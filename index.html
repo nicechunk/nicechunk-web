@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0c0e12" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=0.1.53" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=0.1.53" />
+    <link rel="shortcut icon" href="/favicon.ico?v=0.1.53" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=0.1.53" />
+    <link rel="manifest" href="/site.webmanifest?v=0.1.53" />
+    <meta name="description" content="NiceChunk is a Solana-powered seeded voxel world for exploration, mining, forging, wallet identity, NCK utility, and future Watcher nodes." />
+    <title data-home-i18n="meta.title">NiceChunk | Own the world, one chunk at a time</title>
+  </head>
+  <body>
+    <script>
+      const routeRedirects = {
+        "/play": "/play/",
+        "/login": "/login/",
+        "/player_set": "/player_set/",
+        "/roadmap": "/roadmap/",
+        "/world_rule": "/world_rule/",
+        "/resource_rule": "/resource_rule/",
+        "/elements": "/elements/",
+        "/docs": "/docs/",
+        "/fairness": "/fairness/",
+        "/forging": "/forging/",
+        "/mining": "/mining/",
+        "/guardian": "/guardian/",
+        "/contracts": "/contracts/",
+        "/proof-of-frontier": "/proof-of-frontier/",
+      };
+      if (routeRedirects[window.location.pathname]) {
+        window.location.replace(routeRedirects[window.location.pathname]);
+      }
+    </script>
+
+    <div class="shader-layer" aria-hidden="true">
+      <canvas id="voxelShader"></canvas>
+      <div class="shader-vignette"></div>
+    </div>
+
+    <nav class="side-nav" aria-label="Section navigation" data-home-i18n-aria-label="sideNav.aria">
+      <button class="side-dot active" type="button" data-section-index="0" aria-label="Intro" data-home-i18n-aria-label="sideNav.intro">
+        <span data-home-i18n="sideNav.intro">Intro</span>
+      </button>
+      <button class="side-dot" type="button" data-section-index="1" aria-label="World" data-home-i18n-aria-label="sideNav.world">
+        <span data-home-i18n="sideNav.world">World</span>
+      </button>
+      <button class="side-dot" type="button" data-section-index="2" aria-label="Economy" data-home-i18n-aria-label="sideNav.economy">
+        <span data-home-i18n="sideNav.economy">Economy</span>
+      </button>
+      <button class="side-dot" type="button" data-section-index="3" aria-label="Watchers" data-home-i18n-aria-label="sideNav.watchers">
+        <span data-home-i18n="sideNav.watchers">Watchers</span>
+      </button>
+      <button class="side-dot" type="button" data-section-index="4" aria-label="Roadmap" data-home-i18n-aria-label="sideNav.roadmap">
+        <span data-home-i18n="sideNav.roadmap">Roadmap</span>
+      </button>
+    </nav>
+
+    <header class="site-header" id="siteHeader">
+      <a class="brand-mark" href="/" aria-label="NiceChunk">
+        <img src="/media/nck.png" alt="" />
+        <span>NICECHUNK</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation" data-home-i18n-aria-label="nav.aria">
+        <div class="nav-links">
+          <a class="active" href="/" data-home-i18n="nav.home">Home</a>
+          <a href="/roadmap/" data-home-i18n="nav.roadbook">Roadbook</a>
+          <a href="/world_rule/" data-home-i18n="nav.worldRules">World Rules</a>
+          <a href="/resource_rule/" data-home-i18n="nav.resources">Resources</a>
+          <a href="/elements/" data-home-i18n="nav.elements">Elements</a>
+          <a href="/fairness/" data-home-i18n="nav.fairness">Fairness</a>
+          <a href="/proof-of-frontier/" data-home-i18n="nav.proofOfFrontier">Proof</a>
+          <a href="/guardian/" data-home-i18n="nav.guardians">Guardians</a>
+          <a href="/contracts/" data-home-i18n="nav.contracts">Contracts</a>
+          <a href="/docs/" data-home-i18n="nav.docs">Docs</a>
+        </div>
+        <div class="nav-actions">
+          <a class="header-action" href="/play/" data-home-i18n="nav.enterWorld">Enter World</a>
+          <div class="home-language language-picker" aria-label="Language" data-home-i18n-aria-label="language.aria">
+            <button class="home-language-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+              <span class="home-language-current">English (English)</span>
+              <span class="home-language-caret" aria-hidden="true"></span>
+            </button>
+            <div class="home-language-menu" role="listbox"></div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main id="scrollContainer" class="scroll-container">
+      <section class="snap-section active" id="section-0" aria-labelledby="heroTitle">
+        <div class="zoom-content hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow" data-home-i18n="hero.eyebrow">Alpha Preview Live</p>
+            <h1 id="heroTitle" data-home-i18n="hero.title">Own the world, one chunk at a time.</h1>
+            <p class="hero-subtitle" data-home-i18n="hero.subtitle">
+              NiceChunk is a Solana-powered voxel world where every chunk is seeded, explorable, mineable, and shaped by players.
+            </p>
+            <div class="cta-actions hero-actions">
+              <a class="primary-action" href="/play/" data-home-i18n="hero.enterWorld">Enter World</a>
+            </div>
+            <ul class="status-badges" aria-label="Product status" data-home-i18n-aria-label="hero.statusAria">
+              <li data-home-i18n="hero.badges.alpha">Alpha Preview Live</li>
+              <li data-home-i18n="hero.badges.solana">Solana Wallet Ready</li>
+              <li data-home-i18n="hero.badges.seeded">Seeded Chunk Engine</li>
+              <li data-home-i18n="hero.badges.watchers">Watcher Network Coming Soon</li>
+            </ul>
+          </div>
+          <div class="hero-logo-wrap">
+            <video class="hero-logo hero-logo-video" autoplay muted loop playsinline preload="metadata" poster="/media/nck-hero-logo-v0149.png" aria-hidden="true">
+              <source src="/media/nck-hero-logo-v0149.webm" type="video/webm" />
+              <img src="/media/nck.png" alt="" />
+            </video>
+            <span aria-hidden="true"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="snap-section" id="section-1" aria-labelledby="worldTitle">
+        <div class="zoom-content world-concept-shell">
+          <div class="world-concept-layout">
+            <div class="world-copy">
+              <p class="eyebrow blue" data-home-i18n="world.eyebrow">World</p>
+              <h2 id="worldTitle" data-home-i18n="world.title">A world generated by seeds, changed by players.</h2>
+              <p data-home-i18n="world.body">
+              NiceChunk is not a fixed map. The world expands chunk by chunk. Every explorer helps reveal the world. Every builder leaves a mark.
+              </p>
+              <div class="world-readout" aria-hidden="true">
+                <i></i>
+                <span data-home-i18n="world.readout.protocol">PROTOCOL: SEEDED CHUNK ENGINE</span>
+                <span data-home-i18n="world.readout.state">STATE: PLAYER WRITABLE</span>
+                <span data-home-i18n="world.readout.verify">VERIFY: DETERMINISTIC RULES</span>
+              </div>
+            </div>
+            <div class="glass-card seed-animation-card">
+              <div class="seed-stage">
+                <canvas id="seedChunkCanvas" aria-hidden="true"></canvas>
+                <div class="seed-meta">
+                  <p class="eyebrow" data-home-i18n="world.seed.eyebrow">Seeded Chunk</p>
+                  <strong data-home-i18n="world.seed.title">Live seed generation</strong>
+                  <span data-home-i18n="world.seed.body">A changing seed creates a new chunk preview with terrain height, water, forest, sand, snow, and resource hints.</span>
+                  <dl>
+                    <dt data-home-i18n="world.seed.label">Seed</dt>
+                    <dd id="seedValue">NCK-000000</dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="module-grid gameplay-grid module-strip">
+            <a class="glass-card module-card" href="/play/">
+              <span class="module-symbol">EXP</span>
+              <strong data-home-i18n="gameplay.explore.title">Explore Chunks</strong>
+              <span data-home-i18n="gameplay.explore.body">Enter the browser-based voxel world. Move across seeded terrain, discover new chunks, and find places worth claiming.</span>
+            </a>
+            <a class="glass-card module-card" href="/play/">
+              <span class="module-symbol">MIN</span>
+              <strong data-home-i18n="gameplay.mine.title">Mine Resources</strong>
+              <span data-home-i18n="gameplay.mine.body">Break blocks, reveal hidden resources, and turn exploration into useful materials for the world economy.</span>
+            </a>
+            <a class="glass-card module-card" href="/forging/">
+              <span class="module-symbol">FRG</span>
+              <strong data-home-i18n="gameplay.forge.title">Forge Assets</strong>
+              <span data-home-i18n="gameplay.forge.body">Combine raw materials into tools, blueprints, equipment, and future tradable game assets.</span>
+            </a>
+            <a class="glass-card module-card" href="/player_set/">
+              <span class="module-symbol">ID</span>
+              <strong data-home-i18n="gameplay.identity.title">Player Identity</strong>
+              <span data-home-i18n="gameplay.identity.body">Connect your wallet, create your player profile, and carry your progress across the NiceChunk world.</span>
+            </a>
+            <a class="glass-card module-card" href="#section-3" data-scroll-target="3">
+              <span class="module-symbol">WAT</span>
+              <strong data-home-i18n="gameplay.watchers.title">Watcher Network</strong>
+              <span data-home-i18n="gameplay.watchers.body">Watcher nodes help make regions accessible, support real-time communication, and prepare the world for decentralized coordination.</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="snap-section" id="section-2" aria-labelledby="economyTitle">
+        <div class="zoom-content architecture-grid">
+          <div class="protocol-copy">
+            <p class="eyebrow blue" data-home-i18n="economy.eyebrow">NCK Economy</p>
+            <h2 id="economyTitle" data-home-i18n="economy.title">NCK powers the NiceChunk economy.</h2>
+            <p data-home-i18n="economy.body">
+              NCK is designed as the core utility token of NiceChunk. It can be used for genesis access, in-world actions, forging systems, marketplace settlement, and future governance mechanics.
+            </p>
+          </div>
+          <div class="glass-card economy-list-card">
+            <p class="eyebrow" data-home-i18n="economy.utilityEyebrow">Planned Utility</p>
+            <ul class="utility-list">
+              <li data-home-i18n="economy.utility.genesis">Genesis Pass access connected to NCK</li>
+              <li data-home-i18n="economy.utility.actions">In-world action and material loops</li>
+              <li data-home-i18n="economy.utility.forging">Forging systems and asset creation</li>
+              <li data-home-i18n="economy.utility.market">Marketplace settlement</li>
+              <li data-home-i18n="economy.utility.governance">Future world governance mechanics</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="snap-section" id="section-3" aria-labelledby="watchersTitle">
+        <div class="zoom-content watcher-concept-shell">
+          <div class="watcher-concept-grid">
+            <div class="protocol-copy watcher-side-copy">
+              <p class="eyebrow blue" data-home-i18n="watchers.eyebrow">Watcher Network</p>
+              <h2 id="watchersTitle" data-home-i18n="watchers.title">Run a Watcher. Keep a region alive.</h2>
+              <p data-home-i18n="watchers.body">
+                Watcher nodes are the access layer of NiceChunk. They do not control player assets or process on-chain transactions.
+              </p>
+            </div>
+            <div class="glass-card watcher-animation-card" aria-label="Watcher network animation" data-home-i18n-aria-label="watchers.animation.aria">
+              <canvas id="watcherNetworkCanvas" aria-hidden="true"></canvas>
+              <div class="watcher-copy">
+                <strong data-home-i18n="watchers.animation.title">Watcher Node</strong>
+                <span data-home-i18n="watchers.animation.body">Region access layer</span>
+              </div>
+            </div>
+            <div class="protocol-copy watcher-side-copy rules-side-copy">
+              <p class="eyebrow blue" data-home-i18n="rules.eyebrow">Open World Rules</p>
+              <h2 data-home-i18n="rules.title">Transparent world rules.</h2>
+              <p data-home-i18n="rules.body">
+                NiceChunk is built around open generation rules. Chunks are generated from seeds, player actions update world state, and important economic actions are designed to be verifiable.
+              </p>
+              <a class="secondary-action inline-action" href="/world_rule/" data-home-i18n="rules.cta">Read World Rules</a>
+              <a class="secondary-action inline-action" href="/guardian/" data-home-i18n="watchers.guardianConsole">Guardian Console</a>
+            </div>
+          </div>
+          <ul class="status-badges watcher-status-row">
+            <li data-home-i18n="watchers.badges.noCustody">No asset custody</li>
+            <li data-home-i18n="watchers.badges.noTransactions">No player transaction processing</li>
+            <li data-home-i18n="watchers.badges.communication">Real-time region communication</li>
+            </ul>
+        </div>
+      </section>
+
+      <section class="snap-section cta-section" id="section-4" aria-labelledby="roadmapTitle">
+        <div class="zoom-content cta-shell">
+          <div class="roadmap-layout">
+            <div>
+              <p class="eyebrow blue" data-home-i18n="roadmap.eyebrow">Roadmap</p>
+              <h2 id="roadmapTitle" data-home-i18n="roadmap.title">From alpha world preview to player-owned protocol.</h2>
+            </div>
+            <ol class="timeline-list roadmap-list">
+              <li>
+                <strong data-home-i18n="roadmap.phase1.title">Phase 1 - Alpha World Preview</strong>
+                <p data-home-i18n="roadmap.phase1.body">Browser voxel client, wallet connection, seeded terrain preview, player setup.</p>
+              </li>
+              <li>
+                <strong data-home-i18n="roadmap.phase2.title">Phase 2 - Mining & Forging</strong>
+                <p data-home-i18n="roadmap.phase2.body">Resource discovery, block interaction, material logic, forging bench, basic asset loop.</p>
+              </li>
+              <li>
+                <strong data-home-i18n="roadmap.phase3.title">Phase 3 - NCK Economy</strong>
+                <p data-home-i18n="roadmap.phase3.body">Genesis pass, NCK utility, marketplace settlement, player-owned asset layer.</p>
+              </li>
+              <li>
+                <strong data-home-i18n="roadmap.phase4.title">Phase 4 - Watcher Network</strong>
+                <p data-home-i18n="roadmap.phase4.body">Region access nodes, real-time communication, watcher staking, region-level participation.</p>
+              </li>
+              <li>
+                <strong data-home-i18n="roadmap.phase5.title">Phase 5 - World Governance</strong>
+                <p data-home-i18n="roadmap.phase5.body">Territory rules, world parameters, player voting, long-term protocol governance.</p>
+              </li>
+            </ol>
+            <div class="roadmap-actions">
+              <a class="primary-action" href="/roadmap/" data-home-i18n="roadmap.readFull">Read Full Roadbook</a>
+            </div>
+          </div>
+          <footer class="site-footer">
+            <div>
+              <a class="brand-mark" href="/" aria-label="NiceChunk">
+                <img src="/media/nck.png" alt="" />
+                <span>NICECHUNK</span>
+              </a>
+              <p data-home-i18n="footer.tagline">A seeded voxel world protocol on Solana.</p>
+            </div>
+            <nav aria-label="Footer navigation" data-home-i18n-aria-label="footer.aria">
+              <a href="/play/" data-home-i18n="footer.enterWorld">Enter World</a>
+              <a href="/roadmap/" data-home-i18n="footer.roadbook">Roadbook</a>
+              <a href="/world_rule/" data-home-i18n="footer.worldRules">World Rules</a>
+              <a href="/proof-of-frontier/" data-home-i18n="footer.proofOfFrontier">Proof of Frontier</a>
+              <a href="/contracts/" data-home-i18n="footer.contracts">Contracts</a>
+              <a href="#section-2" data-scroll-target="2" data-home-i18n="footer.nckEconomy">NCK Economy</a>
+              <a href="#section-3" data-scroll-target="3" data-home-i18n="footer.watcherNetwork">Watcher Network</a>
+              <a href="/docs/" data-home-i18n="footer.whitepaper">Whitepaper</a>
+              <a href="/fairness/" data-home-i18n="footer.fairness">Fairness</a>
+            </nav>
+          </footer>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="/home/home.js"></script>
+  </body>
+</html>

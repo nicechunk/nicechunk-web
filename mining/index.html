@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#080907" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=0.1.53" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=0.1.53" />
+    <link rel="shortcut icon" href="/favicon.ico?v=0.1.53" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=0.1.53" />
+    <link rel="manifest" href="/site.webmanifest?v=0.1.53" />
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <title data-i18n="mining.title">Nicechunk Mining</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="mining-shell">
+      <canvas id="mineCanvas" tabindex="0" aria-label="Underground mining cave" data-i18n-aria-label="mining.canvasLabel"></canvas>
+
+      <section class="player-hud" aria-label="Player account" data-i18n-aria-label="main.account.label">
+        <div class="player-avatar" aria-hidden="true"><span></span></div>
+        <div class="player-copy">
+          <div class="player-row">
+            <strong id="playerName">Guest</strong>
+            <span id="playerLevel">Lv. 1</span>
+          </div>
+          <span id="playerTitle" data-i18n="mining.player.title">Novice Miner</span>
+          <span id="playerWallet" data-i18n="main.account.notConnected">Not connected</span>
+        </div>
+      </section>
+
+      <section class="system-panel" aria-label="Computer information" data-i18n-aria-label="mining.system.label">
+        <div class="system-row">
+          <span data-i18n="mining.system.cpu">CPU</span>
+          <strong id="cpuInfo">-</strong>
+        </div>
+        <div class="system-row">
+          <span data-i18n="mining.system.memory">Memory</span>
+          <strong id="memoryInfo">-</strong>
+        </div>
+      </section>
+
+      <div class="language-control">
+        <div data-i18n-language-menu></div>
+      </div>
+
+      <aside class="miners-panel" aria-labelledby="minersTitle">
+        <header class="panel-head">
+          <div>
+            <span data-i18n="mining.panel.kicker">Current Cave</span>
+            <h1 id="minersTitle" data-i18n="mining.panel.title">Online Users</h1>
+          </div>
+          <strong id="activeCount">0</strong>
+        </header>
+        <div class="cave-summary">
+          <div class="wide">
+            <span data-i18n="mining.panel.contractAddress">Cave Contract</span>
+            <strong id="contractAddress">-</strong>
+          </div>
+          <div>
+            <span data-i18n="mining.panel.hashrate">Total Hashrate</span>
+            <strong id="totalHashrate">0 H/s</strong>
+          </div>
+          <div>
+            <span data-i18n="mining.panel.blockTime">Avg Block Time</span>
+            <strong id="avgBlockTime">0s</strong>
+          </div>
+          <div>
+            <span data-i18n="mining.panel.depth">Cave Depth</span>
+            <strong id="caveDepth">0 m</strong>
+          </div>
+          <div>
+            <span data-i18n="mining.panel.totalBlocks">Total Blocks</span>
+            <strong id="totalBlocks">0</strong>
+          </div>
+          <div>
+            <span data-i18n="mining.panel.minedBlocks">Mined Blocks</span>
+            <strong id="minedBlocks">0</strong>
+          </div>
+          <div>
+            <span data-i18n="mining.panel.remainingBlocks">Remaining Blocks</span>
+            <strong id="remainingBlocks">0</strong>
+          </div>
+        </div>
+        <div class="miner-list" id="minerList"></div>
+      </aside>
+
+      <div class="tool-hotbar" id="toolHotbar" aria-label="Tools" data-i18n-aria-label="mining.tools.label"></div>
+
+      <div class="reticle" aria-hidden="true"></div>
+      <div class="exit-fade" aria-hidden="true"></div>
+    </main>
+
+    <script type="module" src="./mining.js"></script>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+{
+  "_meta": {
+    "language": "fr",
+    "label": "French",
+    "version": "player-set-locale-fr-96716140222a6ac0",
+    "contentHash": "96716140222a6ac0"
+  },
+  "common": {
+    "language": "Langue",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "player": {
+    "title": "Éditeur de joueur Nicechunk",
+    "appName": "Éditeur joueur",
+    "resetView": "Réinitialiser la vue",
+    "baseCharacter": "Personnage de base",
+    "baseCharacterMale": "Masculin",
+    "baseCharacterFemale": "Féminin",
+    "baseCharacterMaleExplorer": "Explorateur",
+    "baseCharacterMaleScout": "Scout",
+    "baseCharacterFemalePonytail": "Aventurière à queue de cheval",
+    "baseCharacterFemaleEngineer": "Ingénieure",
+    "characterCode": "Code du personnage",
+    "collapseCode": "Masquer le code",
+    "chainCharacterCode": "Code de personnage on-chain",
+    "viewJson": "Voir JSON",
+    "viewChainData": "Voir données chaîne",
+    "characterParams": "Paramètres du personnage",
+    "addBox": "Ajouter un cube",
+    "selectPart": "Sélectionner une pièce",
+    "name": "Nom",
+    "color": "Couleur",
+    "position": "Position",
+    "scale": "Taille",
+    "rotation": "Rotation",
+    "faceTexture": "Texture de face",
+    "textureSolid": "Uni",
+    "texturePaint": "Peindre texture",
+    "selectFace": "Choisir une face",
+    "brush": "Pinceau",
+    "fillFace": "Remplir la face",
+    "clearFace": "Effacer la face",
+    "duplicatePart": "Dupliquer la pièce",
+    "deletePart": "Supprimer la pièce",
+    "resetDefault": "Restaurer par défaut",
+    "face": {
+      "front": "Avant",
+      "back": "Arrière",
+      "left": "Gauche",
+      "right": "Droite",
+      "top": "Haut",
+      "bottom": "Bas"
+    },
+    "axis": {
+      "x": "X",
+      "y": "Y",
+      "z": "Z",
+      "w": "L",
+      "h": "H",
+      "d": "P",
+      "rx": "RX",
+      "ry": "RY",
+      "rz": "RZ"
+    }
+  }
+}

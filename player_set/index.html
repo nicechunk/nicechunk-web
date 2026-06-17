@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090d0d" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=0.1.53" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=0.1.53" />
+    <link rel="shortcut icon" href="/favicon.ico?v=0.1.53" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=0.1.53" />
+    <link rel="manifest" href="/site.webmanifest?v=0.1.53" />
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <title data-i18n="player.title">Nicechunk Player Set</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <section class="preview-pane">
+        <div class="toolbar">
+          <strong data-i18n="player.appName">Player Set</strong>
+          <div class="toolbar-actions">
+            <label class="base-character-field" for="baseCharacter">
+              <span data-i18n="player.baseCharacter">Base Character</span>
+              <select id="baseCharacter">
+                <option value="male" data-i18n="player.baseCharacterMale">Male</option>
+                <option value="female" data-i18n="player.baseCharacterFemale">Female</option>
+                <option value="male_explorer" data-i18n="player.baseCharacterMaleExplorer">Male Explorer</option>
+                <option value="male_scout" data-i18n="player.baseCharacterMaleScout">Male Scout</option>
+                <option value="female_ponytail" data-i18n="player.baseCharacterFemalePonytail">Female Ponytail</option>
+                <option value="female_engineer" data-i18n="player.baseCharacterFemaleEngineer">Female Engineer</option>
+                <option value="guardian" data-i18n="player.baseCharacterGuardian">Guardian</option>
+              </select>
+            </label>
+            <label class="page-language-field" for="playerSetLanguage">
+              <span data-i18n="common.language">Language</span>
+              <select id="playerSetLanguage" data-player-set-language-select></select>
+            </label>
+            <button id="resetView" type="button" data-i18n="player.resetView">Reset View</button>
+          </div>
+        </div>
+        <canvas id="preview"></canvas>
+        <button id="toggleCode" class="code-tab" type="button" aria-expanded="false" data-i18n="player.characterCode">Character Code</button>
+        <section class="chain-output collapsed">
+          <div class="output-head">
+            <span data-i18n="player.chainCharacterCode">On-chain Character Code</span>
+            <div class="output-actions">
+              <button id="toggleDataMode" type="button" data-i18n="player.viewJson">View JSON</button>
+              <span id="byteSize">0 bytes</span>
+            </div>
+          </div>
+          <textarea id="chainCode" spellcheck="false"></textarea>
+        </section>
+      </section>
+
+      <aside class="settings-pane">
+        <div class="panel-head">
+          <h1 data-i18n="player.characterParams">Character Parameters</h1>
+          <button id="addBox" type="button" data-i18n="player.addBox">Add Box</button>
+        </div>
+
+        <label class="field">
+          <span data-i18n="player.selectPart">Select Part</span>
+          <select id="boxSelect"></select>
+        </label>
+
+        <div class="row">
+          <label class="field">
+            <span data-i18n="player.name">Name</span>
+            <input id="boxName" type="text" />
+          </label>
+          <label class="field">
+            <span data-i18n="player.color">Color</span>
+            <input id="boxColor" type="color" />
+          </label>
+        </div>
+
+        <section class="control-group">
+          <h2 data-i18n="player.position">Position</h2>
+          <div id="positionControls"></div>
+        </section>
+
+        <section class="control-group">
+          <h2 data-i18n="player.scale">Scale</h2>
+          <div id="scaleControls"></div>
+        </section>
+
+        <section class="control-group">
+          <h2 data-i18n="player.rotation">Rotation</h2>
+          <div id="rotationControls"></div>
+        </section>
+
+        <section class="control-group texture-panel">
+          <div class="texture-head">
+            <h2 data-i18n="player.faceTexture">Face Texture</h2>
+            <select id="textureMode">
+              <option value="solid" data-i18n="player.textureSolid">Solid</option>
+              <option value="paint" data-i18n="player.texturePaint">Paint Texture</option>
+            </select>
+          </div>
+
+          <div class="row">
+            <label class="field">
+              <span data-i18n="player.selectFace">Select Face</span>
+              <select id="faceSelect">
+                <option value="front" data-i18n="player.face.front">Front</option>
+                <option value="back" data-i18n="player.face.back">Back</option>
+                <option value="left" data-i18n="player.face.left">Left</option>
+                <option value="right" data-i18n="player.face.right">Right</option>
+                <option value="top" data-i18n="player.face.top">Top</option>
+                <option value="bottom" data-i18n="player.face.bottom">Bottom</option>
+              </select>
+            </label>
+            <label class="field">
+              <span data-i18n="player.brush">Brush</span>
+              <input id="paintColor" type="color" value="#ffffff" />
+            </label>
+          </div>
+
+          <div class="texture-tools">
+            <span id="gridSize">0 x 0</span>
+            <button id="fillFace" type="button" data-i18n="player.fillFace">Fill Face</button>
+            <button id="clearFace" type="button" data-i18n="player.clearFace">Clear Face</button>
+          </div>
+          <canvas id="paintBoard" width="160" height="160"></canvas>
+        </section>
+
+        <div class="actions">
+          <button id="duplicateBox" type="button" data-i18n="player.duplicatePart">Duplicate Part</button>
+          <button id="deleteBox" type="button" data-i18n="player.deletePart">Delete Part</button>
+          <button id="resetCharacter" type="button" data-i18n="player.resetDefault">Restore Default</button>
+        </div>
+      </aside>
+    </main>
+
+    <script type="module" src="./player.js"></script>
+  </body>
+</html>

@@ -1,0 +1,407 @@
+{
+  "_meta": {
+    "language": "zh-Hant",
+    "label": "Traditional Chinese",
+    "version": "docs-locale-zh-Hant-d57e79fe660107c1",
+    "contentHash": "d57e79fe660107c1"
+  },
+  "meta": {
+    "title": "NiceChunk Protocol Docs"
+  },
+  "nav": {
+    "aria": "Primary navigation",
+    "home": "Home",
+    "roadbook": "Roadbook",
+    "enterWorld": "Enter World",
+    "worldRules": "World Rules",
+    "resources": "Resources",
+    "elements": "Elements",
+    "fairness": "Fairness",
+    "proofOfFrontier": "Proof",
+    "docs": "Docs",
+    "guardians": "Guardians"
+  },
+  "language": {
+    "aria": "Language"
+  },
+  "sidebar": {
+    "aria": "Documentation navigation",
+    "title": "Protocol Docs"
+  },
+  "navigation": [
+    {
+      "title": "Start",
+      "items": [
+        {
+          "id": "overview",
+          "label": "Overview"
+        },
+        {
+          "id": "protocol-map",
+          "label": "Protocol Map"
+        },
+        {
+          "id": "status-model",
+          "label": "Status Model"
+        },
+        {
+          "id": "quick-start",
+          "label": "Quick Start"
+        }
+      ]
+    },
+    {
+      "title": "Rules",
+      "items": [
+        {
+          "id": "world-generation",
+          "label": "World Generation"
+        },
+        {
+          "id": "chunk-system",
+          "label": "Chunk System"
+        },
+        {
+          "id": "on-chain-state",
+          "label": "On-chain State"
+        },
+        {
+          "id": "player-actions",
+          "label": "Player Actions"
+        },
+        {
+          "id": "mining-resources",
+          "label": "Mining & Resources"
+        },
+        {
+          "id": "forging-assets",
+          "label": "Forging & Assets"
+        }
+      ]
+    },
+    {
+      "title": "Protocol",
+      "items": [
+        {
+          "id": "nck-economy",
+          "label": "NCK Economy"
+        },
+        {
+          "id": "watcher-network",
+          "label": "Watcher Network"
+        },
+        {
+          "id": "solana-integration",
+          "label": "Solana Integration"
+        },
+        {
+          "id": "fairness",
+          "label": "Fairness"
+        },
+        {
+          "id": "changelog",
+          "label": "Changelog"
+        }
+      ]
+    }
+  ],
+  "hero": {
+    "eyebrow": "Public Protocol Manual",
+    "title": "A fair voxel world must publish its rules before it asks for trust.",
+    "subtitle": "NiceChunk documents the code path from seed to chunk, from player action to state change, and from client behavior to future on-chain verification.",
+    "startReading": "Read Architecture",
+    "fairnessModel": "Verify Rules",
+    "enterWorld": "Enter World",
+    "statusAria": "Documentation status",
+    "seedLabel": "Seed",
+    "badges": {
+      "alpha": "Alpha Documentation",
+      "seeded": "Seeded Chunk Engine",
+      "publicRules": "Public Rulebook",
+      "chainBoundaries": "Chain Boundaries",
+      "versioned": "Versioned Specs"
+    }
+  },
+  "protocolMap": {
+    "eyebrow": "Protocol Map",
+    "title": "The docs follow the same layers as the product.",
+    "body": "NiceChunk is not documented as a marketing site. It is documented as a public rules surface for players, builders, node operators, auditors, and future governance.",
+    "cards": {
+      "world": {
+        "title": "World Protocol",
+        "body": "Seeded terrain, large biome masks, slope-limited mountains, oceans, forests, snow bands, and block resource rules."
+      },
+      "actions": {
+        "title": "Action Rules",
+        "body": "Hotbar-selected behavior, mining range, block placement, inventory movement, forging inputs, and validation boundaries."
+      },
+      "verification": {
+        "title": "State & PDA Model",
+        "body": "GlobalConfig, chunk override accounts, Guardian registry PDAs, version hashes, and what should not be stored on-chain."
+      },
+      "network": {
+        "title": "Guardian Network",
+        "body": "Regional access nodes, realtime messages, non-custodial boundaries, NCK stake, and future availability proofs."
+      }
+    }
+  },
+  "statusModel": {
+    "eyebrow": "Status Model",
+    "title": "Every rule must say whether it is live, planned, client-only, or intended for chain verification.",
+    "body": "This is the core documentation rule for NiceChunk. A feature can be playable before it is fully decentralized, but the page must say which part is already live and which part is still a protocol target.",
+    "cards": {
+      "live": {
+        "label": "Live Alpha",
+        "title": "Playable client behavior",
+        "body": "Browser world, seeded terrain, movement, mining interaction, placement preview, hotbar, backpack UI, forging UI, minimap, and wallet login."
+      },
+      "chain": {
+        "label": "Devnet / Chain",
+        "title": "Explicit Solana state",
+        "body": "GlobalConfig, player/session bridges, Guardian registry and region accounts, NCK mint binding, and PDA derivation rules."
+      },
+      "planned": {
+        "label": "Planned Protocol",
+        "title": "Future verification layers",
+        "body": "Chunk override compression, resource settlement, asset ownership, marketplace settlement, Watcher proofs, and governance controls."
+      },
+      "boundary": {
+        "label": "Trust Boundary",
+        "title": "No hidden claims",
+        "body": "The docs must not imply that client-only rendering, local cache, or unreleased systems are already fully decentralized."
+      }
+    }
+  },
+  "quickStart": {
+    "eyebrow": "Quick Start",
+    "title": "Enter, inspect, and verify the alpha world.",
+    "steps": {
+      "enter": {
+        "title": "Enter the world",
+        "body": "Open the browser client, connect a Solana wallet, and create a player profile before moving into the voxel world."
+      },
+      "explore": {
+        "title": "Explore chunks",
+        "body": "Walk through seeded terrain while the client loads nearby chunks, caches explored map data, and unloads GPU resources when regions are far away."
+      },
+      "act": {
+        "title": "Use the selected item",
+        "body": "The hotbar controls the action: empty hand swings, pickaxe mines, and block items place blocks within range."
+      }
+    }
+  },
+  "worldGeneration": {
+    "eyebrow": "World Generation",
+    "title": "The same seed and rule version must rebuild the same world.",
+    "body": "Terrain is generated from deterministic inputs. Large climate regions are sampled first, then oceans, dunes, foothills, mountains, snow bands, trees, and resource hints are layered on top.",
+    "demo": {
+      "eyebrow": "Interactive Demo",
+      "title": "Seeded Chunk Preview",
+      "random": "Random Seed",
+      "seedLabel": "Seed",
+      "biome": "Dominant Biome",
+      "height": "Height Hash",
+      "resources": "Resource Hints"
+    },
+    "rules": {
+      "seed": {
+        "title": "Seed contract",
+        "body": "A public seed is normalized into numeric streams. Terrain, climate, tree palettes, and resource hints must use seed-derived streams."
+      },
+      "slope": {
+        "title": "Slope-limited mountains",
+        "body": "Mountain growth is broad and probabilistic. Final terrain limits neighboring columns to natural one-block steps where gameplay requires traversal."
+      },
+      "biomes": {
+        "title": "Large biome regions",
+        "body": "Low-frequency climate masks allow large plains, deserts, ocean bodies, forests, foothills, and snow regions without hard size caps."
+      }
+    }
+  },
+  "chunkSystem": {
+    "eyebrow": "Chunk System",
+    "title": "World coordinates become chunk coordinates, local block coordinates, and cache keys.",
+    "body": "A chunk is a 16 x 16 X/Z area. The client currently renders a 13 x 13 visible chunk square and preloads a wider 19 x 19 square to reduce stalls. Rendering resources can unload while discovered minimap data stays cached.",
+    "demo": {
+      "eyebrow": "Coordinate Demo",
+      "title": "World To Chunk",
+      "worldX": "World X",
+      "worldZ": "World Z"
+    }
+  },
+  "chainState": {
+    "eyebrow": "On-chain State",
+    "title": "The chain stores commitments and player-owned state, not every generated block.",
+    "body": "NiceChunk’s storage model is designed around one rule: deterministic generated terrain should be free to reconstruct, while changed or economically meaningful state becomes explicit and verifiable.",
+    "table": {
+      "account": "Account",
+      "seed": "PDA Seed",
+      "role": "Role",
+      "rows": {
+        "global": "Immutable world-law layer: NCK mint, world seed hash, chunk size, rule hashes, fees, and Guardian parameters.",
+        "registry": "Registry for active Guardian regions, NCK stake amount, treasury token account, and registration counters.",
+        "region": "A registered region endpoint with owner, operator, host, TLS flag, stake, proof counters, and update slot.",
+        "chunk": "Future production account for current block overrides only. Unchanged generated terrain should not be stored."
+      }
+    }
+  },
+  "playerActions": {
+    "eyebrow": "Player Actions",
+    "title": "The selected hotbar slot is the action contract.",
+    "body": "NiceChunk actions should be predictable before they are submitted. The client resolves input based on the held item, then range and target rules decide whether an action is valid.",
+    "cards": {
+      "empty": {
+        "title": "Empty hand",
+        "body": "Clicking with no held item produces a swing only. It does not mine or place."
+      },
+      "pickaxe": {
+        "title": "Pickaxe",
+        "body": "A mining tool resolves clicks into mining attempts and consumes durability when successful."
+      },
+      "block": {
+        "title": "Block item",
+        "body": "A block stack resolves clicks into placement attempts within range and consumes one item per successful placement."
+      }
+    }
+  },
+  "mining": {
+    "eyebrow": "Mining & Resources",
+    "title": "Resource outcomes should be reproducible from public inputs.",
+    "body": "Basic terrain can be deterministic, but valuable resources must not be fully predictable from public world seed alone. Discovery should combine public commitments with action-specific inputs so players can verify outcomes without pre-scanning every valuable coordinate.",
+    "demo": {
+      "eyebrow": "Proof Demo",
+      "title": "Mining Roll",
+      "seed": "Seed",
+      "block": "Block",
+      "nonce": "Nonce"
+    }
+  },
+  "forging": {
+    "eyebrow": "Forging, Assets & Inventory",
+    "title": "Items need readable state before they become tradable assets.",
+    "body": "Hotbar slots, durability, stack limits, recipes, material inputs, and future asset metadata are documented as state models rather than hidden UI behavior.",
+    "cards": {
+      "hotbar": {
+        "title": "Hotbar",
+        "body": "The active bar has 9 slots. Stackable items can hold up to 99 per slot."
+      },
+      "durability": {
+        "title": "Durability",
+        "body": "Tools use durability instead of stack amount. The current default tool durability is 999."
+      },
+      "recipes": {
+        "title": "Recipes",
+        "body": "Forged outputs should declare their input materials, output item, quality fields, and future verification path."
+      }
+    }
+  },
+  "economy": {
+    "eyebrow": "NCK Economy",
+    "title": "NCK utility must be documented by status, not by hype.",
+    "body": "NCK is designed as the core utility token for access, in-world actions, forging systems, marketplace settlement, Watcher incentives, and future governance mechanics.",
+    "status": {
+      "planned": "Planned",
+      "devnet": "Devnet",
+      "longTerm": "Long-term"
+    },
+    "table": {
+      "utility": "Utility",
+      "status": "Status",
+      "notes": "Notes",
+      "rows": {
+        "genesis": {
+          "utility": "Genesis access",
+          "notes": "Access can be connected to NCK and Genesis Pass logic."
+        },
+        "forging": {
+          "utility": "Forging systems",
+          "notes": "Economic settlement should expose recipe and material state."
+        },
+        "market": {
+          "utility": "Marketplace settlement",
+          "notes": "Player-owned assets require explicit asset metadata and settlement rules."
+        },
+        "guardian": {
+          "utility": "Guardian stake",
+          "notes": "Guardian registration currently sends 100,000 NCK to the treasury token account on devnet."
+        },
+        "governance": {
+          "utility": "Governance",
+          "notes": "Protocol parameter changes should be versioned and reviewable."
+        }
+      }
+    }
+  },
+  "watchers": {
+    "eyebrow": "Watcher Network",
+    "title": "Guardians and Watchers are access infrastructure, not asset custodians.",
+    "body": "The current Guardian program registers region endpoints and NCK stake on devnet. The broader Watcher network concept is the realtime access layer that keeps regions reachable without owning player assets or signing player transactions.",
+    "demo": {
+      "title": "Watcher Region",
+      "body": "Live access concept"
+    },
+    "status": {
+      "boundary": "Boundary",
+      "devnet": "Devnet"
+    },
+    "rules": {
+      "noCustody": {
+        "title": "No custody",
+        "body": "Watchers do not hold player assets and do not replace wallet authorization."
+      },
+      "noTransactions": {
+        "title": "No transaction signing",
+        "body": "Players interact with Solana wallets directly. Watchers should not process transactions as hidden owners."
+      },
+      "registry": {
+        "title": "Guardian registry",
+        "body": "GuardianRegion accounts store region coordinates, endpoint, owner, operator, stake, proof counters, and update slot."
+      }
+    }
+  },
+  "solana": {
+    "eyebrow": "Solana Integration",
+    "title": "Wallet identity and protocol state should stay explicit.",
+    "body": "The docs separate live wallet flows, devnet programs, local client cache, and future mainnet commitments. This prevents alpha client behavior from being confused with finalized protocol guarantees."
+  },
+  "fairness": {
+    "eyebrow": "Fairness, Security & Governance",
+    "title": "Rules are only fair when players can inspect the rulebook.",
+    "body": "NiceChunk should keep deterministic rules public, version major rule changes, publish test vectors, disclose trust limits, and distinguish live features from planned protocol mechanics.",
+    "cards": {
+      "deterministic": {
+        "title": "Deterministic generation",
+        "body": "The same seed, chunk coordinate, and generation version should produce the same result."
+      },
+      "versioned": {
+        "title": "Versioned rule changes",
+        "body": "UI changes, world-rule changes, economy changes, and chain-state changes should be tracked separately."
+      },
+      "limits": {
+        "title": "Trust limits",
+        "body": "The docs must state what is client-only, what is Watcher-assisted, and what is intended for on-chain verification."
+      }
+    }
+  },
+  "changelog": {
+    "eyebrow": "Changelog",
+    "title": "Protocol documentation must record what changed and what did not.",
+    "items": {
+      "v0150": {
+        "title": "Docs alpha introduced",
+        "body": "Adds protocol docs page, public architecture, demos, independent docs language resources, and mainnet docs locale indexing."
+      },
+      "v0148": {
+        "title": "Homepage hero logo size update",
+        "body": "UI-only change. No gameplay, world generation, economy, or chain-state rule changes."
+      }
+    }
+  },
+  "biomes": {
+    "grassland": "Grassland",
+    "forest": "Forest",
+    "desert": "Desert",
+    "snow": "Snow",
+    "water": "Water"
+  }
+}

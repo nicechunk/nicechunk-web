@@ -1,0 +1,976 @@
+{
+  "_meta": {
+    "language": "de",
+    "label": "German",
+    "version": "elements-locale-de-beca26955a20a40a",
+    "contentHash": "beca26955a20a40a"
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "Sprache",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    },
+    "comingSoon": "Demnächst erhältlich"
+  },
+  "elements": {
+    "names": {
+      "H": "Wasserstoff",
+      "He": "Helium",
+      "Li": "Lithium",
+      "Be": "Beryllium",
+      "B": "Bor",
+      "C": "Kohlenstoff",
+      "N": "Stickstoff",
+      "O": "Sauerstoff",
+      "F": "Fluor",
+      "Ne": "Neon",
+      "Na": "Natrium",
+      "Mg": "Magnesium",
+      "Al": "Aluminium",
+      "Si": "Silizium",
+      "P": "Phosphor",
+      "S": "Schwefel",
+      "Cl": "Chlor",
+      "Ar": "Argon",
+      "K": "Kalium",
+      "Ca": "Kalzium",
+      "Sc": "Scandium",
+      "Ti": "Titan",
+      "V": "Vanadium",
+      "Cr": "Chrom",
+      "Mn": "Mangan",
+      "Fe": "Eisen",
+      "Co": "Kobalt",
+      "Ni": "Nickel",
+      "Cu": "Kupfer",
+      "Zn": "Zink",
+      "Ga": "Gallium",
+      "Ge": "Germanium",
+      "As": "Arsen",
+      "Se": "Selen",
+      "Br": "Brom",
+      "Kr": "Krypton",
+      "Rb": "Rubidium",
+      "Sr": "Strontium",
+      "Y": "Yttrium",
+      "Zr": "Zirkonium",
+      "Nb": "Niob",
+      "Mo": "Molybdän",
+      "Tc": "Technetium",
+      "Ru": "Ruthenium",
+      "Rh": "Rhodium",
+      "Pd": "Palladium",
+      "Ag": "Silber",
+      "Cd": "Cadmium",
+      "In": "Indisch",
+      "Sn": "Zinn",
+      "Sb": "Antimon",
+      "Te": "Erde",
+      "I": "Jod",
+      "Xe": "Xenon",
+      "Cs": "Cäsium",
+      "Ba": "Barium",
+      "La": "Lanthan",
+      "Ce": "Cer",
+      "Pr": "Praseodym",
+      "Nd": "Neodym",
+      "Pm": "Promethium",
+      "Sm": "Samaria",
+      "Eu": "Europa",
+      "Gd": "Gadolinium",
+      "Tb": "Terbium",
+      "Dy": "Dysprosium",
+      "Ho": "Holmium",
+      "Er": "Erbium",
+      "Tm": "Thulium",
+      "Yb": "Ytterbium",
+      "Lu": "Paris",
+      "Hf": "Hafnia",
+      "Ta": "Tantal",
+      "W": "Wolfram",
+      "Re": "Rhenium",
+      "Os": "Osmium",
+      "Ir": "Iridium",
+      "Pt": "Platin",
+      "Au": "Gold",
+      "Hg": "Merkur",
+      "Tl": "Thallium",
+      "Pb": "Leitung",
+      "Bi": "Wismut",
+      "Po": "Polonius",
+      "At": "Astatin",
+      "Rn": "Radon",
+      "Fr": "Frankreich",
+      "Ra": "Ray",
+      "Ac": "Actinium",
+      "Th": "Thorium",
+      "Pa": "Protactinium",
+      "U": "Uran",
+      "Np": "Neptun",
+      "Pu": "Plutonium",
+      "Am": "des amerikanischen Kontinents",
+      "Cm": "Gericht",
+      "Bk": "Berkeley",
+      "Cf": "Kalifornien",
+      "Es": "von Einstein",
+      "Fm": "Fermius",
+      "Md": "Mendelejew",
+      "No": "Nobelium",
+      "Lr": "Lawrence",
+      "Rf": "von Rutherford",
+      "Db": "Dubnium",
+      "Sg": "Seaborgius",
+      "Bh": "Bohrius",
+      "Hs": "Hassius",
+      "Mt": "Meitnerius",
+      "Ds": "von Darmstadt",
+      "Rg": "Röntgenium",
+      "Cn": "Kopernikus",
+      "Nh": "Nihonius",
+      "Fl": "Flerovium",
+      "Mc": "von Moskau",
+      "Lv": "Livermore",
+      "Ts": "Tennessee",
+      "Og": "Oganesson"
+    },
+    "description": {
+      "H": {
+        "short": "Wasserstoff ist eine nichtmetallische Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Brennstoffzellen, Wasserstoffspeicherung, Lebenschemie, Raketentreibstoff und organische Synthese verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Wasserstoff als nichtmetallisches Material ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert, dem der Spieler ausgesetzt ist, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "He": {
+        "short": "Helium ist eine Edelgas-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für kryogene Kühlung, inerte Eindämmung, Ballons, Präzisionsgeräte und Niedertemperaturmaschinen verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Helium als Edelgasmaterial ausgewogen sein: Es definiert Verarbeitungsrouten, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Li": {
+        "short": "Lithium ist eine Alkalimetall-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Batterien, leichte Energiespeicher, reaktive Chemie und hochwertige Energiezellen verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Lithium als Alkalimetallmaterial ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Be": {
+        "short": "Beryllium ist eine Erdalkalimetall-Ressourcenbasis, die für Mineralien, Keramik, Strukturverbindungen, Legierungen und biologische Mineralkreisläufe im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Beryllium als Erdalkalimetallmaterial ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "B": {
+        "short": "Bor ist eine Metalloid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Halbleiter, Glas, Keramikkristalle, optische Teile und Präzisionselektronik verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Bor als metalloides Material ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "C": {
+        "short": "Kohlenstoff ist eine nichtmetallische Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für organische Ketten, Kohlenstofffasern, Kraftstoff, Stahlverstärkung, Graphitleiter und fortschrittliche Verbundwerkstoffe verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Kohlenstoff als nichtmetallisches Material ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "N": {
+        "short": "Stickstoff ist eine nichtmetallische Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Düngemittelchemie, inerte Atmosphären, Sprengstoffe, Kühlung und biologische Kreisläufe verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Stickstoff als nichtmetallisches Material ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "O": {
+        "short": "Sauerstoff ist eine nichtmetallische Rohstoffgrundlage, die im Material- und Schmiedevokabular von NiceChunk für Oxidation, Verbrennungsunterstützung, Lebenserhaltung, Keramik, Glas und Oxiderze verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Sauerstoff als nichtmetallisches Material ausgewogen sein: Es definiert Verarbeitungsrouten, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "F": {
+        "short": "Fluor ist eine Halogen-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk zum Ätzen, zur aggressiven chemischen Verarbeitung, für Salze mit hohem Risiko und für fortschrittliche fluorierte Materialien verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Fluor als Halogenmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Ne": {
+        "short": "Neon ist eine Edelgas-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Neonbeleuchtung, Plasmadisplays, optische Schilder und stabile Gaskammern verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Neon als Edelgasmaterial ausgewogen sein: Es definiert Verarbeitungsrouten, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Na": {
+        "short": "Natrium ist eine Alkalimetall-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Batterien, hochreaktive Chemie, Energiezellen und versiegelte Speicherwege verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Natrium als Alkalimetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Mg": {
+        "short": "Magnesium ist eine Erdalkalimetall-Ressourcengrundlage, die für Mineralien, Keramik, Strukturverbindungen, Legierungen und biologische Mineralkreisläufe im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Magnesium als Erdalkalimetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Al": {
+        "short": "Aluminium ist eine Metallressourcenbasis nach dem Übergang, die für Leichtbaukonstruktionen, leitfähige Rahmen, Luft- und Raumfahrtteile und korrosionsbeständige Schalen im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Aluminium als Post-Transition-Metallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Si": {
+        "short": "Silizium ist eine Metalloid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Halbleiter, Glas, Solarmaterialien, Gesteinschemie und programmierbare Kristallsysteme verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Silizium als metalloides Material ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "P": {
+        "short": "Phosphor ist eine nichtmetallische Rohstoffgrundlage, die im Material- und Schmiedevokabular von NiceChunk für Lebensmaterialien, Gaschemie, Kraftstoffe, Keramik, Düngemittel und Reaktionsketten verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Phosphor als nichtmetallisches Material ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "S": {
+        "short": "Schwefel ist eine nichtmetallische Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Lebensmaterialien, Gaschemie, Kraftstoffe, Keramik, Düngemittel und Reaktionsketten verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Schwefel als nichtmetallisches Material ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Cl": {
+        "short": "Chlor ist eine Halogenressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für korrosive Chemie, Salze, Ätzen, giftige Waffen und hochriskante industrielle Reaktionen verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Chlor als Halogenmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Ar": {
+        "short": "Argon ist eine Edelgas-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für inerte Atmosphären, Schweißschutz, versiegelte Verarbeitung und Plasmalampen verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Argon als Edelgasmaterial ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "K": {
+        "short": "Kalium ist eine Alkalimetall-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Batterien, hochreaktive Chemie, Energiezellen und versiegelte Speicherwege verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Kalium als Alkalimetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Ca": {
+        "short": "Calcium ist eine Erdalkalimetall-Ressourcengrundlage, die für Mineralien, Keramik, Strukturverbindungen, Legierungen und biologische Mineralkreisläufe im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Kalzium als Erdalkalimetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Sc": {
+        "short": "Scandium ist eine Übergangsmetallressourcengrundlage, die für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Scandium als Übergangsmetallmaterial ausgewogen sein: Es definiert Verarbeitungsrouten, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Ti": {
+        "short": "Titan ist eine Übergangsmetall-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für leichte Panzerungen, hochfeste Werkzeuge, Luft- und Raumfahrtstrukturen und fortschrittliche Maschinen verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Titan als Übergangsmetallmaterial ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "V": {
+        "short": "Vanadium ist eine Übergangsmetallressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Vanadium als Übergangsmetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Cr": {
+        "short": "Chrom ist eine Übergangsmetallressourcenbasis, die für rostfreie Legierungen, korrosionsbeständige Beschichtungen, Hartbeschichtungen und Pigmentsysteme im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Chrom als Übergangsmetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Mn": {
+        "short": "Mangan ist eine Übergangsmetallressourcenbasis, die für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Mangan als Übergangsmetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Fe": {
+        "short": "Eisen ist eine Übergangsmetallressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Bau, Maschinen, Waffen, magnetische Geräte und Stahlsynthese verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Eisen als Übergangsmetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Co": {
+        "short": "Kobalt ist eine Übergangsmetallressourcenbasis, die für Batteriekathoden, starke Legierungen, Pigmente, Magnete und hochwertige Werkzeuge im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Kobalt als Übergangsmetallmaterial ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Ni": {
+        "short": "Nickel ist eine Übergangsmetallressourcenbasis, die im Material- und Schmiedevokabular von NiceChunk für Edelstahl, Batterien, Magnete, Panzerlegierungen und katalytische Ausrüstung verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Nickel als Übergangsmetallmaterial ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Cu": {
+        "short": "Kupfer ist eine Übergangsmetallressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Verkabelungen, Elektronik, Motoren, leitfähige Blöcke und Kupferlegierungen verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Kupfer als Übergangsmetallmaterial ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Zn": {
+        "short": "Zink ist eine Übergangsmetallressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Zink als Übergangsmetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Ga": {
+        "short": "Gallium ist eine Metallressourcenbasis nach dem Übergang, die für niedrigschmelzende Elektronik, Verbindungshalbleiter, Anzeigematerialien und ungewöhnliche Flüssigmetalllogik im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Gallium als Metallmaterial nach dem Übergang ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Ge": {
+        "short": "Germanium ist eine Metalloid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Halbleiterwafer, Infrarotoptik, hochwertige Elektronik und Kristallrezepte verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Germanium als Metalloidmaterial ausgewogen sein: Es definiert Verarbeitungsrouten, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "As": {
+        "short": "Arsen ist eine Metalloid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Halbleiter, Glas, Keramikkristalle, optische Teile und Präzisionselektronik verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Arsen als Metalloidmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Se": {
+        "short": "Selen ist eine nichtmetallische Rohstoffgrundlage, die im Material- und Schmiedevokabular von NiceChunk für Lebensmaterialien, Gaschemie, Kraftstoffe, Keramik, Düngemittel und Reaktionsketten verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Selen als nichtmetallisches Material ausgewogen sein: Es definiert Verarbeitungsrouten, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Br": {
+        "short": "Brom ist eine Halogen-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für korrosive Chemie, Salze, Ätzen, giftige Waffen und hochriskante industrielle Reaktionen verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Brom als Halogenmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Kr": {
+        "short": "Krypton ist eine Edelgasressourcenbasis, die für inerte Atmosphären, kryogene Systeme, Plasmabeleuchtung, Optik und geschützte Verarbeitung im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Krypton als Edelgasmaterial ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Rb": {
+        "short": "Rubidium ist eine Alkalimetall-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Batterien, hochreaktive Chemie, Energiezellen und versiegelte Speicherwege verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Rubidium als Alkalimetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Sr": {
+        "short": "Strontium ist eine Erdalkalimetall-Ressourcenbasis, die für Mineralien, Keramik, Strukturverbindungen, Legierungen und biologische Mineralkreisläufe im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Strontium als Erdalkalimetallmaterial ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Y": {
+        "short": "Yttrium ist eine Übergangsmetallressourcenbasis, die für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Yttrium als Übergangsmetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Zr": {
+        "short": "Zirkonium ist eine Übergangsmetallressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Zirkonium als Übergangsmetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Nb": {
+        "short": "Niob ist eine Übergangsmetallressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Niob als Übergangsmetallmaterial ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Mo": {
+        "short": "Molybdän ist eine Übergangsmetallressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Molybdän als Übergangsmetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Tc": {
+        "short": "Technetium ist eine Übergangsmetallressourcenbasis, die für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Technetium als Übergangsmetallmaterial ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Ru": {
+        "short": "Ruthenium ist eine Übergangsmetallressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Ruthenium als Übergangsmetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Rh": {
+        "short": "Rhodium ist eine Übergangsmetallressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Rhodium als Übergangsmetallmaterial ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Pd": {
+        "short": "Palladium ist eine Übergangsmetallressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Palladium als Übergangsmetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Ag": {
+        "short": "Silber ist eine Übergangsmetall-Ressourcengrundlage, die für erstklassige Leitfähigkeit, optische Materialien, antimikrobielle Systeme und wertvolle Ressourcenrouten im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Silber als Übergangsmetallmaterial ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Cd": {
+        "short": "Cadmium ist eine Übergangsmetallressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Cadmium als Übergangsmetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "In": {
+        "short": "Indium ist eine Metallressourcenbasis nach dem Übergang, die für Displayfilme, Touch-Schnittstellen, Lötsysteme und Spezialelektronik im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Indium als Post-Transition-Metallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Sn": {
+        "short": "Zinn ist eine Metallressourcenbasis nach dem Übergang, die für Speziallegierungen, Weichmetalle, Abschirmungen, Rezepturen mit niedrigem Schmelzpunkt und elektronische Materialien im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Zinn als Metallmaterial nach dem Übergang ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Sb": {
+        "short": "Antimon ist eine Metalloid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Halbleiter, Glas, Keramikkristalle, optische Teile und Präzisionselektronik verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Antimon als Metalloidmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Te": {
+        "short": "Tellur ist eine Metalloid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Halbleiter, Glas, Keramikkristalle, optische Teile und Präzisionselektronik verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Tellur als metalloides Material ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "I": {
+        "short": "Jod ist eine Halogenressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für korrosive Chemie, Salze, Ätzen, giftige Waffen und hochriskante industrielle Reaktionen verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Jod als Halogenmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Xe": {
+        "short": "Xenon ist eine Edelgas-Ressourcengrundlage, die für Ionenmotoren, Blitzlampen, Anästhesiechemie und hochwertige optische Systeme im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Xenon als Edelgasmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Cs": {
+        "short": "Cäsium ist eine Alkalimetall-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Batterien, hochreaktive Chemie, Energiezellen und versiegelte Speicherwege verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Cäsium als Alkalimetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Ba": {
+        "short": "Barium ist eine Erdalkalimetall-Ressourcengrundlage, die für Mineralien, Keramik, Strukturverbindungen, Legierungen und biologische Mineralkreisläufe im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Barium als Erdalkalimetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "La": {
+        "short": "Lanthan ist eine Lanthanid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Seltenerdmagnete, Optik, Laser, Leuchtstoffe und High-Tech-Elektronik verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Lanthan als Lanthanoidmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Ce": {
+        "short": "Cer ist eine Lanthanoid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Seltenerdmagnete, Optik, Laser, Leuchtstoffe und High-Tech-Elektronik verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Cer als Lanthanidmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Pr": {
+        "short": "Praseodym ist eine Lanthanid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Seltenerdmagnete, Optik, Laser, Leuchtstoffe und High-Tech-Elektronik verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Praseodym als Lanthanidmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Nd": {
+        "short": "Neodym ist eine Lanthanoid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Permanentmagnete, Motoren, Generatoren und Seltenerd-Technologierezepte verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Neodym als Lanthanidmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Pm": {
+        "short": "Promethium ist eine Lanthanoid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Seltenerdmagnete, Optik, Laser, Leuchtstoffe und High-Tech-Elektronik verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Promethium als Lanthanidmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Sm": {
+        "short": "Samarium ist eine Lanthanid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Seltenerdmagnete, Optik, Laser, Leuchtstoffe und High-Tech-Elektronik verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Samarium als Lanthanidmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Eu": {
+        "short": "Europium ist eine Lanthanid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Seltenerdmagnete, Optik, Laser, Leuchtstoffe und Hightech-Elektronik verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Europium als Lanthanidmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Gd": {
+        "short": "Gadolinium ist eine Lanthanid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Seltenerdmagnete, Optik, Laser, Leuchtstoffe und High-Tech-Elektronik verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Gadolinium als Lanthanidmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Tb": {
+        "short": "Terbium ist eine Lanthanoid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Seltenerdmagnete, Optik, Laser, Leuchtstoffe und Hightech-Elektronik verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Terbium als Lanthanidmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Dy": {
+        "short": "Dysprosium ist eine Lanthanoid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Hochtemperaturmagnete, Seltenerdmotoren und Eliteelektronik verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Dysprosium als Lanthanidmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Ho": {
+        "short": "Holmium ist eine Lanthanid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Seltenerdmagnete, Optik, Laser, Leuchtstoffe und High-Tech-Elektronik verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Holmium als Lanthanoidmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Er": {
+        "short": "Erbium ist eine Lanthanoid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Seltenerdmagnete, Optik, Laser, Leuchtstoffe und High-Tech-Elektronik verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Erbium als Lanthanoidmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Tm": {
+        "short": "Thulium ist eine Lanthanoid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Seltenerdmagnete, Optik, Laser, Leuchtstoffe und High-Tech-Elektronik verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Thulium als Lanthanoidmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Yb": {
+        "short": "Ytterbium ist eine Lanthanoid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Seltenerdmagnete, Optik, Laser, Leuchtstoffe und High-Tech-Elektronik verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Ytterbium als Lanthanidmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Lu": {
+        "short": "Lutetium ist eine Lanthanid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Seltenerdmagnete, Optik, Laser, Leuchtstoffe und High-Tech-Elektronik verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Lutetium als Lanthanidmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Hf": {
+        "short": "Hafnium ist eine Übergangsmetallressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Hafnium als Übergangsmetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Ta": {
+        "short": "Tantal ist eine Übergangsmetallressourcenbasis, die für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Tantal als Übergangsmetallmaterial ausgewogen sein: Es definiert Verarbeitungsrouten, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "W": {
+        "short": "Wolfram ist eine Übergangsmetallressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Hochtemperaturwerkzeuge, harte Panzerungen, schwere Waffen, Öfen und hitzebeständige Maschinen verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Wolfram als Übergangsmetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Re": {
+        "short": "Rhenium ist eine Übergangsmetallressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Rhenium als Übergangsmetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Os": {
+        "short": "Osmium ist eine Übergangsmetallressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Osmium als Übergangsmetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Ir": {
+        "short": "Iridium ist eine Übergangsmetallressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Iridium als Übergangsmetallmaterial ausgewogen sein: Es definiert Verarbeitungsrouten, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Pt": {
+        "short": "Platin ist eine Übergangsmetall-Ressourcengrundlage, die für Katalysatoren, Brennstoffzellen, Präzisionsgeräte, Edellegierungen und hochwertige Technologierezepte im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Platin als Übergangsmetallmaterial ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Au": {
+        "short": "Gold ist eine Übergangsmetall-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für hochwertige Elektronik, Präzisionskontakte, Dekoration, Schatzanlagen und Sammlerstücke in Protokollqualität verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Gold als Übergangsmetallmaterial ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert, dem der Spieler ausgesetzt ist, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Hg": {
+        "short": "Quecksilber ist eine Übergangsmetallressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Flüssigmetallgeräte, Sensoren, Giftfallen und versiegelte Spezialausrüstung verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Quecksilber als Übergangsmetallmaterial ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert, dem der Spieler ausgesetzt ist, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Tl": {
+        "short": "Thallium ist eine Metallressourcenbasis nach dem Übergang, die für Speziallegierungen, weiche Metalle, Abschirmungen, Rezepturen mit niedrigem Schmelzpunkt und elektronische Materialien im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Thallium als Post-Transition-Metallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Pb": {
+        "short": "Blei ist eine Metallressourcengrundlage nach dem Übergang, die im Material- und Schmiedevokabular von NiceChunk für Strahlenschutz, dichte Gewichte, niedrig schmelzende Legierungen und gefährliche Eindämmungsblöcke verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Blei als Metallmaterial nach dem Übergang ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Bi": {
+        "short": "Wismut ist eine Metallressourcenbasis nach dem Übergang, die für Speziallegierungen, Weichmetalle, Abschirmungen, Rezepturen mit niedrigem Schmelzpunkt und elektronische Materialien im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Wismut als Metallmaterial nach dem Übergang ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Po": {
+        "short": "Polonium ist eine Metalloid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Halbleiter, Glas, Keramikkristalle, optische Teile und Präzisionselektronik verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Polonium als Metalloidmaterial ausgewogen sein: Es definiert Verarbeitungsrouten, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "At": {
+        "short": "Astatin ist eine Halogen-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für korrosive Chemie, Salze, Ätzen, giftige Waffen und hochriskante industrielle Reaktionen verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Astat als Halogenmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Rn": {
+        "short": "Radon ist eine Edelgas-Ressourcengrundlage, die für radioaktive Gasfallen, Zerfallserkennung und versiegelte gefährliche Forschung im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Radon als Edelgasmaterial ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Fr": {
+        "short": "Francium ist eine Alkalimetall-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Batterien, hochreaktive Chemie, Energiezellen und versiegelte Speicherwege verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Francium als Alkalimetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Ra": {
+        "short": "Radium ist eine Erdalkalimetall-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Mineralien, Keramik, Strukturverbindungen, Legierungen und biologische Mineralkreisläufe verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Radium als Erdalkalimetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Ac": {
+        "short": "Actinium ist eine Aktinid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Kernenergie, Strahlungssysteme, abgeschirmte Forschung und Endgame-Gefahrstoffe verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Actinium als Aktinidmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Th": {
+        "short": "Thorium ist eine Aktinid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Kernenergie, Strahlungssysteme, abgeschirmte Forschung und gefährliche Endprodukte verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Thorium als Aktinidenmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Pa": {
+        "short": "Protactinium ist eine Aktinid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Kernenergie, Strahlungssysteme, abgeschirmte Forschung und Endgame-Gefahrstoffe verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Protactinium als Aktinidmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "U": {
+        "short": "Uran ist eine Aktinid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Kernbrennstoffe, Strahlungssysteme, Endenergie und abgeschirmte Industrieketten verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Uran als Aktinidenmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Np": {
+        "short": "Neptunium ist eine Aktinid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Kernenergie, Strahlungssysteme, abgeschirmte Forschung und endgefährliche Stoffe verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Neptunium als Aktinidenmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Pu": {
+        "short": "Plutonium ist eine Aktinid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Reaktortreibstoff, verbotene Waffenforschung, Hochrisiko-Energieschleifen und Protokollmaterialien für späte Spiele verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Plutonium als Aktinidenmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesätem chunks entdeckt wird."
+      },
+      "Am": {
+        "short": "Americium ist eine Aktinid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Kernenergie, Strahlungssysteme, abgeschirmte Forschung und endgefährliche Stoffe verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Americium als Aktinidenmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Cm": {
+        "short": "Curium ist eine Aktinid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Kernenergie, Strahlungssysteme, abgeschirmte Forschung und endgefährliche Stoffe verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Curium als Aktinidenmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Bk": {
+        "short": "Berkelium ist eine Aktinid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Kernenergie, Strahlungssysteme, abgeschirmte Forschung und endgefährliche Stoffe verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Berkelium als Aktinidenmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Cf": {
+        "short": "Californium ist eine Aktinid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Kernenergie, Strahlungssysteme, abgeschirmte Forschung und endgefährliche Stoffe verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Californium als Aktinidenmaterial ausgewogen sein: Es definiert Verarbeitungsrouten, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Es": {
+        "short": "Einsteinium ist eine Aktinid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Kernenergie, Strahlungssysteme, abgeschirmte Forschung und gefährliche Endprodukte verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Einsteinium als Aktinoidmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesätem chunks entdeckt wird."
+      },
+      "Fm": {
+        "short": "Fermium ist eine Aktinid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Kernenergie, Strahlungssysteme, abgeschirmte Forschung und gefährliche Endprodukte verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Fermium als Aktinidenmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Md": {
+        "short": "Mendelevium ist eine Aktinid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Kernenergie, Strahlungssysteme, abgeschirmte Forschung und endgefährliche Stoffe verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Mendelevium als Aktinidenmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "No": {
+        "short": "Nobelium ist eine Aktinid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Kernenergie, Strahlungssysteme, abgeschirmte Forschung und gefährliche Endprodukte verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Nobelium als Aktinidenmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Lr": {
+        "short": "Lawrencium ist eine Aktinid-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für Kernenergie, Strahlungssysteme, abgeschirmte Forschung und Endgame-Gefahrstoffe verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Lawrencium als Aktinidenmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Rf": {
+        "short": "Rutherfordium ist eine Übergangsmetallressourcenbasis, die für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Rutherfordium als Übergangsmetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert, dem Spieler ausgesetzt sind, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Db": {
+        "short": "Dubnium ist eine Übergangsmetallressourcenbasis, die für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Dubnium als Übergangsmetallmaterial ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Sg": {
+        "short": "Seaborgium ist ein Übergangsmetallressourcenfundament, das für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Seaborgium als Übergangsmetallmaterial ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Bh": {
+        "short": "Bohrium ist eine Übergangsmetallressourcengrundlage, die für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Bohrium als Übergangsmetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert, dem der Spieler ausgesetzt ist, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Hs": {
+        "short": "Hassium ist eine Übergangsmetallressourcenbasis, die für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Hassium als Übergangsmetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert, dem Spieler ausgesetzt sind, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Mt": {
+        "short": "Meitnerium ist eine Übergangsmetallressourcengrundlage, die für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Meitnerium als Übergangsmetallmaterial ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Ds": {
+        "short": "Darmstadtium ist eine Übergangsmetallressourcengrundlage, die für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Darmstadtium als Übergangsmetallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert, dem Spieler ausgesetzt sind, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Rg": {
+        "short": "Röntgen ist eine Übergangsmetallressourcenbasis, die für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Röntgen als Übergangsmetallmaterial ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Cn": {
+        "short": "Copernicium ist eine Übergangsmetallressourcengrundlage, die für Industriemaschinen, Waffen, Werkzeuge, Legierungen, Strukturteile und leitfähige Systeme im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Copernicium als Übergangsmetallmaterial ausbalanciert sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Nh": {
+        "short": "Nihonium ist eine Metallressourcenbasis nach dem Übergang, die für Speziallegierungen, weiche Metalle, Abschirmungen, Rezepturen mit niedrigem Schmelzpunkt und elektronische Materialien im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Nihonium als Post-Transition-Metallmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Fl": {
+        "short": "Flerovium ist eine Metallressourcenbasis nach dem Übergang, die für Speziallegierungen, Weichmetalle, Abschirmungen, Rezepturen mit niedrigem Schmelzpunkt und elektronische Materialien im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Flerovium als Metallmaterial nach dem Übergang ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Mc": {
+        "short": "Moscovium ist eine Metallressourcenbasis für die Zeit nach dem Übergang, die für Speziallegierungen, weiche Metalle, Abschirmungen, Rezepturen mit niedrigem Schmelzpunkt und elektronische Materialien im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Moscovium als Metallmaterial nach dem Übergang ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Lv": {
+        "short": "Livermorium ist eine Metallressourcengrundlage nach dem Übergang, die für Speziallegierungen, weiche Metalle, Abschirmungen, Rezepturen mit niedrigem Schmelzpunkt und elektronische Materialien im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Livermorium als Metallmaterial nach dem Übergang ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Ts": {
+        "short": "Tennessine ist eine Halogen-Ressourcengrundlage, die im Material- und Schmiedevokabular von NiceChunk für korrosive Chemie, Salze, Ätzen, giftige Waffen und hochriskante industrielle Reaktionen verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Tennessine als Halogenmaterial ausgewogen sein: Es definiert Verarbeitungswege, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      },
+      "Og": {
+        "short": "Oganesson ist eine Edelgas-Ressourcenstiftung, die für instabile Endspiel-Weltherrschaftsfragmente, radioaktive Anomalien und experimentelle Protokollmaterialien im Material- und Schmiedevokabular von NiceChunk verwendet wird.",
+        "gameplayRole": "In NiceChunk sollte Oganesson als Edelgasmaterial ausbalanciert sein: Es definiert Verarbeitungsrouten, Affinitätsregeln, visuelle Ressourcengene und das Risiko oder den Wert für den Spieler, wenn es aus gesetztem chunks entdeckt wird."
+      }
+    },
+    "process": {
+      "alloy": "Legierung",
+      "battery_grade_refine": "Batteriequalität verfeinern",
+      "capture": "Erfassung",
+      "cast": "Besetzung",
+      "compress": "Komprimieren",
+      "corrosion_resistant_container": "Korrosionsbeständiger Behälter",
+      "crush": "Zerquetschen",
+      "cryogenic_separate": "Kryotrennung",
+      "crystallize": "Kristallisieren",
+      "distill": "Destillieren",
+      "electrolyze": "Elektrolysieren",
+      "forge": "Schmiede",
+      "high_temp_sinter": "Hochtemperatursintern",
+      "inert_atmosphere_process": "Prozess in inerter Atmosphäre",
+      "ionize": "Ionisieren",
+      "isotope_separate": "Isotopentrennung",
+      "mine": "Meins",
+      "nuclear_refine": "Nukleare Raffinierung",
+      "oxidize": "Oxidieren",
+      "precision_machine": "Präzisionsmaschine",
+      "quench": "Löschen",
+      "radiation_shielding": "Strahlenschutz",
+      "reduce": "Reduzieren",
+      "refine": "Verfeinern",
+      "sealed_capture": "Versiegelte Gefangennahme",
+      "semiconductor_refine": "Halbleiterverfeinerung",
+      "sinter": "Sinter",
+      "smelt": "Stint",
+      "temper": "Temperament",
+      "vacuum_refine": "Vakuumverfeinerung",
+      "wash": "Waschen"
+    },
+    "visual": {
+      "ceramic_crystal": "Keramikkristall",
+      "copper_metal": "Kupfermetall",
+      "corrosive_gas": "Ätzendes Gas",
+      "faceted_crystal": "Facettierter Kristall",
+      "gold_metal": "Goldmetall",
+      "graphite_carbon": "Graphitkohlenstoff",
+      "liquid_metal": "Flüssiges Metall",
+      "matte_solid": "Matter Feststoff",
+      "metalloid_crystal": "Metalloidkristall",
+      "neon_glow_gas": "Neonglühgas",
+      "noble_gas": "Edelgas",
+      "plasma_gas": "Plasmagas",
+      "radioactive_silver_metal": "Radioaktives Silbermetall",
+      "rough_crystal": "Roher Kristall",
+      "silver_metal": "Silbermetall",
+      "silvery_metal": "Silbernes Metall",
+      "solid_powder": "Festes Pulver",
+      "toxic_halogen": "Giftiges Halogen",
+      "uranium_silver_metal": "Uransilbermetall",
+      "volatile_liquid": "Flüchtige Flüssigkeit",
+      "white_silvery_metal": "Weißes silbriges Metall",
+      "yellow_crystal": "Gelber Kristall",
+      "acid_gas": "Saures Gas",
+      "brushed_metal": "Gebürstetes Metall",
+      "clear_gas": "Klares Gas",
+      "corrosive_liquid": "Ätzende Flüssigkeit",
+      "fresh_cut_metal": "Frisch geschnittenes Metall",
+      "glowing_rare_earth_veins": "Leuchtende Seltenerdadern",
+      "halide_crystal": "Halogenidkristall",
+      "mineral_metal": "Mineralisches Metall",
+      "powdered_solid": "Pulverförmiger Feststoff",
+      "radioactive_veins": "Radioaktive Venen",
+      "soft_brushed_metal": "Weiches gebürstetes Metall",
+      "crystal_ore": "Kristallerz",
+      "metallic_ore_veins": "Metallische Erzadern",
+      "mineral_ore": "Mineralerz",
+      "powder_veins": "Pulveradern",
+      "radioactive_cracked_ore": "Radioaktives gebrochenes Erz",
+      "rare_earth_veins": "Seltenerdadern",
+      "reactive_salt_ore": "Reaktives Salzerz",
+      "sealed_gas_pocket": "Versiegelte Gastasche",
+      "soft_metal_ore": "Weichmetallerz",
+      "corrosive_vapor": "Ätzender Dampf",
+      "glowing_dust": "Glühender Staub",
+      "mineral_sparks": "Mineralische Funken",
+      "radioactive_sparks": "Radioaktive Funken",
+      "soft_glow_mist": "Sanft leuchtender Nebel",
+      "pulse": "Puls",
+      "slow_flow": "Langsamer Fluss",
+      "subtle_shimmer": "Dezenter Schimmer",
+      "unstable_flicker": "Instabiles Flimmern"
+    },
+    "nav": {
+      "aria": "Primärnavigation",
+      "home": "Startseite",
+      "roadbook": "Roadbook",
+      "world": "Welt",
+      "worldRules": "Weltregeln",
+      "economy": "Wirtschaft",
+      "fairness": "Fairness",
+      "resources": "Ressourcen",
+      "elements": "Elemente",
+      "proofOfFrontier": "Beweis",
+      "docs": "Dokumente",
+      "enterWorld": "Betritt die Welt",
+      "guardians": "Wächter"
+    },
+    "page": {
+      "title": "NiceChunk Elemente",
+      "shortTitle": "Elemente",
+      "navAria": "Elementnavigation",
+      "enterWorld": "Betritt die Welt",
+      "resourceRules": "Ressourcenregeln",
+      "eyebrow": "ELEMENT RESOURCE FOUNDATION",
+      "heading": "Elemente werden zu Ressourcen.",
+      "body": "NiceChunk nutzt die 118 echten chemischen Elemente als offenes Vokabular für zukünftige Ressourcen, Schmieden, Materialvisualisierungen und überprüfbare Spielregeln.",
+      "statsAria": "Elementmodellstatus",
+      "tableEyebrow": "Periodische Schnittstelle",
+      "tableTitle": "Elementzuordnung öffnen",
+      "filterAria": "Elementkategoriefilter",
+      "filterAll": "Alle",
+      "protocolAria": "Anmerkungen zum Elementprotokoll",
+      "stat": {
+        "discovered": "Entdeckte Elemente",
+        "elements": "Echte chemische Elemente",
+        "categories": "Ressourcenkategorien",
+        "natural": "Natürliche Kandidaten",
+        "versioned": "Regelsatzstatus"
+      },
+      "protocol": {
+        "resourceGene": {
+          "title": "Ressourcengen",
+          "body": "Jedes Element kann zu einer deterministischen Materialidentität für abgebauten Tropfen, Blockrezepte und zukünftige Asset-Metadaten werden."
+        },
+        "forgingInput": {
+          "title": "Eingabefälschung",
+          "body": "Atomare und physikalische Merkmale werden in zukünftige Verarbeitungsstufen, Wärmeanforderungen, Risiken und Stationslogik eingeordnet."
+        },
+        "visualGene": {
+          "title": "Visuelles Gen",
+          "body": "Farbe, Metall, Rauheit, Emission, Ader, Körnung und Rissmerkmale können die Darstellung von Voxelmaterial steuern."
+        },
+        "verification": {
+          "title": "Offene Verifizierung",
+          "body": "Die Tabelle ist als öffentliche Regeldaten konzipiert, sodass Spieler vor Kettenverpflichtungen prüfen können, wie Ressourcen klassifiziert werden."
+        }
+      },
+      "tableAria": "Periodensystem",
+      "legendAria": "Elementkategorien",
+      "detailsEyebrow": "ELEMENTDETAILS",
+      "detailsTitle": "Klicken Sie auf ein Element, um seine Eigenschaften und Verarbeitungsanforderungen zu überprüfen.",
+      "detailsBody": "Die folgenden Anforderungen sind spielbezogene Platzhalter. Sie definieren, wie jede Elementkategorie später zu abgebauten Ressourcen, verarbeiteten Materialien und neuen konstruierbaren Blöcken werden kann.",
+      "detailListAria": "Elementdetailliste",
+      "elementAria": "{name}, Symbol {symbol}, Ordnungszahl {atomicNumber}",
+      "detailHeading": "{name} ({symbol})",
+      "summary": "{name} ist Element {atomicNumber}. In NiceChunk stellt es eine {category}-Ressource dar, die bei der Blockzerstörung erkannt und später in Blockkonstruktionsregeln verwendet werden kann.",
+      "blockValue": "{block}-Block",
+      "processingTitle": "Verarbeitungsvoraussetzungen",
+      "constructionHint": "{name} kann als Basis-{category}-Komponente verwendet werden, wenn zukünftige Rezepte neue konstruierbare Blöcke definieren."
+    },
+    "detail": {
+      "back": "Zurück zu den Elementen",
+      "documentTitle": "NiceChunk-Elementdatei | {symbol} {name}",
+      "missingTitle": "NiceChunk-Elementdatei | {symbol}",
+      "fileEyebrow": "ELEMENTDATEI",
+      "missingZh": "Elementdetaildaten wurden noch nicht hinzugefügt.",
+      "missingEn": "Elementdetaildaten wurden noch nicht hinzugefügt.",
+      "yes": "Ja",
+      "no": "Nr",
+      "notAvailable": "Unbekannt",
+      "sections": {
+        "identity": "Identität",
+        "atomic": "Atomare Attribute",
+        "physical": "Physische Eigenschaften",
+        "chemical": "Chemische Eigenschaften",
+        "game": "Spielattribute",
+        "processing": "Verarbeitungsattribute",
+        "affinity": "Affinitätsattribute",
+        "visualGene": "Visuelles Gen",
+        "description": "Beschreibung"
+      },
+      "field": {
+        "id": "Element-ID",
+        "atomicNumber": "Ordnungszahl",
+        "symbol": "Symbol",
+        "name": "Name",
+        "category": "Elementkategorie",
+        "period": "Punkt",
+        "group": "Gruppe",
+        "block": "Sperren",
+        "standardState": "Standardstaat",
+        "naturalOccurrence": "Natürliches Vorkommen",
+        "atomicMass": "Atommasse",
+        "atomicRadiusPm": "Atomradius",
+        "covalentRadiusPm": "Kovalenter Radius",
+        "electronConfig": "Elektronenkonfiguration",
+        "valenceElectrons": "Valenzelektronen",
+        "commonOxidationStates": "Gemeinsame Oxidationsstufen",
+        "maxOxidationState": "Max. Oxidationszustand",
+        "minOxidationState": "Min. Oxidationszustand",
+        "densityKgM3": "Dichte",
+        "referenceDimensions": "Referenzmaße",
+        "referenceMassKg": "Referenzmesse",
+        "meltingPointC": "Schmelzpunkt",
+        "boilingPointC": "Siedepunkt",
+        "hardness": "Härte",
+        "toughness": "Zähigkeit",
+        "ductility": "Duktilität",
+        "brittleness": "Sprödigkeit",
+        "electricalConductivity": "Elektrische Leitfähigkeit",
+        "thermalConductivity": "Wärmeleitfähigkeit",
+        "heatResistance": "Hitzebeständigkeit",
+        "magnetism": "Magnetismus",
+        "transparencyTendency": "Transparenztendenz",
+        "electronegativity": "Elektronegativität",
+        "reactivity": "Reaktivität",
+        "stability": "Stabilität",
+        "oxidationTendency": "Oxidationstendenz",
+        "corrosiveness": "Ätzende Wirkung",
+        "toxicity": "Toxizität",
+        "radioactivity": "Radioaktivität",
+        "flammability": "Entflammbarkeit",
+        "explosiveTendency": "Explosive Tendenz",
+        "acidBaseTendency": "Säure-/Base-Tendenz",
+        "rarity": "Seltenheit",
+        "baseValue": "Basiswert",
+        "miningDifficulty": "Bergbauschwierigkeit",
+        "refiningDifficulty": "Verfeinerungsschwierigkeit",
+        "processingDifficulty": "Verarbeitungsschwierigkeiten",
+        "industrialValue": "Industrieller Wert",
+        "weaponValue": "Waffenwert",
+        "technologyValue": "Technologiewert",
+        "buildingValue": "Gebäudewert",
+        "energyValue": "Energiewert",
+        "biologicalValue": "Biologische Wertigkeit",
+        "hazardLevel": "Gefahrenstufe",
+        "requiredTemperatureC": "Erforderliche Temperatur",
+        "minFurnaceTier": "Mindestofenebene",
+        "minToolTier": "Mindestwerkzeugstufe",
+        "requiredFuelTier": "Erforderliche Kraftstoffstufe",
+        "oxygenSensitive": "Sauerstoffempfindlich",
+        "waterSensitive": "Wasserempfindlich",
+        "requiresInertAtmosphere": "Erfordert eine inerte Atmosphäre",
+        "forgeable": "Fälschbar",
+        "castable": "Gießbar",
+        "crystallizable": "Kristallisierbar",
+        "alloyable": "Legierbar",
+        "preferredProcesses": "Bevorzugte Prozesse",
+        "risk": {
+          "oxidation": "Oxidationsrisiko",
+          "explosion": "Explosionsgefahr",
+          "vaporization": "Verdampfungsrisiko",
+          "contamination": "Kontaminationsrisiko",
+          "brittleness": "Sprödigkeitsrisiko"
+        },
+        "metalAffinity": "Metallaffinität",
+        "alloyAffinity": "Legierungsaffinität",
+        "oxygenAffinity": "Sauerstoffaffinität",
+        "carbonAffinity": "Kohlenstoffaffinität",
+        "hydrogenAffinity": "Wasserstoffaffinität",
+        "siliconAffinity": "Siliziumaffinität",
+        "sulfurAffinity": "Schwefelaffinität",
+        "halogenAffinity": "Halogenaffinität",
+        "crystalAffinity": "Kristallaffinität",
+        "ceramicAffinity": "Keramikaffinität",
+        "organicAffinity": "Organische Affinität",
+        "gasAffinity": "Gasaffinität",
+        "energyAffinity": "Energieaffinität",
+        "magneticMaterialAffinity": "Magnetische Materialaffinität",
+        "structuralMaterialAffinity": "Strukturelle Materialaffinität",
+        "opticalMaterialAffinity": "Optische Materialaffinität",
+        "electronicMaterialAffinity": "Elektronische materielle Affinität",
+        "baseColor": "Grundfarbe",
+        "secondaryColor": "Sekundärfarbe",
+        "oxidizedColor": "Oxidierte Farbe",
+        "darkStateColor": "Dunkle Zustandsfarbe",
+        "emissionColor": "Emissionsfarbe",
+        "materialLook": "Materieller Look",
+        "textureType": "Texturtyp",
+        "oreTextureType": "Erztexturtyp",
+        "metallic": "Metallisch",
+        "roughness": "Rauheit",
+        "transparency": "Transparenz",
+        "emissionStrength": "Emissionsstärke",
+        "grain": "Getreide",
+        "scratchDensity": "Kratzdichte",
+        "veinDensity": "Venendichte",
+        "crackDensity": "Rissdichte",
+        "oxidationPattern": "Oxidationsmuster",
+        "particleEffect": "Partikeleffekt",
+        "animationEffect": "Animationseffekt"
+      }
+    },
+    "category": {
+      "nonmetal": "Nichtmetall",
+      "noble_gas": "Edelgas",
+      "alkali_metal": "Alkalimetall",
+      "alkaline_earth_metal": "Erdalkalimetall",
+      "metalloid": "Metalloid",
+      "halogen": "Halogen",
+      "post_transition_metal": "Post-Transition-Metal",
+      "transition_metal": "Übergangsmetall",
+      "lanthanide": "Lanthanid",
+      "actinide": "Aktinid",
+      "unknown_properties": "Unbekannte Eigenschaften"
+    },
+    "state": {
+      "solid": "Fest",
+      "liquid": "Flüssigkeit",
+      "gas": "Gas",
+      "unknown": "Unbekannt"
+    },
+    "phase": {
+      "solid": "Fest",
+      "liquid": "Flüssigkeit",
+      "gas": "Gas",
+      "unknown": "Unbekannt"
+    },
+    "property": {
+      "atomicNumber": "Ordnungszahl",
+      "symbol": "Symbol",
+      "atomicMass": "Atommasse",
+      "category": "Kategorie",
+      "phase": "Staat",
+      "group": "Gruppe",
+      "period": "Punkt",
+      "block": "Elektronenblock"
+    },
+    "processing": {
+      "tier": "Verarbeitungsstufe",
+      "tierValue": "Stufe {tier}",
+      "station": {
+        "separator": "Trennzeichen",
+        "cryogenicTrap": "Kryofalle",
+        "stabilizer": "Stabilisator",
+        "kiln": "Brennofen",
+        "refiner": "Veredler",
+        "sealedReactor": "Versiegelter Reaktor",
+        "smelter": "Schmelzhütte",
+        "alloyForge": "Legierungsschmiede",
+        "magneticSeparator": "Magnetabscheider",
+        "shieldedReactor": "Abgeschirmter Reaktor"
+      },
+      "heat": {
+        "low": "Geringe Hitze",
+        "medium": "Mittlere Hitze",
+        "high": "Hohe Hitze",
+        "extreme": "Extreme Hitze"
+      },
+      "binder": {
+        "none": "Kein Bindemittel",
+        "pressureCell": "Druckzelle",
+        "sealedCapsule": "Versiegelte Kapsel",
+        "flux": "Fluss",
+        "silicateMatrix": "Silikatmatrix",
+        "saltMatrix": "Salzmatrix",
+        "ingotMold": "Barrenform",
+        "carbonFlux": "Kohlenstofffluss",
+        "rareEarthFlux": "Seltenerdfluss",
+        "containmentCore": "Eindämmungskern"
+      }
+    }
+  }
+}

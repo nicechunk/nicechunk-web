@@ -1,0 +1,76 @@
+{
+  "_meta": {
+    "language": "ja",
+    "label": "Japanese",
+    "version": "player-set-locale-ja-bee61ac08a5a86ad",
+    "contentHash": "bee61ac08a5a86ad"
+  },
+  "common": {
+    "language": "言語",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "player": {
+    "title": "Nicechunk プレイヤー設定",
+    "appName": "プレイヤー設定",
+    "resetView": "視点リセット",
+    "baseCharacter": "ベースキャラクター",
+    "baseCharacterMale": "男性",
+    "baseCharacterFemale": "女性",
+    "baseCharacterMaleExplorer": "男性エクスプローラー",
+    "baseCharacterMaleScout": "男性スカウト",
+    "baseCharacterFemalePonytail": "ポニーテール女性",
+    "baseCharacterFemaleEngineer": "女性エンジニア",
+    "characterCode": "キャラクターコード",
+    "collapseCode": "コードを閉じる",
+    "chainCharacterCode": "オンチェーンキャラクターコード",
+    "viewJson": "JSON を表示",
+    "viewChainData": "チェーンデータを表示",
+    "characterParams": "キャラクター設定",
+    "addBox": "ブロック追加",
+    "selectPart": "パーツ選択",
+    "name": "名前",
+    "color": "色",
+    "position": "位置",
+    "scale": "サイズ",
+    "rotation": "回転",
+    "faceTexture": "面テクスチャ",
+    "textureSolid": "単色",
+    "texturePaint": "テクスチャ描画",
+    "selectFace": "面を選択",
+    "brush": "ブラシ",
+    "fillFace": "面を塗りつぶす",
+    "clearFace": "面を消去",
+    "duplicatePart": "パーツ複製",
+    "deletePart": "パーツ削除",
+    "resetDefault": "初期状態に戻す",
+    "face": {
+      "front": "前",
+      "back": "後",
+      "left": "左",
+      "right": "右",
+      "top": "上",
+      "bottom": "下"
+    },
+    "axis": {
+      "x": "X",
+      "y": "Y",
+      "z": "Z",
+      "w": "幅",
+      "h": "高",
+      "d": "奥",
+      "rx": "RX",
+      "ry": "RY",
+      "rz": "RZ"
+    }
+  }
+}

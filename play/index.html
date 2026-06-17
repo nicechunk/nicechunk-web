@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090d0d" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=0.1.53" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=0.1.53" />
+    <link rel="shortcut icon" href="/favicon.ico?v=0.1.53" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=0.1.53" />
+    <link rel="manifest" href="/site.webmanifest?v=0.1.53" />
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <title data-i18n="main.title">Nicechunk Voxel Prototype</title>
+  </head>
+  <body>
+    <script>
+      if (window.location.pathname === "/player_set") {
+        window.location.replace("/player_set/");
+      }
+      if (window.location.pathname === "/login") {
+        window.location.replace("/login/");
+      }
+      if (window.location.pathname === "/world_rule") {
+        window.location.replace("/world_rule/");
+      }
+      if (window.location.pathname === "/resource_rule") {
+        window.location.replace("/resource_rule/");
+      }
+      if (window.location.pathname === "/forging") {
+        window.location.replace("/forging/");
+      }
+    </script>
+    <div id="app">
+      <div class="game-loading-overlay" id="gameLoadingOverlay">
+        <div class="game-loading-panel">
+          <span class="game-loading-eyebrow" data-i18n="main.loading.eyebrow">World Gateway</span>
+          <strong id="gameLoadingTitle" data-i18n="main.loading.stages.boot.title">Downloading game files</strong>
+          <p id="gameLoadingText" data-i18n="main.loading.stages.boot.body">Loading the game bundle before the voxel engine starts.</p>
+          <div class="game-loading-track" aria-hidden="true">
+            <span id="gameLoadingBar"></span>
+          </div>
+          <div class="game-loading-meta" aria-live="polite">
+            <span id="gameLoadingPercent">0%</span>
+            <span id="gameLoadingBytes">Transferred 0 KB</span>
+          </div>
+        </div>
+      </div>
+      <section class="rpc-config-panel" id="rpcConfigPanel" aria-live="polite" hidden>
+        <div class="rpc-config-copy">
+          <strong data-i18n="main.rpcConfig.title">Public RPC is overloaded</strong>
+          <p data-i18n="main.rpcConfig.body">Set a Helius devnet API key to use your own RPC endpoint for chain reads and transactions.</p>
+          <a href="https://www.helius.dev" target="_blank" rel="noreferrer" data-i18n="main.rpcConfig.link">Get a Helius API key</a>
+        </div>
+        <form id="rpcConfigForm" class="rpc-config-form">
+          <label for="rpcConfigApiKey" data-i18n="main.rpcConfig.inputLabel">Helius API key</label>
+          <div class="rpc-config-row">
+            <input
+              id="rpcConfigApiKey"
+              type="password"
+              autocomplete="off"
+              spellcheck="false"
+              data-i18n-placeholder="main.rpcConfig.placeholder"
+              placeholder="Paste your Helius API key"
+            />
+            <button type="submit" data-i18n="main.rpcConfig.save">Save RPC</button>
+            <button id="rpcConfigDismiss" type="button" data-i18n-aria-label="main.rpcConfig.dismiss" aria-label="Dismiss RPC warning">×</button>
+          </div>
+          <span id="rpcConfigStatus" class="rpc-config-status"></span>
+        </form>
+      </section>
+      <script>
+        (() => {
+          const startedAt = performance.now();
+          const title = document.querySelector("#gameLoadingTitle");
+          const text = document.querySelector("#gameLoadingText");
+          const bar = document.querySelector("#gameLoadingBar");
+          const percent = document.querySelector("#gameLoadingPercent");
+          const bytes = document.querySelector("#gameLoadingBytes");
+
+          function formatByteSize(value) {
+            if (!Number.isFinite(value) || value <= 0) return "0 KB";
+            const units = ["B", "KB", "MB", "GB"];
+            let size = value;
+            let unit = 0;
+            while (size >= 1024 && unit < units.length - 1) {
+              size /= 1024;
+              unit++;
+            }
+            const digits = size >= 100 || unit === 0 ? 0 : size >= 10 ? 1 : 2;
+            return `${size.toFixed(digits)} ${units[unit]}`;
+          }
+
+          function resourceBytes() {
+            const entries = [
+              ...performance.getEntriesByType("navigation"),
+              ...performance.getEntriesByType("resource"),
+            ];
+            let loaded = 0;
+            let total = 0;
+            const seen = new Set();
+            for (const entry of entries) {
+              if (!entry.name || seen.has(entry.name)) continue;
+              seen.add(entry.name);
+              const encoded = Math.max(0, entry.encodedBodySize || 0);
+              const transfer = Math.max(0, entry.transferSize || 0);
+              const decoded = Math.max(0, entry.decodedBodySize || 0);
+              const size = transfer || encoded || decoded;
+              if (!size) continue;
+              loaded += size;
+              total += encoded || size;
+            }
+            return { loaded, total };
+          }
+
+          function setBootProgress(value) {
+            const progress = Math.max(1, Math.min(54, Math.round(value)));
+            if (title) title.textContent = "Downloading game files";
+            if (text) text.textContent = "Loading JavaScript, styles, and world engine files.";
+            if (bar) bar.style.width = `${progress}%`;
+            if (percent) percent.textContent = `${progress}%`;
+            if (bytes) {
+              const current = resourceBytes();
+              bytes.textContent =
+                current.total > 0 && current.total >= current.loaded
+                  ? `Transferred ${formatByteSize(current.loaded)} / ${formatByteSize(current.total)}`
+                  : `Transferred ${formatByteSize(current.loaded)}`;
+            }
+          }
+
+          const timer = window.setInterval(() => {
+            const elapsed = performance.now() - startedAt;
+            setBootProgress(4 + elapsed / 420);
+          }, 180);
+          setBootProgress(2);
+
+          window.NiceChunkBootLoading = {
+            stop() {
+              window.clearInterval(timer);
+            },
+            setBootProgress,
+          };
+        })();
+      </script>
+      <canvas id="game"></canvas>
+      <button class="account-hud" id="accountHud" type="button" aria-label="Open player profile" data-i18n-aria-label="main.account.open">
+        <div class="account-avatar" aria-hidden="true">
+          <span></span>
+        </div>
+        <div class="account-copy">
+          <div class="account-row">
+            <strong id="accountName">Guest</strong>
+            <span id="accountLevel">Lv. 1</span>
+          </div>
+          <span id="accountTitle">Novice</span>
+          <span id="accountWallet">Not connected</span>
+          <span id="accountSessionBalance" data-i18n="main.account.sessionNotFunded">Session: not funded</span>
+        </div>
+      </button>
+
+      <div class="session-funding-overlay" id="sessionFundingOverlay" aria-hidden="true" hidden></div>
+      <section class="session-funding-panel" id="sessionFundingPanel" role="dialog" aria-modal="true" aria-labelledby="sessionFundingTitle" hidden>
+        <form id="sessionFundingForm">
+          <span class="session-funding-eyebrow" data-i18n="main.chainSession.eyebrow">Mining Session</span>
+          <h2 id="sessionFundingTitle" data-i18n="main.chainSession.title">Set mining session SOL</h2>
+          <p data-i18n="main.chainSession.body">Mining can create or expand Solana chunk storage accounts. This SOL is sent from your wallet to your browser session signer so mining can submit transactions without asking you to sign every block.</p>
+          <ul>
+            <li data-i18n="main.chainSession.pointStorage">The spending is Solana network cost: transaction fees and rent-exempt storage deposits for chunk PDAs.</li>
+            <li data-i18n="main.chainSession.pointProject">It is not paid to the NiceChunk project wallet, and the project cannot withdraw your session balance.</li>
+            <li data-i18n="main.chainSession.pointControl">Your main wallet only signs this setup or a later top-up; block mining is then signed by your temporary session key.</li>
+          </ul>
+          <label for="sessionFundingAmount">
+            <span data-i18n="main.chainSession.amountLabel">Session funding amount</span>
+            <input id="sessionFundingAmount" type="number" min="0.1" step="0.01" inputmode="decimal" value="0.1" />
+          </label>
+          <div class="session-funding-meta">
+            <span id="sessionFundingMinimum" data-i18n="main.chainSession.minimum">Minimum: 0.1 SOL</span>
+            <span id="sessionFundingCurrent" data-i18n="main.chainSession.currentUnknown">Current session balance: unknown</span>
+          </div>
+          <div class="session-wallet-apps" id="sessionWalletApps" hidden>
+            <p data-i18n="main.chainSession.mobileBody">Mobile browser signing requires opening this page inside a wallet app browser.</p>
+            <div class="session-wallet-app-links">
+              <a id="sessionOpenPhantom" href="#" rel="noreferrer" data-i18n="main.chainSession.openPhantom">Open in Phantom</a>
+              <a id="sessionOpenSolflare" href="#" rel="noreferrer" data-i18n="main.chainSession.openSolflare">Open in Solflare</a>
+              <a id="sessionOpenBackpack" href="#" rel="noreferrer" data-i18n="main.chainSession.openBackpack">Open in Backpack</a>
+            </div>
+          </div>
+          <div class="session-funding-actions">
+            <button type="button" id="sessionFundingCancel" data-i18n="main.chainSession.cancel">Cancel</button>
+            <button type="submit" data-i18n="main.chainSession.confirm">Confirm and continue mining</button>
+          </div>
+        </form>
+      </section>
+
+      <div class="profile-overlay" id="profileOverlay" aria-hidden="true" hidden></div>
+      <section class="profile-panel" id="profilePanel" role="dialog" aria-modal="true" aria-labelledby="profileTitle" hidden>
+        <h2 class="profile-panel-title" id="profileTitle" data-i18n="main.profile.title">Character Profile</h2>
+        <div class="profile-info">
+          <div class="profile-language-row">
+            <span data-i18n="common.language">Language</span>
+            <div data-i18n-language-menu></div>
+          </div>
+          <div class="profile-tabs" role="tablist" aria-label="Profile sections" data-i18n-aria-label="main.profile.tabs">
+            <button class="profile-tab active" type="button" role="tab" aria-selected="true" data-profile-tab="attributes" data-i18n="main.profile.attributesTab">Attributes</button>
+            <button class="profile-tab" type="button" role="tab" aria-selected="false" data-profile-tab="model" data-i18n="main.profile.modelTab">Model</button>
+          </div>
+          <div class="profile-attributes profile-tab-panel" data-profile-tab-panel="attributes">
+            <span class="profile-eyebrow" data-i18n="main.profile.eyebrow">Player Attributes</span>
+            <dl class="profile-details">
+              <div>
+                <dt data-i18n="main.profile.name">Name</dt>
+                <dd id="profileName">Guest</dd>
+              </div>
+              <div>
+                <dt data-i18n="main.profile.level">Level</dt>
+                <dd id="profileLevel">Lv. 1</dd>
+              </div>
+              <div>
+                <dt data-i18n="main.profile.titleLabel">Title</dt>
+                <dd id="profileTitleValue">Novice</dd>
+              </div>
+              <div>
+                <dt data-i18n="main.profile.wallet">Wallet</dt>
+                <dd id="profileWallet">Not connected</dd>
+              </div>
+              <div>
+                <dt data-i18n="main.profile.position">Position</dt>
+                <dd id="profilePosition">0, 0</dd>
+              </div>
+              <div>
+                <dt data-i18n="main.profile.chunks">Known chunks</dt>
+                <dd id="profileChunks">0</dd>
+              </div>
+              <div class="profile-backpack-row">
+                <dt data-i18n="main.profile.backpack">Equipped Backpack</dt>
+                <dd>
+                  <span id="profileBackpackStatus" data-i18n="main.profile.noBackpack">No backpack equipped</span>
+                  <button id="profileBackpackBuy" class="profile-backpack-buy" type="button" data-i18n="main.profile.buyBackpack">Buy Backpack</button>
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+        <div class="profile-model profile-tab-panel" data-profile-tab-panel="model" aria-label="Character model" data-i18n-aria-label="main.profile.model">
+          <canvas id="profileModel" width="360" height="420"></canvas>
+        </div>
+        <button class="profile-close" id="profileClose" type="button" aria-label="Close profile" data-i18n-aria-label="main.profile.close">×</button>
+        <button class="profile-logout" id="profileLogout" type="button" data-i18n="main.profile.logout">Exit</button>
+      </section>
+
+      <div class="hud" hidden>
+        <div class="stats">
+          <span id="position">0, 0</span>
+          <span id="chunks">0 chunks</span>
+          <span id="fps">0 FPS</span>
+          <button id="debugMining" class="debug-toggle" type="button" aria-pressed="false" data-i18n="main.debug" hidden>Debug</button>
+        </div>
+      </div>
+      <div class="minimap-panel" aria-label="Minimap" data-i18n-aria-label="main.minimap">
+        <div class="minimap-coordinate minimap-coordinate-world" id="minimapWorldCoord">0, 0</div>
+        <div class="minimap-coordinate minimap-coordinate-chunk" id="minimapChunkCoord">0, 0</div>
+        <canvas id="minimap" width="160" height="160"></canvas>
+      </div>
+      <div class="map-overlay" id="mapOverlay" aria-hidden="true">
+        <div class="map-modal" role="dialog" aria-label="Map" data-i18n-aria-label="main.map">
+          <div class="map-guardian-status" id="mapGuardianStatus" data-i18n="main.mapGuardian.resolving">Guardian: resolving...</div>
+          <canvas id="largeMinimap" width="512" height="512"></canvas>
+          <form class="map-teleport" id="mapTeleportForm">
+            <label>
+              <span data-i18n="main.mapTeleport.x">X</span>
+              <input id="mapTeleportX" type="number" step="0.1" inputmode="decimal" aria-label="World X" data-i18n-aria-label="main.mapTeleport.xLabel" />
+            </label>
+            <label>
+              <span data-i18n="main.mapTeleport.z">Z</span>
+              <input id="mapTeleportZ" type="number" step="0.1" inputmode="decimal" aria-label="World Z" data-i18n-aria-label="main.mapTeleport.zLabel" />
+            </label>
+            <button type="submit" data-i18n="main.mapTeleport.action">Teleport</button>
+            <span class="map-teleport-status" id="mapTeleportStatus" aria-live="polite"></span>
+          </form>
+        </div>
+      </div>
+      <div class="crosshair" aria-hidden="true"></div>
+      <input
+        class="chat-input"
+        id="chatInput"
+        type="text"
+        maxlength="80"
+        hidden
+        autocomplete="off"
+        aria-label="Chat message"
+        placeholder="Message"
+        data-i18n-aria-label="main.chat.input"
+        data-i18n-placeholder="main.chat.placeholder"
+      />
+      <div class="backpack-overlay" id="backpackOverlay" aria-hidden="true" hidden></div>
+      <section class="backpack-panel" id="backpackPanel" role="dialog" aria-modal="false" aria-labelledby="backpackTitle" hidden>
+        <div class="backpack-header">
+          <div>
+            <span class="backpack-eyebrow" data-i18n="main.backpack.eyebrow">Inventory Tool</span>
+            <h2 id="backpackTitle" data-i18n="main.backpack.title">Backpack</h2>
+          </div>
+          <div class="backpack-header-meta">
+            <span id="backpackCapacity">0/50</span>
+            <span id="backpackWeight">0 kg</span>
+            <span id="backpackWallet">DEV...1111</span>
+            <button class="backpack-close" id="backpackClose" type="button" aria-label="Close backpack" data-i18n-aria-label="main.backpack.close">×</button>
+          </div>
+        </div>
+        <div class="backpack-body">
+          <div class="backpack-grid" id="backpackGrid" aria-label="Backpack slots" data-i18n-aria-label="main.backpack.slots"></div>
+          <aside class="backpack-detail" id="backpackDetail" aria-live="polite"></aside>
+        </div>
+      </section>
+      <div class="hotbar" id="hotbar" aria-label="Hotbar" data-i18n-aria-label="main.hotbar"></div>
+      <div class="chain-event-log" id="chainEventLog" aria-label="Chain event log" data-i18n-aria-label="main.chainLog.aria" aria-live="polite"></div>
+      <div class="resource-debug-feed" id="resourceDebugFeed" aria-label="Resource simulation debug log" data-i18n-aria-label="resourceSimulator.debug.aria" hidden></div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

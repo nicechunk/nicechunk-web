@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090d0d" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=0.1.53" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=0.1.53" />
+    <link rel="shortcut icon" href="/favicon.ico?v=0.1.53" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=0.1.53" />
+    <link rel="manifest" href="/site.webmanifest?v=0.1.53" />
+    <title data-i18n="login.title">NICECHUNK Wallet Login</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="login-shell">
+      <canvas id="worldPreview" class="world-backdrop" width="1440" height="960" aria-hidden="true"></canvas>
+      <div class="backdrop-vignette" aria-hidden="true"></div>
+
+      <header class="login-topbar">
+        <a class="login-brand" href="/" aria-label="NiceChunk" data-i18n-aria-label="common.brand">
+          <img src="/media/nck.png" alt="" aria-hidden="true" />
+          <span data-i18n="common.brand">NICECHUNK</span>
+        </a>
+        <div class="language-control">
+          <div data-i18n-language-menu></div>
+        </div>
+      </header>
+
+      <div class="login-layout">
+        <section class="visual-pane" aria-hidden="true">
+          <div class="hero-logo-stage">
+            <video class="hero-logo-video" autoplay muted loop playsinline preload="auto" poster="/media/nck-hero-logo-v0149.png">
+              <source data-src="/media/nck-hero-logo-v0149.webm" type="video/webm" />
+            </video>
+            <canvas class="hero-logo-canvas" width="512" height="512"></canvas>
+            <img class="hero-logo-fallback" src="/media/nck-hero-logo-v0149.png" alt="" loading="eager" />
+          </div>
+          <div class="media-load-status" id="heroLoadStatus">
+            <strong id="heroLoadTitle" data-i18n="login.loading.stages.visual.title">Loading visual layer</strong>
+            <span id="heroLoadText" data-i18n="login.loading.stages.visual.body">Fetching hero video asset.</span>
+            <div class="load-track" aria-hidden="true">
+              <span id="heroLoadBar"></span>
+            </div>
+            <div class="load-meta">
+              <span id="heroLoadPercent">0%</span>
+              <span id="heroLoadBytes">Transferred 0 KB</span>
+            </div>
+          </div>
+          <div class="visual-title">
+            <span data-i18n="login.heroStatus">Live Engine Render</span>
+            <strong data-i18n="login.brandSubtitle">Voxel Universe</strong>
+          </div>
+        </section>
+
+        <section class="auth-pane" aria-labelledby="loginTitle" aria-describedby="statusLine">
+          <div class="auth-card">
+            <header class="brand-header">
+              <span class="auth-eyebrow" data-i18n="login.authEyebrow">Security Gateway</span>
+              <h1 id="loginTitle" data-i18n="login.authTitle">Wallet Access</h1>
+              <p data-i18n="login.authSubtitle">Enter NiceChunk Ecosystem</p>
+            </header>
+
+            <ol class="steps" aria-label="Login flow" data-i18n-aria-label="login.flowLabel">
+              <li class="step active" data-step="wallet">
+                <span data-i18n="login.steps.wallet">Connect Wallet</span>
+              </li>
+              <li class="step" data-step="profile">
+                <span data-i18n="login.steps.profile">Player Setup</span>
+              </li>
+              <li class="step" data-step="ready">
+                <span data-i18n="login.steps.ready">Ready</span>
+              </li>
+            </ol>
+
+            <section class="wallet-section" id="walletSection">
+              <div class="section-title">
+                <span></span>
+                <h2 data-i18n="login.section.wallet">Connect Wallet</h2>
+                <span></span>
+              </div>
+              <div class="wallet-list" id="walletList">
+                <div class="login-progress-card">
+                  <span class="progress-eyebrow" data-i18n="login.loading.stages.gateway.title">Initializing wallet gateway</span>
+                  <strong data-i18n="login.loading.stages.gateway.body">Preparing interface</strong>
+                  <div class="load-track" aria-hidden="true"><span></span></div>
+                  <div class="load-meta">
+                    <span>12%</span>
+                    <span data-i18n="login.loading.waitingForLanguage">Waiting for language data</span>
+                  </div>
+                </div>
+              </div>
+              <a class="install-link" id="installLink" href="https://phantom.app/download" rel="noreferrer" target="_blank">
+                <span data-i18n="login.installPhantom">Install Phantom</span>
+              </a>
+            </section>
+
+            <section class="profile-section hidden" id="profileSection">
+              <div class="section-title compact">
+                <h2 data-i18n="login.section.profile">Player Setup</h2>
+                <span></span>
+              </div>
+              <label class="name-field" for="usernameInput">
+                <span data-i18n="login.playerName">Player Name</span>
+                <input
+                  id="usernameInput"
+                  type="text"
+                  maxlength="18"
+                  autocomplete="nickname"
+                  placeholder="Enter a 3-18 character name"
+                  data-i18n-placeholder="login.playerNamePlaceholder"
+                />
+              </label>
+              <div class="address-chip" id="addressChip"></div>
+              <button class="primary-action" id="saveNameButton" type="button" data-i18n="login.saveName">Save Player Name</button>
+            </section>
+
+            <section class="ready-section hidden" id="readySection">
+              <div class="section-title compact">
+                <h2 data-i18n="login.section.ready">Enter World</h2>
+                <span></span>
+              </div>
+              <div class="player-summary">
+                <div>
+                  <span class="summary-label" data-i18n="login.player">Player</span>
+                  <strong id="summaryName">-</strong>
+                </div>
+                <div>
+                  <span class="summary-label" data-i18n="login.wallet">Wallet</span>
+                  <strong id="summaryAddress">-</strong>
+                </div>
+              </div>
+              <button class="primary-action" id="startButton" type="button" data-i18n="login.startGame">Start Game</button>
+              <button class="secondary-action" id="resetButton" type="button" data-i18n="login.resetLogin">Log In Again</button>
+            </section>
+
+            <div class="status-line" id="statusLine" role="status" data-i18n="login.status.checking">Checking for Solana wallets...</div>
+          </div>
+        </section>
+      </div>
+
+      <aside class="login-hud" aria-hidden="true">
+        <div>
+          <span data-i18n="login.hudNetwork">NETWORK</span>
+          <strong data-i18n="login.hudNetworkValue">SOLANA</strong>
+        </div>
+        <div>
+          <span data-i18n="login.hudBiome">BIOME</span>
+          <strong data-i18n="login.hudBiomeValue">EMERALD FOREST</strong>
+        </div>
+        <div>
+          <span data-i18n="login.hudWallet">WALLET</span>
+          <strong data-i18n="login.hudWalletValue">READY</strong>
+        </div>
+      </aside>
+    </main>
+
+    <div class="route-loading-overlay" id="routeLoadingOverlay" hidden>
+      <div class="route-loading-panel">
+        <span class="progress-eyebrow" data-i18n="login.loading.worldEyebrow">World Gateway</span>
+        <strong id="routeLoadTitle" data-i18n="login.loading.stages.route.title">Opening game client</strong>
+        <p id="routeLoadBody" data-i18n="login.loading.stages.route.body">Handing your wallet session to the world gateway.</p>
+        <div class="load-track" aria-hidden="true"><span id="routeLoadBar"></span></div>
+        <div class="load-meta">
+          <span id="routeLoadPercent">0%</span>
+          <span id="routeLoadBytes">Transferred 0 KB</span>
+        </div>
+        <small id="routeLoadText" data-i18n="login.loading.route">Opening game client</small>
+      </div>
+    </div>
+
+    <script type="module" src="./login.js"></script>
+  </body>
+</html>

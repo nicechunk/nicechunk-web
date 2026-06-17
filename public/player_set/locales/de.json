@@ -1,0 +1,76 @@
+{
+  "_meta": {
+    "language": "de",
+    "label": "German",
+    "version": "player-set-locale-de-523b4a48f5ab6213",
+    "contentHash": "523b4a48f5ab6213"
+  },
+  "common": {
+    "language": "Sprache",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "player": {
+    "title": "Nicechunk Spieler-Editor",
+    "appName": "Spieler-Editor",
+    "resetView": "Ansicht zurücksetzen",
+    "baseCharacter": "Basischarakter",
+    "baseCharacterMale": "Männlich",
+    "baseCharacterFemale": "Weiblich",
+    "baseCharacterMaleExplorer": "Männlicher Entdecker",
+    "baseCharacterMaleScout": "Männlicher Scout",
+    "baseCharacterFemalePonytail": "Abenteurerin mit Pferdeschwanz",
+    "baseCharacterFemaleEngineer": "Ingenieurin",
+    "characterCode": "Charaktercode",
+    "collapseCode": "Code einklappen",
+    "chainCharacterCode": "On-chain-Charaktercode",
+    "viewJson": "JSON anzeigen",
+    "viewChainData": "Chain-Daten anzeigen",
+    "characterParams": "Charakterparameter",
+    "addBox": "Block hinzufügen",
+    "selectPart": "Teil auswählen",
+    "name": "Name",
+    "color": "Farbe",
+    "position": "Position",
+    "scale": "Größe",
+    "rotation": "Rotation",
+    "faceTexture": "Flächentextur",
+    "textureSolid": "Einfarbig",
+    "texturePaint": "Textur malen",
+    "selectFace": "Fläche wählen",
+    "brush": "Pinsel",
+    "fillFace": "Fläche füllen",
+    "clearFace": "Fläche leeren",
+    "duplicatePart": "Teil duplizieren",
+    "deletePart": "Teil löschen",
+    "resetDefault": "Standard wiederherstellen",
+    "face": {
+      "front": "Vorne",
+      "back": "Hinten",
+      "left": "Links",
+      "right": "Rechts",
+      "top": "Oben",
+      "bottom": "Unten"
+    },
+    "axis": {
+      "x": "X",
+      "y": "Y",
+      "z": "Z",
+      "w": "B",
+      "h": "H",
+      "d": "T",
+      "rx": "RX",
+      "ry": "RY",
+      "rz": "RZ"
+    }
+  }
+}

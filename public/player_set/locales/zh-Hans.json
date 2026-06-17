@@ -1,0 +1,76 @@
+{
+  "_meta": {
+    "language": "zh-Hans",
+    "label": "Simplified Chinese",
+    "version": "player-set-locale-zh-Hans-f9c286ba125aa6a2",
+    "contentHash": "f9c286ba125aa6a2"
+  },
+  "common": {
+    "language": "语言",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "player": {
+    "title": "Nicechunk 角色设置",
+    "appName": "角色设置",
+    "resetView": "重置视角",
+    "baseCharacter": "基础角色",
+    "baseCharacterMale": "男性",
+    "baseCharacterFemale": "女性",
+    "baseCharacterMaleExplorer": "男性探险者",
+    "baseCharacterMaleScout": "男性斥候",
+    "baseCharacterFemalePonytail": "马尾女性",
+    "baseCharacterFemaleEngineer": "女性工程师",
+    "characterCode": "角色代码",
+    "collapseCode": "收起代码",
+    "chainCharacterCode": "链上角色代码",
+    "viewJson": "查看 JSON",
+    "viewChainData": "查看链数据",
+    "characterParams": "角色参数",
+    "addBox": "添加方块",
+    "selectPart": "选择部件",
+    "name": "名称",
+    "color": "颜色",
+    "position": "位置",
+    "scale": "尺寸",
+    "rotation": "旋转",
+    "faceTexture": "面纹理",
+    "textureSolid": "纯色",
+    "texturePaint": "绘制纹理",
+    "selectFace": "选择面",
+    "brush": "画笔",
+    "fillFace": "填充面",
+    "clearFace": "清空面",
+    "duplicatePart": "复制部件",
+    "deletePart": "删除部件",
+    "resetDefault": "恢复默认",
+    "face": {
+      "front": "前",
+      "back": "后",
+      "left": "左",
+      "right": "右",
+      "top": "上",
+      "bottom": "下"
+    },
+    "axis": {
+      "x": "X",
+      "y": "Y",
+      "z": "Z",
+      "w": "宽",
+      "h": "高",
+      "d": "深",
+      "rx": "RX",
+      "ry": "RY",
+      "rz": "RZ"
+    }
+  }
+}

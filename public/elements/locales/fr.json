@@ -1,0 +1,976 @@
+{
+  "_meta": {
+    "language": "fr",
+    "label": "French",
+    "version": "elements-locale-fr-f5ff3a4fdbdb78d4",
+    "contentHash": "f5ff3a4fdbdb78d4"
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "Langue",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    },
+    "comingSoon": "À venir"
+  },
+  "elements": {
+    "names": {
+      "H": "Hydrogène",
+      "He": "Hélium",
+      "Li": "Lithium",
+      "Be": "Béryllium",
+      "B": "Bore",
+      "C": "Carbone",
+      "N": "Azote",
+      "O": "Oxygène",
+      "F": "Fluor",
+      "Ne": "Néon",
+      "Na": "Sodium",
+      "Mg": "Magnésium",
+      "Al": "Aluminium",
+      "Si": "Silicium",
+      "P": "Phosphore",
+      "S": "Soufre",
+      "Cl": "Chlore",
+      "Ar": "Argon",
+      "K": "Potassium",
+      "Ca": "Calcium",
+      "Sc": "Scandium",
+      "Ti": "Titane",
+      "V": "Vanadium",
+      "Cr": "Chrome",
+      "Mn": "Manganèse",
+      "Fe": "Fer",
+      "Co": "Cobalt",
+      "Ni": "Nickel",
+      "Cu": "Cuivre",
+      "Zn": "Zinc",
+      "Ga": "Gallium",
+      "Ge": "Germanium",
+      "As": "Arsenic",
+      "Se": "Sélénium",
+      "Br": "Brome",
+      "Kr": "Krypton",
+      "Rb": "Rubidium",
+      "Sr": "Strontium",
+      "Y": "Yttrium",
+      "Zr": "Zirconium",
+      "Nb": "Niobium",
+      "Mo": "Molybdène",
+      "Tc": "Technétium",
+      "Ru": "Ruthénium",
+      "Rh": "Rhodium",
+      "Pd": "Palladium",
+      "Ag": "Argent",
+      "Cd": "Cadmium",
+      "In": "Indien",
+      "Sn": "Étain",
+      "Sb": "Antimoine",
+      "Te": "Terre",
+      "I": "Iode",
+      "Xe": "Xénon",
+      "Cs": "Césium",
+      "Ba": "Baryum",
+      "La": "Lanthane",
+      "Ce": "Cérium",
+      "Pr": "Praséodyme",
+      "Nd": "Néodyme",
+      "Pm": "Prométhium",
+      "Sm": "Samarie",
+      "Eu": "Europe",
+      "Gd": "Gadolinium",
+      "Tb": "Terbium",
+      "Dy": "Dysprosie",
+      "Ho": "Holmium",
+      "Er": "Erbium",
+      "Tm": "Thulium",
+      "Yb": "Ytterbium",
+      "Lu": "Paris",
+      "Hf": "Hafnia",
+      "Ta": "Tantale",
+      "W": "Tungstène",
+      "Re": "Rhénium",
+      "Os": "Osmium",
+      "Ir": "Iridium",
+      "Pt": "Platine",
+      "Au": "Or",
+      "Hg": "Mercure",
+      "Tl": "Thallium",
+      "Pb": "Plomb",
+      "Bi": "Bismuth",
+      "Po": "Polonius",
+      "At": "Astatine",
+      "Rn": "Radon",
+      "Fr": "France",
+      "Ra": "Rayon",
+      "Ac": "Actinium",
+      "Th": "Thorium",
+      "Pa": "Protactinium",
+      "U": "Uranium",
+      "Np": "Neptune",
+      "Pu": "Plutonium",
+      "Am": "des Amériques",
+      "Cm": "Tribunal",
+      "Bk": "Berkeley",
+      "Cf": "Californie",
+      "Es": "d'Einstein",
+      "Fm": "Fermius",
+      "Md": "Mendeleïev",
+      "No": "Nobélium",
+      "Lr": "Laurent",
+      "Rf": "de Rutherford",
+      "Db": "Dubnium",
+      "Sg": "Seaborgius",
+      "Bh": "Bohrius",
+      "Hs": "Hassius",
+      "Mt": "Meitnerius",
+      "Ds": "de Darmstadt",
+      "Rg": "Roentgenium",
+      "Cn": "Copernic",
+      "Nh": "Nihonium",
+      "Fl": "Flérovium",
+      "Mc": "de Moscou",
+      "Lv": "Livermore",
+      "Ts": "Tennessee",
+      "Og": "Oganesson"
+    },
+    "description": {
+      "H": {
+        "short": "L'hydrogène est une base de ressources non métalliques utilisée pour les piles à combustible, le stockage de l'hydrogène, la chimie de la vie, le propulseur de fusée et la synthèse organique dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'hydrogène doit être équilibré en tant que matériau non métallique : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "He": {
+        "short": "L'hélium est une base de ressources en gaz rares utilisée pour le refroidissement cryogénique, le confinement inerte, les ballons, les appareils de précision et les machines à basse température dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'hélium doit être équilibré en tant que gaz rare : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Li": {
+        "short": "Le lithium est une base de ressources en métaux alcalins utilisée pour les batteries, le stockage d'énergie léger, la chimie réactive et les cellules de puissance de haut niveau dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le lithium doit être équilibré en tant que matériau métallique alcalin : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Be": {
+        "short": "Le béryllium est une base de ressources en métaux alcalino-terreux utilisée pour les minéraux, les céramiques, les composés structurels, les alliages et les boucles minérales biologiques dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le béryllium doit être équilibré en tant que matériau métallique alcalino-terreux : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "B": {
+        "short": "Le bore est une base de ressources métalloïdes utilisée pour les semi-conducteurs, le verre, les cristaux de céramique, les pièces optiques et l'électronique de précision dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le bore doit être équilibré en tant que matériau métalloïde : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "C": {
+        "short": "Le carbone est une base de ressources non métalliques utilisée pour les chaînes organiques, la fibre de carbone, le carburant, le renforcement de l'acier, les conducteurs en graphite et les composites avancés dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le carbone doit être équilibré en tant que matériau non métallique : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "N": {
+        "short": "L'azote est une base de ressources non métalliques utilisée pour la chimie des engrais, les atmosphères inertes, les explosifs, le refroidissement et les boucles biologiques dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'azote doit être équilibré en tant que matériau non métallique : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "O": {
+        "short": "L'oxygène est une base de ressources non métalliques utilisée pour l'oxydation, le support de combustion, le maintien de la vie, la céramique, le verre et les minerais d'oxyde dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'oxygène doit être équilibré en tant que matériau non métallique : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "F": {
+        "short": "Le fluor est une base de ressources halogènes utilisée pour la gravure, le traitement chimique agressif, les sels à haut risque et les matériaux fluorés avancés dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le fluor doit être équilibré en tant que matériau halogène : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Ne": {
+        "short": "Le néon est une base de ressources de gaz rares utilisée pour l'éclairage au néon, les écrans plasma, les panneaux optiques et les chambres à gaz stables dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, Neon doit être équilibré en tant que matériau de gaz noble : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Na": {
+        "short": "Le sodium est une base de ressources en métaux alcalins utilisée pour les batteries, la chimie à haute réactivité, les cellules énergétiques et les itinéraires de stockage scellés dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le sodium doit être équilibré en tant que matériau métallique alcalin : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Mg": {
+        "short": "Le magnésium est une base de ressources en métaux alcalino-terreux utilisée pour les minéraux, les céramiques, les composés structurels, les alliages et les boucles minérales biologiques dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le magnésium doit être équilibré en tant que matériau métallique alcalino-terreux : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Al": {
+        "short": "L'aluminium est une base de ressources métalliques de post-transition utilisée pour la construction légère, les cadres conducteurs, les pièces aérospatiales et les coques résistantes à la corrosion dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'aluminium doit être équilibré en tant que matériau métallique de post-transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Si": {
+        "short": "Le silicium est une base de ressources métalloïdes utilisée pour les semi-conducteurs, le verre, les matériaux solaires, la chimie des roches et les systèmes cristallins programmables dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le silicium doit être équilibré en tant que matériau métalloïde : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "P": {
+        "short": "Le phosphore est une base de ressources non métalliques utilisée pour les matériaux vitaux, la chimie des gaz, les carburants, les céramiques, les engrais et les chaînes de réaction dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le phosphore doit être équilibré en tant que matériau non métallique : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "S": {
+        "short": "Le soufre est une base de ressources non métalliques utilisée pour les matériaux vitaux, la chimie des gaz, les carburants, les céramiques, les engrais et les chaînes de réaction dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le soufre doit être équilibré en tant que matériau non métallique : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Cl": {
+        "short": "Le chlore est une base de ressources halogènes utilisée pour la chimie corrosive, les sels, la gravure, les armes toxiques et les réactions industrielles à haut risque dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le chlore doit être équilibré en tant que matériau halogène : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Ar": {
+        "short": "L'argon est une base de ressources de gaz rares utilisée pour les atmosphères inertes, la protection contre le soudage, le traitement scellé et les lampes à plasma dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'argon doit être équilibré en tant que gaz noble : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "K": {
+        "short": "Le potassium est une base de ressources en métaux alcalins utilisée pour les batteries, la chimie à haute réactivité, les cellules énergétiques et les voies de stockage scellées dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le potassium doit être équilibré en tant que matériau métallique alcalin : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Ca": {
+        "short": "Le calcium est une base de ressources en métaux alcalino-terreux utilisée pour les minéraux, les céramiques, les composés structurels, les alliages et les boucles minérales biologiques dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le calcium doit être équilibré en tant que matériau métallique alcalino-terreux : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Sc": {
+        "short": "Le scandium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Scandium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Ti": {
+        "short": "Le titane est une base de ressources en métaux de transition utilisée pour les blindages légers, les outils à haute résistance, les structures aérospatiales et les machines avancées dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le titane doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "V": {
+        "short": "Le vanadium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le vanadium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Cr": {
+        "short": "Le chrome est une base de ressources en métaux de transition utilisée pour les alliages inoxydables, les placages résistants à la corrosion, les revêtements durs et les systèmes de pigments dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le chrome doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Mn": {
+        "short": "Le manganèse est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le manganèse doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Fe": {
+        "short": "Le fer est une base de ressources en métaux de transition utilisée pour la construction, les machines, les armes, les dispositifs magnétiques et la synthèse de l'acier dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le fer doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Co": {
+        "short": "Le cobalt est une base de ressources en métaux de transition utilisée pour les cathodes de batteries, les alliages forts, les pigments, les aimants et les outils de haute qualité dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le cobalt doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Ni": {
+        "short": "Le nickel est une ressource de métal de transition utilisée pour l'acier inoxydable, les batteries, les aimants, les alliages de blindage et les équipements catalytiques dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le nickel doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Cu": {
+        "short": "Le cuivre est une ressource de métal de transition utilisée pour le câblage, l'électronique, les moteurs, les blocs conducteurs et les alliages de cuivre dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le cuivre doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Zn": {
+        "short": "Le zinc est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le zinc doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Ga": {
+        "short": "Le gallium est une base de ressources métalliques post-transition utilisée pour l'électronique à faible point de fusion, les semi-conducteurs composés, les matériaux d'affichage et la logique inhabituelle du métal liquide dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le gallium doit être équilibré en tant que matériau métallique post-transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Ge": {
+        "short": "Le germanium est une base de ressources métalloïdes utilisée pour les plaquettes semi-conductrices, l'optique infrarouge, l'électronique de haut niveau et les recettes de cristaux dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le germanium doit être équilibré en tant que matériau métalloïde : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "As": {
+        "short": "L'arsenic est une base de ressources métalloïdes utilisée pour les semi-conducteurs, le verre, les cristaux de céramique, les pièces optiques et l'électronique de précision dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'arsenic doit être équilibré en tant que matériau métalloïde : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Se": {
+        "short": "Le sélénium est une base de ressources non métalliques utilisée pour les matériaux vitaux, la chimie des gaz, les carburants, les céramiques, les engrais et les chaînes de réaction dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le sélénium doit être équilibré en tant que matériau non métallique : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Br": {
+        "short": "Le brome est une base de ressources halogènes utilisée pour la chimie corrosive, les sels, la gravure, les armes toxiques et les réactions industrielles à haut risque dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le brome doit être équilibré en tant que matériau halogène : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Kr": {
+        "short": "Le Krypton est une base de ressources de gaz rares utilisée pour les atmosphères inertes, les systèmes cryogéniques, l'éclairage au plasma, l'optique et le traitement protégé dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Krypton doit être équilibré en tant que matériau de gaz noble : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Rb": {
+        "short": "Le rubidium est une base de ressources en métaux alcalins utilisée pour les batteries, la chimie à haute réactivité, les cellules énergétiques et les itinéraires de stockage scellés dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le rubidium doit être équilibré en tant que matériau métallique alcalin : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Sr": {
+        "short": "Le strontium est une base de ressources en métaux alcalino-terreux utilisée pour les minéraux, les céramiques, les composés structurels, les alliages et les boucles minérales biologiques dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le strontium doit être équilibré en tant que matériau métallique alcalino-terreux : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Y": {
+        "short": "L'yttrium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'yttrium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Zr": {
+        "short": "Le zirconium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le zirconium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Nb": {
+        "short": "Le niobium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le niobium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Mo": {
+        "short": "Le molybdène est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le molybdène doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Tc": {
+        "short": "Le technétium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le technétium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Ru": {
+        "short": "Le ruthénium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le ruthénium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Rh": {
+        "short": "Le rhodium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le rhodium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Pd": {
+        "short": "Le palladium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le palladium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Ag": {
+        "short": "L'argent est une base de ressources en métaux de transition utilisée pour la conductivité d'élite, les matériaux optiques, les systèmes antimicrobiens et les routes de ressources précieuses dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'argent doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Cd": {
+        "short": "Le cadmium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le cadmium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "In": {
+        "short": "L'indium est une base de ressources métalliques post-transition utilisée pour les films d'affichage, les interfaces tactiles, les systèmes de soudure et l'électronique spécialisée dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'Indium doit être équilibré en tant que matériau métallique post-transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Sn": {
+        "short": "L'étain est une base de ressources métalliques post-transition utilisée pour les alliages spéciaux, les métaux mous, les blindages, les recettes à faible point de fusion et les matériaux électroniques dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'étain doit être équilibré en tant que matériau métallique de post-transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Sb": {
+        "short": "L'antimoine est une base de ressources métalloïdes utilisée pour les semi-conducteurs, le verre, les cristaux de céramique, les pièces optiques et l'électronique de précision dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'antimoine doit être équilibré en tant que matériau métalloïde : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Te": {
+        "short": "Le tellure est une base de ressources métalloïdes utilisée pour les semi-conducteurs, le verre, les cristaux de céramique, les pièces optiques et l'électronique de précision dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Tellure doit être équilibré en tant que matériau métalloïde : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "I": {
+        "short": "L'iode est une base de ressources halogènes utilisée pour la chimie corrosive, les sels, la gravure, les armes toxiques et les réactions industrielles à haut risque dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'iode doit être équilibré en tant que matériau halogène : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Xe": {
+        "short": "Le xénon est une base de ressources en gaz rares utilisée pour les moteurs ioniques, les lampes flash, la chimie d'anesthésie et les systèmes optiques de haut niveau dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le xénon doit être équilibré en tant que gaz rare : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Cs": {
+        "short": "Le césium est une base de ressources en métaux alcalins utilisée pour les batteries, la chimie à haute réactivité, les cellules énergétiques et les itinéraires de stockage scellés dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le césium doit être équilibré en tant que matériau métallique alcalin : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Ba": {
+        "short": "Le baryum est une base de ressources en métaux alcalino-terreux utilisée pour les minéraux, les céramiques, les composés structurels, les alliages et les boucles minérales biologiques dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le baryum doit être équilibré en tant que matériau métallique alcalino-terreux : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "La": {
+        "short": "Le lanthane est une base de ressources de lanthanides utilisée pour les aimants de terres rares, les optiques, les lasers, les phosphores et l'électronique de haute technologie dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le lanthane doit être équilibré en tant que matériau de lanthanide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Ce": {
+        "short": "Le cérium est une base de ressources de lanthanides utilisée pour les aimants de terres rares, les optiques, les lasers, les phosphores et l'électronique de haute technologie dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le cérium doit être équilibré en tant que matériau lanthanide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Pr": {
+        "short": "Le praséodyme est une base de ressources de lanthanide utilisée pour les aimants de terres rares, les optiques, les lasers, les phosphores et l'électronique de haute technologie dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le praséodyme doit être équilibré en tant que matériau lanthanide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Nd": {
+        "short": "Le néodyme est une base de ressources de lanthanide utilisée pour les aimants permanents, les moteurs, les générateurs et les recettes technologiques des terres rares dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le néodyme doit être équilibré en tant que matériau lanthanide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Pm": {
+        "short": "Le prométhium est une base de ressources de lanthanides utilisée pour les aimants de terres rares, les optiques, les lasers, les phosphores et l'électronique de haute technologie dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Promethium doit être équilibré en tant que matériau de lanthanide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Sm": {
+        "short": "Le Samarium est une base de ressources de lanthanides utilisée pour les aimants de terres rares, les optiques, les lasers, les phosphores et l'électronique de haute technologie dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Samarium doit être équilibré en tant que matériau de lanthanide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Eu": {
+        "short": "Europium est une base de ressources de lanthanides utilisée pour les aimants de terres rares, les optiques, les lasers, les phosphores et l'électronique de haute technologie dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'Europium doit être équilibré en tant que matériau de lanthanide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Gd": {
+        "short": "Le gadolinium est une base de ressources de lanthanides utilisée pour les aimants de terres rares, les optiques, les lasers, les phosphores et l'électronique de haute technologie dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le gadolinium doit être équilibré en tant que matériau lanthanide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Tb": {
+        "short": "Le terbium est une base de ressources de lanthanides utilisée pour les aimants de terres rares, les optiques, les lasers, les phosphores et l'électronique de haute technologie dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Terbium doit être équilibré en tant que matériau de lanthanide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Dy": {
+        "short": "Le dysprosium est une base de ressources de lanthanides utilisée pour les aimants à haute température, les moteurs à terres rares et l'électronique d'élite dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Dysprosium doit être équilibré en tant que matériau de lanthanide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Ho": {
+        "short": "L'holmium est une base de ressources de lanthanides utilisée pour les aimants de terres rares, les optiques, les lasers, les phosphores et l'électronique de haute technologie dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'Holmium doit être équilibré en tant que matériau de lanthanide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Er": {
+        "short": "L'erbium est une base de ressources de lanthanides utilisée pour les aimants de terres rares, les optiques, les lasers, les phosphores et l'électronique de haute technologie dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'Erbium doit être équilibré en tant que matériau de lanthanide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Tm": {
+        "short": "Le thulium est une base de ressources de lanthanides utilisée pour les aimants de terres rares, les optiques, les lasers, les phosphores et l'électronique de haute technologie dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Thulium doit être équilibré en tant que matériau de lanthanide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Yb": {
+        "short": "L'ytterbium est une base de ressources de lanthanides utilisée pour les aimants de terres rares, les optiques, les lasers, les phosphores et l'électronique de haute technologie dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'Ytterbium doit être équilibré en tant que matériau de lanthanide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Lu": {
+        "short": "Le lutétium est une base de ressources de lanthanides utilisée pour les aimants de terres rares, les optiques, les lasers, les phosphores et l'électronique de haute technologie dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le lutétium doit être équilibré en tant que matériau lanthanide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Hf": {
+        "short": "L'hafnium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'hafnium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Ta": {
+        "short": "Le tantale est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le tantale doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "W": {
+        "short": "Le tungstène est une base de ressources en métaux de transition utilisée pour les outils à haute température, les armures dures, les armes lourdes, les fours et les machines résistantes à la chaleur dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le tungstène doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Re": {
+        "short": "Le rhénium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le rhénium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Os": {
+        "short": "L'osmium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'osmium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Ir": {
+        "short": "L'iridium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'Iridium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Pt": {
+        "short": "Le platine est une base de ressources en métaux de transition utilisée pour les catalyseurs, les piles à combustible, les appareils de précision, les alliages nobles et les recettes technologiques de grande valeur dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le platine doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Au": {
+        "short": "L'or est une base de ressources en métaux de transition utilisée pour l'électronique de grande valeur, les contacts de précision, la décoration, les actifs de trésorerie et les objets de collection de qualité protocolaire dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'or doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Hg": {
+        "short": "Le mercure est une base de ressources en métaux de transition utilisée pour les dispositifs à métaux liquides, les capteurs, les pièges toxiques et les équipements spéciaux scellés dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, Mercure doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Tl": {
+        "short": "Le thallium est une base de ressources métalliques post-transition utilisée pour les alliages spéciaux, les métaux mous, les blindages, les recettes à faible point de fusion et les matériaux électroniques dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le thallium doit être équilibré en tant que matériau métallique post-transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Pb": {
+        "short": "Le plomb est une base de ressources métalliques post-transition utilisée pour la protection contre les radiations, les poids denses, les alliages à faible point de fusion et les blocs de confinement dangereux dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le plomb doit être équilibré en tant que matériau métallique post-transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Bi": {
+        "short": "Le bismuth est une base de ressources métalliques post-transition utilisée pour les alliages spéciaux, les métaux mous, les blindages, les recettes à faible point de fusion et les matériaux électroniques dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le bismuth doit être équilibré en tant que matériau métallique post-transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Po": {
+        "short": "Le polonium est une ressource métalloïde utilisée pour les semi-conducteurs, le verre, les cristaux de céramique, les pièces optiques et l'électronique de précision dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le polonium doit être équilibré en tant que matériau métalloïde : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "At": {
+        "short": "L'astatine est une base de ressources halogènes utilisée pour la chimie corrosive, les sels, la gravure, les armes toxiques et les réactions industrielles à haut risque dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'astatine doit être équilibrée en tant que matériau halogène : elle définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Rn": {
+        "short": "Le radon est une base de ressources de gaz rares utilisée pour les pièges à gaz radioactifs, la détection de désintégration et la recherche scellée dangereuse dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le radon doit être équilibré en tant que gaz noble : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Fr": {
+        "short": "Le francium est une base de ressources en métaux alcalins utilisée pour les batteries, la chimie à haute réactivité, les cellules énergétiques et les itinéraires de stockage scellés dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Francium doit être équilibré en tant que matériau métallique alcalin : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Ra": {
+        "short": "Le radium est une base de ressources en métaux alcalino-terreux utilisée pour les minéraux, les céramiques, les composés structurels, les alliages et les boucles minérales biologiques dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le radium doit être équilibré en tant que matériau métallique alcalino-terreux : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Ac": {
+        "short": "Actinium est une base de ressources d'actinides utilisée pour l'énergie nucléaire, les systèmes de rayonnement, la recherche blindée et les matières dangereuses de fin de partie dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, Actinium doit être équilibré en tant que matériau actinide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir de chunks ensemencé."
+      },
+      "Th": {
+        "short": "Le thorium est une base de ressources d'actinides utilisée pour l'énergie nucléaire, les systèmes de rayonnement, la recherche blindée et les matières dangereuses de fin de partie dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le thorium doit être équilibré en tant que matériau actinide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Pa": {
+        "short": "Protactinium est une base de ressources d'actinides utilisée pour l'énergie nucléaire, les systèmes de rayonnement, la recherche blindée et les matières dangereuses de fin de partie dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Protactinium doit être équilibré en tant que matériau actinide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "U": {
+        "short": "L'uranium est une base de ressources d'actinides utilisée pour le combustible nucléaire, les systèmes de rayonnement, l'énergie finale et les chaînes industrielles protégées dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'uranium doit être équilibré en tant que matériau actinide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Np": {
+        "short": "Neptunium est une base de ressources d'actinides utilisée pour l'énergie nucléaire, les systèmes de rayonnement, la recherche blindée et les matières dangereuses de fin de partie dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, Neptunium doit être équilibré en tant que matériau actinide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir de chunks ensemencé."
+      },
+      "Pu": {
+        "short": "Le plutonium est une base de ressources d'actinides utilisée pour le combustible des réacteurs, la recherche sur les armes interdites, les boucles d'énergie à haut risque et les matériaux de protocole de fin de partie dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le plutonium doit être équilibré en tant que matériau actinide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Am": {
+        "short": "L'Americium est une fondation de ressources d'actinides utilisée pour l'énergie nucléaire, les systèmes de rayonnement, la recherche blindée et les matières dangereuses de fin de partie dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'Americium doit être équilibré en tant que matériau actinide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Cm": {
+        "short": "Curium est une base de ressources d'actinides utilisée pour l'énergie nucléaire, les systèmes de rayonnement, la recherche blindée et les matières dangereuses de fin de partie dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Curium doit être équilibré en tant que matériau actinide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Bk": {
+        "short": "Berkelium est une base de ressources d'actinides utilisée pour l'énergie nucléaire, les systèmes de rayonnement, la recherche blindée et les matières dangereuses de fin de partie dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, Berkelium doit être équilibré en tant que matériau actinide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Cf": {
+        "short": "Californium est une base de ressources d'actinides utilisée pour l'énergie nucléaire, les systèmes de rayonnement, la recherche blindée et les matières dangereuses de fin de partie dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Californium doit être équilibré en tant que matériau actinide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Es": {
+        "short": "L'Einsteinium est une base de ressources d'actinides utilisée pour l'énergie nucléaire, les systèmes de rayonnement, la recherche blindée et les matières dangereuses de fin de partie dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, l'Einsteinium doit être équilibré en tant que matériau actinide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Fm": {
+        "short": "Fermium est une base de ressources d'actinides utilisée pour l'énergie nucléaire, les systèmes de rayonnement, la recherche blindée et les matières dangereuses de fin de partie dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, Fermium doit être équilibré en tant que matériau actinide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir de chunks ensemencé."
+      },
+      "Md": {
+        "short": "Mendelevium est une fondation de ressources d'actinides utilisée pour l'énergie nucléaire, les systèmes de rayonnement, la recherche blindée et les matières dangereuses de fin de partie dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, Mendelevium doit être équilibré en tant que matériau actinide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir de chunks ensemencé."
+      },
+      "No": {
+        "short": "Nobelium est une base de ressources d'actinides utilisée pour l'énergie nucléaire, les systèmes de rayonnement, la recherche blindée et les matières dangereuses de fin de partie dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Nobelium doit être équilibré en tant que matériau actinide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Lr": {
+        "short": "Lawrencium est une fondation de ressources d'actinides utilisée pour l'énergie nucléaire, les systèmes de rayonnement, la recherche blindée et les matières dangereuses de fin de partie dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, Lawrencium doit être équilibré en tant que matériau actinide : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir de chunks ensemencé."
+      },
+      "Rf": {
+        "short": "Le rutherfordium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Rutherfordium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Db": {
+        "short": "Le Dubnium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Dubnium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Sg": {
+        "short": "Seaborgium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Seaborgium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Bh": {
+        "short": "Bohrium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Bohrium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Hs": {
+        "short": "Hassium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Hassium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Mt": {
+        "short": "Meitnerium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Meitnerium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Ds": {
+        "short": "Le Darmstadtium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Darmstadtium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Rg": {
+        "short": "Roentgenium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Roentgenium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Cn": {
+        "short": "Copernicium est une base de ressources en métaux de transition utilisée pour les machines industrielles, les armes, les outils, les alliages, les pièces structurelles et les systèmes conducteurs dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Copernicium doit être équilibré en tant que matériau de métal de transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Nh": {
+        "short": "Le nihonium est une base de ressources métalliques post-transition utilisée pour les alliages spéciaux, les métaux mous, les blindages, les recettes à faible point de fusion et les matériaux électroniques dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Nihonium doit être équilibré en tant que matériau métallique post-transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Fl": {
+        "short": "Flerovium est une base de ressources métalliques post-transition utilisée pour les alliages spéciaux, les métaux mous, les blindages, les recettes à faible point de fusion et les matériaux électroniques dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Flerovium doit être équilibré en tant que matériau métallique post-transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Mc": {
+        "short": "Moscovium est une base de ressources métalliques post-transition utilisée pour les alliages spéciaux, les métaux mous, les blindages, les recettes à faible point de fusion et les matériaux électroniques dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, le Moscovium doit être équilibré en tant que matériau métallique post-transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Lv": {
+        "short": "Livermorium est une base de ressources métalliques post-transition utilisée pour les alliages spéciaux, les métaux mous, les blindages, les recettes à faible point de fusion et les matériaux électroniques dans le vocabulaire des matériaux et du forgeage de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, Livermorium doit être équilibré en tant que matériau métallique post-transition : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Ts": {
+        "short": "Tennessine est une base de ressources halogènes utilisée pour la chimie corrosive, les sels, la gravure, les armes toxiques et les réactions industrielles à haut risque dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, la Tennessine doit être équilibrée en tant que matériau halogène : elle définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      },
+      "Og": {
+        "short": "Oganesson est une fondation de ressources en gaz rares utilisée pour les fragments instables des règles du monde de fin de jeu, les anomalies radioactives et les matériaux de protocole expérimental dans le vocabulaire des matériaux et de la forge de NiceChunk.",
+        "gameplayRole": "Dans NiceChunk, Oganesson doit être équilibré en tant que matériau de gaz noble : il définit les itinéraires de traitement, les règles d'affinité, les gènes de ressources visuelles et le risque ou la valeur auquel le joueur est confronté lorsqu'il est découvert à partir du chunks ensemencé."
+      }
+    },
+    "process": {
+      "alloy": "Alliage",
+      "battery_grade_refine": "Affiner la qualité de la batterie",
+      "capture": "Capturer",
+      "cast": "Casting",
+      "compress": "Compresser",
+      "corrosion_resistant_container": "Conteneur résistant à la corrosion",
+      "crush": "Écraser",
+      "cryogenic_separate": "Cryogénique Séparé",
+      "crystallize": "Cristalliser",
+      "distill": "Distiller",
+      "electrolyze": "Électrolyser",
+      "forge": "Forge",
+      "high_temp_sinter": "Frittage haute température",
+      "inert_atmosphere_process": "Processus en atmosphère inerte",
+      "ionize": "Ioniser",
+      "isotope_separate": "Isotope séparé",
+      "mine": "Le mien",
+      "nuclear_refine": "Nucléaire Raffiner",
+      "oxidize": "Oxyder",
+      "precision_machine": "Machine de Précision",
+      "quench": "Éteindre",
+      "radiation_shielding": "Radioprotection",
+      "reduce": "Réduire",
+      "refine": "Affiner",
+      "sealed_capture": "Capture scellée",
+      "semiconductor_refine": "Affiner les semi-conducteurs",
+      "sinter": "Frittage",
+      "smelt": "Éperlan",
+      "temper": "Caractère",
+      "vacuum_refine": "Affiner sous vide",
+      "wash": "Lavage"
+    },
+    "visual": {
+      "ceramic_crystal": "Cristal Céramique",
+      "copper_metal": "Cuivre Métal",
+      "corrosive_gas": "Gaz corrosif",
+      "faceted_crystal": "Cristal à facettes",
+      "gold_metal": "Métal Doré",
+      "graphite_carbon": "Graphite Carbone",
+      "liquid_metal": "Métal Liquide",
+      "matte_solid": "Mat Solide",
+      "metalloid_crystal": "Cristal métalloïde",
+      "neon_glow_gas": "Gaz luminescent au néon",
+      "noble_gas": "Gaz noble",
+      "plasma_gas": "Gaz plasma",
+      "radioactive_silver_metal": "Métal argenté radioactif",
+      "rough_crystal": "Cristal brut",
+      "silver_metal": "Métal Argenté",
+      "silvery_metal": "Métal Argenté",
+      "solid_powder": "Poudre solide",
+      "toxic_halogen": "Halogène Toxique",
+      "uranium_silver_metal": "Uranium Argent Métal",
+      "volatile_liquid": "Liquide Volatil",
+      "white_silvery_metal": "Métal Argenté Blanc",
+      "yellow_crystal": "Cristal Jaune",
+      "acid_gas": "Gaz acide",
+      "brushed_metal": "Métal Brossé",
+      "clear_gas": "Gaz clair",
+      "corrosive_liquid": "Liquide corrosif",
+      "fresh_cut_metal": "Métal fraîchement coupé",
+      "glowing_rare_earth_veins": "Veines lumineuses de terres rares",
+      "halide_crystal": "Cristal aux halogénures",
+      "mineral_metal": "Métal Minéral",
+      "powdered_solid": "Solide en poudre",
+      "radioactive_veins": "Veines radioactives",
+      "soft_brushed_metal": "Métal brossé doux",
+      "crystal_ore": "Minerai de cristal",
+      "metallic_ore_veins": "Veines de minerai métallique",
+      "mineral_ore": "Minerai minéral",
+      "powder_veins": "Veines poudrières",
+      "radioactive_cracked_ore": "Minerai radioactif craqué",
+      "rare_earth_veins": "Veines de terres rares",
+      "reactive_salt_ore": "Minerai de sel réactif",
+      "sealed_gas_pocket": "Poche à gaz scellée",
+      "soft_metal_ore": "Minerai de métal mou",
+      "corrosive_vapor": "Vapeurs corrosives",
+      "glowing_dust": "Poussière rougeoyante",
+      "mineral_sparks": "Étincelles minérales",
+      "radioactive_sparks": "Etincelles radioactives",
+      "soft_glow_mist": "Brume Douce Éclatante",
+      "pulse": "Pouls",
+      "slow_flow": "Débit lent",
+      "subtle_shimmer": "Chatoiement subtil",
+      "unstable_flicker": "Scintillement instable"
+    },
+    "nav": {
+      "aria": "Navigation principale",
+      "home": "Accueil",
+      "roadbook": "Carnet de route",
+      "world": "Monde",
+      "worldRules": "Règles mondiales",
+      "economy": "Économie",
+      "fairness": "Équité",
+      "resources": "Ressources",
+      "elements": "Éléments",
+      "proofOfFrontier": "Preuve",
+      "docs": "Documents",
+      "enterWorld": "Entrez dans le monde",
+      "guardians": "Gardiens"
+    },
+    "page": {
+      "title": "Éléments NiceChunk",
+      "shortTitle": "Éléments",
+      "navAria": "Navigation dans les éléments",
+      "enterWorld": "Entrez dans le monde",
+      "resourceRules": "Règles des ressources",
+      "eyebrow": "FONDATION DE RESSOURCES ÉLÉMENTAIRES",
+      "heading": "Les éléments deviennent des ressources.",
+      "body": "NiceChunk utilise les 118 éléments chimiques réels comme vocabulaire ouvert pour les ressources futures, la forge, les visuels matériels et les règles de jeu vérifiables.",
+      "statsAria": "Statut du modèle d'élément",
+      "tableEyebrow": "Interface périodique",
+      "tableTitle": "Carte des éléments ouverts",
+      "filterAria": "Filtres de catégories d'éléments",
+      "filterAll": "Tous",
+      "protocolAria": "Notes du protocole de l'élément",
+      "stat": {
+        "discovered": "Éléments découverts",
+        "elements": "Éléments chimiques réels",
+        "categories": "Catégories de ressources",
+        "natural": "Candidats naturels",
+        "versioned": "Statut de l'ensemble de règles"
+      },
+      "protocol": {
+        "resourceGene": {
+          "title": "Gène ressource",
+          "body": "Chaque élément peut devenir une identité matérielle déterministe pour les largages extraits, les recettes de bloc et les futures métadonnées des actifs."
+        },
+        "forgingInput": {
+          "title": "Entrée de forge",
+          "body": "Les caractéristiques atomiques et physiques correspondent aux futurs niveaux de traitement, aux besoins en chaleur, aux risques et à la logique de la station."
+        },
+        "visualGene": {
+          "title": "Gène visuel",
+          "body": "Les traits de couleur, de métal, de rugosité, d'émission, de veine, de grain et de fissure peuvent piloter le rendu du matériau voxel."
+        },
+        "verification": {
+          "title": "Vérification ouverte",
+          "body": "Le tableau est conçu comme des données de règles publiques afin que les joueurs puissent inspecter la façon dont les ressources sont classées avant les engagements de la chaîne."
+        }
+      },
+      "tableAria": "Tableau périodique",
+      "legendAria": "Catégories d'éléments",
+      "detailsEyebrow": "DÉTAILS DE L'ÉLÉMENT",
+      "detailsTitle": "Cliquez sur un élément pour inspecter ses propriétés et ses exigences de traitement.",
+      "detailsBody": "Les exigences ci-dessous sont des espaces réservés destinés au jeu. Ils définissent comment chaque catégorie d'éléments peut ensuite devenir des ressources minières, des matériaux traités et de nouveaux blocs constructibles.",
+      "detailListAria": "Liste détaillée des éléments",
+      "elementAria": "{name}, symbole {symbol}, numéro atomique {atomicNumber}",
+      "detailHeading": "{name} ({symbol})",
+      "summary": "{name} est l'élément {atomicNumber}. Dans NiceChunk, il représente une ressource {category} qui peut être découverte à partir de la destruction de blocs et utilisée ultérieurement dans les règles de construction de blocs.",
+      "blockValue": "Bloc {block}",
+      "processingTitle": "Exigences de traitement",
+      "constructionHint": "{name} peut être utilisé comme composant de base {category} lorsque les futures recettes définissent de nouveaux blocs constructibles."
+    },
+    "detail": {
+      "back": "Retour aux éléments",
+      "documentTitle": "Fichier d'éléments NiceChunk | {symbol} {name}",
+      "missingTitle": "Fichier d'éléments NiceChunk | {symbol}",
+      "fileEyebrow": "FICHIER ÉLÉMENT",
+      "missingZh": "Les données détaillées de l'élément n'ont pas encore été ajoutées.",
+      "missingEn": "Les données détaillées de l'élément n'ont pas encore été ajoutées.",
+      "yes": "Oui",
+      "no": "Non",
+      "notAvailable": "Inconnu",
+      "sections": {
+        "identity": "Identité",
+        "atomic": "Attributs atomiques",
+        "physical": "Attributs physiques",
+        "chemical": "Attributs chimiques",
+        "game": "Attributs du jeu",
+        "processing": "Attributs de traitement",
+        "affinity": "Attributs d'affinité",
+        "visualGene": "Gène visuel",
+        "description": "Descriptif"
+      },
+      "field": {
+        "id": "ID de l'élément",
+        "atomicNumber": "Numéro atomique",
+        "symbol": "Symbole",
+        "name": "Nom",
+        "category": "Catégorie d'élément",
+        "period": "Période",
+        "group": "Groupe",
+        "block": "Bloquer",
+        "standardState": "Etat standard",
+        "naturalOccurrence": "Apparition naturelle",
+        "atomicMass": "Masse atomique",
+        "atomicRadiusPm": "Rayon atomique",
+        "covalentRadiusPm": "Rayon covalent",
+        "electronConfig": "Configuration électronique",
+        "valenceElectrons": "Électrons de Valence",
+        "commonOxidationStates": "États d'oxydation courants",
+        "maxOxidationState": "État d'oxydation maximum",
+        "minOxidationState": "État d'oxydation minimum",
+        "densityKgM3": "Densité",
+        "referenceDimensions": "Dimensions de référence",
+        "referenceMassKg": "Masse de référence",
+        "meltingPointC": "Point de fusion",
+        "boilingPointC": "Point d'ébullition",
+        "hardness": "Dureté",
+        "toughness": "Robustesse",
+        "ductility": "Ductilité",
+        "brittleness": "Fragilité",
+        "electricalConductivity": "Conductivité électrique",
+        "thermalConductivity": "Conductivité thermique",
+        "heatResistance": "Résistance à la chaleur",
+        "magnetism": "Magnétisme",
+        "transparencyTendency": "Tendance à la transparence",
+        "electronegativity": "Electronégativité",
+        "reactivity": "Réactivité",
+        "stability": "Stabilité",
+        "oxidationTendency": "Tendance à l'oxydation",
+        "corrosiveness": "Corrosivité",
+        "toxicity": "Toxicité",
+        "radioactivity": "Radioactivité",
+        "flammability": "Inflammabilité",
+        "explosiveTendency": "Tendance explosive",
+        "acidBaseTendency": "Tendance acide/base",
+        "rarity": "Rareté",
+        "baseValue": "Valeur de base",
+        "miningDifficulty": "Difficulté minière",
+        "refiningDifficulty": "Difficulté de raffinage",
+        "processingDifficulty": "Difficulté de traitement",
+        "industrialValue": "Valeur industrielle",
+        "weaponValue": "Valeur de l'arme",
+        "technologyValue": "Valeur technologique",
+        "buildingValue": "Créer de la valeur",
+        "energyValue": "Valeur énergétique",
+        "biologicalValue": "Valeur biologique",
+        "hazardLevel": "Niveau de danger",
+        "requiredTemperatureC": "Température requise",
+        "minFurnaceTier": "Niveau minimum du four",
+        "minToolTier": "Niveau d'outil minimum",
+        "requiredFuelTier": "Niveau de carburant requis",
+        "oxygenSensitive": "Sensible à l'oxygène",
+        "waterSensitive": "Sensible à l'eau",
+        "requiresInertAtmosphere": "Nécessite une atmosphère inerte",
+        "forgeable": "Forgeable",
+        "castable": "Castable",
+        "crystallizable": "Cristallisable",
+        "alloyable": "Alliable",
+        "preferredProcesses": "Processus préférés",
+        "risk": {
+          "oxidation": "Risque d'oxydation",
+          "explosion": "Risque d'explosion",
+          "vaporization": "Risque de vaporisation",
+          "contamination": "Risque de contamination",
+          "brittleness": "Risque de fragilité"
+        },
+        "metalAffinity": "Affinité avec le métal",
+        "alloyAffinity": "Affinité alliage",
+        "oxygenAffinity": "Affinité pour l'oxygène",
+        "carbonAffinity": "Affinité Carbone",
+        "hydrogenAffinity": "Affinité hydrogène",
+        "siliconAffinity": "Affinité Silicium",
+        "sulfurAffinity": "Affinité avec le soufre",
+        "halogenAffinity": "Affinité halogène",
+        "crystalAffinity": "Affinité Cristal",
+        "ceramicAffinity": "Affinité Céramique",
+        "organicAffinity": "Affinité Organique",
+        "gasAffinity": "Affinité avec le gaz",
+        "energyAffinity": "Affinité énergétique",
+        "magneticMaterialAffinity": "Affinité avec les matériaux magnétiques",
+        "structuralMaterialAffinity": "Affinité avec les matériaux de structure",
+        "opticalMaterialAffinity": "Affinité avec les matériaux optiques",
+        "electronicMaterialAffinity": "Affinité matérielle électronique",
+        "baseColor": "Couleur de base",
+        "secondaryColor": "Couleur secondaire",
+        "oxidizedColor": "Couleur oxydée",
+        "darkStateColor": "Couleur de l'état sombre",
+        "emissionColor": "Couleur d'émission",
+        "materialLook": "Aspect matière",
+        "textureType": "Type de texture",
+        "oreTextureType": "Type de texture du minerai",
+        "metallic": "Métallique",
+        "roughness": "Rugosité",
+        "transparency": "Transparence",
+        "emissionStrength": "Force d'émission",
+        "grain": "Céréales",
+        "scratchDensity": "Densité des rayures",
+        "veinDensity": "Densité veineuse",
+        "crackDensity": "Densité des fissures",
+        "oxidationPattern": "Modèle d'oxydation",
+        "particleEffect": "Effet particule",
+        "animationEffect": "Effet d'animation"
+      }
+    },
+    "category": {
+      "nonmetal": "Non métallique",
+      "noble_gas": "Gaz rares",
+      "alkali_metal": "Métal alcalin",
+      "alkaline_earth_metal": "Métal alcalino-terreux",
+      "metalloid": "Métalloïde",
+      "halogen": "Halogène",
+      "post_transition_metal": "Métal post-transition",
+      "transition_metal": "Métal de Transition",
+      "lanthanide": "Lanthanide",
+      "actinide": "Actinide",
+      "unknown_properties": "Propriétés inconnues"
+    },
+    "state": {
+      "solid": "Solide",
+      "liquid": "Liquide",
+      "gas": "Gaz",
+      "unknown": "Inconnu"
+    },
+    "phase": {
+      "solid": "Solide",
+      "liquid": "Liquide",
+      "gas": "Gaz",
+      "unknown": "Inconnu"
+    },
+    "property": {
+      "atomicNumber": "Numéro atomique",
+      "symbol": "Symbole",
+      "atomicMass": "Masse atomique",
+      "category": "Catégorie",
+      "phase": "Etat",
+      "group": "Groupe",
+      "period": "Période",
+      "block": "Bloc électronique"
+    },
+    "processing": {
+      "tier": "Niveau de traitement",
+      "tierValue": "Niveau {tier}",
+      "station": {
+        "separator": "Séparateur",
+        "cryogenicTrap": "Piège cryogénique",
+        "stabilizer": "Stabilisateur",
+        "kiln": "Four",
+        "refiner": "Raffineur",
+        "sealedReactor": "Réacteur scellé",
+        "smelter": "Fonderie",
+        "alloyForge": "Forge en alliage",
+        "magneticSeparator": "Séparateur magnétique",
+        "shieldedReactor": "Réacteur blindé"
+      },
+      "heat": {
+        "low": "Feu doux",
+        "medium": "Chaleur moyenne",
+        "high": "Chaleur élevée",
+        "extreme": "Chaleur extrême"
+      },
+      "binder": {
+        "none": "Pas de classeur",
+        "pressureCell": "Cellule de pression",
+        "sealedCapsule": "Capsule scellée",
+        "flux": "Flux",
+        "silicateMatrix": "Matrice Silicatée",
+        "saltMatrix": "Matrice de Sel",
+        "ingotMold": "Lingotière",
+        "carbonFlux": "Flux de carbone",
+        "rareEarthFlux": "Flux de terres rares",
+        "containmentCore": "Noyau de confinement"
+      }
+    }
+  }
+}

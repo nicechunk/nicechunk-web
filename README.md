@@ -12,6 +12,14 @@ The web client sits at the intersection of rendering, wallet identity, determini
 
 The code is intentionally split into feature pages and shared runtime modules so a developer can iterate on gameplay without editing contract documentation or service deployment code.
 
+## Runtime Composition
+
+![Browser runtime composition](docs/diagrams/browser-runtime-composition.svg)
+
+The web repository is the integration layer, not the final authority for every system it touches. It coordinates wallet session state, versioned i18n, RPC configuration, chain account reads, deterministic world generation, Guardian realtime messages, Three.js rendering, hotbar and backpack state, marketplace UI, NCM tools, and product pages.
+
+That makes `src/main.js` a composition point. It should wire stable modules together, surface loading and failure states clearly, and keep protocol decisions in the program, SDK, worldgen, Guardian, and asset-format repositories where they can be reviewed independently.
+
 ## System Principles
 
 - Game first: the first screen should lead users into a functioning world, not just a marketing page.

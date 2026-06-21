@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">Browser runtime composition</title>
+  <desc id="desc">A diagram showing how the NiceChunk browser client composes session state, i18n, chain configuration, world rendering, Guardian realtime traffic, inventory, market, and feature pages.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071018"/>
+      <stop offset="1" stop-color="#15120d"/>
+    </linearGradient>
+    <style>
+      .label{font:800 12px Inter,ui-sans-serif,system-ui,sans-serif;letter-spacing:.16em;fill:#90ff1a}
+      .title{font:850 42px Inter,ui-sans-serif,system-ui,sans-serif;fill:#f3f8ff}
+      .copy{font:500 17px Inter,ui-sans-serif,system-ui,sans-serif;fill:#b8c7d4}
+      .layer{fill:rgba(255,255,255,.06);stroke:rgba(255,255,255,.16);stroke-width:1.2;rx:18}
+      .head{font:800 18px Inter,ui-sans-serif,system-ui,sans-serif;fill:#f3f8ff}
+      .small{font:600 13px Inter,ui-sans-serif,system-ui,sans-serif;fill:#bdd0df}
+      .mono{font:750 13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:#f7d98f}
+    </style>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <circle cx="1030" cy="120" r="260" fill="#83ff00" opacity=".08"/>
+  <circle cx="220" cy="610" r="280" fill="#00c2ff" opacity=".08"/>
+  <text x="70" y="78" class="label">BROWSER CLIENT</text>
+  <text x="70" y="132" class="title">The web repo is the product integration layer.</text>
+  <text x="70" y="168" class="copy">It composes wallet session, chain reads, deterministic worldgen, Guardian realtime traffic, inventory, and tools into one browser runtime.</text>
+
+  <rect x="100" y="236" width="1080" height="88" class="layer"/>
+  <text x="132" y="286" class="head">Entry pages</text>
+  <text x="576" y="286" class="small">home, login, play, tools, roadmap, player setup</text>
+
+  <rect x="156" y="366" width="968" height="96" class="layer"/>
+  <text x="188" y="420" class="head">Runtime services</text>
+  <text x="380" y="402" class="small">i18n and versioned locale cache</text>
+  <text x="380" y="430" class="small">game session, wallet redirect, RPC configuration, loading stages</text>
+
+  <rect x="214" y="504" width="852" height="104" class="layer"/>
+  <text x="246" y="562" class="head">Game composition</text>
+  <text x="456" y="542" class="small">Three.js world renderer and avatar</text>
+  <text x="456" y="570" class="small">chain sync, Guardian client, hotbar, backpack, market, resource simulation</text>
+
+  <g transform="translate(344 244)">
+    <rect width="54" height="54" rx="10" fill="#14251b" stroke="#90ff1a"/>
+    <rect x="74" width="54" height="54" rx="10" fill="#102236" stroke="#8fdcff"/>
+    <rect x="148" width="54" height="54" rx="10" fill="#2a1f0f" stroke="#f7d98f"/>
+  </g>
+  <text x="468" y="650" class="mono">src/main.js is the integration point, not the protocol boundary.</text>
+</svg>

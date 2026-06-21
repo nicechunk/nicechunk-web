@@ -108,6 +108,26 @@ const backpackClose = document.querySelector("#backpackClose");
 const backpackCapacity = document.querySelector("#backpackCapacity");
 const backpackWeight = document.querySelector("#backpackWeight");
 const backpackWallet = document.querySelector("#backpackWallet");
+const marketPhone = document.querySelector("#marketPhone");
+const marketOverlay = document.querySelector("#marketOverlay");
+const marketPanel = document.querySelector("#marketPanel");
+const marketClose = document.querySelector("#marketClose");
+const marketTabs = document.querySelectorAll("[data-market-tab]");
+const marketTabPanels = document.querySelectorAll("[data-market-tab-panel]");
+const marketWallet = document.querySelector("#marketWallet");
+const marketBackpack = document.querySelector("#marketBackpack");
+const marketSearch = document.querySelector("#marketSearch");
+const marketCategoryButtons = document.querySelectorAll("[data-market-category]");
+const marketListingGrid = document.querySelector("#marketListingGrid");
+const marketInventoryGrid = document.querySelector("#marketInventoryGrid");
+const marketListingForm = document.querySelector("#marketListingForm");
+const marketListingCategory = document.querySelector("#marketListingCategory");
+const marketListingCurrency = document.querySelector("#marketListingCurrency");
+const marketListingPrice = document.querySelector("#marketListingPrice");
+const marketCreateListing = document.querySelector("#marketCreateListing");
+const marketSelectedItem = document.querySelector("#marketSelectedItem");
+const marketFormStatus = document.querySelector("#marketFormStatus");
+const marketOrdersGrid = document.querySelector("#marketOrdersGrid");
 const minimapPanel = document.querySelector(".minimap-panel");
 const minimapCanvas = document.querySelector("#minimap");
 const minimapContext = minimapCanvas.getContext("2d", { willReadFrequently: true });
@@ -612,6 +632,62 @@ const hotbarActions = {
     if (placeHeldPlant(hit, item.type)) consumeSelectedStack();
   },
 };
+const marketListingStorageKey = "nicechunk.marketListings.mvp.v1";
+const marketCategories = ["all", "raw", "equipment", "building", "vegetation", "clothing"];
+const marketSampleListings = [
+  {
+    id: "sample-iron",
+    seller: "NPC",
+    nameKey: "main.market.sampleIron",
+    metaKey: "main.market.sampleIronMeta",
+    category: "raw",
+    currency: "NCK",
+    price: "18.50",
+    iconType: "resource",
+    source: "sample",
+  },
+  {
+    id: "sample-pickaxe",
+    seller: "NPC",
+    nameKey: "main.market.samplePickaxe",
+    metaKey: "main.market.samplePickaxeMeta",
+    category: "equipment",
+    currency: "NCK",
+    price: "42.00",
+    iconType: "equipment",
+    source: "sample",
+  },
+  {
+    id: "sample-brick",
+    seller: "NPC",
+    nameKey: "main.market.sampleBrick",
+    metaKey: "main.market.sampleBrickMeta",
+    category: "building",
+    currency: "NCK",
+    price: "6.25",
+    iconType: "building",
+    source: "sample",
+  },
+  {
+    id: "sample-cloak",
+    seller: "NPC",
+    nameKey: "main.market.sampleCloak",
+    metaKey: "main.market.sampleCloakMeta",
+    category: "vegetation",
+    currency: "NCK",
+    price: "3.20",
+    iconType: "resource",
+    source: "sample",
+  },
+];
+let marketSelectedCategory = "all";
+let marketSelectedListingItem = null;
+let marketListingSubmitting = false;
+let marketBuyingListingId = null;
+let marketChainListings = [];
+let marketChainListingsLoading = false;
+let marketChainListingsLoadedAt = 0;
+let marketChainListingsError = null;
 
 const playerPositionStorageKey = "nicechunk.playerPosition.v1";
 const currentSession = getGameSession();
@@ -889,11 +965,37 @@ backpackPanel?.addEventListener("pointermove", handleBackpackPointerMove);
 backpackPanel?.addEventListener("pointerup", handleBackpackPointerUp);
 backpackPanel?.addEventListener("pointercancel", handleBackpackPointerCancel);
 backpackPanel?.addEventListener("dragstart", (event) => event.preventDefault());
+marketPhone?.addEventListener("click", openMarketPanel);
+marketPhone?.addEventListener("pointerdown", (event) => event.stopPropagation());
+marketPhone?.addEventListener("pointerup", (event) => event.stopPropagation());
+marketOverlay?.addEventListener("pointerdown", (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  closeMarketPanel();
+});
+marketClose?.addEventListener("click", closeMarketPanel);
+marketPanel?.addEventListener("pointerdown", (event) => event.stopPropagation());
+marketTabs.forEach((tab) => {
+  tab.addEventListener("click", () => selectMarketTab(tab.dataset.marketTab || "browse"));
+});
+marketCategoryButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const category = button.dataset.marketCategory || "all";
+    marketSelectedCategory = marketCategories.includes(category) ? category : "all";
+    updateMarketPanel();
+  });
+});
+marketSearch?.addEventListener("input", updateMarketPanel);
+marketListingPrice?.addEventListener("input", updateMarketListingDraft);
+marketListingCategory?.addEventListener("change", updateMarketListingDraft);
+marketListingCurrency?.addEventListener("change", updateMarketListingDraft);
+marketListingForm?.addEventListener("submit", handleCreateMarketListing);
 window.addEventListener("keydown", (event) => {
   if (event.target === chatInput) return;
   if (event.key !== "Escape") return;
   closeBackpackPanel();
   closeProfilePanel();
+  closeMarketPanel();
 });
 
 let dragging = false;
@@ -1084,7 +1186,7 @@ function createProfilePreview() {
 }
 
 function isInteractivePointerTarget(target) {
-  return target instanceof Element && Boolean(target.closest("button, input, select, textarea, a, .backpack-panel, .backpack-overlay, .profile-panel, .profile-overlay, .rpc-config-panel, .session-funding-panel, .session-funding-overlay"));
+  return target instanceof Element && Boolean(target.closest("button, input, select, textarea, a, .market-panel, .market-overlay, .market-phone, .backpack-panel, .backpack-overlay, .profile-panel, .profile-overlay, .rpc-config-panel, .session-funding-panel, .session-funding-overlay"));
 }
 
 function isTextEntryTarget(target) {
@@ -1320,6 +1422,7 @@ async function refreshEquippedBackpack({ force = false } = {}) {
     syncEquippedBackpackSlot();
     renderHotbar();
     if (backpackPanel && !backpackPanel.hidden) renderBackpackPanel();
+    if (marketPanel && !marketPanel.hidden) updateMarketPanel();
     updateProfileBackpackDetails();
     return equippedBackpackStatus;
   } catch (error) {
@@ -1328,6 +1431,7 @@ async function refreshEquippedBackpack({ force = false } = {}) {
   } finally {
     equippedBackpackLoading = false;
     updateProfileBackpackDetails();
+    if (marketPanel && !marketPanel.hidden) updateMarketPanel();
   }
 }
 
@@ -1654,6 +1758,553 @@ function closeBackpackPanel() {
   backpackPanel.setAttribute("aria-hidden", "true");
   backpackOverlay.setAttribute("aria-hidden", "true");
   document.body.classList.remove("backpack-open");
+}
+
+function openMarketPanel() {
+  if (!marketPanel || !marketOverlay) return;
+  marketPanel.hidden = false;
+  marketOverlay.hidden = false;
+  marketPanel.setAttribute("aria-hidden", "false");
+  marketOverlay.setAttribute("aria-hidden", "false");
+  selectMarketTab(marketPanel.dataset.activeMarketTab || "browse");
+  updateMarketPanel();
+  void refreshMarketChainListings({ force: performance.now() - marketChainListingsLoadedAt > 15000 });
+}
+
+function closeMarketPanel() {
+  if (!marketPanel || !marketOverlay) return;
+  marketPanel.hidden = true;
+  marketOverlay.hidden = true;
+  marketPanel.setAttribute("aria-hidden", "true");
+  marketOverlay.setAttribute("aria-hidden", "true");
+}
+
+function selectMarketTab(tabName) {
+  const selected = ["browse", "sell", "orders"].includes(tabName) ? tabName : "browse";
+  if (marketPanel) marketPanel.dataset.activeMarketTab = selected;
+  marketTabs.forEach((tab) => {
+    const active = tab.dataset.marketTab === selected;
+    tab.classList.toggle("active", active);
+    tab.setAttribute("aria-selected", String(active));
+  });
+  marketTabPanels.forEach((panel) => {
+    const active = panel.dataset.marketTabPanel === selected;
+    panel.classList.toggle("active", active);
+    panel.hidden = !active;
+  });
+  updateMarketPanel();
+}
+
+function updateMarketPanel() {
+  updateMarketCategoryButtons();
+  if (marketWallet) {
+    marketWallet.textContent = currentSession.walletAddress
+      ? formatWalletAddress(currentSession.walletAddress)
+      : gameText("main.account.notConnected", "Not connected");
+    marketWallet.title = currentSession.walletAddress ?? "";
+  }
+  if (marketBackpack) {
+    const backpack = equippedBackpackStatus?.backpack ?? null;
+    marketBackpack.textContent = backpack
+      ? gameText("main.market.backpackCount", "{count}/{capacity}", {
+          count: backpack.itemCount ?? 0,
+          capacity: backpack.capacity ?? backpackSlotTotal,
+        })
+      : gameText("main.profile.noBackpack", "No backpack equipped");
+  }
+  renderMarketListings();
+  renderMarketInventory();
+  renderMarketOrders();
+  updateMarketListingDraft();
+  if (marketPanel && !marketPanel.hidden) {
+    void refreshMarketChainListings({ force: performance.now() - marketChainListingsLoadedAt > 30000 });
+  }
+}
+
+function updateMarketCategoryButtons() {
+  marketCategoryButtons.forEach((button) => {
+    button.classList.toggle("active", button.dataset.marketCategory === marketSelectedCategory);
+  });
+}
+
+function renderMarketListings() {
+  if (!marketListingGrid) return;
+  const listings = filterMarketListings([...marketSampleListings, ...loadMergedMarketListings()]);
+  if (!listings.length) {
+    marketListingGrid.replaceChildren(createMarketEmptyState(
+      marketChainListingsLoading
+        ? gameText("main.market.loadingListings", "Loading listings...")
+        : gameText("main.market.noListings", "No listings match"),
+      marketChainListingsError
+        ? gameText("main.market.chainListingLoadFailed", "On-chain listings are temporarily unavailable.")
+        : gameText("main.market.noListingsMeta", "Try another category or search term."),
+    ));
+    return;
+  }
+  marketListingGrid.replaceChildren(...listings.map((listing) => createMarketListingCard(listing, { order: false })));
+}
+
+function renderMarketOrders() {
+  if (!marketOrdersGrid) return;
+  const orders = loadMarketOrderListings();
+  if (!orders.length) {
+    marketOrdersGrid.replaceChildren(createMarketEmptyState(
+      gameText("main.market.noOrders", "No active orders"),
+      gameText("main.market.noOrdersMeta", "Wallet orders will appear here."),
+    ));
+    return;
+  }
+  marketOrdersGrid.replaceChildren(...orders.map((listing) => createMarketListingCard(listing, { order: true })));
+}
+
+function renderMarketInventory() {
+  if (!marketInventoryGrid) return;
+  const items = collectMarketSelectableItems();
+  if (!items.length) {
+    marketInventoryGrid.replaceChildren(createMarketEmptyState(
+      gameText("main.market.noInventoryItems", "No listable items"),
+      gameText("main.market.noInventoryItemsMeta", "Equip a backpack or keep tools in your hotbar to create listings."),
+    ));
+    return;
+  }
+  marketInventoryGrid.replaceChildren(...items.map(createMarketInventoryItemButton));
+}
+
+function filterMarketListings(listings) {
+  const query = String(marketSearch?.value ?? "").trim().toLowerCase();
+  return listings.filter((listing) => {
+    if (marketSelectedCategory !== "all" && listing.category !== marketSelectedCategory) return false;
+    if (!query) return true;
+    return [
+      marketListingName(listing),
+      marketListingMeta(listing),
+      marketCategoryLabel(listing.category),
+      listing.currency,
+      listing.price,
+    ].join(" ").toLowerCase().includes(query);
+  });
+}
+
+function createMarketListingCard(listing, { order = false } = {}) {
+  const card = document.createElement("article");
+  card.className = "market-listing-card";
+  card.dataset.category = listing.category;
+  const icon = document.createElement("div");
+  icon.className = `market-listing-icon ${marketListingIconType(listing)}`;
+  icon.setAttribute("aria-hidden", "true");
+  const copy = document.createElement("div");
+  const title = document.createElement("strong");
+  title.textContent = marketListingName(listing);
+  const meta = document.createElement("span");
+  meta.textContent = `${marketCategoryLabel(listing.category)} · ${marketListingMeta(listing)}`;
+  copy.append(title, meta);
+  const price = document.createElement("b");
+  price.textContent = `${listing.price} ${listing.currency}`;
+  const action = document.createElement("button");
+  action.type = "button";
+  action.textContent = order ? gameText("main.market.cancelListing", "Cancel") : gameText("main.market.buy", "Buy");
+  if (order) {
+    action.addEventListener("click", () => handleCancelMarketListing(listing, action));
+  } else if (listing.listing && listing.seller) {
+    action.disabled = marketBuyingListingId === listing.id;
+    action.textContent = action.disabled ? gameText("main.market.buyPending", "Buying...") : gameText("main.market.buy", "Buy");
+    action.addEventListener("click", () => handleBuyMarketListing(listing, action));
+  } else {
+    action.disabled = true;
+    action.title = gameText("main.market.sampleListing", "Sample listing");
+  }
+  card.append(icon, copy, price, action);
+  return card;
+}
+
+function createMarketInventoryItemButton(item) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "market-inventory-item";
+  button.classList.toggle("selected", marketSelectedListingItem?.id === item.id);
+  button.dataset.itemId = item.id;
+  const icon = document.createElement("span");
+  icon.className = `market-listing-icon ${item.iconType}`;
+  icon.setAttribute("aria-hidden", "true");
+  const copy = document.createElement("span");
+  const title = document.createElement("strong");
+  title.textContent = item.name;
+  const meta = document.createElement("small");
+  meta.textContent = `${marketCategoryLabel(item.category)} · ${item.meta}`;
+  copy.append(title, meta);
+  button.append(icon, copy);
+  button.addEventListener("click", () => {
+    marketSelectedListingItem = item;
+    if (marketListingCategory) marketListingCategory.value = item.category;
+    updateMarketListingDraft();
+    renderMarketInventory();
+  });
+  return button;
+}
+
+function createMarketEmptyState(title, body) {
+  const empty = document.createElement("div");
+  empty.className = "market-empty-state";
+  const titleEl = document.createElement("strong");
+  titleEl.textContent = title;
+  const bodyEl = document.createElement("span");
+  bodyEl.textContent = body;
+  empty.append(titleEl, bodyEl);
+  return empty;
+}
+
+function updateMarketListingDraft() {
+  if (marketSelectedItem) {
+    marketSelectedItem.textContent = marketSelectedListingItem?.name ?? gameText("main.market.noSelection", "No item selected");
+  }
+  const price = Number(marketListingPrice?.value);
+  if (marketCreateListing) {
+    marketCreateListing.disabled = marketListingSubmitting || !marketSelectedListingItem || !Number.isFinite(price) || price <= 0;
+  }
+}
+
+async function handleCreateMarketListing(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  if (marketListingSubmitting) return;
+  updateMarketListingDraft();
+  const price = Number(marketListingPrice?.value);
+  if (!marketSelectedListingItem || !Number.isFinite(price) || price <= 0) {
+    if (marketFormStatus) marketFormStatus.textContent = gameText("main.market.invalidListing", "Select an item and enter a valid price.");
+    return;
+  }
+  marketListingSubmitting = true;
+  if (marketFormStatus) marketFormStatus.textContent = gameText("main.market.listingPending", "Confirm the transaction to create this listing on-chain.");
+  updateMarketListingDraft();
+  try {
+    const chainModule = await loadNicechunkChainModule();
+    const category = marketListingCategory?.value || marketSelectedListingItem.category;
+    const currency = marketListingCurrency?.value || "NCK";
+    const result = await chainModule.createMarketListingOnChain({
+      item: marketSelectedListingItem,
+      category,
+      currency,
+      price: marketListingPrice?.value ?? price,
+      quantity: marketSelectedListingItem.quantity ?? 1,
+    });
+    if (!result?.submitted) {
+      if (marketFormStatus) {
+        marketFormStatus.textContent = gameText("main.market.listingFailed", "Listing transaction failed: {reason}", {
+          reason: chainSubmitReasonLabel(result?.reason),
+        });
+      }
+      return;
+    }
+    const listing = {
+      id: `chain-${result.listingId}`,
+      seller: result.seller || currentSession.walletAddress || "local",
+      listing: result.listing,
+      listingId: result.listingId,
+      signature: result.signature,
+      programId: result.programId,
+      name: marketSelectedListingItem.name,
+      meta: marketSelectedListingItem.meta,
+      category,
+      currency,
+      price: formatMarketPrice(price),
+      priceBaseUnits: result.priceBaseUnits,
+      iconType: marketSelectedListingItem.iconType,
+      source: marketSelectedListingItem.source,
+      sourceItemId: marketSelectedListingItem.id,
+      createdAt: Date.now(),
+    };
+    saveMarketListings([listing, ...loadMarketListings()]);
+    marketSelectedListingItem = null;
+    if (marketListingPrice) marketListingPrice.value = "";
+    if (marketFormStatus) {
+      marketFormStatus.textContent = gameText("main.market.listingCreated", "Listing created on-chain: {signature}", {
+        signature: shortSignature(result.signature),
+      });
+    }
+    selectMarketTab("orders");
+  } catch (error) {
+    console.warn("Failed to create market listing", error);
+    if (marketFormStatus) {
+      marketFormStatus.textContent = gameText("main.market.listingFailed", "Listing transaction failed: {reason}", {
+        reason: readableChainError(error),
+      });
+    }
+  } finally {
+    marketListingSubmitting = false;
+    updateMarketPanel();
+  }
+}
+
+async function handleCancelMarketListing(listing, action) {
+  if (!listing?.id) return;
+  if (!listing.listing && !listing.listingId) {
+    removeMarketListing(listing.id);
+    updateMarketPanel();
+    return;
+  }
+  action.disabled = true;
+  action.textContent = gameText("main.market.cancelPending", "Canceling...");
+  try {
+    const chainModule = await loadNicechunkChainModule();
+    const result = await chainModule.cancelMarketListingOnChain({
+      listing: listing.listing,
+      listingId: listing.listingId,
+    });
+    if (!result?.submitted) {
+      if (marketFormStatus) {
+        marketFormStatus.textContent = gameText("main.market.cancelFailed", "Cancel transaction failed: {reason}", {
+          reason: chainSubmitReasonLabel(result?.reason),
+        });
+      }
+      action.disabled = false;
+      action.textContent = gameText("main.market.cancelListing", "Cancel");
+      return;
+    }
+    removeMarketListing(listing.id);
+    updateMarketPanel();
+  } catch (error) {
+    console.warn("Failed to cancel market listing", error);
+    if (marketFormStatus) {
+      marketFormStatus.textContent = gameText("main.market.cancelFailed", "Cancel transaction failed: {reason}", {
+        reason: readableChainError(error),
+      });
+    }
+    action.disabled = false;
+    action.textContent = gameText("main.market.cancelListing", "Cancel");
+  }
+}
+
+async function handleBuyMarketListing(listing, action) {
+  if (!listing?.id || marketBuyingListingId) return;
+  marketBuyingListingId = listing.id;
+  action.disabled = true;
+  action.textContent = gameText("main.market.buyPending", "Buying...");
+  try {
+    const chainModule = await loadNicechunkChainModule();
+    const result = await chainModule.buyMarketListingOnChain({ listing });
+    if (!result?.submitted) {
+      if (marketFormStatus) {
+        marketFormStatus.textContent = gameText("main.market.buyFailed", "Buy transaction failed: {reason}", {
+          reason: chainSubmitReasonLabel(result?.reason),
+        });
+      }
+      action.disabled = false;
+      action.textContent = gameText("main.market.buy", "Buy");
+      return;
+    }
+    removeMarketListing(listing.id);
+    if (marketFormStatus) {
+      marketFormStatus.textContent = gameText("main.market.buyCreated", "Purchase confirmed on-chain: {signature}", {
+        signature: shortSignature(result.signature),
+      });
+    }
+    updateMarketPanel();
+  } catch (error) {
+    console.warn("Failed to buy market listing", error);
+    if (marketFormStatus) {
+      marketFormStatus.textContent = gameText("main.market.buyFailed", "Buy transaction failed: {reason}", {
+        reason: readableChainError(error),
+      });
+    }
+    action.disabled = false;
+    action.textContent = gameText("main.market.buy", "Buy");
+  } finally {
+    marketBuyingListingId = null;
+    updateMarketPanel();
+  }
+}
+
+function collectMarketSelectableItems() {
+  const items = [];
+  const listedSourceIds = new Set(loadMarketListings().map((listing) => listing.sourceItemId).filter(Boolean));
+  const backpack = equippedBackpackStatus?.backpack ?? null;
+  createBackpackSlotsFromChain(backpack).forEach((slot, index) => {
+    if (!slot) return;
+    const id = `backpack-${index}-${slot.record?.worldX ?? 0}-${slot.record?.worldY ?? 0}-${slot.record?.worldZ ?? 0}`;
+    if (listedSourceIds.has(id)) return;
+    items.push({
+      id,
+      slotIndex: index,
+      source: "backpack",
+      name: slot.meta?.name ?? gameText("main.backpack.coordinateResource", "Coordinate Resource"),
+      meta: slot.meta?.source ?? gameText("main.backpack.unknownSource", "Unknown source"),
+      category: marketCategoryForBackpackSlot(slot),
+      iconType: marketIconTypeForCategory(marketCategoryForBackpackSlot(slot)),
+      slot,
+    });
+  });
+  hotbarSlots.forEach((slot, index) => {
+    if (!slot) return;
+    const item = hotbarItems[slot.itemId];
+    if (!item || item.action === "openBackpack") return;
+    const id = `hotbar-${index}-${slot.itemId}`;
+    if (listedSourceIds.has(id)) return;
+    const category = marketCategoryForHotbarItem(slot, item);
+    items.push({
+      id,
+      slotIndex: index,
+      source: "hotbar",
+      name: marketHotbarItemName(slot, item),
+      meta: gameText("main.market.hotbarSlotMeta", "Hotbar slot {slot}", { slot: index + 1 }),
+      category,
+      iconType: marketIconTypeForCategory(category),
+      slot,
+    });
+  });
+  return items;
+}
+
+function marketCategoryForBackpackSlot(slot) {
+  const key = slot?.atlasKey || slot?.blockType || "";
+  if (["oakLeaf", "oakLog", "leaf", "leaves", "log", "wood", "tree", "grassPlant", "bush"].includes(key)) return "vegetation";
+  if (["stone", "deepStone", "sand", "sandstone", "gravel", "clay", "dirt", "mud", "dryDirt", "basalt", "ash"].includes(key)) return "building";
+  return "raw";
+}
+
+function marketCategoryForHotbarItem(slot, item) {
+  if (item.kind === "tool" || item.kind === "forged" || item.action === "mine") return "equipment";
+  if (item.kind === "plant") return "vegetation";
+  if (item.kind === "block") return "building";
+  return "raw";
+}
+
+function marketHotbarItemName(slot, item) {
+  if (item.kind === "forged" && slot?.code) return gameText("main.item.forged_item", "Forged Item");
+  return t(item.labelKey);
+}
+
+function marketListingName(listing) {
+  return listing.nameKey ? t(listing.nameKey) : listing.name;
+}
+
+function marketListingMeta(listing) {
+  return listing.metaKey ? t(listing.metaKey) : listing.meta;
+}
+
+function marketListingIconType(listing) {
+  return listing.iconType || marketIconTypeForCategory(listing.category);
+}
+
+function marketIconTypeForCategory(category) {
+  if (category === "equipment") return "equipment";
+  if (category === "building") return "building";
+  if (category === "clothing") return "clothing";
+  return "resource";
+}
+
+function marketCategoryLabel(category) {
+  const key = {
+    raw: "main.market.categoryRaw",
+    equipment: "main.market.categoryEquipment",
+    building: "main.market.categoryBuilding",
+    vegetation: "main.market.categoryVegetation",
+    clothing: "main.market.categoryClothing",
+  }[category] ?? "main.market.categoryAll";
+  return t(key);
+}
+
+function marketSourceLabel(source) {
+  if (source === "hotbar") return gameText("main.market.sourceHotbar", "Hotbar");
+  return gameText("main.market.sourceBackpack", "Backpack");
+}
+
+async function refreshMarketChainListings({ force = false } = {}) {
+  if (marketChainListingsLoading) return;
+  const now = performance.now();
+  if (!force && now - marketChainListingsLoadedAt < 30000) return;
+  marketChainListingsLoading = true;
+  marketChainListingsError = null;
+  try {
+    const chainModule = await loadNicechunkChainModule();
+    const listings = await chainModule.fetchMarketListingsOnChain();
+    marketChainListings = Array.isArray(listings) ? listings : [];
+    marketChainListingsLoadedAt = performance.now();
+  } catch (error) {
+    console.warn("Failed to load market listings", error);
+    marketChainListingsError = error;
+  } finally {
+    marketChainListingsLoading = false;
+    if (marketPanel && !marketPanel.hidden) {
+      renderMarketListings();
+      renderMarketOrders();
+      renderMarketInventory();
+    }
+  }
+}
+
+function loadMergedMarketListings() {
+  const localListings = loadMarketListings();
+  const localByPda = new Map(localListings.filter((listing) => listing.listing).map((listing) => [listing.listing, listing]));
+  const chainListings = marketChainListings
+    .filter((listing) => listing?.stateLabel === "active")
+    .map((listing) => normalizeChainMarketListing(listing, localByPda.get(listing.listing)));
+  const chainPdas = new Set(chainListings.map((listing) => listing.listing).filter(Boolean));
+  return [
+    ...chainListings,
+    ...localListings.filter((listing) => !listing.listing || !chainPdas.has(listing.listing)),
+  ];
+}
+
+function loadMarketOrderListings() {
+  const wallet = currentSession.walletAddress;
+  return loadMergedMarketListings().filter((listing) => {
+    if (!wallet) return Boolean(listing.sourceItemId);
+    return listing.seller === wallet || Boolean(listing.sourceItemId);
+  });
+}
+
+function normalizeChainMarketListing(listing, localListing = null) {
+  const source = listing.source || localListing?.source || "backpack";
+  const sourceIndex = Number.isFinite(Number(listing.sourceIndex)) ? Number(listing.sourceIndex) : 0;
+  const category = listing.category || localListing?.category || "raw";
+  return {
+    id: `chain-${listing.listing}`,
+    seller: listing.seller,
+    listing: listing.listing,
+    listingId: listing.listingId,
+    signature: localListing?.signature,
+    programId: listing.programId || localListing?.programId,
+    name: localListing?.name || gameText("main.market.chainListingName", "On-chain Resource Listing"),
+    meta: localListing?.meta || gameText("main.market.chainListingMeta", "{source} slot {slot}", {
+      source: marketSourceLabel(source),
+      slot: sourceIndex + 1,
+    }),
+    category,
+    currency: listing.currency || localListing?.currency || "NCK",
+    price: listing.price || localListing?.price || "0",
+    priceBaseUnits: listing.priceBaseUnits || localListing?.priceBaseUnits,
+    iconType: localListing?.iconType || marketIconTypeForCategory(category),
+    source,
+    sourceIndex,
+    sourceItemId: localListing?.sourceItemId,
+    stateLabel: listing.stateLabel,
+    buyer: listing.buyer,
+    createdAt: Number(listing.createdAt || 0) * 1000 || localListing?.createdAt || Date.now(),
+  };
+}
+
+function loadMarketListings() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(marketListingStorageKey) || "[]");
+    return Array.isArray(parsed) ? parsed.filter((listing) => listing?.id && listing?.name && listing?.price) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveMarketListings(listings) {
+  localStorage.setItem(marketListingStorageKey, JSON.stringify(listings.slice(0, 50)));
+}
+
+function removeMarketListing(id) {
+  saveMarketListings(loadMarketListings().filter((listing) => listing.id !== id));
+  marketChainListings = marketChainListings.filter((listing) => `chain-${listing.listing}` !== id);
+}
+
+function formatMarketPrice(value) {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) return "0";
+  return numeric >= 1 ? numeric.toFixed(2).replace(/\.?0+$/, "") : numeric.toFixed(6).replace(/\.?0+$/, "");
 }
 
 function renderBackpackPanel() {
@@ -4816,6 +5467,9 @@ function chainSubmitReasonLabel(reason) {
   if (reason === "session-funding-cancelled") return gameText("main.chainLog.sessionFundingCancelled", "session funding cancelled");
   if (reason === "no-backpack") return gameText("main.chainLog.noBackpack", "no backpack equipped");
   if (reason === "backpack-full") return gameText("main.chainLog.backpackFull", "backpack full");
+  if (reason === "listing-unavailable") return gameText("main.market.listingUnavailable", "listing unavailable");
+  if (reason === "self-purchase") return gameText("main.market.selfPurchase", "cannot buy your own listing");
+  if (reason === "nck-token-missing") return gameText("main.market.nckTokenMissing", "wallet has no NCK token account");
   return reason || gameText("main.chainLog.unknownReason", "unknown reason");
 }
 

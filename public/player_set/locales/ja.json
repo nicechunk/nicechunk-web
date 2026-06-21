@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ja",
     "label": "Japanese",
-    "version": "player-set-locale-ja-bee61ac08a5a86ad",
-    "contentHash": "bee61ac08a5a86ad"
+    "version": "player-set-locale-ja-c223f8880057fe5c",
+    "contentHash": "c223f8880057fe5c"
   },
   "common": {
     "language": "言語",
@@ -30,6 +30,7 @@
     "baseCharacterMaleScout": "男性スカウト",
     "baseCharacterFemalePonytail": "ポニーテール女性",
     "baseCharacterFemaleEngineer": "女性エンジニア",
+    "baseCharacterGuardian": "ガーディアン",
     "characterCode": "キャラクターコード",
     "collapseCode": "コードを閉じる",
     "chainCharacterCode": "オンチェーンキャラクターコード",
@@ -71,6 +72,49 @@
       "rx": "RX",
       "ry": "RY",
       "rz": "RZ"
+    },
+    "baseCharacterNcmPeasantGirl": "NCM Peasant Girl",
+    "baseCharacterNcmPeasantGuy": "NCM Peasant Guy",
+    "actionPreviewHint": "Action Preview: WASD move, Space jump",
+    "boneBinding": "Bone Binding",
+    "boneBindingHint": "Left click selects blocks. Shift/Ctrl adds to selection. Drag in the 3D view to box select. Middle mouse rotates. Drag a binding point to move a bone pivot.",
+    "groupName": "Group Name",
+    "groupNamePlaceholder": "left_arm",
+    "targetBone": "Target Bone",
+    "createGroup": "Create Group From Selection",
+    "autoBindBones": "Auto Bind Default Skeleton",
+    "clearSelection": "Clear Selection",
+    "activeGroup": "Active Group",
+    "groupPartCount": "{count} blocks",
+    "selectGroup": "Select",
+    "useGroupSelection": "Use As Selection",
+    "deleteGroup": "Delete",
+    "pivot": {
+      "x": "Pivot X",
+      "y": "Pivot Y",
+      "z": "Pivot Z"
+    },
+    "bones": {
+      "root": "Root",
+      "hips": "Hips",
+      "torso": "Torso",
+      "chest": "Chest",
+      "neck": "Neck",
+      "head": "Head",
+      "left_upper_arm": "Left Upper Arm",
+      "left_lower_arm": "Left Lower Arm",
+      "left_hand": "Left Hand",
+      "right_upper_arm": "Right Upper Arm",
+      "right_lower_arm": "Right Lower Arm",
+      "right_hand": "Right Hand",
+      "left_upper_leg": "Left Upper Leg",
+      "left_lower_leg": "Left Lower Leg",
+      "left_foot": "Left Foot",
+      "right_upper_leg": "Right Upper Leg",
+      "right_lower_leg": "Right Lower Leg",
+      "right_foot": "Right Foot",
+      "backpack": "Backpack",
+      "accessory": "Accessory"
     }
   }
 }

@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#080c12" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=0.1.63" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=0.1.63" />
+    <link rel="shortcut icon" href="/favicon.ico?v=0.1.63" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=0.1.63" />
+    <link rel="manifest" href="/site.webmanifest?v=0.1.63" />
+    <meta
+      name="description"
+      content="NCM DNA Lab searches for deterministic short genes that can grow into the same canonical cuboid model."
+      data-i18n-content="ncmDna.page.description"
+    />
+    <title data-i18n="ncmDna.page.title">NCM DNA Lab</title>
+  </head>
+  <body>
+    <div class="dna-bg" aria-hidden="true">
+      <div class="dna-grid"></div>
+      <div class="dna-vignette"></div>
+    </div>
+
+    <header class="site-header">
+      <a class="brand-mark" href="/" aria-label="NiceChunk">
+        <img src="/media/nck.png" alt="" />
+        <span>NICECHUNK</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation" data-i18n-aria-label="ncmDna.nav.aria">
+        <div class="nav-links">
+          <a href="/" data-i18n="ncmDna.nav.home">Home</a>
+          <a href="/roadmap/" data-i18n="ncmDna.nav.roadbook">Roadbook</a>
+          <a href="/world_rule/" data-i18n="ncmDna.nav.worldRules">World Rules</a>
+          <a href="/resource_rule/" data-i18n="ncmDna.nav.resources">Resources</a>
+          <a href="/ncm/" data-i18n="ncmDna.nav.ncm">NCM</a>
+          <a class="active" href="/ncm_dna/" data-i18n="ncmDna.nav.dna">DNA Lab</a>
+          <a href="/elements/" data-i18n="ncmDna.nav.elements">Elements</a>
+          <a href="/fairness/" data-i18n="ncmDna.nav.fairness">Fairness</a>
+          <a href="/proof-of-frontier/" data-i18n="ncmDna.nav.proofOfFrontier">Proof</a>
+          <a href="/contracts/" data-i18n="ncmDna.nav.contracts">Contracts</a>
+        </div>
+        <div class="nav-actions">
+          <a class="header-action" href="/play/" data-i18n="ncmDna.nav.enterWorld">Enter World</a>
+          <div data-i18n-language-menu></div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="dna-layout">
+      <section class="dna-hero">
+        <div class="hero-copy">
+          <p class="eyebrow" data-i18n="ncmDna.hero.eyebrow">NCM GENE SEARCH EXPERIMENT</p>
+          <h1 data-i18n="ncmDna.hero.title">NCM DNA Lab</h1>
+          <p data-i18n="ncmDna.hero.body">
+            NCM DNA Lab is an experimental gene search system for on-chain 3D assets.
+          </p>
+          <p data-i18n="ncmDna.hero.pow">
+            In the future, this search can become a useful Proof of Work.
+          </p>
+        </div>
+        <div class="flow-card">
+          <span data-i18n="ncmDna.flow.raw">Raw Cuboid Model</span>
+          <strong>↓</strong>
+          <span data-i18n="ncmDna.flow.search">NCM-DNA Gene Search</span>
+          <strong>↓</strong>
+          <span data-i18n="ncmDna.flow.grow">Grow(gene) Hash Match</span>
+        </div>
+      </section>
+
+      <section class="lab-shell">
+        <aside class="control-stack">
+          <section class="panel target-panel">
+            <div class="panel-head">
+              <p class="eyebrow" data-i18n="ncmDna.target.eyebrow">TARGET MODEL</p>
+              <h2 data-i18n="ncmDna.target.title">Deterministic cuboid target</h2>
+            </div>
+            <label>
+              <span data-i18n="ncmDna.target.seed">Target Seed</span>
+              <input id="targetSeed" type="text" autocomplete="off" spellcheck="false" value="nicechunk-dna-001" />
+            </label>
+            <div class="form-grid">
+              <label>
+                <span data-i18n="ncmDna.target.source">Source</span>
+                <select id="targetSource">
+                  <option value="ncm-character" data-i18n="ncmDna.target.ncmCharacter" selected>NCM page character</option>
+                  <option value="hidden" data-i18n="ncmDna.target.hiddenGene">Hidden Gene</option>
+                  <option value="raw" data-i18n="ncmDna.target.rawVariation">Raw Variation</option>
+                </select>
+              </label>
+              <label>
+                <span data-i18n="ncmDna.target.ornaments">Ornaments</span>
+                <select id="targetOrnaments">
+                  <option value="off" data-i18n="ncmDna.common.off">Off</option>
+                  <option value="on" data-i18n="ncmDna.common.on">On</option>
+                </select>
+              </label>
+            </div>
+            <div class="button-row">
+              <button id="generateTarget" class="primary-button" type="button" data-i18n="ncmDna.target.generate" disabled>Generate Target</button>
+              <button id="randomTarget" type="button" data-i18n="ncmDna.target.random" disabled>Random Target</button>
+            </div>
+            <label class="switch-row">
+              <input id="revealHiddenGene" type="checkbox" />
+              <span data-i18n="ncmDna.target.reveal">Reveal Hidden Gene</span>
+            </label>
+            <code id="hiddenGeneCode" class="hidden-gene" hidden></code>
+          </section>
+
+          <section class="panel search-panel">
+            <div class="panel-head">
+              <p class="eyebrow" data-i18n="ncmDna.search.eyebrow">CPU SEARCH</p>
+              <h2 data-i18n="ncmDna.search.title">Worker controlled gene search</h2>
+            </div>
+            <div class="form-grid">
+              <label>
+	                <span data-i18n="ncmDna.search.mode">Search Mode</span>
+	                <select id="searchMode">
+	                  <option value="seed-search" data-i18n="ncmDna.search.seedSearch" selected>DNA Seed Free Search</option>
+	                  <option value="ncm-random" data-i18n="ncmDna.search.ncmRandom">NCM Avatar Random</option>
+	                  <option value="exact" data-i18n="ncmDna.search.exact">Exact Parameter Recovery</option>
+	                  <option value="compression" data-i18n="ncmDna.search.compression">Compression Search</option>
+	                  <option value="evolution" data-i18n="ncmDna.search.evolution">Evolution Search</option>
+                </select>
+              </label>
+              <label>
+                <span data-i18n="ncmDna.search.threads">Threads</span>
+                <select id="threadSelect">
+                  <option value="auto" data-i18n="ncmDna.search.auto">Auto</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="4">4</option>
+                </select>
+              </label>
+            </div>
+            <label>
+              <span data-i18n="ncmDna.search.maxCandidates">Max candidates</span>
+              <input id="maxCandidates" type="number" min="1000" max="5000000" step="1000" value="1000000" />
+            </label>
+            <label>
+              <span data-i18n="ncmDna.search.maxSeedLength">Max DNA seed length</span>
+              <input id="maxSeedLength" type="number" min="9" max="64" step="1" value="16" />
+            </label>
+            <div class="button-row">
+              <button id="startSearch" class="primary-button" type="button" data-i18n="ncmDna.search.start" disabled>Start Search</button>
+              <button id="continuousSearch" type="button" data-i18n="ncmDna.search.continuous" disabled>Continuous Search</button>
+              <button id="pauseSearch" type="button" data-i18n="ncmDna.search.pause" disabled>Pause</button>
+              <button id="stopSearch" type="button" data-i18n="ncmDna.search.stop" disabled>Stop</button>
+              <button id="resetSearch" type="button" data-i18n="ncmDna.search.reset" disabled>Reset</button>
+            </div>
+          </section>
+
+          <section class="panel result-panel">
+            <div class="panel-head">
+	              <p class="eyebrow" data-i18n="ncmDna.result.eyebrow">BEST RESULT</p>
+	              <h2 data-i18n="ncmDna.result.title">Current shortest matching gene</h2>
+	            </div>
+	            <label>
+	              <span data-i18n="ncmDna.result.seed">Best DNA seed</span>
+	              <textarea id="bestSeedCode" spellcheck="false" readonly></textarea>
+	            </label>
+	            <div class="button-row">
+	              <button id="copySeed" type="button" data-i18n="ncmDna.result.copySeed" disabled>Copy Seed</button>
+	              <button id="growSeedButton" type="button" data-i18n="ncmDna.result.growSeed" disabled>Create From Seed</button>
+	            </div>
+	            <label>
+	              <span data-i18n="ncmDna.result.gene">Compiled gene</span>
+	              <textarea id="bestGeneCode" spellcheck="false" readonly></textarea>
+	            </label>
+	            <div class="button-row">
+	              <button id="copyGene" type="button" data-i18n="ncmDna.result.copy" disabled>Copy Gene</button>
+	              <button id="growGeneButton" type="button" data-i18n="ncmDna.result.grow" disabled>Grow Gene</button>
+	            </div>
+	            <label>
+	              <span data-i18n="ncmDna.result.seedInput">Seed input</span>
+	              <input id="seedInput" type="text" autocomplete="off" spellcheck="false" placeholder="NCS1.AV..." data-i18n-placeholder="ncmDna.result.seedPlaceholder" />
+	            </label>
+	            <label>
+	              <span data-i18n="ncmDna.result.geneInput">Gene input</span>
+	              <input id="geneInput" type="text" autocomplete="off" spellcheck="false" placeholder="NCD1.HM..." data-i18n-placeholder="ncmDna.result.genePlaceholder" />
+            </label>
+          </section>
+        </aside>
+
+        <section class="viewer-stack">
+          <div class="viewer-toolbar panel">
+            <div>
+              <p class="eyebrow" data-i18n="ncmDna.viewer.eyebrow">3D PREVIEW</p>
+              <h2 data-i18n="ncmDna.viewer.title">Canonical cuboid model</h2>
+            </div>
+            <div class="viewer-controls">
+              <select id="viewerMode" aria-label="Viewer model" data-i18n-aria-label="ncmDna.viewer.modelAria">
+                <option value="target" data-i18n="ncmDna.viewer.target">Target Model</option>
+                <option value="best" data-i18n="ncmDna.viewer.best">Best Gene Model</option>
+                <option value="compare" data-i18n="ncmDna.viewer.compare">Side by Side</option>
+                <option value="diff" data-i18n="ncmDna.viewer.diff">Difference View</option>
+              </select>
+              <select id="renderMode" aria-label="Render mode" data-i18n-aria-label="ncmDna.viewer.renderAria">
+                <option value="cuboid" data-i18n="ncmDna.viewer.cuboid">Cuboid</option>
+                <option value="voxel" data-i18n="ncmDna.viewer.voxel">Voxel</option>
+              </select>
+              <button id="wireframeToggle" type="button" data-i18n="ncmDna.viewer.wireframe" disabled>Wireframe</button>
+              <button id="resetCamera" type="button" data-i18n="ncmDna.viewer.resetCamera" disabled>Reset Camera</button>
+            </div>
+          </div>
+          <div class="viewer-panel">
+            <canvas id="dnaViewer" aria-label="NCM DNA 3D model viewer" data-i18n-aria-label="ncmDna.viewer.canvasAria"></canvas>
+          </div>
+          <section class="metric-grid" id="metricGrid" aria-live="polite"></section>
+        </section>
+      </section>
+
+      <section class="lower-grid">
+        <article class="panel explanation-panel">
+          <p class="eyebrow" data-i18n="ncmDna.cpu.eyebrow">CPU FRIENDLY</p>
+          <h2 data-i18n="ncmDna.cpu.title">Why CPU-first?</h2>
+          <p data-i18n="ncmDna.cpu.body">
+            NCM-DNA v1 uses a rule-based cuboid growth language instead of GPU-friendly voxel functions.
+          </p>
+        </article>
+        <article class="panel explanation-panel">
+          <p class="eyebrow" data-i18n="ncmDna.chain.eyebrow">FUTURE ON-CHAIN FLOW</p>
+          <h2 data-i18n="ncmDna.chain.title">Storage-saving submission path</h2>
+          <ol>
+            <li data-i18n="ncmDna.chain.step1">Asset PDA stores canonical_model_hash and current_encoding.</li>
+            <li data-i18n="ncmDna.chain.step2">Miner submits a shorter gene.</li>
+            <li data-i18n="ncmDna.chain.step3">Program verifies grow(gene) hash equals canonical_model_hash.</li>
+            <li data-i18n="ncmDna.chain.step4">If gene is shorter, asset encoding is updated.</li>
+            <li data-i18n="ncmDna.chain.step5">Released PDA rent can be shared between miner, owner, and protocol pool.</li>
+          </ol>
+        </article>
+        <article class="panel log-panel">
+          <p class="eyebrow" data-i18n="ncmDna.log.eyebrow">SEARCH LOG</p>
+          <h2 data-i18n="ncmDna.log.title">Worker events</h2>
+          <div id="searchLog" class="search-log" aria-live="polite"></div>
+        </article>
+      </section>
+    </main>
+
+    <script type="module" src="./ncm_dna.js"></script>
+  </body>
+</html>

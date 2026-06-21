@@ -2,8 +2,8 @@
   "_meta": {
     "language": "fr",
     "label": "French",
-    "version": "docs-locale-fr-d57e79fe660107c1",
-    "contentHash": "d57e79fe660107c1"
+    "version": "docs-locale-fr-5d9a5bdbdbe0f388",
+    "contentHash": "5d9a5bdbdbe0f388"
   },
   "meta": {
     "title": "NiceChunk Protocol Docs"
@@ -45,6 +45,10 @@
           "label": "Status Model"
         },
         {
+          "id": "implementation-snapshot",
+          "label": "Implementation Snapshot"
+        },
+        {
           "id": "quick-start",
           "label": "Quick Start"
         }
@@ -58,12 +62,24 @@
           "label": "World Generation"
         },
         {
+          "id": "water-system",
+          "label": "Water System"
+        },
+        {
           "id": "chunk-system",
           "label": "Chunk System"
         },
         {
           "id": "on-chain-state",
           "label": "On-chain State"
+        },
+        {
+          "id": "player-backpack-contracts",
+          "label": "Player & Backpack"
+        },
+        {
+          "id": "performance-storage",
+          "label": "Performance & Storage"
         },
         {
           "id": "player-actions",
@@ -76,6 +92,10 @@
         {
           "id": "forging-assets",
           "label": "Forging & Assets"
+        },
+        {
+          "id": "assets-market",
+          "label": "Assets & Market"
         }
       ]
     },
@@ -91,8 +111,16 @@
           "label": "Watcher Network"
         },
         {
+          "id": "magicblock-er",
+          "label": "MagicBlock ER"
+        },
+        {
           "id": "solana-integration",
           "label": "Solana Integration"
+        },
+        {
+          "id": "transaction-debugging",
+          "label": "Transaction Debugging"
         },
         {
           "id": "fairness",
@@ -172,6 +200,34 @@
       }
     }
   },
+  "implementation": {
+    "eyebrow": "Implementation Snapshot",
+    "title": "Current docs should describe the game that actually exists today.",
+    "body": "This snapshot separates live browser behavior, devnet-backed state, and protocol targets so players can understand what is authoritative now and what still belongs to the roadmap.",
+    "status": {
+      "live": "Live Alpha",
+      "chain": "Devnet / Chain",
+      "realtime": "Realtime"
+    },
+    "cards": {
+      "world": {
+        "title": "Infinite seeded world",
+        "body": "Terrain is generated on demand from deterministic rules. The client loads nearby chunks, keeps discovered map information, and unloads render resources outside the active area."
+      },
+      "water": {
+        "title": "Water as blocks",
+        "body": "Rivers, lakes, oceans, and dynamic water visuals use water block entries. Water is shorter than a normal block, ignored by collision, blocks mining selection above covered cells, and uses depth-based color."
+      },
+      "player": {
+        "title": "Player and backpack PDAs",
+        "body": "PlayerProfile stores public player state and the equipped backpack address. Backpack contents live in the Backpack account; mining appends resource records after a valid player session."
+      },
+      "guardian": {
+        "title": "Guardian access layer",
+        "body": "The browser can connect to Guardian realtime endpoints for nearby player movement, chat, and dig events. Guardians provide access and visibility; they do not custody assets or sign player transactions."
+      }
+    }
+  },
   "quickStart": {
     "eyebrow": "Quick Start",
     "title": "Enter, inspect, and verify the alpha world.",
@@ -218,6 +274,30 @@
       }
     }
   },
+  "waterSystem": {
+    "eyebrow": "Water System",
+    "title": "Water is a block state first, then a visual surface.",
+    "body": "The terrain generator and dynamic water layer treat water as cell data. Rendering can make water translucent and shorter, but gameplay checks must derive from block state instead of screen pixels.",
+    "status": {
+      "generated": "Generated",
+      "collision": "Collision Boundary",
+      "selection": "Selection Rule"
+    },
+    "cards": {
+      "generated": {
+        "title": "Generated water blocks",
+        "body": "Sea, lake, and river cells resolve to water-family block ids. Their top should never render above the surrounding ground plane."
+      },
+      "collision": {
+        "title": "No solid collision",
+        "body": "Player collision ignores water cells so the character naturally falls to the real solid block underneath instead of standing on water."
+      },
+      "selection": {
+        "title": "Water blocks mining",
+        "body": "If water covers a target column, mining selection is blocked. This prevents players from standing in water and mining hidden blocks underneath."
+      }
+    }
+  },
   "chunkSystem": {
     "eyebrow": "Chunk System",
     "title": "World coordinates become chunk coordinates, local block coordinates, and cache keys.",
@@ -239,9 +319,57 @@
       "role": "Role",
       "rows": {
         "global": "Immutable world-law layer: NCK mint, world seed hash, chunk size, rule hashes, fees, and Guardian parameters.",
+        "player": "Public player account with owner, global config, position, visible equipment, backpack style, and equipped backpack address.",
+        "session": "Short-lived authority account used so gameplay actions can be submitted without asking the wallet to sign every mined block.",
+        "backpack": "Player-owned inventory account. It stores capacity, item count, carried state, and mined resource coordinate records.",
+        "chunkBroken": "Compact mined-block record for broken generated cells. It avoids writing full generated terrain to chain storage.",
         "registry": "Registry for active Guardian regions, NCK stake amount, treasury token account, and registration counters.",
         "region": "A registered region endpoint with owner, operator, host, TLS flag, stake, proof counters, and update slot.",
         "chunk": "Future production account for current block overrides only. Unchanged generated terrain should not be stored."
+      }
+    }
+  },
+  "playerBackpack": {
+    "eyebrow": "Player & Backpack Contracts",
+    "title": "Buying a backpack and equipping a backpack are separate state changes.",
+    "body": "The Backpack program creates the inventory account. The Player program binds that account to the player's public profile. The profile panel only displays a backpack after the equipped backpack field in PlayerProfile points to a valid Backpack account owned by the same wallet.",
+    "flow": {
+      "eyebrow": "Purchase Flow",
+      "title": "Required instruction sequence",
+      "steps": {
+        "player": "Create PlayerProfile if it does not exist.",
+        "create": "Create Backpack PDA with seed [\"backpack\", owner, backpack_id].",
+        "bind": "Call Player program instruction 5 to write the Backpack public key into PlayerProfile.",
+        "verify": "Reload PlayerProfile, then load the referenced Backpack and verify both accounts share the same owner."
+      }
+    }
+  },
+  "performance": {
+    "eyebrow": "Performance & Storage",
+    "title": "The infinite world stays cheap by deriving first and storing only changes.",
+    "body": "NiceChunk should not pay per generated block and should not add per-frame logic for rules that can be resolved at generation, chunk-build, click, or transaction time.",
+    "status": {
+      "render": "Render Time",
+      "algorithm": "Algorithmic",
+      "storage": "PDA Storage",
+      "ephemeral": "Ephemeral"
+    },
+    "cards": {
+      "render": {
+        "title": "Batch by chunk",
+        "body": "Blocks, water, trees, and decorations are built into chunk meshes or instanced batches. Far chunks use cheaper detail modes instead of per-object realtime decisions."
+      },
+      "algorithm": {
+        "title": "No visual detection for logic",
+        "body": "Collision, water coverage, mining selection, and path checks should use generated block state and local deltas, not browser screenshots or pixel inspection."
+      },
+      "storage": {
+        "title": "Sparse changed cells",
+        "body": "The default world is reconstructed from seed. PDA data should hold compact deltas, mined masks, or section patches only where players changed the world."
+      },
+      "water": {
+        "title": "Dynamic water stays bounded",
+        "body": "MVP flowing water is visual or client-side. Future authoritative water should store compact source changes, not full flowing grids."
       }
     }
   },
@@ -292,6 +420,30 @@
       "recipes": {
         "title": "Recipes",
         "body": "Forged outputs should declare their input materials, output item, quality fields, and future verification path."
+      }
+    }
+  },
+  "assetsMarket": {
+    "eyebrow": "Assets & Market",
+    "title": "Tradable items need compact asset data and explicit listing state.",
+    "body": "NiceChunk has separate workstreams for compact on-chain 3D assets, CPU-searchable asset genes, and marketplace listings. These systems should remain clearly separated from raw gameplay inventory until ownership and settlement rules are complete.",
+    "status": {
+      "tool": "Tooling",
+      "experiment": "Experiment",
+      "contract": "Contract"
+    },
+    "cards": {
+      "ncm": {
+        "title": "NCM asset format",
+        "body": "NCM converts voxel models into compact blockchain-readable text so clients can reconstruct 3D assets from account data without an external gateway."
+      },
+      "dna": {
+        "title": "NCM DNA search",
+        "body": "NCM DNA explores CPU-friendly searches for shorter deterministic genes that reproduce the same asset hash and reduce future PDA storage size."
+      },
+      "market": {
+        "title": "Market listings",
+        "body": "The market program creates seller-owned listing PDAs with category, currency, source kind, source index, quantity, price, and item hash. Current scope is listing and canceling."
       }
     }
   },
@@ -359,10 +511,63 @@
       }
     }
   },
+  "magicblock": {
+    "eyebrow": "MagicBlock ER",
+    "title": "High-frequency chunk changes should move through a bounded realtime path.",
+    "body": "The MagicBlock Ephemeral Rollups bridge is scoped to one active chunk first. It is a devnet-only direction for fast break/place updates, not a replacement for wallet ownership or final settlement.",
+    "status": {
+      "scope": "Scope",
+      "session": "Session",
+      "boundary": "Boundary",
+      "devnet": "Devnet"
+    },
+    "cards": {
+      "singleChunk": {
+        "title": "Single active chunk",
+        "body": "The client should subscribe to the player's current chunk, then unsubscribe and resubscribe when the player crosses chunk boundaries."
+      },
+      "session": {
+        "title": "PlayerSession authority",
+        "body": "A wallet signs once to create or refresh a session PDA. The temporary session key can then sign allowed gameplay actions until expiry."
+      },
+      "noPolling": {
+        "title": "No broad RPC polling",
+        "body": "The design should not re-enable wide multi-chunk polling on public RPC. Realtime updates must stay bounded to active interest areas."
+      },
+      "notProd": {
+        "title": "Not production enabled",
+        "body": "Do not enable the browser ER switch for production until the chunk program is redeployed and a chunk delegation is verified end to end."
+      }
+    }
+  },
   "solana": {
     "eyebrow": "Solana Integration",
     "title": "Wallet identity and protocol state should stay explicit.",
     "body": "The docs separate live wallet flows, devnet programs, local client cache, and future mainnet commitments. This prevents alpha client behavior from being confused with finalized protocol guarantees."
+  },
+  "debugging": {
+    "eyebrow": "Transaction Debugging",
+    "title": "A signature is not enough; confirmed transactions must be checked for errors.",
+    "body": "Wallets can return a signature even when the confirmed transaction later contains an error. Client code and support docs should verify confirmation status, account ownership, and PDA fields before telling a player that state is bound.",
+    "status": {
+      "wallet": "Wallet",
+      "confirmation": "Confirmation",
+      "pda": "PDA"
+    },
+    "cards": {
+      "wallet": {
+        "title": "Wallet mismatch",
+        "body": "The connected provider must match the stored NiceChunk wallet address. Multiple installed wallets can expose different providers."
+      },
+      "confirm": {
+        "title": "Check value.err",
+        "body": "After confirmTransaction, inspect the returned error field before treating a purchase, listing, mining action, or session refresh as successful."
+      },
+      "pda": {
+        "title": "Read the authoritative PDA",
+        "body": "For backpacks, read PlayerProfile first. The profile must point to a Backpack account whose owner equals the wallet address."
+      }
+    }
   },
   "fairness": {
     "eyebrow": "Fairness, Security & Governance",
@@ -387,6 +592,10 @@
     "eyebrow": "Changelog",
     "title": "Protocol documentation must record what changed and what did not.",
     "items": {
+      "v0163": {
+        "title": "Protocol docs expanded",
+        "body": "Adds current implementation snapshot, water block rules, player/backpack binding flow, expanded PDA account coverage, storage principles, market scope, MagicBlock ER boundaries, and transaction debugging."
+      },
       "v0150": {
         "title": "Docs alpha introduced",
         "body": "Adds protocol docs page, public architecture, demos, independent docs language resources, and mainnet docs locale indexing."

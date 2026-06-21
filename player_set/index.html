@@ -24,13 +24,8 @@
             <label class="base-character-field" for="baseCharacter">
               <span data-i18n="player.baseCharacter">Base Character</span>
               <select id="baseCharacter">
-                <option value="male" data-i18n="player.baseCharacterMale">Male</option>
-                <option value="female" data-i18n="player.baseCharacterFemale">Female</option>
-                <option value="male_explorer" data-i18n="player.baseCharacterMaleExplorer">Male Explorer</option>
-                <option value="male_scout" data-i18n="player.baseCharacterMaleScout">Male Scout</option>
-                <option value="female_ponytail" data-i18n="player.baseCharacterFemalePonytail">Female Ponytail</option>
-                <option value="female_engineer" data-i18n="player.baseCharacterFemaleEngineer">Female Engineer</option>
-                <option value="guardian" data-i18n="player.baseCharacterGuardian">Guardian</option>
+                <option value="ncm_peasant_guy" data-i18n="player.baseCharacterNcmPeasantGuy">NCM Peasant Guy</option>
+                <option value="ncm_peasant_girl" data-i18n="player.baseCharacterNcmPeasantGirl">NCM Peasant Girl</option>
               </select>
             </label>
             <label class="page-language-field" for="playerSetLanguage">
@@ -41,6 +36,8 @@
           </div>
         </div>
         <canvas id="preview"></canvas>
+        <div id="selectionMarquee" class="selection-marquee" hidden></div>
+        <div class="action-preview-hint" data-i18n="player.actionPreviewHint">Action Preview: WASD move, Space jump</div>
         <button id="toggleCode" class="code-tab" type="button" aria-expanded="false" data-i18n="player.characterCode">Character Code</button>
         <section class="chain-output collapsed">
           <div class="output-head">
@@ -57,8 +54,48 @@
       <aside class="settings-pane">
         <div class="panel-head">
           <h1 data-i18n="player.characterParams">Character Parameters</h1>
-          <button id="addBox" type="button" data-i18n="player.addBox">Add Box</button>
+          <div class="panel-head-actions">
+            <button id="toggleBoneBinding" type="button" aria-pressed="false" data-i18n="player.boneBinding">Bone Binding</button>
+            <button id="addBox" type="button" data-i18n="player.addBox">Add Box</button>
+          </div>
         </div>
+
+        <section class="control-group bone-panel" id="bonePanel" hidden>
+          <div class="bone-panel-head">
+            <div>
+              <h2 data-i18n="player.boneBinding">Bone Binding</h2>
+              <p data-i18n="player.boneBindingHint">Left click selects blocks. Shift/Ctrl adds to selection. Drag in the 3D view to box select. Middle mouse rotates. Drag a binding point to move a bone pivot.</p>
+            </div>
+            <span id="selectionCount" class="selection-count">0</span>
+          </div>
+
+          <div class="row">
+            <label class="field">
+              <span data-i18n="player.groupName">Group Name</span>
+              <input id="groupName" type="text" data-i18n-placeholder="player.groupNamePlaceholder" placeholder="left_arm" />
+            </label>
+            <label class="field">
+              <span data-i18n="player.targetBone">Target Bone</span>
+              <select id="boneSelect"></select>
+            </label>
+          </div>
+
+          <div class="bone-actions">
+            <button id="createGroup" type="button" data-i18n="player.createGroup">Create Group From Selection</button>
+            <button id="autoBindBones" type="button" data-i18n="player.autoBindBones">Auto Bind Default Skeleton</button>
+            <button id="clearSelection" type="button" data-i18n="player.clearSelection">Clear Selection</button>
+          </div>
+
+          <div class="binding-controls">
+            <label class="field">
+              <span data-i18n="player.activeGroup">Active Group</span>
+              <select id="groupSelect"></select>
+            </label>
+            <div id="pivotControls" class="pivot-controls"></div>
+          </div>
+
+          <div id="groupList" class="group-list"></div>
+        </section>
 
         <label class="field">
           <span data-i18n="player.selectPart">Select Part</span>

@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ru",
     "label": "Russian",
-    "version": "locale-ru-8886ee97aad5b79b",
-    "contentHash": "8886ee97aad5b79b"
+    "version": "locale-ru-540da9efe45765c4",
+    "contentHash": "540da9efe45765c4"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -241,7 +241,8 @@
       "leaves": "Листья",
       "red_flower": "Красный цветок",
       "forged_item": "Кованый предмет",
-      "backpack": "Рюкзак"
+      "backpack": "Рюкзак",
+      "market_phone": "Market Phone"
     },
     "hotbarSlot": {
       "empty": "Слот {slot}: пусто",
@@ -311,6 +312,77 @@
       "publicRpcFailed": "Public devnet RPC is rate limited. Add a Helius API key to keep chain reads and mining transactions reliable.",
       "invalid": "Enter a Helius API key before saving.",
       "saved": "Saved. NiceChunk will use your Helius devnet RPC for chain calls."
+    },
+    "market": {
+      "open": "Открыть рынок",
+      "close": "Close market",
+      "eyebrow": "Trade Terminal",
+      "title": "Рынок",
+      "tabs": "Market sections",
+      "browseTab": "Обзор",
+      "sellTab": "Продать",
+      "ordersTab": "Ордера",
+      "searchLabel": "Search",
+      "searchPlaceholder": "Resource, equipment, coordinate",
+      "filters": "Market filters",
+      "categoryAll": "All",
+      "categoryRaw": "Raw Materials",
+      "categoryEquipment": "Equipment",
+      "categoryBuilding": "Building Materials",
+      "categoryVegetation": "Vegetation",
+      "categoryClothing": "Clothing",
+      "feeLabel": "Market Fee",
+      "feeValue": "2.5%",
+      "settlement": "Preferred settlement: NCK",
+      "backpackCount": "{count}/{capacity}",
+      "sampleIron": "Iron Ore Fragment",
+      "sampleIronMeta": "Raw material",
+      "samplePickaxe": "Forged Pickaxe",
+      "samplePickaxeMeta": "Tool · Rare",
+      "sampleBrick": "Stone Brick Stack",
+      "sampleBrickMeta": "Building",
+      "sampleCloak": "Oak Leaf Block",
+      "sampleCloakMeta": "Vegetation",
+      "buy": "Купить",
+      "buyPending": "Buying...",
+      "buyCreated": "Purchase confirmed on-chain: {signature}",
+      "buyFailed": "Buy transaction failed: {reason}",
+      "cancelListing": "Cancel",
+      "sampleListing": "Sample listing",
+      "loadingListings": "Loading listings...",
+      "chainListingLoadFailed": "On-chain listings are temporarily unavailable.",
+      "chainListingName": "On-chain Resource Listing",
+      "chainListingMeta": "{source} slot {slot}",
+      "sourceBackpack": "Backpack",
+      "sourceHotbar": "Hotbar",
+      "listingUnavailable": "listing unavailable",
+      "selfPurchase": "cannot buy your own listing",
+      "nckTokenMissing": "wallet has no NCK token account",
+      "stepSelectItem": "1. Select Item",
+      "stepListingDraft": "2. Listing Draft",
+      "inventoryEyebrow": "Backpack + Hotbar",
+      "inventoryTitle": "Select one item to list",
+      "listingEyebrow": "Listing Draft",
+      "noSelection": "No item selected",
+      "categoryLabel": "Category",
+      "currencyLabel": "Currency",
+      "priceLabel": "Price",
+      "pricePlaceholder": "0.00",
+      "formHint": "Select an item, set category and price, then create an on-chain listing.",
+      "createListing": "Создать листинг",
+      "noOrders": "No active orders",
+      "noOrdersMeta": "Wallet orders will appear here.",
+      "noListings": "No listings match",
+      "noListingsMeta": "Try another category or search term.",
+      "noInventoryItems": "No listable items",
+      "noInventoryItemsMeta": "Equip a backpack or keep tools in your hotbar to create listings.",
+      "invalidListing": "Select an item and enter a valid price.",
+      "listingPending": "Confirm the transaction to create this listing on-chain.",
+      "listingCreated": "Listing created on-chain: {signature}",
+      "listingFailed": "Listing transaction failed: {reason}",
+      "cancelPending": "Canceling...",
+      "cancelFailed": "Cancel transaction failed: {reason}",
+      "hotbarSlotMeta": "Hotbar slot {slot}"
     },
     "block": {
       "unknown": "Unknown Block",
@@ -522,6 +594,294 @@
       "genesisAlreadyRegistered": "Genesis Guardian уже зарегистрирован.",
       "guardianNotActive": "This Guardian is not active.",
       "unknownProgramError": "Программа Guardian вернула ошибку: {code}"
+    }
+  },
+  "ncm": {
+    "nav": {
+      "aria": "Primary navigation",
+      "home": "Home",
+      "roadbook": "Roadbook",
+      "worldRules": "World Rules",
+      "resources": "Resources",
+      "ncm": "NCM",
+      "elements": "Elements",
+      "fairness": "Fairness",
+      "proofOfFrontier": "Proof",
+      "guardians": "Guardians",
+      "contracts": "Contracts",
+      "docs": "Docs",
+      "enterWorld": "Enter World"
+    },
+    "page": {
+      "title": "NCM формат 3D-активов on-chain",
+      "description": "NCM is NiceChunk's compact Solana game asset format. Store voxel 3D models as PDA-friendly chain text without IPFS."
+    },
+    "hero": {
+      "eyebrow": "ON-CHAIN 3D ASSET FORMAT",
+      "title": "We designed NCM so Solana games can own their 3D assets on-chain.",
+      "body": "NCM is NiceChunk's compact 3D asset format for Solana and other chains. We are building deeper R&D around this format because it can compress voxel assets into tiny text records that clients fetch directly through RPC, verify publicly, and keep available without IPFS.",
+      "convert": "Конвертировать VOX",
+      "sample": "Загрузить пример",
+      "formatLabel": "Format prefix",
+      "formatBody": "Palette, box count, signed positions, and dimensions encoded as compact varints."
+    },
+    "principles": {
+      "aria": "NCM principles",
+      "rpc": {
+        "title": "RPC native",
+        "body": "A client can read the text from account data and reconstruct the model immediately."
+      },
+      "public": {
+        "title": "Public forever",
+        "body": "The asset is stored with the program state, not hidden behind a mutable external gateway."
+      },
+      "compact": {
+        "title": "Cost aware",
+        "body": "Same-color voxels are merged into boxes before encoding to reduce storage size."
+      },
+      "portable": {
+        "title": "Chain portable",
+        "body": "NCM is plain text, so the same asset format can be used beyond one runtime."
+      }
+    },
+    "thesis": {
+      "aria": "Why NCM matters",
+      "eyebrow": "WHY WE DESIGNED NCM",
+      "title": "A Solana game asset should be part of the state, not a URL attached to it.",
+      "body": "NiceChunk is building around NCM because a voxel object can be small enough to live directly inside a program-owned PDA. The asset, its rules, and its ownership can move together, so a game item or NFT does not depend on an external gateway staying online.",
+      "metricsAria": "NCM compression examples",
+      "metricSource": "VOX source",
+      "metricNcm": "NCM record",
+      "metricGirl": "Peasant girl source file",
+      "metricGirlNcm": "Same model as PDA-friendly text",
+      "metricGuy": "Peasant guy source file",
+      "metricGuyNcm": "About a 400-byte class payload"
+    },
+    "roadmap": {
+      "aria": "NCM research direction",
+      "pda": {
+        "title": "PDA-native resources",
+        "body": "NCM turns small characters, props, equipment, and block decorations into account data that Solana clients can read through normal RPC calls."
+      },
+      "trade": {
+        "title": "Safer NFT trading",
+        "body": "When the visual asset is stored with the asset record, buyers do not need to trust that an IPFS gateway, metadata server, or mutable JSON link will keep resolving later."
+      },
+      "research": {
+        "title": "Useful compression research",
+        "body": "NCM is also the base for our NCM-DNA exploration: searching for shorter deterministic genes that reproduce the same model and can turn asset compression into useful computation."
+      }
+    },
+    "converter": {
+      "eyebrow": "VOX TO NCM",
+      "title": "Локальный конвертер в браузере",
+      "body": "Upload a MagicaVoxel .vox file. The file is parsed locally in your browser and converted into NCM text.",
+      "dropTitle": "Перетащите или выберите файл .vox",
+      "dropBody": "MagicaVoxel SIZE, XYZI, and RGBA chunks are supported.",
+      "mode": "Mode",
+      "merge": "Merge boxes",
+      "raw": "Raw voxels",
+      "height": "Target height"
+    },
+    "license": {
+      "title": "Sample attribution",
+      "body": "Sample VOX characters are from OpenGameArt, created by JoshMckay, licensed under CC-BY 4.0."
+    },
+    "preview": {
+      "eyebrow": "LIVE PREVIEW",
+      "title": "No model loaded",
+      "titleLoaded": "NCM model",
+      "reset": "Reset view"
+    },
+    "output": {
+      "eyebrow": "NCM OUTPUT",
+      "title": "Compact chain text",
+      "body": "Store this payload in account data or a program-owned asset record. Clients can decode it without IPFS.",
+      "placeholder": "NCM2:...",
+      "copy": "Копировать NCM",
+      "download": "Скачать .ncm"
+    },
+    "stats": {
+      "voxels": "Source voxels",
+      "boxes": "NCM boxes",
+      "chars": "Text characters",
+      "size": "Source size"
+    },
+    "samples": {
+      "girl": "Peasant Girl",
+      "guy": "Peasant Guy"
+    },
+    "status": {
+      "ready": "Готово.",
+      "loadingSample": "Loading sample NCM...",
+      "sampleLoaded": "Sample loaded.",
+      "converting": "Converting VOX to NCM...",
+      "converted": "Конвертировано.",
+      "copied": "NCM скопирован.",
+      "copyFailed": "Copy failed.",
+      "downloaded": "NCM downloaded.",
+      "failed": "Failed: {reason}"
+    }
+  },
+  "ncmDna": {
+    "nav": {
+      "aria": "Primary navigation",
+      "home": "Home",
+      "roadbook": "Roadbook",
+      "worldRules": "World Rules",
+      "resources": "Resources",
+      "ncm": "NCM",
+      "dna": "DNA Lab",
+      "elements": "Elements",
+      "fairness": "Fairness",
+      "proofOfFrontier": "Proof",
+      "contracts": "Contracts",
+      "enterWorld": "Войти в мир"
+    },
+    "page": {
+      "title": "Лаборатория NCM DNA",
+      "description": "NCM DNA Lab ищет короткие детерминированные гены, из которых можно вырастить ту же каноническую кубоидную модель."
+    },
+    "common": {
+      "yes": "Yes",
+      "no": "No",
+      "on": "On",
+      "off": "Off"
+    },
+    "hero": {
+      "eyebrow": "ЭКСПЕРИМЕНТ ПОИСКА ГЕНОВ NCM",
+      "title": "Лаборатория NCM DNA",
+      "body": "NCM DNA Lab is an experimental gene search system for on-chain 3D assets. Instead of storing every cube, it searches for a shorter deterministic gene that can grow into the same model.",
+      "pow": "In the future, this search can become a useful Proof of Work: miners spend CPU power to discover shorter genes, reduce PDA storage size, and earn rewards from the storage cost saved."
+    },
+    "flow": {
+      "raw": "Raw Cuboid Model",
+      "search": "NCM-DNA Gene Search",
+      "grow": "Grow(gene) Hash Match"
+    },
+    "target": {
+      "eyebrow": "ЦЕЛЕВАЯ МОДЕЛЬ",
+      "title": "Deterministic cuboid target",
+      "seed": "Целевой seed",
+      "source": "Источник",
+      "ncmCharacter": "NCM page character",
+      "hiddenGene": "Hidden Gene",
+      "rawVariation": "Raw Variation",
+      "ornaments": "Ornaments",
+      "generate": "Создать цель",
+      "random": "Случайная цель",
+      "reveal": "Reveal Hidden Gene"
+    },
+    "search": {
+      "eyebrow": "CPU SEARCH",
+      "title": "Worker controlled gene search",
+      "mode": "Search Mode",
+      "seedSearch": "Свободный поиск DNA seed",
+      "ncmRandom": "Случайный NCM Avatar",
+      "exact": "Exact Parameter Recovery",
+      "compression": "Compression Search",
+      "evolution": "Evolution Search",
+      "threads": "Threads",
+      "auto": "Auto",
+      "maxCandidates": "Макс. кандидатов",
+      "maxSeedLength": "Макс. длина DNA seed",
+      "start": "Начать поиск",
+      "continuous": "Непрерывный поиск",
+      "pause": "Пауза",
+      "resume": "Продолжить",
+      "stop": "Стоп",
+      "reset": "Сброс"
+    },
+    "result": {
+      "eyebrow": "ЛУЧШИЙ РЕЗУЛЬТАТ",
+      "title": "Seed and compiled gene",
+      "seed": "Лучший DNA seed",
+      "gene": "Compiled gene",
+      "copySeed": "Копировать seed",
+      "growSeed": "Создать из seed",
+      "copy": "Copy Gene",
+      "grow": "Grow Gene",
+      "seedInput": "Seed input",
+      "seedPlaceholder": "NCS1.AV...",
+      "geneInput": "Gene input",
+      "genePlaceholder": "NCD1.HM..."
+    },
+    "viewer": {
+      "eyebrow": "3D PREVIEW",
+      "title": "Canonical cuboid model",
+      "canvasAria": "3D просмотрщик модели NCM DNA",
+      "modelAria": "Viewer model",
+      "renderAria": "Render mode",
+      "target": "Целевая модель",
+      "best": "Лучшая генная модель",
+      "compare": "Рядом",
+      "diff": "Различия",
+      "cuboid": "Cuboid",
+      "voxel": "Voxel",
+      "wireframe": "Wireframe",
+      "resetCamera": "Сбросить камеру"
+    },
+    "cpu": {
+      "eyebrow": "CPU FRIENDLY",
+      "title": "Why CPU-first?",
+      "body": "NCM-DNA v1 uses a rule-based cuboid growth language instead of GPU-friendly voxel functions. The search contains branching, templates, symmetry detection, canonical sorting, and variable-length genes. These operations are more suitable for general CPU execution and harder to fully parallelize on GPU."
+    },
+    "chain": {
+      "eyebrow": "FUTURE ON-CHAIN FLOW",
+      "title": "Storage-saving submission path",
+      "step1": "Asset PDA stores canonical_model_hash and current_encoding.",
+      "step2": "Miner submits a shorter gene.",
+      "step3": "Program verifies grow(gene) hash equals canonical_model_hash.",
+      "step4": "If gene is shorter, asset encoding is updated.",
+      "step5": "Released PDA rent can be shared between miner, owner, and protocol pool."
+    },
+    "metrics": {
+      "status": "Статус",
+      "candidates": "Кандидаты",
+      "speed": "Скорость",
+      "speedValue": "{value}/s",
+      "generation": "Generation",
+      "bestGeneSize": "Best gene size",
+      "rawModelSize": "Raw model size",
+      "ratio": "Compression",
+      "score": "Оценка",
+      "targetHash": "Target hash",
+      "bestHash": "Best hash",
+      "bestSeed": "Лучший seed",
+      "seedLength": "Длина seed",
+      "exact": "Exact match",
+      "threads": "Threads",
+      "threadValue": "{value}/{planned}",
+      "elapsed": "Время",
+      "saved": "Saved",
+      "bytes": "{value} байт"
+    },
+    "status": {
+      "idle": "Ожидание",
+      "running": "Работает",
+      "paused": "Пауза",
+      "stopped": "Остановлено",
+      "success": "Успех"
+    },
+    "log": {
+      "eyebrow": "SEARCH LOG",
+      "title": "События worker",
+      "targetGenerated": "Target generated: {hash}",
+      "ncmTargetLoaded": "NCM character target loaded with {boxes} cuboids.",
+      "workerError": "Worker error: {message}",
+      "searchStarted": "Поиск начат.",
+      "continuousStarted": "Непрерывный поиск запущен на {threads} worker-потоках.",
+      "searchPaused": "Search paused.",
+      "searchResumed": "Search resumed.",
+      "searchReset": "Search reset.",
+      "best": "Лучшая оценка {score}: {gene}",
+      "success": "Точное совпадение найдено после {candidates} кандидатов.",
+      "copied": "Ген скопирован.",
+      "seedCopied": "Seed скопирован.",
+      "geneGrown": "Gene grown: {hash}",
+      "seedGrown": "Seed grown: {hash}",
+      "invalidGene": "Invalid gene: {message}",
+      "invalidSeed": "Invalid seed: {message}"
     }
   },
   "resourceSimulator": {

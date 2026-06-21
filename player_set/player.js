@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { initI18n, t } from "./i18n.js";
+import { decodeNcm, encodeNcmRigCharacter, ncmRigBoneIds } from "../src/vox/ncm.js";
 
 const canvas = document.querySelector("#preview");
 const baseCharacterSelect = document.querySelector("#baseCharacter");
@@ -17,6 +18,15 @@ const paintColor = document.querySelector("#paintColor");
 const paintBoard = document.querySelector("#paintBoard");
 const paintCtx = paintBoard.getContext("2d");
 const gridSize = document.querySelector("#gridSize");
+const selectionMarquee = document.querySelector("#selectionMarquee");
+const toggleBoneBinding = document.querySelector("#toggleBoneBinding");
+const bonePanel = document.querySelector("#bonePanel");
+const groupNameInput = document.querySelector("#groupName");
+const boneSelect = document.querySelector("#boneSelect");
+const groupSelect = document.querySelector("#groupSelect");
+const groupList = document.querySelector("#groupList");
+const selectionCount = document.querySelector("#selectionCount");
+const pivotControls = document.querySelector("#pivotControls");
 
 await initI18n();
 
@@ -29,6 +39,7 @@ const faceLabels = {
   top: "player.face.top",
   bottom: "player.face.bottom",
 };
+const boneLabelKeys = Object.fromEntries(ncmRigBoneIds.map((bone) => [bone, `player.bones.${bone}`]));
 const chainPalette = [
   "#151414",
   "#2b2520",
@@ -206,110 +217,35 @@ const defaultCharacter = {
 };
 
 const femaleCharacter = createFemaleCharacter();
+const sampleNcmPeasantGirl =
+  "NCM2:ICAgCUYKERERIiIiM6a4V3yKZWdlvcC6wWk84aZ545Fu___74JwNAEB0NgAQ7zEAQsTHAAgBIQMAyHMVACDRVQDAuDcCChPfCCgMfAmIMO81McI890QA4xwEQYx0EAQxz0UAxEQXARDTXgQhzHwRhDAQRgDAuCcBCCOfBCAQfAwAUOfFEkLRF0sI1toEJNhsE5Bg7E0AgtE3AQjW4gQF2IwTFGBOTlCAQTmBASblBAVYexSQYPNRQII9SUEBFiUFBRhsFgxgrt0QgMV2QwDWHAYA2HQYAGCvZQCIxZYBIOZcBmAYdBmEYdJlAIY9pwEYFp0GYJxzIABx0YEAxLkXQggXXwghHHwRHHDlyQDCvScBCBefBCCcfjKAcBBKYMA9RwUA5x4NRFx8NBBxMFJAwEFXwQDn3A0BXHQ3BIDOUQAASkcBAOlcBQCkdBUAAA";
+const sampleNcmPeasantGuy =
+  "NCM2:ICAgCTgIERERM6a4OjImfVMsx4VQ17mO4aZ5___7cM4GABCdDQDkuQoASHQVAKAWKSBAM1JAgJykgABJSQEBaq6CITRfBSPoySoIkGsXBKDYbghA010QgF7DIQDFlgEAYi4DAORcBmBIugzAUHMagKDntABD7mkAgFjbAIA5BwIQiw4EIOZeCCAsvhBAmHsMmDD5GDBhDzJhwNqLIITNF0EIfK-JAXheLCHwvQgAYHwRAED6Ygmh7omQQuMTIYXCl4AIfY8JAAxfBAe4PBlA8HsSAOD4JADA-skAgiGcoAA7RwkAdo8GIhwfDUQYRgoIMHQVDGDnbgjA0d0QwJ2rAIBLVwEA";
 const compressedBaseCharacters = {
   male: defaultCharacter,
   female: femaleCharacter,
 };
 const baseCharacters = {
-  ...compressedBaseCharacters,
-  male_explorer: createGeneratedCharacter({
-    skin: "#d8a171",
-    hair: "#3f2918",
-    hairDark: "#2b1b11",
-    hairLight: "#5a3320",
-    hairStyle: "short",
-    jacket: "#0f6f69",
-    jacketDark: "#0d5552",
-    shirt: "#e8e4c9",
-    pants: "#2b2520",
-    pantsDark: "#1d1712",
-    boot: "#3a2618",
-    bootDark: "#1d1712",
-    accent: "#58b6a8",
-    belt: "#5b351f",
-    buckle: "#d6a84a",
-    backpack: "#4d3424",
-    backpackDark: "#2b1b11",
-    backpackLight: "#6c452b",
-    body: "male",
-    accessory: "wristGems",
-  }),
-  male_scout: createGeneratedCharacter({
-    skin: "#d8a171",
-    hair: "#c58a38",
-    hairDark: "#8a5a24",
-    hairLight: "#d6a84a",
-    hairStyle: "swept",
-    jacket: "#1d335c",
-    jacketDark: "#142541",
-    shirt: "#e8e4c9",
-    pants: "#2b2520",
-    pantsDark: "#151414",
-    boot: "#5a3320",
-    bootDark: "#2b1b11",
-    accent: "#e08343",
-    belt: "#5b351f",
-    buckle: "#bfc4bd",
-    backpack: "#8a5a24",
-    backpackDark: "#4d3424",
-    backpackLight: "#c58a38",
-    body: "male",
-    accessory: "scarf",
-  }),
-  female_ponytail: createGeneratedCharacter({
-    skin: "#d8a171",
-    hair: "#3f2918",
-    hairDark: "#2b1b11",
-    hairLight: "#5a3320",
-    hairStyle: "ponytail",
-    jacket: "#0f6f69",
-    jacketDark: "#0d5552",
-    shirt: "#e8e4c9",
-    pants: "#2b2520",
-    pantsDark: "#1d1712",
-    boot: "#3a2618",
-    bootDark: "#1d1712",
-    accent: "#58b6a8",
-    belt: "#5b351f",
-    buckle: "#d6a84a",
-    backpack: "#8a5a24",
-    backpackDark: "#4d3424",
-    backpackLight: "#c58a38",
-    body: "femaleShorts",
-    accessory: "wristGems",
-  }),
-  female_engineer: createGeneratedCharacter({
-    skin: "#d8a171",
-    hair: "#a34f24",
-    hairDark: "#6f321c",
-    hairLight: "#c15f2e",
-    hairStyle: "bob",
-    jacket: "#6b49b8",
-    jacketDark: "#4b347f",
-    shirt: "#e8e4c9",
-    pants: "#2b2520",
-    pantsDark: "#1d1712",
-    boot: "#4d3424",
-    bootDark: "#2b1b11",
-    accent: "#9b7ac8",
-    belt: "#8a5a24",
-    buckle: "#d6a84a",
-    backpack: "#3f65a3",
-    backpackDark: "#294a7c",
-    backpackLight: "#6e93d6",
-    body: "femalePants",
-    accessory: "toolbelt",
-  }),
-  guardian: createGuardianCharacter(),
+  ncm_peasant_guy: decodeNcm(sampleNcmPeasantGuy),
+  ncm_peasant_girl: decodeNcm(sampleNcmPeasantGirl),
 };
+const ncmBaseCharacterKeys = ["ncm_peasant_guy", "ncm_peasant_girl"];
+const ncmBaseCharacters = Object.fromEntries(ncmBaseCharacterKeys.map((key) => [key, baseCharacters[key]]));
 
 const sgp3PresetBits = 7;
 const sgp3BoxPresets = createPresetBoxes(compressedBaseCharacters);
 
-let activeBaseCharacter = "male";
+let activeBaseCharacter = "ncm_peasant_guy";
 let character = cloneBaseCharacter(activeBaseCharacter);
 let selected = 0;
+const selectedParts = new Set([selected]);
+let rigGroups = [];
+let activeGroupId = "";
+let boneBindingMode = false;
 const meshes = new Map();
+const selectionHelpers = new Map();
+const bindingMarkers = new Map();
+const bindingLines = new Map();
 let painting = false;
 let dataMode = "chain";
 
@@ -348,21 +284,88 @@ scene.add(floor);
 const root = new THREE.Group();
 scene.add(root);
 
+const rigRoot = new THREE.Group();
+scene.add(rigRoot);
+
 const cube = new THREE.BoxGeometry(1, 1, 1);
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
 let yaw = Math.PI - 0.35;
 let pitch = 0.05;
 let dragging = false;
+let draggingBinding = null;
+let selectionDrag = null;
+const actionKeys = new Set();
+let jumpStartedAt = -Infinity;
 let lastX = 0;
 let lastY = 0;
 
+canvas.addEventListener("contextmenu", (event) => event.preventDefault());
+canvas.addEventListener("auxclick", (event) => event.preventDefault());
+
 canvas.addEventListener("pointerdown", (event) => {
-  dragging = true;
-  lastX = event.clientX;
-  lastY = event.clientY;
+  if (event.button === 1) {
+    event.preventDefault();
+    dragging = true;
+    lastX = event.clientX;
+    lastY = event.clientY;
+    canvas.setPointerCapture(event.pointerId);
+    return;
+  }
+
+  if (event.button !== 0) return;
+  const pickedBinding = boneBindingMode ? pickBindingMarker(event) : null;
+  if (pickedBinding) {
+    draggingBinding = {
+      id: pickedBinding,
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      pivot: [...(rigGroups.find((group) => group.id === pickedBinding)?.pivot ?? [0, 0, 0])],
+    };
+    activeGroupId = pickedBinding;
+    syncRigPanel();
+    canvas.setPointerCapture(event.pointerId);
+    return;
+  }
+
+  selectionDrag = {
+    pointerId: event.pointerId,
+    startX: event.clientX,
+    startY: event.clientY,
+    currentX: event.clientX,
+    currentY: event.clientY,
+    additive: event.shiftKey || event.ctrlKey || event.metaKey,
+    pickedPart: pickPart(event),
+    active: false,
+  };
   canvas.setPointerCapture(event.pointerId);
 });
 
 canvas.addEventListener("pointermove", (event) => {
+  if (draggingBinding && draggingBinding.pointerId === event.pointerId) {
+    const group = rigGroups.find((item) => item.id === draggingBinding.id);
+    if (!group) return;
+    group.pivot = [
+      Math.round(draggingBinding.pivot[0] + (event.clientX - draggingBinding.startX) * 0.85),
+      Math.round(draggingBinding.pivot[1] - (event.clientY - draggingBinding.startY) * 0.85),
+      draggingBinding.pivot[2],
+    ];
+    renderRig();
+    syncRigPanel();
+    writeCode();
+    return;
+  }
+  if (selectionDrag && selectionDrag.pointerId === event.pointerId) {
+    selectionDrag.currentX = event.clientX;
+    selectionDrag.currentY = event.clientY;
+    if (!selectionDrag.active && Math.hypot(event.clientX - selectionDrag.startX, event.clientY - selectionDrag.startY) > 6) {
+      selectionDrag.active = true;
+      selectionMarquee.hidden = false;
+    }
+    if (selectionDrag.active) updateSelectionMarquee(selectionDrag);
+    return;
+  }
   if (!dragging) return;
   yaw += (event.clientX - lastX) * 0.008;
   pitch = THREE.MathUtils.clamp(pitch + (event.clientY - lastY) * 0.004, -0.45, 0.6);
@@ -370,8 +373,32 @@ canvas.addEventListener("pointermove", (event) => {
   lastY = event.clientY;
 });
 
-canvas.addEventListener("pointerup", () => {
+canvas.addEventListener("pointerup", (event) => {
+  if (draggingBinding?.pointerId === event.pointerId) draggingBinding = null;
+  if (selectionDrag?.pointerId === event.pointerId) finishSelectionDrag();
   dragging = false;
+});
+
+canvas.addEventListener("pointercancel", (event) => {
+  if (draggingBinding?.pointerId === event.pointerId) draggingBinding = null;
+  if (selectionDrag?.pointerId === event.pointerId) cancelSelectionDrag();
+  dragging = false;
+});
+
+window.addEventListener("keydown", (event) => {
+  if (isTextInputTarget(event.target)) return;
+  const key = normalizeActionKey(event);
+  if (!key) return;
+  event.preventDefault();
+  if (key === "space" && !actionKeys.has("space")) jumpStartedAt = performance.now();
+  actionKeys.add(key);
+});
+
+window.addEventListener("keyup", (event) => {
+  const key = normalizeActionKey(event);
+  if (!key) return;
+  event.preventDefault();
+  actionKeys.delete(key);
 });
 
 document.querySelector("#resetView").addEventListener("click", () => {
@@ -379,16 +406,24 @@ document.querySelector("#resetView").addEventListener("click", () => {
   pitch = 0.05;
 });
 
+initializeBoneControls();
+
 baseCharacterSelect.addEventListener("change", () => {
-  activeBaseCharacter = baseCharacters[baseCharacterSelect.value] ? baseCharacterSelect.value : "male";
+  activeBaseCharacter = ncmBaseCharacters[baseCharacterSelect.value] ? baseCharacterSelect.value : "ncm_peasant_guy";
   character = cloneBaseCharacter(activeBaseCharacter);
   selected = 0;
+  selectedParts.clear();
+  selectedParts.add(selected);
+  rigGroups = createDefaultRigGroups(character);
+  activeGroupId = rigGroups[0]?.id ?? "";
   syncAll();
 });
 
 document.querySelector("#addBox").addEventListener("click", () => {
   character.boxes.push(box("new_box", "#ffffff", [0, 160, -55], [20, 20, 8]));
   selected = character.boxes.length - 1;
+  selectedParts.clear();
+  selectedParts.add(selected);
   syncAll();
 });
 
@@ -398,6 +433,8 @@ document.querySelector("#duplicateBox").addEventListener("click", () => {
   copy.p[0] += 8;
   character.boxes.push(copy);
   selected = character.boxes.length - 1;
+  selectedParts.clear();
+  selectedParts.add(selected);
   syncAll();
 });
 
@@ -405,13 +442,83 @@ document.querySelector("#deleteBox").addEventListener("click", () => {
   if (character.boxes.length <= 1) return;
   character.boxes.splice(selected, 1);
   selected = Math.max(0, selected - 1);
+  rigGroups = sanitizeRigGroups(rigGroups);
+  selectedParts.clear();
+  selectedParts.add(selected);
   syncAll();
 });
 
 document.querySelector("#resetCharacter").addEventListener("click", () => {
   character = cloneBaseCharacter(activeBaseCharacter);
   selected = 0;
+  selectedParts.clear();
+  selectedParts.add(selected);
+  rigGroups = createDefaultRigGroups(character);
+  activeGroupId = rigGroups[0]?.id ?? "";
   syncAll();
+});
+
+toggleBoneBinding.addEventListener("click", () => {
+  boneBindingMode = !boneBindingMode;
+  toggleBoneBinding.setAttribute("aria-pressed", String(boneBindingMode));
+  bonePanel.hidden = !boneBindingMode;
+  renderRig();
+});
+
+document.querySelector("#createGroup").addEventListener("click", () => {
+  createGroupFromSelection();
+});
+
+document.querySelector("#autoBindBones").addEventListener("click", () => {
+  rigGroups = createDefaultRigGroups(character);
+  activeGroupId = rigGroups[0]?.id ?? "";
+  syncRigPanel();
+  renderRig();
+  writeCode();
+});
+
+document.querySelector("#clearSelection").addEventListener("click", () => {
+  selectedParts.clear();
+  syncSelectionState();
+});
+
+groupSelect.addEventListener("change", () => {
+  activeGroupId = groupSelect.value;
+  syncRigPanel();
+  renderRig();
+});
+
+groupList.addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-action]");
+  if (!button) return;
+  const group = rigGroups.find((item) => item.id === button.dataset.id);
+  if (!group) return;
+  if (button.dataset.action === "select") {
+    activeGroupId = group.id;
+  } else if (button.dataset.action === "use") {
+    selectedParts.clear();
+    group.parts.forEach((index) => selectedParts.add(index));
+    selected = group.parts[0] ?? selected;
+    syncSelect();
+    syncPanel();
+    syncSelectionState();
+  } else if (button.dataset.action === "delete") {
+    rigGroups = rigGroups.filter((item) => item.id !== group.id);
+    activeGroupId = rigGroups[0]?.id ?? "";
+  }
+  syncRigPanel();
+  renderRig();
+  writeCode();
+});
+
+boneSelect.addEventListener("change", () => {
+  const group = activeRigGroup();
+  if (!group) return;
+  group.bone = boneSelect.value;
+  if (!group.name || ncmRigBoneIds.includes(group.name)) group.name = group.bone;
+  syncRigPanel();
+  renderRig();
+  writeCode();
 });
 
 toggleCode.addEventListener("click", () => {
@@ -430,6 +537,9 @@ toggleDataMode.addEventListener("click", (event) => {
 
 boxSelect.addEventListener("change", () => {
   selected = Number(boxSelect.value);
+  selectedParts.clear();
+  selectedParts.add(selected);
+  syncSelectionState();
   syncPanel();
 });
 
@@ -497,10 +607,14 @@ paintBoard.addEventListener("pointerup", () => {
 createVectorControls("positionControls", "p", ["x", "y", "z"], -180, 340, 1);
 createVectorControls("scaleControls", "s", ["w", "h", "d"], 1, 160, 1);
 createVectorControls("rotationControls", "r", ["rx", "ry", "rz"], -180, 180, 1);
+createPivotControls();
+rigGroups = createDefaultRigGroups(character);
+activeGroupId = rigGroups[0]?.id ?? "";
 
 window.addEventListener("nicechunk:playerSetLanguageChange", () => {
   updateCodeButtons();
   drawPaintBoard();
+  syncRigPanel();
 });
 window.addEventListener("resize", resize);
 syncAll();
@@ -512,7 +626,7 @@ function box(n, c, p, s, r = [0, 0, 0]) {
 }
 
 function cloneBaseCharacter(key) {
-  return structuredClone(baseCharacters[key] ?? defaultCharacter);
+  return structuredClone(ncmBaseCharacters[key] ?? ncmBaseCharacters.ncm_peasant_guy);
 }
 
 function createPresetBoxes(sources) {
@@ -894,6 +1008,18 @@ function currentBox() {
   return character.boxes[selected];
 }
 
+function initializeBoneControls() {
+  boneSelect.replaceChildren(
+    ...ncmRigBoneIds.map((bone) => {
+      const option = document.createElement("option");
+      option.value = bone;
+      option.textContent = t(boneLabelKeys[bone]);
+      return option;
+    }),
+  );
+  boneSelect.value = "torso";
+}
+
 function createVectorControls(hostId, key, labels, min, max, step) {
   const host = document.querySelector(`#${hostId}`);
   labels.forEach((label, index) => {
@@ -907,6 +1033,7 @@ function createVectorControls(hostId, key, labels, min, max, step) {
       range.value = value;
       number.value = value;
       renderCharacter();
+      renderRig();
       writeCode();
     };
     range.addEventListener("input", () => update(range.value));
@@ -917,10 +1044,315 @@ function createVectorControls(hostId, key, labels, min, max, step) {
   });
 }
 
+function createPivotControls() {
+  ["x", "y", "z"].forEach((label, index) => {
+    const row = document.createElement("label");
+    row.className = "param";
+    row.innerHTML = `<span data-i18n="player.pivot.${label}">${t(`player.pivot.${label}`)}</span><input type="range" min="-220" max="360" step="1" /><input type="number" min="-220" max="360" step="1" />`;
+    const range = row.querySelector('input[type="range"]');
+    const number = row.querySelector('input[type="number"]');
+    const update = (value) => {
+      const group = activeRigGroup();
+      if (!group) return;
+      group.pivot[index] = Number(value);
+      range.value = value;
+      number.value = value;
+      renderRig();
+      writeCode();
+    };
+    range.addEventListener("input", () => update(range.value));
+    number.addEventListener("input", () => update(number.value));
+    row.dataset.index = String(index);
+    pivotControls.appendChild(row);
+  });
+}
+
+function selectPartIndex(index, additive = false) {
+  if (!character.boxes[index]) return;
+  if (!additive) selectedParts.clear();
+  if (additive && selectedParts.has(index)) selectedParts.delete(index);
+  else {
+    selectedParts.add(index);
+    selected = index;
+  }
+  if (!selectedParts.size) selectedParts.add(index);
+  selected = [...selectedParts].at(-1) ?? index;
+  syncSelect();
+  syncPanel();
+  syncSelectionState();
+}
+
+function syncSelectionState() {
+  selectionCount.textContent = `${selectedParts.size}`;
+  renderSelectionHelpers();
+}
+
+function pickPart(event) {
+  updatePointerFromEvent(event);
+  raycaster.setFromCamera(pointer, camera);
+  const hits = raycaster.intersectObjects([...meshes.values()], false);
+  return hits[0]?.object?.userData?.partIndex ?? -1;
+}
+
+function pickBindingMarker(event) {
+  updatePointerFromEvent(event);
+  raycaster.setFromCamera(pointer, camera);
+  const hits = raycaster.intersectObjects([...bindingMarkers.values()], false);
+  return hits[0]?.object?.userData?.groupId ?? "";
+}
+
+function updatePointerFromEvent(event) {
+  const rect = canvas.getBoundingClientRect();
+  pointer.x = ((event.clientX - rect.left) / Math.max(1, rect.width)) * 2 - 1;
+  pointer.y = -(((event.clientY - rect.top) / Math.max(1, rect.height)) * 2 - 1);
+}
+
+function updateSelectionMarquee(drag) {
+  const paneRect = canvas.parentElement.getBoundingClientRect();
+  const left = Math.min(drag.startX, drag.currentX) - paneRect.left;
+  const top = Math.min(drag.startY, drag.currentY) - paneRect.top;
+  const width = Math.abs(drag.currentX - drag.startX);
+  const height = Math.abs(drag.currentY - drag.startY);
+  selectionMarquee.style.left = `${left}px`;
+  selectionMarquee.style.top = `${top}px`;
+  selectionMarquee.style.width = `${width}px`;
+  selectionMarquee.style.height = `${height}px`;
+}
+
+function finishSelectionDrag() {
+  const drag = selectionDrag;
+  selectionDrag = null;
+  selectionMarquee.hidden = true;
+  if (!drag) return;
+  if (drag.active) {
+    selectPartsInScreenRect(drag);
+    return;
+  }
+  if (drag.pickedPart !== -1) {
+    selectPartIndex(drag.pickedPart, drag.additive);
+  } else if (!drag.additive) {
+    selectedParts.clear();
+    syncSelectionState();
+  }
+}
+
+function cancelSelectionDrag() {
+  selectionDrag = null;
+  selectionMarquee.hidden = true;
+}
+
+function selectPartsInScreenRect(drag) {
+  const rect = normalizeScreenRect(drag.startX, drag.startY, drag.currentX, drag.currentY);
+  const nextSelection = new Set(drag.additive ? selectedParts : []);
+  for (const [index, mesh] of meshes.entries()) {
+    const bounds = meshScreenBounds(mesh);
+    if (bounds && intersectsScreenRect(bounds, rect)) nextSelection.add(index);
+  }
+  selectedParts.clear();
+  nextSelection.forEach((index) => selectedParts.add(index));
+  if (selectedParts.size) selected = [...selectedParts].at(-1);
+  syncSelect();
+  syncPanel();
+  syncSelectionState();
+}
+
+function normalizeScreenRect(x1, y1, x2, y2) {
+  return {
+    left: Math.min(x1, x2),
+    right: Math.max(x1, x2),
+    top: Math.min(y1, y2),
+    bottom: Math.max(y1, y2),
+  };
+}
+
+function meshScreenBounds(mesh) {
+  const box = new THREE.Box3().setFromObject(mesh);
+  if (!Number.isFinite(box.min.x) || !Number.isFinite(box.max.x)) return null;
+  const corners = [
+    [box.min.x, box.min.y, box.min.z],
+    [box.min.x, box.min.y, box.max.z],
+    [box.min.x, box.max.y, box.min.z],
+    [box.min.x, box.max.y, box.max.z],
+    [box.max.x, box.min.y, box.min.z],
+    [box.max.x, box.min.y, box.max.z],
+    [box.max.x, box.max.y, box.min.z],
+    [box.max.x, box.max.y, box.max.z],
+  ];
+  const canvasRect = canvas.getBoundingClientRect();
+  let left = Infinity;
+  let right = -Infinity;
+  let top = Infinity;
+  let bottom = -Infinity;
+  let visible = false;
+  for (const corner of corners) {
+    const projected = new THREE.Vector3(...corner).project(camera);
+    if (projected.z < -1 || projected.z > 1) continue;
+    visible = true;
+    const x = canvasRect.left + ((projected.x + 1) / 2) * canvasRect.width;
+    const y = canvasRect.top + ((1 - projected.y) / 2) * canvasRect.height;
+    left = Math.min(left, x);
+    right = Math.max(right, x);
+    top = Math.min(top, y);
+    bottom = Math.max(bottom, y);
+  }
+  return visible ? { left, right, top, bottom } : null;
+}
+
+function intersectsScreenRect(a, b) {
+  return a.left <= b.right && a.right >= b.left && a.top <= b.bottom && a.bottom >= b.top;
+}
+
+function createGroupFromSelection() {
+  const parts = [...selectedParts].sort((a, b) => a - b);
+  if (!parts.length) return;
+  const bone = boneSelect.value || "torso";
+  const group = {
+    id: `g_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`,
+    name: groupNameInput.value.trim() || bone,
+    bone,
+    parts,
+    pivot: inferPivotForParts(parts),
+  };
+  rigGroups.push(group);
+  activeGroupId = group.id;
+  groupNameInput.value = "";
+  syncRigPanel();
+  renderRig();
+  writeCode();
+}
+
+function activeRigGroup() {
+  return rigGroups.find((group) => group.id === activeGroupId) ?? rigGroups[0] ?? null;
+}
+
+function sanitizeRigGroups(groups) {
+  const max = character.boxes.length;
+  return groups
+    .map((group) => ({
+      ...group,
+      parts: [...new Set(group.parts)].filter((index) => index >= 0 && index < max).sort((a, b) => a - b),
+    }))
+    .filter((group) => group.parts.length);
+}
+
+function syncRigPanel() {
+  initializeBoneControls();
+  groupSelect.replaceChildren(
+    ...rigGroups.map((group) => {
+      const option = document.createElement("option");
+      option.value = group.id;
+      option.textContent = `${group.name} · ${t(boneLabelKeys[group.bone])}`;
+      return option;
+    }),
+  );
+  if (activeGroupId && rigGroups.some((group) => group.id === activeGroupId)) groupSelect.value = activeGroupId;
+  else {
+    activeGroupId = rigGroups[0]?.id ?? "";
+    groupSelect.value = activeGroupId;
+  }
+
+  const group = activeRigGroup();
+  boneSelect.value = group?.bone ?? "torso";
+  pivotControls.querySelectorAll(".param").forEach((row) => {
+    const value = group?.pivot[Number(row.dataset.index)] ?? 0;
+    row.querySelector('input[type="range"]').value = value;
+    row.querySelector('input[type="number"]').value = value;
+  });
+
+  groupList.innerHTML = "";
+  rigGroups.forEach((item) => {
+    const card = document.createElement("article");
+    card.className = `group-card${item.id === activeGroupId ? " active" : ""}`;
+    card.innerHTML = `
+      <div class="group-card-head">
+        <strong>${escapeHtml(item.name)}</strong>
+        <span>${escapeHtml(t(boneLabelKeys[item.bone]))}</span>
+      </div>
+      <div class="group-card-meta">${t("player.groupPartCount", { count: item.parts.length })} · ${item.pivot.join(", ")}</div>
+      <div class="group-card-actions">
+        <button type="button" data-action="select" data-id="${item.id}">${t("player.selectGroup")}</button>
+        <button type="button" data-action="use" data-id="${item.id}">${t("player.useGroupSelection")}</button>
+        <button type="button" data-action="delete" data-id="${item.id}">${t("player.deleteGroup")}</button>
+      </div>
+    `;
+    groupList.appendChild(card);
+  });
+}
+
+function createDefaultRigGroups(source) {
+  const assignments = new Map();
+  source.boxes.forEach((part, index) => {
+    const bone = inferBone(part, source.boxes);
+    if (!assignments.has(bone)) assignments.set(bone, []);
+    assignments.get(bone).push(index);
+  });
+  return [...assignments.entries()].map(([bone, parts], index) => ({
+    id: `auto_${index}_${bone}`,
+    name: bone,
+    bone,
+    parts,
+    pivot: inferPivotForParts(parts),
+  }));
+}
+
+function inferBone(part, boxes) {
+  const bounds = modelBounds(boxes);
+  const x = part.p[0];
+  const y = part.p[1];
+  const z = part.p[2];
+  const height = Math.max(1, bounds.maxY - bounds.minY);
+  const normalizedY = (y - bounds.minY) / height;
+  const side = x < 0 ? "left" : "right";
+  const absX = Math.abs(x);
+  if (z > bounds.maxZ - 35 && normalizedY > 0.32 && normalizedY < 0.78) return "backpack";
+  if (normalizedY > 0.76) return "head";
+  if (absX < 34 && normalizedY > 0.35) return normalizedY > 0.62 ? "chest" : "torso";
+  if (absX > 42 && normalizedY > 0.38) {
+    if (normalizedY > 0.56) return `${side}_upper_arm`;
+    if (normalizedY > 0.34) return `${side}_lower_arm`;
+    return `${side}_hand`;
+  }
+  if (normalizedY <= 0.2) return `${side}_foot`;
+  if (normalizedY <= 0.42) return `${side}_lower_leg`;
+  return `${side}_upper_leg`;
+}
+
+function inferPivotForParts(parts) {
+  const selectedBoxes = parts.map((index) => character.boxes[index]).filter(Boolean);
+  const bounds = modelBounds(selectedBoxes);
+  return [
+    Math.round((bounds.minX + bounds.maxX) / 2),
+    Math.round(bounds.maxY),
+    Math.round((bounds.minZ + bounds.maxZ) / 2),
+  ];
+}
+
+function modelBounds(boxes) {
+  const bounds = { minX: Infinity, minY: Infinity, minZ: Infinity, maxX: -Infinity, maxY: -Infinity, maxZ: -Infinity };
+  boxes.forEach((part) => {
+    if (!part) return;
+    bounds.minX = Math.min(bounds.minX, part.p[0] - part.s[0] / 2);
+    bounds.maxX = Math.max(bounds.maxX, part.p[0] + part.s[0] / 2);
+    bounds.minY = Math.min(bounds.minY, part.p[1] - part.s[1] / 2);
+    bounds.maxY = Math.max(bounds.maxY, part.p[1] + part.s[1] / 2);
+    bounds.minZ = Math.min(bounds.minZ, part.p[2] - part.s[2] / 2);
+    bounds.maxZ = Math.max(bounds.maxZ, part.p[2] + part.s[2] / 2);
+  });
+  if (bounds.minX !== Infinity) return bounds;
+  return { minX: 0, minY: 0, minZ: 0, maxX: 0, maxY: 0, maxZ: 0 };
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
+}
+
 function syncAll() {
   syncSelect();
   syncPanel();
   renderCharacter();
+  syncSelectionState();
+  syncRigPanel();
+  renderRig();
   writeCode();
 }
 
@@ -952,7 +1384,7 @@ function syncPanel() {
   boxName.value = part.n;
   boxColor.value = part.c;
   textureMode.value = part.t?.[faceSelect.value] ? "paint" : "solid";
-  document.querySelectorAll(".param").forEach((row) => {
+  document.querySelectorAll(".param[data-key]").forEach((row) => {
     const value = part[row.dataset.key][Number(row.dataset.index)];
     row.querySelector('input[type="range"]').value = value;
     row.querySelector('input[type="number"]').value = value;
@@ -964,18 +1396,158 @@ function renderCharacter() {
   for (const mesh of meshes.values()) root.remove(mesh);
   meshes.clear();
 
-  for (const part of character.boxes) {
+  character.boxes.forEach((part, index) => {
     const material = createMaterials(part);
     const mesh = new THREE.Mesh(cube, material);
     mesh.name = part.n;
+    mesh.userData.partIndex = index;
     mesh.position.set(part.p[0] / 100, part.p[1] / 100, part.p[2] / 100);
     mesh.scale.set(part.s[0] / 100, part.s[1] / 100, part.s[2] / 100);
     mesh.rotation.set(deg(part.r[0]), deg(part.r[1]), deg(part.r[2]));
     mesh.castShadow = true;
     mesh.receiveShadow = true;
     root.add(mesh);
-    meshes.set(part.n, mesh);
+    meshes.set(index, mesh);
+  });
+  renderSelectionHelpers();
+}
+
+function applyBaseMeshTransform(index) {
+  const part = character.boxes[index];
+  const mesh = meshes.get(index);
+  if (!part || !mesh) return;
+  mesh.position.set(part.p[0] / 100, part.p[1] / 100, part.p[2] / 100);
+  mesh.scale.set(part.s[0] / 100, part.s[1] / 100, part.s[2] / 100);
+  mesh.rotation.set(deg(part.r[0]), deg(part.r[1]), deg(part.r[2]));
+}
+
+function applyActionPreview(now) {
+  const movingForward = actionKeys.has("w");
+  const movingBackward = actionKeys.has("s");
+  const movingLeft = actionKeys.has("a");
+  const movingRight = actionKeys.has("d");
+  const moving = movingForward || movingBackward || movingLeft || movingRight;
+  const phase = now * 0.008;
+  const stride = moving ? Math.sin(phase) : 0;
+  const sideStride = movingLeft || movingRight ? (movingLeft ? -1 : 1) : 0;
+  const forwardSign = movingBackward ? -1 : 1;
+  const jumpAge = now - jumpStartedAt;
+  const jumping = jumpAge >= 0 && jumpAge < 620;
+  const jumpT = jumping ? jumpAge / 620 : 1;
+  const jumpHeight = jumping ? Math.sin(Math.PI * jumpT) * 0.72 : 0;
+  const bodyBob = moving ? Math.abs(Math.sin(phase)) * 0.045 : 0;
+  const bodyYaw = sideStride * 0.1;
+
+  root.position.y = jumpHeight + bodyBob;
+  rigRoot.position.y = root.position.y;
+  root.rotation.y = bodyYaw;
+  rigRoot.rotation.y = bodyYaw;
+
+  character.boxes.forEach((_part, index) => applyBaseMeshTransform(index));
+  if (!moving && !jumping) return;
+
+  rigGroups.forEach((group) => {
+    const transform = actionTransformForBone(group.bone, stride, forwardSign, sideStride, jumping, jumpT);
+    if (!transform) return;
+    applyGroupTransform(group, transform);
+  });
+}
+
+function actionTransformForBone(bone, stride, forwardSign, sideStride, jumping, jumpT) {
+  const armSwing = stride * 0.55 * forwardSign;
+  const legSwing = stride * 0.72 * forwardSign;
+  const jumpFold = jumping ? Math.sin(Math.PI * jumpT) : 0;
+  const sideLean = sideStride * 0.28;
+  if (bone === "left_upper_arm" || bone === "left_lower_arm" || bone === "left_hand") return { x: -armSwing, z: sideLean * 0.28 };
+  if (bone === "right_upper_arm" || bone === "right_lower_arm" || bone === "right_hand") return { x: armSwing, z: sideLean * 0.28 };
+  if (bone === "left_upper_leg" || bone === "left_lower_leg" || bone === "left_foot") return { x: legSwing - jumpFold * 0.42, z: sideLean * 0.18 };
+  if (bone === "right_upper_leg" || bone === "right_lower_leg" || bone === "right_foot") return { x: -legSwing - jumpFold * 0.42, z: sideLean * 0.18 };
+  if (bone === "torso" || bone === "chest" || bone === "backpack") return { x: jumping ? -jumpFold * 0.08 : 0, z: sideLean * 0.16 };
+  if (bone === "head" || bone === "neck") return { x: jumping ? jumpFold * 0.06 : 0, z: -sideLean * 0.08 };
+  return null;
+}
+
+function applyGroupTransform(group, transform) {
+  const pivot = new THREE.Vector3(group.pivot[0] / 100, group.pivot[1] / 100, group.pivot[2] / 100);
+  const euler = new THREE.Euler(transform.x || 0, transform.y || 0, transform.z || 0, "XYZ");
+  const matrix = new THREE.Matrix4().makeRotationFromEuler(euler);
+  group.parts.forEach((index) => {
+    const mesh = meshes.get(index);
+    if (!mesh) return;
+    const offset = mesh.position.clone().sub(pivot).applyMatrix4(matrix);
+    mesh.position.copy(pivot).add(offset);
+    mesh.rotation.x += transform.x || 0;
+    mesh.rotation.y += transform.y || 0;
+    mesh.rotation.z += transform.z || 0;
+  });
+}
+
+function normalizeActionKey(event) {
+  const key = String(event.key || "").toLowerCase();
+  if (key === " ") return "space";
+  if (key === "spacebar") return "space";
+  if (key === "w" || key === "a" || key === "s" || key === "d") return key;
+  return "";
+}
+
+function isTextInputTarget(target) {
+  const tag = target?.tagName?.toLowerCase();
+  return tag === "input" || tag === "textarea" || tag === "select" || target?.isContentEditable;
+}
+
+function renderSelectionHelpers() {
+  for (const helper of selectionHelpers.values()) root.remove(helper);
+  selectionHelpers.clear();
+  for (const index of selectedParts) {
+    const mesh = meshes.get(index);
+    if (!mesh) continue;
+    const helper = new THREE.BoxHelper(mesh, 0x8dd9ca);
+    helper.material.depthTest = false;
+    helper.renderOrder = 10;
+    root.add(helper);
+    selectionHelpers.set(index, helper);
   }
+}
+
+function renderRig() {
+  rigRoot.clear();
+  bindingMarkers.clear();
+  bindingLines.clear();
+  if (!boneBindingMode) return;
+  const markerGeometry = new THREE.BoxGeometry(0.12, 0.12, 0.12);
+  rigGroups.forEach((group) => {
+    const active = group.id === activeGroupId;
+    const color = active ? 0x2ba9d6 : 0xd6a84a;
+    const marker = new THREE.Mesh(
+      markerGeometry,
+      new THREE.MeshBasicMaterial({ color, transparent: true, opacity: active ? 0.96 : 0.72 }),
+    );
+    marker.position.set(group.pivot[0] / 100, group.pivot[1] / 100, group.pivot[2] / 100);
+    marker.userData.groupId = group.id;
+    marker.renderOrder = 20;
+    rigRoot.add(marker);
+    bindingMarkers.set(group.id, marker);
+
+    const center = groupCenter(group);
+    const points = [marker.position, new THREE.Vector3(center[0] / 100, center[1] / 100, center[2] / 100)];
+    const line = new THREE.Line(
+      new THREE.BufferGeometry().setFromPoints(points),
+      new THREE.LineBasicMaterial({ color, transparent: true, opacity: active ? 0.86 : 0.38 }),
+    );
+    line.renderOrder = 19;
+    rigRoot.add(line);
+    bindingLines.set(group.id, line);
+  });
+}
+
+function groupCenter(group) {
+  const boxes = group.parts.map((index) => character.boxes[index]).filter(Boolean);
+  const bounds = modelBounds(boxes);
+  return [
+    (bounds.minX + bounds.maxX) / 2,
+    (bounds.minY + bounds.maxY) / 2,
+    (bounds.minZ + bounds.maxZ) / 2,
+  ];
 }
 
 function writeCode() {
@@ -996,7 +1568,9 @@ function toCompactJson(source) {
   return {
     v: source.v,
     u: source.unit,
+    base: activeBaseCharacter,
     b: source.boxes.map((part) => [part.n, part.c, part.p, part.s, part.r, compactTextures(part.t)]),
+    rig: rigGroups.map((group) => [group.name, group.bone, group.pivot, group.parts]),
   };
 }
 
@@ -1052,6 +1626,17 @@ function compactTextures(textures) {
 }
 
 function encodeCharacter(source) {
+  if (ncmBaseCharacters[activeBaseCharacter]) {
+    const code = encodeNcmRigCharacter({
+      character: source,
+      baseCharacter: ncmBaseCharacters[activeBaseCharacter],
+      baseIndex: ncmBaseCharacterKeys.indexOf(activeBaseCharacter),
+      groups: rigGroups,
+      boneIds: ncmRigBoneIds,
+    });
+    return { code, bytes: new TextEncoder().encode(code).length };
+  }
+
   if (source.boxes.length > 63) return encodeLosslessCharacter(source);
 
   const writer = createBitWriter();
@@ -1543,6 +2128,9 @@ function paintCell(event) {
 
 function animate() {
   requestAnimationFrame(animate);
+  const now = performance.now();
+  applyActionPreview(now);
+  selectionHelpers.forEach((helper) => helper.update?.());
   const radius = 6.3;
   camera.position.set(Math.sin(yaw) * radius, 2.2 + Math.sin(pitch) * 3.2, Math.cos(yaw) * radius);
   camera.lookAt(0, 1.45, 0);

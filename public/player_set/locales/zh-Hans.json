@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hans",
     "label": "Simplified Chinese",
-    "version": "player-set-locale-zh-Hans-f9c286ba125aa6a2",
-    "contentHash": "f9c286ba125aa6a2"
+    "version": "player-set-locale-zh-Hans-615cb41c8219538f",
+    "contentHash": "615cb41c8219538f"
   },
   "common": {
     "language": "语言",
@@ -30,6 +30,7 @@
     "baseCharacterMaleScout": "男性斥候",
     "baseCharacterFemalePonytail": "马尾女性",
     "baseCharacterFemaleEngineer": "女性工程师",
+    "baseCharacterGuardian": "守护者",
     "characterCode": "角色代码",
     "collapseCode": "收起代码",
     "chainCharacterCode": "链上角色代码",
@@ -71,6 +72,49 @@
       "rx": "RX",
       "ry": "RY",
       "rz": "RZ"
+    },
+    "baseCharacterNcmPeasantGirl": "NCM 村民女孩",
+    "baseCharacterNcmPeasantGuy": "NCM 村民男孩",
+    "actionPreviewHint": "动作预览：WASD 移动，空格跳跃",
+    "boneBinding": "骨骼绑定",
+    "boneBindingHint": "左键选择方块，Shift/Ctrl 追加多选。在 3D 视图拖拽可以框选。中键旋转视角。拖动绑定点可以移动骨骼枢轴。",
+    "groupName": "编组名称",
+    "groupNamePlaceholder": "left_arm",
+    "targetBone": "目标骨骼",
+    "createGroup": "用选择创建编组",
+    "autoBindBones": "自动绑定默认骨架",
+    "clearSelection": "清空选择",
+    "activeGroup": "当前编组",
+    "groupPartCount": "{count} 个方块",
+    "selectGroup": "选择",
+    "useGroupSelection": "设为当前选择",
+    "deleteGroup": "删除",
+    "pivot": {
+      "x": "枢轴 X",
+      "y": "枢轴 Y",
+      "z": "枢轴 Z"
+    },
+    "bones": {
+      "root": "根骨骼",
+      "hips": "胯部",
+      "torso": "躯干",
+      "chest": "胸部",
+      "neck": "颈部",
+      "head": "头部",
+      "left_upper_arm": "左上臂",
+      "left_lower_arm": "左前臂",
+      "left_hand": "左手",
+      "right_upper_arm": "右上臂",
+      "right_lower_arm": "右前臂",
+      "right_hand": "右手",
+      "left_upper_leg": "左大腿",
+      "left_lower_leg": "左小腿",
+      "left_foot": "左脚",
+      "right_upper_leg": "右大腿",
+      "right_lower_leg": "右小腿",
+      "right_foot": "右脚",
+      "backpack": "背包",
+      "accessory": "配件"
     }
   }
 }

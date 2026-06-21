@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#080c12" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=0.1.63" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=0.1.63" />
+    <link rel="shortcut icon" href="/favicon.ico?v=0.1.63" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=0.1.63" />
+    <link rel="manifest" href="/site.webmanifest?v=0.1.63" />
+    <meta
+      name="description"
+      content="NCM is NiceChunk's compact Solana game asset format. Store voxel 3D models as PDA-friendly chain text without IPFS."
+      data-i18n-content="ncm.page.description"
+    />
+    <title data-i18n="ncm.page.title">NCM On-chain 3D Asset Format</title>
+  </head>
+  <body>
+    <div class="ncm-bg" aria-hidden="true">
+      <div></div>
+      <span></span>
+    </div>
+
+    <header class="site-header">
+      <a class="brand-mark" href="/" aria-label="NiceChunk">
+        <img src="/media/nck.png" alt="" />
+        <span>NICECHUNK</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation" data-i18n-aria-label="ncm.nav.aria">
+        <div class="nav-links">
+          <a href="/" data-i18n="ncm.nav.home">Home</a>
+          <a href="/roadmap/" data-i18n="ncm.nav.roadbook">Roadbook</a>
+          <a href="/world_rule/" data-i18n="ncm.nav.worldRules">World Rules</a>
+          <a href="/resource_rule/" data-i18n="ncm.nav.resources">Resources</a>
+          <a class="active" href="/ncm/" data-i18n="ncm.nav.ncm">NCM</a>
+          <a href="/elements/" data-i18n="ncm.nav.elements">Elements</a>
+          <a href="/fairness/" data-i18n="ncm.nav.fairness">Fairness</a>
+          <a href="/proof-of-frontier/" data-i18n="ncm.nav.proofOfFrontier">Proof</a>
+          <a href="/guardian/" data-i18n="ncm.nav.guardians">Guardians</a>
+          <a href="/contracts/" data-i18n="ncm.nav.contracts">Contracts</a>
+          <a href="/docs/" data-i18n="ncm.nav.docs">Docs</a>
+        </div>
+        <div class="nav-actions">
+          <a class="header-action" href="/play/" data-i18n="ncm.nav.enterWorld">Enter World</a>
+          <div data-i18n-language-menu></div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="ncm-layout">
+      <section class="ncm-hero">
+        <div class="ncm-copy">
+          <p class="eyebrow" data-i18n="ncm.hero.eyebrow">ON-CHAIN 3D ASSET FORMAT</p>
+          <h1 data-i18n="ncm.hero.title">We designed NCM so Solana games can own their 3D assets on-chain.</h1>
+          <p data-i18n="ncm.hero.body">
+            NCM is NiceChunk's compact 3D asset format for Solana and other chains. We are building deeper R&D around this format because it can compress voxel assets into tiny text records that clients fetch directly through RPC, verify publicly, and keep available without IPFS.
+          </p>
+          <div class="ncm-actions">
+            <a href="#converter" data-i18n="ncm.hero.convert">Convert VOX</a>
+            <button id="loadSample" type="button" data-i18n="ncm.hero.sample">Load sample</button>
+          </div>
+        </div>
+        <div class="ncm-format-card">
+          <span data-i18n="ncm.hero.formatLabel">Format prefix</span>
+          <strong>NCM2:</strong>
+          <p data-i18n="ncm.hero.formatBody">Palette, box count, signed positions, and dimensions encoded as compact varints.</p>
+        </div>
+      </section>
+
+      <section class="ncm-principles" aria-label="NCM principles" data-i18n-aria-label="ncm.principles.aria">
+        <article>
+          <span>01</span>
+          <strong data-i18n="ncm.principles.rpc.title">RPC native</strong>
+          <p data-i18n="ncm.principles.rpc.body">A client can read the text from account data and reconstruct the model immediately.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <strong data-i18n="ncm.principles.public.title">Public forever</strong>
+          <p data-i18n="ncm.principles.public.body">The asset is stored with the program state, not hidden behind a mutable external gateway.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <strong data-i18n="ncm.principles.compact.title">Cost aware</strong>
+          <p data-i18n="ncm.principles.compact.body">Same-color voxels are merged into boxes before encoding to reduce storage size.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <strong data-i18n="ncm.principles.portable.title">Chain portable</strong>
+          <p data-i18n="ncm.principles.portable.body">NCM is plain text, so the same asset format can be used beyond one runtime.</p>
+        </article>
+      </section>
+
+      <section class="ncm-thesis" aria-label="Why NCM matters" data-i18n-aria-label="ncm.thesis.aria">
+        <div class="thesis-copy">
+          <p class="eyebrow" data-i18n="ncm.thesis.eyebrow">WHY WE DESIGNED NCM</p>
+          <h2 data-i18n="ncm.thesis.title">A Solana game asset should be part of the state, not a URL attached to it.</h2>
+          <p data-i18n="ncm.thesis.body">
+            NiceChunk is building around NCM because a voxel object can be small enough to live directly inside a program-owned PDA. The asset, its rules, and its ownership can move together, so a game item or NFT does not depend on an external gateway staying online.
+          </p>
+        </div>
+        <div class="thesis-metrics" aria-label="NCM compression examples" data-i18n-aria-label="ncm.thesis.metricsAria">
+          <article>
+            <span data-i18n="ncm.thesis.metricSource">VOX source</span>
+            <strong>23.8 KB</strong>
+            <p data-i18n="ncm.thesis.metricGirl">Peasant girl source file</p>
+          </article>
+          <article>
+            <span data-i18n="ncm.thesis.metricNcm">NCM record</span>
+            <strong>452 B</strong>
+            <p data-i18n="ncm.thesis.metricGirlNcm">Same model as PDA-friendly text</p>
+          </article>
+          <article>
+            <span data-i18n="ncm.thesis.metricSource">VOX source</span>
+            <strong>23.7 KB</strong>
+            <p data-i18n="ncm.thesis.metricGuy">Peasant guy source file</p>
+          </article>
+          <article>
+            <span data-i18n="ncm.thesis.metricNcm">NCM record</span>
+            <strong>354 B</strong>
+            <p data-i18n="ncm.thesis.metricGuyNcm">About a 400-byte class payload</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="ncm-roadmap" aria-label="NCM research direction" data-i18n-aria-label="ncm.roadmap.aria">
+        <article>
+          <span>01</span>
+          <h2 data-i18n="ncm.roadmap.pda.title">PDA-native resources</h2>
+          <p data-i18n="ncm.roadmap.pda.body">NCM turns small characters, props, equipment, and block decorations into account data that Solana clients can read through normal RPC calls.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h2 data-i18n="ncm.roadmap.trade.title">Safer NFT trading</h2>
+          <p data-i18n="ncm.roadmap.trade.body">When the visual asset is stored with the asset record, buyers do not need to trust that an IPFS gateway, metadata server, or mutable JSON link will keep resolving later.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h2 data-i18n="ncm.roadmap.research.title">Useful compression research</h2>
+          <p data-i18n="ncm.roadmap.research.body">NCM is also the base for our NCM-DNA exploration: searching for shorter deterministic genes that reproduce the same model and can turn asset compression into useful computation.</p>
+        </article>
+      </section>
+
+      <section class="converter-shell" id="converter">
+        <div class="converter-panel input-panel">
+          <div class="panel-head">
+            <p class="eyebrow" data-i18n="ncm.converter.eyebrow">VOX TO NCM</p>
+            <h2 data-i18n="ncm.converter.title">Browser local converter</h2>
+            <p data-i18n="ncm.converter.body">Upload a MagicaVoxel .vox file. The file is parsed locally in your browser and converted into NCM text.</p>
+          </div>
+
+          <label class="drop-zone" for="voxFile">
+            <input id="voxFile" type="file" accept=".vox" />
+            <strong data-i18n="ncm.converter.dropTitle">Drop or select a .vox file</strong>
+            <span data-i18n="ncm.converter.dropBody">MagicaVoxel SIZE, XYZI, and RGBA chunks are supported.</span>
+          </label>
+
+          <div class="tool-grid">
+            <label>
+              <span data-i18n="ncm.converter.mode">Mode</span>
+              <select id="mergeMode">
+                <option value="merge" data-i18n="ncm.converter.merge">Merge boxes</option>
+                <option value="raw" data-i18n="ncm.converter.raw">Raw voxels</option>
+              </select>
+            </label>
+            <label>
+              <span data-i18n="ncm.converter.height">Target height</span>
+              <input id="targetHeight" type="number" min="80" max="900" step="10" value="300" />
+            </label>
+          </div>
+
+          <div class="sample-list" id="sampleList"></div>
+
+          <div class="stats-grid" id="statsGrid" aria-live="polite"></div>
+
+          <div class="license-note">
+            <strong data-i18n="ncm.license.title">Sample attribution</strong>
+            <p data-i18n="ncm.license.body">
+              Sample VOX characters are from OpenGameArt, created by JoshMckay, licensed under CC-BY 4.0.
+            </p>
+          </div>
+        </div>
+
+        <div class="converter-panel preview-panel">
+          <div class="preview-head">
+            <div>
+              <p class="eyebrow" data-i18n="ncm.preview.eyebrow">LIVE PREVIEW</p>
+              <h2 id="previewTitle" data-i18n="ncm.preview.title">No model loaded</h2>
+            </div>
+            <button id="resetView" type="button" data-i18n="ncm.preview.reset">Reset view</button>
+          </div>
+          <canvas id="ncmPreview"></canvas>
+        </div>
+
+        <div class="converter-panel output-panel">
+          <div class="panel-head">
+            <p class="eyebrow" data-i18n="ncm.output.eyebrow">NCM OUTPUT</p>
+            <h2 data-i18n="ncm.output.title">Compact chain text</h2>
+            <p data-i18n="ncm.output.body">Store this payload in account data or a program-owned asset record. Clients can decode it without IPFS.</p>
+          </div>
+          <textarea id="ncmOutput" spellcheck="false" readonly placeholder="NCM2:..." data-i18n-placeholder="ncm.output.placeholder"></textarea>
+          <div class="output-actions">
+            <button id="copyNcm" type="button" data-i18n="ncm.output.copy">Copy NCM</button>
+            <button id="downloadNcm" type="button" data-i18n="ncm.output.download">Download .ncm</button>
+          </div>
+          <p class="status-line" id="statusLine" data-i18n="ncm.status.ready">Ready.</p>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./ncm.js"></script>
+  </body>
+</html>

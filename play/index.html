@@ -312,6 +312,101 @@
           <aside class="backpack-detail" id="backpackDetail" aria-live="polite"></aside>
         </div>
       </section>
+      <div class="market-overlay" id="marketOverlay" aria-hidden="true" hidden></div>
+      <section class="market-panel" id="marketPanel" role="dialog" aria-modal="false" aria-labelledby="marketTitle" hidden>
+        <header class="market-header">
+          <div>
+            <span class="market-eyebrow" data-i18n="main.market.eyebrow">Trade Terminal</span>
+            <h2 id="marketTitle" data-i18n="main.market.title">Market</h2>
+          </div>
+          <div class="market-header-meta">
+            <span id="marketWallet">DEV...1111</span>
+            <span id="marketBackpack">0/50</span>
+            <button class="market-close" id="marketClose" type="button" aria-label="Close market" data-i18n-aria-label="main.market.close">×</button>
+          </div>
+        </header>
+        <div class="market-tabs" role="tablist" aria-label="Market sections" data-i18n-aria-label="main.market.tabs">
+          <button class="market-tab active" type="button" role="tab" aria-selected="true" data-market-tab="browse" data-i18n="main.market.browseTab">Browse</button>
+          <button class="market-tab" type="button" role="tab" aria-selected="false" data-market-tab="sell" data-i18n="main.market.sellTab">Sell</button>
+          <button class="market-tab" type="button" role="tab" aria-selected="false" data-market-tab="orders" data-i18n="main.market.ordersTab">Orders</button>
+        </div>
+        <div class="market-body">
+          <aside class="market-sidebar">
+            <div class="market-search">
+              <label for="marketSearch" data-i18n="main.market.searchLabel">Search</label>
+              <input id="marketSearch" type="search" autocomplete="off" spellcheck="false" placeholder="Resource, equipment, coordinate" data-i18n-placeholder="main.market.searchPlaceholder" />
+            </div>
+            <div class="market-filter-grid" aria-label="Market filters" data-i18n-aria-label="main.market.filters">
+              <button class="active" type="button" data-market-category="all" data-i18n="main.market.categoryAll">All</button>
+              <button type="button" data-market-category="raw" data-i18n="main.market.categoryRaw">Raw Materials</button>
+              <button type="button" data-market-category="equipment" data-i18n="main.market.categoryEquipment">Equipment</button>
+              <button type="button" data-market-category="building" data-i18n="main.market.categoryBuilding">Building Materials</button>
+              <button type="button" data-market-category="vegetation" data-i18n="main.market.categoryVegetation">Vegetation</button>
+              <button type="button" data-market-category="clothing" data-i18n="main.market.categoryClothing">Clothing</button>
+            </div>
+            <div class="market-rate-card">
+              <span data-i18n="main.market.feeLabel">Market Fee</span>
+              <strong data-i18n="main.market.feeValue">2.5%</strong>
+              <p data-i18n="main.market.settlement">Preferred settlement: NCK</p>
+            </div>
+          </aside>
+          <div class="market-content">
+            <section class="market-tab-panel active" data-market-tab-panel="browse">
+              <div class="market-listing-grid" id="marketListingGrid"></div>
+            </section>
+            <section class="market-tab-panel" data-market-tab-panel="sell" hidden>
+              <div class="market-step-rail" aria-label="Sell listing steps">
+                <span class="active" data-i18n="main.market.stepSelectItem">1. Select Item</span>
+                <span data-i18n="main.market.stepListingDraft">2. Listing Draft</span>
+              </div>
+              <div class="market-sell-flow">
+                <div class="market-inventory-panel">
+                  <div class="market-panel-head">
+                    <span data-i18n="main.market.inventoryEyebrow">Backpack + Hotbar</span>
+                    <strong data-i18n="main.market.inventoryTitle">Select one item to list</strong>
+                  </div>
+                  <div class="market-inventory-grid" id="marketInventoryGrid"></div>
+                </div>
+                <form class="market-listing-form" id="marketListingForm">
+                  <div class="market-panel-head">
+                    <span data-i18n="main.market.listingEyebrow">Listing Draft</span>
+                    <strong id="marketSelectedItem" data-i18n="main.market.noSelection">No item selected</strong>
+                  </div>
+                  <label>
+                    <span data-i18n="main.market.categoryLabel">Category</span>
+                    <select id="marketListingCategory">
+                      <option value="raw" data-i18n="main.market.categoryRaw">Raw Materials</option>
+                      <option value="equipment" data-i18n="main.market.categoryEquipment">Equipment</option>
+                      <option value="building" data-i18n="main.market.categoryBuilding">Building Materials</option>
+                      <option value="vegetation" data-i18n="main.market.categoryVegetation">Vegetation</option>
+                      <option value="clothing" data-i18n="main.market.categoryClothing">Clothing</option>
+                    </select>
+                  </label>
+                  <label>
+                    <span data-i18n="main.market.currencyLabel">Currency</span>
+                    <select id="marketListingCurrency">
+                      <option value="NCK">NCK</option>
+                      <option value="SOL">SOL</option>
+                    </select>
+                  </label>
+                  <label>
+                    <span data-i18n="main.market.priceLabel">Price</span>
+                    <input id="marketListingPrice" type="number" min="0" step="0.000001" inputmode="decimal" placeholder="0.00" data-i18n-placeholder="main.market.pricePlaceholder" />
+                  </label>
+                  <button class="market-submit" id="marketCreateListing" type="submit" data-i18n="main.market.createListing" disabled>Create Listing</button>
+                  <p class="market-form-status" id="marketFormStatus" aria-live="polite" data-i18n="main.market.formHint">Select an item, set category and price, then create an on-chain listing.</p>
+                </form>
+              </div>
+            </section>
+            <section class="market-tab-panel" data-market-tab-panel="orders" hidden>
+              <div class="market-listing-grid" id="marketOrdersGrid"></div>
+            </section>
+          </div>
+        </div>
+      </section>
+      <button class="market-phone" id="marketPhone" type="button" aria-label="Open market" data-i18n-aria-label="main.market.open">
+        <span aria-hidden="true"></span>
+      </button>
       <div class="hotbar" id="hotbar" aria-label="Hotbar" data-i18n-aria-label="main.hotbar"></div>
       <div class="chain-event-log" id="chainEventLog" aria-label="Chain event log" data-i18n-aria-label="main.chainLog.aria" aria-live="polite"></div>
       <div class="resource-debug-feed" id="resourceDebugFeed" aria-label="Resource simulation debug log" data-i18n-aria-label="resourceSimulator.debug.aria" hidden></div>

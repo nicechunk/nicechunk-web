@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ja",
     "label": "Japanese",
-    "version": "locale-ja-3dadac384d0b99d8",
-    "contentHash": "3dadac384d0b99d8"
+    "version": "locale-ja-ab3d82ca3806f731",
+    "contentHash": "ab3d82ca3806f731"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -241,7 +241,8 @@
       "leaves": "葉",
       "red_flower": "赤い花",
       "forged_item": "鍛造アイテム",
-      "backpack": "バックパック"
+      "backpack": "バックパック",
+      "market_phone": "Market Phone"
     },
     "hotbarSlot": {
       "empty": "スロット {slot}: 空",
@@ -311,6 +312,77 @@
       "publicRpcFailed": "Public devnet RPC is rate limited. Add a Helius API key to keep chain reads and mining transactions reliable.",
       "invalid": "Enter a Helius API key before saving.",
       "saved": "Saved. NiceChunk will use your Helius devnet RPC for chain calls."
+    },
+    "market": {
+      "open": "マーケットを開く",
+      "close": "Close market",
+      "eyebrow": "Trade Terminal",
+      "title": "マーケット",
+      "tabs": "Market sections",
+      "browseTab": "閲覧",
+      "sellTab": "売却",
+      "ordersTab": "注文",
+      "searchLabel": "Search",
+      "searchPlaceholder": "Resource, equipment, coordinate",
+      "filters": "Market filters",
+      "categoryAll": "All",
+      "categoryRaw": "Raw Materials",
+      "categoryEquipment": "Equipment",
+      "categoryBuilding": "Building Materials",
+      "categoryVegetation": "Vegetation",
+      "categoryClothing": "Clothing",
+      "feeLabel": "Market Fee",
+      "feeValue": "2.5%",
+      "settlement": "Preferred settlement: NCK",
+      "backpackCount": "{count}/{capacity}",
+      "sampleIron": "Iron Ore Fragment",
+      "sampleIronMeta": "Raw material",
+      "samplePickaxe": "Forged Pickaxe",
+      "samplePickaxeMeta": "Tool · Rare",
+      "sampleBrick": "Stone Brick Stack",
+      "sampleBrickMeta": "Building",
+      "sampleCloak": "Oak Leaf Block",
+      "sampleCloakMeta": "Vegetation",
+      "buy": "購入",
+      "buyPending": "Buying...",
+      "buyCreated": "Purchase confirmed on-chain: {signature}",
+      "buyFailed": "Buy transaction failed: {reason}",
+      "cancelListing": "Cancel",
+      "sampleListing": "Sample listing",
+      "loadingListings": "Loading listings...",
+      "chainListingLoadFailed": "On-chain listings are temporarily unavailable.",
+      "chainListingName": "On-chain Resource Listing",
+      "chainListingMeta": "{source} slot {slot}",
+      "sourceBackpack": "Backpack",
+      "sourceHotbar": "Hotbar",
+      "listingUnavailable": "listing unavailable",
+      "selfPurchase": "cannot buy your own listing",
+      "nckTokenMissing": "wallet has no NCK token account",
+      "stepSelectItem": "1. Select Item",
+      "stepListingDraft": "2. Listing Draft",
+      "inventoryEyebrow": "Backpack + Hotbar",
+      "inventoryTitle": "Select one item to list",
+      "listingEyebrow": "Listing Draft",
+      "noSelection": "No item selected",
+      "categoryLabel": "Category",
+      "currencyLabel": "Currency",
+      "priceLabel": "Price",
+      "pricePlaceholder": "0.00",
+      "formHint": "Select an item, set category and price, then create an on-chain listing.",
+      "createListing": "出品を作成",
+      "noOrders": "No active orders",
+      "noOrdersMeta": "Wallet orders will appear here.",
+      "noListings": "No listings match",
+      "noListingsMeta": "Try another category or search term.",
+      "noInventoryItems": "No listable items",
+      "noInventoryItemsMeta": "Equip a backpack or keep tools in your hotbar to create listings.",
+      "invalidListing": "Select an item and enter a valid price.",
+      "listingPending": "Confirm the transaction to create this listing on-chain.",
+      "listingCreated": "Listing created on-chain: {signature}",
+      "listingFailed": "Listing transaction failed: {reason}",
+      "cancelPending": "Canceling...",
+      "cancelFailed": "Cancel transaction failed: {reason}",
+      "hotbarSlotMeta": "Hotbar slot {slot}"
     },
     "block": {
       "unknown": "Unknown Block",
@@ -522,6 +594,294 @@
       "genesisAlreadyRegistered": "Genesis Guardian はすでに登録済みです。",
       "guardianNotActive": "This Guardian is not active.",
       "unknownProgramError": "Guardian プログラムがエラーを返しました: {code}"
+    }
+  },
+  "ncm": {
+    "nav": {
+      "aria": "Primary navigation",
+      "home": "Home",
+      "roadbook": "Roadbook",
+      "worldRules": "World Rules",
+      "resources": "Resources",
+      "ncm": "NCM",
+      "elements": "Elements",
+      "fairness": "Fairness",
+      "proofOfFrontier": "Proof",
+      "guardians": "Guardians",
+      "contracts": "Contracts",
+      "docs": "Docs",
+      "enterWorld": "Enter World"
+    },
+    "page": {
+      "title": "NCM オンチェーン 3D アセット形式",
+      "description": "NCM is NiceChunk's compact Solana game asset format. Store voxel 3D models as PDA-friendly chain text without IPFS."
+    },
+    "hero": {
+      "eyebrow": "ON-CHAIN 3D ASSET FORMAT",
+      "title": "We designed NCM so Solana games can own their 3D assets on-chain.",
+      "body": "NCM is NiceChunk's compact 3D asset format for Solana and other chains. We are building deeper R&D around this format because it can compress voxel assets into tiny text records that clients fetch directly through RPC, verify publicly, and keep available without IPFS.",
+      "convert": "VOX を変換",
+      "sample": "サンプルを読み込む",
+      "formatLabel": "Format prefix",
+      "formatBody": "Palette, box count, signed positions, and dimensions encoded as compact varints."
+    },
+    "principles": {
+      "aria": "NCM principles",
+      "rpc": {
+        "title": "RPC native",
+        "body": "A client can read the text from account data and reconstruct the model immediately."
+      },
+      "public": {
+        "title": "Public forever",
+        "body": "The asset is stored with the program state, not hidden behind a mutable external gateway."
+      },
+      "compact": {
+        "title": "Cost aware",
+        "body": "Same-color voxels are merged into boxes before encoding to reduce storage size."
+      },
+      "portable": {
+        "title": "Chain portable",
+        "body": "NCM is plain text, so the same asset format can be used beyond one runtime."
+      }
+    },
+    "thesis": {
+      "aria": "Why NCM matters",
+      "eyebrow": "WHY WE DESIGNED NCM",
+      "title": "A Solana game asset should be part of the state, not a URL attached to it.",
+      "body": "NiceChunk is building around NCM because a voxel object can be small enough to live directly inside a program-owned PDA. The asset, its rules, and its ownership can move together, so a game item or NFT does not depend on an external gateway staying online.",
+      "metricsAria": "NCM compression examples",
+      "metricSource": "VOX source",
+      "metricNcm": "NCM record",
+      "metricGirl": "Peasant girl source file",
+      "metricGirlNcm": "Same model as PDA-friendly text",
+      "metricGuy": "Peasant guy source file",
+      "metricGuyNcm": "About a 400-byte class payload"
+    },
+    "roadmap": {
+      "aria": "NCM research direction",
+      "pda": {
+        "title": "PDA-native resources",
+        "body": "NCM turns small characters, props, equipment, and block decorations into account data that Solana clients can read through normal RPC calls."
+      },
+      "trade": {
+        "title": "Safer NFT trading",
+        "body": "When the visual asset is stored with the asset record, buyers do not need to trust that an IPFS gateway, metadata server, or mutable JSON link will keep resolving later."
+      },
+      "research": {
+        "title": "Useful compression research",
+        "body": "NCM is also the base for our NCM-DNA exploration: searching for shorter deterministic genes that reproduce the same model and can turn asset compression into useful computation."
+      }
+    },
+    "converter": {
+      "eyebrow": "VOX TO NCM",
+      "title": "ブラウザ内ローカル変換",
+      "body": "Upload a MagicaVoxel .vox file. The file is parsed locally in your browser and converted into NCM text.",
+      "dropTitle": ".vox ファイルをドロップまたは選択",
+      "dropBody": "MagicaVoxel SIZE, XYZI, and RGBA chunks are supported.",
+      "mode": "Mode",
+      "merge": "Merge boxes",
+      "raw": "Raw voxels",
+      "height": "Target height"
+    },
+    "license": {
+      "title": "Sample attribution",
+      "body": "Sample VOX characters are from OpenGameArt, created by JoshMckay, licensed under CC-BY 4.0."
+    },
+    "preview": {
+      "eyebrow": "LIVE PREVIEW",
+      "title": "No model loaded",
+      "titleLoaded": "NCM model",
+      "reset": "Reset view"
+    },
+    "output": {
+      "eyebrow": "NCM OUTPUT",
+      "title": "Compact chain text",
+      "body": "Store this payload in account data or a program-owned asset record. Clients can decode it without IPFS.",
+      "placeholder": "NCM2:...",
+      "copy": "NCM をコピー",
+      "download": ".ncm をダウンロード"
+    },
+    "stats": {
+      "voxels": "Source voxels",
+      "boxes": "NCM boxes",
+      "chars": "Text characters",
+      "size": "Source size"
+    },
+    "samples": {
+      "girl": "Peasant Girl",
+      "guy": "Peasant Guy"
+    },
+    "status": {
+      "ready": "準備完了。",
+      "loadingSample": "Loading sample NCM...",
+      "sampleLoaded": "Sample loaded.",
+      "converting": "Converting VOX to NCM...",
+      "converted": "変換しました。",
+      "copied": "NCM をコピーしました。",
+      "copyFailed": "Copy failed.",
+      "downloaded": "NCM downloaded.",
+      "failed": "Failed: {reason}"
+    }
+  },
+  "ncmDna": {
+    "nav": {
+      "aria": "Primary navigation",
+      "home": "Home",
+      "roadbook": "Roadbook",
+      "worldRules": "World Rules",
+      "resources": "Resources",
+      "ncm": "NCM",
+      "dna": "DNA ラボ",
+      "elements": "Elements",
+      "fairness": "Fairness",
+      "proofOfFrontier": "Proof",
+      "contracts": "Contracts",
+      "enterWorld": "ワールドへ"
+    },
+    "page": {
+      "title": "NCM DNA ラボ",
+      "description": "NCM DNA Lab は、同じ正規直方体モデルを生成できる短い決定的遺伝子を検索します。"
+    },
+    "common": {
+      "yes": "Yes",
+      "no": "No",
+      "on": "On",
+      "off": "Off"
+    },
+    "hero": {
+      "eyebrow": "NCM 遺伝子検索実験",
+      "title": "NCM DNA ラボ",
+      "body": "NCM DNA Lab is an experimental gene search system for on-chain 3D assets. Instead of storing every cube, it searches for a shorter deterministic gene that can grow into the same model.",
+      "pow": "In the future, this search can become a useful Proof of Work: miners spend CPU power to discover shorter genes, reduce PDA storage size, and earn rewards from the storage cost saved."
+    },
+    "flow": {
+      "raw": "Raw Cuboid Model",
+      "search": "NCM-DNA Gene Search",
+      "grow": "Grow(gene) Hash Match"
+    },
+    "target": {
+      "eyebrow": "ターゲットモデル",
+      "title": "Deterministic cuboid target",
+      "seed": "ターゲットシード",
+      "source": "ソース",
+      "ncmCharacter": "NCM page character",
+      "hiddenGene": "Hidden Gene",
+      "rawVariation": "Raw Variation",
+      "ornaments": "Ornaments",
+      "generate": "ターゲット生成",
+      "random": "ランダムターゲット",
+      "reveal": "Reveal Hidden Gene"
+    },
+    "search": {
+      "eyebrow": "CPU SEARCH",
+      "title": "Worker controlled gene search",
+      "mode": "Search Mode",
+      "seedSearch": "DNA シード自由検索",
+      "ncmRandom": "NCM アバターランダム",
+      "exact": "Exact Parameter Recovery",
+      "compression": "Compression Search",
+      "evolution": "Evolution Search",
+      "threads": "Threads",
+      "auto": "Auto",
+      "maxCandidates": "最大候補数",
+      "maxSeedLength": "DNA シード最大長",
+      "start": "検索開始",
+      "continuous": "連続検索",
+      "pause": "一時停止",
+      "resume": "再開",
+      "stop": "停止",
+      "reset": "リセット"
+    },
+    "result": {
+      "eyebrow": "最良結果",
+      "title": "Seed and compiled gene",
+      "seed": "最良 DNA シード",
+      "gene": "Compiled gene",
+      "copySeed": "シードをコピー",
+      "growSeed": "シードから作成",
+      "copy": "Copy Gene",
+      "grow": "Grow Gene",
+      "seedInput": "Seed input",
+      "seedPlaceholder": "NCS1.AV...",
+      "geneInput": "Gene input",
+      "genePlaceholder": "NCD1.HM..."
+    },
+    "viewer": {
+      "eyebrow": "3D PREVIEW",
+      "title": "Canonical cuboid model",
+      "canvasAria": "NCM DNA 3D モデルビューア",
+      "modelAria": "Viewer model",
+      "renderAria": "Render mode",
+      "target": "ターゲットモデル",
+      "best": "最良遺伝子モデル",
+      "compare": "並べて表示",
+      "diff": "差分表示",
+      "cuboid": "Cuboid",
+      "voxel": "Voxel",
+      "wireframe": "Wireframe",
+      "resetCamera": "カメラをリセット"
+    },
+    "cpu": {
+      "eyebrow": "CPU FRIENDLY",
+      "title": "Why CPU-first?",
+      "body": "NCM-DNA v1 uses a rule-based cuboid growth language instead of GPU-friendly voxel functions. The search contains branching, templates, symmetry detection, canonical sorting, and variable-length genes. These operations are more suitable for general CPU execution and harder to fully parallelize on GPU."
+    },
+    "chain": {
+      "eyebrow": "FUTURE ON-CHAIN FLOW",
+      "title": "Storage-saving submission path",
+      "step1": "Asset PDA stores canonical_model_hash and current_encoding.",
+      "step2": "Miner submits a shorter gene.",
+      "step3": "Program verifies grow(gene) hash equals canonical_model_hash.",
+      "step4": "If gene is shorter, asset encoding is updated.",
+      "step5": "Released PDA rent can be shared between miner, owner, and protocol pool."
+    },
+    "metrics": {
+      "status": "状態",
+      "candidates": "候補",
+      "speed": "速度",
+      "speedValue": "{value}/s",
+      "generation": "Generation",
+      "bestGeneSize": "Best gene size",
+      "rawModelSize": "Raw model size",
+      "ratio": "Compression",
+      "score": "スコア",
+      "targetHash": "Target hash",
+      "bestHash": "Best hash",
+      "bestSeed": "最良シード",
+      "seedLength": "シード長",
+      "exact": "Exact match",
+      "threads": "Threads",
+      "threadValue": "{value}/{planned}",
+      "elapsed": "経過",
+      "saved": "Saved",
+      "bytes": "{value} バイト"
+    },
+    "status": {
+      "idle": "待機中",
+      "running": "実行中",
+      "paused": "一時停止",
+      "stopped": "停止",
+      "success": "成功"
+    },
+    "log": {
+      "eyebrow": "SEARCH LOG",
+      "title": "Worker イベント",
+      "targetGenerated": "Target generated: {hash}",
+      "ncmTargetLoaded": "NCM character target loaded with {boxes} cuboids.",
+      "workerError": "Worker error: {message}",
+      "searchStarted": "検索を開始しました。",
+      "continuousStarted": "{threads} 個の worker スレッドで連続検索を開始しました。",
+      "searchPaused": "Search paused.",
+      "searchResumed": "Search resumed.",
+      "searchReset": "Search reset.",
+      "best": "最良スコア {score}: {gene}",
+      "success": "{candidates} 候補後に完全一致を発見しました。",
+      "copied": "遺伝子をコピーしました。",
+      "seedCopied": "シードをコピーしました。",
+      "geneGrown": "Gene grown: {hash}",
+      "seedGrown": "Seed grown: {hash}",
+      "invalidGene": "Invalid gene: {message}",
+      "invalidSeed": "Invalid seed: {message}"
     }
   },
   "resourceSimulator": {

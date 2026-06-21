@@ -20,6 +20,14 @@ The web repository is the integration layer, not the final authority for every s
 
 That makes `src/main.js` a composition point. It should wire stable modules together, surface loading and failure states clearly, and keep protocol decisions in the program, SDK, worldgen, Guardian, and asset-format repositories where they can be reviewed independently.
 
+## Startup State Machine
+
+![Browser startup state machine](docs/diagrams/startup-state-machine.svg)
+
+The client boot path is intentionally staged. It checks the game session, loads language data, reads world configuration, syncs chain-backed resource changes, initializes rendering, builds the first visible chunks, and only then marks the world ready. Each stage has a user-facing loading state because a blank canvas is not a debuggable failure mode.
+
+This is one of the main places where the web client should keep getting sharper. Startup failures should point to the layer that failed: wallet session, locale cache, RPC configuration, chain account read, renderer setup, or terrain mesh generation.
+
 ## System Principles
 
 - Game first: the first screen should lead users into a functioning world, not just a marketing page.

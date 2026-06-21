@@ -11,7 +11,7 @@
     "fairness": "公平",
     "proofOfFrontier": "證明",
     "economy": "經濟",
-    "watchers": "Watchers",
+    "watchers": "Guardians",
     "resources": "資源",
     "elements": "元素",
     "docs": "文檔",
@@ -26,7 +26,7 @@
     "intro": "簡介",
     "world": "世界",
     "economy": "經濟",
-    "watchers": "Watchers",
+    "watchers": "Guardians",
     "roadmap": "路線圖"
   },
   "hero": {
@@ -42,7 +42,7 @@
       "alpha": "Alpha 預覽直播",
       "solana": "Solana 錢包就緒",
       "seeded": "種子 Chunk 引擎",
-      "watchers": "Watcher Network 即將推出"
+      "watchers": "Guardian Network 即將推出"
     }
   },
   "world": {
@@ -79,8 +79,8 @@
       "body": "連結您的 wallet，建立您的玩家檔案，並在 NiceChunk 世界中記錄您的進度。"
     },
     "watchers": {
-      "title": "Watcher Network",
-      "body": "Watcher 節點有助於使區域可存取、支援即時通訊並為世界的去中心化協調做好準備。"
+      "title": "Guardian Network",
+      "body": "Guardian 節點有助於使區域可存取、支援即時通訊並為世界的去中心化協調做好準備。"
     }
   },
   "economy": {
@@ -97,17 +97,17 @@
     }
   },
   "watchers": {
-    "eyebrow": "Watcher Network",
-    "title": "運行 Watcher。保持一個地區的活力。",
-    "body": "Watcher 節點是 NiceChunk 的存取層。他們不控制玩家資產或處理鏈上交易。相反，它們幫助各地區保持聯繫、提供即時通訊並支援當地的活動。隨著世界的發展，Watchers 成為維持 chunks 活力的基礎設施。",
+    "eyebrow": "Guardian Network",
+    "title": "運行 Guardian。保持一個地區的活力。",
+    "body": "Guardian 節點是 NiceChunk 的存取層。他們不控制玩家資產或處理鏈上交易。相反，它們幫助各地區保持聯繫、提供即時通訊並支援當地的活動。隨著世界的發展，Guardians 成為維持 chunks 活力的基礎設施。",
     "badges": {
       "noCustody": "無資產託管",
       "noTransactions": "無玩家交易處理",
       "communication": "實時區域通信"
     },
     "animation": {
-      "aria": "Watcher 網路動畫",
-      "title": "Watcher 節點",
+      "aria": "Guardian 網路動畫",
+      "title": "Guardian 節點",
       "body": "区域接入层"
     },
     "guardianConsole": "開啟守護者控制台"
@@ -134,7 +134,7 @@
       "body": "創世通行證、NCK 公用程式、市場結算、玩家擁有的資產層。"
     },
     "phase4": {
-      "title": "第 4 階段 - Watcher Network",
+      "title": "第 4 階段 - Guardian Network",
       "body": "區域接觸節點，即時通訊，觀察者質押，區域級參與。"
     },
     "phase5": {
@@ -151,7 +151,7 @@
     "worldRules": "世界规则",
     "proofOfFrontier": "Proof of Frontier",
     "nckEconomy": "NCK 經濟",
-    "watcherNetwork": "Watcher Network",
+    "watcherNetwork": "Guardian Network",
     "whitepaper": "白皮书",
     "fairness": "公平",
     "github": "GitHub"

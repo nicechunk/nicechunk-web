@@ -2,8 +2,22 @@
   "_meta": {
     "language": "es",
     "label": "Spanish",
-    "version": "home-locale-es-640d0790bff3cf04",
-    "contentHash": "640d0790bff3cf04"
+    "version": "home-locale-es-1ff87ecb08196dec",
+    "contentHash": "1ff87ecb08196dec"
+  },
+  "siteFooter": {
+    "tagline": "Un protocolo de mundo voxel con semillas en Solana.",
+    "navigationAria": "Navegación del pie de página",
+    "socialAria": "Enlaces sociales de NiceChunk",
+    "home": "Inicio",
+    "play": "Entrar al mundo",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Guardianes",
+    "contracts": "Contratos",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Todos los derechos reservados."
   },
   "meta": {
     "title": "NiceChunk | Sea dueño del mundo, un chunk a la vez"
@@ -17,7 +31,7 @@
     "fairness": "Equidad",
     "proofOfFrontier": "Prueba",
     "economy": "Economía",
-    "watchers": "Watchers",
+    "watchers": "Guardians",
     "resources": "Recursos",
     "elements": "Elementos",
     "docs": "Documentos",
@@ -32,7 +46,7 @@
     "intro": "Introducción",
     "world": "Mundo",
     "economy": "Economía",
-    "watchers": "Watchers",
+    "watchers": "Guardians",
     "roadmap": "Hoja de ruta"
   },
   "hero": {
@@ -48,7 +62,7 @@
       "alpha": "Alpha Vista previa en vivo",
       "solana": "Solana Listo para billetera",
       "seeded": "Motor Chunk sembrado",
-      "watchers": "Watcher Network Próximamente"
+      "watchers": "Guardian Network Próximamente"
     }
   },
   "world": {
@@ -85,8 +99,8 @@
       "body": "Conecte su wallet, cree su perfil de jugador y lleve su progreso por todo el mundo NiceChunk."
     },
     "watchers": {
-      "title": "Watcher Network",
-      "body": "Los nodos Watcher ayudan a que las regiones sean accesibles, respaldan la comunicación en tiempo real y preparan al mundo para la coordinación descentralizada."
+      "title": "Guardian Network",
+      "body": "Los nodos Guardian ayudan a que las regiones sean accesibles, respaldan la comunicación en tiempo real y preparan al mundo para la coordinación descentralizada."
     }
   },
   "economy": {
@@ -103,17 +117,17 @@
     }
   },
   "watchers": {
-    "eyebrow": "Watcher Network",
-    "title": "Ejecute un Watcher. Mantener viva una región.",
-    "body": "Los nodos Watcher son la capa de acceso de NiceChunk. No controlan los activos de los jugadores ni procesan transacciones en cadena. En cambio, ayudan a las regiones a mantenerse accesibles, brindan comunicación en tiempo real y respaldan la actividad mundial local. A medida que el mundo crece, Watchers se convierte en la infraestructura que mantiene vivo a chunks.",
+    "eyebrow": "Guardian Network",
+    "title": "Ejecute un Guardian. Mantener viva una región.",
+    "body": "Los nodos Guardian son la capa de acceso de NiceChunk. No controlan los activos de los jugadores ni procesan transacciones en cadena. En cambio, ayudan a las regiones a mantenerse accesibles, brindan comunicación en tiempo real y respaldan la actividad mundial local. A medida que el mundo crece, Guardians se convierte en la infraestructura que mantiene vivo a chunks.",
     "badges": {
       "noCustody": "Sin custodia de bienes",
       "noTransactions": "No se procesan transacciones de jugadores",
       "communication": "Comunicación regional en tiempo real"
     },
     "animation": {
-      "aria": "Animación de red Watcher",
-      "title": "Watcher Nodo",
+      "aria": "Animación de red Guardian",
+      "title": "Guardian Nodo",
       "body": "Capa de acceso a la región"
     },
     "guardianConsole": "Abrir consola de guardianes"
@@ -140,7 +154,7 @@
       "body": "Pase Génesis, utilidad NCK, liquidación del mercado, capa de activos propiedad del jugador."
     },
     "phase4": {
-      "title": "Fase 4 - Watcher Network",
+      "title": "Fase 4 - Guardian Network",
       "body": "Nodos de acceso a la región, comunicación en tiempo real, participación de los observadores, participación a nivel regional."
     },
     "phase5": {
@@ -157,7 +171,7 @@
     "worldRules": "Reglas Mundiales",
     "proofOfFrontier": "Proof of Frontier",
     "nckEconomy": "NCK Economía",
-    "watcherNetwork": "Watcher Network",
+    "watcherNetwork": "Guardian Network",
     "whitepaper": "Libro blanco",
     "fairness": "Equidad",
     "github": "GitHub"

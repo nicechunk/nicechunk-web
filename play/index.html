@@ -322,6 +322,7 @@
           <div class="market-header-meta">
             <span id="marketWallet">DEV...1111</span>
             <span id="marketBackpack">0/50</span>
+            <button class="market-refresh" id="marketRefresh" type="button" aria-label="Refresh market listings" data-i18n-aria-label="main.market.refresh" data-i18n-title="main.market.refresh">↻</button>
             <button class="market-close" id="marketClose" type="button" aria-label="Close market" data-i18n-aria-label="main.market.close">×</button>
           </div>
         </header>
@@ -330,29 +331,48 @@
           <button class="market-tab" type="button" role="tab" aria-selected="false" data-market-tab="sell" data-i18n="main.market.sellTab">Sell</button>
           <button class="market-tab" type="button" role="tab" aria-selected="false" data-market-tab="orders" data-i18n="main.market.ordersTab">Orders</button>
         </div>
+        <p class="market-status" id="marketStatus" role="status" aria-live="polite" hidden></p>
         <div class="market-body">
           <aside class="market-sidebar">
             <div class="market-search">
               <label for="marketSearch" data-i18n="main.market.searchLabel">Search</label>
               <input id="marketSearch" type="search" autocomplete="off" spellcheck="false" placeholder="Resource, equipment, coordinate" data-i18n-placeholder="main.market.searchPlaceholder" />
+              <span class="market-search-meta" id="marketSearchMeta" aria-live="polite"></span>
             </div>
+            <label class="market-sort" for="marketSort">
+              <span data-i18n="main.market.sortLabel">Sort</span>
+              <select id="marketSort">
+                <option value="newest" data-i18n="main.market.sortNewest">Newest first</option>
+                <option value="oldest" data-i18n="main.market.sortOldest">Oldest first</option>
+                <option value="price-asc" data-i18n="main.market.sortPriceAsc">Price low to high</option>
+                <option value="price-desc" data-i18n="main.market.sortPriceDesc">Price high to low</option>
+              </select>
+            </label>
+            <label class="market-currency-filter" for="marketCurrencyFilter">
+              <span data-i18n="main.market.currencyFilterLabel">Currency</span>
+              <select id="marketCurrencyFilter">
+                <option value="all" data-i18n="main.market.currencyAll">All currencies</option>
+                <option value="NCK">NCK</option>
+                <option value="SOL">SOL</option>
+              </select>
+            </label>
             <div class="market-filter-grid" aria-label="Market filters" data-i18n-aria-label="main.market.filters">
               <button class="active" type="button" data-market-category="all" data-i18n="main.market.categoryAll">All</button>
               <button type="button" data-market-category="raw" data-i18n="main.market.categoryRaw">Raw Materials</button>
               <button type="button" data-market-category="equipment" data-i18n="main.market.categoryEquipment">Equipment</button>
               <button type="button" data-market-category="building" data-i18n="main.market.categoryBuilding">Building Materials</button>
-              <button type="button" data-market-category="vegetation" data-i18n="main.market.categoryVegetation">Vegetation</button>
               <button type="button" data-market-category="clothing" data-i18n="main.market.categoryClothing">Clothing</button>
             </div>
             <div class="market-rate-card">
               <span data-i18n="main.market.feeLabel">Market Fee</span>
-              <strong data-i18n="main.market.feeValue">2.5%</strong>
+              <strong data-i18n="main.market.feeValue">1%</strong>
               <p data-i18n="main.market.settlement">Preferred settlement: NCK</p>
             </div>
           </aside>
           <div class="market-content">
             <section class="market-tab-panel active" data-market-tab-panel="browse">
               <div class="market-listing-grid" id="marketListingGrid"></div>
+              <div class="market-pagination" id="marketListingPager" aria-label="Browse listings pages" data-i18n-aria-label="main.market.browsePagination"></div>
             </section>
             <section class="market-tab-panel" data-market-tab-panel="sell" hidden>
               <div class="market-step-rail" aria-label="Sell listing steps">
@@ -378,7 +398,6 @@
                       <option value="raw" data-i18n="main.market.categoryRaw">Raw Materials</option>
                       <option value="equipment" data-i18n="main.market.categoryEquipment">Equipment</option>
                       <option value="building" data-i18n="main.market.categoryBuilding">Building Materials</option>
-                      <option value="vegetation" data-i18n="main.market.categoryVegetation">Vegetation</option>
                       <option value="clothing" data-i18n="main.market.categoryClothing">Clothing</option>
                     </select>
                   </label>
@@ -400,11 +419,71 @@
             </section>
             <section class="market-tab-panel" data-market-tab-panel="orders" hidden>
               <div class="market-listing-grid" id="marketOrdersGrid"></div>
+              <div class="market-pagination" id="marketOrdersPager" aria-label="Order pages" data-i18n-aria-label="main.market.ordersPagination"></div>
             </section>
           </div>
         </div>
       </section>
+      <div class="smelting-overlay" id="smeltingOverlay" aria-hidden="true" hidden></div>
+      <section class="smelting-panel" id="smeltingPanel" role="dialog" aria-modal="false" aria-labelledby="smeltingTitle" hidden>
+        <header class="smelting-header">
+          <div>
+            <span class="smelting-eyebrow" data-i18n="main.smelting.eyebrow">Forge Material Prep</span>
+            <h2 id="smeltingTitle" data-i18n="main.smelting.title">Smelting Station</h2>
+          </div>
+          <div class="smelting-header-meta">
+            <span id="smeltingBackpack">0/50</span>
+            <span id="smeltingMode" data-i18n="main.smelting.modePreview">Local preview</span>
+            <button class="smelting-close" id="smeltingClose" type="button" aria-label="Close smelting station" data-i18n-aria-label="main.smelting.close">×</button>
+          </div>
+        </header>
+        <div class="smelting-body">
+          <section class="smelting-inventory-panel">
+            <div class="smelting-panel-head">
+              <span data-i18n="main.smelting.inputEyebrow">Backpack Resources</span>
+              <strong data-i18n="main.smelting.inputTitle">Choose one mined resource</strong>
+            </div>
+            <div class="smelting-resource-grid" id="smeltingResourceGrid" aria-label="Smeltable backpack resources" data-i18n-aria-label="main.smelting.resources"></div>
+          </section>
+          <section class="smelting-core-panel" aria-live="polite">
+            <div class="smelting-panel-head">
+              <span data-i18n="main.smelting.furnaceEyebrow">Thermal Core</span>
+              <strong data-i18n="main.smelting.furnaceTitle">Recipe match</strong>
+            </div>
+            <div class="smelting-core">
+              <div class="smelting-slot" id="smeltingInputSlot">
+                <span data-i18n="main.smelting.inputSlot">Input</span>
+              </div>
+              <div class="smelting-heat-core" id="smeltingHeatCore" aria-hidden="true">
+                <i></i>
+              </div>
+              <div class="smelting-slot fuel" id="smeltingFuelSlot">
+                <span data-i18n="main.smelting.fuelSlot">Fuel</span>
+              </div>
+            </div>
+            <div class="smelting-progress">
+              <div class="smelting-progress-meta">
+                <span id="smeltingStatus" data-i18n="main.smelting.statusIdle">Select input and fuel.</span>
+                <strong id="smeltingProgressValue">0%</strong>
+              </div>
+              <div class="smelting-progress-track" aria-hidden="true"><span id="smeltingProgressBar"></span></div>
+            </div>
+            <div class="smelting-fuel-list" id="smeltingFuelList"></div>
+            <button class="smelting-submit" id="smeltingStart" type="button" data-i18n="main.smelting.start" disabled>Start Smelting</button>
+          </section>
+          <aside class="smelting-output-panel" id="smeltingOutputPanel">
+            <div class="smelting-panel-head">
+              <span data-i18n="main.smelting.outputEyebrow">Forge-Ready Output</span>
+              <strong data-i18n="main.smelting.outputTitle">Material preview</strong>
+            </div>
+            <div id="smeltingOutput"></div>
+          </aside>
+        </div>
+      </section>
       <button class="market-phone" id="marketPhone" type="button" aria-label="Open market" data-i18n-aria-label="main.market.open">
+        <span aria-hidden="true"></span>
+      </button>
+      <button class="smelting-phone" id="smeltingPhone" type="button" aria-label="Open smelting station" data-i18n-aria-label="main.smelting.open">
         <span aria-hidden="true"></span>
       </button>
       <div class="hotbar" id="hotbar" aria-label="Hotbar" data-i18n-aria-label="main.hotbar"></div>

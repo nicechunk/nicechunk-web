@@ -2,8 +2,22 @@
   "_meta": {
     "language": "en",
     "label": "English",
-    "version": "docs-locale-en-5d9a5bdbdbe0f388",
-    "contentHash": "5d9a5bdbdbe0f388"
+    "version": "docs-locale-en-38396b925639964b",
+    "contentHash": "38396b925639964b"
+  },
+  "siteFooter": {
+    "tagline": "A seeded voxel world protocol on Solana.",
+    "navigationAria": "Footer navigation",
+    "socialAria": "NiceChunk social links",
+    "home": "Home",
+    "play": "Enter World",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Guardians",
+    "contracts": "Contracts",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. All rights reserved."
   },
   "meta": {
     "title": "NiceChunk Protocol Docs"
@@ -107,8 +121,8 @@
           "label": "NCK Economy"
         },
         {
-          "id": "watcher-network",
-          "label": "Watcher Network"
+          "id": "guardian-network",
+          "label": "Guardian Network"
         },
         {
           "id": "magicblock-er",
@@ -191,7 +205,7 @@
       "planned": {
         "label": "Planned Protocol",
         "title": "Future verification layers",
-        "body": "Chunk override compression, resource settlement, asset ownership, marketplace settlement, Watcher proofs, and governance controls."
+        "body": "Chunk override compression, resource settlement, asset ownership, marketplace settlement, Guardian proofs, and governance controls."
       },
       "boundary": {
         "label": "Trust Boundary",
@@ -450,7 +464,7 @@
   "economy": {
     "eyebrow": "NCK Economy",
     "title": "NCK utility must be documented by status, not by hype.",
-    "body": "NCK is designed as the core utility token for access, in-world actions, forging systems, marketplace settlement, Watcher incentives, and future governance mechanics.",
+    "body": "NCK is designed as the core utility token for access, in-world actions, forging systems, marketplace settlement, Guardian incentives, and future governance mechanics.",
     "status": {
       "planned": "Planned",
       "devnet": "Devnet",
@@ -485,11 +499,11 @@
     }
   },
   "watchers": {
-    "eyebrow": "Watcher Network",
-    "title": "Guardians and Watchers are access infrastructure, not asset custodians.",
-    "body": "The current Guardian program registers region endpoints and NCK stake on devnet. The broader Watcher network concept is the realtime access layer that keeps regions reachable without owning player assets or signing player transactions.",
+    "eyebrow": "Guardian Network",
+    "title": "Guardians and Guardians are access infrastructure, not asset custodians.",
+    "body": "The current Guardian program registers region endpoints and NCK stake on devnet. The broader Guardian network concept is the realtime access layer that keeps regions reachable without owning player assets or signing player transactions.",
     "demo": {
-      "title": "Watcher Region",
+      "title": "Guardian Region",
       "body": "Live access concept"
     },
     "status": {
@@ -499,11 +513,11 @@
     "rules": {
       "noCustody": {
         "title": "No custody",
-        "body": "Watchers do not hold player assets and do not replace wallet authorization."
+        "body": "Guardians do not hold player assets and do not replace wallet authorization."
       },
       "noTransactions": {
         "title": "No transaction signing",
-        "body": "Players interact with Solana wallets directly. Watchers should not process transactions as hidden owners."
+        "body": "Players interact with Solana wallets directly. Guardians should not process transactions as hidden owners."
       },
       "registry": {
         "title": "Guardian registry",
@@ -584,7 +598,7 @@
       },
       "limits": {
         "title": "Trust limits",
-        "body": "The docs must state what is client-only, what is Watcher-assisted, and what is intended for on-chain verification."
+        "body": "The docs must state what is client-only, what is Guardian-assisted, and what is intended for on-chain verification."
       }
     }
   },

@@ -20,7 +20,7 @@ import {
   shouldUseGuardianSpawnForSession,
 } from "./guardianClient.js";
 import { createGuardianRegistryResolver, guardianCoversChunk } from "./guardianRegistry.js";
-import { equipForgedItemOnAvatar, forgedItemsStorageKey, latestForgedItemStorageKey, loadLatestForgedItem } from "./forgedItems.js";
+import { equipForgedItemOnAvatar, forgedItemsStorageKey, forgeBytesToCode, latestForgedItemStorageKey, loadLatestForgedItem } from "./forgedItems.js";
 import {
   backpackSlotIndex,
   createBackpackSlot,
@@ -116,9 +116,15 @@ const marketTabs = document.querySelectorAll("[data-market-tab]");
 const marketTabPanels = document.querySelectorAll("[data-market-tab-panel]");
 const marketWallet = document.querySelector("#marketWallet");
 const marketBackpack = document.querySelector("#marketBackpack");
+const marketRefresh = document.querySelector("#marketRefresh");
 const marketSearch = document.querySelector("#marketSearch");
+const marketSort = document.querySelector("#marketSort");
+const marketCurrencyFilter = document.querySelector("#marketCurrencyFilter");
+const marketSearchMeta = document.querySelector("#marketSearchMeta");
+const marketStatus = document.querySelector("#marketStatus");
 const marketCategoryButtons = document.querySelectorAll("[data-market-category]");
 const marketListingGrid = document.querySelector("#marketListingGrid");
+const marketListingPager = document.querySelector("#marketListingPager");
 const marketInventoryGrid = document.querySelector("#marketInventoryGrid");
 const marketListingForm = document.querySelector("#marketListingForm");
 const marketListingCategory = document.querySelector("#marketListingCategory");
@@ -128,6 +134,23 @@ const marketCreateListing = document.querySelector("#marketCreateListing");
 const marketSelectedItem = document.querySelector("#marketSelectedItem");
 const marketFormStatus = document.querySelector("#marketFormStatus");
 const marketOrdersGrid = document.querySelector("#marketOrdersGrid");
+const marketOrdersPager = document.querySelector("#marketOrdersPager");
+const smeltingPhone = document.querySelector("#smeltingPhone");
+const smeltingOverlay = document.querySelector("#smeltingOverlay");
+const smeltingPanel = document.querySelector("#smeltingPanel");
+const smeltingClose = document.querySelector("#smeltingClose");
+const smeltingBackpack = document.querySelector("#smeltingBackpack");
+const smeltingMode = document.querySelector("#smeltingMode");
+const smeltingResourceGrid = document.querySelector("#smeltingResourceGrid");
+const smeltingInputSlot = document.querySelector("#smeltingInputSlot");
+const smeltingFuelSlot = document.querySelector("#smeltingFuelSlot");
+const smeltingFuelList = document.querySelector("#smeltingFuelList");
+const smeltingOutput = document.querySelector("#smeltingOutput");
+const smeltingStatus = document.querySelector("#smeltingStatus");
+const smeltingStart = document.querySelector("#smeltingStart");
+const smeltingProgressValue = document.querySelector("#smeltingProgressValue");
+const smeltingProgressBar = document.querySelector("#smeltingProgressBar");
+const smeltingHeatCore = document.querySelector("#smeltingHeatCore");
 const minimapPanel = document.querySelector(".minimap-panel");
 const minimapCanvas = document.querySelector("#minimap");
 const minimapContext = minimapCanvas.getContext("2d", { willReadFrequently: true });
@@ -159,6 +182,9 @@ let runtimeUiReady = false;
 let firstGameFrameRendered = false;
 let gameLoadingComplete = false;
 let startupChunkTotal = 0;
+
+const startupWorldConfigTimeoutMs = 4500;
+const startupChainSyncTimeoutMs = 5200;
 
 const gameLoadingFallbacks = {
   boot: {
@@ -236,6 +262,8 @@ function refreshRuntimeI18nText() {
   updateAccountHud();
   renderHotbar();
   renderBackpackPanel();
+  resetSmeltingRenderSignatures();
+  scheduleSmeltingPanelUpdate();
   updateHud();
   updateProfilePanelDetails();
   renderResourceDebugFeed();
@@ -276,11 +304,23 @@ function interpolateLoadingText(template, params = {}) {
   return String(template).replace(/\{(\w+)\}/g, (_match, name) => params[name] ?? "");
 }
 
+function withStartupTimeout(promise, timeoutMs, label) {
+  let timeoutId = 0;
+  const timeout = new Promise((_, reject) => {
+    timeoutId = window.setTimeout(() => {
+      reject(new Error(`${label} timed out after ${timeoutMs}ms`));
+    }, timeoutMs);
+  });
+  return Promise.race([promise, timeout]).finally(() => {
+    if (timeoutId) window.clearTimeout(timeoutId);
+  });
+}
+
 async function initializeWorldConfig() {
   setGameLoadingStage("worldConfig", 28);
   try {
     const { loadGlobalConfig } = await import("./chain/nicechunkChain.js");
-    const config = await loadGlobalConfig();
+    const config = await withStartupTimeout(loadGlobalConfig(), startupWorldConfigTimeoutMs, "world-config");
     applyWorldConfigFromChain(config);
     setWorldSeed(config.worldSeedHex ?? bufferToHex(config.worldSeed));
     window.NiceChunkWorldConfig = config;
@@ -604,6 +644,14 @@ const backpackSlotCache = {
   signature: "",
   slots: [],
 };
+const availableBackpackSlotCache = {
+  signature: "",
+  slots: [],
+};
+const marketListedSourceIdCache = {
+  signature: "",
+  ids: new Set(),
+};
 let latestForgedItem = null;
 let equippedForgedMesh = null;
 const resourceDebugEvents = [];
@@ -633,7 +681,11 @@ const hotbarActions = {
   },
 };
 const marketListingStorageKey = "nicechunk.marketListings.mvp.v1";
-const marketCategories = ["all", "raw", "equipment", "building", "vegetation", "clothing"];
+const marketCategories = ["all", "raw", "equipment", "building", "clothing"];
+const marketPageSizeByTab = {
+  browse: 12,
+  orders: 12,
+};
 const marketSampleListings = [
   {
     id: "sample-iron",
@@ -673,21 +725,58 @@ const marketSampleListings = [
     seller: "NPC",
     nameKey: "main.market.sampleCloak",
     metaKey: "main.market.sampleCloakMeta",
-    category: "vegetation",
+    category: "clothing",
     currency: "NCK",
     price: "3.20",
-    iconType: "resource",
+    iconType: "clothing",
     source: "sample",
   },
 ];
+const marketPageState = {
+  browse: 1,
+  orders: 1,
+};
+const marketSortOptions = ["newest", "oldest", "price-asc", "price-desc"];
+const marketCurrencyOptions = ["all", "NCK", "SOL"];
 let marketSelectedCategory = "all";
+let marketSelectedSort = "newest";
+let marketSelectedCurrency = "all";
 let marketSelectedListingItem = null;
+let marketDetailDialog = null;
+let marketDetailState = {
+  listing: null,
+  order: false,
+  tabName: null,
+};
 let marketListingSubmitting = false;
+let marketCancelingListingId = null;
 let marketBuyingListingId = null;
 let marketChainListings = [];
 let marketChainListingsLoading = false;
 let marketChainListingsLoadedAt = 0;
+let marketChainListingsFilterKey = "";
 let marketChainListingsError = null;
+let marketChainListingsRefreshPending = false;
+const smeltingProgressDurationMs = 3200;
+let smeltingSelectedSourceItemId = null;
+let smeltingSelectedFuelSourceItemId = null;
+let smeltingProgressTimer = null;
+let smeltingProgressStartedAt = 0;
+let smeltingProgress = 0;
+let smeltingState = "idle";
+let smeltingActiveInputSlot = null;
+let smeltingActiveFuelSlot = null;
+let smeltingLastStatusText = "";
+let smeltingLastStartText = "";
+let smeltingLastProgressValue = "";
+let smeltingResourceRenderSignature = "";
+let smeltingFuelRenderSignature = "";
+let smeltingWorkbenchRenderSignature = "";
+let smeltingOutputRenderSignature = "";
+let smeltingUpdateFrame = 0;
+let smeltingDeferredRefreshFrame = 0;
+let smeltingDeferredRefreshTimer = 0;
+let smeltingResourceRenderToken = 0;
 
 const playerPositionStorageKey = "nicechunk.playerPosition.v1";
 const currentSession = getGameSession();
@@ -974,6 +1063,7 @@ marketOverlay?.addEventListener("pointerdown", (event) => {
   closeMarketPanel();
 });
 marketClose?.addEventListener("click", closeMarketPanel);
+marketRefresh?.addEventListener("click", handleMarketRefreshClick);
 marketPanel?.addEventListener("pointerdown", (event) => event.stopPropagation());
 marketTabs.forEach((tab) => {
   tab.addEventListener("click", () => selectMarketTab(tab.dataset.marketTab || "browse"));
@@ -982,20 +1072,58 @@ marketCategoryButtons.forEach((button) => {
   button.addEventListener("click", () => {
     const category = button.dataset.marketCategory || "all";
     marketSelectedCategory = marketCategories.includes(category) ? category : "all";
+    closeMarketListingDetails();
+    resetMarketPages();
     updateMarketPanel();
   });
 });
-marketSearch?.addEventListener("input", updateMarketPanel);
+marketSearch?.addEventListener("input", () => {
+  closeMarketListingDetails();
+  resetMarketPages();
+  updateMarketPanel();
+});
+marketSort?.addEventListener("change", () => {
+  const sort = marketSort.value || "newest";
+  marketSelectedSort = marketSortOptions.includes(sort) ? sort : "newest";
+  closeMarketListingDetails();
+  resetMarketPages();
+  updateMarketPanel();
+});
+marketCurrencyFilter?.addEventListener("change", () => {
+  const currency = marketCurrencyFilter.value || "all";
+  marketSelectedCurrency = marketCurrencyOptions.includes(currency) ? currency : "all";
+  closeMarketListingDetails();
+  resetMarketPages();
+  updateMarketPanel();
+});
 marketListingPrice?.addEventListener("input", updateMarketListingDraft);
 marketListingCategory?.addEventListener("change", updateMarketListingDraft);
 marketListingCurrency?.addEventListener("change", updateMarketListingDraft);
 marketListingForm?.addEventListener("submit", handleCreateMarketListing);
+smeltingPhone?.addEventListener("click", openSmeltingPanel);
+smeltingPhone?.addEventListener("pointerdown", (event) => event.stopPropagation());
+smeltingPhone?.addEventListener("pointerup", (event) => event.stopPropagation());
+smeltingOverlay?.addEventListener("pointerdown", (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  closeSmeltingPanel();
+});
+smeltingClose?.addEventListener("click", closeSmeltingPanel);
+smeltingPanel?.addEventListener("pointerdown", (event) => event.stopPropagation());
+smeltingStart?.addEventListener("click", startSmeltingPreview);
 window.addEventListener("keydown", (event) => {
   if (event.target === chatInput) return;
   if (event.key !== "Escape") return;
+  if (marketDetailDialog) {
+    const tabName = marketDetailState.tabName || "browse";
+    closeMarketListingDetails();
+    renderMarketTabPage(tabName);
+    return;
+  }
   closeBackpackPanel();
   closeProfilePanel();
   closeMarketPanel();
+  closeSmeltingPanel();
 });
 
 let dragging = false;
@@ -1061,7 +1189,9 @@ requestAnimationFrame(startInitialWorld);
 
 async function startInitialWorld() {
   prepareStartupChunkLoading(player.position);
-  await syncInitialChainViewport(player.position);
+  await withStartupTimeout(syncInitialChainViewport(player.position), startupChainSyncTimeoutMs, "initial-chain-sync").catch((error) => {
+    console.warn("Initial NiceChunk chain sync skipped during startup", error);
+  });
   setGameLoadingStage("chunks", 58);
   generateAround(player.position);
   generateCloudsAround(player.position);
@@ -1186,7 +1316,7 @@ function createProfilePreview() {
 }
 
 function isInteractivePointerTarget(target) {
-  return target instanceof Element && Boolean(target.closest("button, input, select, textarea, a, .market-panel, .market-overlay, .market-phone, .backpack-panel, .backpack-overlay, .profile-panel, .profile-overlay, .rpc-config-panel, .session-funding-panel, .session-funding-overlay"));
+  return target instanceof Element && Boolean(target.closest("button, input, select, textarea, a, .market-panel, .market-overlay, .market-phone, .smelting-panel, .smelting-overlay, .smelting-phone, .backpack-panel, .backpack-overlay, .profile-panel, .profile-overlay, .rpc-config-panel, .session-funding-panel, .session-funding-overlay"));
 }
 
 function isTextEntryTarget(target) {
@@ -1224,7 +1354,7 @@ function syncEquippedBackpackSlot() {
     address: backpack.publicKey,
     backpackId: backpack.backpackId,
     capacity: backpack.capacity,
-    itemCount: backpack.itemCount,
+    itemCount: availableBackpackItemCount(backpack),
   });
   if (isBackpackHotbarSlot(selectedHotbarSlot)) selectFirstSelectableHotbarSlot();
 }
@@ -1354,10 +1484,11 @@ function setProfileTab(tabName) {
 function updateProfileBackpackDetails() {
   const backpack = equippedBackpackStatus?.backpack ?? null;
   if (profileBackpackStatus) {
+    const itemCount = availableBackpackItemCount(backpack);
     profileBackpackStatus.textContent = backpack
       ? gameText("main.profile.backpackEquipped", "{address} · {count}/{capacity}", {
           address: formatWalletAddress(backpack.publicKey),
-          count: backpack.itemCount ?? 0,
+          count: itemCount,
           capacity: backpack.capacity ?? backpackSlotTotal,
         })
       : gameText("main.profile.noBackpack", "No backpack equipped");
@@ -1415,14 +1546,17 @@ async function refreshEquippedBackpack({ force = false } = {}) {
   if (equippedBackpackLoading && !force) return equippedBackpackStatus;
   if (!force && now - equippedBackpackLastLoadedAt < 14000) return equippedBackpackStatus;
   equippedBackpackLoading = true;
+  scheduleSmeltingPanelUpdate();
   try {
     const { getEquippedBackpackStatus } = await loadNicechunkChainModule();
     equippedBackpackStatus = await getEquippedBackpackStatus();
     equippedBackpackLastLoadedAt = performance.now();
+    scheduleBackpackSlotWarmup(equippedBackpackStatus?.backpack ?? null);
     syncEquippedBackpackSlot();
     renderHotbar();
     if (backpackPanel && !backpackPanel.hidden) renderBackpackPanel();
     if (marketPanel && !marketPanel.hidden) updateMarketPanel();
+    scheduleSmeltingPanelUpdate();
     updateProfileBackpackDetails();
     return equippedBackpackStatus;
   } catch (error) {
@@ -1432,6 +1566,7 @@ async function refreshEquippedBackpack({ force = false } = {}) {
     equippedBackpackLoading = false;
     updateProfileBackpackDetails();
     if (marketPanel && !marketPanel.hidden) updateMarketPanel();
+    scheduleSmeltingPanelUpdate({ reset: true });
   }
 }
 
@@ -1742,6 +1877,8 @@ function createInitialBackpackSlots() {
 
 function openBackpackPanel() {
   if (!backpackPanel || !backpackOverlay) return;
+  closeMarketPanel();
+  closeSmeltingPanel();
   backpackPanel.hidden = false;
   backpackOverlay.hidden = false;
   backpackPanel.setAttribute("aria-hidden", "false");
@@ -1762,6 +1899,8 @@ function closeBackpackPanel() {
 
 function openMarketPanel() {
   if (!marketPanel || !marketOverlay) return;
+  closeBackpackPanel();
+  closeSmeltingPanel();
   marketPanel.hidden = false;
   marketOverlay.hidden = false;
   marketPanel.setAttribute("aria-hidden", "false");
@@ -1773,14 +1912,592 @@ function openMarketPanel() {
 
 function closeMarketPanel() {
   if (!marketPanel || !marketOverlay) return;
+  closeMarketListingDetails();
+  setMarketStatus("");
   marketPanel.hidden = true;
   marketOverlay.hidden = true;
   marketPanel.setAttribute("aria-hidden", "true");
   marketOverlay.setAttribute("aria-hidden", "true");
 }
 
+function openSmeltingPanel() {
+  if (!smeltingPanel || !smeltingOverlay) return;
+  closeBackpackPanel();
+  closeMarketPanel();
+  resetSmeltingRenderSignatures();
+  smeltingPanel.hidden = false;
+  smeltingOverlay.hidden = false;
+  smeltingPanel.setAttribute("aria-hidden", "false");
+  smeltingOverlay.setAttribute("aria-hidden", "false");
+  if (availableBackpackSlotCache.signature) {
+    updateSmeltingPanel();
+  } else {
+    scheduleSmeltingPanelUpdate();
+  }
+  scheduleDeferredSmeltingBackpackRefresh({
+    force: !equippedBackpackLoading && performance.now() - equippedBackpackLastLoadedAt > 12000,
+  });
+}
+
+function closeSmeltingPanel() {
+  if (!smeltingPanel || !smeltingOverlay) return;
+  if (smeltingUpdateFrame) {
+    window.cancelAnimationFrame(smeltingUpdateFrame);
+    smeltingUpdateFrame = 0;
+  }
+  smeltingResourceRenderToken += 1;
+  cancelDeferredSmeltingBackpackRefresh();
+  stopSmeltingProgressTimer();
+  if (smeltingState === "running") {
+    smeltingState = "idle";
+    smeltingProgress = 0;
+    updateSmeltingProgressUi();
+  }
+  smeltingPanel.hidden = true;
+  smeltingOverlay.hidden = true;
+  smeltingPanel.setAttribute("aria-hidden", "true");
+  smeltingOverlay.setAttribute("aria-hidden", "true");
+}
+
+function scheduleDeferredSmeltingBackpackRefresh({ force = false } = {}) {
+  cancelDeferredSmeltingBackpackRefresh();
+  smeltingDeferredRefreshFrame = window.requestAnimationFrame(() => {
+    smeltingDeferredRefreshFrame = 0;
+    smeltingDeferredRefreshTimer = window.setTimeout(() => {
+      smeltingDeferredRefreshTimer = 0;
+      if (!smeltingPanel || smeltingPanel.hidden) return;
+      void refreshEquippedBackpack({ force });
+    }, 0);
+  });
+}
+
+function cancelDeferredSmeltingBackpackRefresh() {
+  if (smeltingDeferredRefreshFrame) {
+    window.cancelAnimationFrame(smeltingDeferredRefreshFrame);
+    smeltingDeferredRefreshFrame = 0;
+  }
+  if (smeltingDeferredRefreshTimer) {
+    window.clearTimeout(smeltingDeferredRefreshTimer);
+    smeltingDeferredRefreshTimer = 0;
+  }
+}
+
+function scheduleSmeltingPanelUpdate({ reset = false } = {}) {
+  if (reset) resetSmeltingRenderSignatures();
+  if (!smeltingPanel || smeltingPanel.hidden) return;
+  if (smeltingUpdateFrame) return;
+  smeltingUpdateFrame = window.requestAnimationFrame(() => {
+    smeltingUpdateFrame = 0;
+    updateSmeltingPanel();
+  });
+}
+
+function updateSmeltingPanel() {
+  if (!smeltingPanel || smeltingPanel.hidden) return;
+  smeltingPanel.dataset.refreshing = equippedBackpackLoading ? "true" : "false";
+  const backpack = equippedBackpackStatus?.backpack ?? null;
+  const slots = createAvailableBackpackSlotsFromChain(backpack).filter(Boolean);
+  const filledCount = slots.length;
+  const capacity = backpack?.capacity ?? backpackSlotTotal;
+  const selectedSlot = resolveSmeltingSelectedSlot(slots);
+  const fuelSlots = slots.filter((slot) => isSmeltingFuelSlot(slot) && slot.sourceItemId !== selectedSlot?.sourceItemId);
+  const fuelSlot = resolveSmeltingFuelSlot(fuelSlots);
+  smeltingActiveInputSlot = selectedSlot;
+  smeltingActiveFuelSlot = fuelSlot;
+
+  if (smeltingBackpack) {
+    smeltingBackpack.textContent = backpack
+      ? gameText("main.smelting.backpackCount", "{count}/{capacity}", { count: filledCount, capacity })
+      : equippedBackpackLoading
+      ? gameText("main.smelting.statusSyncing", "Syncing equipped backpack...")
+      : gameText("main.smelting.noBackpackShort", "No backpack");
+  }
+  if (smeltingMode) smeltingMode.textContent = gameText("main.smelting.modePreview", "Local preview");
+
+  renderSmeltingResourceGrid(slots, selectedSlot);
+  renderSmeltingFuelList(fuelSlots, fuelSlot);
+  renderSmeltingWorkbenchSlots(selectedSlot, fuelSlot);
+  renderSmeltingOutput(selectedSlot, fuelSlot);
+  updateSmeltingProgressUi(selectedSlot, fuelSlot);
+}
+
+function resolveSmeltingSelectedSlot(slots) {
+  let selected = slots.find((slot) => slot.sourceItemId === smeltingSelectedSourceItemId) ?? null;
+  if (!selected) {
+    selected = slots[0] ?? null;
+    smeltingSelectedSourceItemId = selected?.sourceItemId ?? null;
+  }
+  return selected;
+}
+
+function resolveSmeltingFuelSlot(fuelSlots) {
+  let selected = fuelSlots.find((slot) => slot.sourceItemId === smeltingSelectedFuelSourceItemId) ?? null;
+  if (!selected) {
+    selected = fuelSlots[0] ?? null;
+    smeltingSelectedFuelSourceItemId = selected?.sourceItemId ?? null;
+  }
+  return selected;
+}
+
+function renderSmeltingResourceGrid(slots, selectedSlot) {
+  if (!smeltingResourceGrid) return;
+  const signature = smeltingCollectionSignature(slots, selectedSlot?.sourceItemId, "resources");
+  if (signature === smeltingResourceRenderSignature) return;
+  smeltingResourceRenderSignature = signature;
+  const renderToken = ++smeltingResourceRenderToken;
+  cleanupSmeltingPreviewTree(smeltingResourceGrid);
+  if (!slots.length) {
+    smeltingResourceGrid.replaceChildren(
+      equippedBackpackLoading
+        ? createSmeltingEmptyState("main.smelting.statusSyncing", "Syncing equipped backpack...")
+        : createSmeltingEmptyState("main.smelting.noResources", "No mined resources in this backpack."),
+    );
+    return;
+  }
+  const initialCount = window.matchMedia?.("(max-width: 760px)")?.matches ? 8 : 18;
+  const firstSlots = slots.slice(0, initialCount);
+  const remainingSlots = slots.slice(initialCount);
+  smeltingResourceGrid.replaceChildren(...firstSlots.map((slot) => createSmeltingResourceCard(slot, selectedSlot)));
+  appendSmeltingResourceCardsInBatches(remainingSlots, selectedSlot, renderToken);
+}
+
+function appendSmeltingResourceCardsInBatches(slots, selectedSlot, renderToken) {
+  if (!slots.length || !smeltingResourceGrid) return;
+  window.setTimeout(() => {
+    if (renderToken !== smeltingResourceRenderToken || !smeltingResourceGrid || smeltingPanel?.hidden) return;
+    const fragment = document.createDocumentFragment();
+    slots.forEach((slot) => {
+      fragment.append(createSmeltingResourceCard(slot, selectedSlot));
+    });
+    smeltingResourceGrid.append(fragment);
+  }, 120);
+}
+
+function createSmeltingResourceCard(slot, selectedSlot) {
+  const button = document.createElement("button");
+  button.className = "smelting-resource-card";
+  button.type = "button";
+  button.classList.toggle("selected", slot.sourceItemId === selectedSlot?.sourceItemId);
+  button.append(createSmeltingResourceSwatch(slot));
+
+  const copy = document.createElement("span");
+  copy.innerHTML = "<strong></strong><small></small><em></em>";
+  copy.querySelector("strong").textContent = slot.meta?.name ?? gameText("main.backpack.coordinateResource", "Coordinate Resource");
+  copy.querySelector("small").textContent = slot.meta?.source ?? gameText("main.backpack.unknownSource", "Unknown source");
+  copy.querySelector("em").textContent = formatMassKg(slot.massKg);
+  button.append(copy);
+  button.addEventListener("click", () => {
+    if (smeltingState === "running") return;
+    smeltingSelectedSourceItemId = slot.sourceItemId;
+    if (smeltingSelectedFuelSourceItemId === slot.sourceItemId) smeltingSelectedFuelSourceItemId = null;
+    resetSmeltingProgressState();
+    scheduleSmeltingPanelUpdate();
+  });
+  return button;
+}
+
+function renderSmeltingFuelList(fuelSlots, selectedFuelSlot) {
+  if (!smeltingFuelList) return;
+  const signature = smeltingCollectionSignature(fuelSlots, selectedFuelSlot?.sourceItemId, "fuel");
+  if (signature === smeltingFuelRenderSignature) return;
+  smeltingFuelRenderSignature = signature;
+  cleanupSmeltingPreviewTree(smeltingFuelList);
+  const title = document.createElement("span");
+  title.className = "smelting-fuel-title";
+  title.textContent = gameText("main.smelting.fuelTitle", "Fuel");
+  if (!fuelSlots.length) {
+    const empty = createSmeltingEmptyState("main.smelting.noFuel", "No compatible fuel in backpack.");
+    smeltingFuelList.replaceChildren(title, empty);
+    return;
+  }
+  smeltingFuelList.replaceChildren(
+    title,
+    ...fuelSlots.map((slot) => {
+      const profile = smeltingFuelProfile(slot);
+      const button = document.createElement("button");
+      button.className = "smelting-fuel-card";
+      button.type = "button";
+      button.classList.toggle("selected", slot.sourceItemId === selectedFuelSlot?.sourceItemId);
+      button.append(createSmeltingResourceSwatch(slot));
+      const copy = document.createElement("span");
+      copy.innerHTML = "<strong></strong><small></small>";
+      copy.querySelector("strong").textContent = slot.meta?.name ?? gameText("main.smelting.fuel", "Fuel");
+      copy.querySelector("small").textContent = slot.meta?.source ?? gameText("main.backpack.unknownSource", "Unknown source");
+      const tier = document.createElement("b");
+      tier.textContent = gameText("main.smelting.fuelHeat", "Heat tier {tier}", { tier: profile.tier });
+      button.append(copy, tier);
+      button.addEventListener("click", () => {
+        if (smeltingState === "running") return;
+        smeltingSelectedFuelSourceItemId = slot.sourceItemId;
+        resetSmeltingProgressState();
+        scheduleSmeltingPanelUpdate();
+      });
+      return button;
+    }),
+  );
+}
+
+function renderSmeltingWorkbenchSlots(inputSlot, fuelSlot) {
+  const signature = [
+    smeltingLocaleSignature(),
+    smeltingSlotSignature(inputSlot),
+    smeltingSlotSignature(fuelSlot),
+  ].join("::");
+  if (signature === smeltingWorkbenchRenderSignature) return;
+  smeltingWorkbenchRenderSignature = signature;
+  renderSmeltingWorkbenchSlot(smeltingInputSlot, inputSlot, "main.smelting.inputSlot", "Input");
+  renderSmeltingWorkbenchSlot(smeltingFuelSlot, fuelSlot, "main.smelting.fuelSlot", "Fuel");
+}
+
+function renderSmeltingWorkbenchSlot(container, slot, labelKey, fallback) {
+  if (!container) return;
+  cleanupSmeltingPreviewTree(container);
+  container.replaceChildren();
+  const label = document.createElement("span");
+  label.textContent = gameText(labelKey, fallback);
+  container.append(label);
+  if (slot) {
+    container.append(createSmeltingSlotPreview(slot, "smelting-slot-preview"));
+    const name = document.createElement("strong");
+    name.textContent = slot.meta?.name ?? gameText("main.backpack.coordinateResource", "Coordinate Resource");
+    container.append(name);
+  }
+}
+
+function renderSmeltingOutput(inputSlot, fuelSlot) {
+  if (!smeltingOutput) return;
+  const signature = [
+    smeltingLocaleSignature(),
+    smeltingSlotSignature(inputSlot),
+    smeltingSlotSignature(fuelSlot),
+  ].join("::");
+  if (signature === smeltingOutputRenderSignature) return;
+  smeltingOutputRenderSignature = signature;
+  cleanupSmeltingPreviewTree(smeltingOutput);
+  if (!inputSlot) {
+    smeltingOutput.replaceChildren(createSmeltingEmptyState("main.smelting.selectInput", "Select a backpack resource to preview output."));
+    return;
+  }
+  const recipe = createSmeltingRecipe(inputSlot, fuelSlot);
+  const panel = document.createElement("div");
+  panel.className = "smelting-output-card";
+
+  const preview = document.createElement("div");
+  preview.className = "smelting-output-preview";
+  preview.append(createSmeltingMaterialPreview(recipe));
+
+  const copy = document.createElement("div");
+  copy.className = "smelting-output-copy";
+  copy.innerHTML = `
+    <strong></strong>
+    <p></p>
+    <div class="smelting-output-stats"></div>
+    <div class="smelting-element-chips"></div>
+    <small></small>
+  `;
+  copy.querySelector("strong").textContent = recipe.name;
+  copy.querySelector("p").textContent = recipe.description;
+  copy.querySelector("small").textContent = gameText("main.smelting.previewOnly", "Preview only: the smelting contract is not submitted yet.");
+  const stats = copy.querySelector(".smelting-output-stats");
+  [
+    [gameText("main.smelting.requiredHeat", "Required heat"), recipe.heatLabel],
+    [gameText("main.smelting.yieldRange", "Yield range"), recipe.yieldRange],
+    [gameText("main.smelting.quality", "Quality basis"), recipe.quality],
+  ].forEach(([label, value]) => {
+    const stat = document.createElement("span");
+    stat.innerHTML = "<em></em><b></b>";
+    stat.querySelector("em").textContent = label;
+    stat.querySelector("b").textContent = value;
+    stats.append(stat);
+  });
+  const chips = copy.querySelector(".smelting-element-chips");
+  recipe.composition.forEach(([symbol, range]) => {
+    const chip = document.createElement("b");
+    chip.innerHTML = "<strong></strong><span></span><em></em>";
+    chip.querySelector("strong").textContent = symbol;
+    chip.querySelector("span").textContent = localizedElementLabel(symbol);
+    chip.querySelector("em").textContent = range;
+    chips.append(chip);
+  });
+
+  panel.append(preview, copy);
+  smeltingOutput.replaceChildren(panel);
+}
+
+function smeltingCollectionSignature(slots, selectedSourceItemId, scope) {
+  return [
+    scope,
+    smeltingLocaleSignature(),
+    selectedSourceItemId ?? "-",
+    slots.map(smeltingSlotSignature).join("||"),
+  ].join("::");
+}
+
+function smeltingSlotSignature(slot) {
+  if (!slot) return "-";
+  return [
+    slot.sourceItemId ?? "",
+    slot.atlasKey ?? "",
+    slot.blockType ?? "",
+    slot.chainIndex ?? "",
+    slot.record?.worldX ?? "",
+    slot.record?.worldY ?? "",
+    slot.record?.worldZ ?? "",
+    Number.isFinite(slot.massKg) ? slot.massKg : "",
+    slot.meta?.name ?? "",
+    slot.meta?.source ?? "",
+  ].join("|");
+}
+
+function smeltingLocaleSignature() {
+  return `${localStorage.getItem("nicechunk.language") ?? "en"}:${i18nReady ? "ready" : "loading"}`;
+}
+
+function resetSmeltingRenderSignatures() {
+  smeltingResourceRenderSignature = "";
+  smeltingFuelRenderSignature = "";
+  smeltingWorkbenchRenderSignature = "";
+  smeltingOutputRenderSignature = "";
+}
+
+function cleanupSmeltingPreviewTree(root) {
+  root?.querySelectorAll?.("*").forEach((node) => {
+    node.__nicechunkCleanup?.();
+  });
+}
+
+function updateSmeltingProgressUi(inputSlot = smeltingActiveInputSlot, fuelSlot = smeltingActiveFuelSlot) {
+  const heatReady = inputSlot && fuelSlot ? smeltingFuelProfile(fuelSlot).tier >= smeltingRequiredHeatTier(getBlockAtlasEntry(inputSlot.atlasKey)) : false;
+  const ready = Boolean(inputSlot && fuelSlot && heatReady && smeltingState !== "running");
+  const uiState = equippedBackpackLoading && !inputSlot ? "syncing" : !inputSlot ? "no-input" : !fuelSlot ? "no-fuel" : !heatReady ? "heat-missing" : smeltingState;
+  if (smeltingPanel) {
+    smeltingPanel.dataset.smeltingState = uiState;
+    smeltingPanel.dataset.heatReady = heatReady ? "true" : "false";
+  }
+  if (smeltingHeatCore) smeltingHeatCore.dataset.smeltingState = uiState;
+  if (smeltingStart) {
+    const nextStartText =
+      smeltingState === "running"
+        ? gameText("main.smelting.running", "Smelting...")
+        : gameText("main.smelting.start", "Start Smelting");
+    smeltingStart.disabled = !ready;
+    if (nextStartText !== smeltingLastStartText || smeltingStart.textContent !== nextStartText) {
+      smeltingStart.textContent = nextStartText;
+      smeltingLastStartText = nextStartText;
+    }
+  }
+  const progress = smeltingState === "complete" ? 100 : smeltingProgress;
+  const progressText = `${Math.round(progress)}%`;
+  if (smeltingProgressValue && (progressText !== smeltingLastProgressValue || smeltingProgressValue.textContent !== progressText)) {
+    smeltingProgressValue.textContent = progressText;
+    smeltingLastProgressValue = progressText;
+  }
+  if (smeltingProgressBar) smeltingProgressBar.style.width = `${Math.max(0, Math.min(100, progress))}%`;
+  if (!smeltingStatus) return;
+  let nextStatusText = "";
+  if (equippedBackpackLoading && !inputSlot) {
+    nextStatusText = gameText("main.smelting.statusSyncing", "Syncing equipped backpack...");
+  } else if (!inputSlot) {
+    nextStatusText = gameText("main.smelting.statusNoInput", "Select a mined resource.");
+  } else if (!fuelSlot) {
+    nextStatusText = gameText("main.smelting.statusNoFuel", "Add compatible fuel.");
+  } else if (!heatReady) {
+    nextStatusText = gameText("main.smelting.statusHeatMissing", "Selected fuel cannot reach the required heat tier.");
+  } else if (smeltingState === "running") {
+    nextStatusText = gameText("main.smelting.statusRunning", "Heating resource sample...");
+  } else if (smeltingState === "complete") {
+    nextStatusText = gameText("main.smelting.statusComplete", "Forge material preview completed.");
+  } else {
+    nextStatusText = gameText("main.smelting.statusReady", "Ready to preview smelting.");
+  }
+  if (nextStatusText !== smeltingLastStatusText || smeltingStatus.textContent !== nextStatusText) {
+    smeltingStatus.textContent = nextStatusText;
+    smeltingLastStatusText = nextStatusText;
+  }
+}
+
+function stopSmeltingProgressTimer() {
+  if (!smeltingProgressTimer) return;
+  window.cancelAnimationFrame(smeltingProgressTimer);
+  smeltingProgressTimer = null;
+}
+
+function resetSmeltingProgressState() {
+  stopSmeltingProgressTimer();
+  smeltingState = "idle";
+  smeltingProgress = 0;
+  smeltingProgressStartedAt = 0;
+  updateSmeltingProgressUi();
+}
+
+function startSmeltingPreview() {
+  if (smeltingState === "running") return;
+  const slots = createAvailableBackpackSlotsFromChain(equippedBackpackStatus?.backpack ?? null).filter(Boolean);
+  const inputSlot = slots.find((slot) => slot.sourceItemId === smeltingSelectedSourceItemId) ?? null;
+  const fuelSlot = slots.find((slot) => slot.sourceItemId === smeltingSelectedFuelSourceItemId) ?? null;
+  const heatReady = inputSlot && fuelSlot ? smeltingFuelProfile(fuelSlot).tier >= smeltingRequiredHeatTier(getBlockAtlasEntry(inputSlot.atlasKey)) : false;
+  if (!inputSlot || !fuelSlot || !heatReady) {
+    scheduleSmeltingPanelUpdate();
+    return;
+  }
+  stopSmeltingProgressTimer();
+  smeltingActiveInputSlot = inputSlot;
+  smeltingActiveFuelSlot = fuelSlot;
+  smeltingState = "running";
+  smeltingProgress = 0;
+  smeltingProgressStartedAt = performance.now();
+  updateSmeltingProgressUi(inputSlot, fuelSlot);
+  const tick = () => {
+    const elapsed = performance.now() - smeltingProgressStartedAt;
+    smeltingProgress = Math.min(100, (elapsed / smeltingProgressDurationMs) * 100);
+    if (smeltingProgress >= 100) {
+      stopSmeltingProgressTimer();
+      smeltingState = "complete";
+      updateSmeltingProgressUi(inputSlot, fuelSlot);
+      return;
+    }
+    updateSmeltingProgressUi(inputSlot, fuelSlot);
+    smeltingProgressTimer = window.requestAnimationFrame(tick);
+  };
+  smeltingProgressTimer = window.requestAnimationFrame(tick);
+}
+
+function createSmeltingRecipe(slot, fuelSlot) {
+  const atlas = getBlockAtlasEntry(slot?.atlasKey);
+  const category = atlas?.category ?? "terrain";
+  const massKg = Number.isFinite(slot?.massKg) ? slot.massKg : atlas?.physical?.massKg;
+  const [minYield, maxYield] = smeltingYieldRangeKg(massKg, category);
+  const heatTier = smeltingRequiredHeatTier(atlas);
+  const fuelTier = fuelSlot ? smeltingFuelProfile(fuelSlot).tier : 0;
+  const localizedName = slot?.meta?.name ?? atlas?.name ?? gameText("main.backpack.coordinateResource", "Coordinate Resource");
+  const outputKind = smeltingOutputKind(category, atlas?.key);
+  return {
+    name: gameText("main.smelting.outputName", "{kind} {resource}", { kind: outputKind, resource: localizedName }),
+    description: gameText("main.smelting.outputDescription", "A forge-ready material batch derived from {resource}. Its element ranges stay tied to the original mined coordinate.", { resource: localizedName }),
+    heatLabel: fuelTier >= heatTier
+      ? gameText("main.smelting.heatMet", "Tier {tier} met", { tier: heatTier })
+      : gameText("main.smelting.heatMissing", "Tier {required} required, fuel {fuel}", { required: heatTier, fuel: fuelTier || "-" }),
+    yieldRange: `${formatMassKg(minYield)} - ${formatMassKg(maxYield)}`,
+    quality: slot?.meta?.source ?? gameText("main.backpack.unknownSource", "Unknown source"),
+    composition: (atlas?.composition ?? []).slice(0, 7),
+    color: atlas?.colors?.[0] ?? "#8bd8ff",
+  };
+}
+
+function smeltingYieldRangeKg(massKg, category) {
+  const mass = Number.isFinite(massKg) && massKg > 0 ? massKg : 1;
+  const factor = {
+    organic: [0.18, 0.36],
+    plants: [0.14, 0.32],
+    aquatic: [0.12, 0.34],
+    fluids: [0.08, 0.25],
+    terrain: [0.38, 0.68],
+    geological: [0.42, 0.74],
+    volcanic: [0.45, 0.78],
+    cold: [0.18, 0.52],
+    anomaly: [0.24, 0.62],
+  }[category] ?? [0.32, 0.66];
+  return [mass * factor[0], mass * factor[1]];
+}
+
+function smeltingRequiredHeatTier(atlas) {
+  const key = atlas?.key ?? "";
+  if (["basalt", "lava", "deepStone", "bedrock"].includes(key)) return 4;
+  if (["stone", "gravel", "sand", "clay", "coral", "shellBed"].includes(key)) return 3;
+  if (["dirt", "grass", "mud", "saltFlat", "frozenSoil"].includes(key)) return 2;
+  if (["water", "swampWater", "toxicWater", "ice", "snow"].includes(key)) return 2;
+  return 1;
+}
+
+function smeltingOutputKind(category, key) {
+  if (["trunk", "pineTrunk", "deadWood", "giantRoot"].includes(key)) return gameText("main.smelting.kindChar", "Carbonized");
+  if (category === "organic" || category === "plants" || category === "aquatic") return gameText("main.smelting.kindBiochar", "Biochar");
+  if (category === "terrain" || key === "clay" || key === "sand") return gameText("main.smelting.kindCeramic", "Sintered");
+  if (category === "volcanic" || category === "geological" || category === "anomaly") return gameText("main.smelting.kindBloom", "Refined");
+  if (category === "fluids" || category === "cold") return gameText("main.smelting.kindStabilized", "Stabilized");
+  return gameText("main.smelting.kindMaterial", "Processed");
+}
+
+function isSmeltingFuelSlot(slot) {
+  const key = slot?.atlasKey ?? "";
+  const category = getBlockAtlasEntry(key)?.category;
+  return smeltingFuelProfile(slot).tier > 0 || category === "organic" || category === "plants";
+}
+
+function smeltingFuelProfile(slot) {
+  const key = slot?.atlasKey ?? "";
+  const tiers = {
+    deadWood: 3,
+    trunk: 2,
+    pineTrunk: 2,
+    giantRoot: 2,
+    dryGrass: 1,
+    leaves: 1,
+    pineLeaves: 1,
+    deadBush: 1,
+    bush: 1,
+    cactus: 1,
+    reed: 1,
+    vine: 1,
+    glowMycelium: 2,
+    mushroom: 1,
+  };
+  return { tier: tiers[key] ?? 0 };
+}
+
+function createSmeltingSlotPreview(slot, className) {
+  const wrap = document.createElement("div");
+  wrap.className = className;
+  wrap.append(
+    createChainEventBlockPreview(slot.blockType, {
+      className: `${className}-block`,
+      canvasClassName: `${className}-canvas`,
+      rotating: false,
+      block: null,
+      immediate: false,
+    }),
+  );
+  return wrap;
+}
+
+function createSmeltingResourceSwatch(slot) {
+  const atlas = getBlockAtlasEntry(slot?.atlasKey);
+  const swatch = document.createElement("span");
+  swatch.className = "smelting-resource-swatch";
+  swatch.style.setProperty("--swatch-a", atlas?.colors?.[0] ?? "#8bd8ff");
+  swatch.style.setProperty("--swatch-b", atlas?.colors?.[1] ?? "#1f2c2d");
+  swatch.style.setProperty("--swatch-c", atlas?.colors?.[2] ?? "#090d0f");
+  swatch.setAttribute("aria-hidden", "true");
+  return swatch;
+}
+
+function createSmeltingMaterialPreview(recipe) {
+  const box = document.createElement("div");
+  box.className = "smelting-material-preview";
+  box.style.setProperty("--material", recipe.color);
+  box.innerHTML = "<i></i><i></i><i></i>";
+  return box;
+}
+
+function createSmeltingEmptyState(key, fallback) {
+  const empty = document.createElement("div");
+  empty.className = "smelting-empty-state";
+  empty.textContent = gameText(key, fallback);
+  return empty;
+}
+
+function localizedElementLabel(symbol) {
+  const normalized = String(symbol || "").trim();
+  if (!normalized) return "";
+  const label = gameText(`elements.names.${normalized}`, normalized);
+  return label === normalized ? normalized : label;
+}
+
 function selectMarketTab(tabName) {
   const selected = ["browse", "sell", "orders"].includes(tabName) ? tabName : "browse";
+  if (marketPanel?.dataset.activeMarketTab && marketPanel.dataset.activeMarketTab !== selected) {
+    closeMarketListingDetails();
+  }
   if (marketPanel) marketPanel.dataset.activeMarketTab = selected;
   marketTabs.forEach((tab) => {
     const active = tab.dataset.marketTab === selected;
@@ -1797,6 +2514,9 @@ function selectMarketTab(tabName) {
 
 function updateMarketPanel() {
   updateMarketCategoryButtons();
+  alignMarketChainListingCacheWithActiveFilters();
+  updateMarketSearchMeta();
+  updateMarketRefreshButton();
   if (marketWallet) {
     marketWallet.textContent = currentSession.walletAddress
       ? formatWalletAddress(currentSession.walletAddress)
@@ -1807,7 +2527,7 @@ function updateMarketPanel() {
     const backpack = equippedBackpackStatus?.backpack ?? null;
     marketBackpack.textContent = backpack
       ? gameText("main.market.backpackCount", "{count}/{capacity}", {
-          count: backpack.itemCount ?? 0,
+          count: availableBackpackItemCount(backpack),
           capacity: backpack.capacity ?? backpackSlotTotal,
         })
       : gameText("main.profile.noBackpack", "No backpack equipped");
@@ -1821,6 +2541,61 @@ function updateMarketPanel() {
   }
 }
 
+function updateMarketRefreshButton() {
+  if (!marketRefresh) return;
+  marketRefresh.disabled = marketChainListingsLoading;
+  marketRefresh.setAttribute("aria-busy", String(marketChainListingsLoading));
+}
+
+function setMarketStatus(message, tone = "info") {
+  if (!marketStatus) return;
+  marketStatus.textContent = message || "";
+  marketStatus.hidden = !message;
+  marketStatus.dataset.tone = tone;
+}
+
+function setMarketLocalizedStatus(key, fallback, params = {}, tone = "info") {
+  const message = gameText(key, fallback, params);
+  setMarketStatus(message, tone);
+  return message;
+}
+
+function setMarketFormLocalizedStatus(key, fallback, params = {}, tone = "info") {
+  const message = setMarketLocalizedStatus(key, fallback, params, tone);
+  if (marketFormStatus) marketFormStatus.textContent = message;
+  return message;
+}
+
+function handleMarketRefreshClick(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  closeMarketListingDetails();
+  marketChainListingsLoadedAt = 0;
+  renderMarketTabPage(marketPanel?.dataset.activeMarketTab || "browse");
+  void refreshMarketChainListings({ force: true });
+  updateMarketRefreshButton();
+}
+
+function updateMarketSearchMeta() {
+  if (!marketSearchMeta) return;
+  const query = marketSearchQuery();
+  const category = marketCategoryLabel(marketSelectedCategory);
+  const sort = marketSortLabel(marketSelectedSort);
+  const currency = marketCurrencyLabel(marketSelectedCurrency);
+  const filterKey = marketChainListingFilterKey(currentMarketChainListingFilters());
+  const chainStatus = marketChainListingsLoading
+    ? gameText("main.market.chainListingsSyncing", "Syncing chain listings...")
+    : marketChainListingsError
+      ? gameText("main.market.chainListingsUnavailable", "Chain sync unavailable")
+      : marketChainListingsLoadedAt > 0 && filterKey === marketChainListingsFilterKey
+        ? gameText("main.market.chainListingsSynced", "Chain listings synced")
+        : "";
+  const baseMeta = query
+    ? gameText("main.market.searchMetaActive", "{category} · {currency} · {sort} · \"{query}\"", { category, currency, sort, query })
+    : gameText("main.market.searchMetaIdle", "{category} · {currency} · {sort}", { category, currency, sort });
+  marketSearchMeta.textContent = chainStatus ? `${baseMeta} · ${chainStatus}` : baseMeta;
+}
+
 function updateMarketCategoryButtons() {
   marketCategoryButtons.forEach((button) => {
     button.classList.toggle("active", button.dataset.marketCategory === marketSelectedCategory);
@@ -1829,7 +2604,9 @@ function updateMarketCategoryButtons() {
 
 function renderMarketListings() {
   if (!marketListingGrid) return;
-  const listings = filterMarketListings([...marketSampleListings, ...loadMergedMarketListings()]);
+  const listings = sortMarketListings(filterMarketListings([...marketSampleListings, ...loadMergedMarketListings()]));
+  const page = paginateMarketItems(listings, "browse");
+  renderMarketPagination(marketListingPager, "browse", page);
   if (!listings.length) {
     marketListingGrid.replaceChildren(createMarketEmptyState(
       marketChainListingsLoading
@@ -1841,12 +2618,34 @@ function renderMarketListings() {
     ));
     return;
   }
-  marketListingGrid.replaceChildren(...listings.map((listing) => createMarketListingCard(listing, { order: false })));
+  marketListingGrid.replaceChildren(...page.items.map((listing) => createMarketListingCard(listing, {
+    order: false,
+    tabName: "browse",
+  })));
+}
+
+function renderMarketTabPage(tabName) {
+  if (tabName === "sell") {
+    renderMarketInventory();
+    updateMarketListingDraft();
+    return;
+  }
+  if (tabName === "orders") {
+    renderMarketOrders();
+    return;
+  }
+  renderMarketListings();
+}
+
+function scheduleMarketTabPageRender(tabName) {
+  window.setTimeout(() => renderMarketTabPage(tabName), 50);
 }
 
 function renderMarketOrders() {
   if (!marketOrdersGrid) return;
-  const orders = loadMarketOrderListings();
+  const orders = sortMarketListings(filterMarketListings(loadMarketOrderListings()));
+  const page = paginateMarketItems(orders, "orders");
+  renderMarketPagination(marketOrdersPager, "orders", page);
   if (!orders.length) {
     marketOrdersGrid.replaceChildren(createMarketEmptyState(
       gameText("main.market.noOrders", "No active orders"),
@@ -1854,12 +2653,37 @@ function renderMarketOrders() {
     ));
     return;
   }
-  marketOrdersGrid.replaceChildren(...orders.map((listing) => createMarketListingCard(listing, { order: true })));
+  marketOrdersGrid.replaceChildren(...page.items.map((listing) => createMarketListingCard(listing, {
+    order: true,
+    tabName: "orders",
+  })));
 }
 
 function renderMarketInventory() {
   if (!marketInventoryGrid) return;
-  const items = collectMarketSelectableItems();
+  if (marketNeedsChainSourceLockSync()) {
+    if (marketChainListingsError) {
+      marketInventoryGrid.replaceChildren(createMarketEmptyState(
+        gameText("main.market.chainListingLoadFailed", "On-chain listings are temporarily unavailable."),
+        gameText("main.market.chainListingsUnavailable", "Chain sync unavailable"),
+        {
+          label: gameText("main.market.refresh", "Refresh market listings"),
+          onClick: () => {
+            marketChainListingsLoadedAt = 0;
+            renderMarketInventory();
+            void refreshMarketChainListings({ force: true });
+          },
+        },
+      ));
+    } else {
+      marketInventoryGrid.replaceChildren(createMarketEmptyState(
+        gameText("main.market.loadingListings", "Loading listings..."),
+        gameText("main.market.chainListingsSyncing", "Syncing chain listings..."),
+      ));
+    }
+    return;
+  }
+  const items = filterMarketInventoryItems(collectMarketSelectableItems());
   if (!items.length) {
     marketInventoryGrid.replaceChildren(createMarketEmptyState(
       gameText("main.market.noInventoryItems", "No listable items"),
@@ -1871,50 +2695,435 @@ function renderMarketInventory() {
 }
 
 function filterMarketListings(listings) {
-  const query = String(marketSearch?.value ?? "").trim().toLowerCase();
+  const query = marketSearchQuery();
   return listings.filter((listing) => {
     if (marketSelectedCategory !== "all" && listing.category !== marketSelectedCategory) return false;
+    if (marketSelectedCurrency !== "all" && String(listing.currency || "").toUpperCase() !== marketSelectedCurrency) return false;
     if (!query) return true;
-    return [
+    return marketMatchesSearch([
       marketListingName(listing),
       marketListingMeta(listing),
       marketCategoryLabel(listing.category),
       listing.currency,
       listing.price,
-    ].join(" ").toLowerCase().includes(query);
+      listing.seller,
+      listing.listing,
+      listing.sourceInventory,
+      listing.sourceRecord
+        ? `${listing.sourceRecord.worldX},${listing.sourceRecord.worldY},${listing.sourceRecord.worldZ}`
+        : "",
+    ], query);
   });
 }
 
-function createMarketListingCard(listing, { order = false } = {}) {
+function filterMarketInventoryItems(items) {
+  const query = marketSearchQuery();
+  return items.filter((item) => {
+    if (marketSelectedCategory !== "all" && item.category !== marketSelectedCategory) return false;
+    if (!query) return true;
+    return marketMatchesSearch([
+      item.name,
+      item.meta,
+      marketCategoryLabel(item.category),
+      item.source,
+      item.backpack,
+      item.slot?.record
+        ? `${item.slot.record.worldX},${item.slot.record.worldY},${item.slot.record.worldZ}`
+        : "",
+    ], query);
+  });
+}
+
+function sortMarketListings(listings) {
+  const sort = marketSortOptions.includes(marketSelectedSort) ? marketSelectedSort : "newest";
+  return listings
+    .map((listing, index) => ({ listing, index }))
+    .sort((a, b) => {
+      const listingA = a.listing;
+      const listingB = b.listing;
+      if (sort === "price-asc" || sort === "price-desc") {
+        const currencyCompare = marketListingCurrencyRank(listingA) - marketListingCurrencyRank(listingB);
+        if (currencyCompare !== 0) return currencyCompare;
+        const priceCompare = marketListingPriceValue(listingA) - marketListingPriceValue(listingB);
+        if (priceCompare !== 0) return sort === "price-asc" ? priceCompare : -priceCompare;
+      } else {
+        const createdCompare = marketListingCreatedAt(listingA) - marketListingCreatedAt(listingB);
+        if (createdCompare !== 0) return sort === "oldest" ? createdCompare : -createdCompare;
+      }
+      return a.index - b.index;
+    })
+    .map(({ listing }) => listing);
+}
+
+function marketSearchQuery() {
+  return String(marketSearch?.value ?? "").trim().toLowerCase();
+}
+
+function marketMatchesSearch(parts, query) {
+  return parts.join(" ").toLowerCase().includes(query);
+}
+
+function marketSortLabel(sort) {
+  const key = {
+    newest: "main.market.sortNewest",
+    oldest: "main.market.sortOldest",
+    "price-asc": "main.market.sortPriceAsc",
+    "price-desc": "main.market.sortPriceDesc",
+  }[sort] ?? "main.market.sortNewest";
+  return gameText(key, "Newest first");
+}
+
+function marketCurrencyLabel(currency) {
+  if (currency === "NCK" || currency === "SOL") return currency;
+  return gameText("main.market.currencyAll", "All currencies");
+}
+
+function marketListingCreatedAt(listing) {
+  const value = Number(listing?.createdAt || 0);
+  return Number.isFinite(value) ? value : 0;
+}
+
+function marketListingCurrencyRank(listing) {
+  const currency = String(listing?.currency || "").toUpperCase();
+  if (currency === "NCK") return 0;
+  if (currency === "SOL") return 1;
+  return 2;
+}
+
+function marketListingPriceValue(listing) {
+  const baseUnits = Number(listing?.priceBaseUnits);
+  if (Number.isFinite(baseUnits) && baseUnits > 0) return baseUnits;
+  const value = Number(listing?.price || 0);
+  return Number.isFinite(value) ? value : 0;
+}
+
+function resetMarketPages(tabName = null) {
+  closeMarketListingDetails();
+  if (tabName) {
+    marketPageState[tabName] = 1;
+    return;
+  }
+  Object.keys(marketPageState).forEach((key) => {
+    marketPageState[key] = 1;
+  });
+}
+
+function paginateMarketItems(items, tabName) {
+  const pageSize = marketPageSizeByTab[tabName] ?? 8;
+  const total = items.length;
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  const currentPage = Math.min(Math.max(1, marketPageState[tabName] || 1), totalPages);
+  marketPageState[tabName] = currentPage;
+  const startIndex = total ? (currentPage - 1) * pageSize : 0;
+  const endIndex = total ? Math.min(total, startIndex + pageSize) : 0;
+  return {
+    items: items.slice(startIndex, endIndex),
+    page: currentPage,
+    pageSize,
+    total,
+    totalPages,
+    start: total ? startIndex + 1 : 0,
+    end: endIndex,
+  };
+}
+
+function renderMarketPagination(container, tabName, page) {
+  if (!container) return;
+  container.hidden = page.total === 0;
+  container.replaceChildren();
+  if (page.total === 0) return;
+  const summary = document.createElement("span");
+  summary.textContent = gameText("main.market.pageSummary", "Showing {start}-{end} of {total}", {
+    start: page.start,
+    end: page.end,
+    total: page.total,
+  });
+  const controls = document.createElement("div");
+  controls.className = "market-pagination-controls";
+  const previous = document.createElement("button");
+  previous.type = "button";
+  previous.textContent = "<";
+  previous.disabled = page.page <= 1;
+  previous.setAttribute("aria-label", gameText("main.market.previousPage", "Previous page"));
+  previous.addEventListener("click", () => {
+    closeMarketListingDetails();
+    marketPageState[tabName] = Math.max(1, page.page - 1);
+    scheduleMarketTabPageRender(tabName);
+  });
+  const current = document.createElement("strong");
+  current.textContent = gameText("main.market.pageIndicator", "Page {page} / {totalPages}", {
+    page: page.page,
+    totalPages: page.totalPages,
+  });
+  const next = document.createElement("button");
+  next.type = "button";
+  next.textContent = ">";
+  next.disabled = page.page >= page.totalPages;
+  next.setAttribute("aria-label", gameText("main.market.nextPage", "Next page"));
+  next.addEventListener("click", () => {
+    closeMarketListingDetails();
+    marketPageState[tabName] = Math.min(page.totalPages, page.page + 1);
+    scheduleMarketTabPageRender(tabName);
+  });
+  controls.append(previous, current, next);
+  container.append(summary, controls);
+}
+
+function createMarketListingCard(listing, { order = false, tabName = "browse" } = {}) {
+  const selected = marketDetailState.listing?.id === listing.id && marketDetailState.tabName === tabName;
   const card = document.createElement("article");
   card.className = "market-listing-card";
+  card.classList.toggle("selected", selected);
   card.dataset.category = listing.category;
+  card.dataset.listingId = listing.id;
+  card.tabIndex = 0;
+  card.setAttribute("role", "button");
+  card.setAttribute("aria-haspopup", "dialog");
+  card.setAttribute("aria-expanded", String(selected));
+  card.setAttribute("aria-label", gameText("main.market.cardAria", "{name}, {price} {currency}", {
+    name: marketListingName(listing),
+    price: listing.price,
+    currency: listing.currency,
+  }));
+  card.addEventListener("click", () => openMarketListingDetails(listing, { order, tabName }));
+  card.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    openMarketListingDetails(listing, { order, tabName });
+  });
   const icon = document.createElement("div");
   icon.className = `market-listing-icon ${marketListingIconType(listing)}`;
   icon.setAttribute("aria-hidden", "true");
   const copy = document.createElement("div");
+  copy.className = "market-listing-main";
   const title = document.createElement("strong");
   title.textContent = marketListingName(listing);
   const meta = document.createElement("span");
-  meta.textContent = `${marketCategoryLabel(listing.category)} · ${marketListingMeta(listing)}`;
+  meta.textContent = marketCategoryLabel(listing.category);
   copy.append(title, meta);
   const price = document.createElement("b");
+  price.className = "market-listing-price";
   price.textContent = `${listing.price} ${listing.currency}`;
+  const detailHint = document.createElement("small");
+  detailHint.className = "market-listing-hint";
+  detailHint.textContent = isOwnMarketListing(listing)
+    ? gameText("main.market.ownListing", "Your listing")
+    : gameText("main.market.expandDetails", "Details");
+  card.append(icon, copy, price, detailHint);
+  return card;
+}
+
+function openMarketListingDetails(listing, { order = false, tabName = "browse" } = {}) {
+  if (!listing) return;
+  marketDetailState = { listing, order, tabName };
+  renderMarketListingDetailsDialog();
+  renderMarketTabPage(tabName);
+}
+
+function closeMarketListingDetails() {
+  marketDetailDialog?.remove();
+  marketDetailDialog = null;
+  marketDetailState = { listing: null, order: false, tabName: null };
+}
+
+function renderMarketListingDetailsDialog() {
+  if (!marketPanel || !marketDetailState.listing) return;
+  marketDetailDialog?.remove();
+  const listing = marketDetailState.listing;
+  const overlay = document.createElement("div");
+  overlay.className = "market-detail-overlay";
+  overlay.addEventListener("pointerdown", (event) => {
+    if (event.target === overlay) {
+      const tabName = marketDetailState.tabName || "browse";
+      event.preventDefault();
+      event.stopPropagation();
+      closeMarketListingDetails();
+      renderMarketTabPage(tabName);
+    }
+  });
+  const dialog = document.createElement("section");
+  dialog.className = "market-detail-dialog";
+  dialog.setAttribute("role", "dialog");
+  dialog.setAttribute("aria-modal", "false");
+  dialog.setAttribute("aria-labelledby", "marketDetailTitle");
+  dialog.addEventListener("pointerdown", (event) => event.stopPropagation());
+  const header = document.createElement("header");
+  header.className = "market-detail-header";
+  const titleWrap = document.createElement("div");
+  const eyebrow = document.createElement("span");
+  eyebrow.textContent = gameText("main.market.detailTitle", "Listing details");
+  const title = document.createElement("h3");
+  title.id = "marketDetailTitle";
+  title.textContent = marketListingName(listing);
+  titleWrap.append(eyebrow, title);
+  const close = document.createElement("button");
+  close.type = "button";
+  close.className = "market-detail-close";
+  close.textContent = "×";
+  close.setAttribute("aria-label", gameText("main.market.detailClose", "Close listing details"));
+  close.addEventListener("click", () => {
+    const tabName = marketDetailState.tabName || "browse";
+    closeMarketListingDetails();
+    renderMarketTabPage(tabName);
+  });
+  header.append(titleWrap, close);
+  const summary = document.createElement("div");
+  summary.className = "market-detail-summary";
+  const icon = document.createElement("div");
+  icon.className = `market-listing-icon ${marketListingIconType(listing)}`;
+  icon.setAttribute("aria-hidden", "true");
+  const summaryCopy = document.createElement("div");
+  const meta = document.createElement("span");
+  meta.textContent = marketCategoryLabel(listing.category);
+  const itemMeta = document.createElement("strong");
+  itemMeta.textContent = marketListingMeta(listing);
+  summaryCopy.append(meta, itemMeta);
+  const price = document.createElement("b");
+  price.className = "market-listing-price";
+  price.textContent = `${listing.price} ${listing.currency}`;
+  summary.append(icon, summaryCopy, price);
+  const details = document.createElement("div");
+  details.className = "market-listing-details";
+  details.append(
+    createMarketListingDetailRow(gameText("main.market.detailItem", "Item"), marketListingMeta(listing)),
+    createMarketListingDetailRow(gameText("main.market.detailSeller", "Seller"), formatWalletAddress(listing.seller)),
+    createMarketListingDetailRow(gameText("main.market.detailSource", "Source"), marketSourceLabel(listing.source)),
+    createMarketListingDetailRow(gameText("main.market.detailInventory", "Inventory"), marketListingInventoryLabel(listing)),
+  );
+  const paymentRequirement = marketPaymentRequirement(listing);
+  if (paymentRequirement) {
+    details.append(createMarketListingDetailRow(
+      gameText("main.market.detailPayment", "Payment"),
+      gameText(paymentRequirement.key, paymentRequirement.fallback),
+    ));
+  }
+  const buyDisabledReason = marketDetailState.order || isOwnMarketListing(listing) ? null : marketBuyDisabledReason(listing);
+  if (buyDisabledReason) {
+    details.append(createMarketListingDetailRow(
+      gameText("main.market.detailRequirement", "Requirement"),
+      gameText(buyDisabledReason.key, buyDisabledReason.fallback),
+    ));
+  }
+  details.append(createMarketListingActionButton(listing, marketDetailState.order));
+  dialog.append(header, summary, details);
+  overlay.append(dialog);
+  marketPanel.append(overlay);
+  marketDetailDialog = overlay;
+  requestAnimationFrame(() => close.focus());
+}
+
+function createMarketListingActionButton(listing, order = false) {
+  const ownListing = order || isOwnMarketListing(listing);
   const action = document.createElement("button");
   action.type = "button";
-  action.textContent = order ? gameText("main.market.cancelListing", "Cancel") : gameText("main.market.buy", "Buy");
-  if (order) {
+  action.textContent = ownListing ? gameText("main.market.cancelListing", "Cancel") : gameText("main.market.buy", "Buy");
+  action.addEventListener("click", (event) => event.stopPropagation());
+  if (ownListing) {
+    action.disabled = marketCancelingListingId === listing.id;
+    action.textContent = action.disabled
+      ? gameText("main.market.cancelPending", "Canceling...")
+      : gameText("main.market.cancelListing", "Cancel");
     action.addEventListener("click", () => handleCancelMarketListing(listing, action));
   } else if (listing.listing && listing.seller) {
-    action.disabled = marketBuyingListingId === listing.id;
+    const disabledReason = marketBuyDisabledReason(listing);
+    action.disabled = marketBuyingListingId === listing.id || Boolean(disabledReason);
     action.textContent = action.disabled ? gameText("main.market.buyPending", "Buying...") : gameText("main.market.buy", "Buy");
-    action.addEventListener("click", () => handleBuyMarketListing(listing, action));
+    if (disabledReason) {
+      action.textContent = gameText("main.market.buy", "Buy");
+      action.title = gameText(disabledReason.key, disabledReason.fallback);
+    } else {
+      action.addEventListener("click", () => handleBuyMarketListing(listing, action));
+    }
   } else {
     action.disabled = true;
     action.title = gameText("main.market.sampleListing", "Sample listing");
   }
-  card.append(icon, copy, price, action);
-  return card;
+  return action;
+}
+
+function isOwnMarketListing(listing) {
+  const wallet = currentSession.walletAddress;
+  return Boolean(wallet && listing?.seller === wallet);
+}
+
+function marketPaymentRequirement(listing) {
+  const currency = String(listing?.currency || "").toUpperCase();
+  if (currency === "NCK") {
+    return {
+      key: "main.market.paymentNck",
+      fallback: "Requires a wallet NCK token account.",
+    };
+  }
+  if (currency === "SOL") {
+    return {
+      key: "main.market.paymentSol",
+      fallback: "Pays from wallet SOL balance.",
+    };
+  }
+  return null;
+}
+
+function marketBuyDisabledReason(listing) {
+  if (listing?.source === "asset") {
+    if (!listing.sourceSlot?.itemId) {
+      return {
+        key: "main.market.buyAssetUnavailable",
+        fallback: "Asset metadata is unavailable.",
+      };
+    }
+    if (findMarketAssetDeliveryHotbarIndex() < 0) {
+      return {
+        key: "main.market.buyNeedsHotbarSlot",
+        fallback: "Free one hotbar slot to receive this item.",
+      };
+    }
+    return null;
+  }
+  if (listing?.source !== "backpack") return null;
+  const backpack = equippedBackpackStatus?.backpack ?? null;
+  if (!backpack?.publicKey) {
+    return {
+      key: "main.market.buyNeedsBackpack",
+      fallback: "Equip a backpack to buy this listing.",
+    };
+  }
+  if (isBackpackStorageFull(backpack)) {
+    return {
+      key: "main.market.buyBackpackFull",
+      fallback: "Your backpack is full.",
+    };
+  }
+  return null;
+}
+
+function isBackpackStorageFull(backpack) {
+  if (!backpack) return false;
+  const capacity = backpack.capacity ?? backpackSlotTotal;
+  const itemCount = Number.isFinite(Number(backpack.itemCount))
+    ? Number(backpack.itemCount)
+    : backpack.records?.length ?? 0;
+  return itemCount >= capacity;
+}
+
+function findMarketAssetDeliveryHotbarIndex() {
+  return hotbarSlots.findIndex((slot, index) => !slot && !isBackpackHotbarSlot(index));
+}
+
+function createMarketListingDetailRow(label, value) {
+  const row = document.createElement("span");
+  const labelEl = document.createElement("em");
+  labelEl.textContent = label;
+  const valueEl = document.createElement("strong");
+  valueEl.textContent = value || gameText("main.market.detailUnknown", "Unknown");
+  row.append(labelEl, valueEl);
+  return row;
+}
+
+function marketListingInventoryLabel(listing) {
+  if (listing.sourceRecord) {
+    return `${listing.sourceRecord.worldX}, ${listing.sourceRecord.worldY}, ${listing.sourceRecord.worldZ}`;
+  }
+  return listing.sourceInventory ? formatWalletAddress(listing.sourceInventory) : gameText("main.market.detailUnknown", "Unknown");
 }
 
 function createMarketInventoryItemButton(item) {
@@ -1942,7 +3151,7 @@ function createMarketInventoryItemButton(item) {
   return button;
 }
 
-function createMarketEmptyState(title, body) {
+function createMarketEmptyState(title, body, action = null) {
   const empty = document.createElement("div");
   empty.className = "market-empty-state";
   const titleEl = document.createElement("strong");
@@ -1950,6 +3159,13 @@ function createMarketEmptyState(title, body) {
   const bodyEl = document.createElement("span");
   bodyEl.textContent = body;
   empty.append(titleEl, bodyEl);
+  if (action?.label && typeof action.onClick === "function") {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = action.label;
+    button.addEventListener("click", action.onClick);
+    empty.append(button);
+  }
   return empty;
 }
 
@@ -1970,11 +3186,11 @@ async function handleCreateMarketListing(event) {
   updateMarketListingDraft();
   const price = Number(marketListingPrice?.value);
   if (!marketSelectedListingItem || !Number.isFinite(price) || price <= 0) {
-    if (marketFormStatus) marketFormStatus.textContent = gameText("main.market.invalidListing", "Select an item and enter a valid price.");
+    setMarketFormLocalizedStatus("main.market.invalidListing", "Select an item and enter a valid price.", {}, "error");
     return;
   }
   marketListingSubmitting = true;
-  if (marketFormStatus) marketFormStatus.textContent = gameText("main.market.listingPending", "Confirm the transaction to create this listing on-chain.");
+  setMarketFormLocalizedStatus("main.market.listingPending", "Confirm the transaction to create this listing on-chain.");
   updateMarketListingDraft();
   try {
     const chainModule = await loadNicechunkChainModule();
@@ -1986,13 +3202,12 @@ async function handleCreateMarketListing(event) {
       currency,
       price: marketListingPrice?.value ?? price,
       quantity: marketSelectedListingItem.quantity ?? 1,
+      backpackAddress: equippedBackpackStatus?.backpack?.publicKey ?? null,
     });
     if (!result?.submitted) {
-      if (marketFormStatus) {
-        marketFormStatus.textContent = gameText("main.market.listingFailed", "Listing transaction failed: {reason}", {
-          reason: chainSubmitReasonLabel(result?.reason),
-        });
-      }
+      setMarketFormLocalizedStatus("main.market.listingFailed", "Listing transaction failed: {reason}", {
+        reason: chainSubmitReasonLabel(result?.reason),
+      }, "error");
       return;
     }
     const listing = {
@@ -2007,28 +3222,54 @@ async function handleCreateMarketListing(event) {
       category,
       currency,
       price: formatMarketPrice(price),
-      priceBaseUnits: result.priceBaseUnits,
-      iconType: marketSelectedListingItem.iconType,
-      source: marketSelectedListingItem.source,
-      sourceItemId: marketSelectedListingItem.id,
+	      priceBaseUnits: result.priceBaseUnits,
+	      iconType: marketSelectedListingItem.iconType,
+	      source: result.sourceKind ?? marketSelectedListingItem.source,
+	      sourceOrigin: marketSelectedListingItem.source,
+	      sourceIndex: marketSelectedListingItem.slotIndex,
+	      sourceItemId: marketSelectedListingItem.id,
+	      sourceInventory: result.sourceInventory ?? marketSelectedListingItem.backpack ?? equippedBackpackStatus?.backpack?.publicKey ?? null,
+	      backpack: marketSelectedListingItem.source === "backpack"
+	        ? result.sourceInventory ?? marketSelectedListingItem.backpack ?? equippedBackpackStatus?.backpack?.publicKey ?? null
+	        : null,
+	      asset: result.asset ?? (result.sourceKind === "asset" ? result.sourceInventory : null),
+	      assetId: result.assetId ?? null,
+      sourceRecord: marketSelectedListingItem.slot?.record
+        ? {
+            worldX: marketSelectedListingItem.slot.record.worldX,
+            worldY: marketSelectedListingItem.slot.record.worldY,
+            worldZ: marketSelectedListingItem.slot.record.worldZ,
+          }
+        : null,
+      sourceSlot: marketSelectedListingItem.source === "hotbar"
+        ? {
+            itemId: marketSelectedListingItem.slot?.itemId ?? null,
+            count: marketSelectedListingItem.slot?.count ?? null,
+            bytes: Array.isArray(marketSelectedListingItem.slot?.bytes) ? [...marketSelectedListingItem.slot.bytes] : null,
+            byteLength: marketSelectedListingItem.slot?.byteLength ?? null,
+            code: marketSelectedListingItem.slot?.code ?? null,
+            durability: marketSelectedListingItem.slot?.durability ?? null,
+            locked: Boolean(marketSelectedListingItem.slot?.locked),
+            savedAt: marketSelectedListingItem.slot?.savedAt ?? null,
+          }
+        : null,
       createdAt: Date.now(),
     };
     saveMarketListings([listing, ...loadMarketListings()]);
+    removeMarketListingSourceFromLocalInventory(listing);
+    await refreshEquippedBackpack({ force: true });
     marketSelectedListingItem = null;
     if (marketListingPrice) marketListingPrice.value = "";
-    if (marketFormStatus) {
-      marketFormStatus.textContent = gameText("main.market.listingCreated", "Listing created on-chain: {signature}", {
-        signature: shortSignature(result.signature),
-      });
-    }
+    setMarketFormLocalizedStatus("main.market.listingCreated", "Listing created on-chain: {signature}", {
+      signature: shortSignature(result.signature),
+    }, "success");
+    marketChainListingsLoadedAt = 0;
     selectMarketTab("orders");
   } catch (error) {
     console.warn("Failed to create market listing", error);
-    if (marketFormStatus) {
-      marketFormStatus.textContent = gameText("main.market.listingFailed", "Listing transaction failed: {reason}", {
-        reason: readableChainError(error),
-      });
-    }
+    setMarketFormLocalizedStatus("main.market.listingFailed", "Listing transaction failed: {reason}", {
+      reason: readableChainError(error),
+    }, "error");
   } finally {
     marketListingSubmitting = false;
     updateMarketPanel();
@@ -2036,76 +3277,97 @@ async function handleCreateMarketListing(event) {
 }
 
 async function handleCancelMarketListing(listing, action) {
-  if (!listing?.id) return;
+  if (!listing?.id || marketCancelingListingId) return;
+  marketCancelingListingId = listing.id;
   if (!listing.listing && !listing.listingId) {
-    removeMarketListing(listing.id);
+    removeMarketListing(listing);
+    restoreMarketListingSourceToLocalInventory(listing);
+    closeMarketListingDetails();
+    setMarketLocalizedStatus("main.market.cancelCreated", "Listing canceled.", {}, "success");
     updateMarketPanel();
+    marketCancelingListingId = null;
     return;
   }
   action.disabled = true;
   action.textContent = gameText("main.market.cancelPending", "Canceling...");
+  setMarketLocalizedStatus("main.market.cancelPending", "Canceling...");
   try {
     const chainModule = await loadNicechunkChainModule();
     const result = await chainModule.cancelMarketListingOnChain({
       listing: listing.listing,
       listingId: listing.listingId,
+      source: listing.source,
+      sourceInventory: listing.sourceInventory ?? listing.backpack,
     });
     if (!result?.submitted) {
-      if (marketFormStatus) {
-        marketFormStatus.textContent = gameText("main.market.cancelFailed", "Cancel transaction failed: {reason}", {
-          reason: chainSubmitReasonLabel(result?.reason),
-        });
-      }
+      setMarketLocalizedStatus("main.market.cancelFailed", "Cancel transaction failed: {reason}", {
+        reason: chainSubmitReasonLabel(result?.reason),
+      }, "error");
       action.disabled = false;
       action.textContent = gameText("main.market.cancelListing", "Cancel");
       return;
     }
-    removeMarketListing(listing.id);
+    removeMarketListing(listing);
+    restoreMarketListingSourceToLocalInventory(listing);
+    await refreshEquippedBackpack({ force: true });
+    closeMarketListingDetails();
+    setMarketLocalizedStatus("main.market.cancelCreated", "Listing canceled.", {}, "success");
     updateMarketPanel();
   } catch (error) {
     console.warn("Failed to cancel market listing", error);
-    if (marketFormStatus) {
-      marketFormStatus.textContent = gameText("main.market.cancelFailed", "Cancel transaction failed: {reason}", {
-        reason: readableChainError(error),
-      });
-    }
+    setMarketLocalizedStatus("main.market.cancelFailed", "Cancel transaction failed: {reason}", {
+      reason: readableChainError(error),
+    }, "error");
     action.disabled = false;
     action.textContent = gameText("main.market.cancelListing", "Cancel");
+  } finally {
+    marketCancelingListingId = null;
+    updateMarketPanel();
   }
 }
 
 async function handleBuyMarketListing(listing, action) {
   if (!listing?.id || marketBuyingListingId) return;
+  const disabledReason = marketBuyDisabledReason(listing);
+  if (disabledReason) {
+    setMarketLocalizedStatus(disabledReason.key, disabledReason.fallback, {}, "error");
+    if (action) {
+      action.disabled = true;
+      action.title = gameText(disabledReason.key, disabledReason.fallback);
+    }
+    return;
+  }
   marketBuyingListingId = listing.id;
   action.disabled = true;
   action.textContent = gameText("main.market.buyPending", "Buying...");
+  setMarketLocalizedStatus("main.market.buyPending", "Buying...");
   try {
     const chainModule = await loadNicechunkChainModule();
-    const result = await chainModule.buyMarketListingOnChain({ listing });
+    const result = await chainModule.buyMarketListingOnChain({
+      listing,
+      buyerBackpackAddress: equippedBackpackStatus?.backpack?.publicKey ?? null,
+    });
     if (!result?.submitted) {
-      if (marketFormStatus) {
-        marketFormStatus.textContent = gameText("main.market.buyFailed", "Buy transaction failed: {reason}", {
-          reason: chainSubmitReasonLabel(result?.reason),
-        });
-      }
+      setMarketLocalizedStatus("main.market.buyFailed", "Buy transaction failed: {reason}", {
+        reason: chainSubmitReasonLabel(result?.reason),
+      }, "error");
       action.disabled = false;
       action.textContent = gameText("main.market.buy", "Buy");
       return;
-    }
-    removeMarketListing(listing.id);
-    if (marketFormStatus) {
-      marketFormStatus.textContent = gameText("main.market.buyCreated", "Purchase confirmed on-chain: {signature}", {
-        signature: shortSignature(result.signature),
-      });
-    }
+	    }
+    removeMarketListing(listing);
+    deliverMarketAssetToLocalInventory(listing);
+    await refreshEquippedBackpack({ force: true });
+    closeMarketListingDetails();
+    setMarketLocalizedStatus("main.market.buyCreated", "Purchase confirmed on-chain: {signature}", {
+      signature: shortSignature(result.signature),
+    }, "success");
     updateMarketPanel();
   } catch (error) {
     console.warn("Failed to buy market listing", error);
-    if (marketFormStatus) {
-      marketFormStatus.textContent = gameText("main.market.buyFailed", "Buy transaction failed: {reason}", {
-        reason: readableChainError(error),
-      });
-    }
+    setMarketLocalizedStatus("main.market.buyFailed", "Buy transaction failed: {reason}", {
+      reason: readableChainError(error),
+    }, "error");
     action.disabled = false;
     action.textContent = gameText("main.market.buy", "Buy");
   } finally {
@@ -2114,18 +3376,129 @@ async function handleBuyMarketListing(listing, action) {
   }
 }
 
+function removeMarketListingSourceFromLocalInventory(listing) {
+  if (!listing) return;
+  const origin = listing.sourceOrigin ?? listing.source;
+  if (origin === "backpack") {
+    removeBackpackRecordFromLocalState(listing);
+    return;
+  }
+  if (origin === "hotbar" && Number.isInteger(listing.sourceIndex)) {
+    hotbarSlots[listing.sourceIndex] = null;
+    if (selectedHotbarSlot === listing.sourceIndex) selectFirstSelectableHotbarSlot();
+    renderHotbar();
+  }
+}
+
+function restoreMarketListingSourceToLocalInventory(listing) {
+  if (!listing) return;
+  const origin = listing.sourceOrigin ?? listing.source;
+  if (origin === "backpack") {
+    restoreBackpackRecordToLocalState(listing);
+    return;
+  }
+  if (origin === "hotbar" && Number.isInteger(listing.sourceIndex) && listing.sourceSlot?.itemId) {
+    const current = hotbarSlots[listing.sourceIndex];
+    if (!current) {
+      hotbarSlots[listing.sourceIndex] = { ...listing.sourceSlot };
+      renderHotbar();
+    }
+  }
+}
+
+function deliverMarketAssetToLocalInventory(listing) {
+  if (!listing || listing.source !== "asset" || !listing.sourceSlot?.itemId) return;
+  const emptyIndex = findMarketAssetDeliveryHotbarIndex();
+  if (emptyIndex < 0) return;
+  hotbarSlots[emptyIndex] = { ...listing.sourceSlot };
+  renderHotbar();
+}
+
+function removeBackpackRecordFromLocalState(listing) {
+  const backpack = equippedBackpackStatus?.backpack;
+  if (!backpack?.records?.length) return;
+  const listingSourceIds = new Set(marketListingSourceItemIds(listing));
+  const recordIndex = Number.isInteger(listing.sourceIndex)
+    ? listing.sourceIndex
+    : backpack.records.findIndex((record, index) => (
+        listingSourceIds.has(marketBackpackSourceItemId(index, record, backpack.publicKey)) ||
+        listingSourceIds.has(marketBackpackSourceItemId(index, record))
+      ));
+  if (recordIndex < 0 || recordIndex >= backpack.records.length) return;
+  backpack.records.splice(recordIndex, 1);
+  backpack.itemCount = Math.max(0, Number(backpack.itemCount ?? backpack.records.length + 1) - 1);
+  reindexBackpackRecords(backpack);
+  invalidateBackpackSlotCache();
+  syncEquippedBackpackSlot();
+  renderHotbar();
+  if (backpackPanel && !backpackPanel.hidden) renderBackpackPanel();
+}
+
+function restoreBackpackRecordToLocalState(listing) {
+  const backpack = equippedBackpackStatus?.backpack;
+  const record = listing.sourceRecord;
+  if (!backpack || !record) return;
+  const capacity = backpack.capacity ?? backpackSlotTotal;
+  if ((backpack.records?.length ?? 0) >= capacity) return;
+  backpack.records = [
+    ...(backpack.records ?? []),
+    {
+      index: backpack.records?.length ?? 0,
+      worldX: record.worldX,
+      worldY: record.worldY,
+      worldZ: record.worldZ,
+    },
+  ];
+  backpack.itemCount = Math.min(capacity, Number(backpack.itemCount ?? 0) + 1);
+  reindexBackpackRecords(backpack);
+  invalidateBackpackSlotCache();
+  syncEquippedBackpackSlot();
+  renderHotbar();
+  if (backpackPanel && !backpackPanel.hidden) renderBackpackPanel();
+}
+
+function reindexBackpackRecords(backpack) {
+  (backpack?.records ?? []).forEach((record, index) => {
+    record.index = index;
+  });
+}
+
+function invalidateBackpackSlotCache() {
+  backpackSlotCache.signature = "";
+  backpackSlotCache.slots = [];
+  availableBackpackSlotCache.signature = "";
+  availableBackpackSlotCache.slots = [];
+}
+
+function scheduleBackpackSlotWarmup(backpack) {
+  if (!backpack) return;
+  const warmup = () => {
+    try {
+      createAvailableBackpackSlotsFromChain(backpack);
+    } catch (error) {
+      console.warn("Failed to warm backpack slot cache", error);
+    }
+  };
+  if (window.requestIdleCallback) {
+    window.requestIdleCallback(warmup, { timeout: 1200 });
+    return;
+  }
+  window.setTimeout(warmup, 0);
+}
+
 function collectMarketSelectableItems() {
   const items = [];
-  const listedSourceIds = new Set(loadMarketListings().map((listing) => listing.sourceItemId).filter(Boolean));
+  const listedSourceIds = activeMarketListedSourceIds();
   const backpack = equippedBackpackStatus?.backpack ?? null;
-  createBackpackSlotsFromChain(backpack).forEach((slot, index) => {
+  createAvailableBackpackSlotsFromChain(backpack).forEach((slot) => {
     if (!slot) return;
-    const id = `backpack-${index}-${slot.record?.worldX ?? 0}-${slot.record?.worldY ?? 0}-${slot.record?.worldZ ?? 0}`;
+    const id = slot.sourceItemId;
     if (listedSourceIds.has(id)) return;
     items.push({
       id,
-      slotIndex: index,
+      slotIndex: slot.chainIndex,
       source: "backpack",
+      backpack: backpack?.publicKey ?? null,
       name: slot.meta?.name ?? gameText("main.backpack.coordinateResource", "Coordinate Resource"),
       meta: slot.meta?.source ?? gameText("main.backpack.unknownSource", "Unknown source"),
       category: marketCategoryForBackpackSlot(slot),
@@ -2148,6 +3521,7 @@ function collectMarketSelectableItems() {
       meta: gameText("main.market.hotbarSlotMeta", "Hotbar slot {slot}", { slot: index + 1 }),
       category,
       iconType: marketIconTypeForCategory(category),
+      quantity: Number.isFinite(slot.count) ? Math.max(1, slot.count) : 1,
       slot,
     });
   });
@@ -2156,14 +3530,14 @@ function collectMarketSelectableItems() {
 
 function marketCategoryForBackpackSlot(slot) {
   const key = slot?.atlasKey || slot?.blockType || "";
-  if (["oakLeaf", "oakLog", "leaf", "leaves", "log", "wood", "tree", "grassPlant", "bush"].includes(key)) return "vegetation";
+  if (["oakLeaf", "oakLog", "leaf", "leaves", "log", "wood", "tree", "grassPlant", "bush"].includes(key)) return "raw";
   if (["stone", "deepStone", "sand", "sandstone", "gravel", "clay", "dirt", "mud", "dryDirt", "basalt", "ash"].includes(key)) return "building";
   return "raw";
 }
 
 function marketCategoryForHotbarItem(slot, item) {
   if (item.kind === "tool" || item.kind === "forged" || item.action === "mine") return "equipment";
-  if (item.kind === "plant") return "vegetation";
+  if (item.kind === "plant") return "raw";
   if (item.kind === "block") return "building";
   return "raw";
 }
@@ -2197,39 +3571,96 @@ function marketCategoryLabel(category) {
     raw: "main.market.categoryRaw",
     equipment: "main.market.categoryEquipment",
     building: "main.market.categoryBuilding",
-    vegetation: "main.market.categoryVegetation",
     clothing: "main.market.categoryClothing",
   }[category] ?? "main.market.categoryAll";
   return t(key);
 }
 
 function marketSourceLabel(source) {
+  if (source === "asset") return gameText("main.market.sourceAsset", "Asset");
   if (source === "hotbar") return gameText("main.market.sourceHotbar", "Hotbar");
   return gameText("main.market.sourceBackpack", "Backpack");
 }
 
 async function refreshMarketChainListings({ force = false } = {}) {
-  if (marketChainListingsLoading) return;
+  if (marketChainListingsLoading) {
+    marketChainListingsRefreshPending = true;
+    return;
+  }
   const now = performance.now();
-  if (!force && now - marketChainListingsLoadedAt < 30000) return;
+  const filters = currentMarketChainListingFilters();
+  const filterKey = marketChainListingFilterKey(filters);
+  if (!force && filterKey === marketChainListingsFilterKey && now - marketChainListingsLoadedAt < 30000) return;
   marketChainListingsLoading = true;
+  updateMarketRefreshButton();
+  updateMarketSearchMeta();
   marketChainListingsError = null;
   try {
     const chainModule = await loadNicechunkChainModule();
-    const listings = await chainModule.fetchMarketListingsOnChain();
+    const listings = await chainModule.fetchMarketListingsOnChain({
+      ...filters,
+      sort: marketSelectedSort,
+    });
     marketChainListings = Array.isArray(listings) ? listings : [];
+    marketChainListingsFilterKey = filterKey;
     marketChainListingsLoadedAt = performance.now();
   } catch (error) {
     console.warn("Failed to load market listings", error);
     marketChainListingsError = error;
   } finally {
     marketChainListingsLoading = false;
+    updateMarketRefreshButton();
+    updateMarketSearchMeta();
     if (marketPanel && !marketPanel.hidden) {
       renderMarketListings();
       renderMarketOrders();
       renderMarketInventory();
     }
+    if (marketChainListingsRefreshPending) {
+      marketChainListingsRefreshPending = false;
+      void refreshMarketChainListings({ force: true });
+    }
   }
+}
+
+function currentMarketChainListingFilters() {
+  const activeTab = marketPanel?.dataset.activeMarketTab || "browse";
+  const seller = activeTab === "orders" && currentSession.walletAddress
+    ? currentSession.walletAddress
+    : null;
+  const needsAllListingsForSourceLocks = activeTab === "sell";
+  return {
+    state: "active",
+    seller,
+    category: needsAllListingsForSourceLocks
+      ? "all"
+      : marketCategories.includes(marketSelectedCategory) ? marketSelectedCategory : "all",
+    currency: needsAllListingsForSourceLocks
+      ? "all"
+      : marketCurrencyOptions.includes(marketSelectedCurrency) ? marketSelectedCurrency : "all",
+  };
+}
+
+function marketChainListingFilterKey(filters) {
+  return [
+    filters.state || "",
+    filters.seller || "",
+    filters.category || "all",
+    filters.currency || "all",
+  ].join(":");
+}
+
+function alignMarketChainListingCacheWithActiveFilters() {
+  const filterKey = marketChainListingFilterKey(currentMarketChainListingFilters());
+  if (filterKey === marketChainListingsFilterKey) return;
+  marketChainListings = [];
+  marketChainListingsLoadedAt = 0;
+}
+
+function marketNeedsChainSourceLockSync() {
+  if (marketPanel?.dataset.activeMarketTab !== "sell") return false;
+  const filterKey = marketChainListingFilterKey(currentMarketChainListingFilters());
+  return filterKey !== marketChainListingsFilterKey || marketChainListingsLoadedAt <= 0;
 }
 
 function loadMergedMarketListings() {
@@ -2247,9 +3678,9 @@ function loadMergedMarketListings() {
 
 function loadMarketOrderListings() {
   const wallet = currentSession.walletAddress;
+  if (!wallet) return [];
   return loadMergedMarketListings().filter((listing) => {
-    if (!wallet) return Boolean(listing.sourceItemId);
-    return listing.seller === wallet || Boolean(listing.sourceItemId);
+    return listing.seller === wallet;
   });
 }
 
@@ -2257,6 +3688,10 @@ function normalizeChainMarketListing(listing, localListing = null) {
   const source = listing.source || localListing?.source || "backpack";
   const sourceIndex = Number.isFinite(Number(listing.sourceIndex)) ? Number(listing.sourceIndex) : 0;
   const category = listing.category || localListing?.category || "raw";
+  const assetSlot = source === "asset" ? createMarketSlotFromChainAsset(listing.asset) : null;
+  const assetItem = assetSlot?.itemId ? hotbarItems[assetSlot.itemId] : null;
+  const sourceRecord = listing.sourceRecord || localListing?.sourceRecord || null;
+  const sourceInventory = listing.sourceInventory || localListing?.sourceInventory || localListing?.backpack || null;
   return {
     id: `chain-${listing.listing}`,
     seller: listing.seller,
@@ -2264,7 +3699,7 @@ function normalizeChainMarketListing(listing, localListing = null) {
     listingId: listing.listingId,
     signature: localListing?.signature,
     programId: listing.programId || localListing?.programId,
-    name: localListing?.name || gameText("main.market.chainListingName", "On-chain Resource Listing"),
+    name: localListing?.name || (assetItem ? t(assetItem.labelKey) : gameText("main.market.chainListingName", "On-chain Listing")),
     meta: localListing?.meta || gameText("main.market.chainListingMeta", "{source} slot {slot}", {
       source: marketSourceLabel(source),
       slot: sourceIndex + 1,
@@ -2275,11 +3710,52 @@ function normalizeChainMarketListing(listing, localListing = null) {
     priceBaseUnits: listing.priceBaseUnits || localListing?.priceBaseUnits,
     iconType: localListing?.iconType || marketIconTypeForCategory(category),
     source,
+    sourceOrigin: localListing?.sourceOrigin ?? localListing?.source ?? source,
     sourceIndex,
-    sourceItemId: localListing?.sourceItemId,
+    sourceItemId: localListing?.sourceItemId || marketListingSourceItemId({
+      source,
+      sourceIndex,
+      sourceRecord,
+      sourceInventory,
+      sourceSlot: localListing?.sourceSlot,
+    }),
+    sourceInventory,
+    sourceRecord,
+    sourceSlot: localListing?.sourceSlot ?? assetSlot,
+    backpack: source === "backpack" ? sourceInventory : null,
+    asset: listing.asset || localListing?.asset || null,
     stateLabel: listing.stateLabel,
     buyer: listing.buyer,
     createdAt: Number(listing.createdAt || 0) * 1000 || localListing?.createdAt || Date.now(),
+  };
+}
+
+function createMarketSlotFromChainAsset(asset) {
+  if (!asset?.itemId) return null;
+  const item = hotbarItems[asset.itemId] ?? null;
+  if (!item) return null;
+  if (item.kind === "system") return null;
+  if (item.kind === "forged") {
+    const bytes = Array.isArray(asset.payload) ? asset.payload.slice(0, asset.payloadLength ?? asset.payload.length) : [];
+    if (!bytes.length) return null;
+    return {
+      itemId: asset.itemId,
+      count: 1,
+      bytes,
+      byteLength: bytes.length,
+      code: forgeBytesToCode(bytes),
+      savedAt: Date.now(),
+    };
+  }
+  if (item.kind === "tool" || item.action === "mine") {
+    return {
+      itemId: asset.itemId,
+      durability: Math.max(1, Number(asset.durability || 0)),
+    };
+  }
+  return {
+    itemId: asset.itemId,
+    count: Math.max(1, Number(asset.stackCount || asset.quantity || 1)),
   };
 }
 
@@ -2296,9 +3772,40 @@ function saveMarketListings(listings) {
   localStorage.setItem(marketListingStorageKey, JSON.stringify(listings.slice(0, 50)));
 }
 
-function removeMarketListing(id) {
-  saveMarketListings(loadMarketListings().filter((listing) => listing.id !== id));
-  marketChainListings = marketChainListings.filter((listing) => `chain-${listing.listing}` !== id);
+function removeMarketListing(listingOrId) {
+  const identity = marketListingIdentity(listingOrId);
+  saveMarketListings(loadMarketListings().filter((listing) => !marketListingIdentityMatches(listing, identity)));
+  marketChainListings = marketChainListings.filter((listing) => !marketListingIdentityMatches(listing, identity));
+  marketChainListingsLoadedAt = 0;
+}
+
+function marketListingIdentity(listingOrId) {
+  if (typeof listingOrId === "string") {
+    return {
+      id: listingOrId,
+      listing: listingOrId.startsWith("chain-") ? listingOrId.slice(6) : "",
+      listingId: "",
+    };
+  }
+  return {
+    id: listingOrId?.id ?? "",
+    listing: listingOrId?.listing ?? "",
+    listingId: listingOrId?.listingId != null ? String(listingOrId.listingId) : "",
+  };
+}
+
+function marketListingIdentityMatches(listing, identity) {
+  if (!listing || !identity) return false;
+  const listingId = listing.id ?? "";
+  const listingPda = listing.listing ?? "";
+  const listingSequence = listing.listingId != null ? String(listing.listingId) : "";
+  return Boolean(
+    (identity.id && listingId === identity.id) ||
+      (identity.listing && listingPda === identity.listing) ||
+      (identity.listingId && listingSequence === identity.listingId) ||
+      (identity.listing && listingId === `chain-${identity.listing}`) ||
+      (identity.listingId && listingId === `chain-${identity.listingId}`),
+  );
 }
 
 function formatMarketPrice(value) {
@@ -2310,7 +3817,7 @@ function formatMarketPrice(value) {
 function renderBackpackPanel() {
   if (!backpackGrid || !backpackDetail) return;
   const backpack = equippedBackpackStatus?.backpack ?? null;
-  const slots = createBackpackSlotsFromChain(backpack);
+  const slots = createAvailableBackpackSlotsFromChain(backpack);
   const capacity = backpack?.capacity ?? backpackSlotTotal;
   const filledSlots = slots.filter(Boolean);
   if (backpackCapacity) backpackCapacity.textContent = `${filledSlots.length}/${capacity}`;
@@ -2346,6 +3853,9 @@ function createBackpackSlotsFromChain(backpack) {
       blockType,
       atlasKey,
       massKg,
+      chainIndex: record.index ?? index,
+      sourceItemId: marketBackpackSourceItemId(record.index ?? index, record, backpack.publicKey),
+      legacySourceItemId: marketBackpackSourceItemId(record.index ?? index, record),
       meta: {
         name: localizedBlockResourceName(atlasKey, atlas),
         source: `${record.worldX}, ${record.worldY}, ${record.worldZ}`,
@@ -2362,14 +3872,95 @@ function createBackpackSlotsFromChain(backpack) {
   return slots;
 }
 
+function createAvailableBackpackSlotsFromChain(backpack) {
+  const capacity = backpack?.capacity ?? backpackSlotTotal;
+  const listedSourceIds = activeMarketListedSourceIds();
+  const baseSlots = createBackpackSlotsFromChain(backpack);
+  const signature = [
+    backpackSlotCache.signature,
+    capacity,
+    marketListedSourceIdCache.signature,
+  ].join("::");
+  if (availableBackpackSlotCache.signature === signature) return availableBackpackSlotCache.slots;
+  const available = baseSlots
+    .filter((slot) => slot && !listedSourceIds.has(slot.sourceItemId) && !listedSourceIds.has(slot.legacySourceItemId));
+  const slots = [
+    ...available,
+    ...Array.from({ length: Math.max(0, capacity - available.length) }, () => null),
+  ].slice(0, capacity);
+  availableBackpackSlotCache.signature = signature;
+  availableBackpackSlotCache.slots = slots;
+  return slots;
+}
+
+function availableBackpackItemCount(backpack) {
+  if (!backpack) return 0;
+  return createAvailableBackpackSlotsFromChain(backpack).filter(Boolean).length;
+}
+
+function activeMarketListedSourceIds() {
+  const signature = marketListedSourceStateSignature();
+  if (marketListedSourceIdCache.signature === signature) return marketListedSourceIdCache.ids;
+  const ids = new Set();
+  [
+    ...loadMarketListings(),
+    ...marketChainListings.filter((listing) => listing?.stateLabel === "active"),
+  ].forEach((listing) => {
+    marketListingSourceItemIds(listing).forEach((id) => ids.add(id));
+  });
+  marketListedSourceIdCache.signature = signature;
+  marketListedSourceIdCache.ids = ids;
+  return ids;
+}
+
+function marketListedSourceStateSignature() {
+  const localListings = localStorage.getItem(marketListingStorageKey) || "[]";
+  const chainListings = marketChainListings
+    .filter((listing) => listing?.stateLabel === "active")
+    .map((listing) => [
+      listing.id ?? "",
+      listing.listing ?? "",
+      listing.listingId ?? "",
+      marketListingSourceItemIds(listing).join(","),
+    ].join("/"))
+    .join("|");
+  return `${localListings}::${chainListings}`;
+}
+
+function marketListingSourceItemId(listing) {
+  return marketListingSourceItemIds(listing)[0] ?? "";
+}
+
+function marketListingSourceItemIds(listing) {
+  const ids = [];
+  if (listing?.sourceItemId) ids.push(listing.sourceItemId);
+  const source = listing?.sourceOrigin ?? listing?.source;
+  const sourceIndex = Number(listing?.sourceIndex);
+  if (source === "backpack" && listing?.sourceRecord && Number.isInteger(sourceIndex)) {
+    const inventory = listing.sourceInventory ?? listing.backpack ?? null;
+    if (inventory) ids.push(marketBackpackSourceItemId(sourceIndex, listing.sourceRecord, inventory));
+    ids.push(marketBackpackSourceItemId(sourceIndex, listing.sourceRecord));
+  }
+  if (source === "hotbar" && listing?.sourceSlot?.itemId && Number.isInteger(sourceIndex)) {
+    ids.push(`hotbar-${sourceIndex}-${listing.sourceSlot.itemId}`);
+  }
+  return Array.from(new Set(ids.filter(Boolean)));
+}
+
+function marketBackpackSourceItemId(index, record, inventory = null) {
+  const inventoryPart = inventory ? `${inventory}-` : "";
+  return `backpack-${inventoryPart}${index}-${record?.worldX ?? 0}-${record?.worldY ?? 0}-${record?.worldZ ?? 0}`;
+}
+
 function backpackSlotsSignature(backpack) {
-  if (!backpack) return `empty:${localStorage.getItem("nicechunk.language") ?? "en"}`;
+  const localeState = `${localStorage.getItem("nicechunk.language") ?? "en"}:${i18nReady ? "ready" : "loading"}`;
+  if (!backpack) return `empty:${localeState}`;
   const records = (backpack.records ?? [])
     .slice(0, backpack.capacity ?? backpackSlotTotal)
     .map((record) => `${record.worldX},${record.worldY},${record.worldZ}`)
     .join("|");
   return [
-    localStorage.getItem("nicechunk.language") ?? "en",
+    localeState,
     backpack.publicKey ?? "",
     backpack.capacity ?? backpackSlotTotal,
     backpack.itemCount ?? backpack.records?.length ?? 0,

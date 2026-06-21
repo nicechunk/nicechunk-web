@@ -2,8 +2,22 @@
   "_meta": {
     "language": "zh-Hans",
     "label": "Simplified Chinese",
-    "version": "elements-locale-zh-Hans-7f8f4d9f29f834d4",
-    "contentHash": "7f8f4d9f29f834d4"
+    "version": "elements-locale-zh-Hans-0812ec83824c630f",
+    "contentHash": "0812ec83824c630f"
+  },
+  "siteFooter": {
+    "tagline": "Solana 上的种子体素世界协议。",
+    "navigationAria": "页脚导航",
+    "socialAria": "NiceChunk 社交链接",
+    "home": "首页",
+    "play": "进入世界",
+    "roadmap": "路书",
+    "docs": "文档",
+    "guardian": "守护者",
+    "contracts": "合约",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk。保留所有权利。"
   },
   "common": {
     "brand": "NICECHUNK",

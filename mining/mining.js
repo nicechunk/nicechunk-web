@@ -1,4 +1,6 @@
 import * as THREE from "three";
+import "../src/site-header.css";
+import "../src/site-ui.js";
 import { initI18n, t } from "../src/i18n.js";
 import { createAvatar } from "../src/render/avatar.js";
 

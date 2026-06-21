@@ -2,8 +2,22 @@
   "_meta": {
     "language": "fr",
     "label": "French",
-    "version": "fairness-locale-fr-904920bc01a7d816",
-    "contentHash": "904920bc01a7d816"
+    "version": "fairness-locale-fr-5863925b8ae21e6c",
+    "contentHash": "5863925b8ae21e6c"
+  },
+  "siteFooter": {
+    "tagline": "Un protocole de monde voxel seedé sur Solana.",
+    "navigationAria": "Navigation du pied de page",
+    "socialAria": "Liens sociaux de NiceChunk",
+    "home": "Accueil",
+    "play": "Entrer dans le monde",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Gardiens",
+    "contracts": "Contrats",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Tous droits réservés."
   },
   "meta": {
     "title": "Modèle d'équité NiceChunk"
@@ -27,7 +41,7 @@
   "hero": {
     "eyebrow": "Modèle d'équité",
     "title": "Un monde n'est juste que lorsque les joueurs peuvent en vérifier les règles.",
-    "subtitle": "NiceChunk est conçu autour de règles de départ publiques, de résultats reproductibles, de mises à niveau versionnées, d'actions appartenant à wallet et de limites de confiance claires entre le client, Watchers et Solana.",
+    "subtitle": "NiceChunk est conçu autour de règles de départ publiques, de résultats reproductibles, de mises à niveau versionnées, d'actions appartenant à wallet et de limites de confiance claires entre le client, Guardians et Solana.",
     "verify": "Vérifier un Chunk",
     "mining": "Test du rouleau de minage",
     "docs": "Lire la documentation",
@@ -62,7 +76,7 @@
       },
       "boundary": {
         "title": "Limites de confiance",
-        "body": "Le site Web doit indiquer ce qui est réservé au client, ce pour quoi Watchers peut aider et ce qui est destiné à être vérifié en chaîne."
+        "body": "Le site Web doit indiquer ce qui est réservé au client, ce pour quoi Guardians peut aider et ce qui est destiné à être vérifié en chaîne."
       }
     }
   },
@@ -168,7 +182,7 @@
         "verification": "Entrées de recettes, durabilité, métadonnées de sortie, futurs enregistrements de menthe."
       },
       "watchers": {
-        "system": "Réseau Watcher",
+        "system": "Réseau Guardian",
         "status": "À venir",
         "verification": "Pas de garde, pas de signature de transaction de joueur, rôle de disponibilité par région uniquement."
       },
@@ -193,8 +207,8 @@
         "body": "Signe directement l'intention du joueur. Les actifs des joueurs ne doivent pas dépendre d’une signature cachée contrôlée par le projet."
       },
       "watcher": {
-        "title": "Watcher",
-        "body": "Aide les régions à rester joignables et à communiquer. Watchers ne conserve pas d'actifs et ne signe pas de transactions avec les joueurs."
+        "title": "Guardian",
+        "body": "Aide les régions à rester joignables et à communiquer. Guardians ne conserve pas d'actifs et ne signe pas de transactions avec les joueurs."
       },
       "chain": {
         "title": "Solana",

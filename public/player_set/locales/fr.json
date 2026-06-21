@@ -2,8 +2,22 @@
   "_meta": {
     "language": "fr",
     "label": "French",
-    "version": "player-set-locale-fr-5a7f123bd06b9242",
-    "contentHash": "5a7f123bd06b9242"
+    "version": "player-set-locale-fr-e86c95e74e370591",
+    "contentHash": "e86c95e74e370591"
+  },
+  "siteFooter": {
+    "tagline": "Un protocole de monde voxel seedé sur Solana.",
+    "navigationAria": "Navigation du pied de page",
+    "socialAria": "Liens sociaux de NiceChunk",
+    "home": "Accueil",
+    "play": "Entrer dans le monde",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Gardiens",
+    "contracts": "Contrats",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Tous droits réservés."
   },
   "common": {
     "language": "Langue",

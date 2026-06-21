@@ -2,8 +2,22 @@
   "_meta": {
     "language": "ko",
     "label": "Korean",
-    "version": "fairness-locale-ko-93f9cae29160e15e",
-    "contentHash": "93f9cae29160e15e"
+    "version": "fairness-locale-ko-fd8d8308a110210f",
+    "contentHash": "fd8d8308a110210f"
+  },
+  "siteFooter": {
+    "tagline": "Solana 기반 시드형 복셀 월드 프로토콜.",
+    "navigationAria": "푸터 내비게이션",
+    "socialAria": "NiceChunk 소셜 링크",
+    "home": "홈",
+    "play": "월드 입장",
+    "roadmap": "로드북",
+    "docs": "문서",
+    "guardian": "가디언",
+    "contracts": "컨트랙트",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. All rights reserved."
   },
   "meta": {
     "title": "NiceChunk 공정성 모델"
@@ -27,7 +41,7 @@
   "hero": {
     "eyebrow": "공정성 모델",
     "title": "플레이어가 규칙을 확인할 수 있어야 세상은 공정합니다.",
-    "subtitle": "NiceChunk는 공개 시드 규칙, 재현 가능한 결과, 버전이 지정된 업그레이드, wallet 소유 작업 및 클라이언트, Watchers 및 Solana 간의 명확한 신뢰 경계를 중심으로 설계되었습니다.",
+    "subtitle": "NiceChunk는 공개 시드 규칙, 재현 가능한 결과, 버전이 지정된 업그레이드, wallet 소유 작업 및 클라이언트, Guardians 및 Solana 간의 명확한 신뢰 경계를 중심으로 설계되었습니다.",
     "verify": "Chunk 확인",
     "mining": "테스트 마이닝 롤",
     "docs": "문서 읽기",
@@ -62,7 +76,7 @@
       },
       "boundary": {
         "title": "신뢰 경계",
-        "body": "웹사이트는 무엇이 클라이언트 전용인지, Watchers가 무엇을 지원할 수 있는지, 무엇이 온체인에서 검증되어야 하는지를 말해야 합니다."
+        "body": "웹사이트는 무엇이 클라이언트 전용인지, Guardians가 무엇을 지원할 수 있는지, 무엇이 온체인에서 검증되어야 하는지를 말해야 합니다."
       }
     }
   },
@@ -168,7 +182,7 @@
         "verification": "레시피 입력, 내구성, 출력 메타데이터, 향후 주조 기록."
       },
       "watchers": {
-        "system": "Watcher 네트워크",
+        "system": "Guardian 네트워크",
         "status": "출시 예정",
         "verification": "양육권 없음, 플레이어 거래 서명 없음, 지역 가용성 역할만 있음."
       },
@@ -193,8 +207,8 @@
         "body": "플레이어 의도에 직접 서명합니다. 플레이어 자산은 숨겨진 프로젝트 제어 서명에 의존해서는 안 됩니다."
       },
       "watcher": {
-        "title": "Watcher",
-        "body": "지역에 계속 연락하고 의사소통할 수 있도록 돕습니다. Watchers는 자산을 보관하거나 플레이어 거래에 서명하지 않습니다."
+        "title": "Guardian",
+        "body": "지역에 계속 연락하고 의사소통할 수 있도록 돕습니다. Guardians는 자산을 보관하거나 플레이어 거래에 서명하지 않습니다."
       },
       "chain": {
         "title": "Solana",

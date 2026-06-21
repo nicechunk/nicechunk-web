@@ -1,4 +1,6 @@
 import * as THREE from "three";
+import "../src/site-header.css";
+import "../src/site-ui.js";
 import { initI18n, t } from "./i18n.js";
 import { decodeNcm, encodeNcmRigCharacter, ncmRigBoneIds } from "../src/vox/ncm.js";
 

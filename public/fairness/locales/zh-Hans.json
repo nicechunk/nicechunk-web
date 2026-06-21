@@ -2,8 +2,22 @@
   "_meta": {
     "language": "zh-Hans",
     "label": "Simplified Chinese",
-    "version": "fairness-locale-zh-Hans-ff47107c9aeae1ac",
-    "contentHash": "ff47107c9aeae1ac"
+    "version": "fairness-locale-zh-Hans-1f472bb863cb9806",
+    "contentHash": "1f472bb863cb9806"
+  },
+  "siteFooter": {
+    "tagline": "Solana 上的种子体素世界协议。",
+    "navigationAria": "页脚导航",
+    "socialAria": "NiceChunk 社交链接",
+    "home": "首页",
+    "play": "进入世界",
+    "roadmap": "路书",
+    "docs": "文档",
+    "guardian": "守护者",
+    "contracts": "合约",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk。保留所有权利。"
   },
   "meta": {
     "title": "NiceChunk 公平模型"
@@ -27,7 +41,7 @@
   "hero": {
     "eyebrow": "公平模型",
     "title": "只有玩家能验证规则，世界才真正公平。",
-    "subtitle": "NiceChunk 围绕公开种子规则、可复现结果、版本化升级、钱包拥有的行为，以及客户端、守望者和 Solana 之间清晰的信任边界来设计。",
+    "subtitle": "NiceChunk 围绕公开种子规则、可复现结果、版本化升级、钱包拥有的行为，以及客户端、守护者和 Solana 之间清晰的信任边界来设计。",
     "verify": "验证 Chunk",
     "mining": "测试挖矿 Roll",
     "docs": "阅读文档",
@@ -62,7 +76,7 @@
       },
       "boundary": {
         "title": "信任边界",
-        "body": "网站必须说明哪些只是客户端逻辑，哪些可以由守望者辅助，哪些计划进入链上验证。"
+        "body": "网站必须说明哪些只是客户端逻辑，哪些可以由守护者辅助，哪些计划进入链上验证。"
       }
     }
   },
@@ -168,7 +182,7 @@
         "verification": "配方输入、耐久、输出元数据、未来 mint 记录。"
       },
       "watchers": {
-        "system": "守望者网络",
+        "system": "守护者网络",
         "status": "即将开放",
         "verification": "不托管资产，不签署玩家交易，只承担区域可用性角色。"
       },
@@ -193,8 +207,8 @@
         "body": "直接签署玩家意图。玩家资产不应该依赖项目方隐藏签名。"
       },
       "watcher": {
-        "title": "守望者",
-        "body": "帮助区域保持可访问并进行通信。守望者不托管资产，也不签署玩家交易。"
+        "title": "守护者",
+        "body": "帮助区域保持可访问并进行通信。守护者不托管资产，也不签署玩家交易。"
       },
       "chain": {
         "title": "Solana",

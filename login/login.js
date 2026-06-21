@@ -1,3 +1,5 @@
+import "../src/site-header.css";
+import "../src/site-ui.js";
 import { initI18n, t } from "../src/i18n.js";
 import bs58 from "bs58";
 import nacl from "tweetnacl";

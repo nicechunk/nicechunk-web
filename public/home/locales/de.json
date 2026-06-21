@@ -2,8 +2,22 @@
   "_meta": {
     "language": "de",
     "label": "German",
-    "version": "home-locale-de-06fa9c1531f299e4",
-    "contentHash": "06fa9c1531f299e4"
+    "version": "home-locale-de-7cd6a66f78e6a0d2",
+    "contentHash": "7cd6a66f78e6a0d2"
+  },
+  "siteFooter": {
+    "tagline": "Ein Seed-Voxelwelt-Protokoll auf Solana.",
+    "navigationAria": "Footer-Navigation",
+    "socialAria": "NiceChunk Social Links",
+    "home": "Home",
+    "play": "Welt betreten",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Guardians",
+    "contracts": "Contracts",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Alle Rechte vorbehalten."
   },
   "meta": {
     "title": "NiceChunk | Besitzen Sie die Welt, ein chunk nach dem anderen"
@@ -17,7 +31,7 @@
     "fairness": "Fairness",
     "proofOfFrontier": "Beweis",
     "economy": "Wirtschaft",
-    "watchers": "Watchers",
+    "watchers": "Guardians",
     "resources": "Ressourcen",
     "elements": "Elemente",
     "docs": "Dokumente",
@@ -32,7 +46,7 @@
     "intro": "Einleitung",
     "world": "Welt",
     "economy": "Wirtschaft",
-    "watchers": "Watchers",
+    "watchers": "Guardians",
     "roadmap": "Fahrplan"
   },
   "hero": {
@@ -48,7 +62,7 @@
       "alpha": "Alpha Live-Vorschau",
       "solana": "Solana Wallet bereit",
       "seeded": "Gesäte Chunk-Engine",
-      "watchers": "Watcher Network Demnächst verfügbar"
+      "watchers": "Guardian Network Demnächst verfügbar"
     }
   },
   "world": {
@@ -85,8 +99,8 @@
       "body": "Verbinden Sie Ihr wallet, erstellen Sie Ihr Spielerprofil und tragen Sie Ihren Fortschritt durch die NiceChunk-Welt."
     },
     "watchers": {
-      "title": "Watcher Network",
-      "body": "Watcher-Knoten tragen dazu bei, Regionen zugänglich zu machen, Echtzeitkommunikation zu unterstützen und die Welt auf die dezentrale Koordination vorzubereiten."
+      "title": "Guardian Network",
+      "body": "Guardian-Knoten tragen dazu bei, Regionen zugänglich zu machen, Echtzeitkommunikation zu unterstützen und die Welt auf die dezentrale Koordination vorzubereiten."
     }
   },
   "economy": {
@@ -103,17 +117,17 @@
     }
   },
   "watchers": {
-    "eyebrow": "Watcher Network",
-    "title": "Führen Sie ein Watcher aus. Halten Sie eine Region am Leben.",
-    "body": "Watcher-Knoten sind die Zugriffsschicht von NiceChunk. Sie kontrollieren weder Spielervermögen noch verarbeiten sie On-Chain-Transaktionen. Stattdessen helfen sie den Regionen, erreichbar zu bleiben, bieten Echtzeitkommunikation und unterstützen die lokale Weltaktivität. Während die Welt wächst, wird Watchers zur Infrastruktur, die chunks am Leben erhält.",
+    "eyebrow": "Guardian Network",
+    "title": "Führen Sie ein Guardian aus. Halten Sie eine Region am Leben.",
+    "body": "Guardian-Knoten sind die Zugriffsschicht von NiceChunk. Sie kontrollieren weder Spielervermögen noch verarbeiten sie On-Chain-Transaktionen. Stattdessen helfen sie den Regionen, erreichbar zu bleiben, bieten Echtzeitkommunikation und unterstützen die lokale Weltaktivität. Während die Welt wächst, wird Guardians zur Infrastruktur, die chunks am Leben erhält.",
     "badges": {
       "noCustody": "Keine Vermögensverwahrung",
       "noTransactions": "Keine Verarbeitung von Spielertransaktionen",
       "communication": "Regionskommunikation in Echtzeit"
     },
     "animation": {
-      "aria": "Watcher Netzwerkanimation",
-      "title": "Watcher-Knoten",
+      "aria": "Guardian Netzwerkanimation",
+      "title": "Guardian-Knoten",
       "body": "Regionszugriffsschicht"
     },
     "guardianConsole": "Guardian-Konsole öffnen"
@@ -140,7 +154,7 @@
       "body": "Genesis-Pass, NCK-Dienstprogramm, Marktplatzabwicklung, spielereigene Asset-Schicht."
     },
     "phase4": {
-      "title": "Phase 4 - Watcher Network",
+      "title": "Phase 4 - Guardian Network",
       "body": "Regionszugangsknoten, Echtzeitkommunikation, Beobachterabsteckung, Teilnahme auf Regionsebene."
     },
     "phase5": {
@@ -157,7 +171,7 @@
     "worldRules": "Weltregeln",
     "proofOfFrontier": "Proof of Frontier",
     "nckEconomy": "NCK Wirtschaft",
-    "watcherNetwork": "Watcher Network",
+    "watcherNetwork": "Guardian Network",
     "whitepaper": "Whitepaper",
     "fairness": "Fairness",
     "github": "GitHub"

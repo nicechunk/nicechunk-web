@@ -2,8 +2,22 @@
   "_meta": {
     "language": "en",
     "label": "English",
-    "version": "home-locale-en-2dc80af104b000ff",
-    "contentHash": "2dc80af104b000ff"
+    "version": "home-locale-en-2ae008cf96cfb95b",
+    "contentHash": "2ae008cf96cfb95b"
+  },
+  "siteFooter": {
+    "tagline": "A seeded voxel world protocol on Solana.",
+    "navigationAria": "Footer navigation",
+    "socialAria": "NiceChunk social links",
+    "home": "Home",
+    "play": "Enter World",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Guardians",
+    "contracts": "Contracts",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. All rights reserved."
   },
   "meta": {
     "title": "NiceChunk | Own the world, one chunk at a time"
@@ -17,7 +31,7 @@
     "fairness": "Fairness",
     "proofOfFrontier": "Proof",
     "economy": "Economy",
-    "watchers": "Watchers",
+    "watchers": "Guardians",
     "resources": "Resources",
     "elements": "Elements",
     "contracts": "Contracts",
@@ -33,7 +47,7 @@
     "intro": "Intro",
     "world": "World",
     "economy": "Economy",
-    "watchers": "Watchers",
+    "watchers": "Guardians",
     "roadmap": "Roadmap"
   },
   "hero": {
@@ -49,7 +63,7 @@
       "alpha": "Alpha Preview Live",
       "solana": "Solana Wallet Ready",
       "seeded": "Seeded Chunk Engine",
-      "watchers": "Watcher Network Coming Soon"
+      "watchers": "Guardian Network Coming Soon"
     }
   },
   "world": {
@@ -86,8 +100,8 @@
       "body": "Connect your wallet, create your player profile, and carry your progress across the NiceChunk world."
     },
     "watchers": {
-      "title": "Watcher Network",
-      "body": "Watcher nodes help make regions accessible, support real-time communication, and prepare the world for decentralized coordination."
+      "title": "Guardian Network",
+      "body": "Guardian nodes help make regions accessible, support real-time communication, and prepare the world for decentralized coordination."
     }
   },
   "economy": {
@@ -104,17 +118,17 @@
     }
   },
   "watchers": {
-    "eyebrow": "Watcher Network",
-    "title": "Run a Watcher. Keep a region alive.",
-    "body": "Watcher nodes are the access layer of NiceChunk. They do not control player assets or process on-chain transactions. Instead, they help regions stay reachable, provide real-time communication, and support local world activity. As the world grows, Watchers become the infrastructure that keeps chunks alive.",
+    "eyebrow": "Guardian Network",
+    "title": "Run a Guardian. Keep a region alive.",
+    "body": "Guardian nodes are the access layer of NiceChunk. They do not control player assets or process on-chain transactions. Instead, they help regions stay reachable, provide real-time communication, and support local world activity. As the world grows, Guardians become the infrastructure that keeps chunks alive.",
     "badges": {
       "noCustody": "No asset custody",
       "noTransactions": "No player transaction processing",
       "communication": "Real-time region communication"
     },
     "animation": {
-      "aria": "Watcher network animation",
-      "title": "Watcher Node",
+      "aria": "Guardian network animation",
+      "title": "Guardian Node",
       "body": "Region access layer"
     },
     "guardianConsole": "Open Guardian Console"
@@ -141,8 +155,8 @@
       "body": "Genesis pass, NCK utility, marketplace settlement, player-owned asset layer."
     },
     "phase4": {
-      "title": "Phase 4 - Watcher Network",
-      "body": "Region access nodes, real-time communication, watcher staking, region-level participation."
+      "title": "Phase 4 - Guardian Network",
+      "body": "Region access nodes, real-time communication, guardian staking, region-level participation."
     },
     "phase5": {
       "title": "Phase 5 - World Governance",
@@ -159,7 +173,7 @@
     "proofOfFrontier": "Proof of Frontier",
     "contracts": "Contracts",
     "nckEconomy": "NCK Economy",
-    "watcherNetwork": "Watcher Network",
+    "watcherNetwork": "Guardian Network",
     "whitepaper": "Whitepaper",
     "fairness": "Fairness",
     "github": "GitHub"

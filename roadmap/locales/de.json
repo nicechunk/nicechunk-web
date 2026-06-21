@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "NiceChunk Roadbook | Roadmap und Zukunftsplan",
-    "description": "NiceChunk-Roadbook: ein transparenter Zukunftsplan für eine Solana-basierte Seed-Voxel-Welt, Alpha-Gameplay, öffentliche Regeln, Mining, Schmieden, NCK-Dienstprogramm und zukünftiges Watcher-Netzwerk."
+    "description": "NiceChunk-Roadbook: ein transparenter Zukunftsplan für eine Solana-basierte Seed-Voxel-Welt, Alpha-Gameplay, öffentliche Regeln, Mining, Schmieden, NCK-Dienstprogramm und zukünftiges Guardian-Netzwerk."
   },
   "nav": {
     "aria": "Primäre Navigation",
@@ -22,7 +22,7 @@
   "hero": {
     "eyebrow": "NiceChunk Roadbook",
     "title": "Roadbook für eine spielereigene Voxelwelt.",
-    "subtitle": "NiceChunk bewegt sich vom Langform-Design zur Startvorbereitung: eine gesetzte Voxelwelt, öffentliche Regeln, Browser-Gameplay, Ressourcengrundlagen, wallet-Identität und ein zukünftiges Watcher-Netzwerk, das auf einem überprüfbaren Spielstatus basiert.",
+    "subtitle": "NiceChunk bewegt sich vom Langform-Design zur Startvorbereitung: eine gesetzte Voxelwelt, öffentliche Regeln, Browser-Gameplay, Ressourcengrundlagen, wallet-Identität und ein zukünftiges Guardian-Netzwerk, das auf einem überprüfbaren Spielstatus basiert.",
     "body": "Dieses Roadbook richtet sich an Spieler, Entwickler, Gilden, Schöpfer und Ökosystempartner, die einen klaren Überblick darüber haben möchten, was live ist, was vorbereitet wird und welche Risiken offen gehandhabt werden.",
     "enterWorld": "Betritt die Welt",
     "viewRoadmap": "Roadbook ansehen",
@@ -53,7 +53,7 @@
       },
       {
         "label": "Netzwerkschicht",
-        "value": "Watchers geplant"
+        "value": "Guardians geplant"
       }
     ]
   },
@@ -73,7 +73,7 @@
       {
         "label": "Planungshorizont",
         "value": "24 Monate",
-        "description": "Behandelt Genesis-Zugriff, Jahreszeiten, Ressourcenschleifen, Watchers, Governance und Ökosystemerweiterung."
+        "description": "Behandelt Genesis-Zugriff, Jahreszeiten, Ressourcenschleifen, Guardians, Governance und Ökosystemerweiterung."
       },
       {
         "label": "Grundprinzip",
@@ -192,19 +192,19 @@
     },
     {
       "phase": "Phase 5",
-      "title": "Watcher Netzwerk & Governance",
+      "title": "Guardian Netzwerk & Governance",
       "period": "Langfristig / 12-24 Monate",
       "confidence": 65,
       "status": "langfristig",
       "statusLabel": "Langfristig",
-      "summary": "Watchers vorgesehen. Sie sollen den Regionen dabei helfen, erreichbar zu bleiben und die Kommunikation zu unterstützen, ohne Vermögenswerte zu verwahren oder Spielertransaktionen abzuwickeln.",
+      "summary": "Guardians vorgesehen. Sie sollen den Regionen dabei helfen, erreichbar zu bleiben und die Kommunikation zu unterstützen, ohne Vermögenswerte zu verwahren oder Spielertransaktionen abzuwickeln.",
       "goals": [
         "Testen Sie Regionszugangsknoten, ohne ihnen die Kontrolle über Benutzerressourcen zu geben.",
         "Öffnen Sie mehr Weltparameter für transparente Überprüfung und begrenzte Governance.",
         "Unterstützen Sie Ersteller, Gilden, APIs, Veranstaltungen und langfristige Community-Teilnahme."
       ],
       "deliverables": [
-        "Watcher-Knotenspezifikation und Regionsverfügbarkeitsmodell.",
+        "Guardian-Knotenspezifikation und Regionsverfügbarkeitsmodell.",
         "Kommunikations- und regionale Aktivitätsinfrastruktur.",
         "Versionierte Weltparameter und Governance-Vorschläge.",
         "Creator-, Gilden- und Ökosystem-Partnerschaftsprogramme."
@@ -239,7 +239,7 @@
       },
       {
         "title": "Gilde und soziale Schicht",
-        "body": "Regionsaktivität, Gruppenziele, gemeinsame Erkundung, Bestenlisten, Kommunikation und zukünftige Watcher-unterstützte lokale Koordination."
+        "body": "Regionsaktivität, Gruppenziele, gemeinsame Erkundung, Bestenlisten, Kommunikation und zukünftige Guardian-unterstützte lokale Koordination."
       },
       {
         "title": "Beteiligung des Erstellers",
@@ -251,7 +251,7 @@
       },
       {
         "title": "Open-World-Protokoll",
-        "body": "APIs, überprüfbarer Status, Governance-Richtung, Watcher-Netzwerk und langfristige Tools für eine spielereigene Voxelwelt."
+        "body": "APIs, überprüfbarer Status, Governance-Richtung, Guardian-Netzwerk und langfristige Tools für eine spielereigene Voxelwelt."
       }
     ]
   },
@@ -273,8 +273,8 @@
         "body": "Spieler interagieren direkt mit Solana wallets. Das Projekt muss die Absicht des unterzeichneten Spielers klar von der reinen Client-Vorschaulogik trennen."
       },
       {
-        "title": "Sorgerechtsverbot Watchers",
-        "body": "Watchers sollen Regionen dabei helfen, erreichbar zu bleiben und zu kommunizieren; Sie sollten keine Vermögenswerte verwahren oder Spielertransaktionen verarbeiten."
+        "title": "Sorgerechtsverbot Guardians",
+        "body": "Guardians sollen Regionen dabei helfen, erreichbar zu bleiben und zu kommunizieren; Sie sollten keine Vermögenswerte verwahren oder Spielertransaktionen verarbeiten."
       },
       {
         "title": "Risikoaufklärung",
@@ -316,7 +316,7 @@
         "reason": "Hängt von Sicherheitsüberprüfung, Kettenbeschränkungen, Asset-Regeln, Compliance und tatsächlicher Nachfrage ab."
       },
       {
-        "stage": "Watcher Netzwerk & Governance",
+        "stage": "Guardian Netzwerk & Governance",
         "confidence": 65,
         "reason": "Langfristige Systeme hängen von Knotenanreizen, regionaler Aktivität, Infrastruktur und Governance-Reife ab."
       }

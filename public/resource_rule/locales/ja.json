@@ -2,8 +2,22 @@
   "_meta": {
     "language": "ja",
     "label": "Japanese",
-    "version": "resource-rule-locale-ja-c62adcdf680d0a34",
-    "contentHash": "c62adcdf680d0a34"
+    "version": "resource-rule-locale-ja-bfae65be6cc9f60b",
+    "contentHash": "bfae65be6cc9f60b"
+  },
+  "siteFooter": {
+    "tagline": "Solana 上のシード型ボクセルワールドプロトコル。",
+    "navigationAria": "フッターナビゲーション",
+    "socialAria": "NiceChunk ソーシャルリンク",
+    "home": "ホーム",
+    "play": "ワールドへ",
+    "roadmap": "ロードブック",
+    "docs": "ドキュメント",
+    "guardian": "ガーディアン",
+    "contracts": "コントラクト",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. All rights reserved."
   },
   "common": {
     "brand": "NICECHUNK",

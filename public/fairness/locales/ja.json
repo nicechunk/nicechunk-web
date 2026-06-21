@@ -2,8 +2,22 @@
   "_meta": {
     "language": "ja",
     "label": "Japanese",
-    "version": "fairness-locale-ja-a6b1688dd6bd0378",
-    "contentHash": "a6b1688dd6bd0378"
+    "version": "fairness-locale-ja-79747db2c57677d0",
+    "contentHash": "79747db2c57677d0"
+  },
+  "siteFooter": {
+    "tagline": "Solana 上のシード型ボクセルワールドプロトコル。",
+    "navigationAria": "フッターナビゲーション",
+    "socialAria": "NiceChunk ソーシャルリンク",
+    "home": "ホーム",
+    "play": "ワールドへ",
+    "roadmap": "ロードブック",
+    "docs": "ドキュメント",
+    "guardian": "ガーディアン",
+    "contracts": "コントラクト",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. All rights reserved."
   },
   "meta": {
     "title": "NiceChunk 公平性モデル"
@@ -27,7 +41,7 @@
   "hero": {
     "eyebrow": "公平性モデル",
     "title": "プレイヤーがルールを検証できる場合にのみ、世界は公平になります。",
-    "subtitle": "NiceChunk は、パブリック シード ルール、再現可能な結果、バージョン管理されたアップグレード、wallet 所有のアクション、およびクライアント、Watchers、および Solana 間の明確な信頼境界を中心に設計されています。",
+    "subtitle": "NiceChunk は、パブリック シード ルール、再現可能な結果、バージョン管理されたアップグレード、wallet 所有のアクション、およびクライアント、Guardians、および Solana 間の明確な信頼境界を中心に設計されています。",
     "verify": "Chunk を検証する",
     "mining": "テストマイニングロール",
     "docs": "ドキュメントを読む",
@@ -62,7 +76,7 @@
       },
       "boundary": {
         "title": "信頼境界",
-        "body": "Web サイトには、何がクライアント専用なのか、Watchers が何を支援できるのか、何がオンチェーンで検証されることを意図しているのかを記載する必要があります。"
+        "body": "Web サイトには、何がクライアント専用なのか、Guardians が何を支援できるのか、何がオンチェーンで検証されることを意図しているのかを記載する必要があります。"
       }
     }
   },
@@ -168,7 +182,7 @@
         "verification": "レシピ入力、耐久性、出力メタデータ、将来の造幣記録。"
       },
       "watchers": {
-        "system": "Watcher ネットワーク",
+        "system": "Guardian ネットワーク",
         "status": "近日公開予定",
         "verification": "カストディなし、プレイヤーのトランザクション署名なし、リージョン利用可能ロールのみ。"
       },
@@ -193,8 +207,8 @@
         "body": "プレイヤーの意図に直接署名します。 プレーヤーのアセットは、プロジェクトによって制御される非表示の署名に依存すべきではありません。"
       },
       "watcher": {
-        "title": "Watcher",
-        "body": "リージョン間の到達可能性と通信を維持するのに役立ちます。 Watchers は資産を管理したり、プレイヤーのトランザクションに署名したりしません。"
+        "title": "Guardian",
+        "body": "リージョン間の到達可能性と通信を維持するのに役立ちます。 Guardians は資産を管理したり、プレイヤーのトランザクションに署名したりしません。"
       },
       "chain": {
         "title": "Solana",

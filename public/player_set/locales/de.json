@@ -2,8 +2,22 @@
   "_meta": {
     "language": "de",
     "label": "German",
-    "version": "player-set-locale-de-73ca31aa26fe9fe0",
-    "contentHash": "73ca31aa26fe9fe0"
+    "version": "player-set-locale-de-1a264dc498cc89e9",
+    "contentHash": "1a264dc498cc89e9"
+  },
+  "siteFooter": {
+    "tagline": "Ein Seed-Voxelwelt-Protokoll auf Solana.",
+    "navigationAria": "Footer-Navigation",
+    "socialAria": "NiceChunk Social Links",
+    "home": "Home",
+    "play": "Welt betreten",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Guardians",
+    "contracts": "Contracts",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Alle Rechte vorbehalten."
   },
   "common": {
     "language": "Sprache",

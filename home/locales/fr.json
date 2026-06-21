@@ -11,7 +11,7 @@
     "fairness": "Équité",
     "proofOfFrontier": "Preuve",
     "economy": "Économie",
-    "watchers": "Watchers",
+    "watchers": "Guardians",
     "resources": "Ressources",
     "elements": "Éléments",
     "docs": "Documents",
@@ -26,7 +26,7 @@
     "intro": "Introduction",
     "world": "Monde",
     "economy": "Économie",
-    "watchers": "Watchers",
+    "watchers": "Guardians",
     "roadmap": "Feuille de route"
   },
   "hero": {
@@ -42,7 +42,7 @@
       "alpha": "Alpha Aperçu en direct",
       "solana": "Solana Prêt pour le portefeuille",
       "seeded": "Moteur Chunk ensemencé",
-      "watchers": "Watcher Network à venir"
+      "watchers": "Guardian Network à venir"
     }
   },
   "world": {
@@ -79,8 +79,8 @@
       "body": "Connectez votre wallet, créez votre profil de joueur et poursuivez votre progression à travers le monde NiceChunk."
     },
     "watchers": {
-      "title": "Watcher Network",
-      "body": "Les nœuds Watcher contribuent à rendre les régions accessibles, prennent en charge la communication en temps réel et préparent le monde à une coordination décentralisée."
+      "title": "Guardian Network",
+      "body": "Les nœuds Guardian contribuent à rendre les régions accessibles, prennent en charge la communication en temps réel et préparent le monde à une coordination décentralisée."
     }
   },
   "economy": {
@@ -97,17 +97,17 @@
     }
   },
   "watchers": {
-    "eyebrow": "Watcher Network",
-    "title": "Exécutez un Watcher. Faire vivre une région.",
-    "body": "Les nœuds Watcher constituent la couche d'accès de NiceChunk. Ils ne contrôlent pas les actifs des joueurs et ne traitent pas les transactions en chaîne. Au lieu de cela, ils aident les régions à rester joignables, assurent une communication en temps réel et soutiennent l’activité mondiale locale. À mesure que le monde se développe, Watchers devient l'infrastructure qui maintient chunks en vie.",
+    "eyebrow": "Guardian Network",
+    "title": "Exécutez un Guardian. Faire vivre une région.",
+    "body": "Les nœuds Guardian constituent la couche d'accès de NiceChunk. Ils ne contrôlent pas les actifs des joueurs et ne traitent pas les transactions en chaîne. Au lieu de cela, ils aident les régions à rester joignables, assurent une communication en temps réel et soutiennent l’activité mondiale locale. À mesure que le monde se développe, Guardians devient l'infrastructure qui maintient chunks en vie.",
     "badges": {
       "noCustody": "Pas de garde d'actifs",
       "noTransactions": "Aucun traitement de transaction de joueur",
       "communication": "Communication régionale en temps réel"
     },
     "animation": {
-      "aria": "Animation réseau Watcher",
-      "title": "Nœud Watcher",
+      "aria": "Animation réseau Guardian",
+      "title": "Nœud Guardian",
       "body": "Couche d'accès à la région"
     },
     "guardianConsole": "Ouvrir la console Guardian"
@@ -134,7 +134,7 @@
       "body": "Genesis pass, utilitaire NCK, règlement du marché, couche d'actifs appartenant aux joueurs."
     },
     "phase4": {
-      "title": "Phase 4 - Watcher Network",
+      "title": "Phase 4 - Guardian Network",
       "body": "Nœuds d'accès régionaux, communication en temps réel, jalonnement des observateurs, participation au niveau régional."
     },
     "phase5": {
@@ -151,7 +151,7 @@
     "worldRules": "Règles mondiales",
     "proofOfFrontier": "Proof of Frontier",
     "nckEconomy": "NCK Économie",
-    "watcherNetwork": "Watcher Network",
+    "watcherNetwork": "Guardian Network",
     "whitepaper": "Livre blanc",
     "fairness": "Équité",
     "github": "GitHub"

@@ -2,8 +2,22 @@
   "_meta": {
     "language": "zh-Hant",
     "label": "Traditional Chinese",
-    "version": "fairness-locale-zh-Hant-10d5989e6aba08e4",
-    "contentHash": "10d5989e6aba08e4"
+    "version": "fairness-locale-zh-Hant-10308a7df962f8f9",
+    "contentHash": "10308a7df962f8f9"
+  },
+  "siteFooter": {
+    "tagline": "Solana 上的種子體素世界協議。",
+    "navigationAria": "頁腳導航",
+    "socialAria": "NiceChunk 社交連結",
+    "home": "首頁",
+    "play": "進入世界",
+    "roadmap": "路書",
+    "docs": "文檔",
+    "guardian": "守護者",
+    "contracts": "合約",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk。保留所有權利。"
   },
   "meta": {
     "title": "NiceChunk 公平模型"
@@ -27,7 +41,7 @@
   "hero": {
     "eyebrow": "公平模型",
     "title": "只有當玩家能夠驗證規則時，世界才是公平的。",
-    "subtitle": "NiceChunk 是圍繞公共種子規則、可重現結果、版本升級、wallet 擁有的操作以及客戶端、Watchers 和 Solana 之間明確的信任邊界而設計的。",
+    "subtitle": "NiceChunk 是圍繞公共種子規則、可重現結果、版本升級、wallet 擁有的操作以及客戶端、Guardians 和 Solana 之間明確的信任邊界而設計的。",
     "verify": "驗證 Chunk",
     "mining": "測試採礦輥",
     "docs": "閱讀文檔",
@@ -62,7 +76,7 @@
       },
       "boundary": {
         "title": "信任邊界",
-        "body": "網站必須說明什麼是僅限客戶端的、Watchers 可以協助什麼、以及打算在鏈上驗證什麼。"
+        "body": "網站必須說明什麼是僅限客戶端的、Guardians 可以協助什麼、以及打算在鏈上驗證什麼。"
       }
     }
   },
@@ -168,7 +182,7 @@
         "verification": "配方輸入、耐久性、輸出元資料、未來鑄幣記錄。"
       },
       "watchers": {
-        "system": "Watcher 網絡",
+        "system": "Guardian 網絡",
         "status": "即將推出",
         "verification": "無託管，無玩家交易簽名，僅具有區域可用性角色。"
       },
@@ -193,8 +207,8 @@
         "body": "直接簽署玩家意圖。 玩家資產不應依賴隱藏的項目控制簽名。"
       },
       "watcher": {
-        "title": "Watcher",
-        "body": "幫助區域保持可及性和溝通。 Watchers 不會託管資產或簽署玩家交易。"
+        "title": "Guardian",
+        "body": "幫助區域保持可及性和溝通。 Guardians 不會託管資產或簽署玩家交易。"
       },
       "chain": {
         "title": "Solana",

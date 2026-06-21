@@ -2,12 +2,26 @@
   "_meta": {
     "language": "fr",
     "label": "French",
-    "version": "roadmap-locale-fr-aac9e49b02167782",
-    "contentHash": "aac9e49b02167782"
+    "version": "roadmap-locale-fr-be9c00befb142577",
+    "contentHash": "be9c00befb142577"
+  },
+  "siteFooter": {
+    "tagline": "Un protocole de monde voxel seedé sur Solana.",
+    "navigationAria": "Navigation du pied de page",
+    "socialAria": "Liens sociaux de NiceChunk",
+    "home": "Accueil",
+    "play": "Entrer dans le monde",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Gardiens",
+    "contracts": "Contrats",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Tous droits réservés."
   },
   "meta": {
     "title": "NiceChunk Roadbook | Feuille de route et plan d'avenir",
-    "description": "NiceChunk Roadbook : un plan d'avenir transparent pour un monde de voxels ensemencés alimenté par Solana, un gameplay alpha, des règles publiques, l'exploitation minière, la forge, l'utilitaire NCK et le futur réseau Watcher."
+    "description": "NiceChunk Roadbook : un plan d'avenir transparent pour un monde de voxels ensemencés alimenté par Solana, un gameplay alpha, des règles publiques, l'exploitation minière, la forge, l'utilitaire NCK et le futur réseau Guardian."
   },
   "nav": {
     "aria": "Navigation principale",
@@ -28,7 +42,7 @@
   "hero": {
     "eyebrow": "Carnet de route NiceChunk",
     "title": "Roadbook pour un monde de voxels appartenant aux joueurs.",
-    "subtitle": "NiceChunk passe de la conception de forme longue à la préparation du lancement : un monde de voxels ensemencés, des règles publiques, un gameplay de navigateur, des fondations de ressources, une identité wallet et un futur réseau Watcher construit autour d'un état de jeu vérifiable.",
+    "subtitle": "NiceChunk passe de la conception de forme longue à la préparation du lancement : un monde de voxels ensemencés, des règles publiques, un gameplay de navigateur, des fondations de ressources, une identité wallet et un futur réseau Guardian construit autour d'un état de jeu vérifiable.",
     "body": "Ce guide est écrit pour les joueurs, les constructeurs, les guildes, les créateurs et les partenaires de l'écosystème qui veulent une vision claire de ce qui est en direct, de ce qui est préparé et des risques qui sont gérés ouvertement.",
     "enterWorld": "Entrer dans le monde / Enregistrer",
     "viewRoadmap": "Voir le Roadbook",
@@ -59,7 +73,7 @@
       },
       {
         "label": "Couche réseau",
-        "value": "Watchers prévu"
+        "value": "Guardians prévu"
       }
     ]
   },
@@ -79,7 +93,7 @@
       {
         "label": "Horizon de planification",
         "value": "24 mois",
-        "description": "Couvre l'accès à la genèse, les saisons, les boucles de ressources, Watchers, la gouvernance et l'expansion de l'écosystème."
+        "description": "Couvre l'accès à la genèse, les saisons, les boucles de ressources, Guardians, la gouvernance et l'expansion de l'écosystème."
       },
       {
         "label": "PRINCIPE DE BASE",
@@ -198,19 +212,19 @@
     },
     {
       "phase": "Phase 5",
-      "title": "Réseau et gouvernance Watcher",
+      "title": "Réseau et gouvernance Guardian",
       "period": "Long terme / 12-24 mois",
       "confidence": 65,
       "status": "à long terme",
       "statusLabel": "Longue durée",
-      "summary": "Watchers sont prévus comme couche d'accès pour les régions actives. Ils doivent aider les régions à rester joignables et à soutenir la communication sans garder les actifs ni traiter les transactions des joueurs.",
+      "summary": "Guardians sont prévus comme couche d'accès pour les régions actives. Ils doivent aider les régions à rester joignables et à soutenir la communication sans garder les actifs ni traiter les transactions des joueurs.",
       "goals": [
         "Testez les nœuds d'accès aux régions sans leur donner le contrôle des ressources des utilisateurs.",
         "Ouvrir plus de paramètres mondiaux à un examen transparent et à une gouvernance limitée.",
         "Soutenez les créateurs, les guildes, les API, les événements et la participation à long terme de la communauté."
       ],
       "deliverables": [
-        "Spécification de nœud Watcher et modèle de disponibilité de région.",
+        "Spécification de nœud Guardian et modèle de disponibilité de région.",
         "Infrastructures de communication et d'activité de la région.",
         "Version des paramètres mondiaux et des propositions de gouvernance.",
         "Programmes de partenariat avec les créateurs, les guildes et les écosystèmes."
@@ -245,7 +259,7 @@
       },
       {
         "title": "Guilde et couche sociale",
-        "body": "Activité régionale, objectifs de groupe, exploration partagée, classements, communication et future coordination locale soutenue par Watcher."
+        "body": "Activité régionale, objectifs de groupe, exploration partagée, classements, communication et future coordination locale soutenue par Guardian."
       },
       {
         "title": "Participation du créateur",
@@ -257,7 +271,7 @@
       },
       {
         "title": "Protocole monde ouvert",
-        "body": "API, état vérifiable, direction de la gouvernance, réseau Watcher et outils à long terme pour un monde de voxels appartenant aux joueurs."
+        "body": "API, état vérifiable, direction de la gouvernance, réseau Guardian et outils à long terme pour un monde de voxels appartenant aux joueurs."
       }
     ]
   },
@@ -279,8 +293,8 @@
         "body": "Les joueurs interagissent directement avec Solana wallets. Le projet doit clairement séparer l'intention du joueur signée de la logique de prévisualisation réservée au client."
       },
       {
-        "title": "Watchers sans garde",
-        "body": "Watchers est prévu pour aider les régions à rester joignables et à communiquer ; elles ne doivent pas conserver les actifs ou traiter les transactions des joueurs."
+        "title": "Guardians sans garde",
+        "body": "Guardians est prévu pour aider les régions à rester joignables et à communiquer ; elles ne doivent pas conserver les actifs ou traiter les transactions des joueurs."
       },
       {
         "title": "Divulgation du risque",
@@ -322,7 +336,7 @@
         "reason": "Dépend de l'examen de la sécurité, des contraintes de la chaîne, des règles relatives aux actifs, de la conformité et de la demande réelle."
       },
       {
-        "stage": "Réseau et gouvernance Watcher",
+        "stage": "Réseau et gouvernance Guardian",
         "confidence": 65,
         "reason": "Les systèmes à long terme dépendent des incitations des nœuds, de l'activité régionale, de l'infrastructure et de la maturité de la gouvernance."
       }

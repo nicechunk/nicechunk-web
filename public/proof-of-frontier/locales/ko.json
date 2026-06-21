@@ -2,8 +2,22 @@
   "_meta": {
     "language": "ko",
     "label": "Korean",
-    "version": "proof-of-frontier-locale-ko-dd79989667b4b6e6",
-    "contentHash": "dd79989667b4b6e6"
+    "version": "proof-of-frontier-locale-ko-e5cc5ceb3426cac6",
+    "contentHash": "e5cc5ceb3426cac6"
+  },
+  "siteFooter": {
+    "tagline": "Solana 기반 시드형 복셀 월드 프로토콜.",
+    "navigationAria": "푸터 내비게이션",
+    "socialAria": "NiceChunk 소셜 링크",
+    "home": "홈",
+    "play": "월드 입장",
+    "roadmap": "로드북",
+    "docs": "문서",
+    "guardian": "가디언",
+    "contracts": "컨트랙트",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. All rights reserved."
   },
   "common": {
     "brand": "NICECHUNK",

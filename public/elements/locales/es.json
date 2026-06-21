@@ -2,8 +2,22 @@
   "_meta": {
     "language": "es",
     "label": "Spanish",
-    "version": "elements-locale-es-deff57f837691b6c",
-    "contentHash": "deff57f837691b6c"
+    "version": "elements-locale-es-a733565bd39ac6ce",
+    "contentHash": "a733565bd39ac6ce"
+  },
+  "siteFooter": {
+    "tagline": "Un protocolo de mundo voxel con semillas en Solana.",
+    "navigationAria": "Navegación del pie de página",
+    "socialAria": "Enlaces sociales de NiceChunk",
+    "home": "Inicio",
+    "play": "Entrar al mundo",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Guardianes",
+    "contracts": "Contratos",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Todos los derechos reservados."
   },
   "common": {
     "brand": "NICECHUNK",

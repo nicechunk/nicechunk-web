@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "NiceChunk Roadbook | Roadmap & Future Plan",
-    "description": "NiceChunk Roadbook: a transparent future plan for a Solana-powered seeded voxel world, alpha gameplay, public rules, mining, forging, NCK utility, and future Watcher network."
+    "description": "NiceChunk Roadbook: a transparent future plan for a Solana-powered seeded voxel world, alpha gameplay, public rules, mining, forging, NCK utility, and future Guardian network."
   },
   "nav": {
     "aria": "Primary navigation",
@@ -22,7 +22,7 @@
   "hero": {
     "eyebrow": "NiceChunk Roadbook",
     "title": "Roadbook for a player-owned voxel world.",
-    "subtitle": "NiceChunk is moving from long-form design into launch preparation: a seeded voxel world, public rules, browser gameplay, resource foundations, wallet identity, and a future Watcher network built around verifiable game state.",
+    "subtitle": "NiceChunk is moving from long-form design into launch preparation: a seeded voxel world, public rules, browser gameplay, resource foundations, wallet identity, and a future Guardian network built around verifiable game state.",
     "body": "This roadbook is written for players, builders, guilds, creators, and ecosystem partners who want a clear view of what is live, what is being prepared, and which risks are being handled openly.",
     "enterWorld": "Enter World",
     "viewRoadmap": "View Roadbook",
@@ -53,7 +53,7 @@
       },
       {
         "label": "Network Layer",
-        "value": "Watchers planned"
+        "value": "Guardians planned"
       }
     ]
   },
@@ -73,7 +73,7 @@
       {
         "label": "Planning horizon",
         "value": "24 Months",
-        "description": "Covers genesis access, seasons, resource loops, Watchers, governance, and ecosystem expansion."
+        "description": "Covers genesis access, seasons, resource loops, Guardians, governance, and ecosystem expansion."
       },
       {
         "label": "Core principle",
@@ -192,19 +192,19 @@
     },
     {
       "phase": "Phase 5",
-      "title": "Watcher network & governance",
+      "title": "Guardian network & governance",
       "period": "Long term / 12-24 months",
       "confidence": 65,
       "status": "long-term",
       "statusLabel": "Long-Term",
-      "summary": "Watchers are planned as the access layer for live regions. They should help regions stay reachable and support communication without custodying assets or processing player transactions.",
+      "summary": "Guardians are planned as the access layer for live regions. They should help regions stay reachable and support communication without custodying assets or processing player transactions.",
       "goals": [
         "Test region access nodes without giving them control over user assets.",
         "Open more world parameters to transparent review and limited governance.",
         "Support creators, guilds, APIs, events, and long-term community participation."
       ],
       "deliverables": [
-        "Watcher node specification and region availability model.",
+        "Guardian node specification and region availability model.",
         "Communication and region activity infrastructure.",
         "Versioned world parameters and governance proposals.",
         "Creator, guild, and ecosystem partnership programs."
@@ -239,7 +239,7 @@
       },
       {
         "title": "Guild and social layer",
-        "body": "Region activity, group objectives, shared exploration, leaderboards, communication, and future Watcher-supported local coordination."
+        "body": "Region activity, group objectives, shared exploration, leaderboards, communication, and future Guardian-supported local coordination."
       },
       {
         "title": "Creator participation",
@@ -251,7 +251,7 @@
       },
       {
         "title": "Open world protocol",
-        "body": "APIs, verifiable state, governance direction, Watcher network, and long-term tooling for a player-owned voxel world."
+        "body": "APIs, verifiable state, governance direction, Guardian network, and long-term tooling for a player-owned voxel world."
       }
     ]
   },
@@ -273,8 +273,8 @@
         "body": "Players interact with Solana wallets directly. The project must clearly separate signed player intent from client-only preview logic."
       },
       {
-        "title": "No-custody Watchers",
-        "body": "Watchers are planned to help regions stay reachable and communicate; they should not custody assets or process player transactions."
+        "title": "No-custody Guardians",
+        "body": "Guardians are planned to help regions stay reachable and communicate; they should not custody assets or process player transactions."
       },
       {
         "title": "Risk disclosure",
@@ -316,7 +316,7 @@
         "reason": "Depends on security review, chain constraints, asset rules, compliance, and real demand."
       },
       {
-        "stage": "Watcher network & governance",
+        "stage": "Guardian network & governance",
         "confidence": 65,
         "reason": "Long-term systems depend on node incentives, region activity, infrastructure, and governance maturity."
       }

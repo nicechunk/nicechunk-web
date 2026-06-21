@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "NiceChunk Libro de ruta | Hoja de ruta y plan futuro",
-    "description": "NiceChunk Roadbook: un plan futuro transparente para un mundo de vóxeles sembrado impulsado por Solana, juego alfa, reglas públicas, minería, forja, utilidad NCK y futura red Watcher."
+    "description": "NiceChunk Roadbook: un plan futuro transparente para un mundo de vóxeles sembrado impulsado por Solana, juego alfa, reglas públicas, minería, forja, utilidad NCK y futura red Guardian."
   },
   "nav": {
     "aria": "Navegación primaria",
@@ -22,7 +22,7 @@
   "hero": {
     "eyebrow": "NiceChunk Libro de ruta",
     "title": "Libro de ruta para un mundo vóxel propiedad de los jugadores.",
-    "subtitle": "NiceChunk está pasando del diseño de formato largo a la preparación del lanzamiento: un mundo de vóxeles sembrado, reglas públicas, jugabilidad de navegador, bases de recursos, identidad wallet y una futura red Watcher construida alrededor de un estado de juego verificable.",
+    "subtitle": "NiceChunk está pasando del diseño de formato largo a la preparación del lanzamiento: un mundo de vóxeles sembrado, reglas públicas, jugabilidad de navegador, bases de recursos, identidad wallet y una futura red Guardian construida alrededor de un estado de juego verificable.",
     "body": "Este libro de ruta está escrito para jugadores, constructores, gremios, creadores y socios del ecosistema que desean una visión clara de lo que está en vivo, lo que se está preparando y qué riesgos se están manejando abiertamente.",
     "enterWorld": "Entrar al mundo",
     "viewRoadmap": "Ver libro de ruta",
@@ -53,7 +53,7 @@
       },
       {
         "label": "Capa de red",
-        "value": "Watchers previsto"
+        "value": "Guardians previsto"
       }
     ]
   },
@@ -73,7 +73,7 @@
       {
         "label": "Horizonte de planificación",
         "value": "24 Meses",
-        "description": "Cubre el acceso a la génesis, las estaciones, los ciclos de recursos, Watchers, la gobernanza y la expansión del ecosistema."
+        "description": "Cubre el acceso a la génesis, las estaciones, los ciclos de recursos, Guardians, la gobernanza y la expansión del ecosistema."
       },
       {
         "label": "Principio fundamental",
@@ -192,19 +192,19 @@
     },
     {
       "phase": "Fase 5",
-      "title": "Red y gobernanza Watcher",
+      "title": "Red y gobernanza Guardian",
       "period": "Largo plazo / 12-24 meses",
       "confidence": 65,
       "status": "a largo plazo",
       "statusLabel": "Largo Plazo",
-      "summary": "Watchers está previsto como capa de acceso para regiones activas. Deberían ayudar a las regiones a mantenerse accesibles y respaldar la comunicación sin custodiar activos ni procesar transacciones de jugadores.",
+      "summary": "Guardians está previsto como capa de acceso para regiones activas. Deberían ayudar a las regiones a mantenerse accesibles y respaldar la comunicación sin custodiar activos ni procesar transacciones de jugadores.",
       "goals": [
         "Probar los nodos de acceso a la región sin darles control sobre los activos del usuario.",
         "Abrir más parámetros mundiales a una revisión transparente y una gobernanza limitada.",
         "Apoyar a los creadores, gremios, API, eventos y participación comunitaria a largo plazo."
       ],
       "deliverables": [
-        "Especificación de nodo Watcher y modelo de disponibilidad de región.",
+        "Especificación de nodo Guardian y modelo de disponibilidad de región.",
         "Infraestructura de comunicaciones y actividades regionales.",
         "Parámetros mundiales versionados y propuestas de gobernanza.",
         "Programas de asociación de creadores, gremios y ecosistemas."
@@ -239,7 +239,7 @@
       },
       {
         "title": "Gremio y estrato social",
-        "body": "Actividad regional, objetivos grupales, exploración compartida, tablas de clasificación, comunicación y futura coordinación local respaldada por Watcher."
+        "body": "Actividad regional, objetivos grupales, exploración compartida, tablas de clasificación, comunicación y futura coordinación local respaldada por Guardian."
       },
       {
         "title": "Participación del creador",
@@ -251,7 +251,7 @@
       },
       {
         "title": "Protocolo de mundo abierto",
-        "body": "API, estado verificable, dirección de gobernanza, red Watcher y herramientas a largo plazo para un mundo voxel propiedad de los jugadores."
+        "body": "API, estado verificable, dirección de gobernanza, red Guardian y herramientas a largo plazo para un mundo voxel propiedad de los jugadores."
       }
     ]
   },
@@ -273,8 +273,8 @@
         "body": "Los jugadores interactúan directamente con Solana wallet. El proyecto debe separar claramente la intención del jugador firmado de la lógica de vista previa exclusiva del cliente."
       },
       {
-        "title": "Watchers sin custodia",
-        "body": "Watchers están previstos para ayudar a las regiones a mantenerse accesibles y comunicadas; no deben custodiar activos ni procesar transacciones de jugadores."
+        "title": "Guardians sin custodia",
+        "body": "Guardians están previstos para ayudar a las regiones a mantenerse accesibles y comunicadas; no deben custodiar activos ni procesar transacciones de jugadores."
       },
       {
         "title": "Divulgación de riesgos",
@@ -316,7 +316,7 @@
         "reason": "Depende de la revisión de seguridad, las restricciones de la cadena, las reglas de activos, el cumplimiento y la demanda real."
       },
       {
-        "stage": "Red y gobernanza Watcher",
+        "stage": "Red y gobernanza Guardian",
         "confidence": 65,
         "reason": "Los sistemas a largo plazo dependen de los incentivos de los nodos, la actividad de la región, la infraestructura y la madurez de la gobernanza."
       }

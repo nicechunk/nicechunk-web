@@ -2,8 +2,22 @@
   "_meta": {
     "language": "ja",
     "label": "Japanese",
-    "version": "home-locale-ja-81ac95f2a74f0ef0",
-    "contentHash": "81ac95f2a74f0ef0"
+    "version": "home-locale-ja-1ed6859d44e738f2",
+    "contentHash": "1ed6859d44e738f2"
+  },
+  "siteFooter": {
+    "tagline": "Solana 上のシード型ボクセルワールドプロトコル。",
+    "navigationAria": "フッターナビゲーション",
+    "socialAria": "NiceChunk ソーシャルリンク",
+    "home": "ホーム",
+    "play": "ワールドへ",
+    "roadmap": "ロードブック",
+    "docs": "ドキュメント",
+    "guardian": "ガーディアン",
+    "contracts": "コントラクト",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. All rights reserved."
   },
   "meta": {
     "title": "NiceChunk |一度に 1 台の chunk で世界を所有"
@@ -17,7 +31,7 @@
     "fairness": "公平性",
     "proofOfFrontier": "証明",
     "economy": "経済",
-    "watchers": "Watchers",
+    "watchers": "Guardians",
     "resources": "リソース",
     "elements": "要素",
     "docs": "ドキュメント",
@@ -32,7 +46,7 @@
     "intro": "イントロ",
     "world": "世界",
     "economy": "経済",
-    "watchers": "Watchers",
+    "watchers": "Guardians",
     "roadmap": "ロードマップ"
   },
   "hero": {
@@ -48,7 +62,7 @@
       "alpha": "Alpha プレビューライブ",
       "solana": "Solana ウォレット対応",
       "seeded": "シードされた Chunk エンジン",
-      "watchers": "Watcher Network 近日公開予定"
+      "watchers": "Guardian Network 近日公開予定"
     }
   },
   "world": {
@@ -85,8 +99,8 @@
       "body": "wallet に接続し、プレーヤー プロフィールを作成し、進行状況を NiceChunk の世界全体に伝えます。"
     },
     "watchers": {
-      "title": "Watcher Network",
-      "body": "Watcher ノードは、地域へのアクセスを可能にし、リアルタイム通信をサポートし、世界を分散型調整に備えるのに役立ちます。"
+      "title": "Guardian Network",
+      "body": "Guardian ノードは、地域へのアクセスを可能にし、リアルタイム通信をサポートし、世界を分散型調整に備えるのに役立ちます。"
     }
   },
   "economy": {
@@ -103,17 +117,17 @@
     }
   },
   "watchers": {
-    "eyebrow": "Watcher Network",
-    "title": "Watcher を実行します。地域を存続させましょう。",
-    "body": "Watcher ノードは、NiceChunk のアクセス層です。彼らはプレーヤーの資産を制御したり、オンチェーントランザクションを処理したりしません。代わりに、地域への到達可能性を維持し、リアルタイム通信を提供し、ローカル世界の活動をサポートするのに役立ちます。世界が成長するにつれて、Watchers は chunks を存続させるインフラストラクチャになります。",
+    "eyebrow": "Guardian Network",
+    "title": "Guardian を実行します。地域を存続させましょう。",
+    "body": "Guardian ノードは、NiceChunk のアクセス層です。彼らはプレーヤーの資産を制御したり、オンチェーントランザクションを処理したりしません。代わりに、地域への到達可能性を維持し、リアルタイム通信を提供し、ローカル世界の活動をサポートするのに役立ちます。世界が成長するにつれて、Guardians は chunks を存続させるインフラストラクチャになります。",
     "badges": {
       "noCustody": "資産保管なし",
       "noTransactions": "プレイヤーのトランザクション処理なし",
       "communication": "リアルタイム地域通信"
     },
     "animation": {
-      "aria": "Watcher ネットワーク アニメーション",
-      "title": "Watcher ノード",
+      "aria": "Guardian ネットワーク アニメーション",
+      "title": "Guardian ノード",
       "body": "領域アクセス層"
     },
     "guardianConsole": "Guardian コンソールを開く"
@@ -140,7 +154,7 @@
       "body": "ジェネシス パス、NCK ユーティリティ、マーケットプレイス決済、プレイヤー所有のアセット レイヤー。"
     },
     "phase4": {
-      "title": "フェーズ 4 - Watcher Network",
+      "title": "フェーズ 4 - Guardian Network",
       "body": "リージョンアクセスノード、リアルタイム通信、ウォッチャーステーキング、リージョンレベルの参加。"
     },
     "phase5": {
@@ -157,7 +171,7 @@
     "worldRules": "世界ルール",
     "proofOfFrontier": "Proof of Frontier",
     "nckEconomy": "NCK エコノミー",
-    "watcherNetwork": "Watcher Network",
+    "watcherNetwork": "Guardian Network",
     "whitepaper": "ホワイトペーパー",
     "fairness": "公平性",
     "github": "GitHub"

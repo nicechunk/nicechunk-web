@@ -10,7 +10,7 @@
     <link rel="shortcut icon" href="/favicon.ico?v=0.1.53" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=0.1.53" />
     <link rel="manifest" href="/site.webmanifest?v=0.1.53" />
-    <meta name="description" content="NiceChunk is a Solana-powered seeded voxel world for exploration, mining, forging, wallet identity, NCK utility, and future Watcher nodes." />
+    <meta name="description" content="NiceChunk is a Solana-powered seeded voxel world for exploration, mining, forging, wallet identity, NCK utility, and future Guardian nodes." />
     <title data-home-i18n="meta.title">NiceChunk | Own the world, one chunk at a time</title>
   </head>
   <body>
@@ -31,6 +31,7 @@
         "/mining": "/mining/",
         "/guardian": "/guardian/",
         "/contracts": "/contracts/",
+        "/trust": "/trust/",
         "/proof-of-frontier": "/proof-of-frontier/",
       };
       if (routeRedirects[window.location.pathname]) {
@@ -53,8 +54,8 @@
       <button class="side-dot" type="button" data-section-index="2" aria-label="Economy" data-home-i18n-aria-label="sideNav.economy">
         <span data-home-i18n="sideNav.economy">Economy</span>
       </button>
-      <button class="side-dot" type="button" data-section-index="3" aria-label="Watchers" data-home-i18n-aria-label="sideNav.watchers">
-        <span data-home-i18n="sideNav.watchers">Watchers</span>
+      <button class="side-dot" type="button" data-section-index="3" aria-label="Guardians" data-home-i18n-aria-label="sideNav.watchers">
+        <span data-home-i18n="sideNav.watchers">Guardians</span>
       </button>
       <button class="side-dot" type="button" data-section-index="4" aria-label="Roadmap" data-home-i18n-aria-label="sideNav.roadmap">
         <span data-home-i18n="sideNav.roadmap">Roadmap</span>
@@ -109,7 +110,7 @@
               <li data-home-i18n="hero.badges.alpha">Alpha Preview Live</li>
               <li data-home-i18n="hero.badges.solana">Solana Wallet Ready</li>
               <li data-home-i18n="hero.badges.seeded">Seeded Chunk Engine</li>
-              <li data-home-i18n="hero.badges.watchers">Watcher Network Coming Soon</li>
+              <li data-home-i18n="hero.badges.watchers">Guardian Network Coming Soon</li>
             </ul>
           </div>
           <div class="hero-logo-wrap">
@@ -175,9 +176,9 @@
               <span data-home-i18n="gameplay.identity.body">Connect your wallet, create your player profile, and carry your progress across the NiceChunk world.</span>
             </a>
             <a class="glass-card module-card" href="#section-3" data-scroll-target="3">
-              <span class="module-symbol">WAT</span>
-              <strong data-home-i18n="gameplay.watchers.title">Watcher Network</strong>
-              <span data-home-i18n="gameplay.watchers.body">Watcher nodes help make regions accessible, support real-time communication, and prepare the world for decentralized coordination.</span>
+              <span class="module-symbol">GDN</span>
+              <strong data-home-i18n="gameplay.watchers.title">Guardian Network</strong>
+              <span data-home-i18n="gameplay.watchers.body">Guardian nodes help make regions accessible, support real-time communication, and prepare the world for decentralized coordination.</span>
             </a>
           </div>
         </div>
@@ -209,16 +210,16 @@
         <div class="zoom-content watcher-concept-shell">
           <div class="watcher-concept-grid">
             <div class="protocol-copy watcher-side-copy">
-              <p class="eyebrow blue" data-home-i18n="watchers.eyebrow">Watcher Network</p>
-              <h2 id="watchersTitle" data-home-i18n="watchers.title">Run a Watcher. Keep a region alive.</h2>
+              <p class="eyebrow blue" data-home-i18n="watchers.eyebrow">Guardian Network</p>
+              <h2 id="watchersTitle" data-home-i18n="watchers.title">Run a Guardian. Keep a region alive.</h2>
               <p data-home-i18n="watchers.body">
-                Watcher nodes are the access layer of NiceChunk. They do not control player assets or process on-chain transactions.
+                Guardian nodes are the access layer of NiceChunk. They do not control player assets or process on-chain transactions.
               </p>
             </div>
-            <div class="glass-card watcher-animation-card" aria-label="Watcher network animation" data-home-i18n-aria-label="watchers.animation.aria">
+            <div class="glass-card watcher-animation-card" aria-label="Guardian network animation" data-home-i18n-aria-label="watchers.animation.aria">
               <canvas id="watcherNetworkCanvas" aria-hidden="true"></canvas>
               <div class="watcher-copy">
-                <strong data-home-i18n="watchers.animation.title">Watcher Node</strong>
+                <strong data-home-i18n="watchers.animation.title">Guardian Node</strong>
                 <span data-home-i18n="watchers.animation.body">Region access layer</span>
               </div>
             </div>
@@ -261,8 +262,8 @@
                 <p data-home-i18n="roadmap.phase3.body">Genesis pass, NCK utility, marketplace settlement, player-owned asset layer.</p>
               </li>
               <li>
-                <strong data-home-i18n="roadmap.phase4.title">Phase 4 - Watcher Network</strong>
-                <p data-home-i18n="roadmap.phase4.body">Region access nodes, real-time communication, watcher staking, region-level participation.</p>
+                <strong data-home-i18n="roadmap.phase4.title">Phase 4 - Guardian Network</strong>
+                <p data-home-i18n="roadmap.phase4.body">Region access nodes, real-time communication, guardian staking, region-level participation.</p>
               </li>
               <li>
                 <strong data-home-i18n="roadmap.phase5.title">Phase 5 - World Governance</strong>
@@ -288,7 +289,7 @@
               <a href="/proof-of-frontier/" data-home-i18n="footer.proofOfFrontier">Proof of Frontier</a>
               <a href="/contracts/" data-home-i18n="footer.contracts">Contracts</a>
               <a href="#section-2" data-scroll-target="2" data-home-i18n="footer.nckEconomy">NCK Economy</a>
-              <a href="#section-3" data-scroll-target="3" data-home-i18n="footer.watcherNetwork">Watcher Network</a>
+              <a href="#section-3" data-scroll-target="3" data-home-i18n="footer.watcherNetwork">Guardian Network</a>
               <a href="/docs/" data-home-i18n="footer.whitepaper">Whitepaper</a>
               <a href="/fairness/" data-home-i18n="footer.fairness">Fairness</a>
             </nav>

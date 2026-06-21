@@ -2,8 +2,22 @@
   "_meta": {
     "language": "ru",
     "label": "Russian",
-    "version": "player-set-locale-ru-b65483900aa34364",
-    "contentHash": "b65483900aa34364"
+    "version": "player-set-locale-ru-a554ee8997bcca81",
+    "contentHash": "a554ee8997bcca81"
+  },
+  "siteFooter": {
+    "tagline": "Seeded voxel world protocol on Solana.",
+    "navigationAria": "Навигация в футере",
+    "socialAria": "Социальные ссылки NiceChunk",
+    "home": "Главная",
+    "play": "Войти в мир",
+    "roadmap": "План",
+    "docs": "Документы",
+    "guardian": "Стражи",
+    "contracts": "Контракты",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Все права защищены."
   },
   "common": {
     "language": "Язык",

@@ -2,8 +2,22 @@
   "_meta": {
     "language": "de",
     "label": "German",
-    "version": "fairness-locale-de-cdc73cd3896b6da8",
-    "contentHash": "cdc73cd3896b6da8"
+    "version": "fairness-locale-de-fcf49325e66ac8b9",
+    "contentHash": "fcf49325e66ac8b9"
+  },
+  "siteFooter": {
+    "tagline": "Ein Seed-Voxelwelt-Protokoll auf Solana.",
+    "navigationAria": "Footer-Navigation",
+    "socialAria": "NiceChunk Social Links",
+    "home": "Home",
+    "play": "Welt betreten",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Guardians",
+    "contracts": "Contracts",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Alle Rechte vorbehalten."
   },
   "meta": {
     "title": "NiceChunk Fairness-Modell"
@@ -27,7 +41,7 @@
   "hero": {
     "eyebrow": "Fairness-Modell",
     "title": "Eine Welt ist nur dann fair, wenn Spieler die Regeln überprüfen können.",
-    "subtitle": "NiceChunk basiert auf öffentlichen Seed-Regeln, reproduzierbaren Ergebnissen, versionierten Upgrades, wallet-eigenen Aktionen und klaren Vertrauensgrenzen zwischen dem Client, Watchers und Solana.",
+    "subtitle": "NiceChunk basiert auf öffentlichen Seed-Regeln, reproduzierbaren Ergebnissen, versionierten Upgrades, wallet-eigenen Aktionen und klaren Vertrauensgrenzen zwischen dem Client, Guardians und Solana.",
     "verify": "Überprüfen Sie ein Chunk",
     "mining": "Prüfungsrolle im Bergbau",
     "docs": "Dokumente lesen",
@@ -62,7 +76,7 @@
       },
       "boundary": {
         "title": "Vertrauensgrenzen",
-        "body": "Auf der Website muss angegeben werden, was nur für den Client gilt, womit Watchers unterstützen kann und was in der Kette überprüft werden soll."
+        "body": "Auf der Website muss angegeben werden, was nur für den Client gilt, womit Guardians unterstützen kann und was in der Kette überprüft werden soll."
       }
     }
   },
@@ -168,7 +182,7 @@
         "verification": "Rezepteingaben, Haltbarkeit, Ausgabemetadaten, zukünftige Mint-Aufzeichnungen."
       },
       "watchers": {
-        "system": "Watcher Netzwerk",
+        "system": "Guardian Netzwerk",
         "status": "Demnächst verfügbar",
         "verification": "Keine Verwahrung, keine Unterzeichnung von Spielertransaktionen, nur regionale Verfügbarkeitsrolle."
       },
@@ -193,8 +207,8 @@
         "body": "Unterschreibt die Absicht des Spielers direkt. Spielervermögen sollte nicht von versteckten, projektgesteuerten Unterzeichnungen abhängen."
       },
       "watcher": {
-        "title": "Watcher",
-        "body": "Hilft Regionen, erreichbar zu bleiben und zu kommunizieren. Watchers verwahrt keine Vermögenswerte und unterzeichnet keine Spielertransaktionen."
+        "title": "Guardian",
+        "body": "Hilft Regionen, erreichbar zu bleiben und zu kommunizieren. Guardians verwahrt keine Vermögenswerte und unterzeichnet keine Spielertransaktionen."
       },
       "chain": {
         "title": "Solana",

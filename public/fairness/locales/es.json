@@ -2,8 +2,22 @@
   "_meta": {
     "language": "es",
     "label": "Spanish",
-    "version": "fairness-locale-es-0af81251ba599f36",
-    "contentHash": "0af81251ba599f36"
+    "version": "fairness-locale-es-a0beb7f0675c6e29",
+    "contentHash": "a0beb7f0675c6e29"
+  },
+  "siteFooter": {
+    "tagline": "Un protocolo de mundo voxel con semillas en Solana.",
+    "navigationAria": "Navegación del pie de página",
+    "socialAria": "Enlaces sociales de NiceChunk",
+    "home": "Inicio",
+    "play": "Entrar al mundo",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Guardianes",
+    "contracts": "Contratos",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Todos los derechos reservados."
   },
   "meta": {
     "title": "NiceChunk Modelo de equidad"
@@ -27,7 +41,7 @@
   "hero": {
     "eyebrow": "Modelo de equidad",
     "title": "Un mundo es justo sólo cuando los jugadores pueden verificar las reglas.",
-    "subtitle": "NiceChunk está diseñado en torno a reglas iniciales públicas, resultados reproducibles, actualizaciones versionadas, acciones propiedad de wallet y límites de confianza claros entre el cliente, Watchers y Solana.",
+    "subtitle": "NiceChunk está diseñado en torno a reglas iniciales públicas, resultados reproducibles, actualizaciones versionadas, acciones propiedad de wallet y límites de confianza claros entre el cliente, Guardians y Solana.",
     "verify": "Verificar A Chunk",
     "mining": "Rollo de prueba de minería",
     "docs": "Leer documentos",
@@ -62,7 +76,7 @@
       },
       "boundary": {
         "title": "Límites del fideicomiso",
-        "body": "El sitio web debe indicar qué es exclusivo para el cliente, en qué puede ayudar Watchers y qué debe verificarse en la cadena."
+        "body": "El sitio web debe indicar qué es exclusivo para el cliente, en qué puede ayudar Guardians y qué debe verificarse en la cadena."
       }
     }
   },
@@ -168,7 +182,7 @@
         "verification": "Entradas de recetas, durabilidad, metadatos de salida, futuros registros de ceca."
       },
       "watchers": {
-        "system": "Red Watcher",
+        "system": "Red Guardian",
         "status": "Próximamente",
         "verification": "Sin custodia, sin firma de transacciones de jugadores, rol de disponibilidad regional únicamente."
       },
@@ -193,8 +207,8 @@
         "body": "Señala directamente la intención del jugador. Los activos de los jugadores no deberían depender de firmas ocultas controladas por proyectos."
       },
       "watcher": {
-        "title": "Watcher",
-        "body": "Ayuda a las regiones a mantenerse accesibles y comunicadas. Watchers no custodia activos ni firma transacciones de jugadores."
+        "title": "Guardian",
+        "body": "Ayuda a las regiones a mantenerse accesibles y comunicadas. Guardians no custodia activos ni firma transacciones de jugadores."
       },
       "chain": {
         "title": "Solana",

@@ -2,8 +2,22 @@
   "_meta": {
     "language": "zh-Hans",
     "label": "Simplified Chinese",
-    "version": "docs-locale-zh-Hans-978bc8ad70b4f490",
-    "contentHash": "978bc8ad70b4f490"
+    "version": "docs-locale-zh-Hans-98084956ef5cfdb3",
+    "contentHash": "98084956ef5cfdb3"
+  },
+  "siteFooter": {
+    "tagline": "Solana 上的种子体素世界协议。",
+    "navigationAria": "页脚导航",
+    "socialAria": "NiceChunk 社交链接",
+    "home": "首页",
+    "play": "进入世界",
+    "roadmap": "路书",
+    "docs": "文档",
+    "guardian": "守护者",
+    "contracts": "合约",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk。保留所有权利。"
   },
   "meta": {
     "title": "NiceChunk 协议文档"
@@ -107,8 +121,8 @@
           "label": "NCK 经济"
         },
         {
-          "id": "watcher-network",
-          "label": "守望者网络"
+          "id": "guardian-network",
+          "label": "守护者网络"
         },
         {
           "id": "magicblock-er",
@@ -191,7 +205,7 @@
       "planned": {
         "label": "计划中的协议",
         "title": "未来验证层",
-        "body": "Chunk 覆盖压缩、资源结算、资产所有权、市场结算、Watcher 证明和治理控制。"
+        "body": "Chunk 覆盖压缩、资源结算、资产所有权、市场结算、Guardian 证明和治理控制。"
       },
       "boundary": {
         "label": "信任边界",
@@ -450,7 +464,7 @@
   "economy": {
     "eyebrow": "NCK 经济",
     "title": "NCK 功能必须按状态记录，而不是靠宣传语表达。",
-    "body": "NCK 被设计为 NiceChunk 的核心功能型代币，用于访问、游戏内行为、锻造系统、市场结算、守望者激励和未来治理机制。",
+    "body": "NCK 被设计为 NiceChunk 的核心功能型代币，用于访问、游戏内行为、锻造系统、市场结算、守护者激励和未来治理机制。",
     "status": {
       "planned": "计划中",
       "devnet": "开发网",
@@ -485,11 +499,11 @@
     }
   },
   "watchers": {
-    "eyebrow": "守望者网络",
-    "title": "Guardian 和 Watcher 是接入基础设施，不是资产托管方。",
-    "body": "当前 Guardian 程序已经在开发网上注册区域端点和 NCK 质押。更大的 Watcher 网络概念是实时接入层，用来保持区域可访问，但不拥有玩家资产，也不替玩家签名交易。",
+    "eyebrow": "守护者网络",
+    "title": "Guardian 和 Guardian 是接入基础设施，不是资产托管方。",
+    "body": "当前 Guardian 程序已经在开发网上注册区域端点和 NCK 质押。更大的 Guardian 网络概念是实时接入层，用来保持区域可访问，但不拥有玩家资产，也不替玩家签名交易。",
     "demo": {
-      "title": "守望者区域",
+      "title": "守护者区域",
       "body": "实时访问概念"
     },
     "status": {
@@ -499,11 +513,11 @@
     "rules": {
       "noCustody": {
         "title": "不托管资产",
-        "body": "守望者不持有玩家资产，也不替代钱包授权。"
+        "body": "守护者不持有玩家资产，也不替代钱包授权。"
       },
       "noTransactions": {
         "title": "不签署交易",
-        "body": "玩家直接与 Solana 钱包交互。守望者不应该作为隐藏所有者处理交易。"
+        "body": "玩家直接与 Solana 钱包交互。守护者不应该作为隐藏所有者处理交易。"
       },
       "registry": {
         "title": "Guardian 登记表",
@@ -584,7 +598,7 @@
       },
       "limits": {
         "title": "信任边界",
-        "body": "文档必须说明哪些是客户端行为，哪些由守望者辅助，哪些计划进入链上验证。"
+        "body": "文档必须说明哪些是客户端行为，哪些由守护者辅助，哪些计划进入链上验证。"
       }
     }
   },

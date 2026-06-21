@@ -11,7 +11,7 @@
     "fairness": "公平",
     "proofOfFrontier": "证明",
     "economy": "经济",
-    "watchers": "守望者",
+    "watchers": "守护者",
     "resources": "资源",
     "elements": "元素表",
     "contracts": "合约",
@@ -27,7 +27,7 @@
     "intro": "介绍",
     "world": "世界",
     "economy": "经济",
-    "watchers": "守望者",
+    "watchers": "守护者",
     "roadmap": "路线图"
   },
   "hero": {
@@ -43,7 +43,7 @@
       "alpha": "Alpha 预览已开放",
       "solana": "Solana 钱包接入",
       "seeded": "种子 Chunk 引擎",
-      "watchers": "守望者网络即将开放"
+      "watchers": "守护者网络即将开放"
     }
   },
   "world": {
@@ -80,14 +80,14 @@
       "body": "连接钱包，创建角色档案，让你的身份、资产和进度进入 NiceChunk 世界。"
     },
     "watchers": {
-      "title": "守望者网络",
-      "body": "守望者节点让区域可访问、支持实时通信，并为未来的去中心化世界协作提供基础。"
+      "title": "守护者网络",
+      "body": "守护者节点让区域可访问、支持实时通信，并为未来的去中心化世界协作提供基础。"
     }
   },
   "economy": {
     "eyebrow": "NCK 经济",
     "title": "NCK 驱动 NiceChunk 的世界经济",
-    "body": "NCK 是 NiceChunk 的核心功能型代币，计划用于创世通行证、游戏内行为、锻造系统、市场结算以及未来的治理机制。NiceChunk 的目标不是做一个只有皮肤交易的小游戏，而是建立一个由探索者、矿工、建造者和守望者共同参与的世界经济。",
+    "body": "NCK 是 NiceChunk 的核心功能型代币，计划用于创世通行证、游戏内行为、锻造系统、市场结算以及未来的治理机制。NiceChunk 的目标不是做一个只有皮肤交易的小游戏，而是建立一个由探索者、矿工、建造者和守护者共同参与的世界经济。",
     "utilityEyebrow": "计划功能",
     "utility": {
       "genesis": "创世通行证与 NCK 连接",
@@ -98,17 +98,17 @@
     }
   },
   "watchers": {
-    "eyebrow": "守望者网络",
-    "title": "运行守望者，让一个区域保持在线",
-    "body": "守望者是 NiceChunk 的区域访问层。它不托管玩家资产，也不替玩家处理链上交易，而是为特定区域提供连接、通信和实时协作能力。随着世界扩张，守望者将成为维持 Chunk 活跃的重要基础设施。",
+    "eyebrow": "守护者网络",
+    "title": "运行守护者，让一个区域保持在线",
+    "body": "守护者是 NiceChunk 的区域访问层。它不托管玩家资产，也不替玩家处理链上交易，而是为特定区域提供连接、通信和实时协作能力。随着世界扩张，守护者将成为维持 Chunk 活跃的重要基础设施。",
     "badges": {
       "noCustody": "不托管玩家资产",
       "noTransactions": "不处理玩家交易",
       "communication": "区域实时通信"
     },
     "animation": {
-      "aria": "守望者网络动画",
-      "title": "守望者节点",
+      "aria": "守护者网络动画",
+      "title": "守护者节点",
       "body": "区域访问层"
     },
     "guardianConsole": "打开守护者控制台"
@@ -135,8 +135,8 @@
       "body": "创世通行证、NCK 功能场景、市场结算、玩家资产层。"
     },
     "phase4": {
-      "title": "阶段 4 - 守望者网络",
-      "body": "区域访问节点、实时通信、守望者质押、区域级参与机制。"
+      "title": "阶段 4 - 守护者网络",
+      "body": "区域访问节点、实时通信、守护者质押、区域级参与机制。"
     },
     "phase5": {
       "title": "阶段 5 - 世界治理",
@@ -153,7 +153,7 @@
     "proofOfFrontier": "世界轮廓证明",
     "contracts": "合约",
     "nckEconomy": "NCK 经济",
-    "watcherNetwork": "守望者网络",
+    "watcherNetwork": "守护者网络",
     "whitepaper": "白皮书",
     "fairness": "公平模型",
     "github": "GitHub"

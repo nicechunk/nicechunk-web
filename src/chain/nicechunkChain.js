@@ -31,6 +31,7 @@ const chunkSeed = "chunk";
 const chunkBrokenSeed = "chunk-broken";
 const backpackSeed = "backpack";
 const marketListingSeed = "listing";
+const marketAuthoritySeed = "market-authority";
 const globalConfigLength = 293;
 const globalConfigMagic = "NCKCFG01";
 const worldConfigStorageKey = "nicechunk.worldConfig.v1";
@@ -50,18 +51,26 @@ const backpackHeaderLength = 128;
 const backpackRecordLength = 10;
 const backpackAccountLength = backpackHeaderLength + backpackMaxCapacity * backpackRecordLength;
 const marketListingMagic = "NCKMKT01";
-const marketListingLength = 176;
+const marketListingLength = 216;
+const marketListingStateOffset = 11;
+const marketListingSellerOffset = 12;
+const marketListingCategoryOffset = 52;
+const marketListingCurrencyOffset = 53;
+const marketListingSourceKindOffset = 54;
+const marketAssetMagic = "NCKAST01";
+const marketAssetPayloadLength = 96;
+const marketAssetLength = 256;
 const marketStateNames = new Map([
   [1, "active"],
   [2, "canceled"],
   [3, "sold"],
 ]);
+const marketStateCodes = new Map(Array.from(marketStateNames.entries()).map(([code, key]) => [key, code]));
 const marketCategoryCodes = new Map([
   ["raw", 1],
   ["equipment", 2],
   ["building", 3],
   ["clothing", 4],
-  ["vegetation", 5],
 ]);
 const marketCategoryNames = new Map(Array.from(marketCategoryCodes.entries()).map(([key, code]) => [code, key]));
 const marketCurrencyCodes = new Map([
@@ -71,14 +80,29 @@ const marketCurrencyCodes = new Map([
 const marketCurrencyNames = new Map(Array.from(marketCurrencyCodes.entries()).map(([key, code]) => [code, key]));
 const marketSourceKindCodes = new Map([
   ["backpack", 1],
-  ["hotbar", 2],
+  ["asset", 2],
 ]);
 const marketSourceKindNames = new Map(Array.from(marketSourceKindCodes.entries()).map(([key, code]) => [code, key]));
+const marketDynamicAssetItemCode = 65535;
+const marketAssetItemCodes = new Map([
+  ["iron_pickaxe", 1],
+  ["dirt", 2],
+  ["stone", 3],
+  ["sand", 4],
+  ["trunk", 5],
+  ["leaves", 6],
+  ["red_flower", 7],
+  ["forged_item", 8],
+  ["backpack_resource", 9],
+]);
+const marketAssetItemIds = new Map(Array.from(marketAssetItemCodes.entries()).map(([key, code]) => [code, key]));
 const marketCurrencyDecimals = new Map([
   ["NCK", 6],
   ["SOL", 9],
 ]);
+const base58Alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 const nckMint = new PublicKey("HSnWF5kjkWVrceW2SaSskScuLveUZE4gpthZ2ZXRPQPo");
+const marketTreasury = new PublicKey("CtPV2vmqNNwUSfMu5nz58ZtMPy6ZvxL4LyNdPHVW7WvF");
 const storageWalletKey = "nicechunk.walletAddress";
 const chainSyncStorageKey = "nicechunk.chainSync";
 const equippedBackpackStorageKeyPrefix = "nicechunk.equippedBackpack.v1.";
@@ -279,12 +303,26 @@ export function deriveMarketListingPda(seller, listingId) {
   );
 }
 
+export function deriveMarketAssetPda(owner, assetId) {
+  const assetIdBytes = Buffer.alloc(8);
+  assetIdBytes.writeBigUInt64LE(BigInt(assetId), 0);
+  return PublicKey.findProgramAddressSync(
+    [Buffer.from("asset"), owner.toBuffer(), assetIdBytes],
+    marketProgramId,
+  );
+}
+
+export function deriveMarketAuthorityPda() {
+  return PublicKey.findProgramAddressSync([Buffer.from(marketAuthoritySeed)], marketProgramId);
+}
+
 export async function createMarketListingOnChain({
   item,
   category,
   currency,
   price,
   quantity = 1,
+  backpackAddress = null,
 }) {
   const provider = await connectedWalletProvider({ prompt: true });
   if (!provider) return { submitted: false, reason: "wallet-unavailable" };
@@ -293,18 +331,43 @@ export async function createMarketListingOnChain({
   const [listing] = deriveMarketListingPda(provider.publicKey, listingId);
   const normalizedCurrency = String(currency || "NCK").toUpperCase();
   const priceBaseUnits = parseMarketPriceBaseUnits(price, normalizedCurrency);
-  const itemHash = await createMarketItemHash({ item, category, currency: normalizedCurrency, quantity });
-  const tx = new Transaction().add(createMarketListingInstruction({
+  const sourceKind = item?.source === "backpack" ? "backpack" : "asset";
+  const assetDetails = sourceKind === "asset" ? createMarketAssetDetails(item, quantity) : null;
+  const itemHash = await createMarketItemHash({ item, category, currency: normalizedCurrency, quantity, assetDetails });
+  const assetId = sourceKind === "asset" ? createMarketAssetId() : null;
+  const [asset] = sourceKind === "asset" ? deriveMarketAssetPda(provider.publicKey, assetId) : [null];
+  const sourceInventory = sourceKind === "backpack"
+    ? backpackAddress || item?.backpack
+    : asset.toBase58();
+  const sourceRecord = item?.source === "backpack" ? item?.slot?.record : null;
+  if (item?.source === "backpack" && (!sourceInventory || !sourceRecord)) {
+    return { submitted: false, reason: "listing-unavailable" };
+  }
+  const tx = new Transaction();
+  if (sourceKind === "asset") {
+    tx.add(createInitializeMarketAssetInstruction({
+      owner: provider.publicKey,
+      asset,
+      assetId,
+      category,
+      quantity,
+      itemHash,
+      assetDetails,
+    }));
+  }
+  tx.add(createMarketListingInstruction({
     seller: provider.publicKey,
     listing,
     listingId,
     category,
     currency: normalizedCurrency,
-    sourceKind: item?.source,
+    sourceKind,
     sourceIndex: Number.isInteger(item?.slotIndex) ? item.slotIndex : 0,
     quantity,
     priceBaseUnits,
     itemHash,
+    sourceInventory,
+    sourceRecord,
   }));
 
   const conn = getNicechunkConnection();
@@ -316,11 +379,20 @@ export async function createMarketListingOnChain({
     listingId: listingId.toString(),
     seller: provider.publicKey.toBase58(),
     priceBaseUnits: priceBaseUnits.toString(),
+    sourceInventory,
+    sourceKind,
+    asset: asset?.toBase58() ?? null,
+    assetId: assetId?.toString() ?? null,
     programId: marketProgramId.toBase58(),
   };
 }
 
-export async function cancelMarketListingOnChain({ listing, listingId }) {
+export async function cancelMarketListingOnChain({
+  listing,
+  listingId,
+  source = null,
+  sourceInventory = null,
+}) {
   const provider = await connectedWalletProvider({ prompt: true });
   if (!provider) return { submitted: false, reason: "wallet-unavailable" };
   const listingPublicKey = listing
@@ -329,6 +401,8 @@ export async function cancelMarketListingOnChain({ listing, listingId }) {
   const tx = new Transaction().add(createCancelMarketListingInstruction({
     seller: provider.publicKey,
     listing: listingPublicKey,
+    source,
+    sourceInventory,
   }));
   const signature = await signAndSendWalletTransaction(provider, tx, getNicechunkConnection());
   return {
@@ -338,7 +412,7 @@ export async function cancelMarketListingOnChain({ listing, listingId }) {
   };
 }
 
-export async function buyMarketListingOnChain({ listing }) {
+export async function buyMarketListingOnChain({ listing, buyerBackpackAddress = null }) {
   const provider = await connectedWalletProvider({ prompt: true });
   if (!provider) return { submitted: false, reason: "wallet-unavailable" };
   if (!listing?.listing || !listing?.seller) return { submitted: false, reason: "listing-unavailable" };
@@ -348,14 +422,24 @@ export async function buyMarketListingOnChain({ listing }) {
   if (seller.equals(provider.publicKey)) return { submitted: false, reason: "self-purchase" };
 
   const currency = String(listing.currency || "NCK").toUpperCase();
+  if (listing.source === "backpack" && !buyerBackpackAddress) {
+    return { submitted: false, reason: "no-backpack" };
+  }
   const conn = getNicechunkConnection();
+  if (listing.source === "backpack") {
+    const buyerBackpack = await fetchBackpack(buyerBackpackAddress);
+    if (!buyerBackpack?.publicKey) return { submitted: false, reason: "no-backpack" };
+    if (buyerBackpack.itemCount >= buyerBackpack.capacity) return { submitted: false, reason: "backpack-full" };
+  }
   const tx = new Transaction();
   if (currency === "NCK") {
     const buyerNckToken = getAssociatedTokenAddressSync(nckMint, provider.publicKey, false, TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID);
     const sellerNckToken = getAssociatedTokenAddressSync(nckMint, seller, false, TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID);
-    const [buyerNckAccount, sellerNckAccount] = await Promise.all([
+    const treasuryNckToken = getAssociatedTokenAddressSync(nckMint, marketTreasury, false, TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID);
+    const [buyerNckAccount, sellerNckAccount, treasuryNckAccount] = await Promise.all([
       conn.getAccountInfo(buyerNckToken, "confirmed"),
       conn.getAccountInfo(sellerNckToken, "confirmed"),
+      conn.getAccountInfo(treasuryNckToken, "confirmed"),
     ]);
     if (!buyerNckAccount?.data?.length) return { submitted: false, reason: "nck-token-missing" };
     if (!sellerNckAccount?.data?.length) {
@@ -368,6 +452,16 @@ export async function buyMarketListingOnChain({ listing }) {
         ASSOCIATED_TOKEN_PROGRAM_ID,
       ));
     }
+    if (!treasuryNckAccount?.data?.length) {
+      tx.add(createAssociatedTokenAccountInstruction(
+        provider.publicKey,
+        treasuryNckToken,
+        marketTreasury,
+        nckMint,
+        TOKEN_PROGRAM_ID,
+        ASSOCIATED_TOKEN_PROGRAM_ID,
+      ));
+    }
     tx.add(createBuyMarketListingInstruction({
       buyer: provider.publicKey,
       seller,
@@ -375,6 +469,10 @@ export async function buyMarketListingOnChain({ listing }) {
       currency,
       buyerNckToken,
       sellerNckToken,
+      treasuryNckToken,
+      source: listing.source,
+      sourceInventory: listing.sourceInventory,
+      buyerBackpackAddress,
     }));
   } else if (currency === "SOL") {
     tx.add(createBuyMarketListingInstruction({
@@ -382,6 +480,9 @@ export async function buyMarketListingOnChain({ listing }) {
       seller,
       listing: listingPublicKey,
       currency,
+      source: listing.source,
+      sourceInventory: listing.sourceInventory,
+      buyerBackpackAddress,
     }));
   } else {
     throw new Error(`Unsupported market currency: ${currency}`);
@@ -399,17 +500,42 @@ export async function buyMarketListingOnChain({ listing }) {
   };
 }
 
-export async function fetchMarketListingsOnChain({ seller = null } = {}) {
+export async function fetchMarketListingsOnChain({
+  seller = null,
+  state = null,
+  category = "all",
+  currency = "all",
+  source = null,
+  query = "",
+  sort = "newest",
+} = {}) {
   const filters = [{ dataSize: marketListingLength }];
   if (seller) {
     const sellerKey = typeof seller === "string" ? new PublicKey(seller) : seller;
-    filters.push({ memcmp: { offset: 12, bytes: sellerKey.toBase58() } });
+    filters.push({ memcmp: { offset: marketListingSellerOffset, bytes: sellerKey.toBase58() } });
   }
-  const accounts = await getNicechunkConnection().getProgramAccounts(marketProgramId, {
+  const stateCode = state ? marketStateCodes.get(String(state).toLowerCase()) : null;
+  if (stateCode) {
+    filters.push(createSingleByteMemcmpFilter(marketListingStateOffset, stateCode));
+  }
+  const categoryCode = category && category !== "all" ? marketCategoryCodes.get(String(category).toLowerCase()) : null;
+  if (categoryCode) {
+    filters.push(createSingleByteMemcmpFilter(marketListingCategoryOffset, categoryCode));
+  }
+  const currencyCode = currency && currency !== "all" ? marketCurrencyCodes.get(String(currency).toUpperCase()) : null;
+  if (currencyCode) {
+    filters.push(createSingleByteMemcmpFilter(marketListingCurrencyOffset, currencyCode));
+  }
+  const sourceCode = source ? marketSourceKindCodes.get(String(source).toLowerCase()) : null;
+  if (sourceCode) {
+    filters.push(createSingleByteMemcmpFilter(marketListingSourceKindOffset, sourceCode));
+  }
+  const conn = getNicechunkConnection();
+  const accounts = await conn.getProgramAccounts(marketProgramId, {
     commitment: "confirmed",
     filters,
   });
-  return accounts
+  const listings = accounts
     .map(({ pubkey, account }) => {
       try {
         return { ...decodeMarketListing(account.data), listing: pubkey.toBase58() };
@@ -418,6 +544,116 @@ export async function fetchMarketListingsOnChain({ seller = null } = {}) {
       }
     })
     .filter(Boolean);
+  const assetLookups = listings
+    .map((listing, index) => listing.source === "asset" && listing.sourceInventory
+      ? { index, publicKey: new PublicKey(listing.sourceInventory) }
+      : null)
+    .filter(Boolean);
+  if (assetLookups.length) {
+    const assetAccounts = await conn.getMultipleAccountsInfo(
+      assetLookups.map((lookup) => lookup.publicKey),
+      "confirmed",
+    );
+    assetAccounts.forEach((account, lookupIndex) => {
+      if (!account?.data?.length) return;
+      try {
+        listings[assetLookups[lookupIndex].index].asset = decodeMarketAsset(account.data);
+      } catch {
+        // Listing data is still usable without client-side asset metadata.
+      }
+    });
+  }
+  return filterAndSortMarketListings(listings, { state, category, currency, source, query, sort });
+}
+
+export async function fetchMarketListingsPageOnChain({
+  page = 1,
+  pageSize = 20,
+  ...filters
+} = {}) {
+  const listings = await fetchMarketListingsOnChain(filters);
+  const normalizedPageSize = Math.max(1, Math.min(500, Math.floor(Number(pageSize) || 20)));
+  const total = listings.length;
+  const totalPages = Math.max(1, Math.ceil(total / normalizedPageSize));
+  const currentPage = Math.min(Math.max(1, Math.floor(Number(page) || 1)), totalPages);
+  const startIndex = total ? (currentPage - 1) * normalizedPageSize : 0;
+  const endIndex = total ? Math.min(total, startIndex + normalizedPageSize) : 0;
+  return {
+    items: listings.slice(startIndex, endIndex),
+    pageInfo: {
+      page: currentPage,
+      pageSize: normalizedPageSize,
+      total,
+      totalPages,
+      start: total ? startIndex + 1 : 0,
+      end: endIndex,
+    },
+  };
+}
+
+function createSingleByteMemcmpFilter(offset, value) {
+  const byte = Number(value);
+  if (!Number.isInteger(byte) || byte < 0 || byte >= base58Alphabet.length) {
+    throw new Error(`Invalid single-byte memcmp value: ${value}`);
+  }
+  return { memcmp: { offset, bytes: base58Alphabet[byte] } };
+}
+
+function filterAndSortMarketListings(listings, {
+  state = null,
+  category = "all",
+  currency = "all",
+  source = null,
+  query = "",
+  sort = "newest",
+} = {}) {
+  const normalizedState = state ? String(state).toLowerCase() : null;
+  const normalizedCategory = String(category || "all").toLowerCase();
+  const normalizedCurrency = String(currency || "all").toUpperCase();
+  const normalizedSource = source ? String(source).toLowerCase() : null;
+  const normalizedQuery = String(query || "").trim().toLowerCase();
+  const filtered = listings.filter((listing) => {
+    if (normalizedState && listing.stateLabel !== normalizedState) return false;
+    if (normalizedCategory !== "all" && listing.category !== normalizedCategory) return false;
+    if (normalizedCurrency !== "ALL" && listing.currency !== normalizedCurrency) return false;
+    if (normalizedSource && listing.source !== normalizedSource) return false;
+    if (!normalizedQuery) return true;
+    return marketListingSearchText(listing).includes(normalizedQuery);
+  });
+  return filtered.sort((a, b) => {
+    if (sort === "oldest") return marketListingCreatedAt(a) - marketListingCreatedAt(b);
+    if (sort === "price-asc") return marketListingPriceValue(a) - marketListingPriceValue(b);
+    if (sort === "price-desc") return marketListingPriceValue(b) - marketListingPriceValue(a);
+    return marketListingCreatedAt(b) - marketListingCreatedAt(a);
+  });
+}
+
+function marketListingCreatedAt(listing) {
+  const value = Number(listing?.createdAt || 0);
+  return Number.isFinite(value) ? value : 0;
+}
+
+function marketListingPriceValue(listing) {
+  const value = Number(listing?.price || 0);
+  return Number.isFinite(value) ? value : 0;
+}
+
+function marketListingSearchText(listing) {
+  const record = listing?.sourceRecord;
+  const asset = listing?.asset;
+  return [
+    listing?.listing,
+    listing?.listingId,
+    listing?.seller,
+    listing?.category,
+    listing?.currency,
+    listing?.source,
+    listing?.sourceInventory,
+    listing?.price,
+    record ? `${record.worldX},${record.worldY},${record.worldZ}` : "",
+    asset?.itemId,
+    asset?.itemCode,
+  ].join(" ").toLowerCase();
 }
 
 export async function loadChunkBlockDeltas(chunkX, chunkZ) {
@@ -871,9 +1107,9 @@ function decodeMarketListing(data) {
   }
   const currency = marketCurrencyNames.get(data.readUInt8(53)) ?? "NCK";
   const priceBaseUnits = data.readBigUInt64LE(61);
-  const soldSlot = data.readBigUInt64LE(157);
-  const soldAt = data.readBigInt64LE(165);
-  const buyerBytes = data.subarray(125, 157);
+  const soldSlot = data.readBigUInt64LE(199);
+  const soldAt = data.readBigInt64LE(207);
+  const buyerBytes = data.subarray(167, 199);
   const hasBuyer = buyerBytes.some((byte) => byte !== 0);
   return {
     magic: marketListingMagic,
@@ -891,12 +1127,57 @@ function decodeMarketListing(data) {
     priceBaseUnits: priceBaseUnits.toString(),
     price: formatMarketBaseUnits(priceBaseUnits, currency),
     itemHash: Buffer.from(data.subarray(69, 101)).toString("hex"),
-    createdSlot: data.readBigUInt64LE(101).toString(),
-    updatedSlot: data.readBigUInt64LE(109).toString(),
-    createdAt: data.readBigInt64LE(117).toString(),
+    sourceInventory: new PublicKey(data.subarray(101, 133)).toBase58(),
+    sourceRecord: {
+      worldX: data.readInt32LE(133),
+      worldY: data.readInt16LE(137),
+      worldZ: data.readInt32LE(139),
+    },
+    createdSlot: data.readBigUInt64LE(143).toString(),
+    updatedSlot: data.readBigUInt64LE(151).toString(),
+    createdAt: data.readBigInt64LE(159).toString(),
     buyer: hasBuyer ? new PublicKey(buyerBytes).toBase58() : null,
     soldSlot: soldSlot ? soldSlot.toString() : null,
     soldAt: soldAt ? soldAt.toString() : null,
+  };
+}
+
+function decodeMarketAsset(data) {
+  if (data.length !== marketAssetLength) {
+    throw new Error(`Invalid MarketAsset length: expected ${marketAssetLength}, got ${data.length}.`);
+  }
+  if (data.subarray(0, 8).toString("utf8") !== marketAssetMagic) {
+    throw new Error("Invalid MarketAsset magic.");
+  }
+  const itemCode = data.readUInt16LE(145);
+  const payloadLength = Math.min(data.readUInt16LE(155), marketAssetPayloadLength);
+  const payload = Array.from(data.subarray(157, 157 + payloadLength));
+  const dynamicItemId = itemCode === marketDynamicAssetItemCode
+    ? new TextDecoder().decode(Uint8Array.from(payload)).replace(/\0+$/, "") || null
+    : null;
+  return {
+    magic: marketAssetMagic,
+    version: data.readUInt16LE(8),
+    bump: data.readUInt8(10),
+    state: data.readUInt8(11),
+    stateLabel: data.readUInt8(11) === 1 ? "active" : data.readUInt8(11) === 2 ? "listed" : "unknown",
+    owner: new PublicKey(data.subarray(12, 44)).toBase58(),
+    assetId: data.readBigUInt64LE(44).toString(),
+    category: marketCategoryNames.get(data.readUInt8(52)) ?? "raw",
+    quantity: data.readUInt32LE(53),
+    itemHash: Buffer.from(data.subarray(57, 89)).toString("hex"),
+    listing: data.subarray(89, 121).some((byte) => byte !== 0)
+      ? new PublicKey(data.subarray(89, 121)).toBase58()
+      : null,
+    createdSlot: data.readBigUInt64LE(121).toString(),
+    updatedSlot: data.readBigUInt64LE(129).toString(),
+    createdAt: data.readBigInt64LE(137).toString(),
+    itemCode,
+    itemId: marketAssetItemIds.get(itemCode) ?? dynamicItemId,
+    stackCount: data.readUInt32LE(147),
+    durability: data.readUInt32LE(151),
+    payloadLength,
+    payload,
   };
 }
 
@@ -1143,6 +1424,52 @@ function createAppendMinedResourceInstruction({ owner, sessionAuthority, backpac
   });
 }
 
+function createInitializeMarketAssetInstruction({
+  owner,
+  asset,
+  assetId,
+  category,
+  quantity,
+  itemHash,
+  assetDetails,
+}) {
+  const categoryCode = marketCategoryCodes.get(category);
+  if (!categoryCode) throw new Error(`Unsupported market category: ${category}`);
+  const normalizedQuantity = Math.max(1, Math.min(2 ** 32 - 1, Number(quantity) || 1));
+  const hash = Buffer.from(itemHash);
+  if (hash.length !== 32) throw new Error("Invalid market item hash.");
+  const details = assetDetails ?? {
+    itemCode: 0,
+    itemId: null,
+    stackCount: normalizedQuantity,
+    durability: 0,
+    payloadLength: 0,
+    payload: [],
+  };
+  const payload = Buffer.alloc(marketAssetPayloadLength);
+  Buffer.from(details.payload ?? []).copy(payload, 0, 0, marketAssetPayloadLength);
+  const data = Buffer.alloc(154);
+  data.writeUInt8(3, 0);
+  data.writeBigUInt64LE(BigInt(assetId), 1);
+  data.writeUInt8(categoryCode, 9);
+  data.writeUInt32LE(normalizedQuantity, 10);
+  hash.copy(data, 14);
+  data.writeUInt16LE(details.itemCode, 46);
+  data.writeUInt32LE(details.stackCount, 48);
+  data.writeUInt32LE(details.durability, 52);
+  data.writeUInt16LE(details.payloadLength, 56);
+  payload.copy(data, 58);
+  return new TransactionInstruction({
+    programId: marketProgramId,
+    keys: [
+      { pubkey: owner, isSigner: true, isWritable: true },
+      { pubkey: asset, isSigner: false, isWritable: true },
+      { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },
+    ],
+    data,
+  });
+}
+
 function createMarketListingInstruction({
   seller,
   listing,
@@ -1154,6 +1481,8 @@ function createMarketListingInstruction({
   quantity,
   priceBaseUnits,
   itemHash,
+  sourceInventory,
+  sourceRecord,
 }) {
   const categoryCode = marketCategoryCodes.get(category);
   const currencyCode = marketCurrencyCodes.get(currency);
@@ -1165,8 +1494,10 @@ function createMarketListingInstruction({
   const normalizedQuantity = Math.max(1, Math.min(2 ** 32 - 1, Number(quantity) || 1));
   const hash = Buffer.from(itemHash);
   if (hash.length !== 32) throw new Error("Invalid market item hash.");
+  const sourceInventoryKey = sourceInventory ? new PublicKey(sourceInventory) : PublicKey.default;
+  const record = sourceRecord ?? {};
 
-  const data = Buffer.alloc(58);
+  const data = Buffer.alloc(100);
   data.writeUInt8(0, 0);
   data.writeBigUInt64LE(BigInt(listingId), 1);
   data.writeUInt8(categoryCode, 9);
@@ -1176,25 +1507,49 @@ function createMarketListingInstruction({
   data.writeUInt32LE(normalizedQuantity, 14);
   data.writeBigUInt64LE(BigInt(priceBaseUnits), 18);
   hash.copy(data, 26);
+  sourceInventoryKey.toBuffer().copy(data, 58);
+  data.writeInt32LE(Number(record.worldX ?? 0), 90);
+  data.writeInt16LE(Number(record.worldY ?? 0), 94);
+  data.writeInt32LE(Number(record.worldZ ?? 0), 96);
+
+  const keys = [
+    { pubkey: seller, isSigner: true, isWritable: true },
+    { pubkey: listing, isSigner: false, isWritable: true },
+    { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },
+  ];
+  if (sourceKind === "backpack") {
+    keys.push(
+      { pubkey: sourceInventoryKey, isSigner: false, isWritable: true },
+      { pubkey: backpackProgramId, isSigner: false, isWritable: false },
+    );
+  } else if (sourceKind === "asset") {
+    keys.push({ pubkey: sourceInventoryKey, isSigner: false, isWritable: true });
+  }
 
   return new TransactionInstruction({
     programId: marketProgramId,
-    keys: [
-      { pubkey: seller, isSigner: true, isWritable: true },
-      { pubkey: listing, isSigner: false, isWritable: true },
-      { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },
-    ],
+    keys,
     data,
   });
 }
 
-function createCancelMarketListingInstruction({ seller, listing }) {
+function createCancelMarketListingInstruction({ seller, listing, source = null, sourceInventory = null }) {
+  const keys = [
+    { pubkey: seller, isSigner: true, isWritable: true },
+    { pubkey: listing, isSigner: false, isWritable: true },
+  ];
+  if (source === "backpack" && sourceInventory) {
+    keys.push(
+      { pubkey: new PublicKey(sourceInventory), isSigner: false, isWritable: true },
+      { pubkey: backpackProgramId, isSigner: false, isWritable: false },
+      { pubkey: deriveMarketAuthorityPda()[0], isSigner: false, isWritable: false },
+    );
+  } else if (source === "asset" && sourceInventory) {
+    keys.push({ pubkey: new PublicKey(sourceInventory), isSigner: false, isWritable: true });
+  }
   return new TransactionInstruction({
     programId: marketProgramId,
-    keys: [
-      { pubkey: seller, isSigner: true, isWritable: true },
-      { pubkey: listing, isSigner: false, isWritable: true },
-    ],
+    keys,
     data: Buffer.from([1]),
   });
 }
@@ -1206,6 +1561,10 @@ function createBuyMarketListingInstruction({
   currency,
   buyerNckToken = null,
   sellerNckToken = null,
+  treasuryNckToken = null,
+  source = null,
+  sourceInventory = null,
+  buyerBackpackAddress = null,
 }) {
   const normalizedCurrency = String(currency || "NCK").toUpperCase();
   const keys = [
@@ -1214,17 +1573,34 @@ function createBuyMarketListingInstruction({
     { pubkey: listing, isSigner: false, isWritable: true },
   ];
   if (normalizedCurrency === "NCK") {
-    if (!buyerNckToken || !sellerNckToken) throw new Error("NCK purchase requires buyer and seller token accounts.");
+    if (!buyerNckToken || !sellerNckToken || !treasuryNckToken) {
+      throw new Error("NCK purchase requires buyer, seller, and treasury token accounts.");
+    }
     keys.push(
       { pubkey: buyerNckToken, isSigner: false, isWritable: true },
       { pubkey: sellerNckToken, isSigner: false, isWritable: true },
+      { pubkey: treasuryNckToken, isSigner: false, isWritable: true },
       { pubkey: nckMint, isSigner: false, isWritable: false },
       { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },
     );
   } else if (normalizedCurrency === "SOL") {
-    keys.push({ pubkey: SystemProgram.programId, isSigner: false, isWritable: false });
+    keys.push(
+      { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },
+      { pubkey: marketTreasury, isSigner: false, isWritable: true },
+    );
   } else {
     throw new Error(`Unsupported market currency: ${currency}`);
+  }
+  if (source === "backpack") {
+    if (!buyerBackpackAddress) throw new Error("Backpack listing purchase requires a buyer backpack.");
+    keys.push(
+      { pubkey: new PublicKey(buyerBackpackAddress), isSigner: false, isWritable: true },
+      { pubkey: backpackProgramId, isSigner: false, isWritable: false },
+      { pubkey: deriveMarketAuthorityPda()[0], isSigner: false, isWritable: false },
+    );
+  } else if (source === "asset") {
+    if (!sourceInventory) throw new Error("Asset listing purchase requires an asset account.");
+    keys.push({ pubkey: new PublicKey(sourceInventory), isSigner: false, isWritable: true });
   }
   return new TransactionInstruction({
     programId: marketProgramId,
@@ -1408,6 +1784,12 @@ function createMarketListingId() {
   return (time << 22n) | random;
 }
 
+function createMarketAssetId() {
+  const time = BigInt(Date.now()) & ((1n << 42n) - 1n);
+  const random = BigInt(Math.floor(Math.random() * 2 ** 22));
+  return (time << 22n) | random;
+}
+
 function parseMarketPriceBaseUnits(value, currency) {
   const decimals = marketCurrencyDecimals.get(currency) ?? 6;
   const text = String(value ?? "").trim();
@@ -1432,7 +1814,31 @@ function formatMarketBaseUnits(value, currency) {
   return `${whole}.${fraction.toString().padStart(decimals, "0").replace(/0+$/, "")}`;
 }
 
-async function createMarketItemHash({ item, category, currency, quantity }) {
+function createMarketAssetDetails(item, quantity = 1) {
+  const slot = item?.slot ?? {};
+  const itemId = slot.itemId ?? item?.itemId ?? "backpack_resource";
+  const itemCode = marketAssetItemCodes.get(itemId) ?? marketDynamicAssetItemCode;
+  const stackCount = clampU32(Number.isFinite(slot.count) ? slot.count : quantity);
+  const durability = clampU32(Number.isFinite(slot.durability) ? slot.durability : 0);
+  const payloadSource = itemId === "forged_item" && Array.isArray(slot.bytes)
+    ? slot.bytes
+    : itemCode === marketDynamicAssetItemCode
+      ? Array.from(new TextEncoder().encode(itemId))
+      : [];
+  if (payloadSource.length > marketAssetPayloadLength) {
+    throw new Error("Market asset payload is too large.");
+  }
+  return {
+    itemCode,
+    itemId,
+    stackCount,
+    durability,
+    payloadLength: payloadSource.length,
+    payload: [...payloadSource],
+  };
+}
+
+async function createMarketItemHash({ item, category, currency, quantity, assetDetails = null }) {
   const payload = JSON.stringify({
     id: item?.id ?? "",
     source: item?.source ?? "",
@@ -1451,6 +1857,7 @@ async function createMarketItemHash({ item, category, currency, quantity }) {
       : null,
     code: item?.slot?.code ?? null,
     itemId: item?.slot?.itemId ?? null,
+    asset: assetDetails,
   });
   const encoded = new TextEncoder().encode(payload);
   if (crypto?.subtle?.digest) {
@@ -1467,6 +1874,10 @@ async function createMarketItemHash({ item, category, currency, quantity }) {
     hash = Math.imul(hash ^ index, 16777619);
   }
   return fallback;
+}
+
+function clampU32(value) {
+  return Math.max(0, Math.min(2 ** 32 - 1, Math.floor(Number(value) || 0)));
 }
 
 function getConfiguredGameplaySessionFundingLamports(owner = null) {

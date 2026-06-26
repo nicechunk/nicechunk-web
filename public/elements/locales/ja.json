@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ja",
     "label": "Japanese",
-    "version": "elements-locale-ja-d9097dd5e4536b82",
-    "contentHash": "d9097dd5e4536b82"
+    "version": "elements-locale-ja-dd413ad27119a57f",
+    "contentHash": "dd413ad27119a57f"
   },
   "siteFooter": {
     "tagline": "Solana 上のシード型ボクセルワールドプロトコル。",
@@ -32,958 +32,957 @@
       "ko": "한국어",
       "zhHant": "繁體中文",
       "zhHans": "简体中文"
-    },
-    "comingSoon": "近日公開予定"
+    }
   },
   "elements": {
     "names": {
-      "H": "水素",
-      "He": "ヘリウム",
-      "Li": "リチウム",
-      "Be": "ベリリウム",
-      "B": "ホウ素",
-      "C": "カーボン",
-      "N": "窒素",
-      "O": "酸素",
-      "F": "フッ素",
-      "Ne": "ネオン",
-      "Na": "ナトリウム",
-      "Mg": "マグネシウム",
-      "Al": "アルミニウム",
-      "Si": "シリコン",
-      "P": "リン",
-      "S": "硫黄",
-      "Cl": "塩素",
-      "Ar": "アルゴン",
-      "K": "カリウム",
-      "Ca": "カルシウム",
-      "Sc": "スカンジウム",
-      "Ti": "チタン",
-      "V": "バナジウム",
-      "Cr": "クロム",
-      "Mn": "マンガン",
-      "Fe": "鉄",
-      "Co": "コバルト",
-      "Ni": "ニッケル",
-      "Cu": "銅",
-      "Zn": "亜鉛",
-      "Ga": "ガリウム",
-      "Ge": "ゲルマニウム",
-      "As": "ヒ素",
-      "Se": "セレン",
-      "Br": "臭素",
-      "Kr": "クリプトン",
-      "Rb": "ルビジウム",
-      "Sr": "ストロンチウム",
-      "Y": "イットリウム",
-      "Zr": "ジルコニウム",
-      "Nb": "ニオブ",
-      "Mo": "モリブデン",
-      "Tc": "テクネチウム",
-      "Ru": "ルテニウム",
-      "Rh": "ロジウム",
-      "Pd": "パラジウム",
-      "Ag": "シルバー",
-      "Cd": "カドミウム",
-      "In": "インド人",
-      "Sn": "錫",
-      "Sb": "アンチモン",
-      "Te": "地球",
-      "I": "ヨウ素",
-      "Xe": "キセノン",
-      "Cs": "セシウム",
-      "Ba": "バリウム",
-      "La": "ランタン",
-      "Ce": "セリウム",
-      "Pr": "プラセオジム",
-      "Nd": "ネオジム",
-      "Pm": "プロメチウム",
-      "Sm": "サマリア",
-      "Eu": "ヨーロッパ",
-      "Gd": "ガドリニウム",
-      "Tb": "テルビウム",
-      "Dy": "ジスプロシウム",
-      "Ho": "ホルミウム",
-      "Er": "エルビウム",
-      "Tm": "ツリウム",
-      "Yb": "イッテルビウム",
-      "Lu": "パリ",
-      "Hf": "ハフニア",
-      "Ta": "タンタル",
-      "W": "タングステン",
-      "Re": "レニウム",
-      "Os": "オスミウム",
-      "Ir": "イリジウム",
-      "Pt": "プラチナ",
-      "Au": "ゴールド",
-      "Hg": "水星",
-      "Tl": "タリウム",
-      "Pb": "リード",
-      "Bi": "ビスマス",
-      "Po": "ポローニアス",
-      "At": "アスタチン",
-      "Rn": "ラドン",
-      "Fr": "フランス",
-      "Ra": "レイ",
-      "Ac": "アクチニウム",
-      "Th": "トリウム",
-      "Pa": "プロタクチニウム",
-      "U": "ウラン",
-      "Np": "ネプチューン",
-      "Pu": "プルトニウム",
-      "Am": "",
-      "Cm": "裁判所",
-      "Bk": "バークレー",
-      "Cf": "カリフォルニア",
-      "Es": "",
-      "Fm": "フェルミウス",
-      "Md": "メンデレーエフ",
-      "No": "ノーベリウム",
-      "Lr": "ロレンス",
-      "Rf": "",
-      "Db": "ドブニウム",
-      "Sg": "シーボーギウス",
-      "Bh": "ボーリウス",
-      "Hs": "ハシウス",
-      "Mt": "マイトネリウス",
-      "Ds": "",
-      "Rg": "レントゲニウム",
-      "Cn": "コペルニクス",
-      "Nh": "ニホニウム",
-      "Fl": "フレロビウム",
-      "Mc": "",
-      "Lv": "リバモア",
-      "Ts": "テネシー州",
-      "Og": "オガネソン"
+      "H": "Hydrogen",
+      "He": "Helium",
+      "Li": "Lithium",
+      "Be": "Beryllium",
+      "B": "Boron",
+      "C": "Carbon",
+      "N": "Nitrogen",
+      "O": "Oxygen",
+      "F": "Fluorine",
+      "Ne": "Neon",
+      "Na": "Sodium",
+      "Mg": "Magnesium",
+      "Al": "Aluminium",
+      "Si": "Silicon",
+      "P": "Phosphorus",
+      "S": "Sulfur",
+      "Cl": "Chlorine",
+      "Ar": "Argon",
+      "K": "Potassium",
+      "Ca": "Calcium",
+      "Sc": "Scandium",
+      "Ti": "Titanium",
+      "V": "Vanadium",
+      "Cr": "Chromium",
+      "Mn": "Manganese",
+      "Fe": "Iron",
+      "Co": "Cobalt",
+      "Ni": "Nickel",
+      "Cu": "Copper",
+      "Zn": "Zinc",
+      "Ga": "Gallium",
+      "Ge": "Germanium",
+      "As": "Arsenic",
+      "Se": "Selenium",
+      "Br": "Bromine",
+      "Kr": "Krypton",
+      "Rb": "Rubidium",
+      "Sr": "Strontium",
+      "Y": "Yttrium",
+      "Zr": "Zirconium",
+      "Nb": "Niobium",
+      "Mo": "Molybdenum",
+      "Tc": "Technetium",
+      "Ru": "Ruthenium",
+      "Rh": "Rhodium",
+      "Pd": "Palladium",
+      "Ag": "Silver",
+      "Cd": "Cadmium",
+      "In": "Indium",
+      "Sn": "Tin",
+      "Sb": "Antimony",
+      "Te": "Tellurium",
+      "I": "Iodine",
+      "Xe": "Xenon",
+      "Cs": "Caesium",
+      "Ba": "Barium",
+      "La": "Lanthanum",
+      "Ce": "Cerium",
+      "Pr": "Praseodymium",
+      "Nd": "Neodymium",
+      "Pm": "Promethium",
+      "Sm": "Samarium",
+      "Eu": "Europium",
+      "Gd": "Gadolinium",
+      "Tb": "Terbium",
+      "Dy": "Dysprosium",
+      "Ho": "Holmium",
+      "Er": "Erbium",
+      "Tm": "Thulium",
+      "Yb": "Ytterbium",
+      "Lu": "Lutetium",
+      "Hf": "Hafnium",
+      "Ta": "Tantalum",
+      "W": "Tungsten",
+      "Re": "Rhenium",
+      "Os": "Osmium",
+      "Ir": "Iridium",
+      "Pt": "Platinum",
+      "Au": "Gold",
+      "Hg": "Mercury",
+      "Tl": "Thallium",
+      "Pb": "Lead",
+      "Bi": "Bismuth",
+      "Po": "Polonium",
+      "At": "Astatine",
+      "Rn": "Radon",
+      "Fr": "Francium",
+      "Ra": "Radium",
+      "Ac": "Actinium",
+      "Th": "Thorium",
+      "Pa": "Protactinium",
+      "U": "Uranium",
+      "Np": "Neptunium",
+      "Pu": "Plutonium",
+      "Am": "Americium",
+      "Cm": "Curium",
+      "Bk": "Berkelium",
+      "Cf": "Californium",
+      "Es": "Einsteinium",
+      "Fm": "Fermium",
+      "Md": "Mendelevium",
+      "No": "Nobelium",
+      "Lr": "Lawrencium",
+      "Rf": "Rutherfordium",
+      "Db": "Dubnium",
+      "Sg": "Seaborgium",
+      "Bh": "Bohrium",
+      "Hs": "Hassium",
+      "Mt": "Meitnerium",
+      "Ds": "Darmstadtium",
+      "Rg": "Roentgenium",
+      "Cn": "Copernicium",
+      "Nh": "Nihonium",
+      "Fl": "Flerovium",
+      "Mc": "Moscovium",
+      "Lv": "Livermorium",
+      "Ts": "Tennessine",
+      "Og": "Oganesson"
     },
     "description": {
       "H": {
-        "short": "水素は、NiceChunk の材料および鍛造用語において、燃料電池、水素貯蔵、生命化学、ロケット推進剤、および有機合成に使用される非金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、水素は非金属材料としてバランスがとれている必要があります。水素は、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Hydrogen is a nonmetal resource foundation used for fuel cells, hydrogen storage, life chemistry, rocket propellant, and organic synthesis in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Hydrogen should be balanced as a nonmetal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "He": {
-        "short": "ヘリウムは、NiceChunk の材料および鍛造用語における極低温冷却、不活性格納容器、気球、精密機器、および低温機械に使用される希ガス資源基盤です。",
-        "gameplayRole": "NiceChunk では、ヘリウムは希ガス材料としてバランスがとれている必要があります。ヘリウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Helium is a noble gas resource foundation used for cryogenic cooling, inert containment, balloons, precision devices, and low-temperature machines in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Helium should be balanced as a noble gas material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Li": {
-        "short": "リチウムは、NiceChunk の材料および鍛造用語におけるバッテリー、軽量エネルギー貯蔵、反応性化学、および高級パワーセルに使用されるアルカリ金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、リチウムはアルカリ金属材料としてバランスがとれている必要があります。リチウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Lithium is an alkali metal resource foundation used for batteries, lightweight energy storage, reactive chemistry, and high-tier power cells in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Lithium should be balanced as an alkali metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Be": {
-        "short": "ベリリウムは、NiceChunk の材料および鍛造用語の鉱物、セラミック、構造化合物、合金、および生物学的鉱物ループに使用されるアルカリ土類金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、ベリリウムはアルカリ土類金属材料としてバランスがとれている必要があります。ベリリウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Beryllium is an alkaline earth metal resource foundation used for minerals, ceramics, structural compounds, alloys, and biological mineral loops in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Beryllium should be balanced as an alkaline earth metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "B": {
-        "short": "ホウ素は、NiceChunk の材料および鍛造用語で、半導体、ガラス、セラミック結晶、光学部品、精密エレクトロニクスに使用される半金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、ホウ素は半金属材料としてバランスが取れている必要があります。ホウ素は、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Boron is a metalloid resource foundation used for semiconductors, glass, ceramic crystals, optical parts, and precision electronics in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Boron should be balanced as a metalloid material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "C": {
-        "short": "炭素は、NiceChunk の材料および鍛造用語における有機鎖、炭素繊維、燃料、鋼強化材、黒鉛導体、および高度な複合材料に使用される非金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、カーボンは非金属マテリアルとしてバランスをとる必要があります。これは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Carbon is a nonmetal resource foundation used for organic chains, carbon fiber, fuel, steel strengthening, graphite conductors, and advanced composites in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Carbon should be balanced as a nonmetal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "N": {
-        "short": "窒素は、NiceChunk の材料および鍛造用語における肥料化学、不活性雰囲気、爆発物、冷却、生物学的ループに使用される非金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、窒素は非金属材料としてバランスをとる必要があります。窒素は、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Nitrogen is a nonmetal resource foundation used for fertilizer chemistry, inert atmospheres, explosives, cooling, and biological loops in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Nitrogen should be balanced as a nonmetal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "O": {
-        "short": "酸素は、NiceChunk の材料および鍛造用語において、酸化、燃焼支援、生命維持、セラミック、ガラス、および酸化鉱石に使用される非金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、酸素は非金属マテリアルとしてバランスをとる必要があります。酸素は、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Oxygen is a nonmetal resource foundation used for oxidation, combustion support, life support, ceramics, glass, and oxide ores in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Oxygen should be balanced as a nonmetal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "F": {
-        "short": "フッ素は、NiceChunk の材料および鍛造用語におけるエッチング、強力な化学処理、高リスクの塩、および高度なフッ素化材料に使用されるハロゲン資源基盤です。",
-        "gameplayRole": "NiceChunk では、フッ素はハロゲン材料としてバランスが取れている必要があります。フッ素は、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Fluorine is a halogen resource foundation used for etching, aggressive chemical processing, high-risk salts, and advanced fluorinated materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Fluorine should be balanced as a halogen material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Ne": {
-        "short": "ネオンは、NiceChunk の材料および鍛造用語におけるネオン照明、プラズマ ディスプレイ、光学標識、および安定したガス室に使用される希ガス資源基盤です。",
-        "gameplayRole": "NiceChunk では、ネオンは希ガス マテリアルとしてバランスがとれている必要があります。ネオンは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Neon is a noble gas resource foundation used for neon lighting, plasma displays, optical signs, and stable gas chambers in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Neon should be balanced as a noble gas material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Na": {
-        "short": "ナトリウムは、NiceChunk の材料および鍛造用語におけるバッテリー、高反応性化学、エネルギー電池、および密封された保管ルートに使用されるアルカリ金属資源の基礎です。",
-        "gameplayRole": "NiceChunk では、ナトリウムはアルカリ金属材料としてバランスがとれている必要があります。ナトリウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Sodium is an alkali metal resource foundation used for batteries, high-reactivity chemistry, energy cells, and sealed storage routes in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Sodium should be balanced as an alkali metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Mg": {
-        "short": "マグネシウムは、NiceChunk の材料および鍛造用語の鉱物、セラミック、構造化合物、合金、および生物学的鉱物ループに使用されるアルカリ土類金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、マグネシウムはアルカリ土類金属材料としてバランスがとれている必要があります。マグネシウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Magnesium is an alkaline earth metal resource foundation used for minerals, ceramics, structural compounds, alloys, and biological mineral loops in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Magnesium should be balanced as an alkaline earth metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Al": {
-        "short": "アルミニウムは、NiceChunk の材料および鍛造用語における軽量構造、導電性フレーム、航空宇宙部品、および耐食シェルに使用される遷移後の金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、アルミニウムはポスト遷移金属材料としてバランスがとれている必要があります。アルミニウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Aluminum is a post transition metal resource foundation used for lightweight construction, conductive frames, aerospace parts, and corrosion-resistant shells in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Aluminum should be balanced as a post transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Si": {
-        "short": "シリコンは、NiceChunk の材料および鍛造用語における半導体、ガラス、太陽電池材料、岩石化学、およびプログラム可能な結晶系に使用される半金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、シリコンは半金属材料としてバランスがとれている必要があります。シリコンは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Silicon is a metalloid resource foundation used for semiconductors, glass, solar materials, rock chemistry, and programmable crystal systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Silicon should be balanced as a metalloid material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "P": {
-        "short": "リンは、NiceChunk の材料および鍛造用語における生命材料、ガス化学、燃料、セラミックス、肥料、および反応連鎖に使用される非金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、リンは非金属材料としてバランスがとれている必要があります。リンは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Phosphorus is a nonmetal resource foundation used for life materials, gas chemistry, fuels, ceramics, fertilizers, and reaction chains in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Phosphorus should be balanced as a nonmetal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "S": {
-        "short": "硫黄は、NiceChunk の材料および鍛造用語における生命材料、ガス化学、燃料、セラミック、肥料、および反応連鎖に使用される非金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、硫黄は非金属マテリアルとしてバランスがとれている必要があります。硫黄は、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Sulfur is a nonmetal resource foundation used for life materials, gas chemistry, fuels, ceramics, fertilizers, and reaction chains in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Sulfur should be balanced as a nonmetal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Cl": {
-        "short": "塩素は、NiceChunk の材料および鍛造用語における腐食性化学、塩、エッチング、有毒兵器、および高リスクの工業反応に使用されるハロゲン資源基盤です。",
-        "gameplayRole": "NiceChunk では、塩素はハロゲン物質としてバランスが取れている必要があります。塩素は、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Chlorine is a halogen resource foundation used for corrosive chemistry, salts, etching, toxic weapons, and high-risk industrial reactions in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Chlorine should be balanced as a halogen material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Ar": {
-        "short": "アルゴンは、NiceChunk の材料および鍛造用語における不活性雰囲気、溶接保護、密閉処理、およびプラズマ ランプに使用される希ガス資源基盤です。",
-        "gameplayRole": "NiceChunk では、アルゴンは希ガス材料としてバランスがとれている必要があります。アルゴンは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Argon is a noble gas resource foundation used for inert atmospheres, welding protection, sealed processing, and plasma lamps in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Argon should be balanced as a noble gas material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "K": {
-        "short": "カリウムは、NiceChunk の材料および鍛造用語におけるバッテリー、高反応性化学、エネルギー電池、および密封された保管ルートに使用されるアルカリ金属資源の基礎です。",
-        "gameplayRole": "NiceChunk では、カリウムはアルカリ金属材料としてバランスがとれている必要があります。カリウムは、処理ルート、親和性ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Potassium is an alkali metal resource foundation used for batteries, high-reactivity chemistry, energy cells, and sealed storage routes in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Potassium should be balanced as an alkali metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Ca": {
-        "short": "カルシウムは、NiceChunk の材料および鍛造用語の鉱物、セラミック、構造化合物、合金、および生物学的鉱物ループに使用されるアルカリ土類金属資源の基礎です。",
-        "gameplayRole": "NiceChunk では、カルシウムはアルカリ土類金属材料としてバランスがとれている必要があります。カルシウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Calcium is an alkaline earth metal resource foundation used for minerals, ceramics, structural compounds, alloys, and biological mineral loops in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Calcium should be balanced as an alkaline earth metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Sc": {
-        "short": "スカンジウムは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、スカンジウムは遷移金属材料としてバランスがとれている必要があります。スカンジウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Scandium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Scandium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Ti": {
-        "short": "チタンは、NiceChunk の材料および鍛造用語における軽量装甲、高強度工具、航空宇宙構造、および先進的な機械に使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、チタンは遷移金属材料としてバランスがとれている必要があります。チタンは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Titanium is a transition metal resource foundation used for lightweight armor, high-strength tools, aerospace structures, and advanced machines in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Titanium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "V": {
-        "short": "バナジウムは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、バナジウムは遷移金属材料としてバランスがとれている必要があります。バナジウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Vanadium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Vanadium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Cr": {
-        "short": "クロムは、NiceChunk の材料および鍛造用語におけるステンレス合金、耐食性メッキ、硬質コーティング、および顔料システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、クロムは遷移金属材料としてバランスが取れている必要があります。クロムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Chromium is a transition metal resource foundation used for stainless alloys, corrosion-resistant plating, hard coatings, and pigment systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Chromium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Mn": {
-        "short": "マンガンは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、マンガンは遷移金属材料としてバランスがとれている必要があります。マンガンは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Manganese is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Manganese should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Fe": {
-        "short": "鉄は、NiceChunk の材料および鍛造用語では、建設、機械、武器、磁気装置、鉄鋼合成に使用される遷移金属資源の基礎です。",
-        "gameplayRole": "NiceChunk では、鉄は遷移金属材料としてバランスがとれている必要があります。鉄は、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Iron is a transition metal resource foundation used for construction, machinery, weapons, magnetic devices, and steel synthesis in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Iron should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Co": {
-        "short": "コバルトは、NiceChunk の材料および鍛造用語におけるバッテリーの陰極、強力な合金、顔料、磁石、および高級工具に使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、コバルトは遷移金属材料としてバランスがとれている必要があります。コバルトは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Cobalt is a transition metal resource foundation used for battery cathodes, strong alloys, pigments, magnets, and high-grade tools in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Cobalt should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Ni": {
-        "short": "ニッケルは、NiceChunk の材料および鍛造用語のステンレス鋼、電池、磁石、装甲合金、および触媒装置に使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、ニッケルは遷移金属材料としてバランスがとれている必要があります。ニッケルは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Nickel is a transition metal resource foundation used for stainless steel, batteries, magnets, armor alloys, and catalytic equipment in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Nickel should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Cu": {
-        "short": "銅は、NiceChunk の材料および鍛造用語における配線、電子機器、モーター、導電性ブロック、および銅合金に使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、銅は遷移金属材料としてバランスがとれている必要があります。銅は、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Copper is a transition metal resource foundation used for wiring, electronics, motors, conductive blocks, and copper alloys in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Copper should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Zn": {
-        "short": "亜鉛は、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、亜鉛は遷移金属材料としてバランスがとれている必要があります。亜鉛は、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Zinc is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Zinc should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Ga": {
-        "short": "ガリウムは、低融点エレクトロニクス、化合物半導体、ディスプレイ材料、および NiceChunk の材料および鍛造用語における珍しい液体金属ロジックに使用されるポスト遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、ガリウムはポスト遷移金属材料としてバランスがとれている必要があります。ガリウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Gallium is a post transition metal resource foundation used for low-melting electronics, compound semiconductors, display materials, and unusual liquid-metal logic in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Gallium should be balanced as a post transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Ge": {
-        "short": "ゲルマニウムは、NiceChunk の材料および鍛造用語における半導体ウェーハ、赤外線光学、高級エレクトロニクス、および結晶レシピに使用される半金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、ゲルマニウムは半金属材料としてバランスがとれている必要があります。ゲルマニウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Germanium is a metalloid resource foundation used for semiconductor wafers, infrared optics, high-tier electronics, and crystal recipes in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Germanium should be balanced as a metalloid material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "As": {
-        "short": "ヒ素は、NiceChunk の材料および鍛造用語において、半導体、ガラス、セラミック結晶、光学部品、および精密エレクトロニクスに使用される半金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、ヒ素は半金属材料としてバランスがとれている必要があります。ヒ素は、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Arsenic is a metalloid resource foundation used for semiconductors, glass, ceramic crystals, optical parts, and precision electronics in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Arsenic should be balanced as a metalloid material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Se": {
-        "short": "セレンは、NiceChunk の材料および鍛造用語における生命材料、ガス化学、燃料、セラミック、肥料、および反応連鎖に使用される非金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、セレンは非金属マテリアルとしてバランスをとる必要があります。セレンは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Selenium is a nonmetal resource foundation used for life materials, gas chemistry, fuels, ceramics, fertilizers, and reaction chains in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Selenium should be balanced as a nonmetal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Br": {
-        "short": "臭素は、NiceChunk の材料および鍛造用語における腐食性化学、塩、エッチング、有毒兵器、および高リスク産業反応に使用されるハロゲン資源基盤です。",
-        "gameplayRole": "NiceChunk では、臭素はハロゲン物質としてバランスがとれている必要があります。臭素は、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Bromine is a halogen resource foundation used for corrosive chemistry, salts, etching, toxic weapons, and high-risk industrial reactions in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Bromine should be balanced as a halogen material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Kr": {
-        "short": "クリプトンは、NiceChunk の材料および鍛造用語における不活性雰囲気、極低温システム、プラズマ照明、光学、および保護処理に使用される希ガス資源基盤です。",
-        "gameplayRole": "NiceChunk では、クリプトンは希ガス材料としてバランスがとれている必要があります。クリプトンは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Krypton is a noble gas resource foundation used for inert atmospheres, cryogenic systems, plasma lighting, optics, and protected processing in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Krypton should be balanced as a noble gas material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Rb": {
-        "short": "ルビジウムは、NiceChunk の材料および鍛造用語におけるバッテリー、高反応性化学、エネルギー電池、および密封された保管ルートに使用されるアルカリ金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、ルビジウムはアルカリ金属材料としてバランスがとれている必要があります。ルビジウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Rubidium is an alkali metal resource foundation used for batteries, high-reactivity chemistry, energy cells, and sealed storage routes in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Rubidium should be balanced as an alkali metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Sr": {
-        "short": "ストロンチウムは、NiceChunk の材料および鍛造用語の鉱物、セラミック、構造化合物、合金、および生物学的鉱物ループに使用されるアルカリ土類金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、ストロンチウムはアルカリ土類金属材料としてバランスがとれている必要があります。ストロンチウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Strontium is an alkaline earth metal resource foundation used for minerals, ceramics, structural compounds, alloys, and biological mineral loops in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Strontium should be balanced as an alkaline earth metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Y": {
-        "short": "イットリウムは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、イットリウムは遷移金属材料としてバランスがとれている必要があります。イットリウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Yttrium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Yttrium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Zr": {
-        "short": "ジルコニウムは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、ジルコニウムは遷移金属材料としてバランスがとれている必要があります。ジルコニウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Zirconium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Zirconium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Nb": {
-        "short": "ニオブは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、ニオブは遷移金属材料としてバランスがとれている必要があります。ニオブは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Niobium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Niobium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Mo": {
-        "short": "モリブデンは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、モリブデンは遷移金属材料としてバランスがとれている必要があります。モリブデンは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Molybdenum is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Molybdenum should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Tc": {
-        "short": "テクネチウムは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、テクネチウムは遷移金属材料としてバランスがとれている必要があります。テクネチウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Technetium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Technetium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Ru": {
-        "short": "ルテニウムは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、ルテニウムは遷移金属材料としてバランスがとれている必要があります。ルテニウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Ruthenium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Ruthenium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Rh": {
-        "short": "ロジウムは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、ロジウムは遷移金属材料としてバランスがとれている必要があります。ロジウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Rhodium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Rhodium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Pd": {
-        "short": "パラジウムは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、パラジウムは遷移金属材料としてバランスが取れている必要があります。パラジウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Palladium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Palladium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Ag": {
-        "short": "銀は、NiceChunk の材料および鍛造語彙におけるエリート導電性、光学材料、抗菌システム、および貴重な資源ルートに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、銀は遷移金属材料としてバランスがとれている必要があります。これは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Silver is a transition metal resource foundation used for elite conductivity, optical materials, antimicrobial systems, and precious resource routes in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Silver should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Cd": {
-        "short": "カドミウムは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、カドミウムは遷移金属材料としてバランスがとれている必要があります。カドミウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Cadmium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Cadmium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "In": {
-        "short": "インジウムは、NiceChunk の材料および鍛造用語におけるディスプレイ フィルム、タッチ インターフェイス、はんだシステム、特殊電子機器に使用されるポスト遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、インジウムはポスト遷移金属材料としてバランスがとれている必要があります。インジウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Indium is a post transition metal resource foundation used for display films, touch interfaces, solder systems, and specialized electronics in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Indium should be balanced as a post transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Sn": {
-        "short": "錫は、NiceChunk の材料および鍛造用語の特殊合金、軟金属、シールド、低融点レシピ、および電子材料に使用されるポスト遷移金属資源の基礎です。",
-        "gameplayRole": "NiceChunk では、錫はポスト遷移金属材料としてバランスがとれている必要があります。錫は、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Tin is a post transition metal resource foundation used for special alloys, soft metals, shielding, low-melting recipes, and electronic materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Tin should be balanced as a post transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Sb": {
-        "short": "アンチモンは、NiceChunk の材料および鍛造用語で、半導体、ガラス、セラミック結晶、光学部品、精密エレクトロニクスに使用される半金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、アンチモンは半金属材料としてバランスがとれている必要があります。アンチモンは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Antimony is a metalloid resource foundation used for semiconductors, glass, ceramic crystals, optical parts, and precision electronics in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Antimony should be balanced as a metalloid material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Te": {
-        "short": "テルルは、NiceChunk の材料および鍛造用語で、半導体、ガラス、セラミック結晶、光学部品、精密電子機器に使用される半金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、テルルは半金属材料としてバランスがとれている必要があります。テルルは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Tellurium is a metalloid resource foundation used for semiconductors, glass, ceramic crystals, optical parts, and precision electronics in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Tellurium should be balanced as a metalloid material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "I": {
-        "short": "ヨウ素は、NiceChunk の材料および鍛造用語における腐食性化学、塩、エッチング、有毒兵器、および高リスク産業反応に使用されるハロゲン資源基盤です。",
-        "gameplayRole": "NiceChunk では、ヨウ素はハロゲン物質としてバランスが取れている必要があります。ヨウ素は、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Iodine is a halogen resource foundation used for corrosive chemistry, salts, etching, toxic weapons, and high-risk industrial reactions in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Iodine should be balanced as a halogen material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Xe": {
-        "short": "キセノンは、NiceChunk の材料および鍛造用語におけるイオン エンジン、フラッシュ ランプ、麻酔化学、および上位の光学システムに使用される希ガス資源基盤です。",
-        "gameplayRole": "NiceChunk では、キセノンは希ガス材料としてバランスがとれている必要があります。キセノンは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Xenon is a noble gas resource foundation used for ion engines, flash lamps, anesthesia chemistry, and high-tier optical systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Xenon should be balanced as a noble gas material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Cs": {
-        "short": "セシウムは、NiceChunk の材料および鍛造用語におけるバッテリー、高反応性化学、エネルギー電池、密閉保管ルートに使用されるアルカリ金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、セシウムはアルカリ金属材料としてバランスがとれている必要があります。セシウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Cesium is an alkali metal resource foundation used for batteries, high-reactivity chemistry, energy cells, and sealed storage routes in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Cesium should be balanced as an alkali metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Ba": {
-        "short": "バリウムは、NiceChunk の材料および鍛造用語の鉱物、セラミック、構造化合物、合金、および生物学的鉱物ループに使用されるアルカリ土類金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、バリウムはアルカリ土類金属材料としてバランスがとれている必要があります。バリウムは、処理ルート、親和性ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Barium is an alkaline earth metal resource foundation used for minerals, ceramics, structural compounds, alloys, and biological mineral loops in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Barium should be balanced as an alkaline earth metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "La": {
-        "short": "ランタンは、NiceChunk の材料および鍛造用語において、希土類磁石、光学素子、レーザー、蛍光体、およびハイテクエレクトロニクスに使用されるランタニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、ランタンはランタニド材料としてバランスがとれている必要があります。ランタンは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Lanthanum is a lanthanide resource foundation used for rare-earth magnets, optics, lasers, phosphors, and high-tech electronics in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Lanthanum should be balanced as a lanthanide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Ce": {
-        "short": "セリウムは、NiceChunk の材料および鍛造用語における希土類磁石、光学素子、レーザー、蛍光体、およびハイテクエレクトロニクスに使用されるランタニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、セリウムはランタニド材料としてバランスがとれている必要があります。セリウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Cerium is a lanthanide resource foundation used for rare-earth magnets, optics, lasers, phosphors, and high-tech electronics in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Cerium should be balanced as a lanthanide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Pr": {
-        "short": "プラセオジムは、NiceChunk の材料および鍛造用語における希土類磁石、光学素子、レーザー、蛍光体、およびハイテクエレクトロニクスに使用されるランタニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、プラセオジムはランタニド材料としてバランスがとれている必要があります。プラセオジムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Praseodymium is a lanthanide resource foundation used for rare-earth magnets, optics, lasers, phosphors, and high-tech electronics in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Praseodymium should be balanced as a lanthanide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Nd": {
-        "short": "ネオジムは、永久磁石、モーター、発電機、NiceChunk の材料および鍛造用語のレアアース技術レシピに使用されるランタニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、ネオジムはランタニド材料としてバランスがとれている必要があります。ネオジムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Neodymium is a lanthanide resource foundation used for permanent magnets, motors, generators, and rare-earth technology recipes in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Neodymium should be balanced as a lanthanide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Pm": {
-        "short": "プロメチウムは、NiceChunk の材料および鍛造用語における希土類磁石、光学素子、レーザー、蛍光体、およびハイテクエレクトロニクスに使用されるランタニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、プロメシュームはランタニド材料としてバランスがとれている必要があります。プロメシュームは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Promethium is a lanthanide resource foundation used for rare-earth magnets, optics, lasers, phosphors, and high-tech electronics in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Promethium should be balanced as a lanthanide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Sm": {
-        "short": "サマリウムは、NiceChunk の材料および鍛造用語における希土類磁石、光学素子、レーザー、蛍光体、およびハイテクエレクトロニクスに使用されるランタニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、サマリウムはランタニド材料としてバランスがとれている必要があります。サマリウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Samarium is a lanthanide resource foundation used for rare-earth magnets, optics, lasers, phosphors, and high-tech electronics in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Samarium should be balanced as a lanthanide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Eu": {
-        "short": "ユウロピウムは、NiceChunk の材料および鍛造用語における希土類磁石、光学素子、レーザー、蛍光体、およびハイテクエレクトロニクスに使用されるランタニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、ユウロピウムはランタニド材料としてバランスがとれている必要があります。ユーロピウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Europium is a lanthanide resource foundation used for rare-earth magnets, optics, lasers, phosphors, and high-tech electronics in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Europium should be balanced as a lanthanide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Gd": {
-        "short": "ガドリニウムは、NiceChunk の材料および鍛造用語における希土類磁石、光学素子、レーザー、蛍光体、およびハイテクエレクトロニクスに使用されるランタニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、ガドリニウムはランタニド材料としてバランスがとれている必要があります。ガドリニウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Gadolinium is a lanthanide resource foundation used for rare-earth magnets, optics, lasers, phosphors, and high-tech electronics in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Gadolinium should be balanced as a lanthanide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Tb": {
-        "short": "テルビウムは、NiceChunk の材料および鍛造用語における希土類磁石、光学素子、レーザー、蛍光体、およびハイテクエレクトロニクスに使用されるランタニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、テルビウムはランタニド材料としてバランスが取れている必要があります。テルビウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Terbium is a lanthanide resource foundation used for rare-earth magnets, optics, lasers, phosphors, and high-tech electronics in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Terbium should be balanced as a lanthanide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Dy": {
-        "short": "ジスプロシウムは、NiceChunk の材料および鍛造用語で高温磁石、希土類モーター、およびエリート電子機器に使用されるランタニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、ジスプロシウムはランタニド材料としてバランスがとれている必要があります。これは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Dysprosium is a lanthanide resource foundation used for high-temperature magnets, rare-earth motors, and elite electronics in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Dysprosium should be balanced as a lanthanide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Ho": {
-        "short": "ホルミウムは、NiceChunk の材料および鍛造用語における希土類磁石、光学素子、レーザー、蛍光体、およびハイテクエレクトロニクスに使用されるランタニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、ホルミウムはランタニド材料としてバランスがとれている必要があります。ホルミウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Holmium is a lanthanide resource foundation used for rare-earth magnets, optics, lasers, phosphors, and high-tech electronics in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Holmium should be balanced as a lanthanide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Er": {
-        "short": "エルビウムは、NiceChunk の材料および鍛造用語における希土類磁石、光学素子、レーザー、蛍光体、およびハイテクエレクトロニクスに使用されるランタニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、エルビウムはランタニド材料としてバランスが取れている必要があります。エルビウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Erbium is a lanthanide resource foundation used for rare-earth magnets, optics, lasers, phosphors, and high-tech electronics in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Erbium should be balanced as a lanthanide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Tm": {
-        "short": "ツリウムは、NiceChunk の材料および鍛造用語における希土類磁石、光学素子、レーザー、蛍光体、およびハイテクエレクトロニクスに使用されるランタニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、ツリウムはランタニド材料としてバランスがとれている必要があります。ツリウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Thulium is a lanthanide resource foundation used for rare-earth magnets, optics, lasers, phosphors, and high-tech electronics in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Thulium should be balanced as a lanthanide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Yb": {
-        "short": "イッテルビウムは、NiceChunk の材料および鍛造用語における希土類磁石、光学素子、レーザー、蛍光体、およびハイテクエレクトロニクスに使用されるランタニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、イッテルビウムはランタニド材料としてバランスがとれている必要があります。イッテルビウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Ytterbium is a lanthanide resource foundation used for rare-earth magnets, optics, lasers, phosphors, and high-tech electronics in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Ytterbium should be balanced as a lanthanide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Lu": {
-        "short": "ルテチウムは、NiceChunk の材料および鍛造用語における希土類磁石、光学素子、レーザー、蛍光体、およびハイテクエレクトロニクスに使用されるランタニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、ルテチウムはランタニド材料としてバランスが取れている必要があります。ルテチウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Lutetium is a lanthanide resource foundation used for rare-earth magnets, optics, lasers, phosphors, and high-tech electronics in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Lutetium should be balanced as a lanthanide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Hf": {
-        "short": "ハフニウムは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、ハフニウムは遷移金属材料としてバランスがとれている必要があります。ハフニウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Hafnium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Hafnium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Ta": {
-        "short": "タンタルは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、タンタルは遷移金属材料としてバランスがとれている必要があります。タンタルは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Tantalum is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Tantalum should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "W": {
-        "short": "タングステンは、NiceChunk の材料および鍛造用語における高温工具、硬質装甲、重火器、炉、および耐熱機械に使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、タングステンは遷移金属材料としてバランスがとれている必要があります。タングステンは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Tungsten is a transition metal resource foundation used for high-temperature tools, hard armor, heavy weapons, furnaces, and heat-resistant machines in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Tungsten should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Re": {
-        "short": "レニウムは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、レニウムは遷移金属材料としてバランスがとれている必要があります。レニウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Rhenium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Rhenium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Os": {
-        "short": "オスミウムは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、オスミウムは遷移金属材料としてバランスがとれている必要があります。オスミウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Osmium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Osmium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Ir": {
-        "short": "イリジウムは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、イリジウムは遷移金属材料としてバランスがとれている必要があります。イリジウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Iridium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Iridium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Pt": {
-        "short": "プラチナは、触媒、燃料電池、精密機器、貴合金、NiceChunk の材料および鍛造用語の高価値技術レシピに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、プラチナは遷移金属材料としてバランスがとれている必要があります。プラチナは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Platinum is a transition metal resource foundation used for catalysts, fuel cells, precision devices, noble alloys, and high-value technology recipes in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Platinum should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Au": {
-        "short": "金は、NiceChunk の材料および鍛造語彙における高価なエレクトロニクス、精密接点、装飾品、国庫資産、およびプロトコルグレードの収集品に使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、金は遷移金属材料としてバランスがとれている必要があります。ゴールドは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Gold is a transition metal resource foundation used for high-value electronics, precision contacts, decoration, treasury assets, and protocol-grade collectibles in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Gold should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Hg": {
-        "short": "水銀は、NiceChunk の材料および鍛造用語における液体金属デバイス、センサー、有毒トラップ、および密閉された特殊装置に使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、水銀は遷移金属材料としてバランスがとれている必要があります。水銀は、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Mercury is a transition metal resource foundation used for liquid metal devices, sensors, toxic traps, and sealed special equipment in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Mercury should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Tl": {
-        "short": "タリウムは、NiceChunk の材料および鍛造用語の特殊合金、軟金属、シールド、低融点レシピ、および電子材料に使用されるポスト遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、タリウムは遷移金属材料としてバランスがとれている必要があります。タリウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Thallium is a post transition metal resource foundation used for special alloys, soft metals, shielding, low-melting recipes, and electronic materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Thallium should be balanced as a post transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Pb": {
-        "short": "鉛は、NiceChunk の材料および鍛造用語における放射線遮蔽、高密度重量、低融点合金、および危険物封じ込めブロックに使用される遷移後の金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、鉛はポスト遷移金属材料としてバランスがとれている必要があります。鉛は、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Lead is a post transition metal resource foundation used for radiation shielding, dense weights, low-melting alloys, and hazardous containment blocks in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Lead should be balanced as a post transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Bi": {
-        "short": "ビスマスは、NiceChunk の材料および鍛造用語の特殊合金、軟金属、シールド、低融点レシピ、および電子材料に使用される遷移後の金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、ビスマスは遷移金属材料としてバランスがとれている必要があります。ビスマスは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Bismuth is a post transition metal resource foundation used for special alloys, soft metals, shielding, low-melting recipes, and electronic materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Bismuth should be balanced as a post transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Po": {
-        "short": "ポロニウムは、NiceChunk の材料および鍛造用語で、半導体、ガラス、セラミック結晶、光学部品、精密エレクトロニクスに使用される半金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、ポロニウムはメタロイド マテリアルとしてバランスがとれている必要があります。ポロニウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Polonium is a metalloid resource foundation used for semiconductors, glass, ceramic crystals, optical parts, and precision electronics in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Polonium should be balanced as a metalloid material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "At": {
-        "short": "アスタチンは、NiceChunk の材料および鍛造用語における腐食性化学、塩、エッチング、有毒兵器、および高リスク産業反応に使用されるハロゲン資源基盤です。",
-        "gameplayRole": "NiceChunk では、アスタチンはハロゲン素材としてバランスがとれている必要があります。アスタチンは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Astatine is a halogen resource foundation used for corrosive chemistry, salts, etching, toxic weapons, and high-risk industrial reactions in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Astatine should be balanced as a halogen material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Rn": {
-        "short": "ラドンは、NiceChunk の材料および鍛造用語における放射性ガストラップ、崩壊検出、および密封された危険な研究に使用される希ガス資源基盤です。",
-        "gameplayRole": "NiceChunk では、ラドンは希ガス材料としてバランスがとれている必要があります。ラドンは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Radon is a noble gas resource foundation used for radioactive gas traps, decay detection, and sealed hazardous research in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Radon should be balanced as a noble gas material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Fr": {
-        "short": "フランシウムは、NiceChunk の材料および鍛造用語におけるバッテリー、高反応性化学、エネルギー電池、密閉保管ルートに使用されるアルカリ金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、フランシウムはアルカリ金属材料としてバランスがとれている必要があります。フランシウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Francium is an alkali metal resource foundation used for batteries, high-reactivity chemistry, energy cells, and sealed storage routes in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Francium should be balanced as an alkali metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Ra": {
-        "short": "ラジウムは、NiceChunk の材料および鍛造用語の鉱物、セラミック、構造化合物、合金、および生物学的鉱物ループに使用されるアルカリ土類金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、ラジウムはアルカリ土類金属材料としてバランスがとれている必要があります。ラジウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Radium is an alkaline earth metal resource foundation used for minerals, ceramics, structural compounds, alloys, and biological mineral loops in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Radium should be balanced as an alkaline earth metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Ac": {
-        "short": "アクチニウムは、NiceChunk の材料および鍛造用語において、核エネルギー、放射線システム、遮蔽された研究、および最終ゲームの危険物質に使用されるアクチニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、アクチニウムはアクチニド材料としてバランスが取れている必要があります。アクチニウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Actinium is an actinide resource foundation used for nuclear energy, radiation systems, shielded research, and end-game hazardous materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Actinium should be balanced as an actinide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Th": {
-        "short": "トリウムは、NiceChunk の材料および鍛造用語において、核エネルギー、放射線システム、遮蔽研究、および最終段階の危険物質に使用されるアクチニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、トリウムはアクチニド材料としてバランスが取れている必要があります。トリウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Thorium is an actinide resource foundation used for nuclear energy, radiation systems, shielded research, and end-game hazardous materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Thorium should be balanced as an actinide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Pa": {
-        "short": "プロタクチニウムは、NiceChunk の材料および鍛造用語で、核エネルギー、放射線システム、遮蔽された研究、および最終ゲームの危険物質に使用されるアクチニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、プロタクチニウムはアクチニド材料としてバランスが取れている必要があります。プロタクチニウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Protactinium is an actinide resource foundation used for nuclear energy, radiation systems, shielded research, and end-game hazardous materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Protactinium should be balanced as an actinide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "U": {
-        "short": "ウランは、NiceChunk の材料および鍛造用語において、核燃料、放射線システム、終末エネルギー、および遮蔽された産業チェーンに使用されるアクチニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、ウランはアクチニド材料としてバランスが取れている必要があります。ウランは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Uranium is an actinide resource foundation used for nuclear fuel, radiation systems, end-game energy, and shielded industrial chains in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Uranium should be balanced as an actinide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Np": {
-        "short": "ネプツニウムは、NiceChunk の材料および鍛造用語において、核エネルギー、放射線システム、遮蔽研究、および最終段階の危険物質に使用されるアクチニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、ネプツニウムはアクチニド材料としてバランスをとる必要があります。ネプツニウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、シードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Neptunium is an actinide resource foundation used for nuclear energy, radiation systems, shielded research, and end-game hazardous materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Neptunium should be balanced as an actinide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Pu": {
-        "short": "プルトニウムは、原子炉燃料、禁止された兵器の研究、高リスクのエネルギーループ、NiceChunk の材料および鍛造語彙におけるゲーム後半のプロトコル材料に使用されるアクチニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、プルトニウムはアクチニド材料としてバランスが取れている必要があります。プルトニウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Plutonium is an actinide resource foundation used for reactor fuel, forbidden weapons research, high-risk energy loops, and late-game protocol materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Plutonium should be balanced as an actinide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Am": {
-        "short": "アメリシウムは、NiceChunk の材料および鍛造用語で、核エネルギー、放射線システム、遮蔽研究、および最終段階の危険物質に使用されるアクチニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、アメリシウムはアクチニド材料としてバランスがとれている必要があります。アメリシウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Americium is an actinide resource foundation used for nuclear energy, radiation systems, shielded research, and end-game hazardous materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Americium should be balanced as an actinide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Cm": {
-        "short": "Curium は、NiceChunk の材料および鍛造語彙における核エネルギー、放射線システム、遮蔽研究、および最終段階の危険物質に使用されるアクチニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、キュリウムはアクチニド材料としてバランスが取れている必要があります。キュリウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Curium is an actinide resource foundation used for nuclear energy, radiation systems, shielded research, and end-game hazardous materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Curium should be balanced as an actinide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Bk": {
-        "short": "バーケリウムは、NiceChunk の材料および鍛造用語において、核エネルギー、放射線システム、遮蔽研究、および最終段階の危険物質に使用されるアクチニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、バーケリウムはアクチニド材料としてバランスがとれている必要があります。バーケリウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Berkelium is an actinide resource foundation used for nuclear energy, radiation systems, shielded research, and end-game hazardous materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Berkelium should be balanced as an actinide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Cf": {
-        "short": "Californium は、NiceChunk の材料および鍛造語彙における核エネルギー、放射線システム、遮蔽研究、および最終段階の危険物質に使用されるアクチニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、Californium はアクチニド材料としてバランスがとれている必要があります。Californium は、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Californium is an actinide resource foundation used for nuclear energy, radiation systems, shielded research, and end-game hazardous materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Californium should be balanced as an actinide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Es": {
-        "short": "アインスタイニウムは、NiceChunk の材料および鍛造語彙における核エネルギー、放射線システム、遮蔽された研究、および最終ゲームの危険物質に使用されるアクチニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、アインスタイニウムはアクチニド材料としてバランスがとれている必要があります。アインスタイニウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Einsteinium is an actinide resource foundation used for nuclear energy, radiation systems, shielded research, and end-game hazardous materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Einsteinium should be balanced as an actinide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Fm": {
-        "short": "フェルミウムは、NiceChunk の材料および鍛造用語で、核エネルギー、放射線システム、遮蔽研究、および最終段階の危険物質に使用されるアクチニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、フェルミウムはアクチニド材料としてバランスが取れている必要があります。フェルミウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Fermium is an actinide resource foundation used for nuclear energy, radiation systems, shielded research, and end-game hazardous materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Fermium should be balanced as an actinide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Md": {
-        "short": "メンデレビウムは、NiceChunk の材料および鍛造語彙における核エネルギー、放射線システム、遮蔽された研究、および最終ゲームの危険物質に使用されるアクチニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、メンデレビウムはアクチニド材料としてバランスがとれている必要があります。メンデレビウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Mendelevium is an actinide resource foundation used for nuclear energy, radiation systems, shielded research, and end-game hazardous materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Mendelevium should be balanced as an actinide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "No": {
-        "short": "Nobelium は、NiceChunk の材料および鍛造語彙における核エネルギー、放射線システム、遮蔽研究、および最終段階の危険物質に使用されるアクチニド資源財団です。",
-        "gameplayRole": "NiceChunk では、Nobelium はアクチニド素材としてバランスが取れている必要があります。Nobelium は、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Nobelium is an actinide resource foundation used for nuclear energy, radiation systems, shielded research, and end-game hazardous materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Nobelium should be balanced as an actinide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Lr": {
-        "short": "ローレンシウムは、NiceChunk の材料および鍛造語彙における核エネルギー、放射線システム、遮蔽された研究、および最終ゲームの危険物質に使用されるアクチニド資源基盤です。",
-        "gameplayRole": "NiceChunk では、ローレンシウムはアクチニド材料としてバランスが取れている必要があります。ローレンシウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Lawrencium is an actinide resource foundation used for nuclear energy, radiation systems, shielded research, and end-game hazardous materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Lawrencium should be balanced as an actinide material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Rf": {
-        "short": "ラザフォージウムは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、ラザフォージウムは遷移金属材料としてバランスがとれている必要があります。ラザフォージウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Rutherfordium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Rutherfordium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Db": {
-        "short": "ドブニウムは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、ドブニウムは遷移金属材料としてバランスがとれている必要があります。ドブニウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Dubnium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Dubnium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Sg": {
-        "short": "Seaborgium は、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、シーボーギウムは遷移金属材料としてバランスがとれている必要があります。シーボーギウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Seaborgium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Seaborgium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Bh": {
-        "short": "ボーリウムは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、ボーリウムは遷移金属材料としてバランスがとれている必要があります。ボーリウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Bohrium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Bohrium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Hs": {
-        "short": "ハシウムは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、ハシウムは遷移金属材料としてバランスがとれている必要があります。ハシウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Hassium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Hassium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Mt": {
-        "short": "マイトネリウムは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、マイトネリウムは遷移金属材料としてバランスがとれている必要があります。マイトネリウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Meitnerium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Meitnerium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Ds": {
-        "short": "Darmstadtium は、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、ダルムシュタディウムは遷移金属材料としてバランスがとれている必要があります。ダルムシュタディウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Darmstadtium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Darmstadtium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Rg": {
-        "short": "レントゲニウムは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、レントゲニウムは遷移金属材料としてバランスが取れている必要があります。レントゲニウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Roentgenium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Roentgenium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Cn": {
-        "short": "コペルニシウムは、NiceChunk の材料および鍛造用語における産業用機械、武器、工具、合金、構造部品、および導電システムに使用される遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、コペルニシウムは遷移金属材料としてバランスがとれている必要があります。コペルニシウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Copernicium is a transition metal resource foundation used for industrial machines, weapons, tools, alloys, structural parts, and conductive systems in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Copernicium should be balanced as a transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Nh": {
-        "short": "ニホニウムは、NiceChunk の材料および鍛造用語における特殊合金、軟金属、シールド、低融点レシピ、および電子材料に使用されるポスト遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、ニホニウムはポスト遷移金属材料としてバランスがとれている必要があります。ニホニウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Nihonium is a post transition metal resource foundation used for special alloys, soft metals, shielding, low-melting recipes, and electronic materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Nihonium should be balanced as a post transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Fl": {
-        "short": "フレロビウムは、NiceChunk の材料および鍛造用語における特殊合金、軟金属、シールド、低融点レシピ、および電子材料に使用されるポスト遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、フレロビウムはポスト遷移金属材料としてバランスがとれている必要があります。フレロビウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Flerovium is a post transition metal resource foundation used for special alloys, soft metals, shielding, low-melting recipes, and electronic materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Flerovium should be balanced as a post transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Mc": {
-        "short": "Moscovium は、NiceChunk の材料および鍛造用語における特殊合金、軟金属、シールド、低融点レシピ、および電子材料に使用されるポスト遷移金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、Moscovium はポスト遷移金属マテリアルとしてバランスがとれている必要があります。Moscovium は、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Moscovium is a post transition metal resource foundation used for special alloys, soft metals, shielding, low-melting recipes, and electronic materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Moscovium should be balanced as a post transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Lv": {
-        "short": "リバモリウムは、NiceChunk の材料および鍛造用語における特殊合金、軟金属、シールド、低融点レシピ、および電子材料に使用される遷移後の金属資源基盤です。",
-        "gameplayRole": "NiceChunk では、リバモリウムはポスト遷移金属マテリアルとしてバランスがとれている必要があります。リバモリウムは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Livermorium is a post transition metal resource foundation used for special alloys, soft metals, shielding, low-melting recipes, and electronic materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Livermorium should be balanced as a post transition metal material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Ts": {
-        "short": "テネシンは、NiceChunk の材料および鍛造用語における腐食性化学、塩、エッチング、有毒兵器、高リスク産業反応に使用されるハロゲン資源基盤です。",
-        "gameplayRole": "NiceChunk では、テネシンはハロゲン マテリアルとしてバランスがとれている必要があります。テネシンは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見された場合のプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Tennessine is a halogen resource foundation used for corrosive chemistry, salts, etching, toxic weapons, and high-risk industrial reactions in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Tennessine should be balanced as a halogen material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       },
       "Og": {
-        "short": "Oganesson は、不安定なエンドゲームの世界ルールの断片、放射性異常、および NiceChunk の素材および鍛造語彙の実験プロトコル素材に使用される希ガス資源財団です。",
-        "gameplayRole": "NiceChunk では、オガネソンは希ガス マテリアルとしてバランスがとれている必要があります。オガネソンは、処理ルート、アフィニティ ルール、ビジュアル リソース遺伝子、およびシードされた chunks から発見されたときにプレイヤーが直面するリスクまたは価値を定義します。"
+        "short": "Oganesson is a noble gas resource foundation used for unstable end-game world-rule fragments, radioactive anomalies, and experimental protocol materials in NiceChunk's material and forging vocabulary.",
+        "gameplayRole": "In NiceChunk, Oganesson should be balanced as a noble gas material: it defines processing routes, affinity rules, visual resource genes, and player-facing risk or value when discovered from seeded chunks."
       }
     },
     "process": {
-      "alloy": "合金",
-      "battery_grade_refine": "バッテリーグレードの調整",
-      "capture": "キャプチャ",
-      "cast": "キャスト",
-      "compress": "圧縮",
-      "corrosion_resistant_container": "耐食性容器",
-      "crush": "クラッシュ",
-      "cryogenic_separate": "極低温分離",
-      "crystallize": "結晶化する",
-      "distill": "蒸留",
-      "electrolyze": "電気分解",
-      "forge": "鍛造",
-      "high_temp_sinter": "高温焼結",
-      "inert_atmosphere_process": "不活性雰囲気プロセス",
-      "ionize": "イオン化",
-      "isotope_separate": "同位体の分離",
-      "mine": "鉱山",
-      "nuclear_refine": "核精製",
-      "oxidize": "酸化する",
-      "precision_machine": "精密機械",
-      "quench": "クエンチ",
-      "radiation_shielding": "放射線遮蔽",
-      "reduce": "削減",
-      "refine": "絞り込み",
-      "sealed_capture": "封印された捕獲",
-      "semiconductor_refine": "半導体精製",
-      "sinter": "焼結体",
-      "smelt": "ワカサギ",
-      "temper": "気性",
-      "vacuum_refine": "真空精製",
-      "wash": "洗浄"
+      "alloy": "Alloy",
+      "battery_grade_refine": "Battery Grade Refine",
+      "capture": "Capture",
+      "cast": "Cast",
+      "compress": "Compress",
+      "corrosion_resistant_container": "Corrosion Resistant Container",
+      "crush": "Crush",
+      "cryogenic_separate": "Cryogenic Separate",
+      "crystallize": "Crystallize",
+      "distill": "Distill",
+      "electrolyze": "Electrolyze",
+      "forge": "Forge",
+      "high_temp_sinter": "High Temperature Sinter",
+      "inert_atmosphere_process": "Inert Atmosphere Process",
+      "ionize": "Ionize",
+      "isotope_separate": "Isotope Separate",
+      "mine": "Mine",
+      "nuclear_refine": "Nuclear Refine",
+      "oxidize": "Oxidize",
+      "precision_machine": "Precision Machine",
+      "quench": "Quench",
+      "radiation_shielding": "Radiation Shielding",
+      "reduce": "Reduce",
+      "refine": "Refine",
+      "sealed_capture": "Sealed Capture",
+      "semiconductor_refine": "Semiconductor Refine",
+      "sinter": "Sinter",
+      "smelt": "Smelt",
+      "temper": "Temper",
+      "vacuum_refine": "Vacuum Refine",
+      "wash": "Wash"
     },
     "visual": {
-      "ceramic_crystal": "セラミッククリスタル",
-      "copper_metal": "銅金属",
-      "corrosive_gas": "腐食性ガス",
-      "faceted_crystal": "ファセットクリスタル",
-      "gold_metal": "ゴールドメタル",
-      "graphite_carbon": "グラファイトカーボン",
-      "liquid_metal": "液体金属",
-      "matte_solid": "マットソリッド",
-      "metalloid_crystal": "半金属結晶",
-      "neon_glow_gas": "ネオングローガス",
-      "noble_gas": "希ガス",
-      "plasma_gas": "プラズマガス",
-      "radioactive_silver_metal": "放射性銀金属",
-      "rough_crystal": "原石結晶",
-      "silver_metal": "シルバーメタル",
-      "silvery_metal": "銀色の金属",
-      "solid_powder": "固体粉末",
-      "toxic_halogen": "有毒ハロゲン",
-      "uranium_silver_metal": "ウラン銀金属",
-      "volatile_liquid": "揮発性液体",
-      "white_silvery_metal": "白い銀色の金属",
-      "yellow_crystal": "イエロークリスタル",
-      "acid_gas": "酸性ガス",
-      "brushed_metal": "つや消しメタル",
-      "clear_gas": "クリアガス",
-      "corrosive_liquid": "腐食性液体",
-      "fresh_cut_metal": "フレッシュカットメタル",
-      "glowing_rare_earth_veins": "輝くレアアース鉱脈",
-      "halide_crystal": "ハロゲン化物結晶",
-      "mineral_metal": "鉱物金属",
-      "powdered_solid": "粉末固体",
-      "radioactive_veins": "放射性静脈",
-      "soft_brushed_metal": "ソフトブラッシュメタル",
-      "crystal_ore": "水晶鉱石",
-      "metallic_ore_veins": "金属鉱脈",
-      "mineral_ore": "鉱物鉱石",
-      "powder_veins": "粉脈",
-      "radioactive_cracked_ore": "放射性分解鉱石",
-      "rare_earth_veins": "レアアース鉱脈",
-      "reactive_salt_ore": "反応性塩鉱石",
-      "sealed_gas_pocket": "密閉ガスポケット",
-      "soft_metal_ore": "軟金属鉱石",
-      "corrosive_vapor": "腐食性蒸気",
-      "glowing_dust": "光る粉塵",
-      "mineral_sparks": "ミネラルスパーク",
-      "radioactive_sparks": "放射性火花",
-      "soft_glow_mist": "ソフトグローミスト",
-      "pulse": "パルス",
-      "slow_flow": "スローフロー",
-      "subtle_shimmer": "微妙な輝き",
-      "unstable_flicker": "不安定なちらつき"
+      "ceramic_crystal": "Ceramic Crystal",
+      "copper_metal": "Copper Metal",
+      "corrosive_gas": "Corrosive Gas",
+      "faceted_crystal": "Faceted Crystal",
+      "gold_metal": "Gold Metal",
+      "graphite_carbon": "Graphite Carbon",
+      "liquid_metal": "Liquid Metal",
+      "matte_solid": "Matte Solid",
+      "metalloid_crystal": "Metalloid Crystal",
+      "neon_glow_gas": "Neon Glow Gas",
+      "noble_gas": "Noble Gas",
+      "plasma_gas": "Plasma Gas",
+      "radioactive_silver_metal": "Radioactive Silver Metal",
+      "rough_crystal": "Rough Crystal",
+      "silver_metal": "Silver Metal",
+      "silvery_metal": "Silvery Metal",
+      "solid_powder": "Solid Powder",
+      "toxic_halogen": "Toxic Halogen",
+      "uranium_silver_metal": "Uranium Silver Metal",
+      "volatile_liquid": "Volatile Liquid",
+      "white_silvery_metal": "White Silvery Metal",
+      "yellow_crystal": "Yellow Crystal",
+      "acid_gas": "Acid Gas",
+      "brushed_metal": "Brushed Metal",
+      "clear_gas": "Clear Gas",
+      "corrosive_liquid": "Corrosive Liquid",
+      "fresh_cut_metal": "Fresh Cut Metal",
+      "glowing_rare_earth_veins": "Glowing Rare Earth Veins",
+      "halide_crystal": "Halide Crystal",
+      "mineral_metal": "Mineral Metal",
+      "powdered_solid": "Powdered Solid",
+      "radioactive_veins": "Radioactive Veins",
+      "soft_brushed_metal": "Soft Brushed Metal",
+      "crystal_ore": "Crystal Ore",
+      "metallic_ore_veins": "Metallic Ore Veins",
+      "mineral_ore": "Mineral Ore",
+      "powder_veins": "Powder Veins",
+      "radioactive_cracked_ore": "Radioactive Cracked Ore",
+      "rare_earth_veins": "Rare Earth Veins",
+      "reactive_salt_ore": "Reactive Salt Ore",
+      "sealed_gas_pocket": "Sealed Gas Pocket",
+      "soft_metal_ore": "Soft Metal Ore",
+      "corrosive_vapor": "Corrosive Vapor",
+      "glowing_dust": "Glowing Dust",
+      "mineral_sparks": "Mineral Sparks",
+      "radioactive_sparks": "Radioactive Sparks",
+      "soft_glow_mist": "Soft Glow Mist",
+      "pulse": "Pulse",
+      "slow_flow": "Slow Flow",
+      "subtle_shimmer": "Subtle Shimmer",
+      "unstable_flicker": "Unstable Flicker"
     },
     "nav": {
-      "aria": "プライマリナビゲーション",
-      "home": "ホーム",
-      "roadbook": "ロードブック",
-      "world": "世界",
-      "worldRules": "世界ルール",
-      "economy": "経済",
-      "fairness": "公平性",
-      "resources": "リソース",
-      "elements": "要素",
-      "proofOfFrontier": "証明",
-      "docs": "ドキュメント",
-      "enterWorld": "世界に入る",
-      "guardians": "ガーディアン"
+      "aria": "Primary navigation",
+      "home": "Home",
+      "roadbook": "Roadbook",
+      "world": "World",
+      "worldRules": "World Rules",
+      "economy": "Economy",
+      "fairness": "Fairness",
+      "resources": "Resources",
+      "elements": "Elements",
+      "proofOfFrontier": "Proof",
+      "guardians": "Guardians",
+      "docs": "Docs",
+      "enterWorld": "Enter World"
     },
     "page": {
-      "title": "NiceChunk 要素",
-      "shortTitle": "要素",
-      "navAria": "要素のナビゲーション",
-      "enterWorld": "世界に入る",
-      "resourceRules": "リソースルール",
-      "eyebrow": "要素リソースの基礎",
-      "heading": "要素はリソースになります。",
-      "body": "NiceChunk は、118 の実際の化学元素を、将来のリソース、鍛造、マテリアルビジュアル、および検証可能なゲームルールのためのオープンボキャブラリーとして使用します。",
-      "statsAria": "要素モデルのステータス",
-      "tableEyebrow": "周期的インターフェース",
-      "tableTitle": "要素マップを開く",
-      "filterAria": "要素カテゴリフィルター",
-      "filterAll": "すべて",
-      "protocolAria": "要素プロトコルの注意事項",
+      "title": "NiceChunk Elements",
+      "shortTitle": "Elements",
+      "navAria": "Element navigation",
+      "enterWorld": "Enter World",
+      "resourceRules": "Resource Rules",
+      "eyebrow": "ELEMENT RESOURCE FOUNDATION",
+      "heading": "Elements become resources.",
+      "body": "NiceChunk uses the 118 real chemical elements as the open vocabulary for future resources, forging, material visuals, and verifiable game rules.",
+      "statsAria": "Element model status",
+      "tableEyebrow": "Periodic Interface",
+      "tableTitle": "Open element map",
+      "filterAria": "Element category filters",
+      "filterAll": "All",
+      "protocolAria": "Element protocol notes",
       "stat": {
-        "discovered": "発見された要素",
-        "elements": "実際の化学元素",
-        "categories": "リソース カテゴリ",
-        "natural": "自然な候補者",
-        "versioned": "ルールセットのステータス"
+        "discovered": "Discovered elements",
+        "elements": "Real chemical elements",
+        "categories": "Resource categories",
+        "natural": "Natural candidates",
+        "versioned": "Ruleset status"
       },
       "protocol": {
         "resourceGene": {
-          "title": "リソース遺伝子",
-          "body": "各要素は、採掘されたドロップ、ブロックレシピ、および将来のアセットメタデータの決定論的なマテリアルアイデンティティになる可能性があります。"
+          "title": "Resource Gene",
+          "body": "Each element can become a deterministic material identity for mined drops, block recipes, and future asset metadata."
         },
         "forgingInput": {
-          "title": "鍛造入力",
-          "body": "原子的および物理的特性は、将来の処理層、熱要件、リスク、およびステーションのロジックにマッピングされます。"
+          "title": "Forging Input",
+          "body": "Atomic and physical traits map into future processing tiers, heat requirements, risks, and station logic."
         },
         "visualGene": {
-          "title": "視覚遺伝子",
-          "body": "色、メタリック、粗さ、発光、静脈、粒子、亀裂の特性によって、ボクセル マテリアルのレンダリングが制御されることがあります。"
+          "title": "Visual Gene",
+          "body": "Color, metallic, roughness, emission, vein, grain, and crack traits can drive voxel material rendering."
         },
         "verification": {
-          "title": "オープン検証",
-          "body": "テーブルは公開ルール データとして設計されているため、プレイヤーはチェーン コミットメントの前にリソースがどのように分類されているかを検査できます。"
+          "title": "Open Verification",
+          "body": "The table is designed as public rule data so players can inspect how resources are classified before chain commitments."
         }
       },
-      "tableAria": "周期表",
-      "legendAria": "要素のカテゴリー",
-      "detailsEyebrow": "要素の詳細",
-      "detailsTitle": "要素をクリックして、そのプロパティと処理要件を調べます。",
-      "detailsBody": "以下の要件はゲームに関わるプレースホルダーです。 これらは、各要素カテゴリが後で採掘されたリソース、加工された材料、および新しい構築可能なブロックになる方法を定義します。",
-      "detailListAria": "要素詳細リスト",
-      "elementAria": "{name}、記号 {symbol}、原子番号 {atomicNumber}",
+      "tableAria": "Periodic table",
+      "legendAria": "Element categories",
+      "detailsEyebrow": "ELEMENT DETAILS",
+      "detailsTitle": "Click an element to inspect its properties and processing requirements.",
+      "detailsBody": "The requirements below are game-facing placeholders. They define how each element category can later become mined resources, processed materials, and new constructible blocks.",
+      "detailListAria": "Element detail list",
+      "elementAria": "{name}, symbol {symbol}, atomic number {atomicNumber}",
       "detailHeading": "{name} ({symbol})",
-      "summary": "{name} は要素 {atomicNumber} です。 NiceChunk では、ブロックの破壊から検出でき、後でブロック構築ルールで使用できる {category} リソースを表します。",
-      "blockValue": "{block} ブロック",
-      "processingTitle": "処理要件",
-      "constructionHint": "{name} は、将来のレシピで新しい構築可能なブロックを定義するときに、ベース {category} コンポーネントとして使用できます。"
+      "summary": "{name} is element {atomicNumber}. In NiceChunk it represents a {category} resource that can be discovered from block destruction and later used in block construction rules.",
+      "blockValue": "{block}-block",
+      "processingTitle": "Processing requirements",
+      "constructionHint": "{name} can be used as a base {category} component when future recipes define new constructible blocks."
     },
     "detail": {
-      "back": "要素に戻る",
-      "documentTitle": "NiceChunk 要素ファイル | {symbol} {name}",
-      "missingTitle": "NiceChunk 要素ファイル | {symbol}",
-      "fileEyebrow": "エレメントファイル",
-      "missingZh": "要素詳細データはまだ追加されていません。",
-      "missingEn": "要素詳細データはまだ追加されていません。",
-      "yes": "はい",
-      "no": "いいえ",
-      "notAvailable": "不明",
+      "back": "Back to Elements",
+      "documentTitle": "NiceChunk Element File | {symbol} {name}",
+      "missingTitle": "NiceChunk Element File | {symbol}",
+      "fileEyebrow": "ELEMENT FILE",
+      "missingZh": "Element detail data has not been added yet.",
+      "missingEn": "Element detail data has not been added yet.",
+      "yes": "Yes",
+      "no": "No",
+      "notAvailable": "Unknown",
       "sections": {
-        "identity": "アイデンティティ",
-        "atomic": "アトミック属性",
-        "physical": "物理的属性",
-        "chemical": "化学的属性",
-        "game": "ゲームの属性",
-        "processing": "処理属性",
-        "affinity": "アフィニティ属性",
-        "visualGene": "視覚遺伝子",
-        "description": "説明"
+        "identity": "Identity",
+        "atomic": "Atomic Attributes",
+        "physical": "Physical Attributes",
+        "chemical": "Chemical Attributes",
+        "game": "Game Attributes",
+        "processing": "Processing Attributes",
+        "affinity": "Affinity Attributes",
+        "visualGene": "Visual Gene",
+        "description": "Description"
       },
       "field": {
-        "id": "要素ID",
-        "atomicNumber": "原子番号",
-        "symbol": "記号",
-        "name": "名前",
-        "category": "要素カテゴリ",
-        "period": "期間",
-        "group": "グループ",
-        "block": "ブロック",
-        "standardState": "標準状態",
-        "naturalOccurrence": "自然現象",
-        "atomicMass": "原子質量",
-        "atomicRadiusPm": "原子半径",
-        "covalentRadiusPm": "共有結合半径",
-        "electronConfig": "電子配置",
-        "valenceElectrons": "価電子",
-        "commonOxidationStates": "一般的な酸化状態",
-        "maxOxidationState": "最大酸化状態",
-        "minOxidationState": "最小酸化状態",
-        "densityKgM3": "密度",
-        "referenceDimensions": "参考寸法",
-        "referenceMassKg": "基準質量",
-        "meltingPointC": "融点",
-        "boilingPointC": "沸点",
-        "hardness": "硬度",
-        "toughness": "靭性",
-        "ductility": "延性",
-        "brittleness": "脆性",
-        "electricalConductivity": "導電率",
-        "thermalConductivity": "熱伝導率",
-        "heatResistance": "耐熱性",
-        "magnetism": "磁気",
-        "transparencyTendency": "透明性の傾向",
-        "electronegativity": "電気陰性度",
-        "reactivity": "反応性",
-        "stability": "安定性",
-        "oxidationTendency": "酸化傾向",
-        "corrosiveness": "腐食性",
-        "toxicity": "毒性",
-        "radioactivity": "放射能",
-        "flammability": "可燃性",
-        "explosiveTendency": "爆発的な傾向",
-        "acidBaseTendency": "酸/塩基の傾向",
-        "rarity": "レアリティ",
-        "baseValue": "基本値",
-        "miningDifficulty": "採掘の難易度",
-        "refiningDifficulty": "精錬難易度",
-        "processingDifficulty": "処理難易度",
-        "industrialValue": "産業上の価値",
-        "weaponValue": "武器の価値",
-        "technologyValue": "技術価値",
-        "buildingValue": "価値の構築",
-        "energyValue": "エネルギー値",
-        "biologicalValue": "生物学的価値",
-        "hazardLevel": "危険レベル",
-        "requiredTemperatureC": "必要温度",
-        "minFurnaceTier": "炉の最小階層",
-        "minToolTier": "最小ツール層",
-        "requiredFuelTier": "必要な燃料レベル",
-        "oxygenSensitive": "酸素に敏感",
-        "waterSensitive": "水に弱い",
-        "requiresInertAtmosphere": "不活性雰囲気が必要",
-        "forgeable": "偽造可能",
-        "castable": "キャスタブル",
-        "crystallizable": "結晶化可能",
-        "alloyable": "合金化可能",
-        "preferredProcesses": "優先プロセス",
+        "id": "Element ID",
+        "atomicNumber": "Atomic Number",
+        "symbol": "Symbol",
+        "name": "Name",
+        "category": "Element Category",
+        "period": "Period",
+        "group": "Group",
+        "block": "Block",
+        "standardState": "Standard State",
+        "naturalOccurrence": "Natural Occurrence",
+        "atomicMass": "Atomic Mass",
+        "atomicRadiusPm": "Atomic Radius",
+        "covalentRadiusPm": "Covalent Radius",
+        "electronConfig": "Electron Configuration",
+        "valenceElectrons": "Valence Electrons",
+        "commonOxidationStates": "Common Oxidation States",
+        "maxOxidationState": "Max Oxidation State",
+        "minOxidationState": "Min Oxidation State",
+        "densityKgM3": "Density",
+        "referenceDimensions": "Reference Dimensions",
+        "referenceMassKg": "Reference Mass",
+        "meltingPointC": "Melting Point",
+        "boilingPointC": "Boiling Point",
+        "hardness": "Hardness",
+        "toughness": "Toughness",
+        "ductility": "Ductility",
+        "brittleness": "Brittleness",
+        "electricalConductivity": "Electrical Conductivity",
+        "thermalConductivity": "Thermal Conductivity",
+        "heatResistance": "Heat Resistance",
+        "magnetism": "Magnetism",
+        "transparencyTendency": "Transparency Tendency",
+        "electronegativity": "Electronegativity",
+        "reactivity": "Reactivity",
+        "stability": "Stability",
+        "oxidationTendency": "Oxidation Tendency",
+        "corrosiveness": "Corrosiveness",
+        "toxicity": "Toxicity",
+        "radioactivity": "Radioactivity",
+        "flammability": "Flammability",
+        "explosiveTendency": "Explosive Tendency",
+        "acidBaseTendency": "Acid/Base Tendency",
+        "rarity": "Rarity",
+        "baseValue": "Base Value",
+        "miningDifficulty": "Mining Difficulty",
+        "refiningDifficulty": "Refining Difficulty",
+        "processingDifficulty": "Processing Difficulty",
+        "industrialValue": "Industrial Value",
+        "weaponValue": "Weapon Value",
+        "technologyValue": "Technology Value",
+        "buildingValue": "Building Value",
+        "energyValue": "Energy Value",
+        "biologicalValue": "Biological Value",
+        "hazardLevel": "Hazard Level",
+        "requiredTemperatureC": "Required Temperature",
+        "minFurnaceTier": "Minimum Furnace Tier",
+        "minToolTier": "Minimum Tool Tier",
+        "requiredFuelTier": "Required Fuel Tier",
+        "oxygenSensitive": "Oxygen Sensitive",
+        "waterSensitive": "Water Sensitive",
+        "requiresInertAtmosphere": "Requires Inert Atmosphere",
+        "forgeable": "Forgeable",
+        "castable": "Castable",
+        "crystallizable": "Crystallizable",
+        "alloyable": "Alloyable",
+        "preferredProcesses": "Preferred Processes",
         "risk": {
-          "oxidation": "酸化のリスク",
-          "explosion": "爆発の危険性",
-          "vaporization": "蒸発のリスク",
-          "contamination": "汚染リスク",
-          "brittleness": "脆化のリスク"
+          "oxidation": "Oxidation Risk",
+          "explosion": "Explosion Risk",
+          "vaporization": "Vaporization Risk",
+          "contamination": "Contamination Risk",
+          "brittleness": "Brittleness Risk"
         },
-        "metalAffinity": "金属親和性",
-        "alloyAffinity": "合金の親和性",
-        "oxygenAffinity": "酸素親和性",
-        "carbonAffinity": "炭素親和性",
-        "hydrogenAffinity": "水素親和性",
-        "siliconAffinity": "シリコン親和性",
-        "sulfurAffinity": "硫黄親和性",
-        "halogenAffinity": "ハロゲン親和性",
-        "crystalAffinity": "クリスタルアフィニティ",
-        "ceramicAffinity": "セラミック親和性",
-        "organicAffinity": "有機的親和性",
-        "gasAffinity": "ガス親和性",
-        "energyAffinity": "エネルギー親和性",
-        "magneticMaterialAffinity": "磁性材料の親和性",
-        "structuralMaterialAffinity": "構造材料の親和性",
-        "opticalMaterialAffinity": "光学材料の親和性",
-        "electronicMaterialAffinity": "電子物質の親和性",
-        "baseColor": "ベースカラー",
-        "secondaryColor": "二次色",
-        "oxidizedColor": "いぶし色",
-        "darkStateColor": "ダークステートカラー",
-        "emissionColor": "発光色",
-        "materialLook": "マテリアルルック",
-        "textureType": "テクスチャタイプ",
-        "oreTextureType": "鉱石テクスチャタイプ",
-        "metallic": "メタリック",
-        "roughness": "粗さ",
-        "transparency": "透明性",
-        "emissionStrength": "発光強度",
-        "grain": "穀物",
-        "scratchDensity": "スクラッチ密度",
-        "veinDensity": "静脈密度",
-        "crackDensity": "クラック密度",
-        "oxidationPattern": "酸化パターン",
-        "particleEffect": "パーティクルエフェクト",
-        "animationEffect": "アニメーション効果"
+        "metalAffinity": "Metal Affinity",
+        "alloyAffinity": "Alloy Affinity",
+        "oxygenAffinity": "Oxygen Affinity",
+        "carbonAffinity": "Carbon Affinity",
+        "hydrogenAffinity": "Hydrogen Affinity",
+        "siliconAffinity": "Silicon Affinity",
+        "sulfurAffinity": "Sulfur Affinity",
+        "halogenAffinity": "Halogen Affinity",
+        "crystalAffinity": "Crystal Affinity",
+        "ceramicAffinity": "Ceramic Affinity",
+        "organicAffinity": "Organic Affinity",
+        "gasAffinity": "Gas Affinity",
+        "energyAffinity": "Energy Affinity",
+        "magneticMaterialAffinity": "Magnetic Material Affinity",
+        "structuralMaterialAffinity": "Structural Material Affinity",
+        "opticalMaterialAffinity": "Optical Material Affinity",
+        "electronicMaterialAffinity": "Electronic Material Affinity",
+        "baseColor": "Base Color",
+        "secondaryColor": "Secondary Color",
+        "oxidizedColor": "Oxidized Color",
+        "darkStateColor": "Dark State Color",
+        "emissionColor": "Emission Color",
+        "materialLook": "Material Look",
+        "textureType": "Texture Type",
+        "oreTextureType": "Ore Texture Type",
+        "metallic": "Metallic",
+        "roughness": "Roughness",
+        "transparency": "Transparency",
+        "emissionStrength": "Emission Strength",
+        "grain": "Grain",
+        "scratchDensity": "Scratch Density",
+        "veinDensity": "Vein Density",
+        "crackDensity": "Crack Density",
+        "oxidationPattern": "Oxidation Pattern",
+        "particleEffect": "Particle Effect",
+        "animationEffect": "Animation Effect"
       }
     },
     "category": {
-      "nonmetal": "非金属",
-      "noble_gas": "希ガス",
-      "alkali_metal": "アルカリ金属",
-      "alkaline_earth_metal": "アルカリ土類金属",
-      "metalloid": "メタロイド",
-      "halogen": "ハロゲン",
-      "post_transition_metal": "遷移後の金属",
-      "transition_metal": "遷移金属",
-      "lanthanide": "ランタニド",
-      "actinide": "アクチニド",
-      "unknown_properties": "未知のプロパティ"
+      "nonmetal": "Nonmetal",
+      "noble_gas": "Noble Gas",
+      "alkali_metal": "Alkali Metal",
+      "alkaline_earth_metal": "Alkaline Earth Metal",
+      "metalloid": "Metalloid",
+      "halogen": "Halogen",
+      "post_transition_metal": "Post-transition Metal",
+      "transition_metal": "Transition Metal",
+      "lanthanide": "Lanthanide",
+      "actinide": "Actinide",
+      "unknown_properties": "Unknown Properties"
     },
     "state": {
-      "solid": "ソリッド",
-      "liquid": "液体",
-      "gas": "ガス",
-      "unknown": "不明"
+      "solid": "Solid",
+      "liquid": "Liquid",
+      "gas": "Gas",
+      "unknown": "Unknown"
     },
     "phase": {
-      "solid": "ソリッド",
-      "liquid": "液体",
-      "gas": "ガス",
-      "unknown": "不明"
+      "solid": "Solid",
+      "liquid": "Liquid",
+      "gas": "Gas",
+      "unknown": "Unknown"
     },
     "property": {
-      "atomicNumber": "原子番号",
-      "symbol": "記号",
-      "atomicMass": "原子質量",
-      "category": "カテゴリ",
-      "phase": "状態",
-      "group": "グループ",
-      "period": "期間",
-      "block": "電子ブロック"
+      "atomicNumber": "Atomic Number",
+      "symbol": "Symbol",
+      "atomicMass": "Atomic Mass",
+      "category": "Category",
+      "phase": "State",
+      "group": "Group",
+      "period": "Period",
+      "block": "Electron Block"
     },
     "processing": {
-      "tier": "処理層",
-      "tierValue": "層 {tier}",
+      "tier": "Processing Tier",
+      "tierValue": "Tier {tier}",
       "station": {
-        "separator": "セパレータ",
-        "cryogenicTrap": "極低温トラップ",
-        "stabilizer": "スタビライザー",
-        "kiln": "窯",
-        "refiner": "精製者",
-        "sealedReactor": "密閉型リアクター",
-        "smelter": "製錬所",
-        "alloyForge": "合金鍛造",
-        "magneticSeparator": "磁気選別機",
-        "shieldedReactor": "シールドリアクトル"
+        "separator": "Separator",
+        "cryogenicTrap": "Cryogenic Trap",
+        "stabilizer": "Stabilizer",
+        "kiln": "Kiln",
+        "refiner": "Refiner",
+        "sealedReactor": "Sealed Reactor",
+        "smelter": "Smelter",
+        "alloyForge": "Alloy Forge",
+        "magneticSeparator": "Magnetic Separator",
+        "shieldedReactor": "Shielded Reactor"
       },
       "heat": {
-        "low": "弱火",
-        "medium": "中火",
-        "high": "高熱",
-        "extreme": "極度の暑さ"
+        "low": "Low Heat",
+        "medium": "Medium Heat",
+        "high": "High Heat",
+        "extreme": "Extreme Heat"
       },
       "binder": {
-        "none": "バインダーなし",
-        "pressureCell": "圧力セル",
-        "sealedCapsule": "密閉カプセル",
-        "flux": "フラックス",
-        "silicateMatrix": "ケイ酸塩マトリックス",
-        "saltMatrix": "塩マトリックス",
-        "ingotMold": "インゴットモールド",
-        "carbonFlux": "炭素フラックス",
-        "rareEarthFlux": "レアアースフラックス",
-        "containmentCore": "収容コア"
+        "none": "No Binder",
+        "pressureCell": "Pressure Cell",
+        "sealedCapsule": "Sealed Capsule",
+        "flux": "Flux",
+        "silicateMatrix": "Silicate Matrix",
+        "saltMatrix": "Salt Matrix",
+        "ingotMold": "Ingot Mold",
+        "carbonFlux": "Carbon Flux",
+        "rareEarthFlux": "Rare Earth Flux",
+        "containmentCore": "Containment Core"
       }
     }
   }

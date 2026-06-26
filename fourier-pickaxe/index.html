@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A NiceChunk lab that loads VOX models, maps colors to a shared palette, emits compact on-chain function bytes, and redraws the model from that payload."
+      data-i18n-content="ncmFourier.page.description"
+    />
+    <title data-i18n="ncmFourier.page.title">NCM Function Model Lab</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="viewer-panel">
+        <div class="viewer-toolbar">
+          <div>
+            <p class="eyebrow" data-i18n="ncmFourier.hero.eyebrow">NiceChunk Function Asset Lab</p>
+            <h1 data-i18n="ncmFourier.hero.title">Load a VOX model and redraw it from a function</h1>
+          </div>
+          <div class="status-pill" id="buildStatus" data-i18n="ncmFourier.status.ready">Drop a VOX file</div>
+        </div>
+
+        <div class="lab-grid">
+          <section class="canvas-card">
+            <div class="canvas-head">
+              <h2 data-i18n="ncmFourier.viewer.source">Element model</h2>
+              <span id="sourceBadge">0 voxels</span>
+            </div>
+            <div class="canvas-viewport">
+              <canvas id="sourceScene" aria-label="Loaded element model" data-i18n-aria-label="ncmFourier.viewer.sourceAria"></canvas>
+            </div>
+          </section>
+          <section class="canvas-card">
+            <div class="canvas-head">
+              <h2 data-i18n="ncmFourier.viewer.function">Function redraw</h2>
+              <span id="functionBadge">0 basis</span>
+            </div>
+            <div class="canvas-viewport">
+              <canvas id="functionScene" aria-label="Function generated model" data-i18n-aria-label="ncmFourier.viewer.functionAria"></canvas>
+            </div>
+          </section>
+          <section class="canvas-card">
+            <div class="canvas-head">
+              <h2 data-i18n="ncmFourier.viewer.pow">PoW best model</h2>
+              <span id="powBadge">0%</span>
+            </div>
+            <div class="canvas-viewport">
+              <canvas id="powScene" aria-label="PoW best generated model" data-i18n-aria-label="ncmFourier.viewer.powAria"></canvas>
+            </div>
+          </section>
+        </div>
+
+        <div class="timeline">
+          <label class="file-drop" id="dropZone">
+            <input id="voxFile" type="file" accept=".vox" />
+            <span data-i18n="ncmFourier.controls.drop">Drop or choose .vox</span>
+          </label>
+          <button type="button" id="computeFunction" data-i18n="ncmFourier.controls.compute" disabled>Compute function</button>
+          <button type="button" id="optimizeFunction" data-i18n="ncmFourier.controls.optimize" disabled>Optimize function</button>
+          <label>
+            <span data-i18n="ncmFourier.controls.exprBytes">Expr bytes</span>
+            <input id="exprBytesRange" type="range" min="4" max="32" step="1" value="8" />
+          </label>
+          <label>
+            <span data-i18n="ncmFourier.controls.maxBasis">Max basis</span>
+            <input id="basisRange" type="range" min="32" max="2048" step="32" value="512" />
+          </label>
+          <label>
+            <span data-i18n="ncmFourier.controls.scale">View scale</span>
+            <input id="scaleRange" type="range" min="40" max="120" value="72" />
+          </label>
+        </div>
+      </section>
+
+      <aside class="info-panel">
+        <section class="metric-grid">
+          <div>
+            <span data-i18n="ncmFourier.metrics.grid">Model size</span>
+            <strong id="gridMetric">-</strong>
+          </div>
+          <div>
+            <span data-i18n="ncmFourier.metrics.coefficients">Function basis</span>
+            <strong id="coefMetric">0</strong>
+          </div>
+          <div>
+            <span data-i18n="ncmFourier.metrics.voxels">Redrawn voxels</span>
+            <strong id="voxelMetric">0</strong>
+          </div>
+          <div>
+            <span data-i18n="ncmFourier.metrics.storage">On-chain bytes</span>
+            <strong id="storageMetric">0 B</strong>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 data-i18n="ncmFourier.palette.title">G0 global colors used</h2>
+          <div class="palette-strip" id="paletteStrip"></div>
+        </section>
+
+        <section class="card">
+          <h2 data-i18n="ncmFourier.tech.title">Technical idea</h2>
+          <p data-i18n="ncmFourier.tech.body">
+            The function payload stores only G0 palette indexes and box-basis bytes. Later miners can use the exact model hash as the target and search for a shorter Fourier gene.
+          </p>
+          <ol class="steps" id="steps">
+            <li data-step="sample" class="active" data-i18n="ncmFourier.steps.sample">Load VOX and canonicalize its voxel/color grid.</li>
+            <li data-step="fit" data-i18n="ncmFourier.steps.fit">Map colors to the shared G0 palette and merge same-color voxels into box basis functions.</li>
+            <li data-step="rebuild" data-i18n="ncmFourier.steps.rebuild">Evaluate the function bytes and redraw the model from G0 palette indexes.</li>
+            <li data-step="bake" data-i18n="ncmFourier.steps.bake">Use the exact result hash as a future PoW target for shorter genes.</li>
+          </ol>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <h2 data-i18n="ncmFourier.formula.title">On-chain function data</h2>
+            <button type="button" id="copyGene" data-i18n="ncmFourier.formula.copy">Copy function</button>
+          </div>
+          <pre id="formulaBlock"></pre>
+        </section>
+
+        <section class="card">
+          <h2 data-i18n="ncmFourier.algorithm.title">Original algorithm</h2>
+          <pre id="algorithmBlock" data-i18n="ncmFourier.algorithm.empty">Compute a function to show its decoder algorithm.</pre>
+        </section>
+
+        <section class="card">
+          <div class="section-head">
+            <h2 data-i18n="ncmFourier.pow.title">PoW expression search</h2>
+            <div class="pow-actions">
+              <button type="button" id="startPow" data-i18n="ncmFourier.pow.start" disabled>Start PoW</button>
+              <button type="button" id="stopPow" data-i18n="ncmFourier.pow.stop" disabled>Stop</button>
+            </div>
+          </div>
+          <div class="pow-grid">
+            <div>
+              <span data-i18n="ncmFourier.pow.hashrate">Hashrate</span>
+              <strong id="powHashrate">0 H/s</strong>
+            </div>
+            <div>
+              <span data-i18n="ncmFourier.pow.attempts">Attempts</span>
+              <strong id="powAttempts">0</strong>
+            </div>
+            <div>
+              <span data-i18n="ncmFourier.pow.best">Best match</span>
+              <strong id="powBest">0%</strong>
+            </div>
+            <div>
+              <span data-i18n="ncmFourier.pow.bytes">Expr bytes</span>
+              <strong id="powBytes">0 B</strong>
+            </div>
+          </div>
+          <pre id="powLog" data-i18n="ncmFourier.pow.empty">Load a VOX model, then start local PoW.</pre>
+        </section>
+
+        <section class="card">
+          <h2 data-i18n="ncmFourier.coefficients.title">Basis preview</h2>
+          <pre id="coefBlock"></pre>
+        </section>
+      </aside>
+    </main>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>

@@ -31,6 +31,7 @@ const loadSampleButton = document.querySelector("#loadSample");
 const resetViewButton = document.querySelector("#resetView");
 const previewTitle = document.querySelector("#previewTitle");
 const canvas = document.querySelector("#ncmPreview");
+const ncmDnaFrame = document.querySelector("#ncmDnaFrame");
 
 let currentNcm = "";
 let currentFilename = "nicechunk-model.ncm";
@@ -133,6 +134,15 @@ function setupEvents() {
     distance = THREE.MathUtils.clamp(distance + event.deltaY * 0.003, 2.2, 10);
   }, { passive: false });
   window.addEventListener("resize", resize, { passive: true });
+  window.addEventListener("message", resizeNcmDnaFrame);
+}
+
+function resizeNcmDnaFrame(event) {
+  if (!ncmDnaFrame || event.origin !== window.location.origin || event.source !== ncmDnaFrame.contentWindow) return;
+  if (event.data?.type !== "nicechunk:ncm-dna-height") return;
+  const nextHeight = Math.ceil(Number(event.data.height) || 0);
+  if (nextHeight < 600) return;
+  ncmDnaFrame.style.height = `${nextHeight + 8}px`;
 }
 
 function renderSamples() {

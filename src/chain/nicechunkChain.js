@@ -6,6 +6,7 @@ import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
 import {
+  ComputeBudgetProgram,
   Connection,
   Keypair,
   PublicKey,
@@ -13,43 +14,53 @@ import {
   Transaction,
   TransactionInstruction,
 } from "@solana/web3.js";
-import { EMPTY_BLOCK, WorldMapBlock } from "../world/blocks.js";
-import { chunkSize } from "../world/config.js";
+import { EMPTY_BLOCK, WorldMapBlock, renderTypeForBlock } from "../world/blocks.js";
+import { canonicalBlockIdAt, isCanonicalMineableBlockId } from "../world/canonicalResource.js";
+import { chunkSize, minBuildY } from "../world/config.js";
 import { createNicechunkRpcFetch, getNicechunkRpcUrl, reportRpcError, rpcConfigChangedEventName } from "../rpcConfig.js";
+import { assertNicechunkWalletNetwork, solanaClusterLabel } from "../solanaNetwork.js";
 
 if (!globalThis.Buffer) globalThis.Buffer = Buffer;
 
 const coreProgramId = new PublicKey("9EhMCRYMJej1F21KzaA5Zao3khGGc5aJbDGbnxaogQHu");
 const playerProgramId = new PublicKey("oeaRMVnPoV4iENnGCCtaEeRxU5be515s4YYe6aXQuKe");
-const chunkProgramId = new PublicKey("12rCvz9PZ64Uix1TCiHEGU4AN4ZS1h4jv5u7CkqTRdk5");
+const chunkProgramId = new PublicKey("7JD6kASAfQeiVLUi51mrfWSbeh96ntRJnRiFQKCqUVhn");
 const backpackProgramId = new PublicKey("FwTrMDGyRg653L9svvt5aoGii9ZjX1WekSFWcwByjxqt");
 const marketProgramId = new PublicKey("1PwPzFtdJ5gQqku5gBo4b6Wvo48Qe8NuXSogUP8TWpR");
+const smeltingProgramId = new PublicKey("7imEiNtpiN487HRwrftdLrMFs8TcAnjLE94vKsDgU6L7");
 const globalConfigSeed = "global-config";
 const playerSeed = "player";
 const playerSessionSeed = "session";
-const chunkSeed = "chunk";
 const chunkBrokenSeed = "chunk-broken";
 const backpackSeed = "backpack";
 const marketListingSeed = "listing";
 const marketAuthoritySeed = "market-authority";
+const smeltingRecipeTableSeed = "smelting-recipes";
+const smeltingAuthoritySeed = "smelting-authority";
+const smeltingDefaultRecipeTableId = 1n;
 const globalConfigLength = 293;
 const globalConfigMagic = "NCKCFG01";
 const worldConfigStorageKey = "nicechunk.worldConfig.v1";
 const legacyPlayerProfileLength = 417;
 const playerProfileLength = 449;
-const chunkStateLength = 8280;
-const chunkHeaderLength = 88;
-const blockDeltaLength = 64;
-const chunkMagic = "NCKCHK01";
 const chunkBrokenMagic = "NCBK";
 const chunkBrokenHeaderLength = 16;
 const chunkBrokenRecordLength = 3;
 const backpackMagic = "NCKBPK01";
+const backpackLegacyVersion = 1;
+const backpackVersion = 2;
 const backpackDefaultCapacity = 50;
 const backpackMaxCapacity = 99;
 const backpackHeaderLength = 128;
-const backpackRecordLength = 10;
+const backpackLegacyRecordLength = 10;
+const backpackSlotRecordLength = 64;
+const backpackRecordLength = backpackSlotRecordLength;
+const backpackLegacyAccountLength = backpackHeaderLength + backpackMaxCapacity * backpackLegacyRecordLength;
 const backpackAccountLength = backpackHeaderLength + backpackMaxCapacity * backpackRecordLength;
+const backpackSlotKindBlock = 1;
+const backpackSlotKindItem = 2;
+const backpackPackedYBits = 9;
+const backpackPackedYMask = (1 << backpackPackedYBits) - 1;
 const marketListingMagic = "NCKMKT01";
 const marketListingLength = 216;
 const marketListingStateOffset = 11;
@@ -116,13 +127,14 @@ const minimumSessionFundingLamports = 100_000_000;
 const sessionMinimumMiningLamports = 8_000_000;
 const sessionAllowedActions = (1 << 1) | (1 << 2);
 const sessionMaxActions = 10_000;
-const inspectOnlyBlockId = 0xffff;
+const miningComputeUnitLimit = 1_400_000;
 
 const blockIdByRenderType = new Map([
   ["grass", WorldMapBlock.Grass],
   ["dirt", WorldMapBlock.Dirt],
   ["stone", WorldMapBlock.Stone],
   ["deepStone", WorldMapBlock.DeepStone],
+  ["coal", WorldMapBlock.Coal],
   ["sand", WorldMapBlock.Sand],
   ["sandstone", WorldMapBlock.Sand],
   ["gravel", WorldMapBlock.Gravel],
@@ -263,17 +275,6 @@ export function derivePlayerSessionPda(owner, sessionAuthority) {
   );
 }
 
-export function deriveChunkPda(chunkX, chunkZ) {
-  const chunkXBytes = Buffer.alloc(4);
-  const chunkZBytes = Buffer.alloc(4);
-  chunkXBytes.writeInt32LE(chunkX, 0);
-  chunkZBytes.writeInt32LE(chunkZ, 0);
-  return PublicKey.findProgramAddressSync(
-    [Buffer.from(chunkSeed), deriveGlobalConfigPda().toBuffer(), chunkXBytes, chunkZBytes],
-    chunkProgramId,
-  );
-}
-
 export function deriveChunkBrokenPda(chunkX, chunkZ) {
   const chunkXBytes = Buffer.alloc(4);
   const chunkZBytes = Buffer.alloc(4);
@@ -314,6 +315,64 @@ export function deriveMarketAssetPda(owner, assetId) {
 
 export function deriveMarketAuthorityPda() {
   return PublicKey.findProgramAddressSync([Buffer.from(marketAuthoritySeed)], marketProgramId);
+}
+
+export function deriveSmeltingRecipeTablePda(tableId = smeltingDefaultRecipeTableId) {
+  const tableIdBytes = Buffer.alloc(8);
+  tableIdBytes.writeBigUInt64LE(BigInt(tableId), 0);
+  return PublicKey.findProgramAddressSync([Buffer.from(smeltingRecipeTableSeed), tableIdBytes], smeltingProgramId);
+}
+
+export function deriveSmeltingAuthorityPda() {
+  return PublicKey.findProgramAddressSync([Buffer.from(smeltingAuthoritySeed)], smeltingProgramId);
+}
+
+export async function executeSmeltingOnChain({
+  recipeId,
+  recipeTableId = smeltingDefaultRecipeTableId,
+  inputIndexes = [],
+  fuelIndexes = [],
+  backpackAddress = null,
+} = {}) {
+  const provider = await connectedWalletProvider({ prompt: true });
+  if (!provider) return { submitted: false, reason: "wallet-unavailable" };
+  const normalizedInputIndexes = normalizeBackpackIndexes(inputIndexes).slice(0, 8);
+  const normalizedFuelIndexes = normalizeBackpackIndexes(fuelIndexes);
+  if (!BigInt(recipeId || 0) || !normalizedInputIndexes.length || !normalizedFuelIndexes.length) {
+    return { submitted: false, reason: "invalid-smelting-inputs" };
+  }
+  const conn = getNicechunkConnection();
+  const backpack = backpackAddress
+    ? new PublicKey(backpackAddress)
+    : (await loadEquippedBackpackForOwner(provider.publicKey, conn))?.publicKey;
+  if (!backpack) return { submitted: false, reason: "no-backpack" };
+  const [recipeTable] = deriveSmeltingRecipeTablePda(recipeTableId);
+  const recipeTableAccount = await conn.getAccountInfo(recipeTable, "confirmed");
+  if (!recipeTableAccount?.data?.length) {
+    return { submitted: false, reason: "smelting-table-uninitialized", recipeTable: recipeTable.toBase58() };
+  }
+  const tx = new Transaction();
+  tx.add(ComputeBudgetProgram.setComputeUnitLimit({ units: 260_000 }));
+  tx.add(createExecuteSmeltingInstruction({
+    owner: provider.publicKey,
+    recipeTable,
+    backpack,
+    recipeId,
+    inputIndexes: normalizedInputIndexes,
+    fuelIndexes: normalizedFuelIndexes,
+  }));
+  const signature = await signAndSendWalletTransaction(provider, tx, conn);
+  return {
+    submitted: true,
+    signature,
+    backpack: backpack.toBase58(),
+    recipeId: BigInt(recipeId).toString(),
+    inputIndexes: normalizedInputIndexes,
+    fuelIndexes: normalizedFuelIndexes,
+    recipeTable: recipeTable.toBase58(),
+    recipeTableId: BigInt(recipeTableId).toString(),
+    programId: smeltingProgramId.toBase58(),
+  };
 }
 
 export async function createMarketListingOnChain({
@@ -653,23 +712,19 @@ function marketListingSearchText(listing) {
     record ? `${record.worldX},${record.worldY},${record.worldZ}` : "",
     asset?.itemId,
     asset?.itemCode,
-  ].join(" ").toLowerCase();
+  ]
+    .filter((part) => part !== null && part !== undefined && part !== "")
+    .map((part) => String(part))
+    .join(" ")
+    .toLowerCase();
 }
 
 export async function loadChunkBlockDeltas(chunkX, chunkZ) {
   if (!isNicechunkChainSyncEnabled()) return [];
   const [chunkBrokenPda] = deriveChunkBrokenPda(chunkX, chunkZ);
-  const [chunkPda] = deriveChunkPda(chunkX, chunkZ);
-  const [chunkBrokenAccount, chunkAccount] = await getNicechunkConnection().getMultipleAccountsInfo(
-    [chunkBrokenPda, chunkPda],
-    "confirmed",
-  );
-  if (chunkBrokenAccount?.data?.length) {
-    const brokenDeltas = decodeChunkBrokenDeltas(chunkBrokenAccount.data, chunkX, chunkZ);
-    if (brokenDeltas.length) return brokenDeltas;
-  }
-  if (!chunkAccount?.data?.length) return [];
-  return decodeChunkDeltas(chunkAccount.data, chunkX, chunkZ);
+  const chunkBrokenAccount = await getNicechunkConnection().getAccountInfo(chunkBrokenPda, "confirmed");
+  if (!chunkBrokenAccount?.data?.length) return [];
+  return decodeChunkBrokenDeltas(chunkBrokenAccount.data, chunkX, chunkZ);
 }
 
 export async function loadChunkBlockDeltasBatch(chunks, { batchSize = 50 } = {}) {
@@ -680,12 +735,7 @@ export async function loadChunkBlockDeltasBatch(chunks, { batchSize = 50 } = {})
 
   for (let start = 0; start < uniqueChunks.length; start += batchSize) {
     const batch = uniqueChunks.slice(start, start + batchSize);
-    const accounts = [];
-    for (const chunk of batch) {
-      const [chunkBrokenPda] = deriveChunkBrokenPda(chunk.chunkX, chunk.chunkZ);
-      const [chunkPda] = deriveChunkPda(chunk.chunkX, chunk.chunkZ);
-      accounts.push(chunkBrokenPda, chunkPda);
-    }
+    const accounts = batch.map((chunk) => deriveChunkBrokenPda(chunk.chunkX, chunk.chunkZ)[0]);
     let infos;
     try {
       infos = await conn.getMultipleAccountsInfo(accounts, "confirmed");
@@ -696,15 +746,10 @@ export async function loadChunkBlockDeltasBatch(chunks, { batchSize = 50 } = {})
     for (let index = 0; index < batch.length; index += 1) {
       const chunk = batch[index];
       const chunkKey = `${chunk.chunkX},${chunk.chunkZ}`;
-      const brokenAccount = infos[index * 2];
-      const legacyAccount = infos[index * 2 + 1];
-      let deltas = [];
-      if (brokenAccount?.data?.length) {
-        deltas = decodeChunkBrokenDeltas(brokenAccount.data, chunk.chunkX, chunk.chunkZ);
-      }
-      if (!deltas.length && legacyAccount?.data?.length) {
-        deltas = decodeChunkDeltas(legacyAccount.data, chunk.chunkX, chunk.chunkZ);
-      }
+      const brokenAccount = infos[index];
+      const deltas = brokenAccount?.data?.length
+        ? decodeChunkBrokenDeltas(brokenAccount.data, chunk.chunkX, chunk.chunkZ)
+        : [];
       results.set(chunkKey, deltas);
     }
   }
@@ -733,20 +778,55 @@ export async function recordBlockBreakOnChain(block, toolSlot = 0) {
     if (equippedBackpack.itemCount >= equippedBackpack.capacity) {
       return { submitted: false, reason: "backpack-full" };
     }
-    tx.add(createMineBlockInstruction({ authority: session.keypair.publicKey, block, owner: provider.publicKey }));
+    const canonicalBlock = await resolveCanonicalMinedBlock(block);
+    if (!isCanonicalMineableBlockId(canonicalBlock.blockId)) {
+      return { submitted: false, reason: "unmineable-block", blockId: canonicalBlock.blockId };
+    }
+    await ensureChunkBrokenInitialized(
+      conn,
+      session.keypair,
+      blockChunkX(canonicalBlock.x),
+      blockChunkZ(canonicalBlock.z),
+    );
+    tx.add(ComputeBudgetProgram.setComputeUnitLimit({ units: miningComputeUnitLimit }));
+    tx.add(createMineBlockInstruction({
+      authority: session.keypair.publicKey,
+      block,
+      owner: provider.publicKey,
+      expectedBlockId: canonicalBlock.blockId,
+    }));
     tx.add(createAppendMinedResourceInstruction({
       owner: provider.publicKey,
       sessionAuthority: session.keypair.publicKey,
       backpack: equippedBackpack.publicKey,
-      block,
+      block: canonicalBlock,
     }));
 
     const signature = await signAndSendKeypairTransaction(session.keypair, tx, conn);
-    return { submitted: true, signature, backpack: equippedBackpack?.publicKey?.toBase58?.() ?? null };
+    return {
+      submitted: true,
+      signature,
+      backpack: equippedBackpack?.publicKey?.toBase58?.() ?? null,
+      block: canonicalBlock,
+      blockId: canonicalBlock.blockId,
+      type: canonicalBlock.type,
+    };
   } catch (error) {
     reportRpcError(error, "mine-block");
     throw error;
   }
+}
+
+async function ensureChunkBrokenInitialized(conn, sessionKeypair, chunkX, chunkZ) {
+  const [chunkBrokenPda] = deriveChunkBrokenPda(chunkX, chunkZ);
+  const account = await conn.getAccountInfo(chunkBrokenPda, "confirmed");
+  if (account?.data?.length) return null;
+  const tx = new Transaction().add(createInitializeChunkBrokenInstruction({
+    authority: sessionKeypair.publicKey,
+    chunkX,
+    chunkZ,
+  }));
+  return signAndSendKeypairTransaction(sessionKeypair, tx, conn);
 }
 
 export async function purchaseDefaultBackpack() {
@@ -758,11 +838,14 @@ export async function purchaseDefaultBackpack() {
   if (playerAccount?.data?.length) {
     const profile = decodePlayerProfile(playerAccount.data);
     if (profile.equippedBackpack && profile.equippedBackpack !== PublicKey.default.toBase58()) {
-      return {
-        purchased: false,
-        reason: "backpack-already-bound",
-        backpack: profile.equippedBackpack,
-      };
+      const equippedAccount = await conn.getAccountInfo(new PublicKey(profile.equippedBackpack), "confirmed").catch(() => null);
+      if (isCurrentBackpackAccountData(equippedAccount?.data)) {
+        return {
+          purchased: false,
+          reason: "backpack-already-bound",
+          backpack: profile.equippedBackpack,
+        };
+      }
     }
   }
   const backpackId = createBackpackId();
@@ -803,6 +886,71 @@ export async function getEquippedBackpackStatus({ prompt = false } = {}) {
     return { walletAvailable: Boolean(provider), owner: owner.toBase58(), equipped: false, backpack: null };
   }
   return { walletAvailable: Boolean(provider), owner: owner.toBase58(), equipped: true, backpack: equippedBackpack };
+}
+
+export async function discardBackpackResourceAt({ backpackAddress = null, index = null } = {}) {
+  const provider = await connectedWalletProvider();
+  if (!provider) return { submitted: false, reason: "wallet-unavailable" };
+  const resourceIndex = Number(index);
+  if (!Number.isInteger(resourceIndex) || resourceIndex < 0 || resourceIndex > 98) {
+    return { submitted: false, reason: "invalid-backpack-index" };
+  }
+  const session = await getOrCreateGameplaySession(provider);
+  const backpack = backpackAddress
+    ? new PublicKey(backpackAddress)
+    : (await loadEquippedBackpackForOwner(provider.publicKey))?.publicKey;
+  if (!backpack) return { submitted: false, reason: "no-backpack" };
+  const tx = new Transaction().add(createRemoveBackpackResourceInstruction({
+    owner: provider.publicKey,
+    sessionAuthority: session.keypair.publicKey,
+    backpack,
+    index: resourceIndex,
+  }));
+  const conn = getNicechunkConnection();
+  const signature = await signAndSendKeypairTransaction(session.keypair, tx, conn);
+  return {
+    submitted: true,
+    signature,
+    backpack: backpack.toBase58(),
+    index: resourceIndex,
+    programId: backpackProgramId.toBase58(),
+  };
+}
+
+export async function discardBackpackResourcesAt({ backpackAddress = null, indexes = [] } = {}) {
+  const provider = await connectedWalletProvider();
+  if (!provider) return { submitted: false, reason: "wallet-unavailable" };
+  const resourceIndexes = normalizeBackpackIndexes(indexes);
+  if (!resourceIndexes.length) {
+    return { submitted: false, reason: "invalid-backpack-index" };
+  }
+  const session = await getOrCreateGameplaySession(provider);
+  const backpack = backpackAddress
+    ? new PublicKey(backpackAddress)
+    : (await loadEquippedBackpackForOwner(provider.publicKey))?.publicKey;
+  if (!backpack) return { submitted: false, reason: "no-backpack" };
+  const tx = new Transaction().add(createRemoveBackpackResourcesInstruction({
+    owner: provider.publicKey,
+    sessionAuthority: session.keypair.publicKey,
+    backpack,
+    indexes: resourceIndexes,
+  }));
+  const conn = getNicechunkConnection();
+  const signature = await signAndSendKeypairTransaction(session.keypair, tx, conn);
+  return {
+    submitted: true,
+    signature,
+    backpack: backpack.toBase58(),
+    indexes: resourceIndexes,
+    count: resourceIndexes.length,
+    programId: backpackProgramId.toBase58(),
+  };
+}
+
+function normalizeBackpackIndexes(indexes = []) {
+  return Array.from(new Set((indexes ?? [])
+    .map((index) => Number(index))
+    .filter((index) => Number.isInteger(index) && index >= 0 && index <= 98)));
 }
 
 export async function fetchBackpack(backpackAddress) {
@@ -895,17 +1043,27 @@ export async function getGameplaySessionStatus() {
 }
 
 export async function ensureGameplaySessionFunded() {
-  const provider = await connectedWalletProvider({ prompt: true });
-  if (!provider) return { funded: false, reason: "wallet-unavailable" };
-  const session = await getOrCreateGameplaySession(provider);
-  const balanceLamports = await getNicechunkConnection().getBalance(session.keypair.publicKey, "confirmed");
-  return {
-    funded: true,
-    balanceLamports,
-    balanceSol: balanceLamports / lamportsPerSol,
-    publicKey: session.keypair.publicKey.toBase58(),
-    expiresAt: session.expiresAt,
-  };
+  try {
+    const provider = await connectedWalletProvider({ prompt: true });
+    if (!provider) return { funded: false, reason: "wallet-unavailable" };
+    const session = await getOrCreateGameplaySession(provider);
+    const balanceLamports = await getNicechunkConnection().getBalance(session.keypair.publicKey, "confirmed");
+    return {
+      funded: true,
+      balanceLamports,
+      balanceSol: balanceLamports / lamportsPerSol,
+      publicKey: session.keypair.publicKey.toBase58(),
+      expiresAt: session.expiresAt,
+    };
+  } catch (error) {
+    reportRpcError(error, "session-funding");
+    return {
+      funded: false,
+      reason: "session-funding-failed",
+      error,
+      message: readableErrorMessage(error),
+    };
+  }
 }
 
 function dedupeChunks(chunks) {
@@ -923,42 +1081,10 @@ function dedupeChunks(chunks) {
   return unique;
 }
 
-export async function recordBlockPlacementOnChain(target, renderType, toolSlot = 0) {
-  if (!isNicechunkChainSyncEnabled()) {
-    return { submitted: false, reason: "chain-sync-disabled" };
-  }
-  try {
-    const provider = await connectedWalletProvider();
-    if (!provider) return { submitted: false, reason: "wallet-unavailable" };
-
-    const authority = provider.publicKey;
-    const [playerProfile] = derivePlayerProfilePda(authority);
-    const [chunkPda] = deriveChunkPda(blockChunkX(target.x), blockChunkZ(target.z));
-    const conn = getNicechunkConnection();
-    const tx = new Transaction();
-    const playerAccount = await getNicechunkConnection().getAccountInfo(playerProfile, "confirmed");
-
-    if (!playerAccount) {
-      tx.add(createInitializePlayerInstruction(authority, playerProfile));
-    }
-    tx.add(createRecordBlockChangeInstruction({
-      authority,
-      playerProfile,
-      chunkPda,
-      block: { ...target, type: renderType },
-      previousBlockId: EMPTY_BLOCK,
-      newBlockId: blockRenderTypeId(renderType),
-      action: 2,
-      toolSlot,
-    }));
-
-    const signature = await signAndSendWalletTransaction(provider, tx, conn);
-    return { submitted: true, signature };
-  } catch (error) {
-    reportRpcError(error, "place-block");
-    throw error;
-  }
+export async function recordBlockPlacementOnChain(_target, _renderType, _toolSlot = 0) {
+  return { submitted: false, reason: "chain-placement-disabled" };
 }
+
 
 export function blockChunkX(x) {
   return Math.floor(x / chunkSize);
@@ -981,46 +1107,26 @@ export function blockRenderTypeId(type) {
 }
 
 export function renderTypeForBlockId(blockId) {
-  return renderTypeByBlockId.get(blockId) ?? null;
+  return renderTypeForBlock(blockId) ?? renderTypeByBlockId.get(blockId) ?? null;
+}
+
+async function resolveCanonicalMinedBlock(block) {
+  const config = loadCachedGlobalConfig() ?? await loadGlobalConfig({ useCache: true });
+  const blockId = canonicalBlockIdAt({
+    config,
+    x: block.x,
+    y: block.y,
+    z: block.z,
+  });
+  return {
+    ...block,
+    blockId,
+    type: renderTypeForBlockId(blockId) ?? block.type ?? "stone",
+  };
 }
 
 export function isNicechunkChainSyncEnabled() {
   return localStorage.getItem(chainSyncStorageKey) !== "0";
-}
-
-function decodeChunkDeltas(data, chunkX, chunkZ) {
-  if (data.length !== chunkStateLength) return [];
-  if (data.subarray(0, 8).toString("utf8") !== chunkMagic) return [];
-
-  const storedDeltaCount = data.readUInt16LE(58);
-  const deltas = [];
-  for (let index = 0; index < storedDeltaCount; index += 1) {
-    const offset = chunkHeaderLength + index * blockDeltaLength;
-    const sequence = data.readUInt32LE(offset);
-    if (sequence === 0) continue;
-    const localX = data.readUInt8(offset + 36);
-    const y = data.readInt16LE(offset + 37);
-    const localZ = data.readUInt8(offset + 39);
-    const previousBlockId = data.readUInt16LE(offset + 40);
-    const newBlockId = data.readUInt16LE(offset + 42);
-    deltas.push({
-      sequence,
-      actor: new PublicKey(data.subarray(offset + 4, offset + 36)),
-      x: chunkX * chunkSize + localX,
-      y,
-      z: chunkZ * chunkSize + localZ,
-      localX,
-      localZ,
-      previousBlockId,
-      newBlockId,
-      action: data.readUInt8(offset + 44),
-      toolSlot: data.readUInt8(offset + 45),
-      slot: data.readBigUInt64LE(offset + 46),
-      timestamp: data.readBigInt64LE(offset + 54),
-    });
-  }
-  deltas.sort((a, b) => a.sequence - b.sequence);
-  return deltas;
 }
 
 function decodeChunkBrokenDeltas(data, chunkX, chunkZ) {
@@ -1056,28 +1162,31 @@ function decodeChunkBrokenDeltas(data, chunkX, chunkZ) {
 }
 
 function decodeBackpack(data) {
-  if (data.length !== backpackAccountLength) {
-    throw new Error(`Invalid Backpack length: expected ${backpackAccountLength}, got ${data.length}.`);
+  if (data.length !== backpackAccountLength && data.length !== backpackLegacyAccountLength) {
+    throw new Error(`Invalid Backpack length: expected ${backpackAccountLength} or ${backpackLegacyAccountLength}, got ${data.length}.`);
   }
   if (data.subarray(0, 8).toString("utf8") !== backpackMagic) {
     throw new Error("Invalid Backpack magic.");
   }
+  const version = data.readUInt16LE(8);
+  const recordLength = version === backpackLegacyVersion ? backpackLegacyRecordLength : backpackSlotRecordLength;
   const capacity = data.readUInt8(52);
   const itemCount = data.readUInt8(53);
   const readableCount = Math.min(itemCount, capacity, backpackMaxCapacity);
   const records = [];
+  const slots = [];
   for (let index = 0; index < readableCount; index += 1) {
-    const offset = backpackHeaderLength + index * backpackRecordLength;
-    records.push({
-      index,
-      worldX: data.readInt32LE(offset),
-      worldY: data.readInt16LE(offset + 4),
-      worldZ: data.readInt32LE(offset + 6),
-    });
+    const offset = backpackHeaderLength + index * recordLength;
+    const slot = recordLength === backpackLegacyRecordLength
+      ? decodeLegacyBackpackSlot(data, offset)
+      : decodeBackpackSlot(data, offset);
+    slot.index = index;
+    slots.push(slot);
+    if (slot.kind === "block") records.push(slot.resource);
   }
   return {
     magic: backpackMagic,
-    version: data.readUInt16LE(8),
+    version,
     bump: data.readUInt8(10),
     initialized: data.readUInt8(11) === 1,
     backpackId: data.readBigUInt64LE(12).toString(),
@@ -1095,6 +1204,46 @@ function decodeBackpack(data) {
     updatedSlot: data.readBigUInt64LE(74).toString(),
     createdAt: data.readBigInt64LE(82).toString(),
     records,
+    slots,
+  };
+}
+
+function decodeLegacyBackpackSlot(data, offset) {
+  const resource = decodeBackpackResource(data, offset);
+  return {
+    kind: "block",
+    kindCode: backpackSlotKindBlock,
+    category: 0,
+    quantity: 1,
+    resource,
+  };
+}
+
+function decodeBackpackSlot(data, offset) {
+  const kindCode = data.readUInt8(offset);
+  const resource = decodeBackpackResource(data, offset + 8);
+  const itemPda = new PublicKey(data.subarray(offset + 28, offset + 60)).toBase58();
+  return {
+    kind: kindCode === backpackSlotKindItem ? "item" : "block",
+    kindCode,
+    category: data.readUInt8(offset + 1),
+    flags: data.readUInt16LE(offset + 2),
+    quantity: data.readUInt32LE(offset + 4),
+    resource,
+    itemCode: data.readUInt16LE(offset + 18),
+    itemId: data.readBigUInt64LE(offset + 20).toString(),
+    itemPda,
+  };
+}
+
+function decodeBackpackResource(data, offset) {
+  const decodedY = decodeBackpackPackedY(data.readInt16LE(offset + 4));
+  return {
+    worldX: data.readInt32LE(offset),
+    worldY: decodedY.worldY,
+    worldZ: data.readInt32LE(offset + 6),
+    blockId: decodedY.blockId,
+    renderType: renderTypeForBlockId(decodedY.blockId),
   };
 }
 
@@ -1322,34 +1471,26 @@ function createOrRefreshPlayerSessionInstruction({
   });
 }
 
-function createRecordBlockChangeInstruction({
-  authority,
-  playerProfile,
-  chunkPda,
-  block,
-  previousBlockId = blockRenderTypeId(block.type),
-  newBlockId = EMPTY_BLOCK,
-  action = 1,
-  toolSlot,
-}) {
-  const data = Buffer.alloc(19);
-  data.writeUInt8(1, 0);
-  data.writeInt32LE(blockChunkX(block.x), 1);
-  data.writeInt32LE(blockChunkZ(block.z), 5);
-  data.writeUInt8(blockLocalX(block.x), 9);
-  data.writeInt16LE(block.y, 10);
-  data.writeUInt8(blockLocalZ(block.z), 12);
-  data.writeUInt16LE(previousBlockId, 13);
-  data.writeUInt16LE(newBlockId, 15);
-  data.writeUInt8(action, 17);
-  data.writeUInt8(toolSlot, 18);
+function createMineBlockInstruction({ authority, block, owner, expectedBlockId }) {
+  if (!owner) throw new Error("owner is required for canonical mining");
+  if (!Number.isInteger(expectedBlockId)) throw new Error("expectedBlockId is required for canonical mining");
+  const [chunkBrokenPda] = deriveChunkBrokenPda(blockChunkX(block.x), blockChunkZ(block.z));
+  const [playerProfile] = derivePlayerProfilePda(owner);
+  const [playerSession] = derivePlayerSessionPda(owner, authority);
+  const data = Buffer.alloc(13);
+  data.writeUInt8(5, 0);
+  data.writeInt32LE(block.x, 1);
+  data.writeInt16LE(block.y, 5);
+  data.writeInt32LE(block.z, 7);
+  data.writeUInt16LE(expectedBlockId, 11);
 
   return new TransactionInstruction({
     programId: chunkProgramId,
     keys: [
       { pubkey: authority, isSigner: true, isWritable: true },
       { pubkey: playerProfile, isSigner: false, isWritable: false },
-      { pubkey: chunkPda, isSigner: false, isWritable: true },
+      { pubkey: playerSession, isSigner: false, isWritable: false },
+      { pubkey: chunkBrokenPda, isSigner: false, isWritable: true },
       { pubkey: deriveGlobalConfigPda(), isSigner: false, isWritable: false },
       { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },
     ],
@@ -1357,32 +1498,21 @@ function createRecordBlockChangeInstruction({
   });
 }
 
-function createMineBlockInstruction({ authority, block, owner = null }) {
-  const [chunkBrokenPda] = deriveChunkBrokenPda(blockChunkX(block.x), blockChunkZ(block.z));
-  const data = Buffer.alloc(13);
-  data.writeUInt8(5, 0);
-  data.writeInt32LE(block.x, 1);
-  data.writeInt16LE(block.y, 5);
-  data.writeInt32LE(block.z, 7);
-  data.writeUInt16LE(inspectOnlyBlockId, 11);
-  const keys = [{ pubkey: authority, isSigner: true, isWritable: true }];
-  if (owner) {
-    const [playerProfile] = derivePlayerProfilePda(owner);
-    const [playerSession] = derivePlayerSessionPda(owner, authority);
-    keys.push(
-      { pubkey: playerProfile, isSigner: false, isWritable: false },
-      { pubkey: playerSession, isSigner: false, isWritable: false },
-    );
-  }
-  keys.push(
-    { pubkey: chunkBrokenPda, isSigner: false, isWritable: true },
-    { pubkey: deriveGlobalConfigPda(), isSigner: false, isWritable: false },
-    { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },
-  );
+function createInitializeChunkBrokenInstruction({ authority, chunkX, chunkZ }) {
+  const [chunkBrokenPda] = deriveChunkBrokenPda(chunkX, chunkZ);
+  const data = Buffer.alloc(9);
+  data.writeUInt8(6, 0);
+  data.writeInt32LE(chunkX, 1);
+  data.writeInt32LE(chunkZ, 5);
 
   return new TransactionInstruction({
     programId: chunkProgramId,
-    keys,
+    keys: [
+      { pubkey: authority, isSigner: true, isWritable: true },
+      { pubkey: chunkBrokenPda, isSigner: false, isWritable: true },
+      { pubkey: deriveGlobalConfigPda(), isSigner: false, isWritable: false },
+      { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },
+    ],
     data,
   });
 }
@@ -1410,7 +1540,7 @@ function createAppendMinedResourceInstruction({ owner, sessionAuthority, backpac
   const data = Buffer.alloc(11);
   data.writeUInt8(1, 0);
   data.writeInt32LE(block.x, 1);
-  data.writeInt16LE(block.y, 5);
+  data.writeInt16LE(encodeBackpackPackedY(block.y, block.blockId ?? blockRenderTypeId(block.type)), 5);
   data.writeInt32LE(block.z, 7);
   return new TransactionInstruction({
     programId: backpackProgramId,
@@ -1419,6 +1549,130 @@ function createAppendMinedResourceInstruction({ owner, sessionAuthority, backpac
       { pubkey: playerProfile, isSigner: false, isWritable: false },
       { pubkey: playerSession, isSigner: false, isWritable: false },
       { pubkey: backpack, isSigner: false, isWritable: true },
+    ],
+    data,
+  });
+}
+
+function encodeBackpackPackedY(worldY, blockId) {
+  const y = Number(worldY);
+  const id = Number(blockId);
+  const yOffset = y - minBuildY;
+  if (
+    Number.isInteger(y) &&
+    Number.isInteger(yOffset) &&
+    yOffset >= 0 &&
+    yOffset <= backpackPackedYMask &&
+    Number.isInteger(id) &&
+    id > 0 &&
+    id < (1 << (16 - backpackPackedYBits))
+  ) {
+    return (id << backpackPackedYBits) | yOffset;
+  }
+  return y;
+}
+
+function decodeBackpackPackedY(packedY) {
+  const value = Number(packedY);
+  if (!Number.isInteger(value) || value < 0) {
+    return { worldY: value, blockId: 0 };
+  }
+  const blockId = value >> backpackPackedYBits;
+  if (blockId <= 0 || !renderTypeForBlockId(blockId)) {
+    return { worldY: value, blockId: 0 };
+  }
+  return {
+    worldY: minBuildY + (value & backpackPackedYMask),
+    blockId,
+  };
+}
+
+function createRemoveBackpackResourceInstruction({ owner, sessionAuthority = null, backpack, index }) {
+  const data = Buffer.alloc(2);
+  data.writeUInt8(2, 0);
+  data.writeUInt8(index, 1);
+  if (sessionAuthority) {
+    const [playerProfile] = derivePlayerProfilePda(owner);
+    const [playerSession] = derivePlayerSessionPda(owner, sessionAuthority);
+    return new TransactionInstruction({
+      programId: backpackProgramId,
+      keys: [
+        { pubkey: sessionAuthority, isSigner: true, isWritable: false },
+        { pubkey: playerProfile, isSigner: false, isWritable: false },
+        { pubkey: playerSession, isSigner: false, isWritable: false },
+        { pubkey: backpack, isSigner: false, isWritable: true },
+      ],
+      data,
+    });
+  }
+  return new TransactionInstruction({
+    programId: backpackProgramId,
+    keys: [
+      { pubkey: owner, isSigner: true, isWritable: true },
+      { pubkey: backpack, isSigner: false, isWritable: true },
+    ],
+    data,
+  });
+}
+
+function createRemoveBackpackResourcesInstruction({ owner, sessionAuthority = null, backpack, indexes = [] }) {
+  const normalizedIndexes = Array.from(new Set(indexes
+    .map((index) => Number(index))
+    .filter((index) => Number.isInteger(index) && index >= 0 && index <= 98)));
+  const data = Buffer.alloc(2 + normalizedIndexes.length);
+  data.writeUInt8(4, 0);
+  data.writeUInt8(normalizedIndexes.length, 1);
+  normalizedIndexes.forEach((index, offset) => data.writeUInt8(index, 2 + offset));
+  if (sessionAuthority) {
+    const [playerProfile] = derivePlayerProfilePda(owner);
+    const [playerSession] = derivePlayerSessionPda(owner, sessionAuthority);
+    return new TransactionInstruction({
+      programId: backpackProgramId,
+      keys: [
+        { pubkey: sessionAuthority, isSigner: true, isWritable: false },
+        { pubkey: playerProfile, isSigner: false, isWritable: false },
+        { pubkey: playerSession, isSigner: false, isWritable: false },
+        { pubkey: backpack, isSigner: false, isWritable: true },
+      ],
+      data,
+    });
+  }
+  return new TransactionInstruction({
+    programId: backpackProgramId,
+    keys: [
+      { pubkey: owner, isSigner: true, isWritable: true },
+      { pubkey: backpack, isSigner: false, isWritable: true },
+    ],
+    data,
+  });
+}
+
+function createExecuteSmeltingInstruction({
+  owner,
+  recipeTable,
+  backpack,
+  recipeId,
+  inputIndexes = [],
+  fuelIndexes = [],
+}) {
+  const [smeltingAuthority] = deriveSmeltingAuthorityPda();
+  const inputs = normalizeBackpackIndexes(inputIndexes).slice(0, 8);
+  const fuels = normalizeBackpackIndexes(fuelIndexes);
+  const data = Buffer.alloc(11 + inputs.length + fuels.length);
+  data.writeUInt8(2, 0);
+  data.writeBigUInt64LE(BigInt(recipeId), 1);
+  data.writeUInt8(inputs.length, 9);
+  data.writeUInt8(fuels.length, 10);
+  inputs.forEach((index, offset) => data.writeUInt8(index, 11 + offset));
+  fuels.forEach((index, offset) => data.writeUInt8(index, 11 + inputs.length + offset));
+  return new TransactionInstruction({
+    programId: smeltingProgramId,
+    keys: [
+      { pubkey: owner, isSigner: true, isWritable: true },
+      { pubkey: recipeTable, isSigner: false, isWritable: false },
+      { pubkey: backpack, isSigner: false, isWritable: true },
+      { pubkey: smeltingAuthority, isSigner: false, isWritable: false },
+      { pubkey: backpackProgramId, isSigner: false, isWritable: false },
     ],
     data,
   });
@@ -1639,7 +1893,9 @@ async function getOrCreateGameplaySession(provider) {
   if (!profileAccount?.data?.length) {
     tx.add(createInitializePlayerInstruction(owner, playerProfile));
   }
-  const targetLamports = getConfiguredGameplaySessionFundingLamports(owner);
+  const targetLamports = sessionBalance < minimumSessionFundingLamports
+    ? getConfiguredGameplaySessionFundingLamports(owner)
+    : sessionBalance;
   if (sessionBalance < targetLamports) {
     tx.add(SystemProgram.transfer({
       fromPubkey: owner,
@@ -1662,13 +1918,16 @@ async function getOrCreateGameplaySession(provider) {
 }
 
 async function fundGameplaySessionIfNeeded(provider, sessionAuthority, sessionBalance, conn) {
+  if (sessionBalance >= minimumSessionFundingLamports) return;
   const targetLamports = getConfiguredGameplaySessionFundingLamports(provider.publicKey);
-  if (sessionBalance >= sessionMinimumMiningLamports) return;
+  if (sessionBalance >= targetLamports) return;
+  const lamports = targetLamports - sessionBalance;
+  if (lamports <= 0) return;
   const tx = new Transaction();
   tx.add(SystemProgram.transfer({
     fromPubkey: provider.publicKey,
     toPubkey: sessionAuthority,
-    lamports: targetLamports - sessionBalance,
+    lamports,
   }));
   await signAndSendWalletTransaction(provider, tx, conn);
 }
@@ -1683,11 +1942,20 @@ async function loadEquippedBackpackForOwner(owner, conn = getNicechunkConnection
   const publicKey = new PublicKey(profile.equippedBackpack);
   const account = await conn.getAccountInfo(publicKey, "confirmed");
   if (!account?.data?.length) return null;
+  if (!isCurrentBackpackAccountData(account.data)) return null;
   const decoded = decodeBackpack(account.data);
   if (decoded.owner !== owner.toBase58()) {
     return null;
   }
   return { ...decoded, publicKey };
+}
+
+function isCurrentBackpackAccountData(data) {
+  return Boolean(
+    data?.length === backpackAccountLength &&
+    data.subarray(0, 8).toString("utf8") === backpackMagic &&
+    data.readUInt16LE(8) === backpackVersion,
+  );
 }
 
 function loadStoredGameplaySession(owner) {
@@ -1905,7 +2173,7 @@ async function signAndSendWalletTransaction(provider, transaction, conn = getNic
 
   if (typeof provider.signTransaction === "function") {
     const signed = await provider.signTransaction(transaction);
-    const signature = await conn.sendRawTransaction(signed.serialize(), { skipPreflight: false });
+    const signature = await sendRawTransactionWithLogs(conn, signed.serialize(), "wallet");
     await conn.confirmTransaction({
       signature,
       blockhash: transaction.recentBlockhash,
@@ -1934,34 +2202,95 @@ async function signAndSendKeypairTransaction(signer, transaction, conn = getNice
   transaction.recentBlockhash = blockhash;
   transaction.lastValidBlockHeight = lastValidBlockHeight;
   transaction.sign(signer);
-  const signature = await conn.sendRawTransaction(transaction.serialize(), { skipPreflight: false });
+  const signature = await sendRawTransactionWithLogs(conn, transaction.serialize(), "keypair");
   await conn.confirmTransaction({ signature, blockhash, lastValidBlockHeight }, "confirmed");
   return signature;
 }
 
+async function sendRawTransactionWithLogs(conn, serializedTransaction, context) {
+  try {
+    return await conn.sendRawTransaction(serializedTransaction, { skipPreflight: false });
+  } catch (error) {
+    await attachSendTransactionLogs(error, conn, context);
+    throw error;
+  }
+}
+
+async function attachSendTransactionLogs(error, conn, context) {
+  if (!error || typeof error.getLogs !== "function") return;
+  try {
+    const logs = await error.getLogs(conn);
+    error.nicechunkLogs = logs;
+    if (isVerboseTransactionLogsEnabled() && Array.isArray(logs) && logs.length) {
+      console.warn(`NiceChunk ${context} transaction logs`, logs);
+    }
+  } catch (logError) {
+    error.nicechunkLogError = logError;
+  }
+}
+
+function isVerboseTransactionLogsEnabled() {
+  try {
+    return Boolean(window.NiceChunkDebugMining) || localStorage.getItem("nicechunk.debugTransactionLogs") === "1";
+  } catch {
+    return false;
+  }
+}
+
 async function connectedWalletProvider({ prompt = false } = {}) {
-  const provider = [
+  const providers = [
     window.phantom?.solana,
     window.solflare,
     window.backpack?.solana,
     window.solana,
-  ].find((candidate) => candidate && typeof candidate.connect === "function");
-  if (!provider || typeof provider.connect !== "function") return null;
+  ].filter((candidate, index, list) => (
+    candidate &&
+    typeof candidate.connect === "function" &&
+    list.indexOf(candidate) === index
+  ));
+  if (!providers.length) return null;
   const storedWallet = localStorage.getItem(storageWalletKey);
-  try {
-    if (!provider.publicKey) {
-      if (prompt) {
-        await provider.connect();
-      } else {
-        await provider.connect({ onlyIfTrusted: true });
+
+  for (const provider of providers) {
+    try {
+      if (!provider.publicKey) {
+        if (prompt) {
+          await provider.connect();
+        } else {
+          await provider.connect({ onlyIfTrusted: true });
+        }
       }
+    } catch {
+      continue;
     }
-  } catch {
-    return null;
+    if (!provider.publicKey) continue;
+    if (storedWallet && provider.publicKey.toBase58() !== storedWallet) continue;
+    try {
+      await assertNicechunkWalletNetwork(provider, { requestSwitch: prompt });
+    } catch (error) {
+      if (prompt) throw createWalletNetworkMessageError(error);
+      continue;
+    }
+    return provider;
   }
-  if (!provider.publicKey) return null;
-  if (storedWallet && provider.publicKey.toBase58() !== storedWallet) return null;
-  return provider;
+  return null;
+}
+
+function createWalletNetworkMessageError(error) {
+  const expected = solanaClusterLabel(error?.requiredCluster);
+  const detected = error?.detectedCluster ? solanaClusterLabel(error.detectedCluster) : "Unknown";
+  const nextError = new Error(
+    error?.code === "nicechunk_network_unsupported"
+      ? `Switch your wallet to Solana ${expected}, then retry.`
+      : `NiceChunk requires Solana ${expected}. Wallet network: ${detected}.`,
+  );
+  nextError.code = error?.code || "nicechunk_network_error";
+  nextError.cause = error;
+  return nextError;
+}
+
+function readableErrorMessage(error) {
+  return error?.transactionMessage || error?.message || String(error || "Unknown error");
 }
 
 function positiveModulo(value, divisor) {

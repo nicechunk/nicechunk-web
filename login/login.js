@@ -13,6 +13,12 @@ import {
   persistUsername,
   safeRedirectTarget,
 } from "../src/walletSession.js";
+import {
+  assertNicechunkWalletNetwork,
+  getNicechunkRequiredSolanaCluster,
+  nicechunkRequiredSolanaClusterSync,
+  solanaClusterLabel,
+} from "../src/solanaNetwork.js";
 
 const canvas = document.querySelector("#worldPreview");
 const ctx = canvas.getContext("2d");
@@ -113,6 +119,7 @@ async function bootLogin() {
   updateGatewayLoading(12);
   try {
     await initI18n();
+    await getNicechunkRequiredSolanaCluster();
     i18nReady = true;
     updateGatewayLoading(72);
     const helperRendered = await handleWalletHelperMode();
@@ -251,12 +258,44 @@ async function connectWallet(wallet) {
     const publicKey = result?.publicKey || wallet.provider.publicKey;
     if (!publicKey) throw new Error(t("login.status.publicKeyMissing"));
 
+    await ensureLoginWalletNetwork(wallet.provider);
     walletAddress = publicKey.toString();
     persistConnectedWallet({ walletAddress, walletName: wallet.name });
     showProfile();
   } catch (error) {
-    statusLine.textContent = error?.message || t("login.status.connectFailed");
+    statusLine.textContent = loginNetworkErrorMessage(error) || error?.message || t("login.status.connectFailed");
   }
+}
+
+async function ensureLoginWalletNetwork(provider) {
+  statusLine.textContent = t("login.status.networkChecking");
+  await assertNicechunkWalletNetwork(provider, {
+    requestSwitch: true,
+    onStatus: ({ type, requiredCluster, detectedCluster }) => {
+      const expected = solanaClusterLabel(requiredCluster);
+      const detected = detectedCluster ? solanaClusterLabel(detectedCluster) : t("login.status.networkUnknownValue");
+      if (type === "switching") {
+        statusLine.textContent = t("login.status.networkSwitching", { network: expected, detected });
+      } else if (type === "ready") {
+        statusLine.textContent = t("login.status.networkReady", { network: expected });
+      }
+    },
+  });
+}
+
+function loginNetworkErrorMessage(error) {
+  const code = String(error?.code || "");
+  if (!code.startsWith("nicechunk_network_")) return "";
+  const expected = solanaClusterLabel(error.requiredCluster);
+  const detected = error.detectedCluster ? solanaClusterLabel(error.detectedCluster) : t("login.status.networkUnknownValue");
+
+  if (code.endsWith("_mismatch")) {
+    return t("login.status.networkMismatch", { expected, detected });
+  }
+  if (code.endsWith("_unsupported")) {
+    return t("login.status.networkSwitchUnsupported", { expected });
+  }
+  return t("login.status.networkSwitchFailed", { expected });
 }
 
 function maybeAutoConnectWallet(wallets) {
@@ -400,6 +439,7 @@ async function signWalletHelperChallenge(challenge) {
     const connectResult = await provider.connect();
     const publicKey = publicKeyToString(connectResult?.publicKey || provider.publicKey);
     if (!publicKey) throw new Error("Missing wallet public key.");
+    await ensureLoginWalletNetwork(provider);
 
     const encodedMessage = new TextEncoder().encode(challenge.message);
     const signResult = await provider.signMessage(encodedMessage, "utf8");
@@ -424,7 +464,7 @@ async function signWalletHelperChallenge(challenge) {
     }, 250);
   } catch (error) {
     console.warn("Failed to sign NiceChunk login challenge", error);
-    statusLine.textContent = t("login.status.signatureFailed");
+    statusLine.textContent = loginNetworkErrorMessage(error) || t("login.status.signatureFailed");
   }
 }
 
@@ -625,7 +665,7 @@ function buildPhantomConnectLink() {
   connectUrl.searchParams.set("app_url", window.location.origin);
   connectUrl.searchParams.set("dapp_encryption_public_key", bs58.encode(keyPair.publicKey));
   connectUrl.searchParams.set("redirect_link", redirectUrl.toString());
-  connectUrl.searchParams.set("cluster", "devnet");
+  connectUrl.searchParams.set("cluster", nicechunkRequiredSolanaClusterSync());
   return connectUrl.toString();
 }
 

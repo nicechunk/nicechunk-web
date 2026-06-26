@@ -60,6 +60,7 @@
           <div class="ncm-actions">
             <a href="#converter" data-i18n="ncm.hero.convert">Convert VOX</a>
             <button id="loadSample" type="button" data-i18n="ncm.hero.sample">Load sample</button>
+            <a href="#ncm-dna" data-i18n="ncm.hero.dna">NCM-DNA Lab</a>
           </div>
         </div>
         <div class="ncm-format-card">
@@ -205,6 +206,28 @@
             <button id="downloadNcm" type="button" data-i18n="ncm.output.download">Download .ncm</button>
           </div>
           <p class="status-line" id="statusLine" data-i18n="ncm.status.ready">Ready.</p>
+        </div>
+      </section>
+
+      <section class="ncm-dna-embed" id="ncm-dna" aria-label="NCM-DNA Lab" data-i18n-aria-label="ncm.dna.aria">
+        <div class="dna-embed-head">
+          <div>
+            <p class="eyebrow" data-i18n="ncm.dna.eyebrow">NCM-DNA LAB</p>
+            <h2 data-i18n="ncm.dna.title">View the NCM-DNA experiment beside the format it builds on.</h2>
+            <p data-i18n="ncm.dna.body">
+              NCM-DNA continues the same direction: instead of only storing compact cuboids, it searches for deterministic genes that can reproduce the same model with fewer bytes.
+            </p>
+          </div>
+          <a href="/ncm_dna/" data-i18n="ncm.dna.open">Open full lab</a>
+        </div>
+        <div class="dna-frame-shell">
+          <iframe
+            id="ncmDnaFrame"
+            src="/ncm_dna/?embed=1"
+            loading="lazy"
+            title="NCM-DNA Lab"
+            data-i18n-title="ncm.dna.frameTitle"
+          ></iframe>
         </div>
       </section>
     </main>

@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ja",
     "label": "Japanese",
-    "version": "proof-of-frontier-locale-ja-6ad02fb46732995e",
-    "contentHash": "6ad02fb46732995e"
+    "version": "proof-of-frontier-locale-ja-7e645ddc02d70fd3",
+    "contentHash": "7e645ddc02d70fd3"
   },
   "siteFooter": {
     "tagline": "Solana 上のシード型ボクセルワールドプロトコル。",
@@ -32,206 +32,205 @@
       "ko": "한국어",
       "zhHant": "繁體中文",
       "zhHans": "简体中文"
-    },
-    "comingSoon": "近日公開予定"
+    }
   },
   "proofOfFrontier": {
     "meta": {
       "title": "Proof of Short Seed | NiceChunk"
     },
     "common": {
-      "yes": "はい",
-      "no": "いいえ"
+      "yes": "Yes",
+      "no": "No"
     },
     "nav": {
-      "aria": "プライマリナビゲーション",
-      "home": "ホーム",
-      "roadbook": "ロードブック",
-      "worldRules": "世界ルール",
-      "resources": "リソース",
-      "elements": "要素",
-      "fairness": "公平性",
-      "proofOfFrontier": "証明",
-      "docs": "ドキュメント",
-      "enterWorld": "世界に入る",
-      "guardians": "ガーディアン"
+      "aria": "Primary navigation",
+      "home": "Home",
+      "roadbook": "Roadbook",
+      "worldRules": "World Rules",
+      "resources": "Resources",
+      "elements": "Elements",
+      "fairness": "Fairness",
+      "proofOfFrontier": "Proof",
+      "guardians": "Guardians",
+      "docs": "Docs",
+      "enterWorld": "Enter World"
     },
     "hero": {
       "eyebrow": "NiceChunk Proof of Short Seed",
       "title": "Proof of Short Seed",
-      "subtitle": "鉱山労働者は、現在の世界の輪郭の最短の有効なシードを見つけるために競い合います。",
-      "body": "NiceChunk マイナーは無意味なナンスを検索していません。 彼らは現在の世界の輪郭を再構築する Shape Seed を検索します。 より複雑な輪郭を短いシードで記述するのは難しくなります。 現在の難易度で十分に短いシードを最初に送信したマイナーがエポックを解決し、シミュレートされた報酬を獲得します。"
+      "subtitle": "Miners compete to find the shortest valid seed for the current world contour.",
+      "body": "NiceChunk miners are not searching for meaningless nonces. They search for a Shape Seed that reconstructs the current world contour. More complex contours are harder to describe with a short seed. The first miner to submit a seed that is short enough under the current difficulty solves the epoch and earns the simulated reward."
     },
     "concepts": {
-      "aria": "中心となる概念",
+      "aria": "Core concepts",
       "boundary": {
-        "title": "フロンティアターゲット",
-        "body": "現在の世界の輪郭は target_frontier_root に正規化されます。"
+        "title": "Frontier Target",
+        "body": "The current world contour is canonicalized into target_frontier_root."
       },
       "context": {
-        "title": "ショートシードマイニング",
-        "body": "マイナーは、現在の輪郭を再構成する短い Shape Seed を見つけるために競い合います。"
+        "title": "Short Seed Mining",
+        "body": "Miners compete to find a short Shape Seed that reconstructs the current contour."
       },
       "meaningful": {
-        "title": "最初の有効な勝利",
-        "body": "エポックで受け入れられた最初の有効なシードが、シミュレートされたブロック報酬を獲得します。"
+        "title": "First Valid Wins",
+        "body": "The first valid seed accepted for the epoch wins the simulated block reward."
       },
       "tiny": {
-        "title": "自動リターゲット",
-        "body": "ブロックを 60 秒付近に保つように、max_seed_bytes 難易度が 1 分ごとに調整されます。"
+        "title": "Auto Retarget",
+        "body": "Every minute the max_seed_bytes difficulty adjusts to keep blocks near 60 seconds."
       }
     },
     "demo": {
-      "aria": "Proof of Short Seed デモ"
+      "aria": "Proof of Short Seed demo"
     },
     "grid": {
-      "eyebrow": "ワールドグリッド",
-      "title": "現在のフロンティアターゲット",
-      "legend": "地図の凡例",
-      "unlocked": "ロック解除",
-      "candidate": "候補者",
-      "selected": "選択済み",
-      "canvas": "Proof of Short Seed ワールド グリッド"
+      "eyebrow": "World Grid",
+      "title": "Current Frontier Target",
+      "legend": "Map legend",
+      "unlocked": "Unlocked",
+      "candidate": "Candidate",
+      "selected": "Selected",
+      "canvas": "Proof of Short Seed world grid"
     },
     "steps": {
-      "genesis": "創世記 Chunk",
-      "find": "候補者を探す",
-      "select": "検索シード",
-      "mine": "検証",
-      "update": "エポックの解決"
+      "genesis": "Genesis Chunk",
+      "find": "Find Candidates",
+      "select": "Search Seed",
+      "mine": "Validate",
+      "update": "Solve Epoch"
     },
     "panel": {
-      "aria": "アルゴリズムの状態",
+      "aria": "Algorithm state",
       "selected": {
-        "title": "選択された Chunk",
-        "coords": "座標",
-        "status": "ステータス",
-        "neighbors": "ロック解除された隣人",
-        "reward": "推定報酬"
+        "title": "Selected Chunk",
+        "coords": "Coordinates",
+        "status": "Status",
+        "neighbors": "Unlocked neighbors",
+        "reward": "Estimated reward"
       },
       "seed": {
-        "title": "ショートシードマイニング",
-        "epoch": "現在のエポック",
-        "targetRoot": "ターゲット Frontier Root",
-        "maxSeedBytes": "最大シードバイト数",
-        "rawSeedBytes": "生のフォールバックバイト",
-        "candidateBytes": "シードバイト候補",
-        "lastCalculations": "最終結果の計算",
-        "currentEpochCalculations": "現在のエポックの計算",
-        "bestBytes": "最も承認されたシード バイト",
-        "blocksLastMinute": "直前のブロック",
-        "lastBlockAge": "最後のブロックの年齢",
-        "nextRetarget": "次のリターゲット",
-        "difficultyStatus": "難易度ステータス",
-        "stuckMinutes": "滞った時間",
-        "miningStatus": "採掘状況",
-        "status": "難易度ステータス"
+        "title": "Short Seed Mining",
+        "epoch": "Current Epoch",
+        "targetRoot": "Target Frontier Root",
+        "maxSeedBytes": "Max Seed Bytes",
+        "rawSeedBytes": "Raw Fallback Bytes",
+        "candidateBytes": "Candidate Seed Bytes",
+        "lastCalculations": "Last Result Calculations",
+        "currentEpochCalculations": "Current Epoch Calculations",
+        "bestBytes": "Best Accepted Seed Bytes",
+        "blocksLastMinute": "Blocks In Last Minute",
+        "lastBlockAge": "Last Block Age",
+        "nextRetarget": "Next Retarget In",
+        "difficultyStatus": "Difficulty Status",
+        "stuckMinutes": "Stuck Minutes",
+        "miningStatus": "Mining Status",
+        "status": "Difficulty Status"
       },
       "candidate": {
-        "title": "シード候補",
-        "encoding": "エンコーディング",
-        "decodedRoot": "デコードされたルート",
-        "rootValid": "ルート有効",
-        "lengthValid": "有効な長さ",
-        "canonical": "正規",
+        "title": "Candidate Seed",
+        "encoding": "Encoding",
+        "decodedRoot": "Decoded Root",
+        "rootValid": "Root Valid",
+        "lengthValid": "Length Valid",
+        "canonical": "Canonical",
         "seed": "Shape Seed"
       },
       "keys": {
-        "title": "ネイバーキー"
+        "title": "Neighbor Keys"
       },
       "context": {
-        "title": "近隣コンテキスト",
-        "note": "ロック解除された N/E/S/W Chunk キーから一定の順序で生成されます。"
+        "title": "Neighbor Context",
+        "note": "Generated from unlocked N/E/S/W Chunk Keys in a fixed order."
       },
       "pow": {
-        "title": "作業証明",
-        "difficultyAria": "デモの難易度",
-        "easy": "簡単",
-        "normal": "ノーマル",
-        "hard": "ハード",
-        "nonce": "ノンス",
-        "target": "ターゲット",
-        "attempts": "試み",
-        "rate": "ハッシュレート",
-        "currentHash": "現在のハッシュ",
-        "status": "ステータス"
+        "title": "Proof of Work",
+        "difficultyAria": "Demo difficulty",
+        "easy": "Easy",
+        "normal": "Normal",
+        "hard": "Hard",
+        "nonce": "Nonce",
+        "target": "Target",
+        "attempts": "Attempts",
+        "rate": "Hash rate",
+        "currentHash": "Current hash",
+        "status": "Status"
       },
       "newKey": {
-        "title": "新しい Chunk キー"
+        "title": "New Chunk Key"
       }
     },
     "actions": {
-      "randomMine": "ランダム鉱山",
-      "growWorld": "成長する世界",
-      "reset": "世界をリセット",
-      "startSearch": "検索を開始する",
-      "searchOne": "1 つの候補を検索",
-      "submitCandidate": "候補者を提出",
-      "autoRun": "自動実行",
-      "autoSolve": "自動解決",
-      "retargetNow": "今すぐターゲットを変更する",
-      "resetDifficulty": "難易度のリセット",
-      "startMining": "マイニングを開始する",
-      "stop": "停止",
-      "mineStep": "私の一歩",
-      "autoExpand": "自動展開",
-      "stopAuto": "自動停止",
-      "decodeSeed": "Contour Seed をデコードする",
-      "copySeed": "シードをコピーする",
-      "copyState": "状態 JSON のコピー",
-      "showLog": "トランザクションログを表示",
-      "hideLog": "トランザクションログを非表示にする"
+      "randomMine": "Random Mine",
+      "growWorld": "Grow World",
+      "reset": "Reset World",
+      "startSearch": "Start Searching",
+      "searchOne": "Search One Candidate",
+      "submitCandidate": "Submit Candidate",
+      "autoRun": "Auto Run",
+      "autoSolve": "Auto Solve",
+      "retargetNow": "Retarget Now",
+      "resetDifficulty": "Reset Difficulty",
+      "startMining": "Start Mining",
+      "stop": "Stop",
+      "mineStep": "Mine One Step",
+      "autoExpand": "Auto Expand",
+      "stopAuto": "Stop Auto",
+      "decodeSeed": "Decode Contour Seed",
+      "copySeed": "Copy Seed",
+      "copyState": "Copy State JSON",
+      "showLog": "Show Transaction Log",
+      "hideLog": "Hide Transaction Log"
     },
     "worldState": {
-      "title": "世界国家",
-      "unlocked": "ロック解除された chunks",
-      "candidates": "候補者 chunks",
-      "perimeter": "外周",
+      "title": "World State",
+      "unlocked": "Unlocked chunks",
+      "candidates": "Candidate chunks",
+      "perimeter": "Perimeter",
       "frontierRoot": "Frontier Root",
       "contourSeed": "Contour Seed",
-      "seedBytes": "シードバイト",
-      "seedAttempts": "シード検索の試行",
-      "avgBlockTime": "平均ブロック時間",
-      "nextRetarget": "次のリターゲット",
-      "nextRetargetValue": "{count} ブロック",
-      "seedTargetValue": "左端: 最大 {max} バイト / RAW {raw} バイト",
-      "difficulty": "現在の難易度"
+      "seedBytes": "Seed bytes",
+      "seedAttempts": "Seed search attempts",
+      "avgBlockTime": "Avg block time",
+      "nextRetarget": "Next retarget",
+      "nextRetargetValue": "{count} blocks",
+      "seedTargetValue": "Harder left: max {max} bytes / RAW {raw} bytes",
+      "difficulty": "Current difficulty"
     },
     "contour": {
-      "title": "輪郭エンコーディング",
-      "body": "DecodeShapeSeed v1 は、RAW_EDGES、PATH_RLE、および RECT をサポートします。 RAW_EDGES はフォールバックです。max_seed_bytes が生の長さに達すると、あらゆる有限輪郭は解決可能であることが保証されます。",
-      "path": "簡略化された輪郭パス",
-      "seed": "圧縮された Contour Seed",
-      "seedLength": "{bytes} バイト、ターゲット <= {target} バイト",
-      "pasteSeed": "Contour Seed を貼り付けてデコードします",
-      "pastePlaceholder": "ここに NSS1|RAW|...、NSS1|PATH|...、または NSS1|RECT|... を貼り付けます。"
+      "title": "Contour Encoding",
+      "body": "DecodeShapeSeed v1 supports RAW_EDGES, PATH_RLE, and RECT. RAW_EDGES is the fallback: once max_seed_bytes reaches the raw length, any finite contour is guaranteed solvable.",
+      "path": "Simplified contour path",
+      "seed": "Compressed Contour Seed",
+      "seedLength": "{bytes} bytes, target <= {target} bytes",
+      "pasteSeed": "Paste Contour Seed to decode",
+      "pastePlaceholder": "Paste NSS1|RAW|..., NSS1|PATH|..., or NSS1|RECT|... here."
     },
     "formulas": {
-      "eyebrow": "NPoSS 式",
+      "eyebrow": "NPoSS Formula",
       "title": "seed_bytes <= max_seed_bytes",
-      "body": "デモは、シードが世界的に最も短いことを証明するものではありません。 これは、シードが現在の Frontier Root を再構築し、正規であり、現在の max_seed_bytes 難易度の下で十分に短いことを証明します。"
+      "body": "The demo does not prove a seed is globally shortest. It proves the seed reconstructs the current Frontier Root, is canonical, and is short enough under the current max_seed_bytes difficulty."
     },
     "advanced": {
-      "eyebrow": "高度なプロトコルに関する注意事項",
-      "title": "実稼働用のコミット公開",
-      "body": "デモでは直接公開するのが簡単です。 実稼働環境では、最初にコミットし、他のユーザーが有効なシードをコピーして最初に送信することを防ぐために、少し遅れてシードとソルトを公開する必要があります。"
+      "eyebrow": "Advanced Protocol Note",
+      "title": "Commit-reveal for production",
+      "body": "Direct reveal is simple for the demo. Production should commit first, then reveal seed and salt after a short delay to prevent another user from copying a valid seed and submitting it first."
     },
     "transactions": {
-      "eyebrow": "シミュレートされたトランザクション ログ",
-      "title": "SeedBlock イベント",
-      "empty": "シード ブロックはまだありません。 最初のエポックを解決するために有効なシードを検索して送信します。",
-      "nonce": "ノンス",
+      "eyebrow": "Simulated Transaction Log",
+      "title": "SeedBlock Events",
+      "empty": "No seed blocks yet. Search and submit a valid seed to solve the first epoch.",
+      "nonce": "nonce",
       "powHash": "pow_hash",
       "chunkKey": "chunk_key",
-      "frontierRoot": "フロンティアルート",
-      "blockTime": "ブロック時間",
-      "seedTarget": "シードターゲット"
+      "frontierRoot": "frontier_root",
+      "blockTime": "block_time",
+      "seedTarget": "seed_target"
     },
     "difficultyStatus": {
-      "hardening": "硬化",
-      "stable": "安定",
-      "relaxing": "リラックス",
-      "guaranteed_solvable": "解決可能性の保証"
+      "hardening": "Hardening",
+      "stable": "Stable",
+      "relaxing": "Relaxing",
+      "guaranteed_solvable": "Guaranteed Solvable"
     },
     "encoding": {
       "RAW_EDGES": "RAW_EDGES",
@@ -240,40 +239,40 @@
       "UNION": "UNION"
     },
     "directions": {
-      "north": "北",
-      "east": "東",
-      "south": "南",
-      "west": "西"
+      "north": "North",
+      "east": "East",
+      "south": "South",
+      "west": "West"
     },
     "chunkStatus": {
-      "locked": "ロック済み",
-      "candidate": "候補者",
-      "unlocked": "ロック解除"
+      "locked": "Locked",
+      "candidate": "Candidate",
+      "unlocked": "Unlocked"
     },
     "status": {
-      "idle": "アイドル",
-      "mining": "マイニング",
-      "searching": "検索",
-      "autoRunning": "自動実行: 有効なシードを検索して送信します。",
-      "stopped": "停止しました",
-      "valid": "有効なシードが見つかりました",
-      "noValidSeed": "現在の max_seed_bytes の下に有効なシードがありません。",
-      "noCandidate": "最初に候補シードを検索する",
-      "rootMismatch": "シードは現在のフロンティアを再構築しません。",
-      "nonCanonical": "シードは正規ではありません。",
-      "notCandidate": "最初に候補 chunk を選択します",
-      "seedTooLong": "シードは有効ですが、現在の難易度では長すぎます。",
-      "relaxed": "10分間ノーブロック。 シード長の目標が緩和されました。"
+      "idle": "Idle",
+      "mining": "Mining",
+      "searching": "Searching",
+      "autoRunning": "Auto running: searching and submitting valid seeds.",
+      "stopped": "Stopped",
+      "valid": "Valid Seed Found",
+      "noValidSeed": "No valid seed under current max_seed_bytes.",
+      "noCandidate": "Search a candidate seed first",
+      "rootMismatch": "Seed does not reconstruct the current frontier.",
+      "nonCanonical": "Seed is not canonical.",
+      "notCandidate": "Select a candidate chunk first",
+      "seedTooLong": "Seed is valid but too long for current difficulty.",
+      "relaxed": "No block for 10 minutes. Seed length target relaxed."
     },
     "messages": {
-      "locked": "この chunk にはロックされていない隣接ノードがありません。 フロンティア証明には、少なくとも 1 つの確認された隣接キーが必要です。",
-      "unlocked": "この chunk はすでにロックが解除されています。 そのキーは隣接する chunks で使用できるようになります。",
-      "candidate": "この chunk は、現在の世界のフロンティアに接しているため採掘できます。",
-      "decoded": "Contour Seed から {count} フロンティア エッジをデコードし、境界を強調表示しました。",
-      "invalidSeed": "この Contour Seed をデコードできませんでした。 有効な nckc_seed を貼り付けます。",
-      "seedCopied": "Contour Seed をコピーしました。",
-      "stateCopied": "世界状態 JSON がコピーされました。",
-      "copyFailed": "このブラウザのコンテキストではコピーに失敗しました。"
+      "locked": "This chunk has no unlocked neighbors. Frontier proof requires at least one confirmed neighbor key.",
+      "unlocked": "This chunk is already unlocked. Its key can now be used by adjacent chunks.",
+      "candidate": "This chunk can be mined because it touches the current world frontier.",
+      "decoded": "Decoded {count} frontier edges from the Contour Seed and highlighted the boundary.",
+      "invalidSeed": "This Contour Seed could not be decoded. Paste a valid nckc_ seed.",
+      "seedCopied": "Contour Seed copied.",
+      "stateCopied": "World state JSON copied.",
+      "copyFailed": "Copy failed in this browser context."
     }
   }
 }

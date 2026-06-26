@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hans",
     "label": "Simplified Chinese",
-    "version": "elements-locale-zh-Hans-0812ec83824c630f",
-    "contentHash": "0812ec83824c630f"
+    "version": "elements-locale-zh-Hans-e2922c673154f8b5",
+    "contentHash": "e2922c673154f8b5"
   },
   "siteFooter": {
     "tagline": "Solana 上的种子体素世界协议。",
@@ -727,9 +727,9 @@
       "resources": "资源",
       "elements": "元素",
       "proofOfFrontier": "证明",
+      "guardians": "守护者",
       "docs": "文档",
-      "enterWorld": "进入世界",
-      "guardians": "守护者"
+      "enterWorld": "进入世界"
     },
     "page": {
       "title": "NiceChunk 元素",

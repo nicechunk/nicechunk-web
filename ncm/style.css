@@ -182,7 +182,8 @@ p {
 .converter-panel,
 .ncm-principles article,
 .ncm-thesis,
-.ncm-roadmap article {
+.ncm-roadmap article,
+.ncm-dna-embed {
   border: 1px solid var(--line);
   border-radius: 10px;
   background:
@@ -347,6 +348,69 @@ p {
   color: var(--muted);
   font-size: 13px;
   line-height: 1.62;
+}
+
+.ncm-dna-embed {
+  margin-top: 20px;
+  padding: clamp(16px, 2vw, 22px);
+}
+
+.dna-embed-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.dna-embed-head h2 {
+  margin-top: 10px;
+  max-width: 840px;
+  color: #fff;
+  font-size: clamp(28px, 3vw, 44px);
+  font-weight: 950;
+  letter-spacing: 0;
+  line-height: 1.04;
+}
+
+.dna-embed-head p:not(.eyebrow) {
+  margin-top: 13px;
+  max-width: 840px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.68;
+}
+
+.dna-embed-head a {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  border: 1px solid rgba(140, 255, 0, 0.36);
+  border-radius: 8px;
+  background: rgba(140, 255, 0, 0.1);
+  padding: 0 15px;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.dna-frame-shell {
+  margin-top: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(152, 203, 255, 0.16);
+  border-radius: 10px;
+  background: rgba(4, 8, 13, 0.56);
+}
+
+.dna-frame-shell iframe {
+  display: block;
+  width: 100%;
+  height: 1280px;
+  min-height: 960px;
+  border: 0;
+  background: #070b11;
 }
 
 .converter-shell {
@@ -589,13 +653,28 @@ p {
   .ncm-principles,
   .ncm-roadmap,
   .thesis-metrics,
+  .dna-embed-head,
   .tool-grid,
   .stats-grid {
     grid-template-columns: 1fr;
   }
 
+  .dna-embed-head {
+    display: grid;
+    align-items: start;
+  }
+
+  .dna-embed-head a {
+    width: fit-content;
+  }
+
   .converter-panel {
     padding: 14px;
+  }
+
+  .dna-frame-shell iframe {
+    height: 1500px;
+    min-height: 1200px;
   }
 
   .preview-panel {

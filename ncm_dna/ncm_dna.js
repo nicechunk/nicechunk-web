@@ -22,6 +22,11 @@ import {
 import { createNcmDnaRenderer } from "./ncmDnaRenderer.js";
 import "./style.css";
 
+const isEmbedded = new URLSearchParams(window.location.search).get("embed") === "1";
+if (isEmbedded) {
+  document.documentElement.dataset.embed = "true";
+}
+
 const els = {
   targetSeed: document.querySelector("#targetSeed"),
   targetSource: document.querySelector("#targetSource"),
@@ -80,6 +85,7 @@ setSiteLoadingProgress(64);
 await generateTarget();
 setControlsEnabled(true);
 finishSiteLoading();
+setupEmbedHeightSync();
 
 window.addEventListener("nicechunk:languagechange", () => {
   document.title = t("ncmDna.page.title");
@@ -88,6 +94,26 @@ window.addEventListener("nicechunk:languagechange", () => {
   renderSearchLog();
   els.pauseSearch.textContent = paused ? t("ncmDna.search.resume") : t("ncmDna.search.pause");
 });
+
+function setupEmbedHeightSync() {
+  if (!isEmbedded) return;
+  const postHeight = () => {
+    const height = Math.max(
+      document.documentElement.scrollHeight,
+      document.body?.scrollHeight ?? 0,
+      document.documentElement.offsetHeight,
+      document.body?.offsetHeight ?? 0,
+    );
+    window.parent.postMessage({ type: "nicechunk:ncm-dna-height", height }, window.location.origin);
+  };
+  const schedulePostHeight = () => requestAnimationFrame(postHeight);
+  schedulePostHeight();
+  window.addEventListener("load", schedulePostHeight);
+  window.addEventListener("resize", schedulePostHeight, { passive: true });
+  new ResizeObserver(schedulePostHeight).observe(document.body);
+  setTimeout(postHeight, 250);
+  setTimeout(postHeight, 1000);
+}
 
 function setupEvents() {
   els.generateTarget.addEventListener("click", generateTarget);

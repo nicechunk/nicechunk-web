@@ -107,6 +107,37 @@ ol {
   padding: calc(var(--nc-site-header-px, 76px) + 38px) 0 64px;
 }
 
+html[data-embed="true"],
+html[data-embed="true"] body {
+  min-height: auto;
+  background: transparent;
+}
+
+html[data-embed="true"] .site-header {
+  display: none !important;
+}
+
+html[data-embed="true"] .dna-layout {
+  width: min(100% - 24px, 1560px);
+  padding: 18px 0 22px !important;
+}
+
+html[data-embed="true"] .dna-bg {
+  position: fixed;
+}
+
+html[data-embed="true"] .dna-hero {
+  min-height: 0;
+}
+
+html[data-embed="true"] .hero-copy h1 {
+  font-size: clamp(42px, 6vw, 78px);
+}
+
+html[data-embed="true"] .lab-shell {
+  margin-top: 20px;
+}
+
 .dna-hero {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);

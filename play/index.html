@@ -144,6 +144,11 @@
         })();
       </script>
       <canvas id="game"></canvas>
+      <div class="mobile-joystick" id="mobileJoystick" aria-hidden="true">
+        <div class="mobile-joystick-ring">
+          <span class="mobile-joystick-knob" id="mobileJoystickKnob"></span>
+        </div>
+      </div>
       <button class="account-hud" id="accountHud" type="button" aria-label="Open player profile" data-i18n-aria-label="main.account.open">
         <div class="account-avatar" aria-hidden="true">
           <span></span>
@@ -352,8 +357,8 @@
               <span data-i18n="main.market.currencyFilterLabel">Currency</span>
               <select id="marketCurrencyFilter">
                 <option value="all" data-i18n="main.market.currencyAll">All currencies</option>
-                <option value="NCK">NCK</option>
-                <option value="SOL">SOL</option>
+                <option value="NCK" data-i18n="main.market.currencyNck">NCK</option>
+                <option value="SOL" data-i18n="main.market.currencySol">SOL</option>
               </select>
             </label>
             <div class="market-filter-grid" aria-label="Market filters" data-i18n-aria-label="main.market.filters">
@@ -375,7 +380,7 @@
               <div class="market-pagination" id="marketListingPager" aria-label="Browse listings pages" data-i18n-aria-label="main.market.browsePagination"></div>
             </section>
             <section class="market-tab-panel" data-market-tab-panel="sell" hidden>
-              <div class="market-step-rail" aria-label="Sell listing steps">
+              <div class="market-step-rail" aria-label="Sell listing steps" data-i18n-aria-label="main.market.sellSteps">
                 <span class="active" data-i18n="main.market.stepSelectItem">1. Select Item</span>
                 <span data-i18n="main.market.stepListingDraft">2. Listing Draft</span>
               </div>
@@ -404,8 +409,8 @@
                   <label>
                     <span data-i18n="main.market.currencyLabel">Currency</span>
                     <select id="marketListingCurrency">
-                      <option value="NCK">NCK</option>
-                      <option value="SOL">SOL</option>
+                      <option value="NCK" data-i18n="main.market.currencyNck">NCK</option>
+                      <option value="SOL" data-i18n="main.market.currencySol">SOL</option>
                     </select>
                   </label>
                   <label>
@@ -426,10 +431,12 @@
       </section>
       <div class="smelting-overlay" id="smeltingOverlay" aria-hidden="true" hidden></div>
       <section class="smelting-panel" id="smeltingPanel" role="dialog" aria-modal="false" aria-labelledby="smeltingTitle" hidden>
+        <div class="smelting-scanline" aria-hidden="true"></div>
         <header class="smelting-header">
-          <div>
+          <div class="smelting-title-group">
             <span class="smelting-eyebrow" data-i18n="main.smelting.eyebrow">Forge Material Prep</span>
             <h2 id="smeltingTitle" data-i18n="main.smelting.title">Smelting Station</h2>
+            <p data-i18n="main.smelting.coreMeta">Station Core: Forge Alpha | Thermal Level: Stable</p>
           </div>
           <div class="smelting-header-meta">
             <span id="smeltingBackpack">0/50</span>
@@ -468,8 +475,6 @@
               </div>
               <div class="smelting-progress-track" aria-hidden="true"><span id="smeltingProgressBar"></span></div>
             </div>
-            <div class="smelting-fuel-list" id="smeltingFuelList"></div>
-            <button class="smelting-submit" id="smeltingStart" type="button" data-i18n="main.smelting.start" disabled>Start Smelting</button>
           </section>
           <aside class="smelting-output-panel" id="smeltingOutputPanel">
             <div class="smelting-panel-head">
@@ -479,6 +484,20 @@
             <div id="smeltingOutput"></div>
           </aside>
         </div>
+        <footer class="smelting-footer">
+          <div class="smelting-footer-left">
+            <span class="smelting-local-badge" data-i18n="main.smelting.modePreview">Local preview</span>
+            <div>
+              <span data-i18n="main.smelting.safetyLabel">Safety Protocols</span>
+              <strong data-i18n="main.smelting.safetyActive">Thermal shield active</strong>
+            </div>
+          </div>
+          <div class="smelting-footer-right">
+            <kbd data-i18n="main.smelting.closeHint">[ESC] Close</kbd>
+            <kbd data-i18n="main.smelting.forgeHint">[F] Forge</kbd>
+            <button class="smelting-submit" id="smeltingStart" type="button" data-i18n="main.smelting.start" disabled>Start Smelting</button>
+          </div>
+        </footer>
       </section>
       <button class="market-phone" id="marketPhone" type="button" aria-label="Open market" data-i18n-aria-label="main.market.open">
         <span aria-hidden="true"></span>

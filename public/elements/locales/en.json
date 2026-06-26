@@ -2,8 +2,8 @@
   "_meta": {
     "language": "en",
     "label": "English",
-    "version": "elements-locale-en-ee974bc0e2b9d9ab",
-    "contentHash": "ee974bc0e2b9d9ab"
+    "version": "elements-locale-en-d37eabd1f088e70e",
+    "contentHash": "d37eabd1f088e70e"
   },
   "siteFooter": {
     "tagline": "A seeded voxel world protocol on Solana.",
@@ -727,9 +727,9 @@
       "resources": "Resources",
       "elements": "Elements",
       "proofOfFrontier": "Proof",
+      "guardians": "Guardians",
       "docs": "Docs",
-      "enterWorld": "Enter World",
-      "guardians": "Guardians"
+      "enterWorld": "Enter World"
     },
     "page": {
       "title": "NiceChunk Elements",

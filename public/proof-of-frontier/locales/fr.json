@@ -2,8 +2,8 @@
   "_meta": {
     "language": "fr",
     "label": "French",
-    "version": "proof-of-frontier-locale-fr-a53eb962a25587f1",
-    "contentHash": "a53eb962a25587f1"
+    "version": "proof-of-frontier-locale-fr-5e9ddf5aaea83f00",
+    "contentHash": "5e9ddf5aaea83f00"
   },
   "siteFooter": {
     "tagline": "Un protocole de monde voxel seedé sur Solana.",
@@ -32,206 +32,205 @@
       "ko": "한국어",
       "zhHant": "繁體中文",
       "zhHans": "简体中文"
-    },
-    "comingSoon": "À venir"
+    }
   },
   "proofOfFrontier": {
     "meta": {
       "title": "Proof of Short Seed | NiceChunk"
     },
     "common": {
-      "yes": "Oui",
-      "no": "Non"
+      "yes": "Yes",
+      "no": "No"
     },
     "nav": {
-      "aria": "Navigation principale",
-      "home": "Accueil",
-      "roadbook": "Carnet de route",
-      "worldRules": "Règles mondiales",
-      "resources": "Ressources",
-      "elements": "Éléments",
-      "fairness": "Équité",
-      "proofOfFrontier": "Preuve",
-      "docs": "Documents",
-      "enterWorld": "Entrez dans le monde",
-      "guardians": "Gardiens"
+      "aria": "Primary navigation",
+      "home": "Home",
+      "roadbook": "Roadbook",
+      "worldRules": "World Rules",
+      "resources": "Resources",
+      "elements": "Elements",
+      "fairness": "Fairness",
+      "proofOfFrontier": "Proof",
+      "guardians": "Guardians",
+      "docs": "Docs",
+      "enterWorld": "Enter World"
     },
     "hero": {
       "eyebrow": "NiceChunk Proof of Short Seed",
       "title": "Proof of Short Seed",
-      "subtitle": "Les mineurs s'affrontent pour trouver la graine valide la plus courte pour le contour mondial actuel.",
-      "body": "Les mineurs NiceChunk ne recherchent pas de cas occasionnels dénués de sens. Ils recherchent un Shape Seed qui reconstruit le contour actuel du monde. Les contours plus complexes sont plus difficiles à décrire avec une graine courte. Le premier mineur à soumettre une graine suffisamment courte pour la difficulté actuelle résout l'époque et gagne la récompense simulée."
+      "subtitle": "Miners compete to find the shortest valid seed for the current world contour.",
+      "body": "NiceChunk miners are not searching for meaningless nonces. They search for a Shape Seed that reconstructs the current world contour. More complex contours are harder to describe with a short seed. The first miner to submit a seed that is short enough under the current difficulty solves the epoch and earns the simulated reward."
     },
     "concepts": {
-      "aria": "Concepts de base",
+      "aria": "Core concepts",
       "boundary": {
-        "title": "Cible frontière",
-        "body": "Le contour du monde actuel est canonisé en target_frontier_root."
+        "title": "Frontier Target",
+        "body": "The current world contour is canonicalized into target_frontier_root."
       },
       "context": {
-        "title": "Extraction de graines courtes",
-        "body": "Les mineurs s'affrontent pour trouver un court Shape Seed qui reconstruit le contour actuel."
+        "title": "Short Seed Mining",
+        "body": "Miners compete to find a short Shape Seed that reconstructs the current contour."
       },
       "meaningful": {
-        "title": "Premiers gains valides",
-        "body": "La première graine valide acceptée pour l'époque remporte la récompense de bloc simulée."
+        "title": "First Valid Wins",
+        "body": "The first valid seed accepted for the epoch wins the simulated block reward."
       },
       "tiny": {
-        "title": "Reciblage automatique",
-        "body": "Chaque minute, la difficulté max_seed_bytes s'ajuste pour maintenir les blocs proches de 60 secondes."
+        "title": "Auto Retarget",
+        "body": "Every minute the max_seed_bytes difficulty adjusts to keep blocks near 60 seconds."
       }
     },
     "demo": {
-      "aria": "Démo Proof of Short Seed"
+      "aria": "Proof of Short Seed demo"
     },
     "grid": {
-      "eyebrow": "Grille mondiale",
-      "title": "Objectif frontière actuel",
-      "legend": "Légende de la carte",
-      "unlocked": "Débloqué",
-      "candidate": "Candidat",
-      "selected": "Sélectionné",
-      "canvas": "Grille mondiale Proof of Short Seed"
+      "eyebrow": "World Grid",
+      "title": "Current Frontier Target",
+      "legend": "Map legend",
+      "unlocked": "Unlocked",
+      "candidate": "Candidate",
+      "selected": "Selected",
+      "canvas": "Proof of Short Seed world grid"
     },
     "steps": {
-      "genesis": "Genèse Chunk",
-      "find": "Rechercher des candidats",
-      "select": "Rechercher des graines",
-      "mine": "Valider",
-      "update": "Résoudre l'époque"
+      "genesis": "Genesis Chunk",
+      "find": "Find Candidates",
+      "select": "Search Seed",
+      "mine": "Validate",
+      "update": "Solve Epoch"
     },
     "panel": {
-      "aria": "État de l'algorithme",
+      "aria": "Algorithm state",
       "selected": {
-        "title": "Chunk sélectionné",
-        "coords": "Coordonnées",
-        "status": "Statut",
-        "neighbors": "Voisins débloqués",
-        "reward": "Récompense estimée"
+        "title": "Selected Chunk",
+        "coords": "Coordinates",
+        "status": "Status",
+        "neighbors": "Unlocked neighbors",
+        "reward": "Estimated reward"
       },
       "seed": {
-        "title": "Extraction de graines courtes",
-        "epoch": "Époque actuelle",
-        "targetRoot": "Cible Frontier Root",
-        "maxSeedBytes": "Nombre maximum d'octets de départ",
-        "rawSeedBytes": "Octets de secours bruts",
-        "candidateBytes": "Octets de départ candidats",
-        "lastCalculations": "Derniers calculs de résultat",
-        "currentEpochCalculations": "Calculs de l'époque actuelle",
-        "bestBytes": "Octets de départ les plus acceptés",
-        "blocksLastMinute": "Blocages de dernière minute",
-        "lastBlockAge": "Âge du dernier bloc",
-        "nextRetarget": "Prochain reciblage dans",
-        "difficultyStatus": "Statut de difficulté",
-        "stuckMinutes": "Minutes bloquées",
-        "miningStatus": "Statut minier",
-        "status": "Statut de difficulté"
+        "title": "Short Seed Mining",
+        "epoch": "Current Epoch",
+        "targetRoot": "Target Frontier Root",
+        "maxSeedBytes": "Max Seed Bytes",
+        "rawSeedBytes": "Raw Fallback Bytes",
+        "candidateBytes": "Candidate Seed Bytes",
+        "lastCalculations": "Last Result Calculations",
+        "currentEpochCalculations": "Current Epoch Calculations",
+        "bestBytes": "Best Accepted Seed Bytes",
+        "blocksLastMinute": "Blocks In Last Minute",
+        "lastBlockAge": "Last Block Age",
+        "nextRetarget": "Next Retarget In",
+        "difficultyStatus": "Difficulty Status",
+        "stuckMinutes": "Stuck Minutes",
+        "miningStatus": "Mining Status",
+        "status": "Difficulty Status"
       },
       "candidate": {
-        "title": "Graine candidate",
-        "encoding": "Encodage",
-        "decodedRoot": "Racine décodée",
-        "rootValid": "Racine valide",
-        "lengthValid": "Durée Valide",
-        "canonical": "Canonique",
+        "title": "Candidate Seed",
+        "encoding": "Encoding",
+        "decodedRoot": "Decoded Root",
+        "rootValid": "Root Valid",
+        "lengthValid": "Length Valid",
+        "canonical": "Canonical",
         "seed": "Shape Seed"
       },
       "keys": {
-        "title": "Clés des voisins"
+        "title": "Neighbor Keys"
       },
       "context": {
-        "title": "Contexte du voisin",
-        "note": "Généré à partir de clés N/E/S/W Chunk déverrouillées dans un ordre fixe."
+        "title": "Neighbor Context",
+        "note": "Generated from unlocked N/E/S/W Chunk Keys in a fixed order."
       },
       "pow": {
-        "title": "Preuve de travail",
-        "difficultyAria": "Difficulté de la démo",
-        "easy": "Facile",
+        "title": "Proof of Work",
+        "difficultyAria": "Demo difficulty",
+        "easy": "Easy",
         "normal": "Normal",
-        "hard": "Difficile",
-        "nonce": "Occasionnel",
-        "target": "Cible",
-        "attempts": "Tentatives",
-        "rate": "Taux de hachage",
-        "currentHash": "Hachage actuel",
-        "status": "Statut"
+        "hard": "Hard",
+        "nonce": "Nonce",
+        "target": "Target",
+        "attempts": "Attempts",
+        "rate": "Hash rate",
+        "currentHash": "Current hash",
+        "status": "Status"
       },
       "newKey": {
-        "title": "Nouvelle clé Chunk"
+        "title": "New Chunk Key"
       }
     },
     "actions": {
-      "randomMine": "Mine aléatoire",
-      "growWorld": "Cultiver le monde",
-      "reset": "Réinitialiser le monde",
-      "startSearch": "Lancer la recherche",
-      "searchOne": "Rechercher un candidat",
-      "submitCandidate": "Soumettre le candidat",
-      "autoRun": "Exécution automatique",
-      "autoSolve": "Résolution automatique",
-      "retargetNow": "Recibler maintenant",
-      "resetDifficulty": "Difficulté de réinitialisation",
-      "startMining": "Commencer l'exploitation minière",
-      "stop": "Arrêter",
-      "mineStep": "Mine une étape",
-      "autoExpand": "Expansion automatique",
-      "stopAuto": "Arrêter Auto",
-      "decodeSeed": "Décoder Contour Seed",
-      "copySeed": "Copier la graine",
-      "copyState": "Copier l'état JSON",
-      "showLog": "Afficher le journal des transactions",
-      "hideLog": "Masquer le journal des transactions"
+      "randomMine": "Random Mine",
+      "growWorld": "Grow World",
+      "reset": "Reset World",
+      "startSearch": "Start Searching",
+      "searchOne": "Search One Candidate",
+      "submitCandidate": "Submit Candidate",
+      "autoRun": "Auto Run",
+      "autoSolve": "Auto Solve",
+      "retargetNow": "Retarget Now",
+      "resetDifficulty": "Reset Difficulty",
+      "startMining": "Start Mining",
+      "stop": "Stop",
+      "mineStep": "Mine One Step",
+      "autoExpand": "Auto Expand",
+      "stopAuto": "Stop Auto",
+      "decodeSeed": "Decode Contour Seed",
+      "copySeed": "Copy Seed",
+      "copyState": "Copy State JSON",
+      "showLog": "Show Transaction Log",
+      "hideLog": "Hide Transaction Log"
     },
     "worldState": {
-      "title": "État mondial",
-      "unlocked": "chunks débloqué",
-      "candidates": "Candidat chunks",
-      "perimeter": "Périmètre",
+      "title": "World State",
+      "unlocked": "Unlocked chunks",
+      "candidates": "Candidate chunks",
+      "perimeter": "Perimeter",
       "frontierRoot": "Frontier Root",
       "contourSeed": "Contour Seed",
-      "seedBytes": "Octets de départ",
-      "seedAttempts": "Tentatives de recherche de graines",
-      "avgBlockTime": "Temps de blocage moyen",
-      "nextRetarget": "Reciblage suivant",
-      "nextRetargetValue": "Blocs {count}",
-      "seedTargetValue": "Plus à gauche : max {max} octets / RAW {raw} octets",
-      "difficulty": "Difficulté actuelle"
+      "seedBytes": "Seed bytes",
+      "seedAttempts": "Seed search attempts",
+      "avgBlockTime": "Avg block time",
+      "nextRetarget": "Next retarget",
+      "nextRetargetValue": "{count} blocks",
+      "seedTargetValue": "Harder left: max {max} bytes / RAW {raw} bytes",
+      "difficulty": "Current difficulty"
     },
     "contour": {
-      "title": "Codage de contour",
-      "body": "DecodeShapeSeed v1 prend en charge RAW_EDGES, PATH_RLE et RECT. RAW_EDGES est la solution de secours : une fois que max_seed_bytes atteint la longueur brute, tout contour fini est garanti résoluble.",
-      "path": "Tracé de contour simplifié",
-      "seed": "Contour Seed compressé",
-      "seedLength": "{bytes} octets, cible <= {target} octets",
-      "pasteSeed": "Coller Contour Seed pour décoder",
-      "pastePlaceholder": "Collez NSS1|RAW|..., NSS1|PATH|... ou NSS1|RECT|... ici."
+      "title": "Contour Encoding",
+      "body": "DecodeShapeSeed v1 supports RAW_EDGES, PATH_RLE, and RECT. RAW_EDGES is the fallback: once max_seed_bytes reaches the raw length, any finite contour is guaranteed solvable.",
+      "path": "Simplified contour path",
+      "seed": "Compressed Contour Seed",
+      "seedLength": "{bytes} bytes, target <= {target} bytes",
+      "pasteSeed": "Paste Contour Seed to decode",
+      "pastePlaceholder": "Paste NSS1|RAW|..., NSS1|PATH|..., or NSS1|RECT|... here."
     },
     "formulas": {
-      "eyebrow": "Formule NPoSS",
+      "eyebrow": "NPoSS Formula",
       "title": "seed_bytes <= max_seed_bytes",
-      "body": "La démo ne prouve pas qu'une graine est globalement la plus courte. Cela prouve que la graine reconstruit le Frontier Root actuel, est canonique et est suffisamment courte dans le cadre de la difficulté max_seed_bytes actuelle."
+      "body": "The demo does not prove a seed is globally shortest. It proves the seed reconstructs the current Frontier Root, is canonical, and is short enough under the current max_seed_bytes difficulty."
     },
     "advanced": {
-      "eyebrow": "Note de protocole avancé",
-      "title": "Commit-révéler pour la production",
-      "body": "La révélation directe est simple pour la démo. La production doit d'abord s'engager, puis révéler les graines et le sel après un court délai pour empêcher un autre utilisateur de copier une graine valide et de la soumettre en premier."
+      "eyebrow": "Advanced Protocol Note",
+      "title": "Commit-reveal for production",
+      "body": "Direct reveal is simple for the demo. Production should commit first, then reveal seed and salt after a short delay to prevent another user from copying a valid seed and submitting it first."
     },
     "transactions": {
-      "eyebrow": "Journal des transactions simulé",
-      "title": "Événements SeedBlock",
-      "empty": "Pas encore de blocs de départ. Recherchez et soumettez une graine valide pour résoudre la première époque.",
-      "nonce": "occasionnel",
+      "eyebrow": "Simulated Transaction Log",
+      "title": "SeedBlock Events",
+      "empty": "No seed blocks yet. Search and submit a valid seed to solve the first epoch.",
+      "nonce": "nonce",
       "powHash": "pow_hash",
-      "chunkKey": "chunk_clé",
-      "frontierRoot": "frontière_root",
+      "chunkKey": "chunk_key",
+      "frontierRoot": "frontier_root",
       "blockTime": "block_time",
       "seedTarget": "seed_target"
     },
     "difficultyStatus": {
-      "hardening": "Durcissement",
+      "hardening": "Hardening",
       "stable": "Stable",
-      "relaxing": "Détente",
-      "guaranteed_solvable": "Garanti Solvable"
+      "relaxing": "Relaxing",
+      "guaranteed_solvable": "Guaranteed Solvable"
     },
     "encoding": {
       "RAW_EDGES": "RAW_EDGES",
@@ -240,40 +239,40 @@
       "UNION": "UNION"
     },
     "directions": {
-      "north": "Nord",
-      "east": "Est",
-      "south": "Sud",
-      "west": "Ouest"
+      "north": "North",
+      "east": "East",
+      "south": "South",
+      "west": "West"
     },
     "chunkStatus": {
-      "locked": "Verrouillé",
-      "candidate": "Candidat",
-      "unlocked": "Débloqué"
+      "locked": "Locked",
+      "candidate": "Candidate",
+      "unlocked": "Unlocked"
     },
     "status": {
-      "idle": "Ralenti",
-      "mining": "Exploitation minière",
-      "searching": "Recherche",
-      "autoRunning": "Exécution automatique : recherche et soumission de graines valides.",
-      "stopped": "Arrêté",
-      "valid": "Graine valide trouvée",
-      "noValidSeed": "Aucune graine valide sous max_seed_bytes actuel.",
-      "noCandidate": "Recherchez d'abord une graine candidate",
-      "rootMismatch": "Seed ne reconstruit pas la frontière actuelle.",
-      "nonCanonical": "La graine n'est pas canonique.",
-      "notCandidate": "Sélectionnez d'abord un candidat chunk",
-      "seedTooLong": "La graine est valide mais trop longue pour la difficulté actuelle.",
-      "relaxed": "Pas de blocage pendant 10 minutes. Cible de longueur de graine relâchée."
+      "idle": "Idle",
+      "mining": "Mining",
+      "searching": "Searching",
+      "autoRunning": "Auto running: searching and submitting valid seeds.",
+      "stopped": "Stopped",
+      "valid": "Valid Seed Found",
+      "noValidSeed": "No valid seed under current max_seed_bytes.",
+      "noCandidate": "Search a candidate seed first",
+      "rootMismatch": "Seed does not reconstruct the current frontier.",
+      "nonCanonical": "Seed is not canonical.",
+      "notCandidate": "Select a candidate chunk first",
+      "seedTooLong": "Seed is valid but too long for current difficulty.",
+      "relaxed": "No block for 10 minutes. Seed length target relaxed."
     },
     "messages": {
-      "locked": "Ce chunk n'a ​​pas de voisins déverrouillés. La preuve de frontière nécessite au moins une clé de voisin confirmée.",
-      "unlocked": "Ce chunk est déjà débloqué. Sa clé peut désormais être utilisée par le chunks adjacent.",
-      "candidate": "Ce chunk peut être miné car il touche la frontière mondiale actuelle.",
-      "decoded": "Décode les bords de la frontière {count} à partir du Contour Seed et met en évidence la limite.",
-      "invalidSeed": "Ce Contour Seed n'a ​​pas pu être décodé. Collez une graine nckc_ valide.",
-      "seedCopied": "Contour Seed copié.",
-      "stateCopied": "État mondial JSON copié.",
-      "copyFailed": "La copie a échoué dans ce contexte de navigateur."
+      "locked": "This chunk has no unlocked neighbors. Frontier proof requires at least one confirmed neighbor key.",
+      "unlocked": "This chunk is already unlocked. Its key can now be used by adjacent chunks.",
+      "candidate": "This chunk can be mined because it touches the current world frontier.",
+      "decoded": "Decoded {count} frontier edges from the Contour Seed and highlighted the boundary.",
+      "invalidSeed": "This Contour Seed could not be decoded. Paste a valid nckc_ seed.",
+      "seedCopied": "Contour Seed copied.",
+      "stateCopied": "World state JSON copied.",
+      "copyFailed": "Copy failed in this browser context."
     }
   }
 }

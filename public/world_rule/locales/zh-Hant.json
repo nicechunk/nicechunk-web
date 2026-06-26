@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hant",
     "label": "Traditional Chinese",
-    "version": "world-rule-locale-zh-Hant-b3c7c6e02ddc7083",
-    "contentHash": "b3c7c6e02ddc7083"
+    "version": "world-rule-locale-zh-Hant-42f5f47a1c3d34c9",
+    "contentHash": "42f5f47a1c3d34c9"
   },
   "siteFooter": {
     "tagline": "Solana 上的種子體素世界協議。",
@@ -19,320 +19,320 @@
     "github": "GitHub",
     "copyright": "2026 NiceChunk。保留所有權利。"
   },
-  "title": "NiceChunk 世界生成演算法",
+  "title": "NiceChunk World Generation Algorithm",
   "nav": {
-    "aria": "主要導航",
-    "home": "首頁",
-    "roadbook": "路線手冊",
-    "worldRules": "世界規則",
-    "resources": "資源",
-    "elements": "元素",
-    "fairness": "公平",
-    "proofOfFrontier": "證明",
-    "docs": "文檔",
-    "enterWorld": "進入世界",
-    "guardians": "守護者"
+    "aria": "Primary navigation",
+    "home": "Home",
+    "roadbook": "Roadbook",
+    "worldRules": "World Rules",
+    "resources": "Resources",
+    "elements": "Elements",
+    "fairness": "Fairness",
+    "proofOfFrontier": "Proof",
+    "guardians": "Guardians",
+    "docs": "Docs",
+    "enterWorld": "Enter World"
   },
   "preview": {
-    "label": "世界預覽",
-    "heading": "世界預覽",
-    "fly": "WASD 飛行",
-    "look": "滑鼠拖曳查看",
-    "vertical": "空間/C 垂直",
+    "label": "World preview",
+    "heading": "WORLD PREVIEW",
+    "fly": "WASD Fly",
+    "look": "Mouse Drag Look",
+    "vertical": "Space / C Vertical",
     "chunks": "{active}/{total} chunks",
-    "metricsLabel": "預覽常數"
+    "metricsLabel": "Preview constants"
   },
   "header": {
-    "eyebrow": "公共發電規範",
-    "title": "世界生成演算法",
-    "body": "NiceChunk 地形是從公共種子管道產生的。 相同的種子和座標會產生相同的地形剖面、生物群落、水、洞穴、樹木和方塊查詢結果。",
-    "enterWorld": "進入世界",
-    "language": "英語"
+    "eyebrow": "PUBLIC GENERATION SPEC",
+    "title": "World Generation Algorithm",
+    "body": "NiceChunk terrain is generated from a public seed pipeline. The same seed and coordinates produce the same terrain profile, biome, water, caves, trees, and block query results.",
+    "enterWorld": "Enter World",
+    "language": "English"
   },
   "metrics": {
-    "statusLabel": "世界生成狀態",
+    "statusLabel": "World generation status",
     "chunkSizeLabel": "Chunk",
-    "seaLevelLabel": "海",
-    "renderRadiusLabel": "渲染",
-    "deterministic": "確定性",
-    "inspectable": "可檢查",
-    "runtime": "運行時規則"
+    "seaLevelLabel": "Sea",
+    "renderRadiusLabel": "Render",
+    "deterministic": "Deterministic",
+    "inspectable": "Inspectable",
+    "runtime": "Runtime rules"
   },
   "seed": {
-    "label": "種子控制",
-    "field": "世界種子",
-    "render": "渲染種子",
-    "random": "隨機種子"
+    "label": "Seed controls",
+    "field": "World Seed",
+    "render": "Render Seed",
+    "random": "Random Seed"
   },
   "overview": {
-    "label": "生成概述",
+    "label": "Generation overview",
     "seed": {
-      "title": "種子世界狀態",
-      "body": "文本種子被散列一次，然後混合到每個座標樣本中。"
+      "title": "Seeded world state",
+      "body": "A text seed is hashed once, then mixed into every coordinate sample."
     },
     "height": {
-      "title": "高度場優先",
-      "body": "大陸、海洋、地形、河流、沙丘和山脈產生了基礎地形。"
+      "title": "Heightfield first",
+      "body": "Continents, oceans, relief, rivers, dunes, and mountains produce the base terrain."
     },
     "biome": {
-      "title": "氣候與生物群落通行證",
-      "body": "溫度、濕度、坡度、海拔、水和特殊掩模選擇生物群落。"
+      "title": "Climate and biome pass",
+      "body": "Temperature, humidity, slope, altitude, water, and special masks select the biome."
     },
     "block": {
-      "title": "區塊查詢規則",
-      "body": "引擎響應來自深度、流體、洞穴、表面和植被規則的塊請求。"
+      "title": "Block query rules",
+      "body": "The engine answers block requests from depth, fluid, cave, surface, and vegetation rules."
     }
   },
   "pipeline": {
-    "label": "發電管",
-    "eyebrow": "發電管道",
-    "title": "從種子到可玩的 chunks",
+    "label": "Generation pipeline",
+    "eyebrow": "GENERATION PIPELINE",
+    "title": "From seed to playable chunks",
     "steps": [
       {
-        "title": "哈希種子",
-        "body": "將可見種子轉換為所有隨機函數所使用的穩定整數。"
+        "title": "Hash seed",
+        "body": "Convert the visible seed into a stable integer used by all random functions."
       },
       {
-        "title": "範例字段",
-        "body": "閱讀大陸性、侵蝕、怪異、溫度、濕度、火山和腐敗噪音。"
+        "title": "Sample fields",
+        "body": "Read continentalness, erosion, weirdness, temperature, humidity, volcanic, and corruption noise."
       },
       {
-        "title": "建構高度",
-        "body": "混合式海洋盆地、陸架、低地形、河流、沙丘、山脈和坡度限制。"
+        "title": "Build height",
+        "body": "Blend ocean basins, land shelves, lowland relief, rivers, dunes, mountains, and slope limits."
       },
       {
-        "title": "選擇生物群系",
-        "body": "應用有序的生物群系優先級，以便水、冷、海拔、濕度、熱和森林掩模一致地解決。"
+        "title": "Choose biome",
+        "body": "Apply the ordered biome priority so water, cold, altitude, wetness, heat, and forest masks resolve consistently."
       },
       {
-        "title": "答案塊",
-        "body": "從座標查詢返回地形、流體、洞穴、洞壁、植被、樹木和裝飾。"
+        "title": "Answer blocks",
+        "body": "Return terrain, fluid, caves, cave walls, vegetation, trees, and decorations from coordinate queries."
       }
     ]
   },
   "biomes": {
-    "label": "生物群落優先",
-    "eyebrow": "生物群落優先",
-    "title": "水域和極端地形優先獲勝",
+    "label": "Biome priority",
+    "eyebrow": "BIOME PRIORITY",
+    "title": "Water and extreme terrain win first",
     "items": [
-      "海洋",
-      "河",
-      "湖",
-      "海灘",
-      "火山",
-      "雪原",
-      "山",
-      "沼澤",
-      "濕地",
-      "苔原",
-      "沙漠",
-      "雨林",
-      "森林",
-      "平原"
+      "Ocean",
+      "River",
+      "Lake",
+      "Beach",
+      "Volcano",
+      "Snowfield",
+      "Mountain",
+      "Swamp",
+      "Wetland",
+      "Tundra",
+      "Desert",
+      "Rainforest",
+      "Forest",
+      "Plains"
     ]
   },
   "rules": {
-    "label": "生成規則",
-    "generationTitle": "發電管",
-    "blockTitle": "塊、流體和裝飾規則",
+    "label": "Generation rules",
+    "generationTitle": "GENERATION PIPELINE",
+    "blockTitle": "BLOCK, FLUID, AND DECORATION RULES",
     "generation": [
       {
-        "title": "確定性種子",
+        "title": "Deterministic Seed",
         "code": "worldSeed = hashSeed(seed)\nrandom2(x, z) = hash(x, z, worldSeed)\ncache.clear() when seed changes",
-        "description": "種子被簡化為穩定整數並混合到每個隨機樣本中。 地形高度、氣候、水、樹木、洞穴和材料捲對於相同的種子和座標是確定的。"
+        "description": "The seed is reduced to a stable integer and mixed into every random sample. Terrain height, climate, water, trees, caves, and material rolls are deterministic for the same seed and coordinates."
       },
       {
-        "title": "噪音工具包",
+        "title": "Noise Toolkit",
         "code": "valueNoise = smoothed grid random\nfbm = layered valueNoise\nridgeNoise = 1 - abs(valueNoise)\nsmoothstep = soft threshold",
-        "description": "生成器是由簡單的種子噪音原語建構而成的。 FBM 創建廣泛的變化，脊噪聲創建帶和通道，smoothstep 將噪聲值轉換為軟生物群落和特徵掩模。"
+        "description": "The generator is built from simple seeded noise primitives. FBM creates broad variation, ridge noise creates bands and channels, and smoothstep turns noisy values into soft biome and feature masks."
       },
       {
-        "title": "柱輪廓",
+        "title": "Column Profile",
         "code": "profile(x, z):\n  groundHeight = rawTerrainHeight(x, z)\n  slope = max(neighbor height delta)\n  sample = climate + erosion + weirdness + volcanic + corruption\n  biome = chooseBiome(...)\n  terrain/fluid/vegetation = surface rules",
-        "description": "每個世界列都歸納為地形剖面。 渲染、碰撞、小地圖顏色、樹木和水都從同一個配置檔案中讀取，因此該頁面正在解釋實際的運行時資料路徑。"
+        "description": "Every world column is summarized into a terrain profile. Rendering, collision, minimap color, trees, and water all read from this same profile, so the page is explaining the actual runtime data path."
       },
       {
-        "title": "大陸與海洋面具",
+        "title": "Continent And Ocean Mask",
         "code": "continent = oceanBasins * 0.78 + detail * 0.34 + coastalWarp + 0.12\nshelf = smoothstep(-0.36, 0.14, continent)\ninland = smoothstep(-0.06, 0.56, continent)",
-        "description": "在增加局部山丘之前，極低頻噪音決定了廣闊的海洋盆地、大陸棚、海岸線和內陸陸地。 陸架和內陸面罩將海底與高地融為一體，而不是突然切換。"
+        "description": "Very low frequency noise decides broad ocean basins, shelves, coastlines, and inland land before local hills are added. Shelf and inland masks blend sea floor into raised land instead of switching abruptly."
       },
       {
-        "title": "基礎土地高度",
+        "title": "Base Land Height",
         "code": "oceanFloor = seaLevel - 10 + seabedNoise\ncoastHeight = seaLevel - 1 + shelf * (landBaseHeight - seaLevel + 1)\nlandHeight = landBaseHeight + inland * 4 + lowlandRelief + dunes",
-        "description": "目前客戶端常數為 chunkSize 16、seaLevel 96 和 landBaseHeight 100。海洋位於海平面以下，海岸穿過大陸架，內陸柱在應用丘陵和沙丘之前從陸地基地附近開始。"
+        "description": "Current client constants are chunkSize 16, seaLevel 96, and landBaseHeight 100. Oceans sit below sea level, coasts rise through the shelf, and inland columns start near the land base before hills and dunes are applied."
       },
       {
-        "title": "低地救濟",
+        "title": "Lowland Relief",
         "code": "lowlandRelief = inland * (plains + lowHills + rollingRelief + dryWash + microRidges)",
-        "description": "平坦的土地並非完全平坦。 多個中頻噪音層創造平原、低矮的山丘、乾洗和小山脊，同時保持地形在步行範圍內可讀。"
+        "description": "Flat land is not perfectly flat. Multiple medium-frequency noise layers create plains, low hills, dry washes, and small ridges while keeping the terrain readable at walking scale."
       },
       {
-        "title": "沙漠沙丘",
+        "title": "Desert Dunes",
         "code": "desert = smoothstep(-0.46, 0.18, desertMass * 1.25 + temperature * 0.44 - moisture * 0.28)\ndunes = inland * smoothstep(0.24, 0.72, desert) * duneNoise",
-        "description": "沙漠來自炎熱、乾燥、廣泛的氣候噪音。 當沙漠遮罩足夠強大時，會使用山脊和 FBM 噪音在內陸土地上添加額外的沙丘高度。"
+        "description": "Deserts come from hot, dry, broad climate noise. When a desert mask is strong enough, extra dune height is added on inland land using ridge and FBM noise."
       },
       {
-        "title": "河流、峽谷和湖泊雕刻",
+        "title": "River, Canyon, And Lake Carving",
         "code": "riverCut = smoothstep(0.9, 0.985, riverAt(x, z))\ncanyonCut = smoothstep(0.72, 0.94, canyonAt(x, z)) * inland\nlakeCarve = smoothstep(0.78, 0.96, lakeAt(x, z)) * basinDepth",
-        "description": "河流、峽谷和湖泊在標準化之前被雕刻到基礎高度欄位。 河流路徑使用扭曲的線噪聲，峽谷在乾燥地形中切得更深，而湖盆則使低窪的內陸地區變得平坦。"
+        "description": "Rivers, canyons, and lakes are carved into the base height field before normalization. River paths use warped line noise, canyons cut deeper in dry terrain, and lake basins flatten low inland areas."
       },
       {
-        "title": "山細胞",
+        "title": "Mountain Cells",
         "code": "cellSize = 192\npresence = random2(cellX + 811, cellZ - 433)\nif presence < 0.36: no mountain\nsearch nearby cells for overlapping mountains",
-        "description": "山脈以 192 列單元格播種。 單元格可能沒有山，每個可見列都會檢查附近的單元格，因此大山的足跡可以跨越單元格邊界。"
+        "description": "Mountains are seeded per 192-column cell. A cell may have no mountain, and each visible column checks nearby cells so large mountain footprints can cross cell boundaries."
       },
       {
-        "title": "山形",
+        "title": "Mountain Shape",
         "code": "longRadius = radius * random(0.78..1.60)\nshortRadius = radius * random(0.38..0.84)\nangle = random * PI\nwarp = radius * random(0.035..0.11)",
-        "description": "山是一個有角度、扭曲的橢圓形。 長半徑和短半徑獨立變化，然後局部坐標扭曲使山脊彎曲，因此山脈看起來不像完美的圓錐體。"
+        "description": "A mountain is an angled, warped ellipse. Long and short radii vary independently, then local coordinate warping bends the ridge so mountains do not look like perfect cones."
       },
       {
-        "title": "山的高度和紋理",
+        "title": "Mountain Height And Texture",
         "code": "radius starts 72..168 and can grow up to 8 times\nheight starts 12..27 and can grow up to 520 one-block attempts\nlocalHeight = base + height * (shoulder + spine + crag + summitNoise)",
-        "description": "大山罕見但有可能。 最終高程結合了山肩的下降、中央脊柱、山脊峭壁、侵蝕和山頂粗糙度，然後取所有候選山脈的最大值。"
+        "description": "Large mountains are rare but possible. Final elevation combines falloff shoulders, a central spine, ridge crags, erosion, and summit roughness, then takes the maximum over all candidate mountains."
       },
       {
-        "title": "坡度限制器",
+        "title": "Slope Limiter",
         "code": "allowedStep = manhattanDistance * lerp(1.05, 4.4 + roughness * 1.4, mountainWeight)\nconstrainedHeight = min(rawHeight, neighborRaw + allowedStep)",
-        "description": "計算出原始高度後，局部通道將懸崖限制在附近的柱子上。 低地保持平緩，而山區則允許更加崎嶇，但不會成為無限制的尖峰。"
+        "description": "After raw height is computed, a local pass limits cliffs against nearby columns. Lowlands stay gentle, while mountain areas are allowed to be rougher without becoming unbounded spikes."
       },
       {
-        "title": "高度標準化",
+        "title": "Height Normalization",
         "code": "if rawHeight < seaLevel: keep underwater height\nelse if rawHeight < landBaseHeight: clamp to at least seaLevel + 1\nelse clamp to at least landBaseHeight",
-        "description": "最終高度保留了水下盆地，當不再是海洋時，保持低地高於海平面，並防止普通土地下降到陸地基地以下。"
+        "description": "The final height preserves underwater basins, keeps carved low land above sea level when it is no longer ocean, and keeps regular land from dropping below the land base."
       },
       {
-        "title": "氣候採樣",
+        "title": "Climate Sampling",
         "code": "temperature = fbm(0.0032 scale) + broad sine/cosine bands\nmoisture = fbm(0.0038 scale) + broad sine/cosine bands\nvalues are clamped to -1..1",
-        "description": "溫度和濕度是一個廣泛的領域。 它們創造了大片的炎熱、寒冷、潮濕和乾燥區域，這些區域後來決定了沙漠、苔原、雨林、森林、沼澤和雪地。"
+        "description": "Temperature and moisture are broad fields. They create large hot, cold, wet, and dry regions that later decide desert, tundra, rainforest, forest, swamp, and snow."
       },
       {
-        "title": "生物群落優先",
+        "title": "Biome Priority",
         "code": "Ocean -> River -> Lake -> Ocean edge -> Beach -> Volcano -> Snowfield -> Mountain -> Swamp -> Wetland -> Tundra -> Desert -> Rainforest -> Forest -> Plains",
-        "description": "生物群落選擇已下令。 水和特殊地形首先獲勝，然後是海拔和坡度，然後是濕/冷/熱氣候類別，平原作為後備。"
+        "description": "Biome selection is ordered. Water and special terrain win first, then altitude and slope, then wet/cold/hot climate categories, with plains as the fallback."
       },
       {
-        "title": "水剖面",
+        "title": "Water Profile",
         "code": "surfaceFluid = getSurfaceFluidBlock(...)\nwaterSurfaceHeight = seaLevel for ocean/underwater\nwaterFloorHeight = surface - visualDepth\nwaterLevel may rise above terrain for lake/river/swamp/wetland",
-        "description": "水是地形輪廓的一部分，而不是後期處理。 海洋充滿海平面；河流、湖泊、沼澤和濕地可以使水高於當地地面；可讀渲染的視覺深度受到限制。"
+        "description": "Water is part of the terrain profile, not a post-process. Oceans fill to sea level; rivers, lakes, swamps, and wetlands can place water above local ground; visual depth is capped for readable rendering."
       },
       {
-        "title": "洞穴細胞",
+        "title": "Cave Cells",
         "code": "if y >= surfaceHeight - 3 or y <= bedrock: no cave\ncaveNoise = ridgeNoise(x * 0.052 + y * 0.013, z * 0.052 - y * 0.017)\nthreshold = depth > 18 ? 0.72 : 0.84",
-        "description": "洞穴是根據每個區塊查詢的需求產生的。 它們僅出現在近表面層下方，更深時更容易形成，並且當相鄰單元打開時暴露牆壁。",
+        "description": "Caves are generated on demand per block query. They only appear below the near-surface layer, get easier to form when deeper, and expose walls when adjacent cells are open.",
         "action": {
-          "id": "找到最近的洞穴",
-          "label": "搜索",
-          "searching": "搜尋",
-          "notFound": "目前座標附近未發現洞穴。"
+          "id": "findNearestCave",
+          "label": "Search",
+          "searching": "Searching",
+          "notFound": "No cave was found near the current coordinates."
         }
       },
       {
-        "title": "Chunk 渲染策略",
+        "title": "Chunk Rendering Strategy",
         "code": "visible radius = 6 chunks\nnear radius = 1 chunk full detail\nfar visible chunks = distant detail\npreload radius = 9 chunks surface detail",
-        "description": "規則預覽頁面使用相同的地形產生器，但逐步載入 chunks。 chunks附近保持全裝修； chunks 進一步使用更輕的細節，以便快速的世界瀏覽保持響應。"
+        "description": "The rule preview page uses the same terrain generator but loads chunks progressively. Near chunks keep full decoration; farther chunks use lighter detail so fast world browsing stays responsive."
       }
     ],
     "blocks": [
       {
-        "title": "深度層",
-        "code": "y <= 0 -> bedrock\ny < 45 -> deepStone\ny < surfaceY - 6 -> stone or basalt\nnear surface -> biome subsurface\nsurfaceY -> biome surface",
-        "description": "區塊類型首先取決於垂直深度。 基岩錨定底部，深石頭填充低層，普通石頭填充更深的地形，生物群落特定層出現在頂部附近。"
+        "title": "Depth Layers",
+        "code": "y <= 0 -> bedrock\ny < 45 -> deepStone with low-frequency coal seams\ny < surfaceY - 6 -> stone or basalt\nnear surface -> biome subsurface\nsurfaceY -> biome surface",
+        "description": "Block type depends on vertical depth first. Bedrock anchors the bottom, deep stone fills low layers with uncommon coal seams, ordinary stone fills deeper terrain, and biome-specific layers appear near the top."
       },
       {
-        "title": "海洋、海灘、河流和湖面",
+        "title": "Ocean, Beach, River, And Lake Surfaces",
         "code": "Ocean: shellBed/clay/sand/gravel\nBeach: shellBed/gravel/sand\nRiver: gravel/clay/sand\nLake: clay/sand/gravel",
-        "description": "水邊生物群落使用沉積物塊。 海洋和海灘可能會出現貝殼床，河流偏向礫石和粘土，湖泊則使用粘土或沙子，並有一些礫石變化。"
+        "description": "Water-edge biomes use sediment blocks. Oceans and beaches can show shell beds, rivers bias toward gravel and clay, and lakes use clay or sand with some gravel variation."
       },
       {
-        "title": "火山表面",
+        "title": "Volcano Surface",
         "code": "if volcanic > 0.96 and roll > 0.92 -> lava\nelse basalt / ash / stone",
-        "description": "火山生物群落僅在火山噪音非常高且高於海平面時才會出現。 它們的表面主要是玄武岩和火山灰，在最熱的噴口附近有稀有的熔岩細胞。"
+        "description": "Volcano biomes appear only when volcanic noise is very high and above sea level. Their surfaces are mostly basalt and ash, with rare lava cells near the hottest vents."
       },
       {
-        "title": "山地、雪地和苔原表面",
+        "title": "Mountain, Snowfield, And Tundra Surfaces",
         "code": "Mountain: high/cold -> snow or stone, steep -> gravel or stone, gentle -> grass or stone\nSnowfield: snow/frozenSoil/ice\nTundra: frozenSoil/snow",
-        "description": "寒冷和高地地形露出岩石、雪、凍土、冰和礫石。 較平緩的山地架仍然可以攜帶草，這使山地基地保持可玩性。"
+        "description": "Cold and high terrain exposes rock, snow, frozen soil, ice, and gravel. Gentler mountain shelves can still carry grass, which keeps mountain bases playable."
       },
       {
-        "title": "沙漠表面",
+        "title": "Desert Surface",
         "code": "if roll > 0.52 or weirdness < -0.68 -> quicksand\nelse saltFlat / dryDirt / sand",
-        "description": "沙漠大多是沙狀地形，但也可能含有流沙、鹽灘和乾燥泥土。 奇怪的噪音會產生獨立於正常表面滾動的額外流沙斑塊。"
+        "description": "Deserts are mostly sand-like terrain but can contain quicksand, salt flats, and dry dirt. Weirdness noise creates extra quicksand patches independent of the normal surface roll."
       },
       {
-        "title": "沼澤和濕地表面",
+        "title": "Swamp And Wetland Surfaces",
         "code": "Swamp: toxicWater / swampWater / mud / clay\nWetland: clay / mud / grass",
-        "description": "潮濕區域將堅實的地面與淺水般的表面融為一體。 腐敗的沼澤樣本可能會變成有毒的水；濕地因黏土、泥土和草而變得更加溫和。"
+        "description": "Wet areas blend solid ground with shallow water-like surfaces. Corrupted swamp samples can become toxic water; wetlands stay gentler with clay, mud, and grass."
       },
       {
-        "title": "雨林、森林和平原表面",
+        "title": "Rainforest, Forest, And Plains Surfaces",
         "code": "Rainforest: mud or grass, rare moss\nForest: grass, rare moss when humid\nPlains: grass, with dryDirt or clay when humidity is extreme",
-        "description": "普通陸地表面對氣候敏感。 雨林更加潮濕和泥濘，森林可以在潮濕的細胞中生長苔蘚，而平原在極端氣候下會稍微轉變為乾燥的泥土或粘土。"
+        "description": "Regular land surfaces are climate-sensitive. Rainforest is wetter and muddier, forest can grow moss in humid cells, and plains shift slightly toward dry dirt or clay at climate extremes."
       },
       {
-        "title": "地下規則",
+        "title": "Subsurface Rules",
         "code": "Desert/Beach -> sand/gravel/stone\nWet biomes -> clay/mud/stone\nSnow/Tundra -> frozenSoil/stone\nVolcano -> basalt/lava/stone\nDefault -> dirt/gravel/clay",
-        "description": "頂面下方的方塊也遵循生物群落。 這使得懸崖和開採的側面與當地環境相匹配，而不是將每個柱子變成相同的泥土層。"
+        "description": "The block below the top surface also follows biome. This makes cliffs and mined side faces match the local environment instead of turning every column into the same dirt layer."
       },
       {
-        "title": "天然液體",
+        "title": "Natural Fluids",
         "code": "Volcano vent -> lava\nRiver/Lake -> water\nSwamp -> swampWater\nWetland chance -> water\nunder seaLevel -> water/ice/toxicWater/swampWater",
-        "description": "流體塊是在生物群系之後選擇的。 寒冷的水下細胞會變成冰，腐敗的潮濕區域可能會變成有毒的水，沼澤區域會使用沼澤水，而火山噴口會噴出熔岩。"
+        "description": "Fluid blocks are selected after biome. Cold underwater cells become ice, corrupted wet areas may become toxic water, swampy areas use swamp water, and volcano vents can emit lava."
       },
       {
-        "title": "流體高度",
+        "title": "Fluid Height",
         "code": "Lava level = terrain height\nOcean/underwater level = seaLevel\nLake level = height + 2..4\nRiver level = height + 1..2\nSwamp/Wetland level = height + 1",
-        "description": "不同的流體使用不同的可見度。 這使得河流和湖泊位於當地地面之上，而海洋則保持在共同的海平面上。"
+        "description": "Different fluids use different visible levels. This lets rivers and lakes sit above local floors while oceans stay at a shared sea level."
       },
       {
-        "title": "水深渲染",
+        "title": "Water Depth Rendering",
         "code": "Ocean depth = clamp(seaLevel - groundHeight, 1, 4)\nRiver depth grows near erosion center\nLake depth grows near basin center\nSwamp/Wetland depth = 1",
-        "description": "目視水深上限為四個格。 此蓋子可以降低水下柱的渲染成本，並防止深盆地淹沒預覽。"
+        "description": "Visual water depth is capped at four blocks. The cap keeps underwater columns cheap to render and prevents deep basins from overwhelming the preview."
       },
       {
-        "title": "水族裝飾",
+        "title": "Aquatic Decoration",
         "code": "Ocean: warm shallow water can spawn coral\nOcean: cold/corrupted water can spawn dead coral\nSwamp/Wetland/River/Lake: rare reeds",
-        "description": "植物也可以來自水細胞。 珊瑚僅限於溫暖的淺海，死珊瑚標誌著寒冷或腐敗的海水，蘆葦很少出現在非海洋潮濕生物群落附近。"
+        "description": "Plants can also come from water cells. Coral is restricted to shallow warm oceans, dead coral marks cold or corrupted water, and reeds appear rarely near non-ocean wet biomes."
       },
       {
-        "title": "乾熱植被",
+        "title": "Dry And Hot Vegetation",
         "code": "Desert on sand/dryDirt/ash:\n  cactus, deadBush, thorn, dryGrass by roll thresholds",
-        "description": "沙漠裝飾僅出現在適當的乾燥表面上。 仙人掌需要額外的粗滾，因此它看起來像分散的支架，而不是均勻的噪音。"
+        "description": "Desert decoration only appears on appropriate dry surfaces. Cactus requires an additional coarse roll so it appears as scattered stands instead of uniform noise."
       },
       {
-        "title": "濕地與森林植被",
+        "title": "Wet And Forest Vegetation",
         "code": "Swamp/Wetland: moss, vine, reed, rare mushroom\nRainforest: giantRoot, moss, vine, rare mushroom, bush\nForest: bush, vine, rare mushroom, grassPlant",
-        "description": "潮濕地區有利於地被植物、藤蔓、樹根、蘆葦和蘑菇。 雨林獲得了最強的推動力，而普通森林則主要是草地和灌木叢。"
+        "description": "Wet regions favor ground cover, vines, roots, reeds, and mushrooms. Rainforest gets the strongest boost, while regular forest stays mostly grass and bushes."
       },
       {
-        "title": "寒冷和山地植被",
+        "title": "Cold And Mountain Vegetation",
         "code": "Snowfield/Tundra: snowBush or lichen\nMountain: snowBush when cold, otherwise lichen or bush\nslope > 4 blocks most non-mountain vegetation",
-        "description": "寒冷生物群系使用稀疏的耐寒裝飾。 陡峭的斜坡抑制了大多數植被，除了山區特有的裝飾，這使得懸崖在視覺上保持乾淨。"
+        "description": "Cold biomes use sparse hardy decoration. Steep slopes suppress most vegetation except mountain-specific decoration, which keeps cliffs visually clean."
       },
       {
-        "title": "樹木密度",
+        "title": "Tree Density",
         "code": "treeDensity = forestFloor * (1 - altitudePenalty) + meadowTrees + biomeBoost\nblocked if biome cannot grow trees, slope > 3, or height <= 4",
-        "description": "樹木受生物群落、坡度、海拔、森林強度、草地噪音和生物群落增強控制。 雨林和森林得到更強的促進作用，而高海拔則降低​​了密度。"
+        "description": "Trees are controlled by biome, slope, altitude, forest strength, meadow noise, and biome boosts. Rainforest and forest receive stronger boosts, while high altitude reduces density."
       },
       {
-        "title": "樹的種類和葉子",
+        "title": "Tree Type And Leaves",
         "code": "pine when cold/high/mountain/snow or seed roll says evergreen\ntrunkType = pineTrunk / giantRoot / deadWood / trunk\nleafType = pine, snow, teal, dark, light, warm, or normal leaves",
-        "description": "樹的形狀和顏色是每個區域確定的。 寒冷和高地的地方更喜歡松樹，雨林可以使用巨大的根和青色/深色的葉子，普通的森林透過種子捲改變葉子的色調。"
+        "description": "Tree shape and color are deterministic per area. Cold and high locations prefer pines, rainforest can use giant roots and teal/dark leaves, and normal forests vary leaf tone by seed roll."
       },
       {
-        "title": "洞穴牆塊",
-        "code": "adjacent open cave -> cave wall\nif y < 45 -> deep cave\nrare lava in deep or volcanic caves\nrare toxic water in corrupted caves\nwall = deepStone or stone, sometimes gravel",
-        "description": "開放洞穴旁的固體細胞變成暴露的洞穴壁。 較深的洞穴更常使用較深的石頭和發光菌絲體；火山或腐爛的洞穴可能會暴露出危險的液體。"
+        "title": "Cave Wall Blocks",
+        "code": "adjacent open cave -> cave wall\nif y < 45 -> deep cave\nrare lava in deep or volcanic caves\nrare toxic water in corrupted caves\nwall = coal seam, deepStone, or stone, sometimes gravel",
+        "description": "A solid cell beside an open cave becomes an exposed cave wall. Deep caves use deep stone, can expose coal seams, and grow glow mycelium more often; volcanic or corrupted caves can expose dangerous fluids."
       },
       {
-        "title": "洞穴裝飾",
+        "title": "Cave Decoration",
         "code": "deep cave and floorNoise > 0.45 -> glowMycelium\nhumid rare roll -> mushroom\notherwise lichen or moss by floorNoise and humidity",
-        "description": "洞穴表面可以有小裝飾。 深邃的洞穴有利於發光菌絲體，潮濕的洞穴可以產生蘑菇或苔蘚，而地衣則表現為一般的洞穴覆蓋物。"
+        "description": "Cave surfaces can carry small decorations. Deep caves favor glow mycelium, humid caves can produce mushrooms or moss, and lichen appears as general cave cover."
       },
       {
-        "title": "產生的區塊查詢",
+        "title": "Generated Block Query",
         "code": "getGeneratedBlock(x, y, z):\n  water above surface when inside fluid level\n  null above terrain and above seaLevel\n  cave cells return null\n  cave-adjacent cells return cave walls\n  otherwise return terrain by depth",
-        "description": "引擎不會預先儲存完整地形。 它回答來自剖面和深度規則的區塊查詢，使渲染、碰撞、採礦和水模擬讀取相同的程式世界。"
+        "description": "The engine does not pre-store full terrain. It answers block queries from the profile and depth rules, which lets rendering, collision, mining, and water simulation read the same procedural world."
       }
     ]
   }

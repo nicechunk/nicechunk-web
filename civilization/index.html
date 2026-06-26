@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0c0e12" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=0.1.63" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=0.1.63" />
+    <link rel="shortcut icon" href="/favicon.ico?v=0.1.63" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=0.1.63" />
+    <link rel="manifest" href="/site.webmanifest?v=0.1.63" />
+    <meta
+      name="description"
+      data-i18n-content="civilization.meta.description"
+      content="NiceChunk Civilization Codex: players write, read, sign, validate, and execute world rules without project-side privilege."
+    />
+    <title data-i18n="civilization.meta.title">NiceChunk Civilization Codex</title>
+  </head>
+  <body>
+    <div class="civilization-bg" aria-hidden="true">
+      <div class="civilization-bg-grid"></div>
+      <div class="civilization-bg-map"></div>
+      <div class="civilization-bg-vignette"></div>
+    </div>
+
+    <header class="site-header">
+      <a class="brand-mark" href="/" aria-label="NiceChunk">
+        <img src="/media/nck.png" alt="" />
+        <span>NICECHUNK</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation" data-i18n-aria-label="civilization.nav.aria">
+        <div class="nav-links">
+          <a href="/" data-i18n="civilization.nav.home">Home</a>
+          <a href="/roadmap/" data-i18n="civilization.nav.roadbook">Roadbook</a>
+          <a href="/world_rule/" data-i18n="civilization.nav.worldRules">World Rules</a>
+          <a href="/resource_rule/" data-i18n="civilization.nav.resources">Resources</a>
+          <a href="/civilization/" class="active" data-i18n="civilization.nav.civilization">Civilization</a>
+          <a href="/trust/" data-i18n="civilization.nav.trust">Trust</a>
+          <a href="/docs/" data-i18n="civilization.nav.docs">Docs</a>
+        </div>
+        <div class="nav-actions">
+          <a class="header-action" href="/play/" data-i18n="civilization.nav.enterWorld">Enter World</a>
+          <div data-i18n-language-menu></div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="civilization-shell">
+      <section class="civilization-hero" id="overview" aria-labelledby="civilizationTitle">
+        <div class="civilization-hero-copy">
+          <p class="eyebrow" data-i18n="civilization.hero.eyebrow">Civilization Codex</p>
+          <h1 id="civilizationTitle" data-i18n="civilization.hero.title">Civilization Codex</h1>
+          <p class="hero-subtitle" data-i18n="civilization.hero.subtitle">
+            Players do not only play the world. They write the laws of the world.
+          </p>
+          <p class="hero-body" data-i18n="civilization.hero.body">
+            NiceChunk civilization rules are designed for a public on-chain world where resources, equipment, privileges, and world parameters cannot appear from nowhere.
+          </p>
+          <div class="hero-actions">
+            <button class="primary-action" type="button" data-civilization-action data-i18n="civilization.actions.create">Create Rule Book</button>
+            <a class="secondary-action" href="#rule-books" data-i18n="civilization.actions.reviewMock">Review Mock Rules</a>
+          </div>
+        </div>
+        <div class="civilization-hero-panel" aria-label="Civilization consensus model" data-i18n-aria-label="civilization.hero.panelAria">
+          <div class="codex-monolith">
+            <span class="codex-rune">NCK</span>
+            <span class="codex-rune">90%</span>
+            <span class="codex-rune">50%</span>
+            <span class="codex-rune">PDA</span>
+          </div>
+          <div class="hero-ledger" id="heroLedger"></div>
+        </div>
+      </section>
+
+      <section class="civilization-section" aria-labelledby="lawLayersTitle">
+        <div class="section-heading">
+          <p class="eyebrow blue" data-i18n="civilization.layers.eyebrow">Two Layers of Law</p>
+          <h2 id="lawLayersTitle" data-i18n="civilization.layers.title">A world constitution and an evolving civilization layer.</h2>
+          <p data-i18n="civilization.layers.body">
+            Natural Law protects the world from arbitrary authority. Civilization Law lets players evolve production, construction, craft, and society without turning governance into capital voting.
+          </p>
+        </div>
+        <div class="law-layer-grid" id="lawLayerCards"></div>
+      </section>
+
+      <section class="civilization-section warning-section" aria-labelledby="constitutionWarningTitle">
+        <div class="warning-copy">
+          <p class="eyebrow danger" data-i18n="civilization.constitution.eyebrow">World-level consensus</p>
+          <h2 id="constitutionWarningTitle" data-i18n="civilization.constitution.title">Natural Law is not a normal vote.</h2>
+          <p data-i18n="civilization.constitution.body">
+            A Natural Law change must face stronger prompts, stricter validators, longer cooling, and broader challenge windows because it can affect the deepest fairness assumptions of the world.
+          </p>
+        </div>
+        <div class="warning-checks" id="constitutionChecks"></div>
+      </section>
+
+      <section class="civilization-section" aria-labelledby="powerTitle">
+        <div class="section-heading">
+          <p class="eyebrow green" data-i18n="civilization.power.eyebrow">Civilization Power</p>
+          <h2 id="powerTitle" data-i18n="civilization.power.title">Power comes from real participation, not wallet count or raw NCK balance.</h2>
+          <p data-i18n="civilization.power.body">
+            The future contract should weight citizens by world participation while limiting abuse through maturity, caps, active windows, decay, and anomaly penalties.
+          </p>
+        </div>
+        <div class="power-layout">
+          <div class="power-sources" id="powerSources"></div>
+          <div class="power-guards" id="powerGuards"></div>
+        </div>
+      </section>
+
+      <section class="civilization-section" aria-labelledby="timelineTitle">
+        <div class="section-heading">
+          <p class="eyebrow blue" data-i18n="civilization.lifecycle.eyebrow">Lifecycle</p>
+          <h2 id="timelineTitle" data-i18n="civilization.lifecycle.title">A rule book moves from writing to execution without project-side permission.</h2>
+        </div>
+        <div class="timeline" id="ruleLifecycleTimeline"></div>
+      </section>
+
+      <section class="civilization-section split-section" aria-labelledby="schemaTitle">
+        <div class="section-heading sticky-heading">
+          <p class="eyebrow green" data-i18n="civilization.schema.eyebrow">Rule Book Structure</p>
+          <h2 id="schemaTitle" data-i18n="civilization.schema.title">Human-readable intent and machine-executable patch stay bound by hashes.</h2>
+          <p data-i18n="civilization.schema.body">
+            The UI stores mock data locally today. Later these fields can map directly to rule_book_pda, rule_signature_pda, and rule_registry_pda account layouts.
+          </p>
+        </div>
+        <div class="schema-panel" id="ruleBookSchema"></div>
+      </section>
+
+      <section class="civilization-section" aria-labelledby="modulesTitle">
+        <div class="section-heading">
+          <p class="eyebrow blue" data-i18n="civilization.modules.eyebrow">Target Modules</p>
+          <h2 id="modulesTitle" data-i18n="civilization.modules.title">Civilization changes the configuration layer, not core code by text command.</h2>
+        </div>
+        <div class="module-grid" id="ruleModulesGrid"></div>
+      </section>
+
+      <section class="civilization-section twin-examples" aria-label="Rule examples" data-i18n-aria-label="civilization.examples.aria">
+        <article>
+          <p class="eyebrow danger" data-i18n="civilization.examples.naturalEyebrow">Natural Law Examples</p>
+          <h2 data-i18n="civilization.examples.naturalTitle">Rules that protect the world itself.</h2>
+          <div class="example-list" id="naturalLawExamples"></div>
+        </article>
+        <article>
+          <p class="eyebrow green" data-i18n="civilization.examples.civilizationEyebrow">Civilization Law Examples</p>
+          <h2 data-i18n="civilization.examples.civilizationTitle">Rules that let civilization advance.</h2>
+          <div class="example-list" id="civilizationLawExamples"></div>
+        </article>
+      </section>
+
+      <section class="civilization-section" id="execution-model" aria-labelledby="executionTitle">
+        <div class="execution-panel">
+          <div>
+            <p class="eyebrow green" data-i18n="civilization.execution.eyebrow">Execution Model</p>
+            <h2 id="executionTitle" data-i18n="civilization.execution.title">Automatic execution means permissionless execution, not a server changing code.</h2>
+            <p data-i18n="civilization.execution.body">
+              Once threshold, cooling, and challenge conditions are satisfied, any player can call execute_rule. The contract checks only on-chain state and writes the approved configuration into PDA registries.
+            </p>
+          </div>
+          <div class="execution-stack" id="executionStack"></div>
+        </div>
+      </section>
+
+      <section class="civilization-section" id="rule-books" aria-labelledby="mockRulesTitle">
+        <div class="section-heading">
+          <p class="eyebrow blue" data-i18n="civilization.mock.eyebrow">Mock Rule Books</p>
+          <h2 id="mockRulesTitle" data-i18n="civilization.mock.title">Local data today, chain accounts tomorrow.</h2>
+          <p data-i18n="civilization.mock.body">
+            These examples are intentionally structured like future on-chain data so wallet signing, PDA reads, and execute_rule flows can replace the mock layer later.
+          </p>
+        </div>
+        <div class="rule-book-grid" id="mockRuleBooks"></div>
+      </section>
+
+      <section class="civilization-section contract-direction" aria-labelledby="contractTitle">
+        <div class="section-heading">
+          <p class="eyebrow green" data-i18n="civilization.contract.eyebrow">Future Contract Direction</p>
+          <h2 id="contractTitle" data-i18n="civilization.contract.title">The civilization program should mutate rule configuration PDAs through validators.</h2>
+          <p data-i18n="civilization.contract.body">
+            Core gameplay contracts should stay fixed where possible and read active configuration PDAs. Civilization consensus changes configuration, not ownership by fiat.
+          </p>
+        </div>
+        <div class="contract-grid" id="futureContractDirection"></div>
+        <div class="asset-protection">
+          <strong data-i18n="civilization.contract.assetProtectionTitle">Old asset protection principle</strong>
+          <p data-i18n="civilization.contract.assetProtectionBody">
+            Civilization Law should affect newly generated resources, equipment, and block rules by default. Retroactive effects on existing player assets require Natural Law consensus, stronger prompts, and 90% world-level agreement.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <div class="coming-soon-toast" id="comingSoonToast" role="status" aria-live="polite"></div>
+    <script type="module" src="./civilization.js"></script>
+  </body>
+</html>

@@ -29,6 +29,7 @@ For public repository review, use the documentation-first evidence path:
 ```bash
 npm run audit:fourier-pickaxe-docs
 sed -n '1,220p' docs/fourier-pickaxe-showcase.md
+sed -n '1,220p' docs/fourier-pickaxe-static-display.md
 sed -n '1,220p' fourier-pickaxe/README.md
 ```
 
@@ -47,6 +48,7 @@ When a reviewer or automated agent cannot access a GPU, the correct output is a 
 - `fourier-pickaxe/index.html` also exposes a static `Documentation-only review` panel for CPU-only repository review.
 - `fourier-pickaxe/main.js` defines the local VOX read path, G0 palette mapping, box-basis compression, payload encoding, and proof-search preview.
 - `docs/fourier-pickaxe-showcase.md` explains the project as a GPU-gated research surface and lists what can and cannot be proven without target hardware.
+- `docs/fourier-pickaxe-static-display.md` provides the approved CPU-only display packet with allowed claims, disallowed claims, and later GPU evidence requirements.
 - `npm run audit:fourier-pickaxe-docs` verifies that public documentation keeps the GPU limitation, payload format, security boundary, and review path visible.
 
 Do not present screenshots, benchmark numbers, proof-search rates, or visual fidelity claims unless they were produced on a GPU-capable review machine.

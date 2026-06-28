@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ja",
     "label": "Japanese",
-    "version": "locale-ja-a5f56a9ffdf71715",
-    "contentHash": "a5f56a9ffdf71715"
+    "version": "locale-ja-289ce54d9085280b",
+    "contentHash": "289ce54d9085280b"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -529,7 +529,62 @@
       "kindCeramic": "焼結",
       "kindBloom": "精製",
       "kindStabilized": "安定化",
-      "kindMaterial": "加工"
+      "kindMaterial": "加工",
+      "mobileTabsAria": "Smelting sections",
+      "tabBackpack": "Backpack",
+      "tabRecipes": "Recipes",
+      "tabFurnace": "Furnace",
+      "filterAria": "Smelting resource filters",
+      "filterAll": "All",
+      "filterRaw": "Raw",
+      "filterFuel": "Fuel",
+      "filterReady": "Ready",
+      "filterMissing": "Missing",
+      "recipesEyebrow": "Public Recipe Table",
+      "recipesTitle": "Match backpack inputs",
+      "recipeFilterAria": "Smelting recipe filters",
+      "recipeProgress": "{matched}/{required} input slots matched · heat tier {tier}",
+      "recipeRequirement": "{resource} {available}/{amount}",
+      "selectRecipe": "Select Recipe",
+      "findInputs": "Find Inputs",
+      "recipeReady": "Ready",
+      "recipeFuelMissing": "Missing fuel",
+      "recipeMissingInputs": "Missing {count} input slots",
+      "recipePartial": "Partial match",
+      "coordinateUnknown": "Coordinate unknown",
+      "closeDrawer": "Close item actions",
+      "singleItemCoordinate": "Single slot · {coord}",
+      "removeInput": "Remove Input",
+      "addInputFull": "Add Input",
+      "removeFuel": "Remove Fuel",
+      "useAsFuel": "Use as Fuel",
+      "viewRecipes": "View Recipes",
+      "purity": "Purity",
+      "grade": "Grade"
+    },
+    "backpack": {
+      "materialPropertyLine": "{grade} grade · Purity {purity}/100"
+    },
+    "materialGrade": {
+      "crude": "Crude",
+      "standard": "Standard",
+      "refined": "Refined",
+      "prime": "Prime",
+      "mythic": "Mythic"
+    },
+    "materialAttributes": {
+      "hardness": "Hardness",
+      "durability": "Durability",
+      "toughness": "Toughness",
+      "ductility": "Ductility",
+      "brittleness": "Brittleness",
+      "density": "Density",
+      "heatResistance": "Heat Resistance",
+      "corrosionResistance": "Corrosion Resistance",
+      "conductivity": "Conductivity",
+      "thermalConductivity": "Thermal Conductivity",
+      "magnetism": "Magnetism",
+      "workability": "Workability"
     },
     "block": {
       "unknown": "Unknown Block",

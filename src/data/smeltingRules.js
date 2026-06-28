@@ -1029,9 +1029,222 @@ export const smeltingRules = {
   ]
 };
 
+
+export const SMELTING_MATERIAL_ATTRIBUTE_KEYS = [
+  "hardness",
+  "durability",
+  "toughness",
+  "ductility",
+  "brittleness",
+  "density",
+  "heatResistance",
+  "corrosionResistance",
+  "conductivity",
+  "thermalConductivity",
+  "magnetism",
+  "workability",
+];
+
+export const smeltingMaterialAttributeProfiles = {
+  charcoal: { hardness: 18, durability: 35, toughness: 22, ductility: 5, brittleness: 42, density: 25, heatResistance: 62, corrosionResistance: 70, conductivity: 22, thermalConductivity: 18, magnetism: 0, workability: 58 },
+  biochar_compost: { hardness: 8, durability: 22, toughness: 16, ductility: 10, brittleness: 35, density: 18, heatResistance: 34, corrosionResistance: 62, conductivity: 12, thermalConductivity: 14, magnetism: 0, workability: 72 },
+  plant_fiber: { hardness: 12, durability: 38, toughness: 48, ductility: 66, brittleness: 18, density: 14, heatResistance: 24, corrosionResistance: 42, conductivity: 6, thermalConductivity: 8, magnetism: 0, workability: 86 },
+  resin_binder: { hardness: 16, durability: 42, toughness: 36, ductility: 58, brittleness: 22, density: 20, heatResistance: 30, corrosionResistance: 68, conductivity: 5, thermalConductivity: 7, magnetism: 0, workability: 82 },
+  ceramic_brick: { hardness: 62, durability: 64, toughness: 36, ductility: 2, brittleness: 74, density: 54, heatResistance: 78, corrosionResistance: 72, conductivity: 8, thermalConductivity: 24, magnetism: 0, workability: 34 },
+  lime_ceramic: { hardness: 54, durability: 56, toughness: 32, ductility: 2, brittleness: 68, density: 48, heatResistance: 72, corrosionResistance: 66, conductivity: 7, thermalConductivity: 20, magnetism: 0, workability: 42 },
+  quicklime: { hardness: 38, durability: 34, toughness: 20, ductility: 1, brittleness: 82, density: 42, heatResistance: 64, corrosionResistance: 24, conductivity: 8, thermalConductivity: 18, magnetism: 0, workability: 46 },
+  salt_flux: { hardness: 24, durability: 26, toughness: 16, ductility: 4, brittleness: 62, density: 36, heatResistance: 42, corrosionResistance: 22, conductivity: 22, thermalConductivity: 26, magnetism: 0, workability: 74 },
+  ash_cement: { hardness: 58, durability: 68, toughness: 46, ductility: 4, brittleness: 48, density: 50, heatResistance: 76, corrosionResistance: 62, conductivity: 10, thermalConductivity: 22, magnetism: 2, workability: 54 },
+  glass_ingot: { hardness: 58, durability: 44, toughness: 18, ductility: 1, brittleness: 88, density: 45, heatResistance: 52, corrosionResistance: 86, conductivity: 4, thermalConductivity: 16, magnetism: 0, workability: 32 },
+  obsidian_glass: { hardness: 72, durability: 56, toughness: 26, ductility: 1, brittleness: 78, density: 55, heatResistance: 68, corrosionResistance: 88, conductivity: 6, thermalConductivity: 18, magnetism: 4, workability: 24 },
+  silicon_wafer: { hardness: 66, durability: 38, toughness: 16, ductility: 3, brittleness: 84, density: 42, heatResistance: 64, corrosionResistance: 76, conductivity: 56, thermalConductivity: 70, magnetism: 0, workability: 28 },
+  ice_crystal: { hardness: 14, durability: 18, toughness: 10, ductility: 2, brittleness: 76, density: 18, heatResistance: 4, corrosionResistance: 72, conductivity: 3, thermalConductivity: 38, magnetism: 0, workability: 20 },
+  iron_bloom: { hardness: 62, durability: 72, toughness: 74, ductility: 52, brittleness: 26, density: 78, heatResistance: 66, corrosionResistance: 34, conductivity: 46, thermalConductivity: 48, magnetism: 70, workability: 62 },
+  copper_bloom: { hardness: 42, durability: 58, toughness: 48, ductility: 86, brittleness: 14, density: 82, heatResistance: 48, corrosionResistance: 58, conductivity: 94, thermalConductivity: 88, magnetism: 2, workability: 84 },
+  alumina_plate: { hardness: 84, durability: 66, toughness: 38, ductility: 1, brittleness: 72, density: 42, heatResistance: 92, corrosionResistance: 86, conductivity: 6, thermalConductivity: 32, magnetism: 0, workability: 30 },
+  nickel_iron: { hardness: 70, durability: 78, toughness: 76, ductility: 50, brittleness: 24, density: 80, heatResistance: 72, corrosionResistance: 48, conductivity: 42, thermalConductivity: 44, magnetism: 92, workability: 56 },
+  carbon_plate: { hardness: 78, durability: 62, toughness: 48, ductility: 10, brittleness: 58, density: 30, heatResistance: 86, corrosionResistance: 88, conductivity: 38, thermalConductivity: 58, magnetism: 0, workability: 44 },
+  carbon_steel: { hardness: 86, durability: 88, toughness: 82, ductility: 44, brittleness: 30, density: 76, heatResistance: 74, corrosionResistance: 42, conductivity: 36, thermalConductivity: 42, magnetism: 78, workability: 52 },
+  basalt_fiber: { hardness: 66, durability: 70, toughness: 62, ductility: 38, brittleness: 34, density: 34, heatResistance: 94, corrosionResistance: 82, conductivity: 8, thermalConductivity: 24, magnetism: 6, workability: 48 },
+  basalt_composite: { hardness: 78, durability: 82, toughness: 78, ductility: 22, brittleness: 34, density: 52, heatResistance: 92, corrosionResistance: 80, conductivity: 12, thermalConductivity: 28, magnetism: 8, workability: 42 },
+  geopolymer_block: { hardness: 64, durability: 76, toughness: 58, ductility: 4, brittleness: 42, density: 56, heatResistance: 84, corrosionResistance: 78, conductivity: 9, thermalConductivity: 22, magnetism: 4, workability: 46 },
+  coral_lime: { hardness: 48, durability: 54, toughness: 32, ductility: 2, brittleness: 66, density: 40, heatResistance: 62, corrosionResistance: 70, conductivity: 7, thermalConductivity: 18, magnetism: 0, workability: 50 },
+  toxic_glass: { hardness: 60, durability: 50, toughness: 20, ductility: 1, brittleness: 84, density: 48, heatResistance: 56, corrosionResistance: 94, conductivity: 8, thermalConductivity: 18, magnetism: 0, workability: 22 },
+};
+
+const smeltingClassFallbackAttributes = {
+  carbon: { hardness: 38, durability: 46, toughness: 34, ductility: 8, brittleness: 48, density: 28, heatResistance: 68, corrosionResistance: 76, conductivity: 28, thermalConductivity: 32, magnetism: 0, workability: 52 },
+  fiber: { hardness: 24, durability: 48, toughness: 58, ductility: 62, brittleness: 18, density: 18, heatResistance: 36, corrosionResistance: 54, conductivity: 6, thermalConductivity: 10, magnetism: 0, workability: 74 },
+  polymer: { hardness: 26, durability: 48, toughness: 46, ductility: 58, brittleness: 24, density: 24, heatResistance: 34, corrosionResistance: 68, conductivity: 5, thermalConductivity: 8, magnetism: 0, workability: 78 },
+  ceramic: { hardness: 62, durability: 58, toughness: 34, ductility: 2, brittleness: 72, density: 46, heatResistance: 76, corrosionResistance: 72, conductivity: 7, thermalConductivity: 22, magnetism: 0, workability: 36 },
+  chemical: { hardness: 28, durability: 28, toughness: 18, ductility: 4, brittleness: 64, density: 38, heatResistance: 44, corrosionResistance: 28, conductivity: 20, thermalConductivity: 22, magnetism: 0, workability: 66 },
+  glass: { hardness: 62, durability: 46, toughness: 20, ductility: 1, brittleness: 84, density: 48, heatResistance: 58, corrosionResistance: 86, conductivity: 5, thermalConductivity: 18, magnetism: 0, workability: 28 },
+  crystal: { hardness: 56, durability: 34, toughness: 16, ductility: 2, brittleness: 80, density: 32, heatResistance: 42, corrosionResistance: 74, conductivity: 24, thermalConductivity: 48, magnetism: 0, workability: 24 },
+  metal: { hardness: 58, durability: 70, toughness: 68, ductility: 62, brittleness: 22, density: 78, heatResistance: 62, corrosionResistance: 44, conductivity: 68, thermalConductivity: 66, magnetism: 36, workability: 66 },
+  alloy: { hardness: 78, durability: 82, toughness: 78, ductility: 46, brittleness: 28, density: 74, heatResistance: 76, corrosionResistance: 52, conductivity: 38, thermalConductivity: 44, magnetism: 62, workability: 52 },
+  composite: { hardness: 66, durability: 76, toughness: 68, ductility: 16, brittleness: 38, density: 50, heatResistance: 82, corrosionResistance: 78, conductivity: 12, thermalConductivity: 26, magnetism: 4, workability: 46 },
+};
+
+for (const material of smeltingRules.materials) {
+  material.attributes = smeltingMaterialBaseAttributes(material);
+}
+
 export default smeltingRules;
 
 export const SMELTING_RECIPES_PER_TABLE = 12;
+
+
+export function smeltingMaterialBaseAttributes(materialOrId, rules = smeltingRules) {
+  const material = typeof materialOrId === "string" ? smeltingMaterialById(materialOrId, rules) : materialOrId;
+  const fallback = smeltingClassFallbackAttributes[material?.class] ?? smeltingClassFallbackAttributes.composite;
+  const profile = smeltingMaterialAttributeProfiles[material?.id] ?? fallback;
+  return normalizeSmeltingAttributes({ ...fallback, ...profile });
+}
+
+export function normalizeSmeltingAttributes(attributes = {}) {
+  const normalized = {};
+  for (const key of SMELTING_MATERIAL_ATTRIBUTE_KEYS) {
+    normalized[key] = clampSmeltingScore(attributes[key] ?? 0);
+  }
+  return normalized;
+}
+
+export function deriveSmeltingMaterialProperties({
+  material,
+  inputSlots = [],
+  fuelSlots = [],
+  itemId = 0,
+  itemCode = 0,
+  sourceSeed = 0,
+} = {}) {
+  const base = smeltingMaterialBaseAttributes(material);
+  const source = deriveSmeltingSourceAttributes(inputSlots, material);
+  const quality = deriveSmeltingQuality({ material, inputSlots, fuelSlots, itemId, itemCode, sourceSeed });
+  const attributes = {};
+  for (const key of SMELTING_MATERIAL_ATTRIBUTE_KEYS) {
+    const baseValue = base[key] ?? 0;
+    const sourceValue = source[key] ?? baseValue;
+    const qualityDelta = (quality.score - 70) * smeltingQualityWeightForAttribute(key);
+    attributes[key] = clampSmeltingScore(Math.round(baseValue * 0.7 + sourceValue * 0.2 + quality.score * 0.1 + qualityDelta));
+  }
+  return {
+    attributes,
+    purity: quality.purity,
+    grade: quality.grade,
+    qualityScore: quality.score,
+  };
+}
+
+export function deriveSmeltingQuality({ material, inputSlots = [], fuelSlots = [], itemId = 0, itemCode = 0, sourceSeed = 0 } = {}) {
+  const requiredHeat = Math.max(1, Number(material?.requiredHeatTier) || 1);
+  const maxFuel = Math.max(0, ...fuelSlots.map((slot) => Number(slot?.fuelTier ?? slot?.heatTier ?? 0)).filter(Number.isFinite));
+  const heatFit = maxFuel > 0 ? clampNumber(maxFuel - requiredHeat, -2, 2) : 0;
+  const sourceCount = Math.max(1, inputSlots.length || recipeInputCount(material));
+  const artisan = Math.max(1, Number(material?.artisanLevel) || 1);
+  const seed = numericSmeltingSeed([material?.id ?? "", itemId, itemCode, sourceSeed, sourceCount].join("|"));
+  const variance = (seed % 11) - 5;
+  const score = clampSmeltingScore(Math.round(62 + artisan * 4 + sourceCount * 1.4 + heatFit * 5 + variance));
+  return {
+    score,
+    purity: clampSmeltingScore(Math.round(score + 8 + Math.max(0, heatFit) * 2 - Math.max(0, sourceCount - 4))),
+    grade: smeltingGradeForScore(score),
+  };
+}
+
+export function deriveSmeltingSourceAttributes(inputSlots = [], material = null) {
+  if (!inputSlots.length) return smeltingMaterialBaseAttributes(material);
+  const totals = Object.fromEntries(SMELTING_MATERIAL_ATTRIBUTE_KEYS.map((key) => [key, 0]));
+  let weightTotal = 0;
+  for (const slot of inputSlots) {
+    const profile = smeltingSourceAttributeProfile(slot);
+    const weight = Math.max(0.5, Number(slot?.massKg) || 1);
+    for (const key of SMELTING_MATERIAL_ATTRIBUTE_KEYS) totals[key] += profile[key] * weight;
+    weightTotal += weight;
+  }
+  const result = {};
+  for (const key of SMELTING_MATERIAL_ATTRIBUTE_KEYS) result[key] = clampSmeltingScore(Math.round(totals[key] / Math.max(1, weightTotal)));
+  return result;
+}
+
+export function smeltingSourceAttributeProfile(slot = {}) {
+  const category = slot?.category ?? slot?.atlas?.category ?? "";
+  const densityKgM3 = Number(slot?.densityKgM3 ?? slot?.atlas?.physical?.densityKgM3 ?? 0);
+  const density = densityKgM3 > 0 ? clampSmeltingScore(Math.round(densityKgM3 / 100)) : 35;
+  const composition = slot?.composition ?? slot?.atlas?.composition ?? [];
+  const elementScore = (symbol) => compositionMidpointForElement(composition, symbol);
+  const fe = elementScore("Fe");
+  const c = elementScore("C");
+  const si = elementScore("Si");
+  const ca = elementScore("Ca");
+  const al = elementScore("Al");
+  const organic = ["organic", "plants", "aquatic"].includes(category);
+  const fluid = category === "fluids";
+  return normalizeSmeltingAttributes({
+    hardness: organic ? 18 + c * 0.2 : 26 + si * 0.55 + fe * 0.8 + al * 0.45,
+    durability: organic ? 30 + c * 0.35 : 35 + density * 0.32 + fe * 0.7 + si * 0.25,
+    toughness: organic ? 42 + c * 0.25 : 30 + density * 0.22 + fe * 0.65,
+    ductility: organic ? 58 : 18 + fe * 0.25 + ca * 0.15,
+    brittleness: fluid ? 8 : organic ? 22 : 36 + si * 0.4 + ca * 0.25,
+    density,
+    heatResistance: organic ? 24 + c * 0.5 : 38 + si * 0.35 + al * 0.55 + fe * 0.25,
+    corrosionResistance: organic ? 42 : 44 + si * 0.25 + ca * 0.2,
+    conductivity: 4 + fe * 0.7 + c * 0.25,
+    thermalConductivity: 8 + density * 0.18 + fe * 0.35 + c * 0.18,
+    magnetism: fe * 2.4,
+    workability: organic ? 72 : fluid ? 20 : 46 + ca * 0.15 - si * 0.1,
+  });
+}
+
+export function smeltingTopAttributeEntries(attributes = {}, count = 4) {
+  return SMELTING_MATERIAL_ATTRIBUTE_KEYS
+    .map((key) => [key, clampSmeltingScore(attributes[key] ?? 0)])
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, count);
+}
+
+export function smeltingGradeForScore(score) {
+  if (score >= 92) return "mythic";
+  if (score >= 82) return "prime";
+  if (score >= 70) return "refined";
+  if (score >= 56) return "standard";
+  return "crude";
+}
+
+function recipeInputCount(material) {
+  return [...(material?.rawInputs ?? []), ...(material?.catalysts ?? [])]
+    .reduce((sum, input) => sum + (Number(input?.amount) || 0), 0);
+}
+
+function smeltingQualityWeightForAttribute(key) {
+  if (["hardness", "durability", "toughness", "heatResistance", "corrosionResistance"].includes(key)) return 0.18;
+  if (["conductivity", "thermalConductivity", "magnetism"].includes(key)) return 0.12;
+  if (key === "brittleness") return -0.08;
+  return 0.08;
+}
+
+function compositionMidpointForElement(composition = [], symbol) {
+  const entry = composition.find(([candidate]) => candidate === symbol);
+  if (!entry) return 0;
+  return smeltingCompositionMidpoint(entry[1]);
+}
+
+function numericSmeltingSeed(value) {
+  const text = String(value ?? "");
+  let hash = 2166136261;
+  for (let index = 0; index < text.length; index += 1) {
+    hash ^= text.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
+function clampSmeltingScore(value) {
+  return clampNumber(Math.round(Number(value) || 0), 0, 100);
+}
+
+function clampNumber(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
 
 export function validateSmeltingRules(rules = smeltingRules) {
   if (!rules || typeof rules !== "object") throw new Error("Missing smelting rules");
@@ -1070,6 +1283,12 @@ export function validateSmeltingRules(rules = smeltingRules) {
     if (!Array.isArray(material.rawInputs) || !material.rawInputs.length) throw new Error(`Material ${material.id} requires rawInputs`);
     if (!heatTierIds.has(material.requiredHeatTier)) throw new Error(`Material ${material.id} uses unknown heat tier ${material.requiredHeatTier}`);
     if (!Number.isInteger(material.yieldCount) || material.yieldCount < 1) throw new Error(`Material ${material.id} has invalid yieldCount`);
+    const attributes = smeltingMaterialBaseAttributes(material);
+    for (const key of SMELTING_MATERIAL_ATTRIBUTE_KEYS) {
+      if (!Number.isInteger(attributes[key]) || attributes[key] < 0 || attributes[key] > 100) {
+        throw new Error(`Material ${material.id} has invalid attribute ${key}`);
+      }
+    }
     for (const input of [...material.rawInputs, ...(material.catalysts ?? [])]) {
       if (!input.key || !Number.isFinite(input.amount) || input.amount < 1) {
         throw new Error(`Material ${material.id} has invalid input ${JSON.stringify(input)}`);

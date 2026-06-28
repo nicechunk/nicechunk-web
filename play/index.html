@@ -444,13 +444,37 @@
             <button class="smelting-close" id="smeltingClose" type="button" aria-label="Close smelting station" data-i18n-aria-label="main.smelting.close">×</button>
           </div>
         </header>
+        <nav class="smelting-mobile-tabs" aria-label="Smelting sections" data-i18n-aria-label="main.smelting.mobileTabsAria">
+          <button class="active" type="button" data-smelting-mobile-tab="backpack" data-i18n="main.smelting.tabBackpack">Backpack</button>
+          <button type="button" data-smelting-mobile-tab="recipes" data-i18n="main.smelting.tabRecipes">Recipes</button>
+          <button type="button" data-smelting-mobile-tab="furnace" data-i18n="main.smelting.tabFurnace">Furnace</button>
+        </nav>
         <div class="smelting-body">
           <section class="smelting-inventory-panel">
             <div class="smelting-panel-head">
               <span data-i18n="main.smelting.inputEyebrow">Backpack Resources</span>
               <strong data-i18n="main.smelting.inputTitle">Choose one mined resource</strong>
             </div>
+            <div class="smelting-mobile-filter" aria-label="Smelting resource filters" data-i18n-aria-label="main.smelting.filterAria">
+              <button class="active" type="button" data-smelting-filter="all" data-i18n="main.smelting.filterAll">All</button>
+              <button type="button" data-smelting-filter="raw" data-i18n="main.smelting.filterRaw">Raw</button>
+              <button type="button" data-smelting-filter="fuel" data-i18n="main.smelting.filterFuel">Fuel</button>
+              <button type="button" data-smelting-filter="ready" data-i18n="main.smelting.filterReady">Ready</button>
+            </div>
             <div class="smelting-resource-grid" id="smeltingResourceGrid" aria-label="Smeltable backpack resources" data-i18n-aria-label="main.smelting.resources"></div>
+          </section>
+          <section class="smelting-recipes-panel" aria-live="polite">
+            <div class="smelting-panel-head">
+              <span data-i18n="main.smelting.recipesEyebrow">Public Recipe Table</span>
+              <strong data-i18n="main.smelting.recipesTitle">Match backpack inputs</strong>
+            </div>
+            <div class="smelting-mobile-filter smelting-recipe-filter" aria-label="Smelting recipe filters" data-i18n-aria-label="main.smelting.recipeFilterAria">
+              <button class="active" type="button" data-smelting-recipe-filter="all" data-i18n="main.smelting.filterAll">All</button>
+              <button type="button" data-smelting-recipe-filter="ready" data-i18n="main.smelting.filterReady">Ready</button>
+              <button type="button" data-smelting-recipe-filter="missing" data-i18n="main.smelting.filterMissing">Missing</button>
+              <button type="button" data-smelting-recipe-filter="fuel" data-i18n="main.smelting.filterFuel">Fuel</button>
+            </div>
+            <div class="smelting-recipe-list" id="smeltingRecipeList"></div>
           </section>
           <section class="smelting-core-panel" aria-live="polite">
             <div class="smelting-panel-head">
@@ -484,6 +508,7 @@
             <div id="smeltingOutput"></div>
           </aside>
         </div>
+        <aside class="smelting-mobile-drawer" id="smeltingMobileActionDrawer" hidden></aside>
         <footer class="smelting-footer">
           <div class="smelting-footer-left">
             <span class="smelting-local-badge" data-i18n="main.smelting.modePreview">Local preview</span>

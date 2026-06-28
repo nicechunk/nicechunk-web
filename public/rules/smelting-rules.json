@@ -114,7 +114,21 @@
           "K",
           "0.2-2%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 18,
+        "durability": 35,
+        "toughness": 22,
+        "ductility": 5,
+        "brittleness": 42,
+        "density": 25,
+        "heatResistance": 62,
+        "corrosionResistance": 70,
+        "conductivity": 22,
+        "thermalConductivity": 18,
+        "magnetism": 0,
+        "workability": 58
+      }
     },
     {
       "id": "biochar_compost",
@@ -158,7 +172,21 @@
           "K",
           "0.5-4%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 8,
+        "durability": 22,
+        "toughness": 16,
+        "ductility": 10,
+        "brittleness": 35,
+        "density": 18,
+        "heatResistance": 34,
+        "corrosionResistance": 62,
+        "conductivity": 12,
+        "thermalConductivity": 14,
+        "magnetism": 0,
+        "workability": 72
+      }
     },
     {
       "id": "plant_fiber",
@@ -194,7 +222,21 @@
           "N",
           "0.3-2%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 12,
+        "durability": 38,
+        "toughness": 48,
+        "ductility": 66,
+        "brittleness": 18,
+        "density": 14,
+        "heatResistance": 24,
+        "corrosionResistance": 42,
+        "conductivity": 6,
+        "thermalConductivity": 8,
+        "magnetism": 0,
+        "workability": 86
+      }
     },
     {
       "id": "resin_binder",
@@ -230,7 +272,21 @@
           "N",
           "0.2-2%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 16,
+        "durability": 42,
+        "toughness": 36,
+        "ductility": 58,
+        "brittleness": 22,
+        "density": 20,
+        "heatResistance": 30,
+        "corrosionResistance": 68,
+        "conductivity": 5,
+        "thermalConductivity": 7,
+        "magnetism": 0,
+        "workability": 82
+      }
     },
     {
       "id": "ceramic_brick",
@@ -266,7 +322,21 @@
           "Fe",
           "0.5-6%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 62,
+        "durability": 64,
+        "toughness": 36,
+        "ductility": 2,
+        "brittleness": 74,
+        "density": 54,
+        "heatResistance": 78,
+        "corrosionResistance": 72,
+        "conductivity": 8,
+        "thermalConductivity": 24,
+        "magnetism": 0,
+        "workability": 34
+      }
     },
     {
       "id": "lime_ceramic",
@@ -302,7 +372,21 @@
           "Al",
           "3-10%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 54,
+        "durability": 56,
+        "toughness": 32,
+        "ductility": 2,
+        "brittleness": 68,
+        "density": 48,
+        "heatResistance": 72,
+        "corrosionResistance": 66,
+        "conductivity": 7,
+        "thermalConductivity": 20,
+        "magnetism": 0,
+        "workability": 42
+      }
     },
     {
       "id": "quicklime",
@@ -338,7 +422,21 @@
           "Mg",
           "0.5-4%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 38,
+        "durability": 34,
+        "toughness": 20,
+        "ductility": 1,
+        "brittleness": 82,
+        "density": 42,
+        "heatResistance": 64,
+        "corrosionResistance": 24,
+        "conductivity": 8,
+        "thermalConductivity": 18,
+        "magnetism": 0,
+        "workability": 46
+      }
     },
     {
       "id": "salt_flux",
@@ -374,7 +472,21 @@
           "O",
           "8-20%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 24,
+        "durability": 26,
+        "toughness": 16,
+        "ductility": 4,
+        "brittleness": 62,
+        "density": 36,
+        "heatResistance": 42,
+        "corrosionResistance": 22,
+        "conductivity": 22,
+        "thermalConductivity": 26,
+        "magnetism": 0,
+        "workability": 74
+      }
     },
     {
       "id": "ash_cement",
@@ -418,7 +530,21 @@
           "Fe",
           "1-6%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 58,
+        "durability": 68,
+        "toughness": 46,
+        "ductility": 4,
+        "brittleness": 48,
+        "density": 50,
+        "heatResistance": 76,
+        "corrosionResistance": 62,
+        "conductivity": 10,
+        "thermalConductivity": 22,
+        "magnetism": 2,
+        "workability": 54
+      }
     },
     {
       "id": "glass_ingot",
@@ -454,7 +580,21 @@
           "Ca",
           "1-6%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 58,
+        "durability": 44,
+        "toughness": 18,
+        "ductility": 1,
+        "brittleness": 88,
+        "density": 45,
+        "heatResistance": 52,
+        "corrosionResistance": 86,
+        "conductivity": 4,
+        "thermalConductivity": 16,
+        "magnetism": 0,
+        "workability": 32
+      }
     },
     {
       "id": "obsidian_glass",
@@ -500,7 +640,21 @@
           "Al",
           "4-12%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 72,
+        "durability": 56,
+        "toughness": 26,
+        "ductility": 1,
+        "brittleness": 78,
+        "density": 55,
+        "heatResistance": 68,
+        "corrosionResistance": 88,
+        "conductivity": 6,
+        "thermalConductivity": 18,
+        "magnetism": 4,
+        "workability": 24
+      }
     },
     {
       "id": "silicon_wafer",
@@ -536,7 +690,21 @@
           "Al",
           "0.1-2%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 66,
+        "durability": 38,
+        "toughness": 16,
+        "ductility": 3,
+        "brittleness": 84,
+        "density": 42,
+        "heatResistance": 64,
+        "corrosionResistance": 76,
+        "conductivity": 56,
+        "thermalConductivity": 70,
+        "magnetism": 0,
+        "workability": 28
+      }
     },
     {
       "id": "ice_crystal",
@@ -576,7 +744,21 @@
           "Cl",
           "0.2-2%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 14,
+        "durability": 18,
+        "toughness": 10,
+        "ductility": 2,
+        "brittleness": 76,
+        "density": 18,
+        "heatResistance": 4,
+        "corrosionResistance": 72,
+        "conductivity": 3,
+        "thermalConductivity": 38,
+        "magnetism": 0,
+        "workability": 20
+      }
     },
     {
       "id": "iron_bloom",
@@ -622,7 +804,21 @@
           "Mn",
           "0-2%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 62,
+        "durability": 72,
+        "toughness": 74,
+        "ductility": 52,
+        "brittleness": 26,
+        "density": 78,
+        "heatResistance": 66,
+        "corrosionResistance": 34,
+        "conductivity": 46,
+        "thermalConductivity": 48,
+        "magnetism": 70,
+        "workability": 62
+      }
     },
     {
       "id": "copper_bloom",
@@ -658,7 +854,21 @@
           "O",
           "8-22%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 42,
+        "durability": 58,
+        "toughness": 48,
+        "ductility": 86,
+        "brittleness": 14,
+        "density": 82,
+        "heatResistance": 48,
+        "corrosionResistance": 58,
+        "conductivity": 94,
+        "thermalConductivity": 88,
+        "magnetism": 2,
+        "workability": 84
+      }
     },
     {
       "id": "alumina_plate",
@@ -694,7 +904,21 @@
           "Fe",
           "1-6%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 84,
+        "durability": 66,
+        "toughness": 38,
+        "ductility": 1,
+        "brittleness": 72,
+        "density": 42,
+        "heatResistance": 92,
+        "corrosionResistance": 86,
+        "conductivity": 6,
+        "thermalConductivity": 32,
+        "magnetism": 0,
+        "workability": 30
+      }
     },
     {
       "id": "nickel_iron",
@@ -740,7 +964,21 @@
           "Si",
           "2-10%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 70,
+        "durability": 78,
+        "toughness": 76,
+        "ductility": 50,
+        "brittleness": 24,
+        "density": 80,
+        "heatResistance": 72,
+        "corrosionResistance": 48,
+        "conductivity": 42,
+        "thermalConductivity": 44,
+        "magnetism": 92,
+        "workability": 56
+      }
     },
     {
       "id": "carbon_plate",
@@ -776,7 +1014,21 @@
           "O",
           "4-14%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 78,
+        "durability": 62,
+        "toughness": 48,
+        "ductility": 10,
+        "brittleness": 58,
+        "density": 30,
+        "heatResistance": 86,
+        "corrosionResistance": 88,
+        "conductivity": 38,
+        "thermalConductivity": 58,
+        "magnetism": 0,
+        "workability": 44
+      }
     },
     {
       "id": "carbon_steel",
@@ -812,7 +1064,21 @@
           "Si",
           "0.2-2%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 86,
+        "durability": 88,
+        "toughness": 82,
+        "ductility": 44,
+        "brittleness": 30,
+        "density": 76,
+        "heatResistance": 74,
+        "corrosionResistance": 42,
+        "conductivity": 36,
+        "thermalConductivity": 42,
+        "magnetism": 78,
+        "workability": 52
+      }
     },
     {
       "id": "basalt_fiber",
@@ -852,7 +1118,21 @@
           "Ca",
           "4-10%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 66,
+        "durability": 70,
+        "toughness": 62,
+        "ductility": 38,
+        "brittleness": 34,
+        "density": 34,
+        "heatResistance": 94,
+        "corrosionResistance": 82,
+        "conductivity": 8,
+        "thermalConductivity": 24,
+        "magnetism": 6,
+        "workability": 48
+      }
     },
     {
       "id": "basalt_composite",
@@ -896,7 +1176,21 @@
           "Fe",
           "2-8%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 78,
+        "durability": 82,
+        "toughness": 78,
+        "ductility": 22,
+        "brittleness": 34,
+        "density": 52,
+        "heatResistance": 92,
+        "corrosionResistance": 80,
+        "conductivity": 12,
+        "thermalConductivity": 28,
+        "magnetism": 8,
+        "workability": 42
+      }
     },
     {
       "id": "geopolymer_block",
@@ -940,7 +1234,21 @@
           "Ca",
           "1-7%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 64,
+        "durability": 76,
+        "toughness": 58,
+        "ductility": 4,
+        "brittleness": 42,
+        "density": 56,
+        "heatResistance": 84,
+        "corrosionResistance": 78,
+        "conductivity": 9,
+        "thermalConductivity": 22,
+        "magnetism": 4,
+        "workability": 46
+      }
     },
     {
       "id": "coral_lime",
@@ -980,7 +1288,21 @@
           "C",
           "1-8%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 48,
+        "durability": 54,
+        "toughness": 32,
+        "ductility": 2,
+        "brittleness": 66,
+        "density": 40,
+        "heatResistance": 62,
+        "corrosionResistance": 70,
+        "conductivity": 7,
+        "thermalConductivity": 18,
+        "magnetism": 0,
+        "workability": 50
+      }
     },
     {
       "id": "toxic_glass",
@@ -1024,7 +1346,21 @@
           "S",
           "0.5-4%"
         ]
-      ]
+      ],
+      "attributes": {
+        "hardness": 60,
+        "durability": 50,
+        "toughness": 20,
+        "ductility": 1,
+        "brittleness": 84,
+        "density": 48,
+        "heatResistance": 56,
+        "corrosionResistance": 94,
+        "conductivity": 8,
+        "thermalConductivity": 18,
+        "magnetism": 0,
+        "workability": 22
+      }
     }
   ]
 }

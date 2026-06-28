@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hant",
     "label": "Traditional Chinese",
-    "version": "locale-zh-Hant-48fcd5fa029dc76f",
-    "contentHash": "48fcd5fa029dc76f"
+    "version": "locale-zh-Hant-73769a9d0e54903c",
+    "contentHash": "73769a9d0e54903c"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -286,7 +286,8 @@
       "quantityLine": "數量 {count}",
       "itemIdLine": "物品 ID {id}",
       "materialIdLine": "材料 {id}",
-      "unknownMass": "未知"
+      "unknownMass": "未知",
+      "materialPropertyLine": "{grade}品級 · 純度 {purity}/100"
     },
     "loading": {
       "eyebrow": "世界閘道",
@@ -565,7 +566,59 @@
       "kindCeramic": "燒結",
       "kindBloom": "精煉",
       "kindStabilized": "穩定化",
-      "kindMaterial": "加工"
+      "kindMaterial": "加工",
+      "mobileTabsAria": "熔煉分區",
+      "tabBackpack": "背包",
+      "tabRecipes": "配方",
+      "tabFurnace": "熔爐",
+      "filterAria": "熔煉資源篩選",
+      "filterAll": "全部",
+      "filterRaw": "原料",
+      "filterFuel": "燃料",
+      "filterReady": "可用",
+      "filterMissing": "缺少",
+      "recipesEyebrow": "公開配方表",
+      "recipesTitle": "匹配背包輸入",
+      "recipeFilterAria": "熔煉配方篩選",
+      "recipeProgress": "已匹配 {matched}/{required} 個輸入格 · 熱量等級 {tier}",
+      "recipeRequirement": "{resource} {available}/{amount}",
+      "selectRecipe": "選擇配方",
+      "findInputs": "查找輸入",
+      "recipeReady": "可熔煉",
+      "recipeFuelMissing": "缺少燃料",
+      "recipeMissingInputs": "缺少 {count} 個輸入格",
+      "recipePartial": "部分匹配",
+      "coordinateUnknown": "座標未知",
+      "closeDrawer": "關閉物品操作",
+      "singleItemCoordinate": "單格物品 · {coord}",
+      "removeInput": "移除原料",
+      "addInputFull": "加入原料",
+      "removeFuel": "移除燃料",
+      "useAsFuel": "設為燃料",
+      "viewRecipes": "查看配方",
+      "purity": "純度",
+      "grade": "品級"
+    },
+    "materialGrade": {
+      "crude": "粗製",
+      "standard": "標準",
+      "refined": "精煉",
+      "prime": "優質",
+      "mythic": "神話"
+    },
+    "materialAttributes": {
+      "hardness": "硬度",
+      "durability": "耐久",
+      "toughness": "韌性",
+      "ductility": "延展",
+      "brittleness": "脆性",
+      "density": "密度",
+      "heatResistance": "耐熱",
+      "corrosionResistance": "抗腐蝕",
+      "conductivity": "導電",
+      "thermalConductivity": "導熱",
+      "magnetism": "磁性",
+      "workability": "加工性"
     },
     "block": {
       "unknown": "Unknown Block",

@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hant",
     "label": "Traditional Chinese",
-    "version": "resource-rule-locale-zh-Hant-3eaad6a936ec7ec5",
-    "contentHash": "3eaad6a936ec7ec5"
+    "version": "resource-rule-locale-zh-Hant-1bdeb4515dd80f2c",
+    "contentHash": "1bdeb4515dd80f2c"
   },
   "siteFooter": {
     "tagline": "Solana 上的種子體素世界協議。",
@@ -32,7 +32,8 @@
       "ko": "한국어",
       "zhHant": "繁體中文",
       "zhHans": "简体中文"
-    }
+    },
+    "comingSoon": "即將推出"
   },
   "elements": {
     "names": {
@@ -158,17 +159,17 @@
   },
   "resourceAtlas": {
     "nav": {
-      "aria": "Primary navigation",
-      "home": "Home",
-      "roadbook": "Roadbook",
-      "worldRules": "World Rules",
-      "resources": "Resources",
-      "elements": "Elements",
-      "fairness": "Fairness",
-      "proofOfFrontier": "Proof",
-      "guardians": "Guardians",
-      "docs": "Docs",
-      "enterWorld": "Enter World"
+      "aria": "主導航",
+      "home": "首頁",
+      "roadbook": "路線手冊",
+      "worldRules": "世界規則",
+      "resources": "資源",
+      "elements": "元素",
+      "fairness": "公平",
+      "proofOfFrontier": "證明",
+      "guardians": "守護者",
+      "docs": "文檔",
+      "enterWorld": "進入世界"
     },
     "page": {
       "title": "NiceChunk 方塊資源圖鑑",
@@ -471,7 +472,7 @@
       "gravel": {
         "name": "砾石",
         "source": "地表 / 地下",
-        "description": "混合的破碎岩粒，组成會随附近地形明显變化，但整體仍以矽酸盐為主。"
+        "description": "混合的破碎岩粒，组成会随附近地形明显變化，但整體仍以矽酸盐為主。"
       },
       "clay": {
         "name": "黏土",
@@ -526,7 +527,7 @@
       "water": {
         "name": "水",
         "source": "流體",
-        "description": "用於海洋、河流、湖泊和低洼水域覆盖的标准流體方塊，會根據生物群系产生少量溶解离子差异。"
+        "description": "用於海洋、河流、湖泊和低洼水域覆盖的标准流體方塊，会根據生物群系产生少量溶解离子差异。"
       },
       "swampWater": {
         "name": "沼泽水",
@@ -536,7 +537,7 @@
       "toxicWater": {
         "name": "毒水",
         "source": "汙染流體",
-        "description": "由汙染信号選中的危險流體。基礎仍然是水，但痕量金屬和硫化物會提高生物風險。"
+        "description": "由汙染信号選中的危險流體。基礎仍然是水，但痕量金屬和硫化物会提高生物風險。"
       },
       "lava": {
         "name": "熔岩",
@@ -631,12 +632,12 @@
       "lichen": {
         "name": "地衣",
         "source": "寒冷 / 岩石表面",
-        "description": "寒冷或岩石表面上的共生壳层，連接生物组织和矿物基質。"
+        "description": "寒冷或岩石表面上的共生壳层，连接生物组织和矿物基質。"
       },
       "vine": {
         "name": "藤蔓",
         "source": "潮湿植被",
-        "description": "由潮湿生物群系和類似洞穴的湿润區域生成的攀缘植物，具有柔韌的富碳组织。"
+        "description": "由潮湿生物群系和類似洞穴的湿润区域生成的攀缘植物，具有柔韌的富碳组织。"
       },
       "glowMycelium": {
         "name": "發光菌丝",
@@ -651,12 +652,12 @@
       "seaweed": {
         "name": "海藻",
         "source": "海洋植被",
-        "description": "來自水下區域的海洋植物狀生物質，带有鈉、鉀、鎂和碘的痕量傾向。"
+        "description": "來自水下区域的海洋植物狀生物質，带有鈉、鉀、鎂和碘的痕量傾向。"
       },
       "aquaticPlant": {
         "name": "水生植物",
         "source": "淡水植被",
-        "description": "含水量很高的淡水植被，會从沉积物中吸收养分。"
+        "description": "含水量很高的淡水植被，会从沉积物中吸收养分。"
       },
       "coral": {
         "name": "珊瑚",

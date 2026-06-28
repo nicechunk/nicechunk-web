@@ -2,8 +2,8 @@
   "_meta": {
     "language": "en",
     "label": "English",
-    "version": "proof-of-frontier-locale-en-27df386e43b6cf6d",
-    "contentHash": "27df386e43b6cf6d"
+    "version": "proof-of-frontier-locale-en-0e59e236953d9c9e",
+    "contentHash": "0e59e236953d9c9e"
   },
   "siteFooter": {
     "tagline": "A seeded voxel world protocol on Solana.",
@@ -52,9 +52,9 @@
       "elements": "Elements",
       "fairness": "Fairness",
       "proofOfFrontier": "Proof",
-      "guardians": "Guardians",
       "docs": "Docs",
-      "enterWorld": "Enter World"
+      "enterWorld": "Enter World",
+      "guardians": "Guardians"
     },
     "hero": {
       "eyebrow": "NiceChunk Proof of Short Seed",

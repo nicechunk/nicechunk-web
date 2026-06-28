@@ -2,7 +2,7 @@ import * as THREE from "three";
 import "./styles.css";
 import "./polyfills.js";
 import { applyWorldConfigFromChain, chunkSize, cloudSectorSize, maxBuildY, maxTerrainHeight, minBuildY, renderDistance, seaLevel } from "./world/config.js";
-import { setWorldSeed, terrainHeight, terrainProfile } from "./world/generator.js";
+import { setWorldSeed } from "./world/generator.js";
 import { canonicalRenderTypeAt, canonicalSurfaceHeightAt, canonicalWaterLevelAt, setCanonicalWorldConfig } from "./world/canonicalResource.js";
 import { defaultWorldSeed, persistPlayWorldSeed } from "./world/seedStorage.js";
 import { renderTypeForBlock, WORLD_MAP_BLOCK_DEBUG_COLOR, WorldMapBlock } from "./world/blocks.js";
@@ -229,7 +229,7 @@ let startupChunkTotal = 0;
 
 syncGameChromeState();
 
-const startupWorldConfigTimeoutMs = 4500;
+const startupWorldConfigTimeoutMs = 15000;
 const startupChainSyncTimeoutMs = 5200;
 const startupLoadingMaxWaitMs = 16000;
 
@@ -380,10 +380,11 @@ async function initializeWorldConfig() {
     setWorldSeed(worldSeed);
     setCanonicalWorldConfig(config);
     persistPlayWorldSeed(worldSeed);
-    setActiveWorldMapSignature(worldSeed);
+    pendingWorldMapSeed = worldSeed;
+    if (activeWorldMapSignature) setActiveWorldMapSignature(worldSeed);
     window.NiceChunkWorldConfig = config;
   } catch (error) {
-    console.warn("Failed to load NiceChunk world config", error);
+    console.warn("NiceChunk world config refresh unavailable; using bundled world config", error);
   }
 }
 
@@ -590,7 +591,9 @@ function updateRpcConfigStatusText(extraParams = {}) {
   rpcConfigStatus.textContent = gameText(rpcConfigState.statusKey, rpcConfigState.statusFallback, params);
 }
 
-await initializeWorldConfig();
+let pendingWorldMapSeed = defaultWorldSeed;
+let activeWorldMapSignature = "";
+const startupWorldConfigPromise = initializeWorldConfig();
 setGameLoadingStage("engine", 42);
 
 const coarsePointerMedia = typeof window.matchMedia === "function" ? window.matchMedia("(pointer: coarse)") : null;
@@ -912,6 +915,8 @@ let smeltingRecipeRenderSignature = "";
 let smeltingMobileDrawerSignature = "";
 
 const playerPositionStorageKey = "nicechunk.playerPosition.v1";
+const playerPositionStorageVersion = 2;
+const maxSavedPlayerHeightAboveGround = 2;
 const currentSession = getGameSession();
 const savedPlayerState = loadSavedPlayerState();
 const guardianSpawnState = shouldUseGuardianSpawnForSession(currentSession)
@@ -920,7 +925,7 @@ const guardianSpawnState = shouldUseGuardianSpawnForSession(currentSession)
 if (guardianSpawnState) markGuardianSpawnForSession(currentSession);
 const initialPlayerState = guardianSpawnState ?? savedPlayerState;
 const player = {
-  position: vectorFromPlayerState(initialPlayerState) ?? new THREE.Vector3(0, terrainHeight(0, 0) + 1.01, 0),
+  position: vectorFromPlayerState(initialPlayerState) ?? new THREE.Vector3(0, surfaceHeight(0, 0) + 1.01, 0),
   velocity: new THREE.Vector3(),
   yaw: initialPlayerState?.yaw ?? Math.PI * 0.25,
   cameraPitch: initialPlayerState?.cameraPitch ?? -0.42,
@@ -1007,7 +1012,7 @@ const minimapState = { lastDrawAt: 0, expanded: false, largeScale: 1 };
 const minimapSaveState = { dirty: false, lastSaveAt: 0 };
 const playerPositionSaveState = { lastSaveAt: 0, lastPayload: "" };
 const knownChunkRestoreState = { pending: [], loading: false };
-let activeWorldMapSignature = worldMapSignature(defaultWorldSeed);
+activeWorldMapSignature = worldMapSignature(pendingWorldMapSeed);
 const largeMapDrag = {
   active: false,
   pointerId: null,
@@ -1483,6 +1488,15 @@ void refreshEquippedBackpack({ force: true });
 requestAnimationFrame(startInitialWorld);
 
 async function startInitialWorld() {
+  await startupWorldConfigPromise;
+  const configuredSavedPlayerState = !guardianSpawnState ? loadSavedPlayerState() : null;
+  if (!guardianSpawnState && configuredSavedPlayerState) {
+    player.position.copy(configuredSavedPlayerState.position);
+    player.yaw = configuredSavedPlayerState.yaw;
+    player.cameraPitch = configuredSavedPlayerState.cameraPitch;
+  }
+  const hasConfiguredInitialPlayerState = Boolean(guardianSpawnState || configuredSavedPlayerState);
+  placePlayerOnGround(!hasConfiguredInitialPlayerState);
   prepareStartupChunkLoading(player.position);
   void withStartupTimeout(syncInitialChainViewport(player.position, { updateLoading: false, rebuildChanged: true }), startupChainSyncTimeoutMs, "initial-chain-sync").catch((error) => {
     console.warn("Initial NiceChunk chain sync skipped during startup", error);
@@ -1490,7 +1504,6 @@ async function startInitialWorld() {
   setGameLoadingStage("chunks", 58);
   generateAround(player.position, { force: true });
   generateCloudsAround(player.position);
-  placePlayerOnGround(!initialPlayerState);
   startGuardianConnection();
   syncLatestForgedItemSlot();
   resetHotbarForResourceSimulation(hotbarSlots, hotbarItems);
@@ -10608,7 +10621,9 @@ function placePlayerOnGround(resetHorizontal = true) {
     player.position.x = 0;
     player.position.z = 0;
   }
-  player.position.y = Math.max(player.position.y, surfaceHeight(player.position.x, player.position.z) + 1.01);
+  player.position.y = surfaceHeight(player.position.x, player.position.z) + 1.01;
+  player.velocity.y = 0;
+  player.grounded = true;
   avatar.position.copy(player.position);
 }
 
@@ -10625,17 +10640,18 @@ function loadSavedPlayerState() {
     const raw = localStorage.getItem(playerPositionStorageKey);
     if (!raw) return null;
     const data = JSON.parse(raw);
-    if (!data || data.version !== 1) return null;
+    if (!data || (data.version !== 1 && data.version !== playerPositionStorageVersion)) return null;
+    if (data.version === playerPositionStorageVersion && data.worldSignature !== currentPlayerWorldSignature()) return null;
     const x = Number(data.x);
     const y = Number(data.y);
     const z = Number(data.z);
     if (!Number.isFinite(x) || !Number.isFinite(z)) return null;
     const groundY = surfaceHeight(x, z) + 1.01;
-    const position = new THREE.Vector3(x, Number.isFinite(y) ? Math.max(y, groundY) : groundY, z);
+    const position = new THREE.Vector3(x, normalizeSavedPlayerY(y, groundY), z);
     const yaw = Number.isFinite(Number(data.yaw)) ? Number(data.yaw) : Math.PI * 0.25;
     const rawPitch = Number(data.cameraPitch);
     const cameraPitch = Number.isFinite(rawPitch) ? THREE.MathUtils.clamp(rawPitch, -0.92, 0.42) : -0.42;
-    return { position, yaw, cameraPitch };
+    return { position, yaw, cameraPitch, worldSignature: data.worldSignature ?? currentPlayerWorldSignature() };
   } catch {
     return null;
   }
@@ -10645,7 +10661,8 @@ function savePlayerPosition(force = false) {
   const now = performance.now();
   if (!force && now - playerPositionSaveState.lastSaveAt < playerPositionSaveMs) return;
   const payload = JSON.stringify({
-    version: 1,
+    version: playerPositionStorageVersion,
+    worldSignature: currentPlayerWorldSignature(),
     x: roundForStorage(player.position.x),
     y: roundForStorage(player.position.y),
     z: roundForStorage(player.position.z),
@@ -10661,6 +10678,17 @@ function savePlayerPosition(force = false) {
   } catch {
     playerPositionSaveState.lastSaveAt = now;
   }
+}
+
+function normalizeSavedPlayerY(savedY, groundY) {
+  if (!Number.isFinite(savedY)) return groundY;
+  if (savedY < groundY) return groundY;
+  if (savedY > groundY + maxSavedPlayerHeightAboveGround) return groundY;
+  return savedY;
+}
+
+function currentPlayerWorldSignature() {
+  return activeWorldMapSignature || worldMapSignature(pendingWorldMapSeed);
 }
 
 function roundForStorage(value) {
@@ -10759,7 +10787,7 @@ function updateGuardianFogVolumes(centerChunk, currentChunkKey) {
       const offsetZ = (((fogSeed >>> 8) & 255) / 255 - 0.5) * chunkSize * 0.38;
       const worldX = (chunkX + 0.5) * chunkSize + offsetX;
       const worldZ = (chunkZ + 0.5) * chunkSize + offsetZ;
-      const worldY = terrainHeight(worldX, worldZ) + 1 + guardianFogVolumeHeight * 0.5;
+      const worldY = surfaceHeight(worldX, worldZ) + 1 + guardianFogVolumeHeight * 0.5;
       const rotationY = ((fogSeed >>> 16) / 65535) * Math.PI;
       setGuardianFogVolumeInstance(count++, worldX, worldY, worldZ, rotationY);
     }

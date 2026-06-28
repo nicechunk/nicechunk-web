@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ru",
     "label": "Russian",
-    "version": "proof-of-frontier-locale-ru-c44f5e499d814d6b",
-    "contentHash": "c44f5e499d814d6b"
+    "version": "proof-of-frontier-locale-ru-8fbfaf778ea6edc1",
+    "contentHash": "8fbfaf778ea6edc1"
   },
   "siteFooter": {
     "tagline": "Seeded voxel world protocol on Solana.",
@@ -32,205 +32,206 @@
       "ko": "한국어",
       "zhHant": "繁體中文",
       "zhHans": "简体中文"
-    }
+    },
+    "comingSoon": "Скоро в продаже"
   },
   "proofOfFrontier": {
     "meta": {
       "title": "Proof of Short Seed | NiceChunk"
     },
     "common": {
-      "yes": "Yes",
-      "no": "No"
+      "yes": "Да",
+      "no": "Нет"
     },
     "nav": {
-      "aria": "Primary navigation",
-      "home": "Home",
-      "roadbook": "Roadbook",
-      "worldRules": "World Rules",
-      "resources": "Resources",
-      "elements": "Elements",
-      "fairness": "Fairness",
-      "proofOfFrontier": "Proof",
-      "guardians": "Guardians",
-      "docs": "Docs",
-      "enterWorld": "Enter World"
+      "aria": "Основная навигация",
+      "home": "Главная страница",
+      "roadbook": "Дорожная книга",
+      "worldRules": "Мировые правила",
+      "resources": "Ресурсы",
+      "elements": "Элементы",
+      "fairness": "Справедливость",
+      "proofOfFrontier": "Доказательство",
+      "docs": "Документы",
+      "enterWorld": "Войдите в мир",
+      "guardians": "Хранители"
     },
     "hero": {
       "eyebrow": "NiceChunk Proof of Short Seed",
       "title": "Proof of Short Seed",
-      "subtitle": "Miners compete to find the shortest valid seed for the current world contour.",
-      "body": "NiceChunk miners are not searching for meaningless nonces. They search for a Shape Seed that reconstructs the current world contour. More complex contours are harder to describe with a short seed. The first miner to submit a seed that is short enough under the current difficulty solves the epoch and earns the simulated reward."
+      "subtitle": "Майнеры соревнуются, чтобы найти самое короткое допустимое начальное число для текущего контура мира.",
+      "body": "Майнеры NiceChunk не ищут бессмысленные одноразовые номера. Они ищут Shape Seed, который реконструирует текущий контур мира. Более сложные контуры сложнее описать коротким семенем. Первый майнер, отправивший семя, достаточно короткое для текущей сложности, решает эпоху и получает смоделированное вознаграждение."
     },
     "concepts": {
-      "aria": "Core concepts",
+      "aria": "Основные понятия",
       "boundary": {
-        "title": "Frontier Target",
-        "body": "The current world contour is canonicalized into target_frontier_root."
+        "title": "Пограничная цель",
+        "body": "Текущий контур мира канонизируется в target_frontier_root."
       },
       "context": {
-        "title": "Short Seed Mining",
-        "body": "Miners compete to find a short Shape Seed that reconstructs the current contour."
+        "title": "Добыча коротких семян",
+        "body": "Майнеры соревнуются в поиске короткого Shape Seed, который реконструирует текущий контур."
       },
       "meaningful": {
-        "title": "First Valid Wins",
-        "body": "The first valid seed accepted for the epoch wins the simulated block reward."
+        "title": "Первые действительные выигрыши",
+        "body": "Первое допустимое начальное число, принятое для эпохи, получает награду за смоделированный блок."
       },
       "tiny": {
-        "title": "Auto Retarget",
-        "body": "Every minute the max_seed_bytes difficulty adjusts to keep blocks near 60 seconds."
+        "title": "Автоматический перенацеливание",
+        "body": "Каждую минуту сложность max_seed_bytes корректируется, чтобы продолжительность блоков составляла около 60 секунд."
       }
     },
     "demo": {
-      "aria": "Proof of Short Seed demo"
+      "aria": "Демонстрация Proof of Short Seed"
     },
     "grid": {
-      "eyebrow": "World Grid",
-      "title": "Current Frontier Target",
-      "legend": "Map legend",
-      "unlocked": "Unlocked",
-      "candidate": "Candidate",
-      "selected": "Selected",
-      "canvas": "Proof of Short Seed world grid"
+      "eyebrow": "Мировая сетка",
+      "title": "Текущая пограничная цель",
+      "legend": "Легенда карты",
+      "unlocked": "разблокировано",
+      "candidate": "Кандидат",
+      "selected": "Выбрано",
+      "canvas": "Мировая сетка Proof of Short Seed"
     },
     "steps": {
-      "genesis": "Genesis Chunk",
-      "find": "Find Candidates",
-      "select": "Search Seed",
-      "mine": "Validate",
-      "update": "Solve Epoch"
+      "genesis": "Бытие Chunk",
+      "find": "Поиск кандидатов",
+      "select": "Искать начальное значение",
+      "mine": "Подтвердить",
+      "update": "Решить эпоху"
     },
     "panel": {
-      "aria": "Algorithm state",
+      "aria": "Состояние алгоритма",
       "selected": {
-        "title": "Selected Chunk",
-        "coords": "Coordinates",
-        "status": "Status",
-        "neighbors": "Unlocked neighbors",
-        "reward": "Estimated reward"
+        "title": "Выбрано Chunk",
+        "coords": "Координаты",
+        "status": "Статус",
+        "neighbors": "Разблокированные соседи",
+        "reward": "Предполагаемая награда"
       },
       "seed": {
-        "title": "Short Seed Mining",
-        "epoch": "Current Epoch",
-        "targetRoot": "Target Frontier Root",
-        "maxSeedBytes": "Max Seed Bytes",
-        "rawSeedBytes": "Raw Fallback Bytes",
-        "candidateBytes": "Candidate Seed Bytes",
-        "lastCalculations": "Last Result Calculations",
-        "currentEpochCalculations": "Current Epoch Calculations",
-        "bestBytes": "Best Accepted Seed Bytes",
-        "blocksLastMinute": "Blocks In Last Minute",
-        "lastBlockAge": "Last Block Age",
-        "nextRetarget": "Next Retarget In",
-        "difficultyStatus": "Difficulty Status",
-        "stuckMinutes": "Stuck Minutes",
-        "miningStatus": "Mining Status",
-        "status": "Difficulty Status"
+        "title": "Добыча коротких семян",
+        "epoch": "Текущая эпоха",
+        "targetRoot": "Цель Frontier Root",
+        "maxSeedBytes": "Макс. начальные байты",
+        "rawSeedBytes": "Необработанные резервные байты",
+        "candidateBytes": "Кандидатные начальные байты",
+        "lastCalculations": "Расчеты последнего результата",
+        "currentEpochCalculations": "Расчеты текущей эпохи",
+        "bestBytes": "Наилучшие принятые начальные байты",
+        "blocksLastMinute": "Блокируется в последнюю минуту",
+        "lastBlockAge": "Возраст последнего блока",
+        "nextRetarget": "Следующий ретаргетинг через",
+        "difficultyStatus": "Статус сложности",
+        "stuckMinutes": "Застрявшие минуты",
+        "miningStatus": "Статус майнинга",
+        "status": "Статус сложности"
       },
       "candidate": {
-        "title": "Candidate Seed",
-        "encoding": "Encoding",
-        "decodedRoot": "Decoded Root",
-        "rootValid": "Root Valid",
-        "lengthValid": "Length Valid",
-        "canonical": "Canonical",
+        "title": "Кандидатское семя",
+        "encoding": "Кодирование",
+        "decodedRoot": "Декодированный корень",
+        "rootValid": "Корень действительный",
+        "lengthValid": "Действительная длина",
+        "canonical": "Канонический",
         "seed": "Shape Seed"
       },
       "keys": {
-        "title": "Neighbor Keys"
+        "title": "Соседние ключи"
       },
       "context": {
-        "title": "Neighbor Context",
-        "note": "Generated from unlocked N/E/S/W Chunk Keys in a fixed order."
+        "title": "Соседний контекст",
+        "note": "Генерируется из разблокированных ключей N/E/S/W Chunk в фиксированном порядке."
       },
       "pow": {
-        "title": "Proof of Work",
-        "difficultyAria": "Demo difficulty",
-        "easy": "Easy",
-        "normal": "Normal",
-        "hard": "Hard",
-        "nonce": "Nonce",
-        "target": "Target",
-        "attempts": "Attempts",
-        "rate": "Hash rate",
-        "currentHash": "Current hash",
-        "status": "Status"
+        "title": "Доказательство работы",
+        "difficultyAria": "Демо-версия сложности",
+        "easy": "Легко",
+        "normal": "Нормальный",
+        "hard": "Сложный",
+        "nonce": "",
+        "target": "Цель",
+        "attempts": "Попытки",
+        "rate": "Скорость хеширования",
+        "currentHash": "Текущий хэш",
+        "status": "Статус"
       },
       "newKey": {
-        "title": "New Chunk Key"
+        "title": "Новый ключ Chunk"
       }
     },
     "actions": {
-      "randomMine": "Random Mine",
-      "growWorld": "Grow World",
-      "reset": "Reset World",
-      "startSearch": "Start Searching",
-      "searchOne": "Search One Candidate",
-      "submitCandidate": "Submit Candidate",
-      "autoRun": "Auto Run",
-      "autoSolve": "Auto Solve",
-      "retargetNow": "Retarget Now",
-      "resetDifficulty": "Reset Difficulty",
-      "startMining": "Start Mining",
-      "stop": "Stop",
-      "mineStep": "Mine One Step",
-      "autoExpand": "Auto Expand",
-      "stopAuto": "Stop Auto",
-      "decodeSeed": "Decode Contour Seed",
-      "copySeed": "Copy Seed",
-      "copyState": "Copy State JSON",
-      "showLog": "Show Transaction Log",
-      "hideLog": "Hide Transaction Log"
+      "randomMine": "Случайная мина",
+      "growWorld": "Растите мир",
+      "reset": "Сбросить мир",
+      "startSearch": "Начать поиск",
+      "searchOne": "Найдите одного кандидата",
+      "submitCandidate": "Подать кандидата",
+      "autoRun": "Автоматический запуск",
+      "autoSolve": "Авторешение",
+      "retargetNow": "Сделайте ретаргетинг прямо сейчас",
+      "resetDifficulty": "Сбросить сложность",
+      "startMining": "Начать майнинг",
+      "stop": "Стоп",
+      "mineStep": "Мой один шаг",
+      "autoExpand": "Авторазвертывание",
+      "stopAuto": "Стоп Авто",
+      "decodeSeed": "Декодирование Contour Seed",
+      "copySeed": "Копировать начальное значение",
+      "copyState": "Копировать состояние JSON",
+      "showLog": "Показать журнал транзакций",
+      "hideLog": "Скрыть журнал транзакций"
     },
     "worldState": {
-      "title": "World State",
-      "unlocked": "Unlocked chunks",
-      "candidates": "Candidate chunks",
-      "perimeter": "Perimeter",
+      "title": "Мировое Государство",
+      "unlocked": "Разблокирован chunks",
+      "candidates": "Кандидат chunks",
+      "perimeter": "Периметр",
       "frontierRoot": "Frontier Root",
       "contourSeed": "Contour Seed",
-      "seedBytes": "Seed bytes",
-      "seedAttempts": "Seed search attempts",
-      "avgBlockTime": "Avg block time",
-      "nextRetarget": "Next retarget",
-      "nextRetargetValue": "{count} blocks",
-      "seedTargetValue": "Harder left: max {max} bytes / RAW {raw} bytes",
-      "difficulty": "Current difficulty"
+      "seedBytes": "Начальные байты",
+      "seedAttempts": "Попытки поиска семян",
+      "avgBlockTime": "Среднее время блока",
+      "nextRetarget": "Следующий ретаргетинг",
+      "nextRetargetValue": "Блоки {count}",
+      "seedTargetValue": "Слева: максимум {max} байт / RAW {raw} байт",
+      "difficulty": "Текущая сложность"
     },
     "contour": {
-      "title": "Contour Encoding",
-      "body": "DecodeShapeSeed v1 supports RAW_EDGES, PATH_RLE, and RECT. RAW_EDGES is the fallback: once max_seed_bytes reaches the raw length, any finite contour is guaranteed solvable.",
-      "path": "Simplified contour path",
-      "seed": "Compressed Contour Seed",
-      "seedLength": "{bytes} bytes, target <= {target} bytes",
-      "pasteSeed": "Paste Contour Seed to decode",
-      "pastePlaceholder": "Paste NSS1|RAW|..., NSS1|PATH|..., or NSS1|RECT|... here."
+      "title": "Контурное кодирование",
+      "body": "DecodeShapeSeed v1 поддерживает RAW_EDGES, PATH_RLE и RECT. RAW_EDGES является запасным вариантом: как только max_seed_bytes достигает исходной длины, любой конечный контур гарантированно разрешим.",
+      "path": "Упрощенный контурный путь",
+      "seed": "Сжатый Contour Seed",
+      "seedLength": "{bytes} байт, цель <= {target} байт",
+      "pasteSeed": "Вставьте Contour Seed для декодирования.",
+      "pastePlaceholder": "Вставьте сюда NSS1|RAW|..., NSS1|PATH|... или NSS1|RECT|...."
     },
     "formulas": {
-      "eyebrow": "NPoSS Formula",
+      "eyebrow": "Формула NPoSS",
       "title": "seed_bytes <= max_seed_bytes",
-      "body": "The demo does not prove a seed is globally shortest. It proves the seed reconstructs the current Frontier Root, is canonical, and is short enough under the current max_seed_bytes difficulty."
+      "body": "Демо не доказывает, что начальное число является самым коротким в глобальном масштабе. Это доказывает, что начальное число реконструирует текущий Frontier Root, является каноническим и достаточно коротким при текущей сложности max_seed_bytes."
     },
     "advanced": {
-      "eyebrow": "Advanced Protocol Note",
-      "title": "Commit-reveal for production",
-      "body": "Direct reveal is simple for the demo. Production should commit first, then reveal seed and salt after a short delay to prevent another user from copying a valid seed and submitting it first."
+      "eyebrow": "Примечание по расширенному протоколу",
+      "title": "Принятие-открытие производства",
+      "body": "Прямое раскрытие для демо-версии простое. Сначала следует зафиксировать производство, а затем после небольшой задержки раскрыть начальное значение и соль, чтобы другой пользователь не смог скопировать действительное начальное значение и отправить его первым."
     },
     "transactions": {
-      "eyebrow": "Simulated Transaction Log",
-      "title": "SeedBlock Events",
-      "empty": "No seed blocks yet. Search and submit a valid seed to solve the first epoch.",
-      "nonce": "nonce",
+      "eyebrow": "Имитированный журнал транзакций",
+      "title": "События SeedBlock",
+      "empty": "Пока нет сид-блоков. Найдите и отправьте действительное начальное число для решения первой эпохи.",
+      "nonce": "одноразовый номер",
       "powHash": "pow_hash",
       "chunkKey": "chunk_key",
       "frontierRoot": "frontier_root",
-      "blockTime": "block_time",
-      "seedTarget": "seed_target"
+      "blockTime": "время_блока",
+      "seedTarget": "семенная_цель"
     },
     "difficultyStatus": {
-      "hardening": "Hardening",
-      "stable": "Stable",
-      "relaxing": "Relaxing",
-      "guaranteed_solvable": "Guaranteed Solvable"
+      "hardening": "Закалка",
+      "stable": "Стабильный",
+      "relaxing": "Расслабляющий",
+      "guaranteed_solvable": "Гарантировано решаемая задача"
     },
     "encoding": {
       "RAW_EDGES": "RAW_EDGES",
@@ -239,40 +240,40 @@
       "UNION": "UNION"
     },
     "directions": {
-      "north": "North",
-      "east": "East",
-      "south": "South",
-      "west": "West"
+      "north": "Север",
+      "east": "Восток",
+      "south": "Юг",
+      "west": "Запад"
     },
     "chunkStatus": {
-      "locked": "Locked",
-      "candidate": "Candidate",
-      "unlocked": "Unlocked"
+      "locked": "Заблокировано",
+      "candidate": "Кандидат",
+      "unlocked": "разблокировано"
     },
     "status": {
-      "idle": "Idle",
-      "mining": "Mining",
-      "searching": "Searching",
-      "autoRunning": "Auto running: searching and submitting valid seeds.",
-      "stopped": "Stopped",
-      "valid": "Valid Seed Found",
-      "noValidSeed": "No valid seed under current max_seed_bytes.",
-      "noCandidate": "Search a candidate seed first",
-      "rootMismatch": "Seed does not reconstruct the current frontier.",
-      "nonCanonical": "Seed is not canonical.",
-      "notCandidate": "Select a candidate chunk first",
-      "seedTooLong": "Seed is valid but too long for current difficulty.",
-      "relaxed": "No block for 10 minutes. Seed length target relaxed."
+      "idle": "Простой режим",
+      "mining": "Горное дело",
+      "searching": "Поиск",
+      "autoRunning": "Автоматический запуск: поиск и отправка действительных семян.",
+      "stopped": "Остановлено",
+      "valid": "Обнаружено допустимое начальное число",
+      "noValidSeed": "Нет допустимого начального числа при текущем max_seed_bytes.",
+      "noCandidate": "Сначала найдите кандидатное начальное число",
+      "rootMismatch": "Seed не восстанавливает текущую границу.",
+      "nonCanonical": "Seed не является каноническим.",
+      "notCandidate": "Сначала выберите кандидата chunk",
+      "seedTooLong": "Сид действителен, но слишком длинный для текущей сложности.",
+      "relaxed": "Никакой блокировки в течение 10 минут. Целевая длина семян ослаблена."
     },
     "messages": {
-      "locked": "This chunk has no unlocked neighbors. Frontier proof requires at least one confirmed neighbor key.",
-      "unlocked": "This chunk is already unlocked. Its key can now be used by adjacent chunks.",
-      "candidate": "This chunk can be mined because it touches the current world frontier.",
-      "decoded": "Decoded {count} frontier edges from the Contour Seed and highlighted the boundary.",
-      "invalidSeed": "This Contour Seed could not be decoded. Paste a valid nckc_ seed.",
-      "seedCopied": "Contour Seed copied.",
-      "stateCopied": "World state JSON copied.",
-      "copyFailed": "Copy failed in this browser context."
+      "locked": "У этого chunk нет разблокированных соседей. Для доказательства границы требуется хотя бы один подтвержденный ключ соседа.",
+      "unlocked": "Этот chunk уже разблокирован. Его ключ теперь может использоваться соседним chunks.",
+      "candidate": "Этот chunk можно добывать, поскольку он касается нынешних мировых границ.",
+      "decoded": "Декодированы границы границы {count} из Contour Seed и выделена граница.",
+      "invalidSeed": "Этот Contour Seed не удалось декодировать. Вставьте допустимое начальное число nccc_.",
+      "seedCopied": "Contour Seed скопирован.",
+      "stateCopied": "JSON состояния мира скопирован.",
+      "copyFailed": "Не удалось скопировать в этом контексте браузера."
     }
   }
 }

@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hant",
     "label": "Traditional Chinese",
-    "version": "proof-of-frontier-locale-zh-Hant-76b41150bbb6ce1e",
-    "contentHash": "76b41150bbb6ce1e"
+    "version": "proof-of-frontier-locale-zh-Hant-120e88cfb938c5cc",
+    "contentHash": "120e88cfb938c5cc"
   },
   "siteFooter": {
     "tagline": "Solana 上的種子體素世界協議。",
@@ -32,7 +32,8 @@
       "ko": "한국어",
       "zhHant": "繁體中文",
       "zhHans": "简体中文"
-    }
+    },
+    "comingSoon": "即將推出"
   },
   "proofOfFrontier": {
     "meta": {
@@ -51,9 +52,9 @@
       "elements": "元素表",
       "fairness": "公平模型",
       "proofOfFrontier": "证明",
-      "guardians": "守护者",
       "docs": "文件",
-      "enterWorld": "進入世界"
+      "enterWorld": "進入世界",
+      "guardians": "守護者"
     },
     "hero": {
       "eyebrow": "NiceChunk Proof of Short Seed",
@@ -64,19 +65,19 @@
     "concepts": {
       "aria": "核心理念",
       "boundary": {
-        "title": "Frontier Target",
+        "title": "前沿目標",
         "body": "当前世界轮廓会被标准化成 target_frontier_root。"
       },
       "context": {
-        "title": "Short Seed Mining",
+        "title": "短種子開採",
         "body": "矿工竞争寻找一个足够短的 Shape Seed 来还原当前轮廓。"
       },
       "meaningful": {
-        "title": "First Valid Wins",
+        "title": "第一次有效勝利",
         "body": "谁最先提交通过验证的 Seed，谁完成本轮出块并获得模拟奖励。"
       },
       "tiny": {
-        "title": "Auto Retarget",
+        "title": "自動重定向",
         "body": "系统每分钟根据出块速度自动调整 max_seed_bytes。"
       }
     },
@@ -102,17 +103,17 @@
     "panel": {
       "aria": "算法状态",
       "selected": {
-        "title": "Selected Chunk",
+        "title": "選擇 Chunk",
         "coords": "坐标",
         "status": "状态",
         "neighbors": "已解锁邻居",
         "reward": "预估奖励"
       },
       "seed": {
-        "title": "Short Seed Mining",
+        "title": "短種子開採",
         "epoch": "当前 Epoch",
-        "targetRoot": "Target Frontier Root",
-        "maxSeedBytes": "Max Seed Bytes",
+        "targetRoot": "目標 Frontier Root",
+        "maxSeedBytes": "最大種子字節",
         "rawSeedBytes": "RAW 兜底字节",
         "candidateBytes": "候选 Seed 字节",
         "lastCalculations": "本次结果计算次数",
@@ -127,7 +128,7 @@
         "status": "难度状态"
       },
       "candidate": {
-        "title": "Candidate Seed",
+        "title": "候選種子",
         "encoding": "编码",
         "decodedRoot": "反解 Root",
         "rootValid": "Root 匹配",
@@ -136,27 +137,27 @@
         "seed": "Shape Seed"
       },
       "keys": {
-        "title": "Neighbor Keys"
+        "title": "鄰邦鑰匙"
       },
       "context": {
-        "title": "Neighbor Context",
+        "title": "鄰舍上下文",
         "note": "由 N/E/S/W 四个方向的已解锁 Chunk Key 按固定顺序计算得出。"
       },
       "pow": {
-        "title": "Proof of Work",
+        "title": "工作證明",
         "difficultyAria": "演示难度",
         "easy": "简单",
         "normal": "普通",
         "hard": "困难",
-        "nonce": "Nonce",
-        "target": "Target",
+        "nonce": "隨機數",
+        "target": "目標",
         "attempts": "尝试次数",
         "rate": "模拟算力",
         "currentHash": "当前 Hash",
         "status": "状态"
       },
       "newKey": {
-        "title": "New Chunk Key"
+        "title": "新 Chunk 密鑰"
       }
     },
     "actions": {
@@ -182,7 +183,7 @@
       "hideLog": "隱藏交易日誌"
     },
     "worldState": {
-      "title": "World State",
+      "title": "世界狀態",
       "unlocked": "已解锁 Chunk",
       "candidates": "候选 Chunk",
       "perimeter": "轮廓边数",
@@ -197,7 +198,7 @@
       "difficulty": "当前难度"
     },
     "contour": {
-      "title": "Contour Encoding",
+      "title": "輪廓編碼",
       "body": "DecodeShapeSeed v1 支持 RAW_EDGES、PATH_RLE 和 RECT。RAW_EDGES 是兜底编码：当 max_seed_bytes 放宽到 RAW 长度时，任意有限轮廓都一定可解。",
       "path": "简化轮廓路径",
       "seed": "压缩后的 Contour Seed",
@@ -219,18 +220,18 @@
       "eyebrow": "模拟交易日志",
       "title": "SeedBlock 事件",
       "empty": "还没有 Seed 区块。搜索并提交有效 Seed 后会完成第一个 epoch。",
-      "nonce": "nonce",
+      "nonce": "隨機數",
       "powHash": "pow_hash",
       "chunkKey": "chunk_key",
       "frontierRoot": "frontier_root",
       "blockTime": "block_time",
-      "seedTarget": "seed_target"
+      "seedTarget": "種子目標"
     },
     "difficultyStatus": {
-      "hardening": "Hardening",
-      "stable": "Stable",
-      "relaxing": "Relaxing",
-      "guaranteed_solvable": "Guaranteed Solvable"
+      "hardening": "硬化",
+      "stable": "穩定",
+      "relaxing": "放寬",
+      "guaranteed_solvable": "保證可解決"
     },
     "encoding": {
       "RAW_EDGES": "RAW_EDGES",
@@ -239,35 +240,35 @@
       "UNION": "UNION"
     },
     "directions": {
-      "north": "North",
-      "east": "East",
-      "south": "South",
-      "west": "West"
+      "north": "北",
+      "east": "東",
+      "south": "南",
+      "west": "西"
     },
     "chunkStatus": {
-      "locked": "Locked",
-      "candidate": "Candidate",
-      "unlocked": "Unlocked"
+      "locked": "鎖定",
+      "candidate": "候選人",
+      "unlocked": "解鎖"
     },
     "status": {
-      "idle": "Idle",
-      "mining": "Mining",
-      "searching": "Searching",
+      "idle": "空閒",
+      "mining": "採礦",
+      "searching": "搜尋",
       "autoRunning": "自动运行中：持续搜索并提交有效 Seed。",
-      "stopped": "Stopped",
-      "valid": "Valid Seed Found",
+      "stopped": "停止",
+      "valid": "找到有效種子",
       "noValidSeed": "当前 max_seed_bytes 下没有有效 Seed。",
       "noCandidate": "请先搜索一个候选 Seed",
-      "rootMismatch": "Seed does not reconstruct the current frontier.",
-      "nonCanonical": "Seed is not canonical.",
+      "rootMismatch": "種子不會重建當前邊界。",
+      "nonCanonical": "種子不是規範的。",
       "notCandidate": "请先选择候选 Chunk",
-      "seedTooLong": "Seed is valid but too long for current difficulty.",
+      "seedTooLong": "種子有效，但對於當前難度而言太長。",
       "relaxed": "连续 10 分钟无新区块，Seed 长度目标已自动放宽。"
     },
     "messages": {
-      "locked": "This chunk has no unlocked neighbors. Frontier proof requires at least one confirmed neighbor key.",
-      "unlocked": "This chunk is already unlocked. Its key can now be used by adjacent chunks.",
-      "candidate": "This chunk can be mined because it touches the current world frontier.",
+      "locked": "此 chunk 沒有未鎖定的鄰居。 邊界證明需要至少一個已確認的鄰居密鑰。",
+      "unlocked": "此 chunk 已解鎖。 它的密鑰現在可以被相鄰的 chunks 使用。",
+      "candidate": "這個 chunk 可以被開採，因為它觸及當前的世界前沿。",
       "decoded": "已从 Contour Seed 反解出 {count} 条边界边，并在地图上高亮显示。",
       "invalidSeed": "这个 Contour Seed 无法反解，请粘贴有效的 nckc_ Seed。",
       "seedCopied": "Contour Seed 已复制。",

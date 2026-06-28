@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ko",
     "label": "Korean",
-    "version": "proof-of-frontier-locale-ko-531589387b2eb06b",
-    "contentHash": "531589387b2eb06b"
+    "version": "proof-of-frontier-locale-ko-e5cc5ceb3426cac6",
+    "contentHash": "e5cc5ceb3426cac6"
   },
   "siteFooter": {
     "tagline": "Solana 기반 시드형 복셀 월드 프로토콜.",
@@ -32,205 +32,206 @@
       "ko": "한국어",
       "zhHant": "繁體中文",
       "zhHans": "简体中文"
-    }
+    },
+    "comingSoon": "출시 예정"
   },
   "proofOfFrontier": {
     "meta": {
       "title": "Proof of Short Seed | NiceChunk"
     },
     "common": {
-      "yes": "Yes",
-      "no": "No"
+      "yes": "예",
+      "no": "아니요"
     },
     "nav": {
-      "aria": "Primary navigation",
-      "home": "Home",
-      "roadbook": "Roadbook",
-      "worldRules": "World Rules",
-      "resources": "Resources",
-      "elements": "Elements",
-      "fairness": "Fairness",
-      "proofOfFrontier": "Proof",
-      "guardians": "Guardians",
-      "docs": "Docs",
-      "enterWorld": "Enter World"
+      "aria": "기본 탐색",
+      "home": "홈",
+      "roadbook": "로드북",
+      "worldRules": "세계 규칙",
+      "resources": "리소스",
+      "elements": "요소",
+      "fairness": "공정성",
+      "proofOfFrontier": "증명",
+      "docs": "문서",
+      "enterWorld": "엔터 월드",
+      "guardians": "가디언"
     },
     "hero": {
       "eyebrow": "NiceChunk Proof of Short Seed",
       "title": "Proof of Short Seed",
-      "subtitle": "Miners compete to find the shortest valid seed for the current world contour.",
-      "body": "NiceChunk miners are not searching for meaningless nonces. They search for a Shape Seed that reconstructs the current world contour. More complex contours are harder to describe with a short seed. The first miner to submit a seed that is short enough under the current difficulty solves the epoch and earns the simulated reward."
+      "subtitle": "채굴자들은 현재 세계 윤곽에 대해 가장 짧은 유효한 시드를 찾기 위해 경쟁합니다.",
+      "body": "NiceChunk 채굴자는 의미 없는 nonce를 검색하지 않습니다. 그들은 현재 세계 윤곽을 재구성하는 Shape Seed를 검색합니다. 더 복잡한 윤곽선은 짧은 시드로 설명하기가 더 어렵습니다. 현재 난이도에서 충분히 짧은 시드를 제출한 첫 번째 광부는 시대를 해결하고 시뮬레이션 보상을 얻습니다."
     },
     "concepts": {
-      "aria": "Core concepts",
+      "aria": "핵심 개념",
       "boundary": {
-        "title": "Frontier Target",
-        "body": "The current world contour is canonicalized into target_frontier_root."
+        "title": "프론티어 타겟",
+        "body": "현재 세계 윤곽은 target_frontier_root로 표준화됩니다."
       },
       "context": {
-        "title": "Short Seed Mining",
-        "body": "Miners compete to find a short Shape Seed that reconstructs the current contour."
+        "title": "단기 종자 채굴",
+        "body": "채굴자들은 현재 윤곽을 재구성하는 짧은 Shape Seed를 찾기 위해 경쟁합니다."
       },
       "meaningful": {
-        "title": "First Valid Wins",
-        "body": "The first valid seed accepted for the epoch wins the simulated block reward."
+        "title": "첫 번째 유효한 승리",
+        "body": "해당 에포크에 대해 승인된 첫 번째 유효한 시드가 시뮬레이션된 블록 보상을 얻습니다."
       },
       "tiny": {
-        "title": "Auto Retarget",
-        "body": "Every minute the max_seed_bytes difficulty adjusts to keep blocks near 60 seconds."
+        "title": "자동 리타겟팅",
+        "body": "매분마다 max_seed_bytes 난이도가 조정되어 블록을 60초에 가깝게 유지합니다."
       }
     },
     "demo": {
-      "aria": "Proof of Short Seed demo"
+      "aria": "Proof of Short Seed 데모"
     },
     "grid": {
-      "eyebrow": "World Grid",
-      "title": "Current Frontier Target",
-      "legend": "Map legend",
-      "unlocked": "Unlocked",
-      "candidate": "Candidate",
-      "selected": "Selected",
-      "canvas": "Proof of Short Seed world grid"
+      "eyebrow": "월드 그리드",
+      "title": "현재 프론티어 목표",
+      "legend": "지도 범례",
+      "unlocked": "잠금 해제됨",
+      "candidate": "후보자",
+      "selected": "선택됨",
+      "canvas": "Proof of Short Seed 월드 그리드"
     },
     "steps": {
-      "genesis": "Genesis Chunk",
-      "find": "Find Candidates",
-      "select": "Search Seed",
-      "mine": "Validate",
-      "update": "Solve Epoch"
+      "genesis": "창세기 Chunk",
+      "find": "후보자 찾기",
+      "select": "검색 시드",
+      "mine": "확인",
+      "update": "시대 해결"
     },
     "panel": {
-      "aria": "Algorithm state",
+      "aria": "알고리즘 상태",
       "selected": {
-        "title": "Selected Chunk",
-        "coords": "Coordinates",
-        "status": "Status",
-        "neighbors": "Unlocked neighbors",
-        "reward": "Estimated reward"
+        "title": "선택됨 Chunk",
+        "coords": "좌표",
+        "status": "상태",
+        "neighbors": "잠금 해제된 이웃",
+        "reward": "예상 보상"
       },
       "seed": {
-        "title": "Short Seed Mining",
-        "epoch": "Current Epoch",
-        "targetRoot": "Target Frontier Root",
-        "maxSeedBytes": "Max Seed Bytes",
-        "rawSeedBytes": "Raw Fallback Bytes",
-        "candidateBytes": "Candidate Seed Bytes",
-        "lastCalculations": "Last Result Calculations",
-        "currentEpochCalculations": "Current Epoch Calculations",
-        "bestBytes": "Best Accepted Seed Bytes",
-        "blocksLastMinute": "Blocks In Last Minute",
-        "lastBlockAge": "Last Block Age",
-        "nextRetarget": "Next Retarget In",
-        "difficultyStatus": "Difficulty Status",
-        "stuckMinutes": "Stuck Minutes",
-        "miningStatus": "Mining Status",
-        "status": "Difficulty Status"
+        "title": "단기 종자 채굴",
+        "epoch": "현재 시대",
+        "targetRoot": "대상 Frontier Root",
+        "maxSeedBytes": "최대 시드 바이트",
+        "rawSeedBytes": "원시 대체 바이트",
+        "candidateBytes": "후보 시드 바이트",
+        "lastCalculations": "최종 결과 계산",
+        "currentEpochCalculations": "현재 에포크 계산",
+        "bestBytes": "가장 많이 허용되는 시드 바이트",
+        "blocksLastMinute": "막바지 차단",
+        "lastBlockAge": "마지막 블록 기간",
+        "nextRetarget": "다음 재타겟팅",
+        "difficultyStatus": "난이도 상태",
+        "stuckMinutes": "정체 시간(분)",
+        "miningStatus": "채굴 현황",
+        "status": "난이도 상태"
       },
       "candidate": {
-        "title": "Candidate Seed",
-        "encoding": "Encoding",
-        "decodedRoot": "Decoded Root",
-        "rootValid": "Root Valid",
-        "lengthValid": "Length Valid",
-        "canonical": "Canonical",
+        "title": "후보 시드",
+        "encoding": "인코딩",
+        "decodedRoot": "디코딩된 루트",
+        "rootValid": "루트 유효",
+        "lengthValid": "유효 길이",
+        "canonical": "정식",
         "seed": "Shape Seed"
       },
       "keys": {
-        "title": "Neighbor Keys"
+        "title": "이웃 키"
       },
       "context": {
-        "title": "Neighbor Context",
-        "note": "Generated from unlocked N/E/S/W Chunk Keys in a fixed order."
+        "title": "이웃 컨텍스트",
+        "note": "잠금 해제된 N/E/S/W Chunk 키에서 고정된 순서로 생성됩니다."
       },
       "pow": {
-        "title": "Proof of Work",
-        "difficultyAria": "Demo difficulty",
-        "easy": "Easy",
-        "normal": "Normal",
-        "hard": "Hard",
-        "nonce": "Nonce",
-        "target": "Target",
-        "attempts": "Attempts",
-        "rate": "Hash rate",
-        "currentHash": "Current hash",
-        "status": "Status"
+        "title": "작업 증명",
+        "difficultyAria": "데모 난이도",
+        "easy": "쉬움",
+        "normal": "일반",
+        "hard": "어려움",
+        "nonce": "논스",
+        "target": "대상",
+        "attempts": "시도",
+        "rate": "해시율",
+        "currentHash": "현재 해시",
+        "status": "상태"
       },
       "newKey": {
-        "title": "New Chunk Key"
+        "title": "새로운 Chunk 키"
       }
     },
     "actions": {
-      "randomMine": "Random Mine",
-      "growWorld": "Grow World",
-      "reset": "Reset World",
-      "startSearch": "Start Searching",
-      "searchOne": "Search One Candidate",
-      "submitCandidate": "Submit Candidate",
-      "autoRun": "Auto Run",
-      "autoSolve": "Auto Solve",
-      "retargetNow": "Retarget Now",
-      "resetDifficulty": "Reset Difficulty",
-      "startMining": "Start Mining",
-      "stop": "Stop",
-      "mineStep": "Mine One Step",
-      "autoExpand": "Auto Expand",
-      "stopAuto": "Stop Auto",
-      "decodeSeed": "Decode Contour Seed",
-      "copySeed": "Copy Seed",
-      "copyState": "Copy State JSON",
-      "showLog": "Show Transaction Log",
-      "hideLog": "Hide Transaction Log"
+      "randomMine": "무작위 광산",
+      "growWorld": "세계 성장",
+      "reset": "월드 재설정",
+      "startSearch": "검색 시작",
+      "searchOne": "한 명의 후보자 검색",
+      "submitCandidate": "후보자 제출",
+      "autoRun": "자동 실행",
+      "autoSolve": "자동 해결",
+      "retargetNow": "지금 재타겟팅",
+      "resetDifficulty": "난이도 재설정",
+      "startMining": "채굴 시작",
+      "stop": "정지",
+      "mineStep": "마인 원스텝",
+      "autoExpand": "자동 확장",
+      "stopAuto": "자동 중지",
+      "decodeSeed": "Contour Seed 디코딩",
+      "copySeed": "복사 시드",
+      "copyState": "복사 상태 JSON",
+      "showLog": "거래 로그 표시",
+      "hideLog": "거래 로그 숨기기"
     },
     "worldState": {
-      "title": "World State",
-      "unlocked": "Unlocked chunks",
-      "candidates": "Candidate chunks",
-      "perimeter": "Perimeter",
+      "title": "세계 국가",
+      "unlocked": "잠금 해제된 chunks",
+      "candidates": "후보 chunks",
+      "perimeter": "경계",
       "frontierRoot": "Frontier Root",
       "contourSeed": "Contour Seed",
-      "seedBytes": "Seed bytes",
-      "seedAttempts": "Seed search attempts",
-      "avgBlockTime": "Avg block time",
-      "nextRetarget": "Next retarget",
-      "nextRetargetValue": "{count} blocks",
-      "seedTargetValue": "Harder left: max {max} bytes / RAW {raw} bytes",
-      "difficulty": "Current difficulty"
+      "seedBytes": "시드 바이트",
+      "seedAttempts": "종자 검색 시도",
+      "avgBlockTime": "평균 차단 시간",
+      "nextRetarget": "다음 리타겟팅",
+      "nextRetargetValue": "{count} 블록",
+      "seedTargetValue": "더 왼쪽: 최대 {max}바이트/RAW {raw}바이트",
+      "difficulty": "현재 난이도"
     },
     "contour": {
-      "title": "Contour Encoding",
-      "body": "DecodeShapeSeed v1 supports RAW_EDGES, PATH_RLE, and RECT. RAW_EDGES is the fallback: once max_seed_bytes reaches the raw length, any finite contour is guaranteed solvable.",
-      "path": "Simplified contour path",
-      "seed": "Compressed Contour Seed",
-      "seedLength": "{bytes} bytes, target <= {target} bytes",
-      "pasteSeed": "Paste Contour Seed to decode",
-      "pastePlaceholder": "Paste NSS1|RAW|..., NSS1|PATH|..., or NSS1|RECT|... here."
+      "title": "윤곽 인코딩",
+      "body": "DecodeShapeSeed v1은 RAW_EDGES, PATH_RLE 및 RECT를 지원합니다. RAW_EDGES는 대안입니다. max_seed_bytes가 원시 길이에 도달하면 모든 유한 윤곽선이 해결 가능하다는 것이 보장됩니다.",
+      "path": "단순화된 윤곽 경로",
+      "seed": "압축 Contour Seed",
+      "seedLength": "{bytes}바이트, 대상 <= {target}바이트",
+      "pasteSeed": "디코딩하려면 Contour Seed를 붙여넣으세요.",
+      "pastePlaceholder": "여기에 NSS1|RAW|..., NSS1|PATH|... 또는 NSS1|RECT|...를 붙여넣으세요."
     },
     "formulas": {
-      "eyebrow": "NPoSS Formula",
+      "eyebrow": "NPoSS 공식",
       "title": "seed_bytes <= max_seed_bytes",
-      "body": "The demo does not prove a seed is globally shortest. It proves the seed reconstructs the current Frontier Root, is canonical, and is short enough under the current max_seed_bytes difficulty."
+      "body": "데모는 시드가 전 세계적으로 가장 짧다는 것을 증명하지 않습니다. 이는 시드가 현재 Frontier Root를 재구성하고 표준이며 현재 max_seed_bytes 난이도에서 충분히 짧다는 것을 증명합니다."
     },
     "advanced": {
-      "eyebrow": "Advanced Protocol Note",
-      "title": "Commit-reveal for production",
-      "body": "Direct reveal is simple for the demo. Production should commit first, then reveal seed and salt after a short delay to prevent another user from copying a valid seed and submitting it first."
+      "eyebrow": "고급 프로토콜 참고",
+      "title": "프로덕션을 위한 커밋-공개",
+      "body": "Direct reveal is simple for the demo. 프로덕션은 먼저 커밋한 다음 잠시 후 시드와 솔트를 공개하여 다른 사용자가 유효한 시드를 복사하여 먼저 제출하는 것을 방지해야 합니다."
     },
     "transactions": {
-      "eyebrow": "Simulated Transaction Log",
-      "title": "SeedBlock Events",
-      "empty": "No seed blocks yet. Search and submit a valid seed to solve the first epoch.",
-      "nonce": "nonce",
+      "eyebrow": "시뮬레이션된 거래 로그",
+      "title": "SeedBlock 이벤트",
+      "empty": "아직 시드 블록이 없습니다. 첫 번째 에포크를 해결하려면 유효한 시드를 검색하고 제출하세요.",
+      "nonce": "임시값",
       "powHash": "pow_hash",
       "chunkKey": "chunk_key",
       "frontierRoot": "frontier_root",
       "blockTime": "block_time",
-      "seedTarget": "seed_target"
+      "seedTarget": "시드_대상"
     },
     "difficultyStatus": {
-      "hardening": "Hardening",
-      "stable": "Stable",
-      "relaxing": "Relaxing",
-      "guaranteed_solvable": "Guaranteed Solvable"
+      "hardening": "강화",
+      "stable": "안정",
+      "relaxing": "휴식",
+      "guaranteed_solvable": "해결 가능 보장"
     },
     "encoding": {
       "RAW_EDGES": "RAW_EDGES",
@@ -239,40 +240,40 @@
       "UNION": "UNION"
     },
     "directions": {
-      "north": "North",
-      "east": "East",
-      "south": "South",
-      "west": "West"
+      "north": "북쪽",
+      "east": "동부",
+      "south": "남부",
+      "west": "서부"
     },
     "chunkStatus": {
-      "locked": "Locked",
-      "candidate": "Candidate",
-      "unlocked": "Unlocked"
+      "locked": "잠김",
+      "candidate": "후보자",
+      "unlocked": "잠금 해제됨"
     },
     "status": {
-      "idle": "Idle",
-      "mining": "Mining",
-      "searching": "Searching",
-      "autoRunning": "Auto running: searching and submitting valid seeds.",
-      "stopped": "Stopped",
-      "valid": "Valid Seed Found",
-      "noValidSeed": "No valid seed under current max_seed_bytes.",
-      "noCandidate": "Search a candidate seed first",
-      "rootMismatch": "Seed does not reconstruct the current frontier.",
-      "nonCanonical": "Seed is not canonical.",
-      "notCandidate": "Select a candidate chunk first",
-      "seedTooLong": "Seed is valid but too long for current difficulty.",
-      "relaxed": "No block for 10 minutes. Seed length target relaxed."
+      "idle": "유휴 상태",
+      "mining": "채굴",
+      "searching": "검색 중",
+      "autoRunning": "자동 실행: 유효한 시드를 검색하고 제출합니다.",
+      "stopped": "중지됨",
+      "valid": "유효한 시드 발견",
+      "noValidSeed": "현재 max_seed_bytes에 유효한 시드가 없습니다.",
+      "noCandidate": "후보 시드를 먼저 검색하세요",
+      "rootMismatch": "Seed는 현재 국경을 재구성하지 않습니다.",
+      "nonCanonical": "시드는 표준이 아닙니다.",
+      "notCandidate": "후보 chunk를 먼저 선택하세요",
+      "seedTooLong": "시드가 유효하지만 현재 난이도에 비해 너무 깁니다.",
+      "relaxed": "10분 동안 차단이 없습니다. Seed length target relaxed."
     },
     "messages": {
-      "locked": "This chunk has no unlocked neighbors. Frontier proof requires at least one confirmed neighbor key.",
-      "unlocked": "This chunk is already unlocked. Its key can now be used by adjacent chunks.",
-      "candidate": "This chunk can be mined because it touches the current world frontier.",
-      "decoded": "Decoded {count} frontier edges from the Contour Seed and highlighted the boundary.",
-      "invalidSeed": "This Contour Seed could not be decoded. Paste a valid nckc_ seed.",
-      "seedCopied": "Contour Seed copied.",
-      "stateCopied": "World state JSON copied.",
-      "copyFailed": "Copy failed in this browser context."
+      "locked": "이 chunk에는 잠금 해제된 이웃이 없습니다. 프론티어 증명에는 확인된 하나 이상의 이웃 키가 필요합니다.",
+      "unlocked": "이 chunk는 이미 잠금 해제되었습니다. 이제 해당 키를 인접한 chunks에서 사용할 수 있습니다.",
+      "candidate": "이 chunk는 현재 세계의 국경에 닿기 때문에 채굴이 가능합니다.",
+      "decoded": "Contour Seed에서 {count} 프론티어 가장자리를 디코딩하고 경계를 강조 표시했습니다.",
+      "invalidSeed": "이 Contour Seed를 디코딩할 수 없습니다. 유효한 nckc_ 시드를 붙여넣으세요.",
+      "seedCopied": "Contour Seed가 복사되었습니다.",
+      "stateCopied": "세계 상태 JSON이 복사되었습니다.",
+      "copyFailed": "이 브라우저 컨텍스트에서 복사에 실패했습니다."
     }
   }
 }

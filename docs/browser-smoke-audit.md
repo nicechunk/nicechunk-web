@@ -2,7 +2,7 @@
 
 NiceChunk includes a lightweight browser smoke audit for built public pages.
 
-This is not a full visual regression suite. It is a release gate that proves the production build can be served, key pages load in Chromium, DOM content is present, local assets resolve, and screenshots are not trivially blank.
+This is not a full visual regression suite. It is a release gate that proves the production build can be served, key pages load in Chromium across desktop and mobile viewports, DOM content is present, local assets resolve, and screenshots are not trivially blank.
 
 ## Command
 
@@ -30,8 +30,9 @@ The audit opens these built routes from `dist/`:
 - `/proof-of-frontier/`
 - `/trust/`
 
-For each route, it records:
+For each route and viewport, it records:
 
+- viewport name
 - HTTP status
 - document title
 - body text length
@@ -42,6 +43,11 @@ For each route, it records:
 - failed local asset requests
 
 The JSON report is written to `.cache/browser-smoke-report.json`. The cache directory is intentionally ignored by git.
+
+The audit currently runs these viewport profiles:
+
+- `desktop`: 1366 x 768
+- `mobile`: 390 x 844 with Playwright mobile emulation enabled
 
 ## Environment
 
@@ -55,4 +61,4 @@ CI should install Chromium before running `npm run validate:release`.
 
 ## Known Limit
 
-This audit catches broken route output, blank pages, missing local assets, and obvious runtime crashes. It does not compare screenshots against approved baselines, validate wallet extension flows, or perform mobile viewport coverage. Those remain separate visual and wallet-flow review items.
+This audit catches broken route output, blank pages, missing local assets, obvious runtime crashes, and basic desktop/mobile viewport regressions. It does not compare screenshots against approved baselines or validate wallet extension flows. Those remain separate visual and wallet-flow review items.

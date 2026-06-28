@@ -32,6 +32,8 @@ The documentation audit checks that the public repository contains the minimum r
 
 For a shorter handoff packet that is designed specifically for CPU-only reviewers, use `docs/fourier-pickaxe-static-display.md`.
 
+For a display-ready packet that is safe to read aloud or paste into a third-party review without claiming runtime results, use `docs/fourier-pickaxe-display-packet.md`.
+
 ## Documentation-Only Showcase
 
 Use this section when the environment cannot run the GPU workload. It is intentionally written as a presentation card that can be copied into an external review, README summary, or repository handoff without overstating runtime proof.

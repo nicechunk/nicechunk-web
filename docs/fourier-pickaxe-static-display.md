@@ -2,6 +2,8 @@
 
 Fourier Pickaxe requires GPU/WebGL hardware for meaningful runtime validation. This file is the approved static display package for review environments that cannot run the GPU workload.
 
+For a shorter display packet that can be read aloud or pasted into an external review, use `docs/fourier-pickaxe-display-packet.md`.
+
 ## Display Positioning
 
 Fourier Pickaxe is a NiceChunk research surface for compact voxel asset functions. It explores a deterministic path from local MagicaVoxel `.vox` assets to compact function payloads that can be reviewed for future on-chain or proof-oriented workflows.
@@ -25,6 +27,10 @@ Fourier Pickaxe is a GPU-gated voxel function lab. In this review environment, o
 | Security boundary | No upload endpoint, wallet signature, server address, GitHub token, private key, or deploy script |
 | Valid non-GPU evidence | README, showcase document, HTML controls, JavaScript codec path, parser boundary, audit script |
 | Deferred GPU evidence | WebGL rendering, frame stability, visual fidelity, proof-search responsiveness, screenshots, videos, benchmark numbers |
+
+## Display-Only Packet
+
+When the current machine cannot run the GPU workload, present Fourier Pickaxe from the documentation packet instead of attempting runtime proof. The approved source is `docs/fourier-pickaxe-display-packet.md`, which contains a one-minute walkthrough, allowed display copy, and the explicit `No Runtime Claim` boundary.
 
 ## Reviewer Walkthrough
 

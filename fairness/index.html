@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0c0e12" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=0.1.53" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=0.1.53" />
+    <link rel="shortcut icon" href="/favicon.ico?v=0.1.53" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=0.1.53" />
+    <link rel="manifest" href="/site.webmanifest?v=0.1.53" />
+    <meta name="description" content="NiceChunk fairness model for public seeded world generation, reproducible mining rolls, rule versions, trust boundaries, and on-chain verification direction." />
+    <title data-fairness-i18n="meta.title">NiceChunk Fairness Model</title>
+  </head>
+  <body>
+    <div class="fairness-backdrop" aria-hidden="true">
+      <canvas id="fairnessBackdrop"></canvas>
+      <div></div>
+    </div>
+
+    <header class="site-header">
+      <a class="brand-mark" href="/" aria-label="NiceChunk">
+        <img src="/media/nck.png" alt="" />
+        <span>NICECHUNK</span>
+      </a>
+      <nav class="top-nav site-nav" aria-label="Primary navigation" data-fairness-i18n-aria-label="nav.aria">
+        <div class="nav-links">
+          <a href="/" data-fairness-i18n="nav.home">Home</a>
+          <a href="/roadmap/" data-fairness-i18n="nav.roadbook">Roadbook</a>
+          <a href="/world_rule/" data-fairness-i18n="nav.worldRules">World Rules</a>
+          <a href="/resource_rule/" data-fairness-i18n="nav.resources">Resources</a>
+          <a href="/elements/" data-fairness-i18n="nav.elements">Elements</a>
+          <a class="active" href="/fairness/" data-fairness-i18n="nav.fairness">Fairness</a>
+          <a href="/proof-of-frontier/" data-fairness-i18n="nav.proofOfFrontier">Proof</a>
+          <a href="/guardian/" data-fairness-i18n="nav.guardians">Guardians</a>
+          <a href="/docs/" data-fairness-i18n="nav.docs">Docs</a>
+        </div>
+        <div class="nav-actions">
+          <a class="header-action" href="/play/" data-fairness-i18n="nav.enterWorld">Enter World</a>
+          <div class="language-switch language-picker" aria-label="Language" data-fairness-i18n-aria-label="language.aria">
+            <button class="language-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+              <span class="language-current">English (English)</span>
+              <span class="language-caret" aria-hidden="true"></span>
+            </button>
+            <div class="language-menu" role="listbox"></div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="fairness-shell">
+      <section class="hero-section">
+        <div class="hero-copy">
+          <p class="eyebrow" data-fairness-i18n="hero.eyebrow">Fairness Model</p>
+          <h1 data-fairness-i18n="hero.title">A world is fair only when players can verify the rules.</h1>
+          <p class="hero-subtitle" data-fairness-i18n="hero.subtitle">
+            NiceChunk is designed around public seed rules, reproducible results, versioned upgrades, wallet-owned actions, and clear trust boundaries between the client, Guardians, and Solana.
+          </p>
+          <div class="hero-actions">
+            <a class="primary-action" href="#verify" data-fairness-scroll="verify" data-fairness-i18n="hero.verify">Verify A Chunk</a>
+            <a class="secondary-action" href="#mining-proof" data-fairness-scroll="mining-proof" data-fairness-i18n="hero.mining">Test Mining Roll</a>
+            <a class="secondary-action" href="/docs/" data-fairness-i18n="hero.docs">Read Docs</a>
+          </div>
+          <ul class="principle-row" aria-label="Fairness principles" data-fairness-i18n-aria-label="hero.principlesAria">
+            <li data-fairness-i18n="hero.principles.seed">Same seed, same world</li>
+            <li data-fairness-i18n="hero.principles.version">Rule changes are versioned</li>
+            <li data-fairness-i18n="hero.principles.wallet">Wallets sign player intent</li>
+            <li data-fairness-i18n="hero.principles.boundary">Trust limits are explicit</li>
+          </ul>
+        </div>
+        <div class="hero-panel glass-panel">
+          <canvas id="fairnessWorldCanvas" aria-hidden="true"></canvas>
+          <div class="hero-readout">
+            <span data-fairness-i18n="hero.readout.label">Verification Loop</span>
+            <strong data-fairness-i18n="hero.readout.value">Seed -> Chunk -> Hash -> Rule Version</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-block" id="principles">
+        <div class="section-heading">
+          <p class="eyebrow blue" data-fairness-i18n="principles.eyebrow">Principles</p>
+          <h2 data-fairness-i18n="principles.title">Fairness is a system design constraint, not a slogan.</h2>
+          <p data-fairness-i18n="principles.body">The project should be judged by whether players can inspect the rules, reproduce key outputs, and see which parts are live, planned, or still client-only.</p>
+        </div>
+        <div class="principle-grid">
+          <article class="principle-card">
+            <span>01</span>
+            <strong data-fairness-i18n="principles.cards.deterministic.title">Deterministic generation</strong>
+            <p data-fairness-i18n="principles.cards.deterministic.body">A seed, chunk coordinate, and generation version should produce the same terrain result for every verifier.</p>
+          </article>
+          <article class="principle-card">
+            <span>02</span>
+            <strong data-fairness-i18n="principles.cards.reproducible.title">Reproducible rolls</strong>
+            <p data-fairness-i18n="principles.cards.reproducible.body">Resource discovery should be derived from public inputs whenever possible, instead of hidden server randomness.</p>
+          </article>
+          <article class="principle-card">
+            <span>03</span>
+            <strong data-fairness-i18n="principles.cards.versioned.title">Versioned rules</strong>
+            <p data-fairness-i18n="principles.cards.versioned.body">UI changes, world-rule changes, economy-rule changes, and chain-state changes must be tracked separately.</p>
+          </article>
+          <article class="principle-card">
+            <span>04</span>
+            <strong data-fairness-i18n="principles.cards.boundary.title">Trust boundaries</strong>
+            <p data-fairness-i18n="principles.cards.boundary.body">The website must say what is client-only, what Guardians can assist with, and what is intended to be verified on-chain.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-block" id="verify">
+        <div class="section-heading">
+          <p class="eyebrow blue" data-fairness-i18n="verify.eyebrow">Chunk Verification</p>
+          <h2 data-fairness-i18n="verify.title">Anyone should be able to rebuild a chunk from public inputs.</h2>
+          <p data-fairness-i18n="verify.body">This demo shows the verification shape: input seed, chunk coordinate, and rule version; output a visual chunk preview and deterministic hashes that can later be committed on-chain.</p>
+        </div>
+        <div class="world-demo-grid">
+          <div class="glass-panel chunk-stage-panel">
+            <div class="panel-head">
+              <div>
+                <span data-fairness-i18n="verify.demo.eyebrow">Live Terrain Preview</span>
+                <strong data-fairness-i18n="verify.demo.title">Main Game Chunk</strong>
+              </div>
+            </div>
+            <div class="chunk-canvas-wrap">
+              <canvas id="chunkCanvas" aria-label="Interactive chunk terrain preview" data-fairness-i18n-aria-label="verify.demo.canvasAria"></canvas>
+              <div class="chunk-control-hint" data-fairness-i18n="verify.demo.controls">Drag to rotate. Wheel or pinch to zoom.</div>
+            </div>
+          </div>
+          <aside class="glass-panel verifier-control-panel">
+            <div class="panel-head">
+              <div>
+                <span data-fairness-i18n="verify.controls.eyebrow">Public Inputs</span>
+                <strong data-fairness-i18n="verify.controls.title">Seed And Parameters</strong>
+              </div>
+              <button class="small-action" type="button" id="randomChunkButton" data-fairness-i18n="verify.demo.random">Random</button>
+            </div>
+            <div class="field-grid verifier-fields">
+              <label>
+                <span data-fairness-i18n="verify.demo.seed">Seed</span>
+                <span class="locked-input-row">
+                  <input class="text-input" id="seedInput" type="text" value="nicechunk-mainnet-001" />
+                  <button class="lock-button" type="button" data-lock-field="seed" data-fairness-i18n-aria-label="verify.lock.lockSeed"></button>
+                </span>
+              </label>
+              <label>
+                <span data-fairness-i18n="verify.demo.chunkX">Chunk X</span>
+                <span class="locked-input-row">
+                  <input class="text-input" id="chunkXInput" type="number" value="0" />
+                  <button class="lock-button" type="button" data-lock-field="chunkX" data-fairness-i18n-aria-label="verify.lock.lockChunkX"></button>
+                </span>
+              </label>
+              <label>
+                <span data-fairness-i18n="verify.demo.chunkZ">Chunk Y</span>
+                <span class="locked-input-row">
+                  <input class="text-input" id="chunkZInput" type="number" value="0" />
+                  <button class="lock-button" type="button" data-lock-field="chunkZ" data-fairness-i18n-aria-label="verify.lock.lockChunkZ"></button>
+                </span>
+              </label>
+            </div>
+            <div class="metric-grid verifier-metrics">
+              <div><span data-fairness-i18n="verify.metrics.source">Generator</span><strong id="terrainSource">src/world/generator.js</strong></div>
+              <div><span data-fairness-i18n="verify.metrics.height">Height Range</span><strong id="heightHash">0..0</strong></div>
+              <div><span data-fairness-i18n="verify.metrics.biome">Biome Mix</span><strong id="biomeHash">Plains</strong></div>
+              <div><span data-fairness-i18n="verify.metrics.terrain">Terrain Hash</span><strong id="chunkCommitment">0x00000000</strong></div>
+              <div><span data-fairness-i18n="verify.metrics.version">Rule Version</span><strong id="ruleVersionLabel">voxel-seeded-terrain-v2</strong></div>
+              <div><span data-fairness-i18n="verify.metrics.blocks">Visible Blocks</span><strong id="blockCountLabel">0</strong></div>
+            </div>
+            <pre class="code-block chunk-stats"><code id="chunkStats"></code></pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section-block" id="mining-proof">
+        <div class="section-heading">
+          <p class="eyebrow blue" data-fairness-i18n="mining.eyebrow">Mining Proof</p>
+          <h2 data-fairness-i18n="mining.title">Resource discovery should explain why this result happened.</h2>
+          <p data-fairness-i18n="mining.body">The live alpha can evolve, but the target model is simple: every important economic result should be derived from explicit inputs and produce a checkable hash path.</p>
+        </div>
+        <div class="demo-grid compact">
+          <div class="glass-panel demo-panel">
+            <div class="field-grid mining-fields">
+              <label><span data-fairness-i18n="mining.demo.seed">Seed</span><input class="text-input" id="mineSeed" type="text" value="nicechunk-mainnet-001" /></label>
+              <label><span data-fairness-i18n="mining.demo.block">Block XYZ</span><input class="text-input" id="mineBlock" type="text" value="0,8,0" /></label>
+              <label><span data-fairness-i18n="mining.demo.nonce">Action Nonce</span><input class="text-input" id="mineNonce" type="number" value="42" /></label>
+            </div>
+            <pre class="code-block result"><code id="miningResult"></code></pre>
+          </div>
+          <div class="rule-stack">
+            <article class="rule-card">
+              <span class="status-pill">Design Target</span>
+              <strong data-fairness-i18n="mining.rules.roll.title">Hash-derived roll</strong>
+              <p data-fairness-i18n="mining.rules.roll.body">The roll is calculated from seed, block coordinate, chunk coordinate, and nonce. This makes the proof replayable.</p>
+            </article>
+            <article class="rule-card">
+              <span class="status-pill">Boundary</span>
+              <strong data-fairness-i18n="mining.rules.limit.title">Alpha limitation</strong>
+              <p data-fairness-i18n="mining.rules.limit.body">Until settlement is fully verified on-chain, the website must label proof demos as reference logic rather than final economic settlement.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-block" id="status">
+        <div class="section-heading">
+          <p class="eyebrow blue" data-fairness-i18n="status.eyebrow">Status Matrix</p>
+          <h2 data-fairness-i18n="status.title">Fairness claims are tracked by implementation status.</h2>
+        </div>
+        <table class="status-table">
+          <thead>
+            <tr>
+              <th data-fairness-i18n="status.table.system">System</th>
+              <th data-fairness-i18n="status.table.status">Status</th>
+              <th data-fairness-i18n="status.table.verification">Verification Path</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-fairness-i18n="status.rows.world.system">Seeded chunk generation</td>
+              <td data-fairness-i18n="status.rows.world.status">Alpha implemented</td>
+              <td data-fairness-i18n="status.rows.world.verification">Public seed, public rules, local recomputation, future chain commitment.</td>
+            </tr>
+            <tr>
+              <td data-fairness-i18n="status.rows.mining.system">Mining outcome proof</td>
+              <td data-fairness-i18n="status.rows.mining.status">Reference model</td>
+              <td data-fairness-i18n="status.rows.mining.verification">Hash-derived roll demo, planned settlement verification.</td>
+            </tr>
+            <tr>
+              <td data-fairness-i18n="status.rows.forging.system">Forged asset history</td>
+              <td data-fairness-i18n="status.rows.forging.status">Planned</td>
+              <td data-fairness-i18n="status.rows.forging.verification">Recipe inputs, durability, output metadata, future mint records.</td>
+            </tr>
+            <tr>
+              <td data-fairness-i18n="status.rows.watchers.system">Guardian network</td>
+              <td data-fairness-i18n="status.rows.watchers.status">Coming soon</td>
+              <td data-fairness-i18n="status.rows.watchers.verification">No custody, no player transaction signing, region availability role only.</td>
+            </tr>
+            <tr>
+              <td data-fairness-i18n="status.rows.governance.system">Rule upgrades</td>
+              <td data-fairness-i18n="status.rows.governance.status">Planned</td>
+              <td data-fairness-i18n="status.rows.governance.verification">Versioned changelog, separated UI/world/economy/chain change categories.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="section-block" id="boundaries">
+        <div class="section-heading">
+          <p class="eyebrow blue" data-fairness-i18n="boundaries.eyebrow">Trust Boundaries</p>
+          <h2 data-fairness-i18n="boundaries.title">Honest fairness pages disclose what is not final yet.</h2>
+          <p data-fairness-i18n="boundaries.body">NiceChunk should avoid pretending that every alpha system is already fully decentralized. The stronger claim is to publish the path from client logic to verifiable protocol state.</p>
+        </div>
+        <div class="boundary-grid">
+          <article class="boundary-card"><strong data-fairness-i18n="boundaries.cards.client.title">Client</strong><p data-fairness-i18n="boundaries.cards.client.body">Renders the world, predicts movement, shows previews, and can recompute public generation logic.</p></article>
+          <article class="boundary-card"><strong data-fairness-i18n="boundaries.cards.wallet.title">Wallet</strong><p data-fairness-i18n="boundaries.cards.wallet.body">Signs player intent directly. Player assets should not depend on hidden project-controlled signing.</p></article>
+          <article class="boundary-card"><strong data-fairness-i18n="boundaries.cards.watcher.title">Guardian</strong><p data-fairness-i18n="boundaries.cards.watcher.body">Helps regions stay reachable and communicate. Guardians do not custody assets or sign player transactions.</p></article>
+          <article class="boundary-card"><strong data-fairness-i18n="boundaries.cards.chain.title">Solana</strong><p data-fairness-i18n="boundaries.cards.chain.body">The target settlement layer for critical identity, asset, commitment, and economy state.</p></article>
+        </div>
+      </section>
+
+      <section class="cta-section">
+        <div>
+          <p class="eyebrow blue" data-fairness-i18n="cta.eyebrow">Next</p>
+          <h2 data-fairness-i18n="cta.title">Inspect the full protocol documentation.</h2>
+        </div>
+        <div class="hero-actions">
+          <a class="primary-action" href="/docs/" data-fairness-i18n="cta.docs">Open Docs</a>
+          <a class="secondary-action" href="/world_rule/" data-fairness-i18n="cta.worldRules">World Rules</a>
+          <a class="secondary-action" href="/play/" data-fairness-i18n="cta.enterWorld">Enter World</a>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="/fairness/fairness.js"></script>
+  </body>
+</html>

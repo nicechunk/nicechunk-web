@@ -2,8 +2,8 @@
   "_meta": {
     "language": "de",
     "label": "German",
-    "version": "locale-de-fd2cdc76c657d472",
-    "contentHash": "fd2cdc76c657d472"
+    "version": "locale-de-be70daed32082001",
+    "contentHash": "be70daed32082001"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -717,7 +717,7 @@
       "chunkX": "Chunk X",
       "chunkY": "Chunk Y",
       "connection": "Verbindungs-Endpoint",
-      "connectionPlaceholder": "wss://101.32.242.209:8080",
+      "connectionPlaceholder": "wss://guardian.example.com/ws",
       "host": "Host oder IP",
       "hostPlaceholder": "guardian.example.com",
       "port": "Port",

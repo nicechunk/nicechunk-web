@@ -2,8 +2,8 @@
   "_meta": {
     "language": "en",
     "label": "English",
-    "version": "locale-en-49d374e2466df166",
-    "contentHash": "49d374e2466df166"
+    "version": "locale-en-2e22a0f54bea01af",
+    "contentHash": "2e22a0f54bea01af"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -759,9 +759,9 @@
       "chunkX": "Chunk X",
       "chunkY": "Chunk Y",
       "connection": "Connection Endpoint",
-      "connectionPlaceholder": "wss://101.32.242.209:8080",
+      "connectionPlaceholder": "wss://guardian.example.com/ws",
       "host": "IP Address",
-      "hostPlaceholder": "101.32.242.209",
+      "hostPlaceholder": "guardian.example.com",
       "port": "Port",
       "operator": "Operator Authority",
       "operatorPlaceholder": "Defaults to connected wallet",

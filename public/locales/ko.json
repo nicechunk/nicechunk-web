@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ko",
     "label": "Korean",
-    "version": "locale-ko-89d589f7a85905e7",
-    "contentHash": "89d589f7a85905e7"
+    "version": "locale-ko-d26e517ee90a9b15",
+    "contentHash": "d26e517ee90a9b15"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -717,7 +717,7 @@
       "chunkX": "Chunk X",
       "chunkY": "Chunk Y",
       "connection": "연결 endpoint",
-      "connectionPlaceholder": "wss://101.32.242.209:8080",
+      "connectionPlaceholder": "wss://guardian.example.com/ws",
       "host": "Host 또는 IP",
       "hostPlaceholder": "guardian.example.com",
       "port": "포트",

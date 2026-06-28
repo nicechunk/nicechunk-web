@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ru",
     "label": "Russian",
-    "version": "locale-ru-41a29cdbac13c51e",
-    "contentHash": "41a29cdbac13c51e"
+    "version": "locale-ru-96b17843af5f7a7a",
+    "contentHash": "96b17843af5f7a7a"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -717,7 +717,7 @@
       "chunkX": "Chunk X",
       "chunkY": "Chunk Y",
       "connection": "Endpoint подключения",
-      "connectionPlaceholder": "wss://101.32.242.209:8080",
+      "connectionPlaceholder": "wss://guardian.example.com/ws",
       "host": "Host или IP",
       "hostPlaceholder": "guardian.example.com",
       "port": "Порт",

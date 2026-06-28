@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hans",
     "label": "Simplified Chinese",
-    "version": "locale-zh-Hans-15c3a6faa8bba297",
-    "contentHash": "15c3a6faa8bba297"
+    "version": "locale-zh-Hans-f0c3a0ef03b8ddec",
+    "contentHash": "f0c3a0ef03b8ddec"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -759,9 +759,9 @@
       "chunkX": "Chunk X",
       "chunkY": "Chunk Y",
       "connection": "连接端点",
-      "connectionPlaceholder": "wss://101.32.242.209:8080",
+      "connectionPlaceholder": "wss://guardian.example.com/ws",
       "host": "IP 地址",
-      "hostPlaceholder": "101.32.242.209",
+      "hostPlaceholder": "guardian.example.com",
       "port": "端口",
       "operator": "操作员授权地址",
       "operatorPlaceholder": "默认使用已连接钱包",

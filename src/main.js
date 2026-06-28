@@ -763,10 +763,10 @@ const availableBackpackSlotCache = {
   signature: "",
   slots: [],
 };
-const backpackPreviewInitialCountDesktop = 8;
-const backpackPreviewInitialCountMobile = 4;
-const backpackPreviewBatchSizeDesktop = 4;
-const backpackPreviewBatchSizeMobile = 2;
+const backpackPreviewInitialCountDesktop = 16;
+const backpackPreviewInitialCountMobile = 8;
+const backpackPreviewBatchSizeDesktop = 8;
+const backpackPreviewBatchSizeMobile = 4;
 let backpackPreviewHydrationToken = 0;
 let backpackSelectedSourceItemId = "";
 const backpackDiscardingSlotIndexes = new Set();
@@ -3578,7 +3578,7 @@ function createSmeltingSlotPreview(slot, className) {
 function createSmeltingResourceSwatch(slot) {
   if (slot?.materialId) {
     const material = slot.material ?? smeltingMaterialById(slot.materialId);
-    const wrap = document.createElement("span");
+    const wrap = document.createElement("div");
     wrap.className = "smelting-resource-swatch smelting-resource-swatch-material";
     wrap.append(createSmeltingMaterialPreview(material));
     wrap.setAttribute("aria-hidden", "true");
@@ -5210,7 +5210,7 @@ function syncBackpackGridSlots(slots, capacity, initialPreviewCount) {
   if (changedIndexes.length) {
     backpackPreviewHydrationToken += 1;
     const renderToken = backpackPreviewHydrationToken;
-    scheduleBackpackPreviewHydrationForIndexes(slots, changedIndexes, renderToken, initialPreviewCount);
+    scheduleBackpackPreviewHydration(slots, renderToken, initialPreviewCount);
   }
   backpackGrid.scrollTop = scrollTop;
 }

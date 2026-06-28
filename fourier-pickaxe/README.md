@@ -50,6 +50,18 @@ When a reviewer or automated agent cannot access a GPU, the correct output is a 
 
 Do not present screenshots, benchmark numbers, proof-search rates, or visual fidelity claims unless they were produced on a GPU-capable review machine.
 
+## Static Display Summary
+
+For CPU-only GitHub review, present Fourier Pickaxe as a static evidence package:
+
+| Item | Static display |
+| --- | --- |
+| Product surface | A browser lab for converting local `.vox` assets into compact deterministic function payloads. |
+| Runtime dependency | GPU/WebGL hardware for meaningful visual and proof-search validation. |
+| Reviewable without GPU | Documentation, HTML controls, codec path, local input boundary, parser usage, and security notes. |
+| Not reviewable without GPU | Frame stability, visual fidelity, proof-search responsiveness, screenshots, and benchmark claims. |
+| Public safety boundary | No private server address, no deployment script, no token, no wallet key, and no upload endpoint. |
+
 ## Data Flow
 
 ```text

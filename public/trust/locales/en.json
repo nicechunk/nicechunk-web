@@ -1035,7 +1035,7 @@
         "body": "Mining, backpack resources, forging, NCK settlement, and market flows are designed to move toward public verification instead of hidden inventory servers."
       },
       {
-        "status": "Coming Soon",
+        "status": "Planned",
         "title": "Guardian network participation",
         "body": "Guardians are planned as region access nodes. They should help communication and availability without taking custody of player assets."
       },
@@ -1190,7 +1190,7 @@
         "href": "/ncm/"
       },
       {
-        "status": "Coming Soon",
+        "status": "Planned",
         "claim": "Guardian network without custody",
         "evidence": "Guardian pages and docs describe Guardians as region access and communication infrastructure, not asset custodians.",
         "boundary": "Guardian staking, slashing, economics, and mainnet participation rules are not final yet.",

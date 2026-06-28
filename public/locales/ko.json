@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ko",
     "label": "Korean",
-    "version": "locale-ko-d96cbad2a670d31b",
-    "contentHash": "d96cbad2a670d31b"
+    "version": "locale-ko-7626669432638a65",
+    "contentHash": "7626669432638a65"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -1261,7 +1261,7 @@
       "signAgree": "Sign Agree",
       "signReject": "Sign Reject",
       "execute": "Execute Rule",
-      "comingSoon": "On-chain interaction coming later."
+      "comingSoon": "On-chain interaction is planned for a later release."
     },
     "lawType": {
       "natural": "Natural Law",
@@ -3200,7 +3200,7 @@
       "glovesReady": "장갑 활성",
       "sawReady": "톱 활성",
       "drillReady": "핸드 드릴 활성",
-      "toolPending": "아직 구현되지 않은 도구",
+      "toolPending": "이 모드에서는 사용할 수 없는 도구",
       "orbitReady": "보기 회전만",
       "dropReady": "모루에 놓기",
       "resourceAdded": "자원 추가됨",

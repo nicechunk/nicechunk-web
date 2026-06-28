@@ -2,13 +2,13 @@
   "_meta": {
     "language": "en",
     "label": "English",
-    "version": "locale-en-2a8c9a07f05cc96f",
-    "contentHash": "2a8c9a07f05cc96f"
+    "version": "locale-en-7d0a17a55b6609cb",
+    "contentHash": "7d0a17a55b6609cb"
   },
   "common": {
     "brand": "NICECHUNK",
     "language": "Language",
-    "comingSoon": "Coming Soon",
+    "comingSoon": "Planned",
     "languageNative": {
       "en": "English",
       "es": "Español",
@@ -1303,7 +1303,7 @@
       "signAgree": "Sign Agree",
       "signReject": "Sign Reject",
       "execute": "Execute Rule",
-      "comingSoon": "On-chain interaction coming later."
+      "comingSoon": "On-chain interaction is planned for a later release."
     },
     "lawType": {
       "natural": "Natural Law",
@@ -3200,7 +3200,7 @@
       "glovesReady": "Gloves active",
       "sawReady": "Saw active",
       "drillReady": "Hand drill active",
-      "toolPending": "Tool not implemented yet",
+      "toolPending": "Tool unavailable in this mode",
       "orbitReady": "View rotation only",
       "dropReady": "Drop on the anvil",
       "resourceAdded": "Resource added",

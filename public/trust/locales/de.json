@@ -608,7 +608,7 @@
         "body": "Mining, Backpack-Ressourcen, Forging, NCK-Abwicklung und Marktflüsse sollen in Richtung öffentlicher Verifikation gehen."
       },
       {
-        "status": "Coming Soon",
+        "status": "Planned",
         "title": "Guardian Network Teilnahme",
         "body": "Guardians sind als regionale Zugangsknoten geplant und helfen Kommunikation sowie Verfügbarkeit ohne Asset-Custody."
       },
@@ -763,7 +763,7 @@
         "href": "/ncm/"
       },
       {
-        "status": "Coming Soon",
+        "status": "Planned",
         "claim": "Guardian-Netzwerk ohne Custody",
         "evidence": "Guardian-Seiten beschreiben Guardians als regionale Zugangs- und Kommunikationsinfrastruktur, nicht als Asset-Verwahrer.",
         "boundary": "Guardian-Staking, Slashing, Ökonomie und Mainnet-Regeln sind noch nicht final.",

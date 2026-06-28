@@ -608,7 +608,7 @@
         "body": "Le minage, les ressources de sac, la forge, le règlement NCK et les flux de marché sont conçus pour aller vers une vérification publique."
       },
       {
-        "status": "Coming Soon",
+        "status": "Planned",
         "title": "Participation au réseau Guardian",
         "body": "Les Guardians sont prévus comme nœuds d’accès régional, aidant la communication et la disponibilité sans garde des actifs."
       },
@@ -763,7 +763,7 @@
         "href": "/ncm/"
       },
       {
-        "status": "Coming Soon",
+        "status": "Planned",
         "claim": "Réseau Guardian sans garde",
         "evidence": "Les pages Guardian décrivent Guardians comme infrastructure d’accès régional et communication, pas comme gardiens d’actifs.",
         "boundary": "Staking, slashing, économie et règles mainnet Guardian ne sont pas finaux.",

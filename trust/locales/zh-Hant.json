@@ -588,7 +588,7 @@
         "body": "挖掘、背包資源、鍛造、NCK 結算和市場流程，設計目標是逐步走向公開驗證，而不是隱藏庫存伺服器。"
       },
       {
-        "status": "Coming Soon",
+        "status": "Planned",
         "title": "Guardian 網路參與",
         "body": "Guardian 計畫作為區域訪問節點。它們應該幫助通訊和可用性，但不托管玩家資產。"
       },
@@ -743,7 +743,7 @@
         "href": "/ncm/"
       },
       {
-        "status": "Coming Soon",
+        "status": "Planned",
         "claim": "非託管的 Guardian 網路",
         "evidence": "Guardian 頁面和文件說明 Guardian 是區域接入和通訊基礎設施，不託管玩家資產。",
         "boundary": "Guardian 質押、懲罰、經濟和主網參與規則尚未最終定稿。",

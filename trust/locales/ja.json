@@ -588,7 +588,7 @@
         "body": "採掘、バックパック資源、鍛造、NCK 決済、マーケットは公開検証へ向かう設計です。"
       },
       {
-        "status": "Coming Soon",
+        "status": "Planned",
         "title": "Guardian network 参加",
         "body": "Guardian は地域アクセスノードとして計画され、資産を保管せず通信と可用性を支援します。"
       },
@@ -743,7 +743,7 @@
         "href": "/ncm/"
       },
       {
-        "status": "Coming Soon",
+        "status": "Planned",
         "claim": "非カストディ Guardian ネットワーク",
         "evidence": "Guardian ページは Guardian を地域アクセスと通信基盤として説明し、資産の保管者とはしません。",
         "boundary": "Guardian の staking、slashing、経済、mainnet 参加ルールは未確定です。",

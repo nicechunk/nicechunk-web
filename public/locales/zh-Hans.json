@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hans",
     "label": "Simplified Chinese",
-    "version": "locale-zh-Hans-b4bf61ca936332af",
-    "contentHash": "b4bf61ca936332af"
+    "version": "locale-zh-Hans-28ccb606efb460bb",
+    "contentHash": "28ccb606efb460bb"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -3244,7 +3244,7 @@
       "glovesReady": "手套启用",
       "sawReady": "锯子启用",
       "drillReady": "手钻启用",
-      "toolPending": "此工具尚未实现",
+      "toolPending": "此工具在当前模式不可用",
       "orbitReady": "仅旋转视角",
       "dropReady": "放到铁砧上",
       "resourceAdded": "已加入资源",

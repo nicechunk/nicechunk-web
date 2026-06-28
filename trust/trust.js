@@ -160,7 +160,7 @@ function renderLanguageMenu() {
       `;
       option.querySelector(".language-option-name").textContent = language.englishName;
       option.querySelector(".language-option-native").textContent = `(${language.nativeName})`;
-      option.querySelector(".language-option-status").textContent = language.enabled ? "" : "Coming Soon";
+      option.querySelector(".language-option-status").textContent = language.enabled ? "" : "Planned";
       option.addEventListener("click", async () => {
         const nextLanguage = normalizeLanguage(option.dataset.trustLanguage);
         if (!nextLanguage || nextLanguage === activeLanguage) {

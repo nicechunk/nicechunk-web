@@ -608,7 +608,7 @@
         "body": "挖掘、背包资源、锻造、NCK 结算和市场流程，设计目标是逐步走向公开验证，而不是隐藏库存服务器。"
       },
       {
-        "status": "Coming Soon",
+        "status": "Planned",
         "title": "Guardian 网络参与",
         "body": "Guardian 计划作为区域访问节点。它们应该帮助通信和可用性，但不托管玩家资产。"
       },
@@ -763,7 +763,7 @@
         "href": "/ncm/"
       },
       {
-        "status": "Coming Soon",
+        "status": "Planned",
         "claim": "非托管的 Guardian 网络",
         "evidence": "Guardian 页面和文档说明 Guardian 是区域接入和通信基础设施，不托管玩家资产。",
         "boundary": "Guardian 质押、惩罚、经济和主网参与规则尚未最终定稿。",

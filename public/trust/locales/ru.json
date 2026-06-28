@@ -608,7 +608,7 @@
         "body": "Добыча, ресурсы рюкзака, ковка, расчеты NCK и рыночные потоки спроектированы для перехода к публичной проверке."
       },
       {
-        "status": "Coming Soon",
+        "status": "Planned",
         "title": "Участие в сети Guardian",
         "body": "Guardians планируются как региональные узлы доступа; они помогают связи и доступности без хранения активов игроков."
       },
@@ -763,7 +763,7 @@
         "href": "/ncm/"
       },
       {
-        "status": "Coming Soon",
+        "status": "Planned",
         "claim": "Guardian network без custody",
         "evidence": "Guardian pages описывают Guardians как инфраструктуру доступа к регионам и коммуникаций, не как хранителей активов.",
         "boundary": "Guardian staking, slashing, экономика и mainnet-правила еще не финальны.",

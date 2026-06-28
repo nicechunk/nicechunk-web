@@ -183,7 +183,7 @@
       },
       "watchers": {
         "system": "Guardian network",
-        "status": "Coming soon",
+        "status": "Planned",
         "verification": "No custody, no player transaction signing, region availability role only."
       },
       "governance": {

@@ -588,7 +588,7 @@
         "body": "Minería, mochila, forja, liquidación NCK y mercado están diseñados para moverse hacia verificación pública."
       },
       {
-        "status": "Coming Soon",
+        "status": "Planned",
         "title": "Participación de Guardian network",
         "body": "Guardians están planificados como nodos de acceso regional; ayudan comunicación y disponibilidad sin custodiar activos."
       },
@@ -743,7 +743,7 @@
         "href": "/ncm/"
       },
       {
-        "status": "Coming Soon",
+        "status": "Planned",
         "claim": "Red Guardian sin custodia",
         "evidence": "Las páginas Guardian describen Guardians como infraestructura de acceso regional y comunicación, no custodios de activos.",
         "boundary": "Staking, slashing, economía y reglas mainnet de Guardian aún no son finales.",

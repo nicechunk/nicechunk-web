@@ -608,7 +608,7 @@
         "body": "채굴, 백팩 자원, 제련, NCK 정산, 마켓 흐름은 숨겨진 서버 대신 공개 검증으로 이동하도록 설계됩니다."
       },
       {
-        "status": "Coming Soon",
+        "status": "Planned",
         "title": "Guardian network 참여",
         "body": "Guardian는 지역 접근 노드로 계획되며, 자산을 보관하지 않고 통신과 가용성을 돕습니다."
       },
@@ -763,7 +763,7 @@
         "href": "/ncm/"
       },
       {
-        "status": "Coming Soon",
+        "status": "Planned",
         "claim": "비수탁 Guardian 네트워크",
         "evidence": "Guardian 페이지는 Guardian를 지역 접근 및 통신 인프라로 설명하며 자산 보관자로 보지 않습니다.",
         "boundary": "Guardian staking, slashing, 경제, mainnet 참여 규칙은 아직 최종이 아닙니다.",

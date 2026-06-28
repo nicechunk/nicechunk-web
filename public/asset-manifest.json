@@ -1,0 +1,339 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-06-28T16:13:53.733Z",
+  "assetRoots": [
+    "public/media",
+    "p_d"
+  ],
+  "assets": [
+    {
+      "path": "p_d/0dc2f4dc-fdec-465e-9af6-db0b2f37c526.png",
+      "mediaType": "image/png",
+      "bytes": 1043788,
+      "sha256": "d082b10aba2e0b41aecc3249db922158286d933310c2fc7f45d9833a9e8eced5",
+      "dimensions": {
+        "width": 1254,
+        "height": 1254
+      },
+      "surface": "character-reference",
+      "sourceStatus": "local-reference",
+      "canonical": false
+    },
+    {
+      "path": "p_d/4fb79302-552c-411d-8b0e-89eba50aba70.png",
+      "mediaType": "image/png",
+      "bytes": 1046550,
+      "sha256": "24e4599cc0229b8537b73bc8f96194c5796a9fda7230618d5cf2ecc5b626c09c",
+      "dimensions": {
+        "width": 1254,
+        "height": 1254
+      },
+      "surface": "character-reference",
+      "sourceStatus": "local-reference",
+      "canonical": false
+    },
+    {
+      "path": "p_d/5ce31d92-da14-4995-8918-5d0bdeade3cd.png",
+      "mediaType": "image/png",
+      "bytes": 1107147,
+      "sha256": "4cc0e488712da353d7aa180be535a8394fb8af76d847c909d4a563c9e38e2856",
+      "dimensions": {
+        "width": 1254,
+        "height": 1254
+      },
+      "surface": "character-reference",
+      "sourceStatus": "local-reference",
+      "canonical": false
+    },
+    {
+      "path": "p_d/60636c39-05b3-4d02-b498-edeec64062d6.png",
+      "mediaType": "image/png",
+      "bytes": 1002872,
+      "sha256": "8fbe44d03267f1dc4cf731316a22d684486bee47dafef558d70a9a5a3d9520a8",
+      "dimensions": {
+        "width": 1254,
+        "height": 1254
+      },
+      "surface": "character-reference",
+      "sourceStatus": "local-reference",
+      "canonical": false
+    },
+    {
+      "path": "p_d/617b322d-7100-4ed9-9fc1-15770ae43dde.png",
+      "mediaType": "image/png",
+      "bytes": 1038752,
+      "sha256": "6826ba3af6fad977d0aba6c0db758e6ddefa2bb93b8fbf3fbabdfff297783dab",
+      "dimensions": {
+        "width": 1254,
+        "height": 1254
+      },
+      "surface": "character-reference",
+      "sourceStatus": "local-reference",
+      "canonical": false
+    },
+    {
+      "path": "p_d/86f3f034-5fea-4135-a77b-6f946fae4c39.png",
+      "mediaType": "image/png",
+      "bytes": 1043861,
+      "sha256": "fac182220bbff1ff3532ef21fb16f9cdf11f143d812b01091f26d03684fd5197",
+      "dimensions": {
+        "width": 1254,
+        "height": 1254
+      },
+      "surface": "character-reference",
+      "sourceStatus": "local-reference",
+      "canonical": false
+    },
+    {
+      "path": "p_d/8ca1070c-7df7-464c-852d-a8e8f79fa556.png",
+      "mediaType": "image/png",
+      "bytes": 1011041,
+      "sha256": "fc1974aa8fca57e6d281fe85c374257ef9d826d3492bbcfde8ad5a9c53c53a31",
+      "dimensions": {
+        "width": 1254,
+        "height": 1254
+      },
+      "surface": "character-reference",
+      "sourceStatus": "local-reference",
+      "canonical": false
+    },
+    {
+      "path": "p_d/d58c1a89-6cea-4421-90c1-8c694765d013.png",
+      "mediaType": "image/png",
+      "bytes": 1031474,
+      "sha256": "1a2de914435ef8dc5afe1445ef5324e0f7808b7faef6d984ca995ff2221a1164",
+      "dimensions": {
+        "width": 1254,
+        "height": 1254
+      },
+      "surface": "character-reference",
+      "sourceStatus": "local-reference",
+      "canonical": false
+    },
+    {
+      "path": "p_d/da9e9d7e-7d67-41d4-b553-c1da4fcc6bfb.png",
+      "mediaType": "image/png",
+      "bytes": 1070713,
+      "sha256": "77dd379d0a035496307743841135d324a484ab2f7d45b7555f1813b1c506981b",
+      "dimensions": {
+        "width": 1254,
+        "height": 1254
+      },
+      "surface": "character-reference",
+      "sourceStatus": "local-reference",
+      "canonical": false
+    },
+    {
+      "path": "p_d/generated/female-engineer.png",
+      "mediaType": "image/png",
+      "bytes": 1556108,
+      "sha256": "e61797c11ff8a2c732af5747ff4fc8b26ebbeae6a1d67ef66fc784a60828ea94",
+      "dimensions": {
+        "width": 1254,
+        "height": 1254
+      },
+      "surface": "generated-character-reference",
+      "sourceStatus": "generated-reference",
+      "canonical": false
+    },
+    {
+      "path": "p_d/generated/female-ponytail.png",
+      "mediaType": "image/png",
+      "bytes": 1454385,
+      "sha256": "8e95f53ec7737a10340bf97900b98eecd18eff9742704fd25d1828003e94d7bc",
+      "dimensions": {
+        "width": 1254,
+        "height": 1254
+      },
+      "surface": "generated-character-reference",
+      "sourceStatus": "generated-reference",
+      "canonical": false
+    },
+    {
+      "path": "p_d/generated/male-explorer.png",
+      "mediaType": "image/png",
+      "bytes": 1452136,
+      "sha256": "03e0be88181ff66a06accb97e877aa5c13d7ba3822e19bd975303c83824cadcf",
+      "dimensions": {
+        "width": 1254,
+        "height": 1254
+      },
+      "surface": "generated-character-reference",
+      "sourceStatus": "generated-reference",
+      "canonical": false
+    },
+    {
+      "path": "p_d/generated/male-scout.png",
+      "mediaType": "image/png",
+      "bytes": 1589660,
+      "sha256": "ecd1aadcb745a859098b3a343583e653397e835d8dbe2d93059824cd20df4ff0",
+      "dimensions": {
+        "width": 1254,
+        "height": 1254
+      },
+      "surface": "generated-character-reference",
+      "sourceStatus": "generated-reference",
+      "canonical": false
+    },
+    {
+      "path": "public/media/forging-hammer-local.png",
+      "mediaType": "image/png",
+      "bytes": 59092,
+      "sha256": "8cb2f9bce96b42188df2dd527eed173d7e486c6479209abdd8cbadd00ee09c3d",
+      "dimensions": {
+        "width": 1059,
+        "height": 848
+      },
+      "surface": "forging",
+      "sourceStatus": "project-media",
+      "canonical": true
+    },
+    {
+      "path": "public/media/login-preview.png",
+      "mediaType": "image/png",
+      "bytes": 77195,
+      "sha256": "6c996ab931f9b93609561cb4ff8568538244201cbe9caf071b73ca8cb3752a81",
+      "dimensions": {
+        "width": 1280,
+        "height": 800
+      },
+      "surface": "login",
+      "sourceStatus": "project-media",
+      "canonical": false
+    },
+    {
+      "path": "public/media/nck-hero-logo-v0149.png",
+      "mediaType": "image/png",
+      "bytes": 473762,
+      "sha256": "427ef32b3cf3ed1947beb5d3208e2ab9e7175978d519794cc4089ec905c447f3",
+      "dimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "surface": "brand",
+      "sourceStatus": "project-brand",
+      "canonical": true
+    },
+    {
+      "path": "public/media/nck-hero-logo-v0149.webm",
+      "mediaType": "video/webm",
+      "bytes": 1292273,
+      "sha256": "92020089bde1eb49213cd25cde9ae3d501220adaaff2c82234ae07db12c7492d",
+      "dimensions": null,
+      "surface": "brand",
+      "sourceStatus": "project-brand",
+      "canonical": true
+    },
+    {
+      "path": "public/media/nck.png",
+      "mediaType": "image/png",
+      "bytes": 45366,
+      "sha256": "445d37eb18c6121f525fae3618e6900f877161b61af45b8432544a35b2a44607",
+      "dimensions": {
+        "width": 384,
+        "height": 384
+      },
+      "surface": "brand",
+      "sourceStatus": "project-brand",
+      "canonical": true
+    },
+    {
+      "path": "public/media/player-set-backpack.png",
+      "mediaType": "image/png",
+      "bytes": 56173,
+      "sha256": "846f27a55d5e692a92cc15092e8e58adb292cc8b3ff467656f11d2e377cdcaa6",
+      "dimensions": {
+        "width": 1280,
+        "height": 800
+      },
+      "surface": "player-set",
+      "sourceStatus": "project-media",
+      "canonical": true
+    },
+    {
+      "path": "public/media/player-set-watch-view.png",
+      "mediaType": "image/png",
+      "bytes": 67358,
+      "sha256": "b3450509e00d86db5506e1cbbb18efe172d3ccb59f9053a0a207324ea03c8dc2",
+      "dimensions": {
+        "width": 1280,
+        "height": 800
+      },
+      "surface": "player-set",
+      "sourceStatus": "project-media",
+      "canonical": true
+    },
+    {
+      "path": "public/media/vox/chr_peasant_girl_orangehair.ncm",
+      "mediaType": "model/nicechunk-ncm",
+      "bytes": 452,
+      "sha256": "bd8fd29262032edcc298a1b7d08bade93d67dcea7cc9255d4da5bba71020b05c",
+      "dimensions": null,
+      "surface": "ncm-sample",
+      "sourceStatus": "sample-model",
+      "canonical": true
+    },
+    {
+      "path": "public/media/vox/chr_peasant_guy_blackhair.ncm",
+      "mediaType": "model/nicechunk-ncm",
+      "bytes": 354,
+      "sha256": "72126c96db90f782deb1c4d8f85ccb73e9326e197eb541d5987db165e3937595",
+      "dimensions": null,
+      "surface": "ncm-sample",
+      "sourceStatus": "sample-model",
+      "canonical": true
+    },
+    {
+      "path": "public/media/wallets/backpack.svg",
+      "mediaType": "image/svg+xml",
+      "bytes": 707,
+      "sha256": "160aaee269016d1bcca402baa7bfcf86036c581b15dcca1d393fdde4d73bba64",
+      "dimensions": {
+        "width": 48,
+        "height": 48
+      },
+      "surface": "wallet-ui",
+      "sourceStatus": "third-party-wallet-brand",
+      "canonical": true
+    },
+    {
+      "path": "public/media/wallets/phantom.svg",
+      "mediaType": "image/svg+xml",
+      "bytes": 644,
+      "sha256": "e577b002fd4e745934ada4b8a3e753e5530b2343e945386297669ce7353966db",
+      "dimensions": {
+        "width": 48,
+        "height": 48
+      },
+      "surface": "wallet-ui",
+      "sourceStatus": "third-party-wallet-brand",
+      "canonical": true
+    },
+    {
+      "path": "public/media/wallets/solana.svg",
+      "mediaType": "image/svg+xml",
+      "bytes": 1264,
+      "sha256": "4aa37fd8b38e52a793fdb041e92f2c812c436ca0d09a341ed0e71e6cde0e8280",
+      "dimensions": {
+        "width": 48,
+        "height": 48
+      },
+      "surface": "wallet-ui",
+      "sourceStatus": "third-party-wallet-brand",
+      "canonical": true
+    },
+    {
+      "path": "public/media/wallets/solflare.svg",
+      "mediaType": "image/svg+xml",
+      "bytes": 847,
+      "sha256": "d5e98007b4c65e00aa362adea070b94f5b68edfa4986e9fc28ffde5ebbfdafc7",
+      "dimensions": {
+        "width": 48,
+        "height": 48
+      },
+      "surface": "wallet-ui",
+      "sourceStatus": "third-party-wallet-brand",
+      "canonical": true
+    }
+  ]
+}

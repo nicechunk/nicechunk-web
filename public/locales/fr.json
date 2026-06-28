@@ -2,8 +2,8 @@
   "_meta": {
     "language": "fr",
     "label": "French",
-    "version": "locale-fr-379aff5f30db6017",
-    "contentHash": "379aff5f30db6017"
+    "version": "locale-fr-df596619344949ce",
+    "contentHash": "df596619344949ce"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -1157,6 +1157,22 @@
     "tech": {
       "title": "Technical idea",
       "body": "The function payload stores only G0 palette indexes and box-basis bytes. Later miners can use the exact model hash as the target and search for a shorter Fourier gene."
+    },
+    "static": {
+      "title": "Documentation-only review",
+      "body": "This environment cannot prove the GPU workload. Use this panel as the static display: it shows the intended workflow, review boundary, and deferred runtime evidence without claiming screenshots or benchmark results.",
+      "surfaceLabel": "Surface",
+      "surfaceValue": "GPU-oriented voxel function research page",
+      "inputLabel": "Input",
+      "inputValue": "Local MagicaVoxel .vox file",
+      "outputLabel": "Output",
+      "outputValue": "0:<base64url-bytes> function payload",
+      "evidenceLabel": "Static evidence",
+      "evidenceValue": "README, showcase docs, HTML controls, codec path, parser boundary",
+      "deferredLabel": "Deferred evidence",
+      "deferredValue": "WebGL fidelity, frame stability, proof-search speed, screenshots",
+      "securityLabel": "Security boundary",
+      "securityValue": "No upload endpoint, wallet signing, server address, token, or deploy script"
     },
     "steps": {
       "sample": "Load VOX and canonicalize its voxel/color grid.",

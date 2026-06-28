@@ -34,66 +34,66 @@
     "locales": {
       "en": {
         "label": "English",
-        "version": "locale-en-2e22a0f54bea01af",
-        "contentHash": "2e22a0f54bea01af",
+        "version": "locale-en-2a8c9a07f05cc96f",
+        "contentHash": "2a8c9a07f05cc96f",
         "url": "/locales/en.json",
-        "bytes": 176984
+        "bytes": 177970
       },
       "es": {
         "label": "Spanish",
-        "version": "locale-es-42611a78f48b8812",
-        "contentHash": "42611a78f48b8812",
+        "version": "locale-es-0e0b43fe218b2375",
+        "contentHash": "0e0b43fe218b2375",
         "url": "/locales/es.json",
-        "bytes": 178325
+        "bytes": 179311
       },
       "fr": {
         "label": "French",
-        "version": "locale-fr-379aff5f30db6017",
-        "contentHash": "379aff5f30db6017",
+        "version": "locale-fr-df596619344949ce",
+        "contentHash": "df596619344949ce",
         "url": "/locales/fr.json",
-        "bytes": 178886
+        "bytes": 179872
       },
       "de": {
         "label": "German",
-        "version": "locale-de-be70daed32082001",
-        "contentHash": "be70daed32082001",
+        "version": "locale-de-edb607497e8955e5",
+        "contentHash": "edb607497e8955e5",
         "url": "/locales/de.json",
-        "bytes": 177861
+        "bytes": 178847
       },
       "ja": {
         "label": "Japanese",
-        "version": "locale-ja-09e9320c30c6264b",
-        "contentHash": "09e9320c30c6264b",
+        "version": "locale-ja-9c3b9cb1af6f80b7",
+        "contentHash": "9c3b9cb1af6f80b7",
         "url": "/locales/ja.json",
-        "bytes": 181057
+        "bytes": 182043
       },
       "ru": {
         "label": "Russian",
-        "version": "locale-ru-96b17843af5f7a7a",
-        "contentHash": "96b17843af5f7a7a",
+        "version": "locale-ru-bf271924cf657f2d",
+        "contentHash": "bf271924cf657f2d",
         "url": "/locales/ru.json",
-        "bytes": 192291
+        "bytes": 193277
       },
       "ko": {
         "label": "Korean",
-        "version": "locale-ko-d26e517ee90a9b15",
-        "contentHash": "d26e517ee90a9b15",
+        "version": "locale-ko-d96cbad2a670d31b",
+        "contentHash": "d96cbad2a670d31b",
         "url": "/locales/ko.json",
-        "bytes": 178962
+        "bytes": 179948
       },
       "zh-Hant": {
         "label": "Traditional Chinese",
-        "version": "locale-zh-Hant-1f6834e5262329e4",
-        "contentHash": "1f6834e5262329e4",
+        "version": "locale-zh-Hant-1a747cbfbadd7013",
+        "contentHash": "1a747cbfbadd7013",
         "url": "/locales/zh-Hant.json",
-        "bytes": 168250
+        "bytes": 169156
       },
       "zh-Hans": {
         "label": "Simplified Chinese",
-        "version": "locale-zh-Hans-f0c3a0ef03b8ddec",
-        "contentHash": "f0c3a0ef03b8ddec",
+        "version": "locale-zh-Hans-b4bf61ca936332af",
+        "contentHash": "b4bf61ca936332af",
         "url": "/locales/zh-Hans.json",
-        "bytes": 169064
+        "bytes": 169970
       }
     }
   },

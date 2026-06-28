@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hant",
     "label": "Traditional Chinese",
-    "version": "locale-zh-Hant-1f6834e5262329e4",
-    "contentHash": "1f6834e5262329e4"
+    "version": "locale-zh-Hant-1a747cbfbadd7013",
+    "contentHash": "1a747cbfbadd7013"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -1191,6 +1191,22 @@
     "tech": {
       "title": "技术思路",
       "body": "函數 payload 只存 G0 公共色表索引和 box-basis 字节。後续矿工可以把精確模型 hash 作為目标，继续搜尋更短的 Fourier gene。"
+    },
+    "static": {
+      "title": "仅文档审查",
+      "body": "目前环境不能證明 GPU 工作负载。这個面板作為静態展示：只說明预期流程、审查边界和後续 GPU 证據，不声称截图或性能數據。",
+      "surfaceLabel": "界面",
+      "surfaceValue": "面向 GPU 的體素函數研究頁",
+      "inputLabel": "输入",
+      "inputValue": "本地 MagicaVoxel .vox 文件",
+      "outputLabel": "输出",
+      "outputValue": "0:<base64url-bytes> 函數 payload",
+      "evidenceLabel": "静態证據",
+      "evidenceValue": "README、展示文档、HTML 控件、codec 路徑、parser 边界",
+      "deferredLabel": "延後证據",
+      "deferredValue": "WebGL 保真度、帧稳定性、證明搜尋速度、截图",
+      "securityLabel": "安全边界",
+      "securityValue": "无上传接口、錢包簽名、服務器地址、token 或部署脚本"
     },
     "steps": {
       "sample": "載入 VOX，并規範化體素/顏色网格。",

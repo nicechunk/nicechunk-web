@@ -311,6 +311,41 @@ button:hover {
   font-weight: 800;
 }
 
+.static-showcase p {
+  margin-bottom: 14px;
+}
+
+.showcase-grid {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.showcase-grid div {
+  display: grid;
+  grid-template-columns: minmax(106px, 0.34fr) minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  border: 1px solid rgba(51, 65, 65, 0.72);
+  border-radius: 7px;
+  padding: 10px;
+  background: rgba(13, 17, 17, 0.66);
+}
+
+.showcase-grid dt {
+  color: var(--accent-2);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.showcase-grid dd {
+  margin: 0;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
 .section-head {
   display: flex;
   align-items: center;
@@ -418,6 +453,10 @@ pre {
   }
 
   .metric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .showcase-grid div {
     grid-template-columns: 1fr;
   }
 }

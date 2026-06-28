@@ -44,6 +44,7 @@ Runtime validation should be performed on a workstation with:
 When a reviewer or automated agent cannot access a GPU, the correct output is a documentation-only showcase rather than a runtime claim. The reviewer should describe the intended workflow, the file boundaries, and the evidence that can be checked statically:
 
 - `fourier-pickaxe/index.html` exposes three synchronized panes for source model, function redraw, and proof candidate.
+- `fourier-pickaxe/index.html` also exposes a static `Documentation-only review` panel for CPU-only repository review.
 - `fourier-pickaxe/main.js` defines the local VOX read path, G0 palette mapping, box-basis compression, payload encoding, and proof-search preview.
 - `docs/fourier-pickaxe-showcase.md` explains the project as a GPU-gated research surface and lists what can and cannot be proven without target hardware.
 - `npm run audit:fourier-pickaxe-docs` verifies that public documentation keeps the GPU limitation, payload format, security boundary, and review path visible.

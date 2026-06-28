@@ -11736,7 +11736,59 @@ body,
 .backpack-detail-preview .backpack-material-icon .smelting-material-preview {
   width: min(112px, 72%) !important;
   height: min(112px, 72%) !important;
-  transform: rotateX(58deg) rotateZ(45deg) scale(1.08) !important;
+}
+
+/* Material and smelting inventory icons use the same real cube renderer as mined blocks. */
+.smelting-resource-swatch {
+  display: block;
+  overflow: hidden;
+  border-color: rgba(139, 216, 255, 0.22);
+  background:
+    radial-gradient(circle at 50% 58%, rgba(139, 216, 255, 0.12), transparent 62%),
+    rgba(6, 10, 12, 0.82);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 0 10px rgba(139, 216, 255, 0.08);
+  transform: none;
+  transform-style: flat;
+}
+
+.smelting-resource-swatch::before,
+.smelting-resource-swatch::after {
+  display: none;
+}
+
+.smelting-resource-swatch-block,
+.smelting-resource-swatch-canvas,
+.smelting-resource-swatch-material,
+.smelting-resource-swatch-material .smelting-material-preview,
+.smelting-material-preview,
+.smelting-material-preview-canvas,
+.smelting-mobile-slot-preview-block,
+.smelting-mobile-slot-preview-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.smelting-material-preview {
+  position: relative;
+  transform: none;
+  transform-style: flat;
+  filter:
+    drop-shadow(0 8px 8px rgba(0, 0, 0, 0.46))
+    drop-shadow(0 0 14px rgba(139, 216, 255, 0.12));
+}
+
+.smelting-material-preview i {
+  display: none;
+}
+
+.smelting-material-preview-canvas,
+.smelting-resource-swatch-canvas,
+.smelting-slot-preview-canvas,
+.smelting-mobile-slot-preview-canvas {
+  image-rendering: pixelated;
 }
 
 .smelting-output-stats span,

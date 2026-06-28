@@ -3576,21 +3576,29 @@ function createSmeltingSlotPreview(slot, className) {
 }
 
 function createSmeltingResourceSwatch(slot) {
-  const atlas = getBlockAtlasEntry(slot?.atlasKey);
-  const swatch = document.createElement("span");
-  swatch.className = "smelting-resource-swatch";
-  swatch.style.setProperty("--swatch-a", atlas?.colors?.[0] ?? "#8bd8ff");
-  swatch.style.setProperty("--swatch-b", atlas?.colors?.[1] ?? "#1f2c2d");
-  swatch.style.setProperty("--swatch-c", atlas?.colors?.[2] ?? "#090d0f");
-  swatch.setAttribute("aria-hidden", "true");
-  return swatch;
+  if (slot?.materialId) {
+    const material = slot.material ?? smeltingMaterialById(slot.materialId);
+    const wrap = document.createElement("span");
+    wrap.className = "smelting-resource-swatch smelting-resource-swatch-material";
+    wrap.append(createSmeltingMaterialPreview(material));
+    wrap.setAttribute("aria-hidden", "true");
+    return wrap;
+  }
+  return createSmeltingSlotPreview(slot, "smelting-resource-swatch");
 }
 
 function createSmeltingMaterialPreview(recipe) {
   const box = document.createElement("div");
   box.className = "smelting-material-preview";
-  box.style.setProperty("--material", recipe.color);
-  box.innerHTML = "<i></i><i></i><i></i>";
+  const canvas = document.createElement("canvas");
+  canvas.className = "smelting-material-preview-canvas";
+  canvas.width = chainBlockPreviewSize;
+  canvas.height = chainBlockPreviewSize;
+  box.append(canvas);
+  const previewItem = queueStaticMaterialPreviewRender({ canvas, recipe });
+  box.__nicechunkCleanup = () => {
+    previewItem.cleanup();
+  };
   return box;
 }
 
@@ -9944,6 +9952,31 @@ function queueStaticBlockPreviewRender({ canvas, blockType, block = null }) {
   return item;
 }
 
+function queueStaticMaterialPreviewRender({ canvas, recipe = null }) {
+  const item = {
+    kind: "material",
+    canvas,
+    recipe,
+    cacheKey: staticMaterialPreviewCacheKey(recipe),
+    active: true,
+    cleanup() {
+      item.active = false;
+    },
+  };
+
+  const cached = staticBlockPreviewCache.get(item.cacheKey);
+  if (cached) {
+    drawStaticBlockPreviewCache(canvas, cached);
+    return item;
+  }
+
+  staticBlockPreviewQueue.push(item);
+  if (!staticBlockPreviewFrame) {
+    staticBlockPreviewFrame = requestAnimationFrame(renderQueuedStaticBlockPreviews);
+  }
+  return item;
+}
+
 function renderQueuedStaticBlockPreviews() {
   staticBlockPreviewFrame = 0;
   let rendered = 0;
@@ -9959,7 +9992,9 @@ function renderQueuedStaticBlockPreviews() {
       continue;
     }
 
-    const snapshot = renderStaticBlockPreviewSnapshot(item.blockType, item.block);
+    const snapshot = item.kind === "material"
+      ? renderStaticMaterialPreviewSnapshot(item.recipe)
+      : renderStaticBlockPreviewSnapshot(item.blockType, item.block);
     if (!snapshot) continue;
     rememberStaticBlockPreview(item.cacheKey, snapshot);
     drawStaticBlockPreviewCache(item.canvas, snapshot);
@@ -10009,6 +10044,70 @@ function renderStaticBlockPreviewSnapshot(blockType, block = null) {
   return snapshot;
 }
 
+function renderStaticMaterialPreviewSnapshot(recipe = null) {
+  const state = getStaticBlockPreviewState();
+  const object = createMaterialPreviewObject(recipe);
+  object.rotation.x = -0.28;
+  object.rotation.y = 0.72;
+  object.rotation.z = 0.04;
+  state.scene.add(object);
+
+  const renderer = getChainBlockPreviewRenderer();
+  renderer.render(state.scene, state.camera);
+  state.scene.remove(object);
+  disposePreviewObject(object);
+
+  const snapshot = document.createElement("canvas");
+  snapshot.width = chainBlockPreviewSize;
+  snapshot.height = chainBlockPreviewSize;
+  const context = snapshot.getContext("2d", { alpha: true });
+  if (!context) return null;
+  context.clearRect(0, 0, snapshot.width, snapshot.height);
+  context.imageSmoothingEnabled = false;
+  context.drawImage(
+    chainBlockPreviewCanvas,
+    0,
+    0,
+    chainBlockPreviewRenderSize,
+    chainBlockPreviewRenderSize,
+    0,
+    0,
+    snapshot.width,
+    snapshot.height,
+  );
+  return snapshot;
+}
+
+function createMaterialPreviewObject(recipe = null) {
+  const color = normalizePreviewColor(recipe?.color ?? smeltingRecipeColor(recipe) ?? "#8bd8ff");
+  const material = new THREE.MeshLambertMaterial({
+    color,
+    emissive: color,
+    emissiveIntensity: 0.08,
+  });
+  material.fog = false;
+  material.name = `smelting-material:${recipe?.id ?? color}`;
+  const group = new THREE.Group();
+  group.name = material.name;
+
+  const body = new THREE.Mesh(cubeGeometry, material);
+  body.castShadow = false;
+  body.receiveShadow = false;
+  group.add(body);
+
+  const edgeMaterial = new THREE.LineBasicMaterial({
+    color: 0xffffff,
+    transparent: true,
+    opacity: 0.16,
+  });
+  edgeMaterial.fog = false;
+  const edges = new THREE.LineSegments(new THREE.EdgesGeometry(cubeGeometry), edgeMaterial);
+  edges.geometry.userData.disposeWithPreview = true;
+  edges.scale.setScalar(1.004);
+  group.add(edges);
+  return group;
+}
+
 function getStaticBlockPreviewState() {
   if (staticBlockPreviewState) return staticBlockPreviewState;
 
@@ -10052,8 +10151,19 @@ function staticBlockPreviewCacheKey(blockType, block = null) {
   return `${blockType}:${block.x}:${block.y}:${block.z}`;
 }
 
+function staticMaterialPreviewCacheKey(recipe = null) {
+  return `material:${recipe?.id ?? "custom"}:${normalizePreviewColor(recipe?.color ?? smeltingRecipeColor(recipe) ?? "#8bd8ff")}`;
+}
+
+function normalizePreviewColor(color) {
+  if (typeof color === "number" && Number.isFinite(color)) return color;
+  const parsed = new THREE.Color(color || "#8bd8ff");
+  return parsed.getHex();
+}
+
 function disposePreviewObject(object) {
   object?.traverse?.((child) => {
+    if (child.geometry?.userData?.disposeWithPreview) child.geometry.dispose();
     const material = child.material;
     if (Array.isArray(material)) {
       material.forEach((entry) => entry?.dispose?.());

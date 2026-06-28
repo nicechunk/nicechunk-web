@@ -51,6 +51,32 @@ When a reviewer or automated agent cannot access a GPU, the correct output is a 
 
 Do not present screenshots, benchmark numbers, proof-search rates, or visual fidelity claims unless they were produced on a GPU-capable review machine.
 
+## GPU-Free Demonstration Package
+
+Use this package when the review machine cannot run the page with WebGL/GPU acceleration. It is designed to be honest enough for technical due diligence while still giving reviewers a clear product picture.
+
+### Demo Narrative
+
+Fourier Pickaxe is a browser lab for turning local voxel art into compact deterministic function bytes. The planned live demo is simple: load a `.vox` model, quantize it into the NiceChunk G0 palette, merge same-color voxels into box basis functions, emit a `0:<base64url-bytes>` payload, and compare the redraw against the original model.
+
+In this environment, only the documentation and source path are being demonstrated. The live GPU validation is deferred to a workstation that can actually render and sustain the proof-search preview.
+
+### Presenter Checklist
+
+- State that this is a GPU-gated research surface, not a production miner.
+- Show the local-only input boundary: `.vox` files are selected in the browser and are not uploaded.
+- Show the deterministic codec path: parser, palette mapping, basis merge, payload bytes, redraw.
+- Show the security boundary: no wallet signing, no deployment endpoint, no server credential, no GitHub token.
+- Defer screenshots, visual fidelity, frame stability, and proof-search speed until GPU hardware is available.
+
+### Reviewer Handoff
+
+The safest non-GPU handoff is:
+
+```text
+Fourier Pickaxe can be reviewed statically for architecture, scope, codec intent, and security boundaries. Runtime visual behavior is intentionally not claimed here because this environment cannot provide the required GPU/WebGL evidence.
+```
+
 ## Static Display Summary
 
 For CPU-only GitHub review, present Fourier Pickaxe as a static evidence package:

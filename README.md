@@ -4,6 +4,12 @@
 
 Browser client, product site, wallet flow, and playable NiceChunk experience.
 
+## Official Links
+
+GitHub: [https://github.com/nicechunk/nicechunk-web](https://github.com/nicechunk/nicechunk-web)
+
+Website: [https://nicechunk.com/](https://nicechunk.com/)
+
 ## Project Overview
 
 This repository contains the primary browser experience for NiceChunk. It includes the product entry points, wallet login, player setup, playable world client, mining, marketplace UI, NCM tooling pages, roadmap pages, and shared browser runtime modules.

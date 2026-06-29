@@ -55,6 +55,26 @@ When a reviewer or automated agent cannot access a GPU, the correct output is a 
 
 Do not present screenshots, benchmark numbers, proof-search rates, or visual fidelity claims unless they were produced on a GPU-capable review machine.
 
+## GPU/WebGL Code Entrypoints
+
+The GPU-oriented code is included as browser source, not as a generated build artifact:
+
+- `fourier-pickaxe/main.js` is the main GPU-facing implementation. It imports Three.js, creates the three WebGL renderers with `powerPreference: "high-performance"`, builds instanced voxel meshes, runs the animation loop, and updates the source, function redraw, and proof candidate scenes.
+- `fourier-pickaxe/index.html` defines the local `.vox` input, compute controls, proof-search controls, metrics, documentation-only panel, and the three canvas panes used by the WebGL review path.
+- `fourier-pickaxe/styles.css` defines the side-by-side lab layout for source, function redraw, and proof candidate inspection.
+- `src/vox/ncm.js` is the shared parser boundary for MagicaVoxel/NCM data. The browser page imports it directly so reviewers can inspect the data path before any rendering claim.
+
+The repository intentionally excludes `dist/` build output from source publication. Reviewers should inspect the files above, then run a local build or browser test on GPU hardware when runtime evidence is required.
+
+## Documentation Packet
+
+The folder-level documentation for Fourier-Voxel review is:
+
+- `fourier-pickaxe/README.md`: source-level workflow, GPU requirement, local input boundary, data flow, and security notes.
+- `docs/fourier-pickaxe-showcase.md`: full external-review narrative, GPU validation plan, non-GPU evidence checklist, payload format, and known limits.
+- `docs/fourier-pickaxe-static-display.md`: approved CPU-only presentation packet for environments that cannot run WebGL meaningfully.
+- `docs/fourier-pickaxe-display-packet.md`: short display-ready handoff for agents, reviewers, or public repository summaries.
+
 ## GPU-Free Demonstration Package
 
 Use this package when the review machine cannot run the page with WebGL/GPU acceleration. It is designed to be honest enough for technical due diligence while still giving reviewers a clear product picture.

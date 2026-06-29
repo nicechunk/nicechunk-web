@@ -12933,3 +12933,189 @@ body,
   width: 54px !important;
   height: 54px !important;
 }
+
+/* Final cube preview cleanup: keep the card frame, remove the extra box around the cube itself. */
+.smelting-resource-swatch,
+.smelting-slot-preview,
+.smelting-mobile-slot-preview,
+.backpack-block-preview,
+.backpack-material-icon,
+.backpack-detail-block-preview {
+  display: grid !important;
+  place-items: center !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  filter: none !important;
+  overflow: visible !important;
+  transform: none !important;
+  transform-style: flat !important;
+}
+
+.smelting-resource-swatch::before,
+.smelting-resource-swatch::after,
+.smelting-slot-preview::before,
+.smelting-slot-preview::after {
+  display: none !important;
+  content: none !important;
+}
+
+.smelting-resource-swatch-block,
+.smelting-resource-swatch-material,
+.smelting-resource-swatch-material .smelting-material-preview,
+.smelting-slot-preview-block,
+.smelting-mobile-slot-preview-block,
+.smelting-material-preview {
+  position: relative !important;
+  inset: auto !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: auto !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.smelting-resource-swatch-canvas,
+.smelting-slot-preview-canvas,
+.smelting-mobile-slot-preview-canvas,
+.smelting-material-preview-canvas,
+.backpack-block-canvas,
+.backpack-detail-block-canvas {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 auto !important;
+  background: transparent !important;
+  object-fit: contain !important;
+}
+
+.backpack-block-preview,
+.backpack-material-icon {
+  position: absolute !important;
+  inset: 1px !important;
+  pointer-events: none !important;
+}
+
+.backpack-slot .backpack-material-icon .smelting-material-preview,
+.backpack-slot .backpack-block-preview {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+}
+
+.backpack-detail-preview {
+  display: grid !important;
+  place-items: center !important;
+}
+
+.backpack-detail-preview .backpack-material-icon,
+.backpack-detail-preview .backpack-detail-block-preview {
+  position: relative !important;
+  inset: auto !important;
+  width: min(168px, 92%) !important;
+  height: min(168px, 92%) !important;
+}
+
+.backpack-detail-preview .backpack-material-icon .smelting-material-preview,
+.backpack-detail-preview .backpack-detail-block-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+}
+
+.smelting-output-preview,
+.smelting-recipe-preview {
+  display: grid !important;
+  place-items: center !important;
+}
+
+.smelting-output-preview > .smelting-material-preview,
+.smelting-recipe-preview > .smelting-material-preview {
+  margin: auto !important;
+}
+
+@media (max-width: 760px) {
+  .smelting-panel[data-mobile-tab="backpack"] .smelting-body {
+    grid-template-rows: minmax(0, 1fr) !important;
+  }
+
+  .smelting-panel[data-mobile-tab="backpack"] .smelting-inventory-panel {
+    min-height: 0 !important;
+  }
+
+  .smelting-panel[data-mobile-tab="backpack"] .smelting-resource-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(74px, 1fr)) !important;
+    grid-auto-rows: minmax(104px, auto) !important;
+    align-content: start !important;
+    gap: 8px !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: none !important;
+    padding: 10px !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    scroll-snap-type: none !important;
+  }
+
+  .smelting-panel[data-mobile-tab="backpack"] .smelting-resource-card {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: 48px minmax(0, 1fr) !important;
+    justify-items: center !important;
+    align-items: start !important;
+    flex: none !important;
+    width: auto !important;
+    min-width: 0 !important;
+    min-height: 104px !important;
+    gap: 5px !important;
+    padding: 7px 5px 6px !important;
+    scroll-snap-align: none !important;
+  }
+
+  .smelting-panel[data-mobile-tab="backpack"] .smelting-resource-card .smelting-resource-swatch {
+    width: 48px !important;
+    height: 48px !important;
+    justify-self: center !important;
+    align-self: center !important;
+  }
+
+  .smelting-panel[data-mobile-tab="backpack"] .smelting-resource-card > span:not(.smelting-resource-actions) {
+    display: grid !important;
+    justify-items: center !important;
+    gap: 2px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    text-align: center !important;
+  }
+
+  .smelting-panel[data-mobile-tab="backpack"] .smelting-resource-card strong,
+  .smelting-panel[data-mobile-tab="backpack"] .smelting-resource-card small {
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-align: center !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  .smelting-panel[data-mobile-tab="backpack"] .smelting-resource-card em {
+    display: none !important;
+  }
+
+  .smelting-slot-item .smelting-slot-preview,
+  .smelting-slot-item .smelting-slot-preview-block {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .smelting-output-preview > .smelting-material-preview {
+    width: min(76px, 92%) !important;
+    height: min(76px, 92%) !important;
+  }
+}

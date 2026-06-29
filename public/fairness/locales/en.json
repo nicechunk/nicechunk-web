@@ -183,7 +183,7 @@
       },
       "watchers": {
         "system": "Guardian network",
-        "status": "Planned",
+        "status": "Manual release gate",
         "verification": "No custody, no player transaction signing, region availability role only."
       },
       "governance": {

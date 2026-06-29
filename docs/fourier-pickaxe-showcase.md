@@ -1,6 +1,6 @@
-# Fourier Pickaxe Showcase
+# Fourier Voxel Showcase
 
-Fourier Pickaxe is a GPU-oriented NiceChunk research page for compact voxel asset functions. This document gives external reviewers and automated agents enough context to assess the project without requiring this environment to run the GPU workload.
+Fourier Voxel is an independent GPU-oriented NiceChunk browser program for compact voxel asset functions. This document gives external reviewers and automated agents enough context to assess the `fourier-voxel/` source without requiring this environment to run the GPU workload.
 
 ## What It Demonstrates
 
@@ -22,13 +22,13 @@ This project needs a GPU-capable browser for meaningful runtime validation. In C
 
 ```bash
 npm run audit:fourier-pickaxe-docs
-sed -n '1,220p' fourier-pickaxe/README.md
+sed -n '1,220p' fourier-voxel/README.md
 sed -n '1,220p' docs/fourier-pickaxe-showcase.md
-sed -n '1,220p' fourier-pickaxe/index.html
-sed -n '1,260p' fourier-pickaxe/main.js
+sed -n '1,220p' fourier-voxel/index.html
+sed -n '1,260p' fourier-voxel/main.js
 ```
 
-The documentation audit checks that the public repository contains the minimum review material for the Fourier Pickaxe surface and that the declared GPU/runtime limitations are explicit.
+The documentation audit checks that the public repository contains the minimum review material for the Fourier Voxel surface and that the declared GPU/runtime limitations are explicit.
 
 For a shorter handoff packet that is designed specifically for CPU-only reviewers, use `docs/fourier-pickaxe-static-display.md`.
 
@@ -40,16 +40,16 @@ Use this section when the environment cannot run the GPU workload. It is intenti
 
 | Topic | Reviewer-facing statement | Static evidence |
 | --- | --- | --- |
-| Product idea | Fourier Pickaxe explores whether voxel assets can be converted into compact deterministic function payloads for future on-chain or proof-oriented workflows. | `fourier-pickaxe/README.md`, this document |
-| Input boundary | `.vox` files are selected locally in the browser and parsed without upload endpoints, wallet signing, deployment scripts, or server credentials. | `fourier-pickaxe/index.html`, `fourier-pickaxe/main.js`, `src/vox/ncm.js` |
-| Visual workflow | The UI is designed around source model, function redraw, and proof candidate panes so a GPU reviewer can compare original and generated output side by side. | `sourceScene`, `functionScene`, and `powScene` in `fourier-pickaxe/index.html` |
-| Static display | The page includes a documentation-only review panel so CPU-only reviewers can inspect the workflow, trust boundary, and deferred evidence directly in the UI. | `Documentation-only review` in `fourier-pickaxe/index.html` |
+| Product idea | Fourier Voxel explores whether voxel assets can be converted into compact deterministic function payloads for future on-chain or proof-oriented workflows. | `fourier-voxel/README.md`, this document |
+| Input boundary | `.vox` files are selected locally in the browser and parsed without upload endpoints, wallet signing, deployment scripts, or server credentials. | `fourier-voxel/index.html`, `fourier-voxel/main.js`, `src/vox/ncm.js` |
+| Visual workflow | The UI is designed around source model, function redraw, and proof candidate panes so a GPU reviewer can compare original and generated output side by side. | `sourceScene`, `functionScene`, and `powScene` in `fourier-voxel/index.html` |
+| Static display | The page includes a documentation-only review panel so CPU-only reviewers can inspect the workflow, trust boundary, and deferred evidence directly in the UI. | `Documentation-only review` in `fourier-voxel/index.html` |
 | Compression path | The current research codec maps colors to G0, merges same-color voxels into box basis functions, and emits `0:<base64url-bytes>`. | `createFunctionPayload`, `mergeSameColorVoxels`, and `docs/fourier-pickaxe-showcase.md` |
 | GPU limitation | Headless or CPU-only review can verify documentation and source boundaries, but cannot prove WebGL rendering quality, frame stability, or proof-search performance. | `npm run audit:fourier-pickaxe-docs` |
 
 Recommended short showcase copy:
 
-> Fourier Pickaxe is a GPU-gated NiceChunk research surface for voxel asset functions. In this repository review we validate the architecture, codec documentation, browser-local input boundary, and security scope. Runtime visual quality and proof-search behavior must be confirmed later on GPU hardware with reviewer-supplied `.vox` fixtures.
+> Fourier Voxel is a GPU-gated NiceChunk research surface for voxel asset functions. In this repository review we validate the architecture, codec documentation, browser-local input boundary, and security scope. Runtime visual quality and proof-search behavior must be confirmed later on GPU hardware with reviewer-supplied `.vox` fixtures.
 
 ## Static Evidence Card
 
@@ -57,7 +57,7 @@ Use the following card as the safe non-GPU presentation for GitHub, external age
 
 | Field | Display value |
 | --- | --- |
-| Name | Fourier Pickaxe |
+| Name | Fourier Voxel |
 | Category | GPU-oriented voxel function research surface |
 | Review mode in this environment | Documentation-only, static source review |
 | Core input | Local MagicaVoxel `.vox` files |
@@ -69,18 +69,18 @@ Use the following card as the safe non-GPU presentation for GitHub, external age
 
 Static presentation narrative:
 
-1. Fourier Pickaxe turns the abstract asset-function idea into a concrete browser tool.
+1. Fourier Voxel turns the abstract asset-function idea into a concrete browser tool.
 2. The current implementation shows a deterministic path from `.vox` input to G0 palette boxes and compact function bytes.
 3. The repository makes its limitation explicit: documentation can prove scope and boundaries, while GPU hardware must prove live visual behavior.
 4. The surface is separated into its own split repository so reviewers can audit the concept without scanning private deployment material or unrelated game runtime code.
 
 ## GPU-Free Demo Script
 
-Use this script when presenting Fourier Pickaxe from a CPU-only environment. It is deliberately phrased as a static demonstration, not a runtime result.
+Use this script when presenting Fourier Voxel from a CPU-only environment. It is deliberately phrased as a static demonstration, not a runtime result.
 
-1. Open with the product boundary: "Fourier Pickaxe is a GPU-oriented NiceChunk research surface for compact voxel function payloads."
+1. Open with the product boundary: "Fourier Voxel is a GPU-oriented NiceChunk research surface for compact voxel function payloads."
 2. Explain the workflow: "A reviewer supplies a local `.vox` model, the browser parses it locally, maps colors into G0, merges voxels into box basis functions, and emits a deterministic `0:<base64url-bytes>` payload."
-3. Show the reviewable files: `fourier-pickaxe/index.html`, `fourier-pickaxe/main.js`, `src/vox/ncm.js`, and this showcase document.
+3. Show the reviewable files: `fourier-voxel/index.html`, `fourier-voxel/main.js`, `src/vox/ncm.js`, and this showcase document.
 4. Call out the trust boundary: "There is no upload endpoint, wallet signing step, deployment script, server address, GitHub token, or private key in this surface."
 5. Close with the deferred evidence: "WebGL visual fidelity, frame stability, proof-search responsiveness, screenshots, and benchmark numbers must be captured later on GPU hardware."
 
@@ -90,7 +90,7 @@ Do not replace step 5 with estimates. If GPU evidence has not been collected, ma
 
 The following copy is safe to reuse in GitHub descriptions, review packets, or non-GPU project overviews:
 
-> Fourier Pickaxe is a NiceChunk GPU-oriented voxel research surface. It demonstrates the planned path from local MagicaVoxel assets to compact deterministic function payloads, with a browser-local trust boundary and an explicit documentation-first review mode for environments that cannot run the GPU workload.
+> Fourier Voxel is a NiceChunk GPU-oriented voxel research surface. It demonstrates the planned path from local MagicaVoxel assets to compact deterministic function payloads, with a browser-local trust boundary and an explicit documentation-first review mode for environments that cannot run the GPU workload.
 
 Short form:
 
@@ -102,7 +102,7 @@ When suitable hardware is available, collect runtime evidence separately from th
 
 | Evidence | How to collect | Acceptance note |
 | --- | --- | --- |
-| WebGL rendering | Open `/fourier-pickaxe/` in a GPU-enabled browser and load reviewer-supplied `.vox` fixtures. | Source, function redraw, and proof candidate panes must render without blank canvases. |
+| WebGL rendering | Open `/fourier-voxel/` in a GPU-enabled browser and load reviewer-supplied `.vox` fixtures. | Source, function redraw, and proof candidate panes must render without blank canvases. |
 | Visual fidelity | Compare the source pane against the function redraw for small and medium models. | Record mismatches as codec research findings, not as hidden failures. |
 | Proof-search responsiveness | Run the local proof-search preview for a bounded time window. | Report browser/GPU model, duration, and observed responsiveness instead of a universal benchmark claim. |
 | Screenshot evidence | Capture full-page screenshots only after a real GPU run. | Label screenshots with hardware and browser context. |
@@ -117,7 +117,7 @@ The following checks are valid in this environment:
 - The browser page includes a static documentation-only panel for review environments that cannot run the GPU workload.
 - The page has a concrete browser workflow with file input, compute controls, proof controls, metrics, and three canvas panes.
 - The runtime source shows local parsing, deterministic palette mapping, basis generation, payload creation, model hashing, and proof-search preview logic.
-- The repository audit path contains a dedicated Fourier Pickaxe documentation gate.
+- The repository audit path contains a dedicated Fourier Voxel documentation gate.
 
 The following checks are intentionally deferred to GPU hardware:
 
@@ -131,9 +131,9 @@ The following checks are intentionally deferred to GPU hardware:
 
 | Layer | Files | Responsibility |
 | --- | --- | --- |
-| Page shell | `fourier-pickaxe/index.html` | Tool layout, input controls, metrics, viewer panes, and copy targets. |
-| Runtime logic | `fourier-pickaxe/main.js` | VOX loading, palette mapping, basis generation, payload encoding, proof-search preview, and Three.js rendering. |
-| Styling | `fourier-pickaxe/styles.css` | Dense tool layout, responsive behavior, canvas framing, metrics, logs, and panels. |
+| Page shell | `fourier-voxel/index.html` | Tool layout, input controls, metrics, viewer panes, and copy targets. |
+| Runtime logic | `fourier-voxel/main.js` | VOX loading, palette mapping, basis generation, payload encoding, proof-search preview, and Three.js rendering. |
+| Styling | `fourier-voxel/styles.css` | Dense tool layout, responsive behavior, canvas framing, metrics, logs, and panels. |
 | Parser | `src/vox/ncm.js` | Shared MagicaVoxel parsing and NCM encoding primitives. |
 | I18n | `src/i18n.js`, `public/locales/*.json` | Public text and localized labels. |
 
@@ -169,7 +169,7 @@ The current repository does not claim automated GPU proof-search benchmarking. H
 
 ## Security Boundary
 
-Fourier Pickaxe stays inside the public review boundary:
+Fourier Voxel stays inside the public review boundary:
 
 - no private server address
 - no deployment script
@@ -182,13 +182,13 @@ The input file is read locally by browser APIs. Reviewers should continue treati
 
 ## Review Checklist
 
-Before accepting a Fourier Pickaxe change, verify:
+Before accepting a Fourier Voxel change, verify:
 
-- `fourier-pickaxe/README.md` describes scope and GPU requirements.
+- `fourier-voxel/README.md` describes scope and GPU requirements.
 - `docs/fourier-pickaxe-showcase.md` describes architecture, payload format, and limitations.
 - `docs/fourier-pickaxe-showcase.md` includes the documentation-only showcase and non-GPU evidence checklist.
 - `npm run audit:fourier-pickaxe-docs` passes.
-- `npm run build` still includes the `/fourier-pickaxe/` route.
+- `npm run build` still includes the `/fourier-voxel/` route.
 - Split repository generation keeps this surface self-contained.
 - No private infrastructure, deployment script, key, token, or server address is introduced.
 

@@ -1,0 +1,172 @@
+{
+  "_meta": {
+    "language": "zh-Hant",
+    "label": "Traditional Chinese",
+    "version": "seed-locale-zh-Hant-0fd46ef11061b2a3",
+    "contentHash": "0fd46ef11061b2a3"
+  },
+  "meta": {
+    "title": "NiceChunk 種子使用者活動",
+    "description": "NiceChunk 種子使用者活動、公測白名單註冊、錢包綁定以及 100 NCK 種子空投資訊。"
+  },
+  "nav": {
+    "aria": "主導覽",
+    "register": "註冊"
+  },
+  "language": {
+    "aria": "語言",
+    "active": "目前"
+  },
+  "hero": {
+    "eyebrow": "種子使用者活動",
+    "title": "NiceChunk 種子使用者活動",
+    "subtitle": "公測與白名單註冊已開放",
+    "body": "NiceChunk 正式開啟第一期種子使用者活動，邀請玩家從一開始進入一個公平、自由、完全上鏈的體素世界。",
+    "register": "註冊白名單",
+    "connect": "連接錢包",
+    "disclaimer": "國庫價格僅作為協議啟動購買價格展示，不代表投資收益、二級市場價格承諾、保底價格或任何金融宣傳。"
+  },
+  "visual": {
+    "aria": "NiceChunk 體素活動視覺",
+    "label": "白名單路徑"
+  },
+  "cards": {
+    "aria": "活動亮點",
+    "open": {
+      "title": "白名單註冊已開放",
+      "body": "建立 NiceChunk 帳戶並綁定 Solana 錢包，即可加入第一期公測白名單。"
+    },
+    "airdrop": {
+      "title": "100 NCK 種子空投",
+      "body": "第一批符合資格的白名單使用者將在活動結算後獲得 100 NCK，作為遊戲啟動資金。"
+    },
+    "price": {
+      "title": "國庫價格：1 NCK = 0.01 SOL",
+      "body": "Treasury Fixed Purchase Price 僅用於啟動存取和協議記帳。"
+    },
+    "chain": {
+      "title": "完全上鏈世界",
+      "body": "資產、玩法承諾和使用者資料都面向鏈上可讀的所有權與驗證設計。"
+    }
+  },
+  "steps": {
+    "eyebrow": "參與流程",
+    "title": "從帳戶到種子資金的五個步驟。",
+    "body": "白名單註冊使用真實的錢包簽名與活動註冊記錄。簽名訊息只證明錢包所有權，不授權交易或轉帳。",
+    "items": {
+      "account": "建立帳戶",
+      "wallet": "綁定 Solana 錢包",
+      "whitelist": "加入白名單",
+      "settlement": "等待活動結算",
+      "receive": "領取 100 NCK 啟動資金"
+    }
+  },
+  "fairness": {
+    "eyebrow": "程式碼即公平",
+    "title": "一個公開體素世界不應該依賴隱藏的資產伺服器。",
+    "body": "NiceChunk 的核心主張很簡單：資源來自公開公平的世界地圖，材料來自資源熔煉，物品來自材料鍛造，所有權應當可以在鏈上檢查。",
+    "items": {
+      "noIpfs": {
+        "title": "不依賴 IPFS",
+        "body": "定義遊戲資源來源或物品身份時，不需要外部閘道。"
+      },
+      "noStorage": {
+        "title": "沒有中心化資產儲存",
+        "body": "目標是鏈上可讀資產和確定性重建，而不是私有託管的元資料。"
+      },
+      "noMint": {
+        "title": "團隊不能憑空發行資源",
+        "body": "團隊不能在資源、熔煉、鍛造路徑之外建立任意資源或物品。"
+      },
+      "onChain": {
+        "title": "資產 / 玩法 / 使用者資料上鏈",
+        "body": "關鍵狀態面向公開、可重放、由錢包持有的方式設計。"
+      },
+      "map": {
+        "title": "公開公平的世界地圖",
+        "body": "資源來自確定性的地形和資源規則，而不是私有背包資料庫。"
+      }
+    }
+  },
+  "status": {
+    "eyebrow": "即時註冊",
+    "title": "白名單註冊控制台。",
+    "body": "連接 Solana 錢包，簽署一次性證明，並提交你的種子使用者註冊資訊。",
+    "walletLabel": "錢包",
+    "notConnected": "未連接",
+    "connect": "連接錢包",
+    "join": "加入白名單",
+    "note": "連接 Solana 錢包，簽署白名單證明，並提交你的註冊資訊。",
+    "states": [
+      {
+        "key": "wallet",
+        "label": "錢包已連接",
+        "idle": "連接 Solana 錢包。",
+        "done": "錢包地址已擷取。"
+      },
+      {
+        "key": "challenge",
+        "label": "挑戰已簽發",
+        "idle": "後端將簽發一次性 nonce。",
+        "done": "已從 API 收到 nonce。"
+      },
+      {
+        "key": "signature",
+        "label": "簽名已驗證",
+        "idle": "連接錢包後簽署證明。",
+        "done": "錢包所有權證明已通過。"
+      },
+      {
+        "key": "database",
+        "label": "註冊已提交",
+        "idle": "註冊資訊尚未提交。",
+        "done": "已收到你的註冊資訊，請關注活動通知。"
+      }
+    ],
+    "noEntry": "暫無註冊記錄",
+    "entryPrefix": "註冊記錄",
+    "registeredMessage": "已收到你的註冊資訊，請關注活動通知。",
+    "walletConnectedMessage": "錢包已連接，請簽署白名單證明完成註冊。"
+  },
+  "rules": {
+    "eyebrow": "活動規則",
+    "title": "面向第一批合格白名單使用者的種子資金。",
+    "body": "第一批符合資格的白名單使用者將在活動結束後獲得 100 NCK。該獎勵用於初始遊戲啟動資金。最終資格以已發布的活動規則和反作弊檢查為準。",
+    "rewardLabel": "種子獎勵",
+    "priceLabel": "Treasury Bootstrap Purchase Price",
+    "scopeLabel": "範圍",
+    "scopeValue": "公測白名單活動"
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "使用者連接錢包前需要知道的清晰答案。",
+    "items": [
+      {
+        "question": "NCK 是什麼？",
+        "answer": "NCK 是 NiceChunk 的遊戲代幣，用於早期遊戲流程、國庫啟動記帳以及未來世界內操作。本頁描述的是活動用途，不是投資價值。"
+      },
+      {
+        "question": "為什麼 NiceChunk 不依賴 IPFS？",
+        "answer": "NiceChunk 的方向是讓遊戲資產和確定性定義保持鏈上可讀，而不是依賴 IPFS 閘道、固定檔案或可變元資料路徑。"
+      },
+      {
+        "question": "為什麼團隊不能直接發行資源？",
+        "answer": "資源路徑圍繞公開世界生成設計：資源來自世界地圖，材料來自熔煉，物品來自鍛造。"
+      },
+      {
+        "question": "100 NCK 用來做什麼？",
+        "answer": "種子空投用於公測遊戲啟動資金，幫助第一批使用者測試帳戶、錢包、市場、資源和合成流程。"
+      },
+      {
+        "question": "空投什麼時候發放？",
+        "answer": "空投將在活動結算後發放。最終資格取決於活動規則、反作弊檢查和鏈上記錄。"
+      }
+    ]
+  },
+  "bottom": {
+    "eyebrow": "進入完全上鏈世界",
+    "title": "加入第一批種子使用者。",
+    "register": "註冊白名單",
+    "wallet": "連接錢包"
+  }
+}

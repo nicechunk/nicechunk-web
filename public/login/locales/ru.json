@@ -1,0 +1,159 @@
+{
+  "_meta": {
+    "language": "ru",
+    "label": "Russian",
+    "version": "login-locale-ru-aff98f0429d340a3",
+    "contentHash": "aff98f0429d340a3"
+  },
+  "siteFooter": {
+    "tagline": "Seeded voxel world protocol on Solana.",
+    "navigationAria": "Навигация в футере",
+    "socialAria": "Социальные ссылки NiceChunk",
+    "home": "Главная",
+    "play": "Войти в мир",
+    "roadmap": "План",
+    "docs": "Документы",
+    "guardian": "Стражи",
+    "contracts": "Контракты",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Все права защищены."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "Язык",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "login": {
+    "title": "Вход NICECHUNK через кошелек",
+    "flowLabel": "Процесс входа",
+    "brandSubtitle": "Воксельная вселенная",
+    "authEyebrow": "Шлюз безопасности",
+    "authTitle": "Доступ кошелька",
+    "authSubtitle": "Войти в экосистему NiceChunk",
+    "heroStatus": "Живой рендер движка",
+    "steps": {
+      "wallet": "Подключить кошелек",
+      "profile": "Настроить игрока",
+      "ready": "Готово"
+    },
+    "section": {
+      "wallet": "Подключить кошелек",
+      "profile": "Настроить игрока",
+      "ready": "Войти в мир"
+    },
+    "installPhantom": "Установить Phantom",
+    "playerName": "Имя игрока",
+    "playerNamePlaceholder": "Введите имя из 3-18 символов",
+    "saveName": "Сохранить имя",
+    "player": "Игрок",
+    "wallet": "Кошелек",
+    "startGame": "Начать игру",
+    "resetLogin": "Войти заново",
+    "returnToBrowser": "Вернуться в браузер",
+    "continueInWalletBrowser": "Продолжить в браузере кошелька",
+    "signLoginMessage": "Подписать сообщение входа",
+    "completeCopiedLogin": "Завершить вход кошельком",
+    "copyLoginProof": "Скопировать доказательство входа",
+    "manualProofLabel": "Скопируйте это доказательство входа вручную",
+    "selectLoginProof": "Выбрать доказательство входа",
+    "hudNetwork": "СЕТЬ",
+    "hudNetworkValue": "SOLANA",
+    "hudBiome": "БИОМ",
+    "hudBiomeValue": "ИЗУМРУДНЫЙ ЛЕС",
+    "hudWallet": "КОШЕЛЕК",
+    "hudWalletValue": "ГОТОВ",
+    "status": {
+      "checking": "Проверка кошельков Solana...",
+      "walletDetected": "Кошелек Solana найден. Выберите кошелек для подключения.",
+      "noWallet": "Встроенный кошелек не обнаружен. Откройте страницу в приложении кошелька или установите Phantom.",
+      "openingWalletApp": "Открываем {wallet}...",
+      "connecting": "Подключение {wallet}...",
+      "publicKeyMissing": "Кошелек не вернул публичный ключ.",
+      "connectFailed": "Не удалось подключиться. Попробуйте снова.",
+      "profile": "Кошелек подключен. Задайте имя игрока.",
+      "invalidUsername": "Имя должно быть 3-18 символов и может содержать буквы, цифры, подчеркивание или китайские символы.",
+      "ready": "Данные входа готовы.",
+      "returningToBrowser": "Возвращаемся в исходный браузер...",
+      "continuingInWalletBrowser": "Продолжаем в браузере кошелька...",
+      "signingChallenge": "Подтвердите сообщение входа в кошельке.",
+      "signatureFailed": "Не удалось проверить подпись кошелька. Попробуйте еще раз.",
+      "proofCopied": "Доказательство входа скопировано. Вернитесь в браузер и завершите вход кошельком.",
+      "proofCopyFailed": "Не удалось скопировать доказательство входа. Используйте Вернуться в браузер.",
+      "readingProof": "Читаем скопированное доказательство входа...",
+      "noCopiedProof": "Скопированное доказательство входа NiceChunk не найдено.",
+      "proofSelectReady": "Доказательство входа выбрано. Скопируйте его и вернитесь в браузер.",
+      "pasteProofReady": "Paste your wallet signature proof to finish login when the wallet does not return automatically.",
+      "resourceFailed": "Login resources failed to load. Refresh and try again."
+    },
+    "walletButton": {
+      "noWallet": "Кошелек не найден",
+      "installRefresh": "Установите кошелек и обновите",
+      "connectAuthorize": "Подключить и разрешить адрес",
+      "openInApp": "Продолжить в браузере кошелька"
+    },
+    "walletHint": {
+      "recommended": "Рекомендуется",
+      "compatible": "Совместимо",
+      "generic": "Универсально",
+      "mobileApp": "Мобильное приложение"
+    },
+    "loading": {
+      "boot": "Initializing wallet gateway",
+      "checking": "Preparing interface",
+      "waitingForLanguage": "Waiting for language data",
+      "video": "Loading visual layer",
+      "videoReady": "Hero animation is ready.",
+      "visualMetadata": "Preparing transparent logo animation.",
+      "visualReady": "Hero animation is ready.",
+      "videoFallback": "Using poster image while video loading is unavailable.",
+      "worldEyebrow": "World Gateway",
+      "worldTitle": "Preparing NiceChunk world",
+      "worldBody": "Loading player session, terrain engine, and first visible chunks.",
+      "route": "Opening game client",
+      "bytesKnown": "Transferred {loaded} / {total}",
+      "bytesUnknown": "Transferred {loaded}",
+      "stages": {
+        "gateway": {
+          "title": "Initializing wallet gateway",
+          "body": "Preparing interface"
+        },
+        "visual": {
+          "title": "Loading visual layer",
+          "body": "Fetching hero video asset."
+        },
+        "visualDecode": {
+          "title": "Decoding visual layer",
+          "body": "Preparing transparent logo animation."
+        },
+        "visualReady": {
+          "title": "Visual layer ready",
+          "body": "Hero animation is ready."
+        },
+        "visualFallback": {
+          "title": "Visual fallback active",
+          "body": "Using poster image while video loading is unavailable."
+        },
+        "route": {
+          "title": "Opening game client",
+          "body": "Handing your wallet session to the world gateway."
+        }
+      }
+    },
+    "pasteProofAction": "Paste signed proof to finish login",
+    "pasteProofLabel": "Wallet signature proof",
+    "pasteProofPlaceholder": "Paste the signature proof that starts with nicechunk-proof:",
+    "pasteFromClipboard": "Paste from clipboard",
+    "completePastedProof": "Verify pasted proof"
+  }
+}

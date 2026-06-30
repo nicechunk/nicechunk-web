@@ -32,6 +32,8 @@ const resetViewButton = document.querySelector("#resetView");
 const previewTitle = document.querySelector("#previewTitle");
 const canvas = document.querySelector("#ncmPreview");
 const ncmDnaFrame = document.querySelector("#ncmDnaFrame");
+const ncmDnaFrameShell = document.querySelector("#ncmDnaFrameShell");
+const loadNcmDnaFrameButton = document.querySelector("#loadNcmDnaFrame");
 const maxVoxFileBytes = 8 * 1024 * 1024;
 const minTargetHeight = 80;
 const maxTargetHeight = 900;
@@ -138,6 +140,14 @@ function setupEvents() {
   }, { passive: false });
   window.addEventListener("resize", resize, { passive: true });
   window.addEventListener("message", resizeNcmDnaFrame);
+  loadNcmDnaFrameButton?.addEventListener("click", loadNcmDnaFrame);
+}
+
+function loadNcmDnaFrame() {
+  if (!ncmDnaFrame?.dataset.src || ncmDnaFrame.hasAttribute("src")) return;
+  ncmDnaFrameShell?.removeAttribute("hidden");
+  ncmDnaFrame.src = ncmDnaFrame.dataset.src;
+  loadNcmDnaFrameButton?.setAttribute("disabled", "true");
 }
 
 function resizeNcmDnaFrame(event) {

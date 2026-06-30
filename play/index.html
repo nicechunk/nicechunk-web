@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-i18n-scope="play">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -47,28 +47,30 @@
           </div>
         </div>
       </div>
-      <section class="rpc-config-panel" id="rpcConfigPanel" aria-live="polite" hidden>
-        <div class="rpc-config-copy">
-          <strong data-i18n="main.rpcConfig.title">Public RPC is overloaded</strong>
-          <p data-i18n="main.rpcConfig.body">Set a Helius devnet API key to use your own RPC endpoint for chain reads and transactions.</p>
-          <a href="https://www.helius.dev" target="_blank" rel="noreferrer" data-i18n="main.rpcConfig.link">Get a Helius API key</a>
-        </div>
-        <form id="rpcConfigForm" class="rpc-config-form">
-          <label for="rpcConfigApiKey" data-i18n="main.rpcConfig.inputLabel">Helius API key</label>
-          <div class="rpc-config-row">
-            <input
-              id="rpcConfigApiKey"
-              type="password"
-              autocomplete="off"
-              spellcheck="false"
-              data-i18n-placeholder="main.rpcConfig.placeholder"
-              placeholder="Paste your Helius API key"
-            />
-            <button type="submit" data-i18n="main.rpcConfig.save">Save RPC</button>
-            <button id="rpcConfigDismiss" type="button" data-i18n-aria-label="main.rpcConfig.dismiss" aria-label="Dismiss RPC warning">×</button>
+      <section class="rpc-config-panel" id="rpcConfigPanel" role="dialog" aria-modal="true" aria-live="polite" hidden>
+        <div class="rpc-config-dialog">
+          <div class="rpc-config-copy">
+            <strong data-i18n="main.rpcConfig.title">Public RPC is overloaded</strong>
+            <p data-i18n="main.rpcConfig.body">Set a Helius devnet API key to use your own RPC endpoint for chain reads and transactions.</p>
+            <a href="https://www.helius.dev" target="_blank" rel="noreferrer" data-i18n="main.rpcConfig.link">Get a Helius API key</a>
           </div>
-          <span id="rpcConfigStatus" class="rpc-config-status"></span>
-        </form>
+          <form id="rpcConfigForm" class="rpc-config-form">
+            <label for="rpcConfigApiKey" data-i18n="main.rpcConfig.inputLabel">Helius API key</label>
+            <div class="rpc-config-row">
+              <input
+                id="rpcConfigApiKey"
+                type="password"
+                autocomplete="off"
+                spellcheck="false"
+                data-i18n-placeholder="main.rpcConfig.placeholder"
+                placeholder="Paste your Helius API key"
+              />
+              <button type="submit" data-i18n="main.rpcConfig.save">Save RPC</button>
+              <button id="rpcConfigDismiss" type="button" data-i18n-aria-label="main.rpcConfig.dismiss" aria-label="Dismiss RPC warning">×</button>
+            </div>
+            <span id="rpcConfigStatus" class="rpc-config-status"></span>
+          </form>
+        </div>
       </section>
       <script>
         (() => {
@@ -202,26 +204,27 @@
       <section class="profile-panel" id="profilePanel" role="dialog" aria-modal="true" aria-labelledby="profileTitle" hidden>
         <h2 class="profile-panel-title" id="profileTitle" data-i18n="main.profile.title">Character Profile</h2>
         <div class="profile-info">
-          <div class="profile-language-row">
-            <span data-i18n="common.language">Language</span>
-            <div data-i18n-language-menu></div>
-          </div>
-          <div class="profile-rpc-row">
-            <span data-i18n="main.profile.rpc">RPC</span>
-            <div class="profile-rpc-control">
-              <div class="profile-rpc-copy">
-                <strong id="profileRpcValue" data-i18n="main.profile.rpcPublic">Public RPC</strong>
-                <small id="profileRpcHint" data-i18n="main.profile.rpcRecommend">Set a private RPC key for steadier mining.</small>
-              </div>
-              <button id="profileRpcAction" type="button" data-i18n="main.profile.rpcSet">Set</button>
-            </div>
-          </div>
           <div class="profile-tabs" role="tablist" aria-label="Profile sections" data-i18n-aria-label="main.profile.tabs">
             <button class="profile-tab active" type="button" role="tab" aria-selected="true" data-profile-tab="attributes" data-i18n="main.profile.attributesTab">Attributes</button>
-            <button class="profile-tab" type="button" role="tab" aria-selected="false" data-profile-tab="model" data-i18n="main.profile.modelTab">Model</button>
+            <button class="profile-tab" type="button" role="tab" aria-selected="false" data-profile-tab="skills" data-i18n="main.profile.skillsTab">Skills</button>
+            <button class="profile-tab" type="button" role="tab" aria-selected="false" data-profile-tab="equipment" data-i18n="main.profile.equipmentTab">Equipment</button>
           </div>
           <div class="profile-attributes profile-tab-panel" data-profile-tab-panel="attributes">
             <span class="profile-eyebrow" data-i18n="main.profile.eyebrow">Player Attributes</span>
+            <div class="profile-language-row">
+              <span data-i18n="common.language">Language</span>
+              <div data-i18n-language-menu></div>
+            </div>
+            <div class="profile-rpc-row">
+              <span data-i18n="main.profile.rpc">RPC</span>
+              <div class="profile-rpc-control">
+                <div class="profile-rpc-copy">
+                  <strong id="profileRpcValue" data-i18n="main.profile.rpcPublic">Public RPC</strong>
+                  <small id="profileRpcHint" data-i18n="main.profile.rpcRecommend">Set a private RPC key for steadier mining.</small>
+                </div>
+                <button id="profileRpcAction" type="button" data-i18n="main.profile.rpcSet">Set</button>
+              </div>
+            </div>
             <dl class="profile-details">
               <div>
                 <dt data-i18n="main.profile.name">Name</dt>
@@ -255,13 +258,20 @@
                 </dd>
               </div>
             </dl>
+            <button class="profile-logout" id="profileLogout" type="button" data-i18n="main.profile.logout">Exit</button>
+          </div>
+          <div class="profile-skills profile-tab-panel" data-profile-tab-panel="skills">
+            <div class="profile-skills-grid" id="profileSkillsGrid" aria-live="polite"></div>
+          </div>
+          <div class="profile-equipment profile-tab-panel" data-profile-tab-panel="equipment">
+            <div class="profile-equipment-list" id="profileEquipmentList" aria-live="polite"></div>
           </div>
         </div>
-        <div class="profile-model profile-tab-panel" data-profile-tab-panel="model" aria-label="Character model" data-i18n-aria-label="main.profile.model">
+        <div class="profile-model" aria-label="Character model" data-i18n-aria-label="main.profile.model">
           <canvas id="profileModel" width="360" height="420"></canvas>
         </div>
+        <aside class="profile-skill-detail" id="profileSkillDetail" aria-live="polite" hidden></aside>
         <button class="profile-close" id="profileClose" type="button" aria-label="Close profile" data-i18n-aria-label="main.profile.close">×</button>
-        <button class="profile-logout" id="profileLogout" type="button" data-i18n="main.profile.logout">Exit</button>
       </section>
 
       <div class="hud" hidden>

@@ -1,0 +1,187 @@
+{
+  "_meta": {
+    "language": "ru",
+    "label": "Russian",
+    "version": "guardian-locale-ru-09392481cefd3398",
+    "contentHash": "09392481cefd3398"
+  },
+  "siteFooter": {
+    "tagline": "Seeded voxel world protocol on Solana.",
+    "navigationAria": "Навигация в футере",
+    "socialAria": "Социальные ссылки NiceChunk",
+    "home": "Главная",
+    "play": "Войти в мир",
+    "roadmap": "План",
+    "docs": "Документы",
+    "guardian": "Стражи",
+    "contracts": "Контракты",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Все права защищены."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "Язык",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "guardian": {
+    "meta": {
+      "title": "Консоль сети Guardian NiceChunk"
+    },
+    "nav": {
+      "aria": "Основная навигация",
+      "home": "Главная",
+      "roadbook": "Roadbook",
+      "worldRules": "Правила мира",
+      "resources": "Ресурсы",
+      "elements": "Элементы",
+      "fairness": "Честность",
+      "proofOfFrontier": "Proof",
+      "guardians": "Хранители",
+      "docs": "Docs",
+      "enterWorld": "Войти в мир"
+    },
+    "hero": {
+      "eyebrow": "Уровень доступа Guardian",
+      "title": "Консоль сети Guardian",
+      "body": "Register a non-custodial Guardian to keep a region reachable, synchronize realtime chunk activity, and support local game services. Stable Guardians can earn NCK from future regional resource taxes and trading taxes while never holding player assets or signing for users.",
+      "actionsAria": "Действия Guardian",
+      "registerAction": "Зарегистрировать узел",
+      "registryAction": "Открыть реестр",
+      "metricsAria": "Статус реестра Guardian"
+    },
+    "visual": {
+      "aria": "Модель сети Guardian",
+      "core": "GUARDIAN"
+    },
+    "metrics": {
+      "network": "Сеть",
+      "networkValue": "Devnet-01",
+      "stake": "Минимальный стейк",
+      "stakeValue": "100,000 NCK",
+      "region": "Покрытие",
+      "regionValue": "100 x 100 Chunks",
+      "contract": "Contract",
+      "viewContract": "View Program"
+    },
+    "register": {
+      "eyebrow": "Регистрация",
+      "title": "Зарегистрировать узел",
+      "body": "Publish a connection endpoint for a 100 x 100 chunk service region. Offline or unstable nodes can be penalized; stable nodes can receive Guardian rewards from the treasury over time, paid back to the registration wallet."
+    },
+    "wallet": {
+      "connect": "Подключить кошелек",
+      "register": "Register Guardian",
+      "disconnected": "Отключено"
+    },
+    "form": {
+      "chunkX": "Chunk X",
+      "chunkY": "Chunk Y",
+      "connection": "Endpoint подключения",
+      "connectionPlaceholder": "wss://guardian.example.com/ws",
+      "host": "Host или IP",
+      "hostPlaceholder": "guardian.example.com",
+      "port": "Порт",
+      "operator": "Полномочия оператора",
+      "operatorPlaceholder": "По умолчанию подключенный кошелек",
+      "useTls": "Использовать WSS / TLS транспорт",
+      "genesis": "Регистрация genesis Guardian",
+      "regionPreview": "Регион",
+      "submit": "Зарегистрировать и застейкать 100,000 NCK",
+      "close": "Close"
+    },
+    "status": {
+      "ready": "Готово.",
+      "noWallet": "Кошелек Solana не обнаружен. Установите Phantom или Solflare.",
+      "walletConnected": "Кошелек подключен.",
+      "connectFailed": "Не удалось подключиться.",
+      "confirmWallet": "Подтвердите регистрационную транзакцию в кошельке.",
+      "registered": "Зарегистрировано. Транзакция: {signature}",
+      "registerFailed": "Регистрация не удалась.",
+      "updateConfirm": "Confirm the endpoint update in your wallet.",
+      "updated": "Endpoint updated. Transaction: {signature}",
+      "updateFailed": "Endpoint update failed.",
+      "invalidInteger": "{field} должно быть целым числом."
+    },
+    "list": {
+      "eyebrow": "Реестр",
+      "title": "Активные Guardians",
+      "body": "Живые регионы devnet, опубликованные операторами Guardian.",
+      "listView": "List View",
+      "mapView": "Map View",
+      "refresh": "Обновить",
+      "loading": "Загрузка реестра...",
+      "registryMissing": "Реестр Guardian еще не инициализирован.",
+      "registrySummary": "Активные Guardians: {active}. Всего регистраций: {total}.",
+      "connectFirst": "Connect a wallet to load the Guardian registry.",
+      "empty": "Пока нет активных зарегистрированных Guardians.",
+      "loadFailed": "Не удалось загрузить Guardians."
+    },
+    "card": {
+      "title": "Регион {x}, {y}",
+      "chunkRange": "Диапазон chunks",
+      "owner": "Кошелек",
+      "wallet": "Wallet",
+      "operator": "Оператор",
+      "endpoint": "Endpoint",
+      "chainAddress": "Chain Address",
+      "stake": "Оставшийся стейк",
+      "proof": "Последнее доказательство",
+      "never": "Никогда",
+      "viewOnChain": "Смотреть on-chain",
+      "mine": "Mine",
+      "edit": "Edit",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "map": {
+      "regionTitle": "Guardian {x}, {y}",
+      "chunkRange": "Chunks {minX}..{maxX}, {minY}..{maxY}",
+      "emptyRegion": "Region {x}, {y}",
+      "axisX": "Chunk X",
+      "axisY": "Chunk Y",
+      "center": "Center {x}, {y}"
+    },
+    "boundaries": {
+      "aria": "Границы роли Guardian",
+      "access": {
+        "title": "Уровень доступа",
+        "body": "Guardians поддерживают доступность региональных endpoints, чтобы клиенты находили и связывались с ближайшими chunk-сервисами."
+      },
+      "realtime": {
+        "title": "Транспорт в реальном времени",
+        "body": "Они поддерживают живую координацию региональной активности, не заменяя подписи кошельков и on-chain расчеты."
+      },
+      "nonCustodial": {
+        "title": "Некастодиальный поток",
+        "body": "Guardians никогда не хранят активы, не подписывают за пользователей и не обрабатывают Solana-транзакции от имени игрока."
+      }
+    },
+    "error": {
+      "insufficientSol": "Подключенному кошельку нужно немного devnet SOL для комиссий.",
+      "insufficientNck": "В подключенном кошельке недостаточно devnet NCK для стейка 100,000 NCK.",
+      "noPriorCredit": "У кошелька еще нет записи devnet SOL. Запросите devnet SOL перед регистрацией.",
+      "invalidTokenAccount": "Аккаунт токена NCK недействителен. Убедитесь, что кошелек содержит devnet NCK.",
+      "regionAlreadyActive": "В этом регионе уже есть активный Guardian.",
+      "invalidConnection": "Недопустимый endpoint подключения. Используйте ws://host:port или wss://host:port без пути.",
+      "invalidHost": "Недопустимый host. Используйте только домен, IP или имя host без http:// или wss://.",
+      "invalidPort": "Порт должен быть от 1 до 65535.",
+      "missingAdjacentGuardian": "Не-genesis Guardian должен соседствовать хотя бы с одним активным Guardian.",
+      "invalidAdjacentGuardian": "PDA соседнего региона недействителен. Обновите страницу и попробуйте снова.",
+      "noGenesisPermission": "Регистрация genesis Guardian должна быть подписана кошельком разработки. Смените кошелек или отключите genesis-регистрацию.",
+      "genesisAlreadyRegistered": "Genesis Guardian уже зарегистрирован.",
+      "guardianNotActive": "This Guardian is not active.",
+      "unknownProgramError": "Программа Guardian вернула ошибку: {code}"
+    }
+  }
+}

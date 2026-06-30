@@ -1,0 +1,100 @@
+{
+  "_meta": {
+    "language": "fr",
+    "label": "French",
+    "version": "mining-locale-fr-9ec57fa9e31dfc2b",
+    "contentHash": "9ec57fa9e31dfc2b"
+  },
+  "siteFooter": {
+    "tagline": "Un protocole de monde voxel seedé sur Solana.",
+    "navigationAria": "Navigation du pied de page",
+    "socialAria": "Liens sociaux de NiceChunk",
+    "home": "Accueil",
+    "play": "Entrer dans le monde",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Gardiens",
+    "contracts": "Contrats",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Tous droits réservés."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "Langue",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "mining": {
+    "title": "Minage Nicechunk",
+    "canvasLabel": "Grotte miniere souterraine",
+    "player": {
+      "title": "Mineur novice",
+      "wallet": "Portefeuille"
+    },
+    "panel": {
+      "kicker": "Grotte actuelle",
+      "title": "Utilisateurs en ligne",
+      "depth": "Profondeur",
+      "ore": "Minerai",
+      "oreCount": "{count} restants",
+      "contractAddress": "Contrat de grotte",
+      "hashrate": "Hashrate total",
+      "blockTime": "Temps moyen de bloc",
+      "totalBlocks": "Blocs totaux",
+      "minedBlocks": "Blocs mines",
+      "remainingBlocks": "Blocs restants",
+      "hashrateH": "{value} H/s",
+      "hashrateKh": "{value} KH/s",
+      "seconds": "{value}s",
+      "meters": "{value} m"
+    },
+    "controls": {
+      "label": "Commandes de minage",
+      "mine": "Miner"
+    },
+    "inventory": {
+      "ore": "Minerai",
+      "energy": "Energie"
+    },
+    "status": {
+      "label": "Statut",
+      "ready": "Pret a miner",
+      "noTarget": "Visez une veine brillante",
+      "mined": "Minerai extrait"
+    },
+    "userStatus": {
+      "mining": "Mine pres de la veine centrale",
+      "drilling": "Fore le mur lateral",
+      "hauling": "Transporte le wagon",
+      "scanning": "Analyse la qualite du minerai",
+      "resting": "Recupere de l'energie",
+      "yield": "{count} minerai"
+    },
+    "system": {
+      "label": "Informations ordinateur",
+      "cpu": "CPU",
+      "memory": "Memoire",
+      "cores": "{count} coeurs",
+      "memoryGb": "{value} Go",
+      "unknown": "Inconnu"
+    },
+    "tools": {
+      "label": "Outils",
+      "slot": "Emplacement {slot} : {item}",
+      "drill": "Foreuse miniere",
+      "scanner": "Scanner de minerai",
+      "lantern": "Lanterne de grotte",
+      "hammer": "Marteau de roche"
+    }
+  }
+}

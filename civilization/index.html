@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-i18n-scope="civilization">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -73,15 +73,52 @@
         </div>
       </section>
 
-      <section class="civilization-section toc-section" aria-labelledby="tocTitle">
+      <div class="civilization-content-layout">
+        <nav class="chapter-nav" aria-label="Civilization chapter navigation" data-i18n-aria-label="civilization.chapterNav.aria">
+          <div class="chapter-nav-inner">
+            <span class="chapter-nav-label" data-i18n="civilization.chapterNav.label">Chapter navigation</span>
+            <div class="chapter-nav-links" id="civilizationSectionNav"></div>
+          </div>
+        </nav>
+
+        <div class="civilization-content-main">
+      <section class="civilization-section toc-section civilization-entry" id="codex-entry" aria-labelledby="codexEntryTitle">
         <div class="section-heading">
-          <p class="eyebrow blue" data-i18n="civilization.toc.eyebrow">Page Directory</p>
-          <h2 id="tocTitle" data-i18n="civilization.toc.title">Choose a reading path before entering the full civilization codex.</h2>
-          <p data-i18n="civilization.toc.body">
-            The page is intentionally deep. Use this directory to jump between beginner explanations, rule safety, signing impact, civic power, execution proofs, PDA transparency, and future civilization design.
+          <p class="eyebrow green" data-i18n="civilization.entry.eyebrow">Codex Entry</p>
+          <h2 id="codexEntryTitle" data-i18n="civilization.entry.title">Start with the promise, then inspect the proof.</h2>
+          <p data-i18n="civilization.entry.body">
+            The civilization page is a deep technical document. Use one of the reader tracks, then follow every claim down to the matching hash, PDA, validator, receipt, or rejection reason.
           </p>
         </div>
-        <nav class="toc-grid" id="civilizationToc" aria-label="Civilization page directory" data-i18n-aria-label="civilization.toc.aria"></nav>
+        <figure class="diagram-card entry-diagram-card">
+          <figcaption>
+            <strong data-i18n="civilization.diagrams.entry.title">Civilization loop in one view</strong>
+            <span data-i18n="civilization.diagrams.entry.caption">A player action becomes public proof, public proof becomes civic power, and only validated rules can write future config PDAs.</span>
+          </figcaption>
+          <div id="civilizationEntryDiagram"></div>
+        </figure>
+        <div class="entry-path-grid" id="civilizationEntryPaths"></div>
+        <div class="entry-proof-strip" id="civilizationProofStrip"></div>
+      </section>
+
+      <section class="civilization-section trust-ladder-section" id="trust-ladder" aria-labelledby="trustLadderTitle">
+        <div class="section-heading">
+          <p class="eyebrow green" data-i18n="civilization.trustLadder.eyebrow">Trust Ladder</p>
+          <h2 id="trustLadderTitle" data-i18n="civilization.trustLadder.title">A civilization rule should climb six public proofs before it becomes law.</h2>
+          <p data-i18n="civilization.trustLadder.body">
+            This is the shortest way to judge NiceChunk civilization: a player reads a promise, a reviewer checks the proof object, and the contract rejects the rule if any rung is missing.
+          </p>
+        </div>
+        <div class="trust-ladder-layout">
+          <figure class="diagram-card trust-ladder-diagram-card">
+            <figcaption>
+              <strong data-i18n="civilization.diagrams.trustLadder.title">Six-rung trust ladder</strong>
+              <span data-i18n="civilization.diagrams.trustLadder.caption">Every rule must move from readable intent to frozen identity, accountable power, deterministic validation, narrow execution, and public receipt.</span>
+            </figcaption>
+            <div id="civilizationTrustLadderDiagram"></div>
+          </figure>
+          <div class="trust-ladder-grid" id="trustLadderGrid"></div>
+        </div>
       </section>
 
       <section class="civilization-section glossary-section" id="term-decoder" aria-labelledby="glossaryTitle">
@@ -146,6 +183,28 @@
         <div class="review-checklist" id="ruleReviewChecklist"></div>
       </section>
 
+      <section class="civilization-section authoring-section" id="rule-authoring" aria-labelledby="authoringTitle">
+        <div class="section-heading">
+          <p class="eyebrow green" data-i18n="civilization.authoring.eyebrow">Rule Author Workbench</p>
+          <h2 id="authoringTitle" data-i18n="civilization.authoring.title">A good civilization system helps ordinary players write safe rules without hiding the machine truth.</h2>
+          <p data-i18n="civilization.authoring.body">
+            The authoring flow should start from a plain player idea, force it through known templates, preview impact, generate a hash-bound machine patch, dry-run the validator, and only then freeze a rule book for signatures.
+          </p>
+        </div>
+        <div class="authoring-layout">
+          <figure class="diagram-card authoring-diagram-card">
+            <figcaption>
+              <strong data-i18n="civilization.diagrams.authoring.title">Idea-to-signable-rule pipeline</strong>
+              <span data-i18n="civilization.diagrams.authoring.caption">Players write in plain language, but every published rule must end as a frozen, hash-bound, validator-tested object.</span>
+            </figcaption>
+            <div id="civilizationAuthoringDiagram"></div>
+          </figure>
+          <div class="authoring-stack" id="authoringStack"></div>
+        </div>
+        <div class="author-template-grid" id="authoringTemplateGrid"></div>
+        <div class="author-proof-grid" id="authoringProofGrid"></div>
+      </section>
+
       <section class="civilization-section journey-section" id="trust-journey" aria-labelledby="journeyTitle">
         <div class="section-heading">
           <p class="eyebrow green" data-i18n="civilization.journey.eyebrow">Beginner-to-Auditor Journey</p>
@@ -167,7 +226,7 @@
         <div class="journey-grid" id="journeyGrid"></div>
       </section>
 
-      <section class="civilization-section boundary-section" aria-labelledby="boundaryTitle">
+      <section class="civilization-section boundary-section" id="implementation-boundary" aria-labelledby="boundaryTitle">
         <div class="section-heading">
           <p class="eyebrow danger" data-i18n="civilization.boundary.eyebrow">Implementation Boundary</p>
           <h2 id="boundaryTitle" data-i18n="civilization.boundary.title">Credibility starts with saying what is live, what is designed, and what is not claimed.</h2>
@@ -178,7 +237,7 @@
         <div class="boundary-grid" id="civilizationBoundaryGrid"></div>
       </section>
 
-      <section class="civilization-section" aria-labelledby="lawLayersTitle">
+      <section class="civilization-section" id="law-layers" aria-labelledby="lawLayersTitle">
         <div class="section-heading">
           <p class="eyebrow blue" data-i18n="civilization.layers.eyebrow">Two Layers of Law</p>
           <h2 id="lawLayersTitle" data-i18n="civilization.layers.title">A world constitution and an evolving civilization layer.</h2>
@@ -210,7 +269,28 @@
         <div class="classifier-grid" id="classifierGrid"></div>
       </section>
 
-      <section class="civilization-section warning-section" aria-labelledby="constitutionWarningTitle">
+      <section class="civilization-section conservation-section" id="conservation-ledger" aria-labelledby="conservationTitle">
+        <div class="section-heading">
+          <p class="eyebrow green" data-i18n="civilization.conservation.eyebrow">Conservation Ledger</p>
+          <h2 id="conservationTitle" data-i18n="civilization.conservation.title">A credible economy must prove where every new output came from.</h2>
+          <p data-i18n="civilization.conservation.body">
+            Resource rules, recipes, forging, smelting, and civic rewards should all pass the same economic invariant: outputs must be backed by generated origin, consumed inputs, versioned transformation, and public receipts.
+          </p>
+        </div>
+        <div class="conservation-layout">
+          <figure class="diagram-card conservation-diagram-card">
+            <figcaption>
+              <strong data-i18n="civilization.diagrams.conservation.title">Resource conservation proof loop</strong>
+              <span data-i18n="civilization.diagrams.conservation.caption">A rule can change production only when every output can be traced back to origin, input burn, recipe version, and audit balance.</span>
+            </figcaption>
+            <div id="civilizationConservationDiagram"></div>
+          </figure>
+          <div class="conservation-stack" id="conservationStack"></div>
+        </div>
+        <div class="conservation-grid" id="conservationGrid"></div>
+      </section>
+
+      <section class="civilization-section warning-section" id="natural-law-warning" aria-labelledby="constitutionWarningTitle">
         <div class="warning-copy">
           <p class="eyebrow danger" data-i18n="civilization.constitution.eyebrow">World-level consensus</p>
           <h2 id="constitutionWarningTitle" data-i18n="civilization.constitution.title">Natural Law is not a normal vote.</h2>
@@ -221,7 +301,7 @@
         <div class="warning-checks" id="constitutionChecks"></div>
       </section>
 
-      <section class="civilization-section" aria-labelledby="powerTitle">
+      <section class="civilization-section" id="civilization-power" aria-labelledby="powerTitle">
         <div class="section-heading">
           <p class="eyebrow green" data-i18n="civilization.power.eyebrow">Civilization Power</p>
           <h2 id="powerTitle" data-i18n="civilization.power.title">Power comes from real participation, not wallet count or raw NCK balance.</h2>
@@ -240,6 +320,27 @@
           </figcaption>
           <div id="civilizationPowerDiagram"></div>
         </figure>
+      </section>
+
+      <section class="civilization-section snapshot-section" id="power-snapshot-integrity" aria-labelledby="snapshotIntegrityTitle">
+        <div class="section-heading">
+          <p class="eyebrow blue" data-i18n="civilization.snapshotIntegrity.eyebrow">Power Snapshot Integrity</p>
+          <h2 id="snapshotIntegrityTitle" data-i18n="civilization.snapshotIntegrity.title">Civilization power should be computed like an audit trail, not estimated like a leaderboard.</h2>
+          <p data-i18n="civilization.snapshotIntegrity.body">
+            A credible vote needs a frozen, replayable power snapshot. The system should accept only receipt-backed participation, apply eligibility gates, normalize categories, cap concentration, freeze the epoch, and let anyone recount signatures from public accounts.
+          </p>
+        </div>
+        <div class="snapshot-layout">
+          <figure class="diagram-card snapshot-diagram-card">
+            <figcaption>
+              <strong data-i18n="civilization.diagrams.snapshot.title">Receipt-to-snapshot integrity pipeline</strong>
+              <span data-i18n="civilization.diagrams.snapshot.caption">Participation becomes voting weight only after receipt checks, normalization, caps, epoch freeze, and public recountability.</span>
+            </figcaption>
+            <div id="civilizationSnapshotDiagram"></div>
+          </figure>
+          <div class="snapshot-stack" id="snapshotStack"></div>
+        </div>
+        <div class="snapshot-grid" id="snapshotGrid"></div>
       </section>
 
       <section class="civilization-section threat-section" id="threat-model" aria-labelledby="threatModelTitle">
@@ -325,6 +426,50 @@
           <div class="impact-stack" id="impactStack"></div>
         </div>
         <div class="impact-grid" id="impactGrid"></div>
+      </section>
+
+      <section class="civilization-section signing-section" id="signing-safety" aria-labelledby="signingTitle">
+        <div class="section-heading">
+          <p class="eyebrow danger" data-i18n="civilization.signing.eyebrow">Before You Sign</p>
+          <h2 id="signingTitle" data-i18n="civilization.signing.title">A signature should feel like a public commitment, not a blind button press.</h2>
+          <p data-i18n="civilization.signing.body">
+            The signing screen should prove that the player is signing the same rule text, same machine patch, same frozen power snapshot, same risk summary, and one clear side: agree, reject, or abstain.
+          </p>
+        </div>
+        <div class="signing-layout">
+          <figure class="diagram-card signing-diagram-card">
+            <figcaption>
+              <strong data-i18n="civilization.diagrams.signing.title">Signature safety chain</strong>
+              <span data-i18n="civilization.diagrams.signing.caption">A signature becomes trustworthy when the wallet action, risk acknowledgement, PDA write, and public recount all bind to the same rule identity.</span>
+            </figcaption>
+            <div id="civilizationSigningDiagram"></div>
+          </figure>
+          <div class="signing-stack" id="signingStack"></div>
+        </div>
+        <div class="signing-risk-grid" id="signingRiskGrid"></div>
+        <div class="signing-proof-grid" id="signingProofGrid"></div>
+      </section>
+
+      <section class="civilization-section decision-section" id="decision-split" aria-labelledby="decisionTitle">
+        <div class="section-heading">
+          <p class="eyebrow blue" data-i18n="civilization.decision.eyebrow">Decision Split</p>
+          <h2 id="decisionTitle" data-i18n="civilization.decision.title">Reject, abstain, and challenge are different tools, not the same kind of no.</h2>
+          <p data-i18n="civilization.decision.body">
+            A trustworthy governance screen must teach players the difference between support, opposition, silence, and evidence-based blocking. Each action should write a different public meaning while sharing the same rule identity.
+          </p>
+        </div>
+        <div class="decision-layout">
+          <figure class="diagram-card decision-diagram-card">
+            <figcaption>
+              <strong data-i18n="civilization.diagrams.decision.title">Four-way decision routing</strong>
+              <span data-i18n="civilization.diagrams.decision.caption">A player chooses a side for threshold math, but only a challenge with evidence pauses execution.</span>
+            </figcaption>
+            <div id="civilizationDecisionDiagram"></div>
+          </figure>
+          <div class="decision-stack" id="decisionStack"></div>
+        </div>
+        <div class="decision-grid" id="decisionGrid"></div>
+        <div class="decision-proof-grid" id="decisionProofGrid"></div>
       </section>
 
       <section class="civilization-section reputation-section" id="civic-power-ledger" aria-labelledby="reputationTitle">
@@ -430,6 +575,27 @@
         <div class="failure-grid" id="failureCaseGrid"></div>
       </section>
 
+      <section class="civilization-section receipt-section" id="execution-receipts" aria-labelledby="receiptTitle">
+        <div class="section-heading">
+          <p class="eyebrow gold" data-i18n="civilization.receipts.eyebrow">Execution Receipt Ledger</p>
+          <h2 id="receiptTitle" data-i18n="civilization.receipts.title">After execution, the rule should leave a receipt that players can replay forever.</h2>
+          <p data-i18n="civilization.receipts.body">
+            A trustworthy civilization system does not stop at a green success message. It should publish before-and-after hashes, written PDA addresses, event payloads, rejection reasons, indexer confirmations, and later supersession or challenge references.
+          </p>
+        </div>
+        <div class="receipt-layout">
+          <figure class="diagram-card receipt-diagram-card">
+            <figcaption>
+              <strong data-i18n="civilization.diagrams.receipts.title">Execution receipt accountability chain</strong>
+              <span data-i18n="civilization.diagrams.receipts.caption">Success and failure both produce public evidence, so the website, indexer, and skeptical reader can replay the same outcome.</span>
+            </figcaption>
+            <div id="civilizationReceiptDiagram"></div>
+          </figure>
+          <div class="receipt-stack" id="receiptStack"></div>
+        </div>
+        <div class="receipt-grid" id="receiptGrid"></div>
+      </section>
+
       <section class="civilization-section transparency-section" id="pda-transparency" aria-labelledby="transparencyTitle">
         <div class="section-heading">
           <p class="eyebrow green" data-i18n="civilization.transparency.eyebrow">Public Transparency Console</p>
@@ -451,6 +617,27 @@
         <div class="transparency-grid" id="transparencyGrid"></div>
       </section>
 
+      <section class="civilization-section verification-section" id="independent-verification" aria-labelledby="verificationTitle">
+        <div class="section-heading">
+          <p class="eyebrow blue" data-i18n="civilization.verification.eyebrow">Independent Verification Path</p>
+          <h2 id="verificationTitle" data-i18n="civilization.verification.title">A third party should be able to prove or reject every civilization claim without asking NiceChunk.</h2>
+          <p data-i18n="civilization.verification.body">
+            The page should teach a skeptical reader how to move from a website claim to decoded PDA ownership, recomputed hashes, signature recounts, validator dry-runs, and final event receipts.
+          </p>
+        </div>
+        <div class="verification-layout">
+          <figure class="diagram-card verification-diagram-card">
+            <figcaption>
+              <strong data-i18n="civilization.diagrams.verification.title">Claim-to-proof verification path</strong>
+              <span data-i18n="civilization.diagrams.verification.caption">A public claim becomes trustworthy only when another reader can independently recompute the same proof chain.</span>
+            </figcaption>
+            <div id="civilizationVerificationDiagram"></div>
+          </figure>
+          <div class="verification-stack" id="verificationStack"></div>
+        </div>
+        <div class="verification-grid" id="verificationGrid"></div>
+      </section>
+
       <section class="civilization-section versioning-section" id="versioned-evolution" aria-labelledby="versioningTitle">
         <div class="section-heading">
           <p class="eyebrow blue" data-i18n="civilization.versioning.eyebrow">Versioned Evolution</p>
@@ -470,6 +657,27 @@
           <div class="versioning-stack" id="versioningStack"></div>
         </div>
         <div class="versioning-grid" id="versioningGrid"></div>
+      </section>
+
+      <section class="civilization-section roles-section" id="citizen-role-matrix" aria-labelledby="rolesTitle">
+        <div class="section-heading">
+          <p class="eyebrow green" data-i18n="civilization.roles.eyebrow">Citizen Role Matrix</p>
+          <h2 id="rolesTitle" data-i18n="civilization.roles.title">Civilization roles should describe public duties, not private authority.</h2>
+          <p data-i18n="civilization.roles.body">
+            A player can become an explorer, miner, forger, builder, guardian, or auditor through public receipts. Roles explain how a citizen helps the world and which proof object backs that contribution; they should never become hidden admin permissions.
+          </p>
+        </div>
+        <div class="roles-layout">
+          <figure class="diagram-card roles-diagram-card">
+            <figcaption>
+              <strong data-i18n="civilization.diagrams.roles.title">Citizen role-to-proof matrix</strong>
+              <span data-i18n="civilization.diagrams.roles.caption">A role is credible only when it maps to public work, public receipts, public duties, and replayable power inputs.</span>
+            </figcaption>
+            <div id="civilizationRolesDiagram"></div>
+          </figure>
+          <div class="role-stack" id="roleStack"></div>
+        </div>
+        <div class="role-grid" id="roleGrid"></div>
       </section>
 
       <section class="civilization-section design-section" id="civilization-blueprint" aria-labelledby="civilizationDesignTitle">
@@ -580,7 +788,7 @@
         <div class="module-grid" id="ruleModulesGrid"></div>
       </section>
 
-      <section class="civilization-section twin-examples" aria-label="Rule examples" data-i18n-aria-label="civilization.examples.aria">
+      <section class="civilization-section twin-examples" id="rule-examples" aria-label="Rule examples" data-i18n-aria-label="civilization.examples.aria">
         <article>
           <p class="eyebrow danger" data-i18n="civilization.examples.naturalEyebrow">Natural Law Examples</p>
           <h2 data-i18n="civilization.examples.naturalTitle">Rules that protect the world itself.</h2>
@@ -617,7 +825,7 @@
         <div class="rule-book-grid" id="mockRuleBooks"></div>
       </section>
 
-      <section class="civilization-section contract-direction" aria-labelledby="contractTitle">
+      <section class="civilization-section contract-direction" id="future-contract-direction" aria-labelledby="contractTitle">
         <div class="section-heading">
           <p class="eyebrow green" data-i18n="civilization.contract.eyebrow">Future Contract Direction</p>
           <h2 id="contractTitle" data-i18n="civilization.contract.title">The civilization program should mutate rule configuration PDAs through validators.</h2>
@@ -633,6 +841,8 @@
           </p>
         </div>
       </section>
+        </div>
+      </div>
     </main>
 
     <div class="coming-soon-toast" id="comingSoonToast" role="status" aria-live="polite"></div>

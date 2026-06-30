@@ -121,6 +121,9 @@ const profilePanel = document.querySelector("#profilePanel");
 const profileClose = document.querySelector("#profileClose");
 const profileLogout = document.querySelector("#profileLogout");
 const profileTabs = document.querySelectorAll("[data-profile-tab]");
+const profileSkillsGrid = document.querySelector("#profileSkillsGrid");
+const profileSkillDetail = document.querySelector("#profileSkillDetail");
+const profileEquipmentList = document.querySelector("#profileEquipmentList");
 const profileModelContainer = document.querySelector(".profile-model");
 const profileModelCanvas = document.querySelector("#profileModel");
 const profileName = document.querySelector("#profileName");
@@ -261,7 +264,7 @@ const gameLoadingFallbacks = {
   },
   language: {
     title: "Loading language data",
-    body: "Fetching interface dictionary and mainnet version metadata.",
+    body: "Fetching the game interface dictionary.",
   },
   worldConfig: {
     title: "Reading world parameters",
@@ -380,6 +383,473 @@ function gameText(key, fallback, params = {}) {
 
 function interpolateLoadingText(template, params = {}) {
   return String(template).replace(/\{(\w+)\}/g, (_match, name) => params[name] ?? "");
+}
+
+const profileSkillMaxLevel = 10;
+const profileSkillStoragePrefix = "nicechunk.playerSkills.";
+const profileSkillXpStoragePrefix = "nicechunk.playerSkillXp.";
+
+function formatSkillNumber(value, decimals = 0) {
+  if (!Number.isFinite(value)) return "0";
+  return value
+    .toFixed(decimals)
+    .replace(/\.0+$/, "")
+    .replace(/(\.\d*?)0+$/, "$1");
+}
+
+function createPercentMetric(value) {
+  return formatSkillNumber(value, value % 1 === 0 ? 0 : 1);
+}
+
+function createProfileSkillMetric(key, fallback, params = {}) {
+  return { key, fallback, params };
+}
+
+function formatProfileSkillXp(value) {
+  const numeric = Math.max(0, Math.round(Number(value) || 0));
+  return numeric.toLocaleString();
+}
+
+function profileSkillSvg(skillId) {
+  const svg = {
+    precisionGathering: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 18l9-5 9 5-9 5-9-5z"/><path d="M7 18v6l9 5 9-5v-6"/><path d="M16 13v10"/><circle cx="21.5" cy="10.5" r="4.5"/><path d="M25 14l4 4"/></svg>',
+    burden: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M10 11h12l3 5v11H7V16l3-5z"/><path d="M12 11V9a4 4 0 0 1 8 0v2"/><path d="M11 18h10"/><path d="M16 18v7"/></svg>',
+    smelting: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M11 27h10l3-8H8l3 8z"/><path d="M16 4c4 4-2 6 2 10 1-3 4-4 5-7 5 7 1 13-7 13-6 0-9-5-5-11 1 3 3 4 5 5-2-4-1-7 0-10z"/></svg>',
+    forging: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 24h22"/><path d="M10 20h12l3 4H7l3-4z"/><path d="M18 5l7 7-3 3-7-7 3-3z"/><path d="M15 8L7 16"/></svg>',
+    craftsmanship: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 5v4"/><path d="M16 23v4"/><path d="M5 16h4"/><path d="M23 16h4"/><path d="M8.5 8.5l2.8 2.8"/><path d="M20.7 20.7l2.8 2.8"/><path d="M23.5 8.5l-2.8 2.8"/><path d="M11.3 20.7l-2.8 2.8"/><circle cx="16" cy="16" r="7"/><circle cx="16" cy="16" r="2.7"/></svg>',
+    swiftness: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 22h11l5 4H10c-3 0-5-1-5-3 0-1 1-1 3-1z"/><path d="M17 22l-2-9 6 3 3-4"/><path d="M4 10h8"/><path d="M3 15h7"/><path d="M5 20h5"/></svg>',
+    exploration: '<svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11"/><path d="M20 8l-2 10-6 6 2-10 6-6z"/><circle cx="16" cy="16" r="2"/><path d="M16 2v4"/><path d="M16 26v4"/><path d="M2 16h4"/><path d="M26 16h4"/></svg>',
+    stamina: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 27S5 20 5 12a6 6 0 0 1 11-3 6 6 0 0 1 11 3c0 8-11 15-11 15z"/><path d="M15 9l-3 7h5l-2 7 6-10h-5l2-4z"/></svg>',
+    strength: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 20h20"/><path d="M8 16v8"/><path d="M24 16v8"/><path d="M12 14c1-5 7-5 8 0"/><path d="M12 14v5h8v-5"/><path d="M16 19v6"/></svg>',
+    appraisal: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M9 13l5-6h4l5 6-7 10-7-10z"/><path d="M9 13h14"/><path d="M14 7l2 6 2-6"/><circle cx="12" cy="21" r="5"/><path d="M15.5 24.5l5 5"/></svg>',
+  };
+  return svg[skillId] ?? '<svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="10"/><path d="M16 9v14"/><path d="M9 16h14"/></svg>';
+}
+
+function createProfileSkillIcon(skill) {
+  const icon = document.createElement("span");
+  icon.className = "profile-skill-icon";
+  icon.innerHTML = profileSkillSvg(skill.id);
+  return icon;
+}
+
+function profileEquipmentSvg(slotId) {
+  const svg = {
+    head: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M9 14c0-5 3-9 7-9s7 4 7 9v6l-3 5h-8l-3-5v-6z"/><path d="M10 16h12"/><path d="M12 21h8"/></svg>',
+    face: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 12c3-2 5-3 8-3s5 1 8 3l-2 9c-2 3-4 5-6 5s-4-2-6-5l-2-9z"/><path d="M11 16h4"/><path d="M17 16h4"/><path d="M13 22h6"/></svg>',
+    shoulder: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 18c2-6 5-9 10-9s8 3 10 9"/><path d="M8 18l-3 6h8l3-6"/><path d="M24 18l3 6h-8l-3-6"/><path d="M13 12h6"/></svg>',
+    wrist: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M11 6l10 3-2 8-10-3 2-8z"/><path d="M9 14l10 3-2 9-10-3 2-9z"/><path d="M12 19l5 1.5"/></svg>',
+    chest: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M9 8l7-3 7 3 3 17-10 4-10-4 3-17z"/><path d="M16 5v24"/><path d="M10 15h12"/></svg>',
+    back: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M11 5h10l4 6v14l-5 3h-8l-5-3V11l4-6z"/><path d="M11 5v8"/><path d="M21 5v8"/><path d="M10 17h12"/></svg>',
+    leftHand: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M18 6v10"/><path d="M14 7v10"/><path d="M10 10v8"/><path d="M22 10v9"/><path d="M9 18c0 6 3 10 8 10 4 0 7-3 7-8v-4"/></svg>',
+    rightHand: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M14 6v10"/><path d="M18 7v10"/><path d="M22 10v8"/><path d="M10 10v9"/><path d="M23 18c0 6-3 10-8 10-4 0-7-3-7-8v-4"/></svg>',
+    legs: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M11 5h10l2 8-3 14h-6l-3-14 0-8z"/><path d="M16 13v14"/><path d="M11 13h10"/></svg>',
+    feet: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M9 18h7l2 5v3H5v-3l4-5z"/><path d="M20 18h5l3 5v3H17v-3l3-5z"/><path d="M6 26h22"/></svg>',
+    backpack: '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M10 10h12l3 5v12H7V15l3-5z"/><path d="M12 10V8a4 4 0 0 1 8 0v2"/><path d="M11 18h10"/><path d="M16 18v7"/></svg>',
+  };
+  return svg[slotId] ?? '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 8h16v16H8z"/><path d="M8 16h16"/><path d="M16 8v16"/></svg>';
+}
+
+function createProfileEquipmentIcon(entry) {
+  const icon = document.createElement("span");
+  icon.className = "profile-equipment-icon";
+  icon.innerHTML = profileEquipmentSvg(entry.id);
+  return icon;
+}
+
+const playerSkillDefinitions = [
+  {
+    id: "precisionGathering",
+    tone: "green",
+    xpBase: 90,
+    xpGrowth: 1.52,
+    metrics(level) {
+      const percent = Math.min(100, 10 + level * 10);
+      const nextPercent = Math.min(100, 10 + Math.min(profileSkillMaxLevel, level + 1) * 10);
+      return {
+        current: createProfileSkillMetric("main.profile.skills.precisionGathering.current", "{percent}% gathered · {liters} L per resource block", {
+          percent: createPercentMetric(percent),
+          liters: formatSkillNumber(percent / 100, 2),
+        }),
+        next: createProfileSkillMetric("main.profile.skills.precisionGathering.next", "Next level: {percent}% · {liters} L per block", {
+          percent: createPercentMetric(nextPercent),
+          liters: formatSkillNumber(nextPercent / 100, 2),
+        }),
+        max: createProfileSkillMetric("main.profile.skills.precisionGathering.max", "Max: 100% · 1 L per resource block", {}),
+        formula: createProfileSkillMetric("main.profile.skills.precisionGathering.formula", "min(100%, 10% + Lv x 10%); one resource block is 0.1m x 0.1m x 0.1m = 1 L", {}),
+      };
+    },
+  },
+  {
+    id: "burden",
+    tone: "amber",
+    xpBase: 130,
+    xpGrowth: 1.58,
+    metrics(level) {
+      const kg = 30 + level * 10;
+      const nextKg = 30 + Math.min(profileSkillMaxLevel, level + 1) * 10;
+      return {
+        current: createProfileSkillMetric("main.profile.skills.burden.current", "{kg} kg safe carry capacity", { kg }),
+        next: createProfileSkillMetric("main.profile.skills.burden.next", "Next level: {kg} kg", { kg: nextKg }),
+        max: createProfileSkillMetric("main.profile.skills.burden.max", "Max: 130 kg safe carry capacity", {}),
+        formula: createProfileSkillMetric("main.profile.skills.burden.formula", "30 kg + Lv x 10 kg", {}),
+      };
+    },
+  },
+  {
+    id: "smelting",
+    tone: "red",
+    xpBase: 120,
+    xpGrowth: 1.56,
+    metrics(level) {
+      const yieldPercent = Math.min(100, 70 + level * 3);
+      const lossPercent = Math.max(0, 30 - level * 3);
+      const nextYield = Math.min(100, 70 + Math.min(profileSkillMaxLevel, level + 1) * 3);
+      const nextLoss = Math.max(0, 30 - Math.min(profileSkillMaxLevel, level + 1) * 3);
+      return {
+        current: createProfileSkillMetric("main.profile.skills.smelting.current", "{yieldPercent}% yield · {lossPercent}% shrink loss", {
+          yieldPercent,
+          lossPercent,
+        }),
+        next: createProfileSkillMetric("main.profile.skills.smelting.next", "Next level: {yieldPercent}% yield · {lossPercent}% loss", {
+          yieldPercent: nextYield,
+          lossPercent: nextLoss,
+        }),
+        max: createProfileSkillMetric("main.profile.skills.smelting.max", "Max: 100% yield · 0% shrink loss", {}),
+        formula: createProfileSkillMetric("main.profile.skills.smelting.formula", "Yield = 70% + Lv x 3%; loss = 30% - Lv x 3%", {}),
+      };
+    },
+  },
+  {
+    id: "forging",
+    tone: "steel",
+    xpBase: 140,
+    xpGrowth: 1.6,
+    metrics(level) {
+      const bonus = level * 5;
+      const nextBonus = Math.min(profileSkillMaxLevel, level + 1) * 5;
+      return {
+        current: createProfileSkillMetric("main.profile.skills.forging.current", "+{bonus}% forged item durability", { bonus }),
+        next: createProfileSkillMetric("main.profile.skills.forging.next", "Next level: +{bonus}% durability", { bonus: nextBonus }),
+        max: createProfileSkillMetric("main.profile.skills.forging.max", "Max: +50% durability", {}),
+        formula: createProfileSkillMetric("main.profile.skills.forging.formula", "Durability bonus = Lv x 5%", {}),
+      };
+    },
+  },
+  {
+    id: "craftsmanship",
+    tone: "cyan",
+    xpBase: 180,
+    xpGrowth: 1.66,
+    metrics(level) {
+      const tier = 1 + Math.floor(level / 2);
+      const nextTier = 1 + Math.floor(Math.min(profileSkillMaxLevel, level + 1) / 2);
+      return {
+        current: createProfileSkillMetric("main.profile.skills.craftsmanship.current", "Process tier {tier} available", { tier }),
+        next: createProfileSkillMetric("main.profile.skills.craftsmanship.next", "Next level: process tier {tier}", { tier: nextTier }),
+        max: createProfileSkillMetric("main.profile.skills.craftsmanship.max", "Max: process tier 6", {}),
+        formula: createProfileSkillMetric("main.profile.skills.craftsmanship.formula", "Tier = 1 + floor(Lv / 2); unlocks advanced craft methods", {}),
+      };
+    },
+  },
+  {
+    id: "swiftness",
+    tone: "blue",
+    xpBase: 110,
+    xpGrowth: 1.5,
+    metrics(level) {
+      const speed = 100 + level * 3;
+      const nextSpeed = 100 + Math.min(profileSkillMaxLevel, level + 1) * 3;
+      return {
+        current: createProfileSkillMetric("main.profile.skills.swiftness.current", "{speed}% movement speed", { speed }),
+        next: createProfileSkillMetric("main.profile.skills.swiftness.next", "Next level: {speed}% movement speed", { speed: nextSpeed }),
+        max: createProfileSkillMetric("main.profile.skills.swiftness.max", "Max: 130% movement speed", {}),
+        formula: createProfileSkillMetric("main.profile.skills.swiftness.formula", "Speed = 100% + Lv x 3%", {}),
+      };
+    },
+  },
+  {
+    id: "exploration",
+    tone: "violet",
+    xpBase: 125,
+    xpGrowth: 1.57,
+    metrics(level) {
+      const chance = level * 2;
+      const nextChance = Math.min(profileSkillMaxLevel, level + 1) * 2;
+      return {
+        current: createProfileSkillMetric("main.profile.skills.exploration.current", "+{chance}% rare extra-drop roll weight", { chance }),
+        next: createProfileSkillMetric("main.profile.skills.exploration.next", "Next level: +{chance}% rare roll weight", { chance: nextChance }),
+        max: createProfileSkillMetric("main.profile.skills.exploration.max", "Max: +20% rare extra-drop roll weight", {}),
+        formula: createProfileSkillMetric("main.profile.skills.exploration.formula", "Rare roll weight bonus = Lv x 2%; works with altitude/depth drop tables", {}),
+      };
+    },
+  },
+  {
+    id: "stamina",
+    tone: "lime",
+    xpBase: 105,
+    xpGrowth: 1.5,
+    metrics(level) {
+      const reduction = level * 4;
+      const nextReduction = Math.min(profileSkillMaxLevel, level + 1) * 4;
+      return {
+        current: createProfileSkillMetric("main.profile.skills.stamina.current", "{reduction}% lower mining and movement fatigue", { reduction }),
+        next: createProfileSkillMetric("main.profile.skills.stamina.next", "Next level: {reduction}% lower fatigue", { reduction: nextReduction }),
+        max: createProfileSkillMetric("main.profile.skills.stamina.max", "Max: 40% lower fatigue", {}),
+        formula: createProfileSkillMetric("main.profile.skills.stamina.formula", "Fatigue cost reduction = Lv x 4%", {}),
+      };
+    },
+  },
+  {
+    id: "strength",
+    tone: "orange",
+    xpBase: 145,
+    xpGrowth: 1.59,
+    metrics(level) {
+      const liftKg = 8 + level * 4;
+      const nextLiftKg = 8 + Math.min(profileSkillMaxLevel, level + 1) * 4;
+      return {
+        current: createProfileSkillMetric("main.profile.skills.strength.current", "{kg} kg one-hand lift control", { kg: liftKg }),
+        next: createProfileSkillMetric("main.profile.skills.strength.next", "Next level: {kg} kg one-hand control", { kg: nextLiftKg }),
+        max: createProfileSkillMetric("main.profile.skills.strength.max", "Max: 48 kg one-hand lift control", {}),
+        formula: createProfileSkillMetric("main.profile.skills.strength.formula", "Grip lift control = 8 kg + Lv x 4 kg; later combines mass, gravity and torque", {}),
+      };
+    },
+  },
+  {
+    id: "appraisal",
+    tone: "gold",
+    xpBase: 160,
+    xpGrowth: 1.62,
+    metrics(level) {
+      const traits = 2 + level;
+      const nextTraits = 2 + Math.min(profileSkillMaxLevel, level + 1);
+      return {
+        current: createProfileSkillMetric("main.profile.skills.appraisal.current", "Reveals {traits} material traits", { traits }),
+        next: createProfileSkillMetric("main.profile.skills.appraisal.next", "Next level: reveals {traits} traits", { traits: nextTraits }),
+        max: createProfileSkillMetric("main.profile.skills.appraisal.max", "Max: reveals 12 material traits", {}),
+        formula: createProfileSkillMetric("main.profile.skills.appraisal.formula", "Visible traits = 2 + Lv; supports rare materials and civilization rules", {}),
+      };
+    },
+  },
+];
+
+let selectedProfileSkillId = playerSkillDefinitions[0]?.id ?? "";
+
+function profileSkillStorageKey() {
+  const session = getGameSession();
+  const owner = session.walletAddress || session.username || "guest";
+  return `${profileSkillStoragePrefix}${owner}`;
+}
+
+function loadProfileSkillLevels() {
+  try {
+    const raw = window.localStorage.getItem(profileSkillStorageKey()) || window.localStorage.getItem("nicechunk.playerSkills");
+    const parsed = raw ? JSON.parse(raw) : {};
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function profileSkillXpStorageKey() {
+  const session = getGameSession();
+  const owner = session.walletAddress || session.username || "guest";
+  return `${profileSkillXpStoragePrefix}${owner}`;
+}
+
+function loadProfileSkillXp() {
+  try {
+    const raw = window.localStorage.getItem(profileSkillXpStorageKey()) || window.localStorage.getItem("nicechunk.playerSkillXp");
+    const parsed = raw ? JSON.parse(raw) : {};
+    return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function profileSkillLevel(levels, skillId) {
+  const raw = Number(levels?.[skillId] ?? 0);
+  if (!Number.isFinite(raw)) return 0;
+  return Math.round(clampNumber(raw, 0, profileSkillMaxLevel));
+}
+
+function profileSkillExperienceRequirement(skill, level) {
+  if (level >= profileSkillMaxLevel) return 0;
+  const nextLevel = Math.max(1, Math.min(profileSkillMaxLevel, level + 1));
+  return Math.round((skill.xpBase ?? 100) * Math.pow(nextLevel, skill.xpGrowth ?? 1.55));
+}
+
+function profileSkillTotalExperienceForLevel(skill, level) {
+  let total = 0;
+  const capped = Math.max(0, Math.min(profileSkillMaxLevel, Math.round(level)));
+  for (let previousLevel = 0; previousLevel < capped; previousLevel += 1) {
+    total += profileSkillExperienceRequirement(skill, previousLevel);
+  }
+  return total;
+}
+
+function profileSkillExperienceProgress(skill, level, xpBySkill) {
+  const minimumTotal = profileSkillTotalExperienceForLevel(skill, level);
+  const rawTotal = Number(xpBySkill?.[skill.id] ?? minimumTotal);
+  const total = Number.isFinite(rawTotal) ? Math.max(0, Math.round(rawTotal)) : minimumTotal;
+  const required = profileSkillExperienceRequirement(skill, level);
+  if (level >= profileSkillMaxLevel) {
+    return {
+      total,
+      current: 0,
+      required: 0,
+      label: gameText("main.profile.skillXpMax", "Total XP {xp}", { xp: formatProfileSkillXp(total) }),
+    };
+  }
+  const current = Math.max(0, Math.min(required, total - minimumTotal));
+  return {
+    total,
+    current,
+    required,
+    label: gameText("main.profile.skillXpProgress", "XP {current}/{required}", {
+      current: formatProfileSkillXp(current),
+      required: formatProfileSkillXp(required),
+    }),
+  };
+}
+
+function profileSkillTierLabel(skill, targetLevel) {
+  const previousLevel = Math.max(0, Math.min(profileSkillMaxLevel - 1, targetLevel - 1));
+  return gameText("main.profile.skillXpTier", "Lv.{level}: {xp} XP", {
+    level: targetLevel,
+    xp: formatProfileSkillXp(profileSkillExperienceRequirement(skill, previousLevel)),
+  });
+}
+
+function profileSkillText(metric) {
+  return gameText(metric.key, metric.fallback, metric.params);
+}
+
+function appendProfileSkillMetric(parent, className, labelKey, labelFallback, text) {
+  const item = document.createElement("div");
+  item.className = className;
+  const label = document.createElement("span");
+  label.textContent = gameText(labelKey, labelFallback);
+  const value = document.createElement("strong");
+  value.textContent = text;
+  item.append(label, value);
+  parent.append(item);
+}
+
+function appendProfileSkillDetailMetric(parent, labelKey, labelFallback, text, className = "") {
+  appendProfileSkillMetric(parent, `profile-skill-metric ${className}`.trim(), labelKey, labelFallback, text);
+}
+
+function renderProfileSkillDetail(skill, level, metrics, xpProgress) {
+  if (!profileSkillDetail) return;
+  profileSkillDetail.hidden = false;
+  profileSkillDetail.dataset.skillTone = skill.tone;
+  profileSkillDetail.replaceChildren();
+
+  const header = document.createElement("header");
+  header.className = "profile-skill-detail-header";
+  header.append(createProfileSkillIcon(skill));
+  const titleWrap = document.createElement("div");
+  const title = document.createElement("h3");
+  title.textContent = gameText(`main.profile.skills.${skill.id}.name`, skill.id);
+  const levelLabel = document.createElement("span");
+  levelLabel.textContent = gameText("main.profile.skillLevel", "Lv. {level}/{max}", { level, max: profileSkillMaxLevel });
+  const xpLabel = document.createElement("small");
+  xpLabel.className = "profile-skill-xp-inline";
+  xpLabel.textContent = xpProgress.label;
+  titleWrap.append(title, levelLabel, xpLabel);
+  header.append(titleWrap);
+
+  const description = document.createElement("p");
+  description.className = "profile-skill-detail-description";
+  description.textContent = gameText(`main.profile.skills.${skill.id}.description`, "");
+
+  const progress = document.createElement("div");
+  progress.className = "profile-skill-progress profile-skill-detail-progress";
+  const progressFill = document.createElement("span");
+  progressFill.style.width = `${(level / profileSkillMaxLevel) * 100}%`;
+  progress.append(progressFill);
+
+  const metricsGrid = document.createElement("div");
+  metricsGrid.className = "profile-skill-detail-metrics";
+  appendProfileSkillDetailMetric(metricsGrid, "main.profile.skillCurrent", "Current", profileSkillText(metrics.current), "profile-skill-current");
+  appendProfileSkillDetailMetric(
+    metricsGrid,
+    level >= profileSkillMaxLevel ? "main.profile.skillMaxed" : "main.profile.skillNext",
+    level >= profileSkillMaxLevel ? "Max level" : "Next",
+    level >= profileSkillMaxLevel ? gameText("main.profile.skillMaxed", "Max level") : profileSkillText(metrics.next),
+  );
+  appendProfileSkillDetailMetric(metricsGrid, "main.profile.skillCap", "Cap", profileSkillText(metrics.max));
+  appendProfileSkillDetailMetric(metricsGrid, "main.profile.skillFormula", "Rule", profileSkillText(metrics.formula), "profile-skill-formula");
+
+  const xpPanel = document.createElement("section");
+  xpPanel.className = "profile-skill-xp-panel";
+  const xpTitle = document.createElement("h4");
+  xpTitle.textContent = gameText("main.profile.skillXpTitle", "Experience");
+  const xpSource = document.createElement("p");
+  xpSource.textContent = gameText(`main.profile.skills.${skill.id}.xpSource`, "");
+  const xpTierTitle = document.createElement("strong");
+  xpTierTitle.textContent = gameText("main.profile.skillXpTiers", "Upgrade XP tiers");
+  const xpTiers = document.createElement("div");
+  xpTiers.className = "profile-skill-xp-tiers";
+  Array.from({ length: profileSkillMaxLevel }, (_entry, index) => index + 1).forEach((targetLevel) => {
+    const tier = document.createElement("span");
+    tier.textContent = profileSkillTierLabel(skill, targetLevel);
+    xpTiers.append(tier);
+  });
+  xpPanel.append(xpTitle, xpSource, xpTierTitle, xpTiers);
+
+  profileSkillDetail.append(header, description, progress, metricsGrid, xpPanel);
+  profileSkillDetail.scrollTop = 0;
+}
+
+function renderProfileSkills() {
+  if (!profileSkillsGrid) return;
+  const levels = loadProfileSkillLevels();
+  const xpBySkill = loadProfileSkillXp();
+  if (!playerSkillDefinitions.some((skill) => skill.id === selectedProfileSkillId)) {
+    selectedProfileSkillId = playerSkillDefinitions[0]?.id ?? "";
+  }
+  profileSkillsGrid.replaceChildren();
+  for (const skill of playerSkillDefinitions) {
+    const level = profileSkillLevel(levels, skill.id);
+    const progress = (level / profileSkillMaxLevel) * 100;
+    const metrics = skill.metrics(level);
+    const xpProgress = profileSkillExperienceProgress(skill, level, xpBySkill);
+    const selected = skill.id === selectedProfileSkillId;
+    const card = document.createElement("button");
+    card.className = "profile-skill-card profile-skill-row";
+    card.type = "button";
+    card.dataset.skillTone = skill.tone;
+    card.classList.toggle("active", selected);
+    card.setAttribute("aria-pressed", String(selected));
+    card.addEventListener("click", () => {
+      selectedProfileSkillId = skill.id;
+      renderProfileSkills();
+    });
+
+    const head = document.createElement("div");
+    head.className = "profile-skill-card-head";
+    const icon = createProfileSkillIcon(skill);
+    const titleWrap = document.createElement("div");
+    titleWrap.className = "profile-skill-title";
+    const title = document.createElement("h3");
+    title.textContent = gameText(`main.profile.skills.${skill.id}.name`, skill.id);
+    const levelLabel = document.createElement("span");
+    levelLabel.textContent = gameText("main.profile.skillLevel", "Lv. {level}/{max}", { level, max: profileSkillMaxLevel });
+    titleWrap.append(title, levelLabel);
+    head.append(icon, titleWrap);
+
+    const progressTrack = document.createElement("div");
+    progressTrack.className = "profile-skill-progress";
+    const progressFill = document.createElement("span");
+    progressFill.style.width = `${progress}%`;
+    progressTrack.append(progressFill);
+    card.append(head, progressTrack);
+    profileSkillsGrid.append(card);
+    if (selected) renderProfileSkillDetail(skill, level, metrics, xpProgress);
+  }
 }
 
 function withStartupTimeout(promise, timeoutMs, label) {
@@ -638,7 +1108,7 @@ const guardianAreaFog = new THREE.Fog(0x7a7f82, 28, 102);
 scene.background = normalSkyColor;
 scene.fog = normalSceneFog;
 
-const camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 0.1, 1300);
+const camera = new THREE.PerspectiveCamera(58, window.innerWidth / window.innerHeight, 0.035, 1300);
 const renderer = new THREE.WebGLRenderer({
   canvas,
   antialias: false,
@@ -1145,6 +1615,7 @@ const cameraOffset = new THREE.Vector3();
 const cameraDesiredPosition = new THREE.Vector3();
 const cameraResolvedPosition = new THREE.Vector3();
 const cameraSamplePosition = new THREE.Vector3();
+const cameraLookTarget = new THREE.Vector3();
 const cameraRayDirection = new THREE.Vector3();
 const cameraOcclusionState = { blocked: false };
 const playerInputVector = new THREE.Vector3();
@@ -1154,6 +1625,26 @@ const playerMoveDirectionVector = new THREE.Vector3();
 const playerAutoMoveVector = new THREE.Vector3();
 const playerCollisionPushVector = new THREE.Vector3();
 let cameraFocusReady = false;
+let firstPersonCamera = false;
+const firstPersonEyeHeight = 1.95;
+const firstPersonCameraBackDistance = 0.34;
+const firstPersonViewmodelOffset = new THREE.Vector3(0.74, 0.1, -1.52);
+const firstPersonRightArmPose = {
+  pitchOffset: 0.54,
+  yawOffset: -0.18,
+  rollOffset: -0.22,
+};
+const firstPersonRightArmPoseEuler = new THREE.Euler(
+  firstPersonRightArmPose.pitchOffset,
+  firstPersonRightArmPose.yawOffset,
+  firstPersonRightArmPose.rollOffset,
+);
+const firstPersonRightArmPoseQuaternion = new THREE.Quaternion().setFromEuler(firstPersonRightArmPoseEuler);
+const firstPersonViewmodelWorldPosition = new THREE.Vector3();
+const firstPersonViewmodelMotionQuaternion = new THREE.Quaternion();
+const firstPersonViewmodelParentQuaternion = new THREE.Quaternion();
+const firstPersonViewmodelParentQuaternionInverse = new THREE.Quaternion();
+const firstPersonViewmodelWorldQuaternion = new THREE.Quaternion();
 const crackMarker = createCrackMarker();
 scene.add(crackMarker);
 const placementPreview = createPlacementPreview();
@@ -1171,6 +1662,7 @@ window.NiceChunkDebugMining = debugMiningEnabled;
 let selectedHotbarSlot = 0;
 let hotbarDrag = null;
 let backpackDrag = null;
+let backpackSelectionDrag = null;
 let dragGhost = null;
 
 window.addEventListener("keydown", (event) => {
@@ -1184,6 +1676,11 @@ window.addEventListener("keydown", (event) => {
   if (isTextEntryTarget(event.target)) return;
   if (/^Digit[1-9]$/.test(event.code)) {
     selectHotbarSlot(Number(event.code.slice(5)) - 1);
+    return;
+  }
+  if (event.code === "KeyE" && !event.repeat && !event.ctrlKey && !event.metaKey && !event.altKey) {
+    event.preventDefault();
+    toggleFirstPersonCamera();
     return;
   }
   if ((event.ctrlKey || event.metaKey || event.altKey) && isManualMovementKey(event.code)) return;
@@ -1452,6 +1949,11 @@ window.addEventListener("pointerdown", (event) => {
   if (isInteractivePointerTarget(event.target)) return;
   event.preventDefault();
   canvas?.focus?.({ preventScroll: true });
+  if (firstPersonCamera) {
+    requestFirstPersonPointerLock();
+    if (isPrimaryPointer(event)) handleWorldClick(event);
+    return;
+  }
   dragging = true;
   activePointerId = event.pointerId;
   lastPointerX = event.clientX;
@@ -1464,6 +1966,7 @@ window.addEventListener("pointerdown", (event) => {
 
 window.addEventListener("pointerup", (event) => {
   if (activePointerId !== null && event.pointerId !== activePointerId) return;
+  if (firstPersonCamera) return;
   dragging = false;
   activePointerId = null;
   const moved = Math.hypot(event.clientX - pointerDownX, event.clientY - pointerDownY);
@@ -1475,11 +1978,16 @@ window.addEventListener("pointerup", (event) => {
 
 window.addEventListener("pointercancel", (event) => {
   if (activePointerId !== null && event.pointerId !== activePointerId) return;
+  if (firstPersonCamera) return;
   dragging = false;
   activePointerId = null;
 });
 
 window.addEventListener("pointermove", (event) => {
+  if (firstPersonCamera) {
+    if (!isInteractivePointerTarget(event.target)) schedulePlacementPreviewFromCenter();
+    return;
+  }
   if (!dragging && !isInteractivePointerTarget(event.target)) {
     schedulePlacementPreviewFromPointer(event);
   }
@@ -1490,9 +1998,23 @@ window.addEventListener("pointermove", (event) => {
   const dy = event.clientY - lastPointerY;
   lastPointerX = event.clientX;
   lastPointerY = event.clientY;
+  rotateCameraFromMouseDelta(dx, dy);
+}, { passive: false });
+
+window.addEventListener("mousemove", (event) => {
+  if (!firstPersonCamera || isInteractivePointerTarget(event.target)) return;
+  const dx = Number.isFinite(event.movementX) ? event.movementX : 0;
+  const dy = Number.isFinite(event.movementY) ? event.movementY : 0;
+  if (!dx && !dy) return;
+  event.preventDefault();
+  rotateCameraFromMouseDelta(dx, dy);
+  schedulePlacementPreviewFromCenter();
+}, { passive: false });
+
+function rotateCameraFromMouseDelta(dx, dy) {
   player.yaw -= dx * 0.006;
   player.cameraPitch = THREE.MathUtils.clamp(player.cameraPitch - dy * 0.003, cameraPitchMin, cameraPitchMax);
-}, { passive: false });
+}
 
 function handleMobileJoystickPointerDown(event) {
   if (!isMobileViewport()) return;
@@ -1700,7 +2222,7 @@ function createProfilePreview() {
   previewRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
   const previewRoot = new THREE.Group();
-  previewRoot.position.set(0, -1.15, 0);
+  previewRoot.position.set(0, -0.82, 0);
   const previewAvatar = createAvatar({ THREE, cubeGeometry, materials });
   const previewTool = previewAvatar.userData.limbs?.rightTool;
   if (previewTool) previewTool.visible = false;
@@ -1842,6 +2364,81 @@ function heldSlot() {
   return hotbarSlotAt(selectedHotbarSlot);
 }
 
+function profileEquipmentEntries() {
+  const backpack = equippedBackpackStatus?.backpack ?? null;
+  const currentItem = heldItem();
+  const currentSlot = heldSlot();
+  const emptyValue = gameText("main.profile.equipment.emptySlot", "Empty");
+  const emptyDetail = gameText("main.profile.equipment.emptySlotDetail", "No equipment assigned to this slot.");
+  const emptySlot = (id, key, fallback) => ({
+    id,
+    name: gameText(`main.profile.equipment.${key}`, fallback),
+    value: emptyValue,
+    detail: emptyDetail,
+  });
+  const handValue = currentItem?.id === "empty" ? emptyValue : gameText(currentItem?.labelKey, currentItem?.id ?? "Empty");
+  return [
+    emptySlot("head", "head", "Head"),
+    emptySlot("face", "face", "Face"),
+    emptySlot("shoulder", "shoulder", "Shoulder"),
+    emptySlot("wrist", "wrist", "Wrist"),
+    emptySlot("chest", "chest", "Chest"),
+    emptySlot("back", "back", "Back"),
+    emptySlot("leftHand", "leftHand", "Left Hand"),
+    {
+      id: "rightHand",
+      name: gameText("main.profile.equipment.rightHand", "Right Hand"),
+      value: handValue,
+      detail: currentSlot
+        ? gameText("main.profile.equipment.rightHandDetail", "Hotbar slot {slot}. Current action: {action}.", {
+            slot: selectedHotbarSlot + 1,
+            action: currentItem?.action ?? "none",
+          })
+        : gameText("main.profile.equipment.rightHandEmpty", "No item is currently held."),
+    },
+    emptySlot("legs", "legs", "Legs"),
+    emptySlot("feet", "feet", "Feet"),
+    {
+      id: "backpack",
+      name: gameText("main.profile.equipment.backpackSlot", "Backpack"),
+      value: backpack
+        ? gameText("main.profile.backpackEquipped", "{address} · {count}/{capacity}", {
+            address: formatWalletAddress(backpack.publicKey),
+            count: backpackFilledItemCount(backpack),
+            capacity: backpack.capacity ?? backpackSlotTotal,
+          })
+        : gameText("main.profile.noBackpack", "No backpack equipped"),
+      detail: backpack
+        ? gameText("main.profile.equipment.backpackDetail", "Equipped inventory container. Capacity {count}/{capacity}.", {
+            count: backpackFilledItemCount(backpack),
+            capacity: backpack.capacity ?? backpackSlotTotal,
+          })
+        : gameText("main.profile.equipment.backpackEmpty", "Buy and equip a backpack before mining persistent resources."),
+    },
+  ];
+}
+
+function renderProfileEquipment() {
+  if (!profileEquipmentList) return;
+  profileEquipmentList.replaceChildren();
+  for (const entry of profileEquipmentEntries()) {
+    const item = document.createElement("article");
+    item.className = "profile-equipment-item";
+    item.dataset.equipment = entry.id;
+    const icon = createProfileEquipmentIcon(entry);
+    const copy = document.createElement("div");
+    const title = document.createElement("strong");
+    title.textContent = entry.name;
+    const value = document.createElement("span");
+    value.textContent = entry.value;
+    const detail = document.createElement("small");
+    detail.textContent = entry.detail;
+    copy.append(title, value, detail);
+    item.append(icon, copy);
+    profileEquipmentList.append(item);
+  }
+}
+
 function openProfilePanel() {
   if (!profilePanel || !profileOverlay) return;
   profileOverlay.hidden = false;
@@ -1886,6 +2483,8 @@ function updateProfilePanelDetails() {
   if (profileChunks) profileChunks.textContent = String(knownChunks.size);
   updateProfileRpcDetails();
   updateProfileBackpackDetails();
+  renderProfileSkills();
+  renderProfileEquipment();
 }
 
 function handleProfileRpcAction(event) {
@@ -1931,14 +2530,17 @@ function formatRpcKey(apiKey) {
 }
 
 function setProfileTab(tabName) {
-  const next = tabName === "model" ? "model" : "attributes";
+  const normalizedTabName = tabName === "model" ? "equipment" : tabName;
+  const next = ["attributes", "skills", "equipment"].includes(normalizedTabName) ? normalizedTabName : "attributes";
   if (profilePanel) profilePanel.dataset.activeProfileTab = next;
   profileTabs.forEach((tab) => {
     const active = tab.dataset.profileTab === next;
     tab.classList.toggle("active", active);
     tab.setAttribute("aria-selected", String(active));
   });
-  if (next === "model") {
+  if (next === "skills") renderProfileSkills();
+  if (next === "equipment") renderProfileEquipment();
+  if (next !== "skills") {
     window.requestAnimationFrame(() => {
       resizeProfilePreview();
       renderProfilePreview();
@@ -2221,6 +2823,8 @@ function resetEquippedBackpackUiState() {
   equippedBackpackLoading = false;
   equippedBackpackLastLoadedAt = 0;
   backpackSelectedSourceItemId = "";
+  clearBackpackSelectionDragState();
+  clearBackpackDragState();
   backpackDiscardingSlotIndexes.clear();
   backpackSelectedSlotIndexes.clear();
   backpackSelectionMode = false;
@@ -2253,7 +2857,7 @@ function resizeProfilePreview() {
 function updateProfilePreviewCamera() {
   if (!profilePreview) return;
   profilePreview.camera.position.set(0, 1.45, profilePreview.distance);
-  profilePreview.camera.lookAt(0, 1.15, 0);
+  profilePreview.camera.lookAt(0, 1.28, 0);
 }
 
 function renderProfilePreview() {
@@ -2404,6 +3008,8 @@ function openBackpackPanel() {
 function closeBackpackPanel() {
   if (!backpackPanel || !backpackOverlay) return;
   closeBackpackContextMenu();
+  clearBackpackSelectionDragState();
+  clearBackpackDragState();
   backpackPanel.hidden = true;
   backpackOverlay.hidden = true;
   backpackPanel.setAttribute("aria-hidden", "true");
@@ -6368,7 +6974,19 @@ function handleBackpackPointerDown(event) {
   event.preventDefault();
   event.stopPropagation();
   if (backpackSelectionMode) {
-    toggleBackpackSlotSelection(slotIndex);
+    const initiallySelected = backpackSelectedSlotIndexes.has(slotIndex);
+    if (!initiallySelected) selectBackpackSlotForDrag(slotIndex);
+    backpackSelectionDrag = {
+      pointerId: event.pointerId,
+      initiallySelected,
+      startSlotIndex: slotIndex,
+      lastSlotIndex: slotIndex,
+      x: event.clientX,
+      y: event.clientY,
+      active: false,
+    };
+    backpackGrid?.classList.add("selection-dragging");
+    event.target.closest(".backpack-slot")?.setPointerCapture?.(event.pointerId);
     renderBackpackDetail(backpackDemoSlots[slotIndex]);
     return;
   }
@@ -6507,20 +7125,29 @@ function startBackpackSelection(slotIndex) {
 
 function cancelBackpackSelection() {
   closeBackpackContextMenu();
+  clearBackpackSelectionDragState();
   backpackSelectionMode = false;
   backpackSelectedSlotIndexes.clear();
   updateBackpackSlotSelectionClasses();
 }
 
-function toggleBackpackSlotSelection(slotIndex) {
+function toggleBackpackSlotSelection(slotIndex, { keepSelectionMode = false } = {}) {
   if (!backpackDemoSlots[slotIndex] || backpackDiscardingSlotIndexes.has(slotIndex)) return;
   if (backpackSelectedSlotIndexes.has(slotIndex)) {
     backpackSelectedSlotIndexes.delete(slotIndex);
   } else {
     backpackSelectedSlotIndexes.add(slotIndex);
   }
-  if (!backpackSelectedSlotIndexes.size) backpackSelectionMode = false;
+  if (!backpackSelectedSlotIndexes.size && !keepSelectionMode) backpackSelectionMode = false;
   updateBackpackSlotSelectionClasses();
+}
+
+function selectBackpackSlotForDrag(slotIndex) {
+  if (!backpackDemoSlots[slotIndex] || backpackDiscardingSlotIndexes.has(slotIndex)) return false;
+  if (backpackSelectedSlotIndexes.has(slotIndex)) return false;
+  backpackSelectedSlotIndexes.add(slotIndex);
+  updateBackpackSlotSelectionClasses();
+  return true;
 }
 
 function updateBackpackSlotSelectionClasses() {
@@ -6668,6 +7295,18 @@ function animateBackpackSlotsDiscarded(slotIndexes) {
 }
 
 function handleBackpackPointerMove(event) {
+  if (backpackSelectionDrag && event.pointerId === backpackSelectionDrag.pointerId) {
+    event.preventDefault();
+    event.stopPropagation();
+    const moved = Math.hypot(event.clientX - backpackSelectionDrag.x, event.clientY - backpackSelectionDrag.y);
+    if (moved > 6) backpackSelectionDrag.active = true;
+    if (!backpackSelectionDrag.active) return;
+    const slotIndex = backpackSlotIndexFromPoint(event.clientX, event.clientY);
+    if (slotIndex === null || slotIndex === backpackSelectionDrag.lastSlotIndex) return;
+    backpackSelectionDrag.lastSlotIndex = slotIndex;
+    if (selectBackpackSlotForDrag(slotIndex)) renderBackpackDetail(backpackDemoSlots[slotIndex]);
+    return;
+  }
   if (!backpackDrag || event.pointerId !== backpackDrag.pointerId) return;
   event.preventDefault();
   event.stopPropagation();
@@ -6686,6 +7325,15 @@ function handleBackpackPointerMove(event) {
 }
 
 function handleBackpackPointerUp(event) {
+  if (backpackSelectionDrag && event.pointerId === backpackSelectionDrag.pointerId) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (!backpackSelectionDrag.active && backpackSelectionDrag.initiallySelected) {
+      toggleBackpackSlotSelection(backpackSelectionDrag.startSlotIndex);
+    }
+    clearBackpackSelectionDragState();
+    return;
+  }
   if (!backpackDrag || event.pointerId !== backpackDrag.pointerId) return;
   event.preventDefault();
   event.stopPropagation();
@@ -6717,9 +7365,19 @@ function handleBackpackPointerUp(event) {
 }
 
 function handleBackpackPointerCancel(event) {
+  if (backpackSelectionDrag && event.pointerId === backpackSelectionDrag.pointerId) {
+    event.stopPropagation();
+    clearBackpackSelectionDragState();
+    return;
+  }
   if (!backpackDrag || event.pointerId !== backpackDrag.pointerId) return;
   event.stopPropagation();
   clearBackpackDragState();
+}
+
+function clearBackpackSelectionDragState() {
+  backpackSelectionDrag = null;
+  backpackGrid?.classList.remove("selection-dragging");
 }
 
 function updateBackpackDragClasses() {
@@ -7022,6 +7680,7 @@ function animate() {
   restoreKnownChunksBudgeted();
   generateCloudsAround(player.position);
   updateCamera(dt);
+  if (firstPersonCamera && isPlacementAction(heldItem())) updatePlacementPreviewFromCenter();
   updateHud();
   updateMinimap();
   updateGuardianSceneFog();
@@ -7575,6 +8234,7 @@ function faceBlock(block) {
 }
 
 function updateAvatar(dt) {
+  resetFirstPersonViewmodelPose();
   updateAvatarMotion({
     THREE,
     avatar,
@@ -7586,6 +8246,7 @@ function updateAvatar(dt) {
     headPitchMin,
     headPitchMax,
   });
+  if (firstPersonCamera) avatar.rotation.y = player.yaw;
 }
 
 function startHandSwing() {
@@ -8143,7 +8804,116 @@ function disposeChatBubble(sprite) {
   sprite.material?.dispose?.();
 }
 
+function toggleFirstPersonCamera() {
+  setFirstPersonCameraEnabled(!firstPersonCamera);
+}
+
+function setFirstPersonCameraEnabled(enabled) {
+  firstPersonCamera = Boolean(enabled);
+  cameraFocusReady = false;
+  dragging = false;
+  activePointerId = null;
+  document.body.classList.toggle("first-person-camera", firstPersonCamera);
+  if (firstPersonCamera) {
+    requestFirstPersonPointerLock();
+    schedulePlacementPreviewFromCenter();
+  } else {
+    releaseFirstPersonPointerLock();
+  }
+}
+
+function requestFirstPersonPointerLock() {
+  if (!firstPersonCamera || !canvas || document.pointerLockElement === canvas) return;
+  try {
+    const lockResult = canvas.requestPointerLock?.();
+    if (lockResult && typeof lockResult.catch === "function") lockResult.catch(() => {});
+  } catch {
+    // Pointer lock is best-effort; first-person mouse movement still works while the cursor is over the game.
+  }
+}
+
+function releaseFirstPersonPointerLock() {
+  if (document.pointerLockElement !== canvas) return;
+  try {
+    document.exitPointerLock?.();
+  } catch {
+    // Ignore browser-specific pointer lock release failures.
+  }
+}
+
+function resetFirstPersonViewmodelPose() {
+  const { rightArm } = avatar.userData.limbs ?? {};
+  if (!rightArm) return;
+  rightArm.position.set(0.64, 2.05, 0);
+  rightArm.rotation.y = 0;
+  rightArm.getObjectByName("rightArmSleeve")?.scale.set(0.34, 0.5, 0.38);
+  rightArm.getObjectByName("rightArmCuff")?.scale.set(0.36, 0.06, 0.4);
+  rightArm.getObjectByName("rightArmHand")?.scale.set(0.32, 0.42, 0.34);
+  rightArm.getObjectByName("rightArmKnuckle")?.scale.set(0.22, 0.08, 0.05);
+}
+
+function syncFirstPersonAvatarParts() {
+  avatar.visible = true;
+  const { head, leftArm, rightArm, leftLeg, rightLeg } = avatar.userData.limbs ?? {};
+  const torso = avatar.getObjectByName("torso");
+  if (head) head.visible = !firstPersonCamera;
+  if (torso) torso.visible = !firstPersonCamera;
+  if (leftArm) leftArm.visible = !firstPersonCamera;
+  if (leftLeg) leftLeg.visible = !firstPersonCamera;
+  if (rightLeg) rightLeg.visible = !firstPersonCamera;
+  if (!rightArm) return;
+  rightArm.visible = true;
+  const rightArmSleeve = rightArm.getObjectByName("rightArmSleeve");
+  const rightArmCuff = rightArm.getObjectByName("rightArmCuff");
+  if (rightArmSleeve) rightArmSleeve.visible = true;
+  if (rightArmCuff) rightArmCuff.visible = true;
+}
+
+function applyFirstPersonViewmodelPose() {
+  const { rightArm } = avatar.userData.limbs ?? {};
+  if (!rightArm) return;
+  rightArm.getObjectByName("rightArmSleeve")?.scale.set(0.13, 0.24, 0.16);
+  rightArm.getObjectByName("rightArmCuff")?.scale.set(0.18, 0.045, 0.2);
+  rightArm.getObjectByName("rightArmHand")?.scale.set(0.25, 0.32, 0.27);
+  rightArm.getObjectByName("rightArmKnuckle")?.scale.set(0.17, 0.06, 0.04);
+  firstPersonViewmodelMotionQuaternion.copy(rightArm.quaternion);
+  firstPersonViewmodelWorldPosition.copy(firstPersonViewmodelOffset).applyMatrix4(camera.matrixWorld);
+  avatar.updateMatrixWorld(true);
+  avatar.worldToLocal(firstPersonViewmodelWorldPosition);
+  rightArm.position.copy(firstPersonViewmodelWorldPosition);
+  avatar.getWorldQuaternion(firstPersonViewmodelParentQuaternion);
+  firstPersonViewmodelParentQuaternionInverse.copy(firstPersonViewmodelParentQuaternion).invert();
+  firstPersonViewmodelWorldQuaternion
+    .copy(camera.quaternion)
+    .multiply(firstPersonRightArmPoseQuaternion)
+    .multiply(firstPersonViewmodelMotionQuaternion);
+  rightArm.quaternion.copy(firstPersonViewmodelParentQuaternionInverse.multiply(firstPersonViewmodelWorldQuaternion));
+}
+
 function updateCamera(dt = 1 / 60) {
+  syncFirstPersonAvatarParts();
+  if (firstPersonCamera) {
+    const eyePosition = cameraFocus.set(
+      player.position.x,
+      player.position.y + firstPersonEyeHeight,
+      player.position.z,
+    );
+    const horizontal = Math.cos(player.cameraPitch);
+    cameraRayDirection.set(
+      -Math.sin(player.yaw) * horizontal,
+      Math.sin(player.cameraPitch),
+      -Math.cos(player.yaw) * horizontal,
+    ).normalize();
+    cameraOffset.set(Math.sin(player.yaw), 0, Math.cos(player.yaw)).multiplyScalar(firstPersonCameraBackDistance);
+    camera.position.copy(eyePosition).add(cameraOffset);
+    cameraLookTarget.copy(camera.position).addScaledVector(cameraRayDirection, 8);
+    camera.lookAt(cameraLookTarget);
+    camera.updateMatrixWorld(true);
+    applyFirstPersonViewmodelPose();
+    cameraFocusReady = true;
+    return;
+  }
+
   const mobileCamera = isMobileViewport();
   const desiredFocus = cameraSamplePosition.set(
     player.position.x,
@@ -9003,6 +9773,10 @@ function isAutoMoveCellWalkable(x, z) {
 }
 
 function pickBlockFromPointer(event) {
+  if (firstPersonCamera) return pickBlockAtScreenCenter(clickRaycaster, {
+    far: clickRaycastFar,
+    targets: nearbyGeneratedChunkGroups(clickRaycastChunkRadius),
+  });
   return pickBlockAtClientPoint(event.clientX, event.clientY, clickRaycaster, {
     far: clickRaycastFar,
     targets: nearbyGeneratedChunkGroups(clickRaycastChunkRadius),
@@ -9012,10 +9786,20 @@ function pickBlockFromPointer(event) {
 function pickBlockAtClientPoint(clientX, clientY, raycaster, options = {}) {
   const rect = canvas.getBoundingClientRect();
   if (!rect.width || !rect.height) return null;
-  raycastPointerVector.set(
+  return pickBlockAtNormalizedPointer(
     ((clientX - rect.left) / rect.width) * 2 - 1,
     -(((clientY - rect.top) / rect.height) * 2 - 1),
+    raycaster,
+    options,
   );
+}
+
+function pickBlockAtScreenCenter(raycaster, options = {}) {
+  return pickBlockAtNormalizedPointer(0, 0, raycaster, options);
+}
+
+function pickBlockAtNormalizedPointer(x, y, raycaster, options = {}) {
+  raycastPointerVector.set(x, y);
   raycaster.setFromCamera(raycastPointerVector, camera);
   raycaster.far = options.far ?? 120;
   const targets = options.targets ?? world.children;
@@ -9119,6 +9903,10 @@ function schedulePlacementPreviewFromPointer(event) {
     placementPreviewPointer = null;
     return;
   }
+  if (firstPersonCamera) {
+    schedulePlacementPreviewFromCenter();
+    return;
+  }
   placementPreviewPointer = { clientX: event.clientX, clientY: event.clientY };
   if (placementPreviewFrame) return;
   placementPreviewFrame = requestAnimationFrame(() => {
@@ -9130,12 +9918,42 @@ function schedulePlacementPreviewFromPointer(event) {
   });
 }
 
+function schedulePlacementPreviewFromCenter() {
+  if (!isPlacementAction(heldItem())) {
+    placementPreview.visible = false;
+    placementPreviewPointer = null;
+    return;
+  }
+  placementPreviewPointer = { center: true };
+  if (placementPreviewFrame) return;
+  placementPreviewFrame = requestAnimationFrame(() => {
+    placementPreviewFrame = 0;
+    const pointer = placementPreviewPointer;
+    placementPreviewPointer = null;
+    if (!pointer) return;
+    updatePlacementPreviewFromCenter();
+  });
+}
+
 function updatePlacementPreviewFromPoint(clientX, clientY) {
   if (!isPlacementAction(heldItem())) {
     placementPreview.visible = false;
     return;
   }
   const hit = pickBlockAtClientPoint(clientX, clientY, previewRaycaster, {
+    far: placementPreviewRaycastFar,
+    targets: nearbyGeneratedChunkGroups(),
+  });
+  const target = placementTargetFromHit(hit);
+  updatePlacementPreview(target, canPlaceBlockAt(target));
+}
+
+function updatePlacementPreviewFromCenter() {
+  if (!isPlacementAction(heldItem())) {
+    placementPreview.visible = false;
+    return;
+  }
+  const hit = pickBlockAtScreenCenter(previewRaycaster, {
     far: placementPreviewRaycastFar,
     targets: nearbyGeneratedChunkGroups(),
   });

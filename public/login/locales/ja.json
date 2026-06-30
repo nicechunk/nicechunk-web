@@ -1,0 +1,159 @@
+{
+  "_meta": {
+    "language": "ja",
+    "label": "Japanese",
+    "version": "login-locale-ja-69057e40129e9013",
+    "contentHash": "69057e40129e9013"
+  },
+  "siteFooter": {
+    "tagline": "Solana 上のシード型ボクセルワールドプロトコル。",
+    "navigationAria": "フッターナビゲーション",
+    "socialAria": "NiceChunk ソーシャルリンク",
+    "home": "ホーム",
+    "play": "ワールドへ",
+    "roadmap": "ロードブック",
+    "docs": "ドキュメント",
+    "guardian": "ガーディアン",
+    "contracts": "コントラクト",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. All rights reserved."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "言語",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "login": {
+    "title": "NICECHUNK ウォレットログイン",
+    "flowLabel": "ログインフロー",
+    "brandSubtitle": "ボクセルユニバース",
+    "authEyebrow": "セキュリティゲートウェイ",
+    "authTitle": "ウォレットアクセス",
+    "authSubtitle": "NiceChunk エコシステムへ入る",
+    "heroStatus": "ライブエンジンレンダー",
+    "steps": {
+      "wallet": "ウォレット接続",
+      "profile": "プレイヤー設定",
+      "ready": "準備完了"
+    },
+    "section": {
+      "wallet": "ウォレット接続",
+      "profile": "プレイヤー設定",
+      "ready": "ワールドへ入る"
+    },
+    "installPhantom": "Phantom をインストール",
+    "playerName": "プレイヤー名",
+    "playerNamePlaceholder": "3〜18文字の名前を入力",
+    "saveName": "プレイヤー名を保存",
+    "player": "プレイヤー",
+    "wallet": "ウォレット",
+    "startGame": "ゲーム開始",
+    "resetLogin": "再ログイン",
+    "returnToBrowser": "ブラウザに戻る",
+    "continueInWalletBrowser": "ウォレットブラウザで続行",
+    "signLoginMessage": "ログインメッセージに署名",
+    "completeCopiedLogin": "ウォレットログインを完了",
+    "copyLoginProof": "ログイン証明をコピー",
+    "manualProofLabel": "このログイン証明を手動でコピー",
+    "selectLoginProof": "ログイン証明を選択",
+    "hudNetwork": "ネットワーク",
+    "hudNetworkValue": "SOLANA",
+    "hudBiome": "バイオーム",
+    "hudBiomeValue": "エメラルドの森",
+    "hudWallet": "ウォレット",
+    "hudWalletValue": "準備完了",
+    "status": {
+      "checking": "Solana ウォレットを確認中...",
+      "walletDetected": "Solana ウォレットを検出しました。接続するものを選んでください。",
+      "noWallet": "注入されたウォレットが検出されません。このページをウォレットアプリで開くか、Phantom をインストールしてください。",
+      "openingWalletApp": "{wallet} を開いています...",
+      "connecting": "{wallet} に接続中...",
+      "publicKeyMissing": "ウォレットが公開鍵を返しませんでした。",
+      "connectFailed": "接続に失敗しました。もう一度お試しください。",
+      "profile": "ウォレット接続済み。プレイヤー名を設定してください。",
+      "invalidUsername": "プレイヤー名は3〜18文字で、英数字、アンダースコア、中国語文字を使用できます。",
+      "ready": "ログイン情報の準備ができました。",
+      "returningToBrowser": "元のブラウザに戻っています...",
+      "continuingInWalletBrowser": "ウォレットブラウザで続行しています...",
+      "signingChallenge": "ウォレットでログインメッセージを確認してください。",
+      "signatureFailed": "ウォレット署名を検証できませんでした。もう一度お試しください。",
+      "proofCopied": "ログイン証明をコピーしました。ブラウザに戻ってウォレットログインを完了してください。",
+      "proofCopyFailed": "ログイン証明をコピーできませんでした。ブラウザに戻るを使ってください。",
+      "readingProof": "コピーされたログイン証明を読み取っています...",
+      "noCopiedProof": "コピーされた NiceChunk ログイン証明が見つかりません。",
+      "proofSelectReady": "ログイン証明を選択しました。コピーしてブラウザに戻ってください。",
+      "pasteProofReady": "Paste your wallet signature proof to finish login when the wallet does not return automatically.",
+      "resourceFailed": "Login resources failed to load. Refresh and try again."
+    },
+    "walletButton": {
+      "noWallet": "ウォレット未検出",
+      "installRefresh": "ウォレットをインストールして更新",
+      "connectAuthorize": "接続してアドレスを承認",
+      "openInApp": "ウォレットブラウザで続行"
+    },
+    "walletHint": {
+      "recommended": "推奨",
+      "compatible": "対応",
+      "generic": "汎用",
+      "mobileApp": "モバイルアプリ"
+    },
+    "loading": {
+      "boot": "Initializing wallet gateway",
+      "checking": "Preparing interface",
+      "waitingForLanguage": "Waiting for language data",
+      "video": "Loading visual layer",
+      "videoReady": "Hero animation is ready.",
+      "visualMetadata": "Preparing transparent logo animation.",
+      "visualReady": "Hero animation is ready.",
+      "videoFallback": "Using poster image while video loading is unavailable.",
+      "worldEyebrow": "World Gateway",
+      "worldTitle": "Preparing NiceChunk world",
+      "worldBody": "Loading player session, terrain engine, and first visible chunks.",
+      "route": "Opening game client",
+      "bytesKnown": "Transferred {loaded} / {total}",
+      "bytesUnknown": "Transferred {loaded}",
+      "stages": {
+        "gateway": {
+          "title": "Initializing wallet gateway",
+          "body": "Preparing interface"
+        },
+        "visual": {
+          "title": "Loading visual layer",
+          "body": "Fetching hero video asset."
+        },
+        "visualDecode": {
+          "title": "Decoding visual layer",
+          "body": "Preparing transparent logo animation."
+        },
+        "visualReady": {
+          "title": "Visual layer ready",
+          "body": "Hero animation is ready."
+        },
+        "visualFallback": {
+          "title": "Visual fallback active",
+          "body": "Using poster image while video loading is unavailable."
+        },
+        "route": {
+          "title": "Opening game client",
+          "body": "Handing your wallet session to the world gateway."
+        }
+      }
+    },
+    "pasteProofAction": "Paste signed proof to finish login",
+    "pasteProofLabel": "Wallet signature proof",
+    "pasteProofPlaceholder": "Paste the signature proof that starts with nicechunk-proof:",
+    "pasteFromClipboard": "Paste from clipboard",
+    "completePastedProof": "Verify pasted proof"
+  }
+}

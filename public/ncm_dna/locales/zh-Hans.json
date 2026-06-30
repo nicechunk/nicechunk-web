@@ -1,0 +1,199 @@
+{
+  "_meta": {
+    "language": "zh-Hans",
+    "label": "Simplified Chinese",
+    "version": "ncm-dna-locale-zh-Hans-1225fbec20fb4033",
+    "contentHash": "1225fbec20fb4033"
+  },
+  "siteFooter": {
+    "tagline": "Solana 上的种子体素世界协议。",
+    "navigationAria": "页脚导航",
+    "socialAria": "NiceChunk 社交链接",
+    "home": "首页",
+    "play": "进入世界",
+    "roadmap": "路书",
+    "docs": "文档",
+    "guardian": "守护者",
+    "contracts": "合约",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk。保留所有权利。"
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "语言",
+    "comingSoon": "即将开放",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "ncmDna": {
+    "nav": {
+      "aria": "主导航",
+      "home": "首页",
+      "roadbook": "路书",
+      "worldRules": "世界规则",
+      "resources": "资源",
+      "ncm": "NCM",
+      "dna": "DNA 实验室",
+      "elements": "元素",
+      "fairness": "公平",
+      "proofOfFrontier": "证明",
+      "contracts": "合约",
+      "enterWorld": "进入世界"
+    },
+    "page": {
+      "title": "NCM DNA 实验室",
+      "description": "NCM DNA 实验室会搜索确定性的短基因，让它可以生长出同一个规范长方体模型。"
+    },
+    "common": {
+      "yes": "是",
+      "no": "否",
+      "on": "开启",
+      "off": "关闭"
+    },
+    "hero": {
+      "eyebrow": "NCM 基因搜索实验",
+      "title": "NCM DNA 实验室",
+      "body": "NCM DNA Lab 是一个面向链上 3D 资产的基因搜索实验室。它不尝试储存每一个方块，而是搜索一段更短的确定性基因，让模型可以从基因中重新生长出来。",
+      "pow": "未来，这种搜索可以成为一种有用的 PoW：矿工消耗 CPU 算力寻找更短基因，降低 PDA 存储体积，并从节省出来的链上存储成本中获得奖励。"
+    },
+    "flow": {
+      "raw": "原始长方体模型",
+      "search": "NCM-DNA 基因搜索",
+      "grow": "Grow(gene) 哈希匹配"
+    },
+    "target": {
+      "eyebrow": "目标模型",
+      "title": "确定性长方体目标",
+      "seed": "目标种子",
+      "source": "来源",
+      "ncmCharacter": "NCM 页面角色",
+      "hiddenGene": "隐藏基因",
+      "rawVariation": "原始变体",
+      "ornaments": "装饰",
+      "generate": "生成目标",
+      "random": "随机目标",
+      "reveal": "显示隐藏基因"
+    },
+    "search": {
+      "eyebrow": "CPU 搜索",
+      "title": "Worker 控制的基因搜索",
+      "mode": "搜索模式",
+      "seedSearch": "DNA 种子自由搜索",
+      "ncmRandom": "NCM 角色随机搜索",
+      "exact": "精确参数恢复",
+      "compression": "压缩搜索",
+      "evolution": "进化搜索",
+      "threads": "线程",
+      "auto": "自动",
+      "maxCandidates": "最大候选数",
+      "maxSeedLength": "最大 DNA 种子长度",
+      "start": "开始搜索",
+      "continuous": "持续搜索",
+      "pause": "暂停",
+      "resume": "继续",
+      "stop": "停止",
+      "reset": "重置"
+    },
+    "result": {
+      "eyebrow": "最佳结果",
+      "title": "种子与编译后的基因",
+      "seed": "最佳 DNA 种子",
+      "gene": "编译后的基因",
+      "copySeed": "复制种子",
+      "growSeed": "从种子创建",
+      "copy": "复制基因",
+      "grow": "生长基因",
+      "seedInput": "种子输入",
+      "seedPlaceholder": "NCS1.AV...",
+      "geneInput": "基因输入",
+      "genePlaceholder": "NCD1.HM..."
+    },
+    "viewer": {
+      "eyebrow": "3D 预览",
+      "title": "规范长方体模型",
+      "canvasAria": "NCM DNA 3D 模型查看器",
+      "modelAria": "查看器模型",
+      "renderAria": "渲染模式",
+      "target": "目标模型",
+      "best": "最佳基因模型",
+      "compare": "并排对比",
+      "diff": "差异视图",
+      "cuboid": "长方体",
+      "voxel": "体素",
+      "wireframe": "线框",
+      "resetCamera": "重置相机"
+    },
+    "cpu": {
+      "eyebrow": "CPU 友好",
+      "title": "为什么优先 CPU？",
+      "body": "NCM-DNA v1 使用规则型方块生长语言，而不是 GPU 友好的体素坐标函数。搜索过程中包含模板判断、分支、镜像、重复、变长基因、cuboid 合并、标准化排序和 hash 校验。这些任务更适合 CPU，也更符合 NiceChunk 想要的有用 PoW 方向。"
+    },
+    "chain": {
+      "eyebrow": "未来链上流程",
+      "title": "节省存储的提交路径",
+      "step1": "资产 PDA 保存 canonical_model_hash 和 current_encoding。",
+      "step2": "矿工提交更短的基因。",
+      "step3": "程序验证 grow(gene) 哈希等于 canonical_model_hash。",
+      "step4": "如果基因更短，则更新资产编码。",
+      "step5": "释放的 PDA 租金可在矿工、所有者和协议池之间分配。"
+    },
+    "metrics": {
+      "status": "状态",
+      "candidates": "候选数",
+      "speed": "速度",
+      "speedValue": "{value}/秒",
+      "generation": "世代",
+      "bestGeneSize": "最佳基因大小",
+      "rawModelSize": "原始模型大小",
+      "ratio": "压缩率",
+      "score": "得分",
+      "targetHash": "目标哈希",
+      "bestHash": "最佳哈希",
+      "bestSeed": "最佳种子",
+      "seedLength": "种子长度",
+      "exact": "精确匹配",
+      "threads": "线程",
+      "threadValue": "{value}/{planned}",
+      "elapsed": "用时",
+      "saved": "节省",
+      "bytes": "{value} 字节"
+    },
+    "status": {
+      "idle": "空闲",
+      "running": "运行中",
+      "paused": "已暂停",
+      "stopped": "已停止",
+      "success": "成功"
+    },
+    "log": {
+      "eyebrow": "搜索日志",
+      "title": "Worker 事件",
+      "targetGenerated": "目标已生成：{hash}",
+      "ncmTargetLoaded": "已加载 NCM 角色目标，共 {boxes} 个长方体。",
+      "workerError": "Worker 错误：{message}",
+      "searchStarted": "搜索已开始。",
+      "continuousStarted": "持续搜索已启动，使用 {threads} 个 Worker 线程。",
+      "searchPaused": "搜索已暂停。",
+      "searchResumed": "搜索已继续。",
+      "searchReset": "搜索已重置。",
+      "best": "最佳得分 {score}：{gene}",
+      "success": "在 {candidates} 个候选后找到精确匹配。",
+      "copied": "基因已复制。",
+      "seedCopied": "种子已复制。",
+      "geneGrown": "基因已生长：{hash}",
+      "seedGrown": "种子已生长：{hash}",
+      "invalidGene": "无效基因：{message}",
+      "invalidSeed": "无效种子：{message}"
+    }
+  }
+}

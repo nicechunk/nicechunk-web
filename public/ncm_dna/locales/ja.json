@@ -1,0 +1,198 @@
+{
+  "_meta": {
+    "language": "ja",
+    "label": "Japanese",
+    "version": "ncm-dna-locale-ja-a1ad46866c0d54a3",
+    "contentHash": "a1ad46866c0d54a3"
+  },
+  "siteFooter": {
+    "tagline": "Solana 上のシード型ボクセルワールドプロトコル。",
+    "navigationAria": "フッターナビゲーション",
+    "socialAria": "NiceChunk ソーシャルリンク",
+    "home": "ホーム",
+    "play": "ワールドへ",
+    "roadmap": "ロードブック",
+    "docs": "ドキュメント",
+    "guardian": "ガーディアン",
+    "contracts": "コントラクト",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. All rights reserved."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "言語",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "ncmDna": {
+    "nav": {
+      "aria": "メインナビゲーション",
+      "home": "ホーム",
+      "roadbook": "ロードマップ",
+      "worldRules": "ワールドルール",
+      "resources": "リソース",
+      "ncm": "NCM",
+      "dna": "DNA ラボ",
+      "elements": "元素",
+      "fairness": "公平性",
+      "proofOfFrontier": "証明",
+      "contracts": "コントラクト",
+      "enterWorld": "ワールドへ"
+    },
+    "page": {
+      "title": "NCM DNA ラボ",
+      "description": "NCM DNA Lab は、同じ正規直方体モデルを生成できる短い決定的遺伝子を検索します。"
+    },
+    "common": {
+      "yes": "はい",
+      "no": "いいえ",
+      "on": "オン",
+      "off": "オフ"
+    },
+    "hero": {
+      "eyebrow": "NCM 遺伝子検索実験",
+      "title": "NCM DNA ラボ",
+      "body": "NCM DNA Lab はオンチェーン 3D アセット向けの実験的な遺伝子検索システムです。すべてのキューブを保存する代わりに、同じモデルを再生成できる短い決定的遺伝子を探します。",
+      "pow": "将来的に、この検索は有用な Proof of Work になります。マイナーは CPU 計算で短い遺伝子を発見し、PDA ストレージを減らし、削減された保存コストから報酬を得られます。"
+    },
+    "flow": {
+      "raw": "生の直方体モデル",
+      "search": "NCM-DNA 遺伝子検索",
+      "grow": "Grow(gene) ハッシュ一致"
+    },
+    "target": {
+      "eyebrow": "ターゲットモデル",
+      "title": "決定的な直方体ターゲット",
+      "seed": "ターゲットシード",
+      "source": "ソース",
+      "ncmCharacter": "NCM ページのキャラクター",
+      "hiddenGene": "隠し遺伝子",
+      "rawVariation": "生バリエーション",
+      "ornaments": "装飾",
+      "generate": "ターゲット生成",
+      "random": "ランダムターゲット",
+      "reveal": "隠し遺伝子を表示"
+    },
+    "search": {
+      "eyebrow": "CPU 検索",
+      "title": "Worker 制御の遺伝子検索",
+      "mode": "検索モード",
+      "seedSearch": "DNA シード自由検索",
+      "ncmRandom": "NCM アバターランダム",
+      "exact": "正確なパラメータ復元",
+      "compression": "圧縮検索",
+      "evolution": "進化検索",
+      "threads": "スレッド",
+      "auto": "自動",
+      "maxCandidates": "最大候補数",
+      "maxSeedLength": "DNA シード最大長",
+      "start": "検索開始",
+      "continuous": "連続検索",
+      "pause": "一時停止",
+      "resume": "再開",
+      "stop": "停止",
+      "reset": "リセット"
+    },
+    "result": {
+      "eyebrow": "最良結果",
+      "title": "シードとコンパイル済み遺伝子",
+      "seed": "最良 DNA シード",
+      "gene": "コンパイル済み遺伝子",
+      "copySeed": "シードをコピー",
+      "growSeed": "シードから作成",
+      "copy": "遺伝子をコピー",
+      "grow": "遺伝子を生成",
+      "seedInput": "シード入力",
+      "seedPlaceholder": "NCS1.AV...",
+      "geneInput": "遺伝子入力",
+      "genePlaceholder": "NCD1.HM..."
+    },
+    "viewer": {
+      "eyebrow": "3D プレビュー",
+      "title": "正規直方体モデル",
+      "canvasAria": "NCM DNA 3D モデルビューア",
+      "modelAria": "ビューアモデル",
+      "renderAria": "描画モード",
+      "target": "ターゲットモデル",
+      "best": "最良遺伝子モデル",
+      "compare": "並べて表示",
+      "diff": "差分表示",
+      "cuboid": "直方体",
+      "voxel": "ボクセル",
+      "wireframe": "ワイヤーフレーム",
+      "resetCamera": "カメラをリセット"
+    },
+    "cpu": {
+      "eyebrow": "CPU 向け",
+      "title": "なぜ CPU 優先か？",
+      "body": "NCM-DNA v1 は GPU 向けのボクセル関数ではなく、ルールベースの直方体成長言語を使います。分岐、テンプレート、対称性検出、正規ソート、可変長遺伝子を含むため、汎用 CPU 実行に適しています。"
+    },
+    "chain": {
+      "eyebrow": "将来のオンチェーンフロー",
+      "title": "保存容量を減らす提出経路",
+      "step1": "アセット PDA は canonical_model_hash と current_encoding を保存します。",
+      "step2": "マイナーはより短い遺伝子を提出します。",
+      "step3": "プログラムは grow(gene) のハッシュが canonical_model_hash と一致するか検証します。",
+      "step4": "遺伝子が短ければアセットのエンコードを更新します。",
+      "step5": "解放された PDA レントはマイナー、所有者、プロトコルプールで分配できます。"
+    },
+    "metrics": {
+      "status": "状態",
+      "candidates": "候補",
+      "speed": "速度",
+      "speedValue": "{value}/秒",
+      "generation": "世代",
+      "bestGeneSize": "最良遺伝子サイズ",
+      "rawModelSize": "生モデルサイズ",
+      "ratio": "圧縮",
+      "score": "スコア",
+      "targetHash": "ターゲットハッシュ",
+      "bestHash": "最良ハッシュ",
+      "bestSeed": "最良シード",
+      "seedLength": "シード長",
+      "exact": "完全一致",
+      "threads": "スレッド",
+      "threadValue": "{planned} 中 {value}",
+      "elapsed": "経過",
+      "saved": "削減",
+      "bytes": "{value} バイト"
+    },
+    "status": {
+      "idle": "待機中",
+      "running": "実行中",
+      "paused": "一時停止",
+      "stopped": "停止",
+      "success": "成功"
+    },
+    "log": {
+      "eyebrow": "検索ログ",
+      "title": "Worker イベント",
+      "targetGenerated": "ターゲット生成: {hash}",
+      "ncmTargetLoaded": "{boxes} 個の直方体を持つ NCM キャラクターターゲットを読み込みました。",
+      "workerError": "Worker エラー: {message}",
+      "searchStarted": "検索を開始しました。",
+      "continuousStarted": "{threads} 個の worker スレッドで連続検索を開始しました。",
+      "searchPaused": "検索を一時停止しました。",
+      "searchResumed": "検索を再開しました。",
+      "searchReset": "検索をリセットしました。",
+      "best": "最良スコア {score}: {gene}",
+      "success": "{candidates} 候補後に完全一致を発見しました。",
+      "copied": "遺伝子をコピーしました。",
+      "seedCopied": "シードをコピーしました。",
+      "geneGrown": "遺伝子を生成しました: {hash}",
+      "seedGrown": "シードを生成しました: {hash}",
+      "invalidGene": "無効な遺伝子: {message}",
+      "invalidSeed": "無効なシード: {message}"
+    }
+  }
+}

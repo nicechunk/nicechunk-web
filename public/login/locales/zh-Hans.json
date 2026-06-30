@@ -1,0 +1,167 @@
+{
+  "_meta": {
+    "language": "zh-Hans",
+    "label": "Simplified Chinese",
+    "version": "login-locale-zh-Hans-59894175c0d9f535",
+    "contentHash": "59894175c0d9f535"
+  },
+  "siteFooter": {
+    "tagline": "Solana 上的种子体素世界协议。",
+    "navigationAria": "页脚导航",
+    "socialAria": "NiceChunk 社交链接",
+    "home": "首页",
+    "play": "进入世界",
+    "roadmap": "路书",
+    "docs": "文档",
+    "guardian": "守护者",
+    "contracts": "合约",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk。保留所有权利。"
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "语言",
+    "comingSoon": "即将开放",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "login": {
+    "title": "NICECHUNK 钱包登录",
+    "flowLabel": "登录流程",
+    "brandSubtitle": "体素宇宙",
+    "authEyebrow": "安全网关",
+    "authTitle": "钱包访问",
+    "authSubtitle": "进入 NiceChunk 生态系统",
+    "heroStatus": "实时引擎渲染",
+    "steps": {
+      "wallet": "连接钱包",
+      "profile": "玩家设置",
+      "ready": "准备进入"
+    },
+    "section": {
+      "wallet": "连接钱包",
+      "profile": "玩家设置",
+      "ready": "进入世界"
+    },
+    "installPhantom": "安装 Phantom",
+    "playerName": "玩家名",
+    "playerNamePlaceholder": "输入 3-18 位名字",
+    "saveName": "保存玩家名",
+    "player": "玩家",
+    "wallet": "钱包",
+    "startGame": "开始游戏",
+    "resetLogin": "重新登录",
+    "returnToBrowser": "返回浏览器",
+    "continueInWalletBrowser": "在钱包浏览器中继续",
+    "signLoginMessage": "签署登录消息",
+    "completeCopiedLogin": "完成钱包登录",
+    "copyLoginProof": "复制登录凭证",
+    "manualProofLabel": "手动复制此登录凭证",
+    "selectLoginProof": "选中登录凭证",
+    "hudNetwork": "网络",
+    "hudNetworkValue": "SOLANA",
+    "hudBiome": "生态域",
+    "hudBiomeValue": "翡翠森林",
+    "hudWallet": "钱包",
+    "hudWalletValue": "就绪",
+    "status": {
+      "checking": "正在检测 Solana 钱包...",
+      "walletDetected": "检测到 Solana 钱包，选择一个连接。",
+      "noWallet": "没有检测到注入式钱包。请在钱包 App 中打开此页面，或安装 Phantom。",
+      "openingWalletApp": "正在打开 {wallet}...",
+      "connecting": "正在连接 {wallet}...",
+      "networkChecking": "正在检查 NiceChunk 网络...",
+      "networkSwitching": "正在请求钱包切换到 Solana {network}...",
+      "networkReady": "钱包网络已就绪：Solana {network}。",
+      "networkUnknownValue": "未知",
+      "networkMismatch": "NiceChunk 需要 Solana {expected}，但钱包当前报告为 {detected}。请切换网络后重新连接。",
+      "networkSwitchFailed": "钱包网络切换失败。请在钱包中切换到 Solana {expected} 后重新连接。",
+      "networkSwitchUnsupported": "当前钱包不支持自动切换网络。请在钱包设置中切换到 Solana {expected} 后重新连接。",
+      "publicKeyMissing": "钱包没有返回 publicKey。",
+      "connectFailed": "连接失败，请重新尝试。",
+      "profile": "钱包已连接，设置玩家名。",
+      "invalidUsername": "玩家名需要 3-18 位，只能包含字母、数字、下划线和中文。",
+      "ready": "登录信息已准备好。",
+      "returningToBrowser": "正在返回原来的浏览器...",
+      "continuingInWalletBrowser": "正在钱包浏览器中继续...",
+      "signingChallenge": "请在钱包中确认登录消息。",
+      "signatureFailed": "无法验证钱包签名，请重试。",
+      "proofCopied": "登录凭证已复制。返回浏览器后完成钱包登录。",
+      "proofCopyFailed": "无法复制登录凭证，请使用返回浏览器。",
+      "readingProof": "正在读取复制的登录凭证...",
+      "noCopiedProof": "没有找到已复制的 NiceChunk 登录凭证。",
+      "proofSelectReady": "登录凭证已选中。请复制后返回浏览器。",
+      "pasteProofReady": "粘贴钱包签名凭证，完成没有自动跳回时的登录流程。",
+      "resourceFailed": "登录资源加载失败，请刷新后重试。"
+    },
+    "walletButton": {
+      "noWallet": "未检测到钱包",
+      "installRefresh": "安装钱包后刷新页面",
+      "connectAuthorize": "连接并授权地址",
+      "openInApp": "在钱包浏览器中继续"
+    },
+    "walletHint": {
+      "recommended": "推荐",
+      "compatible": "兼容",
+      "generic": "通用",
+      "mobileApp": "移动 App"
+    },
+    "loading": {
+      "boot": "正在初始化钱包网关",
+      "checking": "正在准备界面",
+      "waitingForLanguage": "等待语言数据",
+      "video": "加载视觉层",
+      "videoReady": "首屏动画已就绪。",
+      "visualMetadata": "正在准备透明 Logo 动画。",
+      "visualReady": "首屏动画已就绪。",
+      "videoFallback": "视频暂时不可用，正在使用封面图。",
+      "worldEyebrow": "世界网关",
+      "worldTitle": "正在准备 NiceChunk 世界",
+      "worldBody": "正在加载玩家会话、地形引擎和第一批可见 Chunk。",
+      "route": "正在打开游戏客户端",
+      "bytesKnown": "已传输 {loaded} / {total}",
+      "bytesUnknown": "已传输 {loaded}",
+      "stages": {
+        "gateway": {
+          "title": "正在初始化钱包网关",
+          "body": "正在准备界面"
+        },
+        "visual": {
+          "title": "加载视觉层",
+          "body": "正在获取首屏 Logo 视频资源。"
+        },
+        "visualDecode": {
+          "title": "解码视觉层",
+          "body": "正在准备透明 Logo 动画。"
+        },
+        "visualReady": {
+          "title": "视觉层已就绪",
+          "body": "首屏动画已就绪。"
+        },
+        "visualFallback": {
+          "title": "使用视觉兜底",
+          "body": "视频暂时不可用，正在使用封面图。"
+        },
+        "route": {
+          "title": "打开游戏客户端",
+          "body": "正在把你的钱包会话交给世界网关。"
+        }
+      }
+    },
+    "pasteProofAction": "粘贴签名凭证完成登录",
+    "pasteProofLabel": "钱包签名凭证",
+    "pasteProofPlaceholder": "粘贴 nicechunk-proof: 开头的签名凭证",
+    "pasteFromClipboard": "从剪贴板粘贴",
+    "completePastedProof": "验证粘贴的凭证"
+  }
+}

@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hant",
     "label": "Traditional Chinese",
-    "version": "resource-rule-locale-zh-Hant-7a2d87ac45a86423",
-    "contentHash": "7a2d87ac45a86423"
+    "version": "resource-rule-locale-zh-Hant-7f153586e066698a",
+    "contentHash": "7f153586e066698a"
   },
   "siteFooter": {
     "tagline": "Solana 上的種子體素世界協議。",
@@ -221,7 +221,7 @@
       "title": "原始資源會變成可鍛造材料。",
       "body": "原始資源不能直接鍛造。熔煉爐會消耗燃料熱量，檢查材料配方，然後產出可用於物品鍛造的材料資源。",
       "ruleSetLabel": "規則來源",
-      "contractBody": "这张表來自独立 JSON 規則源，方便遊戲客戶端和未來合約引用同一套熔煉要求。",
+      "contractBody": "這张表來自獨立 JSON 規則源，方便遊戲客戶端和未來合約引用同一套熔煉要求。",
       "fuelTitle": "燃料熱量等級",
       "fuelBody": "可燃燃料提供熱量等級。更高阶的配方需要更強燃料或更熱的爐源。",
       "recipeTitle": "材料圖鉴",
@@ -230,15 +230,15 @@
       "filtersAria": "材料篩選",
       "categoryTitle": "材料類別",
       "allMaterials": "全部材料",
-      "resultCount": "显示 {count} 個",
+      "resultCount": "顯示 {count} 個",
       "searchLabel": "搜尋材料、類別、元素或輸入",
       "searchPlaceholder": "搜尋 steel、Si、glass...",
       "empty": "目前篩選下沒有匹配的材料配方。",
       "materialAria": "打開 {name} 材料詳情",
       "visualModelLabel": "元素色彩模型",
-      "visualModelBody": "材料缩略圖會根據每個配方档案中的主導元素生成。",
+      "visualModelBody": "材料缩略圖會根據每個配方檔案中的主導元素生成。",
       "processTitle": "熔煉流程",
-      "compositionTitle": "材料元素档案",
+      "compositionTitle": "材料元素檔案",
       "forgeUseTitle": "鍛造解鎖",
       "sourceBlocksTitle": "原始資源來源",
       "heatLabel": "熱量",
@@ -286,7 +286,7 @@
         "flux": "熔煉助熔剂，用於净化熔體並减少爐渣",
         "masonry": "結構砌塊、窑爐主體和野外建造",
         "lens": "鏡片、窗片、仪表和易碎配件",
-        "circuit": "電路、感測器、邏輯板和信号装置",
+        "circuit": "電路、感測器、邏輯板和信號装置",
         "cooling": "冷卻单元、穩定器和寒冷等級配件",
         "toolHead": "镐头、刀刃、工具和結構件",
         "conductor": "導電配件、線圈和精密零件",
@@ -350,7 +350,7 @@
         },
         "salt_flux": {
           "name": "盐助熔剂",
-          "description": "由盐滩和火山灰制成的助熔材料，可帮助熔煉分离爐渣並穩定更干净的金屬批次。"
+          "description": "由盐滩和火山灰制成的助熔材料，可幫助熔煉分离爐渣並穩定更干净的金屬批次。"
         },
         "ash_cement": {
           "name": "灰質水泥",
@@ -366,7 +366,7 @@
         },
         "silicon_wafer": {
           "name": "矽晶片",
-          "description": "用碳還原得到的纯化矽片，可用於電路、感測器和未來信号装置。"
+          "description": "用碳還原得到的纯化矽片，可用於電路、感測器和未來信號装置。"
         },
         "ice_crystal": {
           "name": "冰晶",

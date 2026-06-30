@@ -380,7 +380,8 @@ p {
   line-height: 1.68;
 }
 
-.dna-embed-head a {
+.dna-embed-head a,
+.dna-embed-head button {
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
@@ -394,6 +395,15 @@ p {
   font-weight: 950;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.dna-embed-head button {
+  cursor: pointer;
+}
+
+.dna-embed-head button:disabled {
+  cursor: default;
+  opacity: 0.62;
 }
 
 .dna-frame-shell {
@@ -664,7 +674,8 @@ p {
     align-items: start;
   }
 
-  .dna-embed-head a {
+  .dna-embed-head a,
+  .dna-embed-head button {
     width: fit-content;
   }
 

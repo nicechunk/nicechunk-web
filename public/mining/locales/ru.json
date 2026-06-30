@@ -1,0 +1,100 @@
+{
+  "_meta": {
+    "language": "ru",
+    "label": "Russian",
+    "version": "mining-locale-ru-e4a262ede5a1db0a",
+    "contentHash": "e4a262ede5a1db0a"
+  },
+  "siteFooter": {
+    "tagline": "Seeded voxel world protocol on Solana.",
+    "navigationAria": "Навигация в футере",
+    "socialAria": "Социальные ссылки NiceChunk",
+    "home": "Главная",
+    "play": "Войти в мир",
+    "roadmap": "План",
+    "docs": "Документы",
+    "guardian": "Стражи",
+    "contracts": "Контракты",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Все права защищены."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "Язык",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "mining": {
+    "title": "Добыча Nicechunk",
+    "canvasLabel": "Подземная шахтная пещера",
+    "player": {
+      "title": "Начинающий шахтер",
+      "wallet": "Кошелек"
+    },
+    "panel": {
+      "kicker": "Текущая пещера",
+      "title": "Пользователи онлайн",
+      "depth": "Глубина шахты",
+      "ore": "Руда",
+      "oreCount": "Осталось {count}",
+      "contractAddress": "Контракт шахты",
+      "hashrate": "Общий хешрейт",
+      "blockTime": "Среднее время блока",
+      "totalBlocks": "Всего блоков",
+      "minedBlocks": "Добыто блоков",
+      "remainingBlocks": "Осталось блоков",
+      "hashrateH": "{value} H/s",
+      "hashrateKh": "{value} KH/s",
+      "seconds": "{value}с",
+      "meters": "{value} м"
+    },
+    "controls": {
+      "label": "Управление добычей",
+      "mine": "Добывать"
+    },
+    "inventory": {
+      "ore": "Руда",
+      "energy": "Энергия"
+    },
+    "status": {
+      "label": "Статус",
+      "ready": "Готово к добыче",
+      "noTarget": "Наведитесь на светящуюся жилу",
+      "mined": "Руда добыта"
+    },
+    "userStatus": {
+      "mining": "Добывает у центральной жилы",
+      "drilling": "Бурит боковую стену",
+      "hauling": "Везет вагонетку",
+      "scanning": "Проверяет качество руды",
+      "resting": "Восстанавливает энергию",
+      "yield": "{count} руды"
+    },
+    "system": {
+      "label": "Информация о компьютере",
+      "cpu": "CPU",
+      "memory": "Память",
+      "cores": "{count} ядер",
+      "memoryGb": "{value} ГБ",
+      "unknown": "Неизвестно"
+    },
+    "tools": {
+      "label": "Инструменты",
+      "slot": "Слот {slot}: {item}",
+      "drill": "Шахтный бур",
+      "scanner": "Сканер руды",
+      "lantern": "Шахтный фонарь",
+      "hammer": "Каменный молот"
+    }
+  }
+}

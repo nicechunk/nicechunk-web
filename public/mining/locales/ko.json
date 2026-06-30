@@ -1,0 +1,100 @@
+{
+  "_meta": {
+    "language": "ko",
+    "label": "Korean",
+    "version": "mining-locale-ko-b851c6dd4941650c",
+    "contentHash": "b851c6dd4941650c"
+  },
+  "siteFooter": {
+    "tagline": "Solana 기반 시드형 복셀 월드 프로토콜.",
+    "navigationAria": "푸터 내비게이션",
+    "socialAria": "NiceChunk 소셜 링크",
+    "home": "홈",
+    "play": "월드 입장",
+    "roadmap": "로드북",
+    "docs": "문서",
+    "guardian": "가디언",
+    "contracts": "컨트랙트",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. All rights reserved."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "언어",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "mining": {
+    "title": "Nicechunk 채굴",
+    "canvasLabel": "지하 채굴 동굴",
+    "player": {
+      "title": "초보 광부",
+      "wallet": "지갑"
+    },
+    "panel": {
+      "kicker": "현재 동굴",
+      "title": "온라인 사용자",
+      "depth": "동굴 깊이",
+      "ore": "광석",
+      "oreCount": "{count} 남음",
+      "contractAddress": "동굴 컨트랙트",
+      "hashrate": "총 해시레이트",
+      "blockTime": "평균 블록 시간",
+      "totalBlocks": "총 블록",
+      "minedBlocks": "채굴한 블록",
+      "remainingBlocks": "남은 블록",
+      "hashrateH": "{value} H/s",
+      "hashrateKh": "{value} KH/s",
+      "seconds": "{value}초",
+      "meters": "{value} m"
+    },
+    "controls": {
+      "label": "채굴 조작",
+      "mine": "채굴"
+    },
+    "inventory": {
+      "ore": "광석",
+      "energy": "에너지"
+    },
+    "status": {
+      "label": "상태",
+      "ready": "채굴 준비됨",
+      "noTarget": "빛나는 광맥을 조준하세요",
+      "mined": "광석 채굴됨"
+    },
+    "userStatus": {
+      "mining": "중앙 광맥 근처에서 채굴 중",
+      "drilling": "측면 벽 굴착 중",
+      "hauling": "광석 수레 운반 중",
+      "scanning": "광석 품질 검사 중",
+      "resting": "에너지 회복 중",
+      "yield": "{count} 광석"
+    },
+    "system": {
+      "label": "컴퓨터 정보",
+      "cpu": "CPU",
+      "memory": "메모리",
+      "cores": "{count} 코어",
+      "memoryGb": "{value} GB",
+      "unknown": "알 수 없음"
+    },
+    "tools": {
+      "label": "도구",
+      "slot": "슬롯 {slot}: {item}",
+      "drill": "채굴 드릴",
+      "scanner": "광석 스캐너",
+      "lantern": "동굴 랜턴",
+      "hammer": "암석 망치"
+    }
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "_meta": {
+    "language": "es",
+    "label": "Spanish",
+    "version": "mining-locale-es-c63b03bd5a3be2bc",
+    "contentHash": "c63b03bd5a3be2bc"
+  },
+  "siteFooter": {
+    "tagline": "Un protocolo de mundo voxel con semillas en Solana.",
+    "navigationAria": "Navegación del pie de página",
+    "socialAria": "Enlaces sociales de NiceChunk",
+    "home": "Inicio",
+    "play": "Entrar al mundo",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Guardianes",
+    "contracts": "Contratos",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Todos los derechos reservados."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "Idioma",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "mining": {
+    "title": "Mineria Nicechunk",
+    "canvasLabel": "Cueva minera subterranea",
+    "player": {
+      "title": "Minero novato",
+      "wallet": "Cartera"
+    },
+    "panel": {
+      "kicker": "Cueva actual",
+      "title": "Usuarios en linea",
+      "depth": "Profundidad",
+      "ore": "Mineral",
+      "oreCount": "{count} restantes",
+      "contractAddress": "Contrato de cueva",
+      "hashrate": "Hashrate total",
+      "blockTime": "Tiempo medio de bloque",
+      "totalBlocks": "Bloques totales",
+      "minedBlocks": "Bloques minados",
+      "remainingBlocks": "Bloques restantes",
+      "hashrateH": "{value} H/s",
+      "hashrateKh": "{value} KH/s",
+      "seconds": "{value}s",
+      "meters": "{value} m"
+    },
+    "controls": {
+      "label": "Controles de mineria",
+      "mine": "Minar"
+    },
+    "inventory": {
+      "ore": "Mineral",
+      "energy": "Energia"
+    },
+    "status": {
+      "label": "Estado",
+      "ready": "Listo para minar",
+      "noTarget": "Apunta a una veta brillante",
+      "mined": "Mineral extraido"
+    },
+    "userStatus": {
+      "mining": "Minando cerca de la veta central",
+      "drilling": "Perforando pared lateral",
+      "hauling": "Transportando vagoneta",
+      "scanning": "Analizando calidad del mineral",
+      "resting": "Recuperando energia",
+      "yield": "{count} mineral"
+    },
+    "system": {
+      "label": "Informacion del equipo",
+      "cpu": "CPU",
+      "memory": "Memoria",
+      "cores": "{count} nucleos",
+      "memoryGb": "{value} GB",
+      "unknown": "Desconocido"
+    },
+    "tools": {
+      "label": "Herramientas",
+      "slot": "Ranura {slot}: {item}",
+      "drill": "Taladro minero",
+      "scanner": "Escaner de mineral",
+      "lantern": "Linterna de cueva",
+      "hammer": "Martillo de roca"
+    }
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "_meta": {
+    "language": "ru",
+    "label": "Russian",
+    "version": "ncm-dna-locale-ru-a806e8166f2d8b33",
+    "contentHash": "a806e8166f2d8b33"
+  },
+  "siteFooter": {
+    "tagline": "Seeded voxel world protocol on Solana.",
+    "navigationAria": "Навигация в футере",
+    "socialAria": "Социальные ссылки NiceChunk",
+    "home": "Главная",
+    "play": "Войти в мир",
+    "roadmap": "План",
+    "docs": "Документы",
+    "guardian": "Стражи",
+    "contracts": "Контракты",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Все права защищены."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "Язык",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "ncmDna": {
+    "nav": {
+      "aria": "Основная навигация",
+      "home": "Главная",
+      "roadbook": "Дорожная карта",
+      "worldRules": "Правила мира",
+      "resources": "Ресурсы",
+      "ncm": "NCM",
+      "dna": "DNA Lab",
+      "elements": "Элементы",
+      "fairness": "Честность",
+      "proofOfFrontier": "Доказательство",
+      "contracts": "Контракты",
+      "enterWorld": "Войти в мир"
+    },
+    "page": {
+      "title": "Лаборатория NCM DNA",
+      "description": "NCM DNA Lab ищет короткие детерминированные гены, из которых можно вырастить ту же каноническую кубоидную модель."
+    },
+    "common": {
+      "yes": "Да",
+      "no": "Нет",
+      "on": "Вкл.",
+      "off": "Выкл."
+    },
+    "hero": {
+      "eyebrow": "ЭКСПЕРИМЕНТ ПОИСКА ГЕНОВ NCM",
+      "title": "Лаборатория NCM DNA",
+      "body": "NCM DNA Lab — экспериментальная система поиска генов для on-chain 3D-активов. Вместо хранения каждого куба она ищет более короткий детерминированный ген, который может вырастить ту же модель.",
+      "pow": "В будущем такой поиск может стать полезным Proof of Work: майнеры тратят CPU, находят более короткие гены, уменьшают размер PDA-хранилища и получают награды из сэкономленной стоимости хранения."
+    },
+    "flow": {
+      "raw": "Сырая кубоидная модель",
+      "search": "Поиск генов NCM-DNA",
+      "grow": "Совпадение хэша Grow(gene)"
+    },
+    "target": {
+      "eyebrow": "ЦЕЛЕВАЯ МОДЕЛЬ",
+      "title": "Детерминированная кубоидная цель",
+      "seed": "Целевой seed",
+      "source": "Источник",
+      "ncmCharacter": "Персонаж страницы NCM",
+      "hiddenGene": "Скрытый ген",
+      "rawVariation": "Сырая вариация",
+      "ornaments": "Украшения",
+      "generate": "Создать цель",
+      "random": "Случайная цель",
+      "reveal": "Показать скрытый ген"
+    },
+    "search": {
+      "eyebrow": "CPU-ПОИСК",
+      "title": "Поиск генов под управлением worker",
+      "mode": "Режим поиска",
+      "seedSearch": "Свободный поиск DNA seed",
+      "ncmRandom": "Случайный NCM Avatar",
+      "exact": "Точное восстановление параметров",
+      "compression": "Поиск сжатия",
+      "evolution": "Эволюционный поиск",
+      "threads": "Потоки",
+      "auto": "Авто",
+      "maxCandidates": "Макс. кандидатов",
+      "maxSeedLength": "Макс. длина DNA seed",
+      "start": "Начать поиск",
+      "continuous": "Непрерывный поиск",
+      "pause": "Пауза",
+      "resume": "Продолжить",
+      "stop": "Стоп",
+      "reset": "Сброс"
+    },
+    "result": {
+      "eyebrow": "ЛУЧШИЙ РЕЗУЛЬТАТ",
+      "title": "Seed и скомпилированный ген",
+      "seed": "Лучший DNA seed",
+      "gene": "Скомпилированный ген",
+      "copySeed": "Копировать seed",
+      "growSeed": "Создать из seed",
+      "copy": "Копировать ген",
+      "grow": "Вырастить ген",
+      "seedInput": "Ввод seed",
+      "seedPlaceholder": "NCS1.AV...",
+      "geneInput": "Ввод гена",
+      "genePlaceholder": "NCD1.HM..."
+    },
+    "viewer": {
+      "eyebrow": "3D-ПРЕДПРОСМОТР",
+      "title": "Каноническая кубоидная модель",
+      "canvasAria": "3D просмотрщик модели NCM DNA",
+      "modelAria": "Модель в просмотрщике",
+      "renderAria": "Режим рендера",
+      "target": "Целевая модель",
+      "best": "Лучшая генная модель",
+      "compare": "Рядом",
+      "diff": "Вид различий",
+      "cuboid": "Кубоид",
+      "voxel": "Воксель",
+      "wireframe": "Каркас",
+      "resetCamera": "Сбросить камеру"
+    },
+    "cpu": {
+      "eyebrow": "УДОБНО ДЛЯ CPU",
+      "title": "Почему сначала CPU?",
+      "body": "NCM-DNA v1 использует основанный на правилах язык роста кубоидов, а не удобные для GPU воксельные функции. Поиск содержит ветвления, шаблоны, симметрию, каноническую сортировку и гены переменной длины, что лучше подходит для обычного CPU."
+    },
+    "chain": {
+      "eyebrow": "БУДУЩИЙ ON-CHAIN ПОТОК",
+      "title": "Путь отправки с экономией хранения",
+      "step1": "PDA актива хранит canonical_model_hash и current_encoding.",
+      "step2": "Майнер отправляет более короткий ген.",
+      "step3": "Программа проверяет, что хэш grow(gene) равен canonical_model_hash.",
+      "step4": "Если ген короче, кодировка актива обновляется.",
+      "step5": "Освобожденная PDA-рента может делиться между майнером, владельцем и пулом протокола."
+    },
+    "metrics": {
+      "status": "Статус",
+      "candidates": "Кандидаты",
+      "speed": "Скорость",
+      "speedValue": "{value}/с",
+      "generation": "Поколение",
+      "bestGeneSize": "Размер лучшего гена",
+      "rawModelSize": "Размер сырой модели",
+      "ratio": "Сжатие",
+      "score": "Оценка",
+      "targetHash": "Хэш цели",
+      "bestHash": "Лучший хэш",
+      "bestSeed": "Лучший seed",
+      "seedLength": "Длина seed",
+      "exact": "Точное совпадение",
+      "threads": "Потоки",
+      "threadValue": "{value} из {planned}",
+      "elapsed": "Время",
+      "saved": "Сэкономлено",
+      "bytes": "{value} байт"
+    },
+    "status": {
+      "idle": "Ожидание",
+      "running": "Работает",
+      "paused": "Пауза",
+      "stopped": "Остановлено",
+      "success": "Успех"
+    },
+    "log": {
+      "eyebrow": "ЖУРНАЛ ПОИСКА",
+      "title": "События worker",
+      "targetGenerated": "Цель создана: {hash}",
+      "ncmTargetLoaded": "Целевой персонаж NCM загружен: {boxes} кубоидов.",
+      "workerError": "Ошибка worker: {message}",
+      "searchStarted": "Поиск начат.",
+      "continuousStarted": "Непрерывный поиск запущен на {threads} worker-потоках.",
+      "searchPaused": "Поиск приостановлен.",
+      "searchResumed": "Поиск продолжен.",
+      "searchReset": "Поиск сброшен.",
+      "best": "Лучшая оценка {score}: {gene}",
+      "success": "Точное совпадение найдено после {candidates} кандидатов.",
+      "copied": "Ген скопирован.",
+      "seedCopied": "Seed скопирован.",
+      "geneGrown": "Ген выращен: {hash}",
+      "seedGrown": "Seed выращен: {hash}",
+      "invalidGene": "Недопустимый ген: {message}",
+      "invalidSeed": "Недопустимый seed: {message}"
+    }
+  }
+}

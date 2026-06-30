@@ -1,0 +1,174 @@
+{
+  "_meta": {
+    "language": "zh-Hant",
+    "label": "Traditional Chinese",
+    "version": "ncm-locale-zh-Hant-cb0e51d03195a32d",
+    "contentHash": "cb0e51d03195a32d"
+  },
+  "siteFooter": {
+    "tagline": "Solana 上的種子體素世界協議。",
+    "navigationAria": "頁腳導航",
+    "socialAria": "NiceChunk 社交連結",
+    "home": "首頁",
+    "play": "進入世界",
+    "roadmap": "路書",
+    "docs": "文檔",
+    "guardian": "守護者",
+    "contracts": "合約",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk。保留所有權利。"
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "語言",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "ncm": {
+    "nav": {
+      "aria": "主導航",
+      "home": "首頁",
+      "roadbook": "路书",
+      "worldRules": "世界規則",
+      "resources": "資源",
+      "ncm": "NCM",
+      "elements": "元素",
+      "fairness": "公平",
+      "proofOfFrontier": "證明",
+      "guardians": "守護者",
+      "contracts": "合約",
+      "docs": "文件",
+      "enterWorld": "進入世界"
+    },
+    "page": {
+      "title": "NCM 鏈上 3D 資產格式",
+      "description": "NCM 是 NiceChunk 面向 Solana 遊戲設計的紧凑資產格式，可以把體素 3D 模型存成适合 PDA 記錄的鏈上文本，不依賴 IPFS。"
+    },
+    "hero": {
+      "eyebrow": "鏈上 3D 資產格式",
+      "title": "我们設計 NCM，是為了讓 Solana 遊戲真正擁有鏈上的 3D 資產。",
+      "body": "NCM 是 NiceChunk 面向 Solana 和其他区塊鏈設計的紧凑 3D 資產格式。我们正在围绕這种格式做更深入的研發和探索，因為它能把體素資產压缩成极小的文本記錄，讓客戶端通過 RPC 直接讀取、公開驗證，並且長期可用，不依賴 IPFS。",
+      "convert": "转换 VOX",
+      "sample": "載入示例",
+      "formatLabel": "格式前缀",
+      "formatBody": "把调色板、模型网格、缩放比例和合並長方體編碼成 bit-pack 鏈上文本。",
+      "dna": "NCM-DNA 實驗室"
+    },
+    "principles": {
+      "aria": "NCM 設計原則",
+      "rpc": {
+        "title": "RPC 原生讀取",
+        "body": "客戶端可以直接從帳戶資料讀取文本，並立即重建 3D 模型。"
+      },
+      "public": {
+        "title": "永久公開",
+        "body": "資產和程式狀態一起儲存，不隱藏在可變的外部网关後面。"
+      },
+      "compact": {
+        "title": "成本敏感",
+        "body": "編碼前先把同色體素合並成長方體，减少鏈上儲存體积。"
+      },
+      "portable": {
+        "title": "多鏈可用",
+        "body": "NCM 是纯文本格式，同一套資產表达可以用於不同鏈和執行時。"
+      }
+    },
+    "thesis": {
+      "aria": "NCM 設計意义",
+      "eyebrow": "為什麼設計 NCM",
+      "title": "Solana 遊戲資產應該成為狀態的一部分，而不是挂在狀態旁边的一條 URL。",
+      "body": "NiceChunk 選擇围绕 NCM 構建，是因為一個體素對象可以小到直接寫入程式擁有的 PDA。資產、規則和所有權能够一起移動，遊戲道具或 NFT 不再依賴某個外部网关持续在線。",
+      "metricsAria": "NCM 压缩示例",
+      "metricSource": "VOX 源文件",
+      "metricNcm": "NCM 記錄",
+      "metricGirl": "村民女孩源文件",
+      "metricGirlNcm": "同一模型變成适合 PDA 的文本",
+      "metricGuy": "村民男孩源文件",
+      "metricGuyNcm": "约 400 位元組級載荷"
+    },
+    "roadmap": {
+      "aria": "NCM 研發方向",
+      "pda": {
+        "title": "PDA 原生資源",
+        "body": "NCM 可以把小型角色、道具、裝備和方塊装饰變成帳戶資料，Solana 客戶端用普通 RPC 呼叫就能讀取。"
+      },
+      "trade": {
+        "title": "更安全的 NFT 交易",
+        "body": "当視觉資產和資產記錄一起儲存時，买家不需要相信 IPFS 网关、元資料伺服器或可變 JSON 連結未來仍然可解析。"
+      },
+      "research": {
+        "title": "有用的压缩研究",
+        "body": "NCM 也是 NCM-DNA 探索的基礎：搜尋更短的確定性基因來复現同一個模型，並把資產压缩轉化為有意义的計算。"
+      }
+    },
+    "dna": {
+      "aria": "NCM-DNA 實驗室",
+      "eyebrow": "NCM-DNA 實驗室",
+      "title": "把 NCM-DNA 實驗和它所基於的 NCM 格式放在一起查看。",
+      "body": "NCM-DNA 延续同一條研發方向：不只是儲存紧凑長方體，而是搜尋能用更少位元組复現同一模型的確定性基因。",
+      "load": "載入嵌入實驗室",
+      "open": "打開完整實驗室",
+      "frameTitle": "NCM-DNA 實驗室"
+    },
+    "converter": {
+      "eyebrow": "VOX 转 NCM",
+      "title": "瀏覽器本地转换器",
+      "body": "上传 MagicaVoxel .vox 文件。文件會在你的瀏覽器本地解析並转换成 NCM 文本。",
+      "dropTitle": "拖入或選擇 .vox 文件",
+      "dropBody": "支持 MagicaVoxel 的 SIZE、XYZI 和 RGBA 資料塊。",
+      "mode": "模式",
+      "merge": "合並方塊",
+      "raw": "原始體素",
+      "height": "目標高度"
+    },
+    "license": {
+      "title": "示例署名",
+      "body": "示例 VOX 角色來自 OpenGameArt，作者 JoshMckay，授權為 CC-BY 4.0。"
+    },
+    "preview": {
+      "eyebrow": "實時預覽",
+      "title": "未載入模型",
+      "titleLoaded": "NCM 模型",
+      "reset": "重置視角"
+    },
+    "output": {
+      "eyebrow": "NCM 輸出",
+      "title": "紧凑鏈上文本",
+      "body": "可以把這段 payload 存入帳戶資料或程式擁有的資產記錄。客戶端无需 IPFS 就能解碼。",
+      "placeholder": "NCM2:...",
+      "copy": "复制 NCM",
+      "download": "下载 .ncm"
+    },
+    "stats": {
+      "voxels": "原始體素",
+      "boxes": "NCM 方塊",
+      "chars": "文本字符",
+      "size": "原始尺寸"
+    },
+    "samples": {
+      "girl": "村民女孩",
+      "guy": "村民男孩"
+    },
+    "status": {
+      "ready": "准备就绪。",
+      "loadingSample": "正在載入 NCM 示例...",
+      "sampleLoaded": "示例已載入。",
+      "converting": "正在把 VOX 转换為 NCM...",
+      "converted": "转换完成。",
+      "copied": "NCM 已复制。",
+      "copyFailed": "复制失敗。",
+      "downloaded": "NCM 已下载。",
+      "failed": "失敗：{reason}"
+    }
+  }
+}

@@ -1,0 +1,153 @@
+{
+  "_meta": {
+    "language": "en",
+    "label": "English",
+    "version": "fourier-voxel-locale-en-925bad2fe385eee5",
+    "contentHash": "925bad2fe385eee5"
+  },
+  "siteFooter": {
+    "tagline": "A seeded voxel world protocol on Solana.",
+    "navigationAria": "Footer navigation",
+    "socialAria": "NiceChunk social links",
+    "home": "Home",
+    "play": "Enter World",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Guardians",
+    "contracts": "Contracts",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. All rights reserved."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "Language",
+    "comingSoon": "Planned",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "ncmFourier": {
+    "common": {
+      "yes": "Yes",
+      "budget": "Budgeted preview"
+    },
+    "page": {
+      "title": "NCM Function Model Lab",
+      "description": "A NiceChunk lab that loads VOX models, maps colors to a shared palette, emits compact on-chain function bytes, and redraws the model from that payload."
+    },
+    "hero": {
+      "eyebrow": "NiceChunk Function Asset Lab",
+      "title": "Load a VOX model and redraw it from a function"
+    },
+    "viewer": {
+      "source": "Element model",
+      "function": "Function redraw",
+      "pow": "PoW best model",
+      "sourceAria": "Loaded element model",
+      "functionAria": "Function generated model",
+      "powAria": "PoW best generated model"
+    },
+    "controls": {
+      "drop": "Drop or choose .vox",
+      "compute": "Compute function",
+      "optimize": "Optimize function",
+      "exprBytes": "Expr bytes",
+      "maxBasis": "Max basis",
+      "scale": "View scale"
+    },
+    "metrics": {
+      "grid": "Model size",
+      "coefficients": "Function basis",
+      "voxels": "Redrawn voxels",
+      "storage": "On-chain bytes"
+    },
+    "badges": {
+      "noVoxels": "0 voxels",
+      "voxels": "{value} voxels",
+      "waiting": "waiting",
+      "basis": "{value} basis"
+    },
+    "palette": {
+      "title": "G0 global colors used"
+    },
+    "tech": {
+      "title": "Technical idea",
+      "body": "The function payload stores only G0 palette indexes and box-basis bytes. Later miners can use the exact model hash as the target and search for a shorter Fourier gene."
+    },
+    "static": {
+      "title": "Documentation-only review",
+      "body": "This environment cannot prove the GPU workload. Use this panel as the static display: it shows the intended workflow, review boundary, and deferred runtime evidence without claiming screenshots or benchmark results.",
+      "surfaceLabel": "Surface",
+      "surfaceValue": "GPU-oriented voxel function research page",
+      "inputLabel": "Input",
+      "inputValue": "Local MagicaVoxel .vox file",
+      "outputLabel": "Output",
+      "outputValue": "0:<base64url-bytes> function payload",
+      "evidenceLabel": "Static evidence",
+      "evidenceValue": "README, showcase docs, HTML controls, codec path, parser boundary",
+      "deferredLabel": "Deferred evidence",
+      "deferredValue": "WebGL fidelity, frame stability, proof-search speed, screenshots",
+      "securityLabel": "Security boundary",
+      "securityValue": "No upload endpoint, wallet signing, server address, token, or deploy script"
+    },
+    "steps": {
+      "sample": "Load VOX and canonicalize its voxel/color grid.",
+      "fit": "Map colors to the shared G0 palette and merge same-color voxels into box basis functions.",
+      "rebuild": "Evaluate the function bytes and redraw the model from G0 palette indexes.",
+      "bake": "Use the exact result hash as a future PoW target for shorter genes."
+    },
+    "formula": {
+      "title": "On-chain function data",
+      "copy": "Copy function",
+      "copied": "Copied",
+      "copyFailed": "Copy failed",
+      "chainPayload": "On-chain payload",
+      "chainBytes": "Payload size",
+      "modelHash": "Model hash",
+      "exact": "Exact redraw",
+      "empty": "Drop a VOX file, then click Compute function."
+    },
+    "algorithm": {
+      "title": "Original algorithm",
+      "empty": "Compute a function to show its decoder algorithm."
+    },
+    "pow": {
+      "title": "PoW expression search",
+      "start": "Start PoW",
+      "stop": "Stop",
+      "hashrate": "Hashrate",
+      "attempts": "Attempts",
+      "best": "Best match",
+      "bytes": "Expr bytes",
+      "empty": "Load a VOX model, then start local PoW.",
+      "started": "target={hash}, voxels={voxels}; searching seed expressions locally",
+      "stopped": "stopped",
+      "bestLog": "best seed={seed} iou={score} hit={hit}/{union} bytes={bytes} proof={proof} expr={expr}"
+    },
+    "coefficients": {
+      "title": "Basis preview",
+      "empty": "No basis functions yet."
+    },
+    "status": {
+      "ready": "Drop a VOX file",
+      "loading": "Loading VOX...",
+      "loaded": "VOX loaded. Click Compute function.",
+      "computing": "Computing function...",
+      "optimizing": "Searching shorter exact function...",
+      "computedExact": "Exact function redraw generated.",
+      "computedBudget": "Budgeted function preview generated.",
+      "optimized": "Optimized exact function from {count} strategies.",
+      "optimizedBudget": "Optimized budgeted preview from {count} strategies.",
+      "failed": "Failed: {reason}"
+    }
+  }
+}

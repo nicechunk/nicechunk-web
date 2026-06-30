@@ -1,7 +1,6 @@
 import "./style.css";
 import "../src/site-header.css";
 import { finishSiteLoading, setSiteLoadingProgress } from "../src/site-ui.js";
-import enDictionary from "./locales/en.json";
 
 const languageStorageKey = "nicechunk.language";
 const plannedLanguages = [
@@ -16,7 +15,7 @@ const plannedLanguages = [
   { code: "zh-Hans", englishName: "Simplified Chinese", nativeName: "Simplified Chinese", enabled: true },
 ];
 const languageCodes = new Set(plannedLanguages.map((language) => language.code));
-const dictionaryCache = new Map([["en", enDictionary]]);
+const dictionaryCache = new Map();
 
 const backdropCanvas = document.querySelector("#trustBackdrop");
 const coreCanvas = document.querySelector("#trustCoreCanvas");
@@ -58,7 +57,8 @@ const languageCurrent = document.querySelector(".trust-language-current");
 const languageMenu = document.querySelector(".trust-language-menu");
 
 let activeLanguage = normalizeLanguage(localStorage.getItem(languageStorageKey)) || "en";
-let dictionary = enDictionary;
+let dictionary = {};
+let fallbackDictionary = {};
 let languageLoadToken = 0;
 
 initTrustPage();
@@ -126,7 +126,7 @@ function applyTranslations(root) {
 function text(path) {
   const value = path.split(".").reduce((current, part) => (current && Object.hasOwn(current, part) ? current[part] : undefined), dictionary);
   if (value !== undefined) return value;
-  return path.split(".").reduce((current, part) => (current && Object.hasOwn(current, part) ? current[part] : undefined), enDictionary) ?? "";
+  return path.split(".").reduce((current, part) => (current && Object.hasOwn(current, part) ? current[part] : undefined), fallbackDictionary) ?? "";
 }
 
 function setupLanguageSwitcher() {
@@ -1305,11 +1305,15 @@ async function loadDictionary(language) {
     if (!response.ok) throw new Error(`Trust locale ${normalized} failed: ${response.status}`);
     const nextDictionary = await response.json();
     dictionaryCache.set(normalized, nextDictionary);
+    if (normalized === "en") fallbackDictionary = nextDictionary;
     return nextDictionary;
   } catch (error) {
     console.warn(error);
-    activeLanguage = "en";
-    localStorage.setItem(languageStorageKey, "en");
-    return enDictionary;
+    if (normalized !== "en") {
+      activeLanguage = "en";
+      localStorage.setItem(languageStorageKey, "en");
+      return loadDictionary("en");
+    }
+    return {};
   }
 }

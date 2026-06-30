@@ -1,0 +1,872 @@
+{
+  "_meta": {
+    "language": "ko",
+    "label": "Korean",
+    "version": "contracts-locale-ko-d115f7e0f3e7c464",
+    "contentHash": "d115f7e0f3e7c464"
+  },
+  "meta": {
+    "title": "NiceChunk 컨트랙트"
+  },
+  "nav": {
+    "aria": "기본 내비게이션",
+    "home": "홈",
+    "roadbook": "로드북",
+    "worldRules": "월드 규칙",
+    "resources": "리소스",
+    "elements": "원소",
+    "fairness": "공정성",
+    "proofOfFrontier": "증명",
+    "guardians": "가디언",
+    "contracts": "컨트랙트",
+    "docs": "문서",
+    "enterWorld": "월드 입장"
+  },
+  "language": {
+    "aria": "언어"
+  },
+  "sidebar": {
+    "aria": "컨트랙트 디렉터리",
+    "title": "컨트랙트"
+  },
+  "hero": {
+    "eyebrow": "Devnet 컨트랙트 디렉터리",
+    "title": "NiceChunk 온체인 프로그램, ID, 통합 경계.",
+    "subtitle": "현재 NiceChunk Solana 프로그램을 플레이어와 개발자에게 공개하는 페이지입니다. 각 컨트랙트가 저장하는 값, 프론트엔드가 호출하는 기능, 현재 devnet 범위 밖의 기능을 설명합니다.",
+    "directory": "디렉터리 열기",
+    "flow": "라이브 플로우 보기",
+    "networkLabel": "네트워크",
+    "networkValue": "Solana Devnet",
+    "networkNote": "이 컨트랙트들은 개발과 프론트엔드 통합용이며 mainnet 최종 상태를 의미하지 않습니다.",
+    "browser": "Browse PDAs"
+  },
+  "directory": {
+    "eyebrow": "디렉터리",
+    "title": "현재 NiceChunk 프로그램.",
+    "body": "저장소에 존재하고 devnet 통합 표면에서 사용되는 컨트랙트를 나열합니다.",
+    "columns": [
+      "프로그램",
+      "Program ID",
+      "상태",
+      "역할"
+    ]
+  },
+  "flow": {
+    "eyebrow": "라이브 플로우",
+    "title": "현재 게임플레이 경로가 체인에 닿는 방식.",
+    "steps": [
+      {
+        "title": "제네시스 설정 읽기",
+        "body": "The client derives GlobalConfig from the core program and reads world seed, chunk size, build limits, NCK mint, and published config hashes."
+      },
+      {
+        "title": "플레이어 프로필 생성",
+        "body": "The player program stores wallet-owned profile data, default attributes, position, equipment slots, and backpack style."
+      },
+      {
+        "title": "채굴 세션 열기",
+        "body": "A player can create a short-lived session authority so repeated mining actions do not require wallet confirmation every block."
+      },
+      {
+        "title": "파괴 블록 기록",
+        "body": "The chunk program verifies the generated single block, then writes a compact 3-byte broken-block record into the chunk-broken PDA."
+      },
+      {
+        "title": "리소스 추가",
+        "body": "The backpack program is prepared to append mined resource records after session validation. It is the inventory-side bridge for the mining loop."
+      },
+      {
+        "title": "Smelt Resources Into Items",
+        "body": "The smelting program reads a recipe table PDA, validates selected backpack input and fuel slots, removes those slots through the backpack program, and appends material or item outputs back into the same backpack through the smelting authority PDA."
+      },
+      {
+        "title": "List Resources or Assets",
+        "body": "The marketplace verifies either a backpack resource slot or a market Asset PDA, then locks the item inside a listing PDA before it can be bought."
+      },
+      {
+        "title": "Settle Market Orders",
+        "body": "A buyer pays in NCK or SOL, the program routes a 1% market fee to treasury, and the resource or Asset ownership is delivered to the buyer."
+      }
+    ]
+  },
+  "details": {
+    "eyebrow": "프로그램 상세",
+    "title": "코드, instructions, PDA seeds, 저장 데이터."
+  },
+  "developer": {
+    "eyebrow": "개발자 노트",
+    "title": "프론트엔드 및 스크립트 통합 참고.",
+    "programIdsTitle": "Program IDs",
+    "pdaTitle": "PDA seed 예시",
+    "boundaryTitle": "현재 경계",
+    "boundaryBody": "This page documents the live devnet contract surface. It does not claim final mainnet governance, land ownership, complete realtime decentralization, or complete gameplay decentralization.",
+    "pdaCode": "GlobalConfig: [\"global-config\"]\nPlayerProfile: [\"player\", owner]\nPlayerSession: [\"session\", owner, sessionAuthority]\nChunkState: [\"chunk\", globalConfig, chunkX:i32_le, chunkZ:i32_le]\nChunkBrokenState: [\"chunk-broken\", globalConfig, chunkX:i32_le, chunkZ:i32_le]\nGuardianRegistry: [\"guardian-registry\", globalConfig]\nGuardianRegion: [\"guardian-region\", globalConfig, regionX:i32_le, regionY:i32_le]\nGuardianTreasuryAuthority: [\"guardian-treasury\", globalConfig]\nBackpack: [\"backpack\", creator, backpackId:u64_le]\nRecipeTable: [\"smelting-recipes\", tableId:u64_le]\nSmeltingAuthority: [\"smelting-authority\"]\nMarketplaceListing: [\"listing\", seller, listingId:u64_le]\nMarketAsset: [\"asset\", owner, assetId:u64_le]\nMarketplaceAuthority: [\"market-authority\"]"
+  },
+  "labels": {
+    "programId": "Program ID",
+    "source": "컨트랙트 코드",
+    "sdk": "SDK",
+    "magic": "Magic",
+    "accountSize": "계정 크기",
+    "instructions": "Instructions",
+    "pdaSeeds": "PDA seeds",
+    "storage": "저장 데이터",
+    "notes": "통합 노트",
+    "viewCode": "코드",
+    "sourceTree": "소스 트리",
+    "copyCode": "복사",
+    "copied": "복사됨",
+    "viewPda": "PDA Structure",
+    "viewLive": "Live PDAs",
+    "fields": "Fields",
+    "copyAddress": "Copy address"
+  },
+  "navigation": [
+    {
+      "id": "overview",
+      "label": "Overview"
+    },
+    {
+      "id": "directory",
+      "label": "Directory"
+    },
+    {
+      "id": "integration-flow",
+      "label": "Live Flow"
+    },
+    {
+      "id": "transparency-ledger",
+      "label": "Transparency"
+    },
+    {
+      "id": "nicechunk-core",
+      "label": "Genesis Core"
+    },
+    {
+      "id": "nicechunk-player",
+      "label": "Player"
+    },
+    {
+      "id": "nicechunk-chunk",
+      "label": "Chunk / Mining"
+    },
+    {
+      "id": "nicechunk-guardian",
+      "label": "Guardian Registry"
+    },
+    {
+      "id": "nicechunk-backpack",
+      "label": "Backpack"
+    },
+    {
+      "id": "nicechunk-smelting",
+      "label": "Smelting"
+    },
+    {
+      "id": "nicechunk-market",
+      "label": "Marketplace"
+    },
+    {
+      "id": "developer-notes",
+      "label": "Developer Notes"
+    },
+    {
+      "id": "chain-pda-browser",
+      "label": "On-chain PDA Browser"
+    }
+  ],
+  "programs": [
+    {
+      "id": "nicechunk-core",
+      "codeKey": "core",
+      "name": "NiceChunk Genesis Core",
+      "kind": "Genesis config layer",
+      "programId": "9EhMCRYMJej1F21KzaA5Zao3khGGc5aJbDGbnxaogQHu",
+      "status": "Devnet",
+      "role": "Immutable world configuration and NCK mint validation.",
+      "source": "programs/nicechunk_core/src/lib.rs",
+      "sdk": "sdk/nicechunk-core.ts",
+      "magic": "NCKCFG01",
+      "accountSize": "GlobalConfig: 293 bytes",
+      "summary": "The core program initializes the GlobalConfig PDA once. It writes compiled genesis parameters such as world seed, world ID, config hashes, NCK mint, NCK decimals, genesis supply, fees, chunk limits, and guardian parameters. It does not mint items, manage inventory, update admin settings, or run gameplay logic.",
+      "instructions": [
+        "0 initialize_global_config",
+        "Validates SPL Token mint layout, decimals, initialized flag, genesis supply, disabled mint authority, and disabled freeze authority.",
+        "Creates or allocates the GlobalConfig PDA safely even if the PDA was pre-funded with dust lamports."
+      ],
+      "pdaSeeds": [
+        "GlobalConfig: [\"global-config\"]"
+      ],
+      "storage": [
+        "World ID and 32-byte world seed.",
+        "Terrain, resource rule, and client world config hashes.",
+        "NCK mint, decimals, genesis supply, and development wallet.",
+        "Chunk size, section height, build limits, max terrain height, sea level, cooldowns, and guardian settings."
+      ],
+      "notes": [
+        "This is the immutable genesis config layer for the current devnet build.",
+        "Future crafting, inventory, chunk state, world knowledge, and reputation systems belong in separate programs or future modules after PDA specs are finalized.",
+        "Devnet and testnet must use their own NCK mint; the mainnet mint should not be reused on development clusters."
+      ],
+      "pdaAccounts": [
+        {
+          "name": "GlobalConfig",
+          "seeds": "[\"global-config\"]",
+          "magic": "NCKCFG01",
+          "size": "293 bytes",
+          "purpose": "Immutable genesis configuration for the current world.",
+          "fields": [
+            "nckMint, nckDecimals, nckGenesisSupply",
+            "worldId and 32-byte worldSeed",
+            "terrainConfigHash, resourceRuleHash, clientWorldConfigHash",
+            "chunkSize, sectionHeight, build range, seaLevel",
+            "guardian parameters and mineCooldownSlots"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nicechunk-player",
+      "codeKey": "player",
+      "name": "NiceChunk Player",
+      "kind": "Player identity and session layer",
+      "programId": "oeaRMVnPoV4iENnGCCtaEeRxU5be515s4YYe6aXQuKe",
+      "status": "Devnet",
+      "role": "Wallet-owned player profile, position, equipment slots, backpack style, and mining session authority.",
+      "source": "programs/nicechunk_player/src/lib.rs",
+      "sdk": "sdk/nicechunk-player.ts",
+      "magic": "NCKPLY01 / NCKSES01",
+      "accountSize": "PlayerProfile: 449 bytes; legacy PlayerProfile: 417 bytes; PlayerSession: 184 bytes",
+      "summary": "The player program creates a wallet-bound profile and a short-lived session authority. The session lets the game submit repeated allowed actions, such as block breaking, without opening the wallet for every single mined block.",
+      "instructions": [
+        "0 initialize_player",
+        "1 update_position",
+        "2 set_equipment_slot",
+        "3 set_backpack_style",
+        "5 set_equipped_backpack",
+        "4 create_or_refresh_player_session"
+      ],
+      "pdaSeeds": [
+        "PlayerProfile: [\"player\", owner]",
+        "PlayerSession: [\"session\", owner, sessionAuthority]"
+      ],
+      "storage": [
+        "Owner wallet, GlobalConfig address, world ID, bump, and timestamps.",
+        "Base attributes: health, energy, stamina, mining power, build power, and defense.",
+        "Current position and nine equipment slots.",
+        "Session authority, allowed action bitmask, expiration time, max actions, and action count."
+      ],
+      "notes": [
+        "The profile is public state. It stores the equipped backpack public key, while private backpack contents are loaded separately when the player opens inventory flows.",
+        "The current session model is used to reduce repeated wallet prompts during mining.",
+        "Sessions are bounded by expiration, allowed action flags, and max action count."
+      ],
+      "pdaAccounts": [
+        {
+          "name": "PlayerProfile",
+          "seeds": "[\"player\", owner]",
+          "magic": "NCKPLY01",
+          "size": "449 bytes; legacy 417 bytes",
+          "purpose": "Wallet-owned public player state and equipped backpack pointer.",
+          "fields": [
+            "owner, globalConfig, worldId",
+            "position x/y/z",
+            "base health, energy, stamina and power fields",
+            "equipment slots and backpack style",
+            "equippedBackpack, createdSlot, updatedSlot"
+          ]
+        },
+        {
+          "name": "PlayerSession",
+          "seeds": "[\"session\", owner, sessionAuthority]",
+          "magic": "NCKSES01",
+          "size": "184 bytes",
+          "purpose": "Short-lived gameplay authority for repeated allowed actions.",
+          "fields": [
+            "owner, sessionAuthority, playerProfile, globalConfig",
+            "worldId, allowedActions, expiresAt",
+            "createdSlot, updatedSlot, createdAt",
+            "maxActions and actionCount"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nicechunk-chunk",
+      "codeKey": "chunk",
+      "name": "NiceChunk Chunk",
+      "kind": "Chunk state and mining layer",
+      "programId": "7JD6kASAfQeiVLUi51mrfWSbeh96ntRJnRiFQKCqUVhn",
+      "status": "Devnet",
+      "role": "Verifies generated single blocks and records compact broken-block state per chunk.",
+      "source": "programs/nicechunk_chunk/src/lib.rs",
+      "sdk": "sdk/nicechunk-chunk.ts",
+      "magic": "NCKCHK01 / NCBK",
+      "accountSize": "ChunkState: 8,280 bytes; ChunkBrokenState: 16-byte header + 3 bytes per record",
+      "summary": "The chunk program supports legacy chunk delta accounts and the current optimized mining path. For mining, the player submits one world block coordinate. The program derives the chunk, verifies the generated block, rejects air/water/bedrock or already-mined positions, and appends a compressed broken-block record.",
+      "instructions": [
+        "0 initialize_chunk",
+        "1 record_block_change",
+        "2 delegate_chunk",
+        "3 record_block_change_with_session",
+        "4 verify_generated_block",
+        "5 mine_block"
+      ],
+      "pdaSeeds": [
+        "ChunkState: [\"chunk\", globalConfig, chunkX:i32_le, chunkZ:i32_le]",
+        "ChunkBrokenState: [\"chunk-broken\", globalConfig, chunkX:i32_le, chunkZ:i32_le]"
+      ],
+      "storage": [
+        "Legacy ChunkState stores up to 128 64-byte block deltas.",
+        "ChunkBrokenState stores a 16-byte header and 3-byte mined-block records.",
+        "A record packs local x, local z, and y offset. Capacity starts at 64, grows by 64, and caps at 2,048 records.",
+        "GlobalConfig world seed, chunk size, build height, max terrain height, and sea level are used for generated block verification."
+      ],
+      "notes": [
+        "This is the current mining write path used by the browser client.",
+        "MagicBlock delegation hooks exist in the codebase, but the current gameplay path does not require MagicBlock.",
+        "Backpack resource settlement is intentionally separate so mining state and inventory state can evolve independently."
+      ],
+      "pdaAccounts": [
+        {
+          "name": "ChunkBrokenState",
+          "seeds": "[\"chunk-broken\", globalConfig, chunkX:i32_le, chunkZ:i32_le]",
+          "magic": "NCBK",
+          "size": "16 + capacity * 3 bytes",
+          "purpose": "Sparse record of generated blocks broken by players.",
+          "fields": [
+            "version, bump, count, capacity, minY",
+            "3-byte packed local block records",
+            "grows by capacity instead of storing full terrain"
+          ]
+        },
+        {
+          "name": "ResourceDropTable",
+          "seeds": "[\"resource-drops\", tableId:u64_le]",
+          "magic": "NCKDRP01",
+          "size": "16 + ruleCount * 15 bytes",
+          "purpose": "Bounded extra-drop rules for rewarded mining.",
+          "fields": [
+            "sourceBlockId, dropBlockId, chanceBps",
+            "altitude and depth bounds",
+            "salt for deterministic outcome separation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nicechunk-guardian",
+      "codeKey": "guardian",
+      "name": "NiceChunk Guardian Registry",
+      "kind": "Guardian endpoint registry",
+      "programId": "6frJyJSirfEwsztsxijcJLe29LSaceET1wanXSFwPQyE",
+      "status": "Devnet",
+      "role": "Registers Guardian regions, endpoints, NCK treasury payment, liveness proof, settlement, and endpoint updates.",
+      "source": "programs/nicechunk_guardian/src/lib.rs",
+      "sdk": "sdk/nicechunk-guardian.ts",
+      "magic": "NCKGDR01 / NCKGRG01",
+      "accountSize": "GuardianRegistry: 160 bytes; GuardianRegion: 256 bytes",
+      "summary": "The guardian program records public service endpoints for regional realtime infrastructure. A guardian registers a region, pays the NCK registration amount to the treasury token account, and periodically submits proofs. The registry is non-custodial and does not sign player transactions.",
+      "instructions": [
+        "0 initialize_registry",
+        "1 register_genesis_guardian",
+        "2 register_guardian",
+        "3 submit_guardian_proof",
+        "4 settle_guardian",
+        "5 update_guardian_endpoint"
+      ],
+      "pdaSeeds": [
+        "GuardianRegistry: [\"guardian-registry\", globalConfig]",
+        "GuardianRegion: [\"guardian-region\", globalConfig, regionX:i32_le, regionY:i32_le]",
+        "GuardianTreasuryAuthority: [\"guardian-treasury\", globalConfig]"
+      ],
+      "storage": [
+        "Registry stores GlobalConfig, NCK mint, treasury token account, active count, and genesis flag.",
+        "Region stores status, region coordinates, owner/operator wallet, endpoint host, port, TLS flag, stake amount, slash total, proof count, and timestamps.",
+        "Region size is 100 by 100 chunks. Registration requires a 100,000 NCK treasury payment at 6 decimals.",
+        "Proof interval is 3,600 seconds. Settlement can slash 10% per missed proof window until removal."
+      ],
+      "notes": [
+        "The current web Guardian page reads this registry and region PDA data from devnet.",
+        "Endpoint updates are limited to the guardian owner/operator flow.",
+        "The registration payment goes to the treasury token account; this registry does not provide user-initiated unstaking or withdrawal."
+      ],
+      "pdaAccounts": [
+        {
+          "name": "GuardianRegistry",
+          "seeds": "[\"guardian-registry\", globalConfig]",
+          "magic": "NCKGDR01",
+          "size": "160 bytes",
+          "purpose": "Global Guardian registry and treasury pointer.",
+          "fields": [
+            "globalConfig, nckMint, treasuryToken",
+            "activeCount, totalRegistrations, genesisRegistered",
+            "regionSizeChunks, stakeAmount, slashAmount",
+            "createdSlot and createdAt"
+          ]
+        },
+        {
+          "name": "GuardianRegion",
+          "seeds": "[\"guardian-region\", globalConfig, regionX:i32_le, regionY:i32_le]",
+          "magic": "NCKGRG01",
+          "size": "256 bytes",
+          "purpose": "Registered realtime region endpoint and stake state.",
+          "fields": [
+            "region coordinates and chunk bounds",
+            "owner, operator, globalConfig",
+            "host, port, useTls",
+            "stakeAmount, penalties, proof counters, updatedSlot"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nicechunk-backpack",
+      "codeKey": "backpack",
+      "name": "NiceChunk Backpack",
+      "kind": "Inventory slot layer for blocks, resources, and items",
+      "programId": "FwTrMDGyRg653L9svvt5aoGii9ZjX1WekSFWcwByjxqt",
+      "status": "Devnet",
+      "role": "Creates player backpacks, stores block-resource and item slots, removes selected slots, and accepts marketplace or smelting-authorized delivery.",
+      "source": "programs/nicechunk_backpack/src/lib.rs",
+      "sdk": "sdk/nicechunk-backpack.ts",
+      "magic": "NCKBPK01",
+      "accountSize": "BackpackAccount v2: 6,464 bytes; BackpackSlotRecord: 64 bytes; legacy resource record: 10 bytes",
+      "summary": "The backpack program is the inventory storage layer for mined block resources, smelted materials, forged items, and marketplace escrow. Version 2 stores fixed 64-byte slots that can represent either block resources or item/material records. Mining appends block-resource slots through validated player sessions, marketplace flows can remove and restore resources, and smelting can append item slots only through the smelting authority PDA.",
+      "instructions": [
+        "0 initialize_backpack",
+        "requires a PlayerProfile with no equipped backpack",
+        "1 append_mined_resource",
+        "2 remove_resource",
+        "3 append_market_resource",
+        "4 remove_resources",
+        "5 append_smelting_item"
+      ],
+      "pdaSeeds": [
+        "Backpack: [\"backpack\", creator, backpackId:u64_le]"
+      ],
+      "storage": [
+        "Backpack header stores backpack ID, owner, capacity, item count, state, placement fields, timestamps, and flags.",
+        "Default capacity is 50 slots. Max capacity is 99 slots.",
+        "Each v2 BackpackSlotRecord is 64 bytes: kind, category, flags, quantity, resource coordinate, item code, item ID, item PDA, and volume.",
+        "Slot kind 1 stores block resources. Slot kind 2 stores item/material records such as smelted outputs or forged outputs.",
+        "The decoder still recognizes legacy 10-byte resource records for older backpack accounts."
+      ],
+      "notes": [
+        "Backpack contents are separate from public player profile display; the player profile stores only the equipped backpack public key.",
+        "The marketplace program can escrow or deliver backpack resources through the market-authority PDA.",
+        "The smelting program can append material or item outputs through the smelting-authority PDA; users cannot mint arbitrary item slots directly.",
+        "Direct player appends remain restricted to validated mining sessions for block resources."
+      ],
+      "pdaAccounts": [
+        {
+          "name": "Backpack",
+          "seeds": "[\"backpack\", creator, backpackId:u64_le]",
+          "magic": "NCKBPK01",
+          "size": "6464 bytes; legacy 1118 bytes",
+          "purpose": "Wallet-owned inventory PDA for block resources and item references.",
+          "fields": [
+            "backpackId, owner, capacity, itemCount",
+            "state, flags, placed position",
+            "createdSlot, updatedSlot, createdAt",
+            "up to 99 slot records with block resource or item reference"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nicechunk-smelting",
+      "codeKey": "smelting",
+      "name": "NiceChunk Smelting",
+      "kind": "Recipe table and backpack item creation layer",
+      "programId": "7imEiNtpiN487HRwrftdLrMFs8TcAnjLE94vKsDgU6L7",
+      "status": "Devnet",
+      "role": "Stores smelting recipe tables, consumes selected backpack resources and fuels, and appends material or item outputs back into the backpack.",
+      "source": "programs/nicechunk_smelting/src/lib.rs",
+      "sdk": "sdk/nicechunk-smelting.ts",
+      "magic": "NCKSMR01",
+      "accountSize": "RecipeTable: 9,528 bytes; RecipeRecord: 786 bytes",
+      "summary": "The smelting program separates recipe authority from backpack storage. A recipe table PDA stores up to 12 recipes, each with up to 8 input slots and 4 output slots. Executing a recipe validates selected backpack inputs and fuel, removes those slots through the backpack program, then appends material or item outputs through the smelting authority PDA.",
+      "instructions": [
+        "0 initialize_recipe_table",
+        "1 upsert_recipe",
+        "2 execute_smelting",
+        "3 set_recipe_table_authority",
+        "execute_smelting supports input indexes, fuel indexes, and a batch multiplier."
+      ],
+      "pdaSeeds": [
+        "RecipeTable: [\"smelting-recipes\", tableId:u64_le]",
+        "SmeltingAuthority: [\"smelting-authority\"]"
+      ],
+      "storage": [
+        "RecipeTable stores table ID, authority, recipe count, timestamps, and fixed-size recipe records.",
+        "Each RecipeRecord stores recipe ID, enabled flag, minimum heat tier, input count, output count, up to 8 input BackpackSlot records, up to 4 output BackpackSlot records, and updated slot.",
+        "BackpackSlot records support block resources and item/material outputs.",
+        "Recipe table authority can upsert recipes or transfer authority."
+      ],
+      "notes": [
+        "The recipe table is intentionally independent so civilization or governance systems can add and update recipes later.",
+        "Execution validates backpack ownership, recipe matching, input slots, fuel slots, and batch multiplier before consuming inventory.",
+        "Outputs are appended through the backpack program using the smelting authority PDA; users cannot mint arbitrary smelting outputs directly."
+      ],
+      "pdaAccounts": [
+        {
+          "name": "RecipeTable",
+          "seeds": "[\"smelting-recipes\", tableId:u64_le]",
+          "magic": "NCKSMR01",
+          "size": "9552 bytes",
+          "purpose": "Authority-owned smelting recipe table used by the smelting program.",
+          "fields": [
+            "tableId, authority, recipeCount",
+            "createdSlot, updatedSlot, createdAt",
+            "up to 12 recipe records",
+            "each recipe stores heat tier, input slots, output slots and updatedSlot"
+          ]
+        },
+        {
+          "name": "SmeltingAuthority",
+          "seeds": "[\"smelting-authority\"]",
+          "magic": "PDA signer only",
+          "size": "No data account",
+          "purpose": "Program signer used to append outputs back into a backpack after recipe validation.",
+          "fields": [
+            "Derived signer PDA",
+            "No mutable player-owned storage"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nicechunk-market",
+      "codeKey": "market",
+      "name": "NiceChunk Marketplace",
+      "kind": "Resource and asset marketplace settlement layer",
+      "programId": "1PwPzFtdJ5gQqku5gBo4b6Wvo48Qe8NuXSogUP8TWpR",
+      "status": "Devnet",
+      "role": "Creates asset accounts and listings, escrows backpack resources or Asset PDAs, settles NCK or SOL payment, charges the market fee, and returns or delivers listed inventory.",
+      "source": "programs/nicechunk_market/src/lib.rs",
+      "sdk": "src/chain/nicechunkChain.js",
+      "magic": "NCKMKT01",
+      "accountSize": "ListingAccount: 216 bytes; MarketAsset: 256 bytes",
+      "summary": "The marketplace program is the current devnet trading surface for backpack resources and market Assets. A seller can create a MarketAsset PDA for equipment, clothing, building materials, or other hotbar items, then create a listing PDA. Backpack listings remove the selected resource from the seller backpack; Asset listings lock the Asset account to the listing. Cancellation restores the resource or unlocks the Asset to the seller; purchase transfers SOL or NCK, sends a 1% market fee to the treasury, and delivers the resource or Asset ownership to the buyer.",
+      "instructions": [
+        "0 create_listing",
+        "1 cancel_listing",
+        "2 buy_listing",
+        "3 initialize_asset",
+        "Backpack listings require backpack CPI escrow and restore/delivery accounts.",
+        "Asset listings require a market-owned 256-byte MarketAsset PDA that is locked to the listing until cancel or purchase.",
+        "Payment supports NCK and SOL with a 1% market fee."
+      ],
+      "pdaSeeds": [
+        "Listing: [\"listing\", seller, listingId:u64_le]",
+        "MarketAsset: [\"asset\", owner, assetId:u64_le]",
+        "MarketAuthority: [\"market-authority\"]"
+      ],
+      "storage": [
+        "Listing stores seller wallet, listing ID, category, currency, source kind, source slot, quantity, price, item hash, source inventory, timestamps, buyer, and final state.",
+        "Backpack listings store the source backpack public key and the 10-byte resource coordinate record.",
+        "MarketAsset v2 stores owner, asset ID, category, quantity, item hash, linked listing, timestamps, item code, stack count, durability, and up to 96 bytes of asset payload for forged item data.",
+        "Marketplace categories are raw materials, equipment, building materials, and clothing.",
+        "State is active, canceled, or sold for listings; active or listed for Assets."
+      ],
+      "notes": [
+        "Only the listing seller can cancel an active listing.",
+        "Buyers cannot purchase their own listings.",
+        "Only the marketplace PDA can restore or deliver escrowed backpack resources through the backpack program.",
+        "MarketAsset ownership moves to the buyer when an asset listing is purchased.",
+        "Treasury fee is 1% of the listing price in the chosen currency."
+      ],
+      "pdaAccounts": [
+        {
+          "name": "MarketplaceListing",
+          "seeds": "[\"listing\", seller, listingId:u64_le]",
+          "magic": "NCKMKT01",
+          "size": "216 bytes",
+          "purpose": "Seller-owned listing state for backpack resources or asset PDAs.",
+          "fields": [
+            "seller, listingId, state",
+            "category, currency, sourceKind, sourceIndex",
+            "quantity, priceBaseUnits, itemHash",
+            "sourceInventory, sourceRecord, buyer and sold fields"
+          ]
+        },
+        {
+          "name": "MarketAsset",
+          "seeds": "[\"asset\", owner, assetId:u64_le]",
+          "magic": "NCKAST01",
+          "size": "256 bytes",
+          "purpose": "Owned tradable asset record for equipment, building, clothing or raw assets.",
+          "fields": [
+            "owner, assetId, state, category",
+            "quantity, itemHash, listing",
+            "itemCode, stackCount, durability",
+            "bounded payload bytes for dynamic item identity"
+          ]
+        },
+        {
+          "name": "MarketplaceAuthority",
+          "seeds": "[\"market-authority\"]",
+          "magic": "PDA signer only",
+          "size": "No data account",
+          "purpose": "Program signer for escrow and settlement authority boundaries.",
+          "fields": [
+            "Derived signer PDA",
+            "Does not custody player wallets outside explicit instructions"
+          ]
+        }
+      ]
+    }
+  ],
+  "chainBrowser": {
+    "eyebrow": "On-chain PDA Browser",
+    "title": "Read the public devnet state directly from RPC.",
+    "body": "Scan NiceChunk program accounts, decode known PDA layouts, and inspect players, backpacks, smelting tables, market listings, Guardian regions, and chunk deltas without trusting a private database.",
+    "typeLabel": "PDA group",
+    "refresh": "Refresh",
+    "ready": "Choose a PDA group and refresh to read public devnet state.",
+    "loadingAll": "Scanning all known NiceChunk PDA groups from devnet RPC...",
+    "loadingType": "Scanning {type} from devnet RPC...",
+    "loaded": "Loaded {count} decoded PDA accounts.",
+    "loadedType": "Loaded {count} {type} accounts.",
+    "error": "RPC scan failed: {message}",
+    "empty": "No decoded accounts found for this group.",
+    "total": "Total decoded",
+    "program": "Program",
+    "lamports": "Lamports",
+    "scanFailed": "Scan failed",
+    "programTitle": "Live account scan",
+    "programBody": "Read public PDA accounts owned by this program. The scan is read-only and uses the configured Solana RPC endpoint.",
+    "programPrompt": "Choose a PDA group for this program.",
+    "noKnownTypes": "No known data PDA group for this program yet.",
+    "types": {
+      "all": "All known PDA groups",
+      "global-config": "GlobalConfig",
+      "player-profile": "PlayerProfile",
+      "player-session": "PlayerSession",
+      "chunk-broken": "ChunkBrokenState",
+      "resource-drop-table": "ResourceDropTable",
+      "guardian-registry": "GuardianRegistry",
+      "guardian-region": "GuardianRegion",
+      "backpack": "Backpack",
+      "recipe-table": "RecipeTable",
+      "market-listing": "MarketplaceListing",
+      "market-asset": "MarketAsset",
+      "forged-items": "Forged item records"
+    },
+    "summary": {
+      "owner": "Owner",
+      "position": "Position",
+      "backpack": "Backpack",
+      "authority": "Authority",
+      "expiresAt": "Expires",
+      "items": "Items",
+      "updatedSlot": "Updated slot",
+      "recipes": "Recipes",
+      "seller": "Seller",
+      "state": "State",
+      "price": "Price",
+      "item": "Item",
+      "endpoint": "Endpoint",
+      "proofs": "Proofs",
+      "active": "Active",
+      "total": "Total",
+      "treasury": "Treasury",
+      "chunk": "Chunk",
+      "records": "Records",
+      "version": "Version",
+      "rules": "Rules",
+      "world": "World",
+      "seed": "Seed",
+      "nckMint": "NCK mint",
+      "minY": "Min Y",
+      "source": "Source",
+      "forgedItems": "Forged items"
+    },
+    "timeout": "RPC request timed out. Try again later or switch to a more stable RPC endpoint.",
+    "searchLabel": "Search",
+    "searchPlaceholder": "Filter by address, owner, item, or decoded JSON",
+    "filtered": "Showing {shown} of {total} decoded accounts.",
+    "visibleLabel": "Visible data",
+    "trustLabel": "Trust value",
+    "quickTypes": [
+      "player-profile",
+      "backpack",
+      "forged-items",
+      "recipe-table",
+      "guardian-region",
+      "market-listing"
+    ],
+    "typeInfo": {
+      "all": {
+        "title": "All known PDA groups",
+        "body": "Scans each decoded NiceChunk account family exposed by this page. This is a public RPC read, not a backend export.",
+        "visible": "Program owner, PDA address, decoded header fields, and safe samples from bounded account data.",
+        "trust": "Lets players compare the website, source code, PDA layout, and live devnet state from one screen."
+      },
+      "global-config": {
+        "title": "GlobalConfig",
+        "body": "The immutable genesis configuration for this devnet world.",
+        "visible": "NCK mint, world ID, world seed hash material, config hashes, chunk limits, and guardian parameters.",
+        "trust": "Shows the world is not secretly changing seed, resource config, or core limits from a private server."
+      },
+      "player-profile": {
+        "title": "PlayerProfile",
+        "body": "Wallet-owned public player identity state.",
+        "visible": "Owner wallet, position, attributes, equipment summary, equipped backpack pointer, and update slots.",
+        "trust": "Players can see which identities exist and which backpack each public profile points to."
+      },
+      "player-session": {
+        "title": "PlayerSession",
+        "body": "Short-lived authority used to reduce repeated wallet prompts during allowed gameplay actions.",
+        "visible": "Owner, session authority, allowed action flags, expiration, max actions, and used action count.",
+        "trust": "Shows that session power is bounded instead of an unlimited hidden operator key."
+      },
+      "chunk-broken": {
+        "title": "ChunkBrokenState",
+        "body": "Compact per-chunk mining record for blocks that players have already broken.",
+        "visible": "Version, capacity, minY, count, and sample packed broken-block records.",
+        "trust": "Makes mined terrain changes auditable without storing full terrain on-chain."
+      },
+      "resource-drop-table": {
+        "title": "ResourceDropTable",
+        "body": "Bounded resource drop rule table used by mining rewards.",
+        "visible": "Source block, drop block, chance basis points, altitude/depth bounds, and salt.",
+        "trust": "Lets players inspect drop rules instead of trusting opaque reward logic."
+      },
+      "guardian-registry": {
+        "title": "GuardianRegistry",
+        "body": "Global registry for realtime service coverage.",
+        "visible": "Treasury token, active count, registrations, stake amount, slash amount, and region size.",
+        "trust": "Shows service economics and coverage rules are public PDA data."
+      },
+      "guardian-region": {
+        "title": "GuardianRegion",
+        "body": "Registered realtime region endpoint and proof state.",
+        "visible": "Region bounds, owner, operator, endpoint, TLS flag, stake, penalties, and proof counters.",
+        "trust": "Players can verify who serves a region and whether liveness proofs are being submitted."
+      },
+      "backpack": {
+        "title": "Backpack",
+        "body": "Player-owned inventory PDA for block resources, material slots, and item references.",
+        "visible": "Owner, backpack ID, capacity, item count, placement, update slots, and safe sample slots.",
+        "trust": "Inventory is inspectable from public account data instead of only from the game UI."
+      },
+      "recipe-table": {
+        "title": "RecipeTable",
+        "body": "Authority-owned smelting recipe table used by the smelting program.",
+        "visible": "Authority, recipe count, update slot, heat tiers, input counts, output counts, and recipe IDs.",
+        "trust": "Players can inspect which recipes exist before spending backpack resources."
+      },
+      "market-listing": {
+        "title": "MarketplaceListing",
+        "body": "Public listing state for backpack resources or market assets.",
+        "visible": "Seller, listing ID, category, currency, source kind, quantity, price, buyer, and final state.",
+        "trust": "Market escrow and settlement can be audited without trusting a private order book."
+      },
+      "market-asset": {
+        "title": "MarketAsset",
+        "body": "Owned tradable asset account for equipment, materials, clothing, or item payloads.",
+        "visible": "Owner, asset ID, state, category, quantity, item hash, linked listing, item code, and bounded payload.",
+        "trust": "Assets have explicit owners and listing state that can be checked before purchase."
+      },
+      "forged-items": {
+        "title": "Forged item records",
+        "body": "A convenience scan that finds forged outputs inside live Backpack and MarketAsset accounts.",
+        "visible": "Source account type, owner, backpack or asset identity, forged sample slots, item code, item ID, and payload where available.",
+        "trust": "Shows forged results through real account data while staying honest that a dedicated forging PDA family is not yet live."
+      }
+    }
+  },
+  "transparency": {
+    "eyebrow": "Transparency Ledger",
+    "title": "Players can audit the world from contract code to public PDA state.",
+    "body": "NiceChunk treats public state as part of the game interface. Players should be able to inspect who exists, which backpacks and assets exist, what recipes are active, which regions serve realtime play, and which rules or accounts are still only planned.",
+    "cards": [
+      {
+        "kicker": "Identity",
+        "title": "Players are public account records, not hidden rows in a private database.",
+        "body": "PlayerProfile and PlayerSession PDAs expose the wallet, position, equipped backpack pointer, session authority, and limits that the client is allowed to use.",
+        "points": [
+          "Wallet ownership is visible.",
+          "Session limits are inspectable.",
+          "Equipped backpack links are public."
+        ]
+      },
+      {
+        "kicker": "Inventory",
+        "title": "Backpacks and market assets are readable storage objects.",
+        "body": "Backpack, MarketplaceListing, and MarketAsset accounts show item counts, owners, states, prices, and sample item payloads so players can audit inventory movement.",
+        "points": [
+          "Backpack ownership is explicit.",
+          "Listings expose escrow state.",
+          "Forged items surface through item slots or asset payloads."
+        ]
+      },
+      {
+        "kicker": "World",
+        "title": "Terrain and mining state are tied to verifiable world config.",
+        "body": "GlobalConfig fixes the world seed and config hashes, while ChunkBrokenState and ResourceDropTable expose what has been mined and which extra-drop rules exist.",
+        "points": [
+          "World seed and hashes are public.",
+          "Broken-block records are compact but readable.",
+          "Drop tables are bounded PDA data."
+        ]
+      },
+      {
+        "kicker": "Civilization",
+        "title": "Governance should be visible before it becomes powerful.",
+        "body": "The current contracts expose the surfaces that future civilization rules must bind to: recipe tables, resource rules, guardians, market policy, and player-owned assets.",
+        "points": [
+          "Live surfaces are separated from planned ones.",
+          "Configuration changes should target PDA data.",
+          "Old player assets need stronger protection."
+        ]
+      }
+    ],
+    "map": [
+      {
+        "surface": "Players",
+        "status": "Live PDA",
+        "audit": "Read PlayerProfile accounts to see wallets, positions, equipment slots, and equipped backpack pointers.",
+        "typeId": "player-profile",
+        "action": "View players"
+      },
+      {
+        "surface": "Backpacks",
+        "status": "Live PDA",
+        "audit": "Read Backpack accounts to inspect owners, capacity, item counts, block resources, and item/material slots.",
+        "typeId": "backpack",
+        "action": "View backpacks"
+      },
+      {
+        "surface": "Forged outputs",
+        "status": "Aggregated PDA view",
+        "audit": "Read forged records from Backpack item slots and MarketAsset payloads without inventing a separate live forging program.",
+        "typeId": "forged-items",
+        "action": "View forged items"
+      },
+      {
+        "surface": "Smelting recipes",
+        "status": "Live PDA",
+        "audit": "Read RecipeTable accounts to inspect active recipe tables, heat tiers, input counts, output counts, and update slots.",
+        "typeId": "recipe-table",
+        "action": "View recipes"
+      },
+      {
+        "surface": "Guardian service",
+        "status": "Live PDA",
+        "audit": "Read GuardianRegion and GuardianRegistry accounts to audit realtime region owners, endpoints, stake, proof counts, and penalties.",
+        "typeId": "guardian-region",
+        "action": "View guardians"
+      },
+      {
+        "surface": "Market settlement",
+        "status": "Live PDA",
+        "audit": "Read listings and market assets to inspect seller, buyer, price, currency, escrow source, state, and settlement slots.",
+        "typeId": "market-listing",
+        "action": "View market"
+      }
+    ]
+  }
+}

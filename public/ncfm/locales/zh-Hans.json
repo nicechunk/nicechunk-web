@@ -1,0 +1,38 @@
+{
+  "_meta": {
+    "language": "zh-Hans",
+    "label": "Simplified Chinese",
+    "version": "ncfm-locale-zh-Hans-a5e83bf7f752b581",
+    "contentHash": "a5e83bf7f752b581"
+  },
+  "siteFooter": {
+    "tagline": "Solana 上的种子体素世界协议。",
+    "navigationAria": "页脚导航",
+    "socialAria": "NiceChunk 社交链接",
+    "home": "首页",
+    "play": "进入世界",
+    "roadmap": "路书",
+    "docs": "文档",
+    "guardian": "守护者",
+    "contracts": "合约",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk。保留所有权利。"
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "语言",
+    "comingSoon": "即将开放",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  }
+}

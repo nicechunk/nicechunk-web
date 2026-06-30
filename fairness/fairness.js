@@ -51,7 +51,6 @@ const plannedLanguages = [
 ];
 
 let dictionary = {};
-let mainnetIndex = null;
 let activeLanguage = normalizeLanguage(localStorage.getItem(languageStorageKey)) || "en";
 let chunkPreview = null;
 const lockedFields = {
@@ -77,11 +76,9 @@ async function initFairness() {
 }
 
 async function loadFairnessDictionary(language) {
-  const mainnet = await fetchMainnetIndex();
-  const locale = mainnet?.fairnessI18n?.locales?.[language];
   const cachedVersion = localStorage.getItem(localeVersionKey(language));
   const cachedRaw = localStorage.getItem(localeDataKey(language));
-  if (locale?.version && cachedVersion === locale.version && cachedRaw) {
+  if (cachedVersion === buildVersion && cachedRaw) {
     try {
       return JSON.parse(cachedRaw);
     } catch (_error) {
@@ -90,27 +87,17 @@ async function loadFairnessDictionary(language) {
     }
   }
 
-  const url = locale?.url || `/fairness/locales/${language}.json`;
-  const version = locale?.version || buildVersion;
-  const response = await fetch(`${url}?v=${encodeURIComponent(version)}`, { cache: "no-store" });
+  const response = await fetch(`/fairness/locales/${language}.json?v=${encodeURIComponent(buildVersion)}`, { cache: "no-store" });
   if (!response.ok && language !== "en") return loadFairnessDictionary("en");
   if (!response.ok) return {};
   const data = await response.json();
   try {
-    localStorage.setItem(localeVersionKey(language), version);
+    localStorage.setItem(localeVersionKey(language), buildVersion);
     localStorage.setItem(localeDataKey(language), JSON.stringify(data));
   } catch (_error) {
     localStorage.removeItem(localeDataKey(language));
   }
   return data;
-}
-
-async function fetchMainnetIndex() {
-  if (mainnetIndex) return mainnetIndex;
-  mainnetIndex = await fetch(`/mainnet.json?v=${encodeURIComponent(buildVersion)}`, { cache: "no-store" })
-    .then((response) => (response.ok ? response.json() : null))
-    .catch(() => null);
-  return mainnetIndex;
 }
 
 function applyTranslations(root) {

@@ -1,0 +1,187 @@
+{
+  "_meta": {
+    "language": "zh-Hant",
+    "label": "Traditional Chinese",
+    "version": "guardian-locale-zh-Hant-9b48afd407564640",
+    "contentHash": "9b48afd407564640"
+  },
+  "siteFooter": {
+    "tagline": "Solana 上的種子體素世界協議。",
+    "navigationAria": "頁腳導航",
+    "socialAria": "NiceChunk 社交連結",
+    "home": "首頁",
+    "play": "進入世界",
+    "roadmap": "路書",
+    "docs": "文檔",
+    "guardian": "守護者",
+    "contracts": "合約",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk。保留所有權利。"
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "語言",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "guardian": {
+    "meta": {
+      "title": "NiceChunk 守護者網路控制台"
+    },
+    "nav": {
+      "aria": "主導航",
+      "home": "首頁",
+      "roadbook": "路书",
+      "worldRules": "世界規則",
+      "resources": "資源",
+      "elements": "元素",
+      "fairness": "公平性",
+      "proofOfFrontier": "證明",
+      "guardians": "守護者",
+      "docs": "文件",
+      "enterWorld": "進入世界"
+    },
+    "hero": {
+      "eyebrow": "Guardian 接入層",
+      "title": "守護者網路控制台",
+      "body": "註冊一個非託管 Guardian，讓守護區域保持可存取，實時同步 Chunk 活動，並為本地遊戲服務提供支撐。只要穩定提供守護服務，Guardian 後續可以從守護區域的資源税收和交易税收中赚取 NCK，同時不託管玩家資產，也不替使用者簽名。",
+      "actionsAria": "守護者操作",
+      "registerAction": "註冊節點",
+      "registryAction": "查看登記表",
+      "metricsAria": "守護者登记狀態"
+    },
+    "visual": {
+      "aria": "守護者網路模型",
+      "core": "GUARDIAN"
+    },
+    "metrics": {
+      "network": "網路",
+      "networkValue": "Devnet-01",
+      "stake": "註冊费用",
+      "stakeValue": "100,000 NCK",
+      "region": "覆蓋範圍",
+      "regionValue": "100 x 100 Chunks",
+      "contract": "合約",
+      "viewContract": "查看合約"
+    },
+    "register": {
+      "eyebrow": "註冊",
+      "title": "註冊節點",
+      "body": "為一個 100 x 100 Chunk 服務區域發布連接端點。節點掉線或不穩定會受到懲罰；穩定執行的節點，国庫會以守護者獎勵的形式逐步返回給註冊錢包。"
+    },
+    "wallet": {
+      "connect": "連接錢包",
+      "register": "註冊守護者",
+      "disconnected": "未連接"
+    },
+    "form": {
+      "chunkX": "Chunk X",
+      "chunkY": "Chunk Y",
+      "connection": "連接端點",
+      "connectionPlaceholder": "wss://guardian.example.com/ws",
+      "host": "IP 地址",
+      "hostPlaceholder": "guardian.example.com",
+      "port": "端口",
+      "operator": "操作员授權地址",
+      "operatorPlaceholder": "預設使用已連接錢包",
+      "useTls": "使用 WSS / TLS 傳輸",
+      "genesis": "創世守護者註冊",
+      "regionPreview": "區域",
+      "submit": "註冊並支付 100,000 NCK",
+      "close": "关闭"
+    },
+    "status": {
+      "ready": "准备就绪。",
+      "noWallet": "沒有檢测到 Solana 錢包。请安装 Phantom 或 Solflare。",
+      "walletConnected": "錢包已連接。",
+      "connectFailed": "連接失敗。",
+      "confirmWallet": "请在錢包中確認註冊交易。",
+      "registered": "註冊成功。交易：{signature}",
+      "registerFailed": "註冊失敗。",
+      "updateConfirm": "请在錢包中確認端點修改交易。",
+      "updated": "端點已更新。交易：{signature}",
+      "updateFailed": "端點更新失敗。",
+      "invalidInteger": "{field} 必須是整數。"
+    },
+    "list": {
+      "eyebrow": "登記表",
+      "title": "活躍守護者",
+      "body": "開發網活躍 Guardian 區域列表。連接錢包後，你自己的守護者會优先顯示並標記。",
+      "listView": "列表查看",
+      "mapView": "地圖查看",
+      "refresh": "重新整理",
+      "loading": "正在載入登記表...",
+      "registryMissing": "守護者登記表尚未初始化。",
+      "registrySummary": "活躍守護者：{active}。累計註冊：{total}。",
+      "connectFirst": "请先連接錢包，再載入守護者登記表。",
+      "empty": "目前還沒有活躍守護者。",
+      "loadFailed": "載入守護者失敗。"
+    },
+    "card": {
+      "title": "區域 {x}, {y}",
+      "chunkRange": "Chunk 範圍",
+      "owner": "錢包",
+      "wallet": "錢包",
+      "operator": "操作员",
+      "endpoint": "端點",
+      "chainAddress": "鏈地址",
+      "stake": "剩餘質押",
+      "proof": "最後證明",
+      "never": "從未提交",
+      "viewOnChain": "鏈上查看",
+      "mine": "我的",
+      "edit": "修改",
+      "save": "儲存",
+      "cancel": "取消"
+    },
+    "map": {
+      "regionTitle": "Guardian {x}, {y}",
+      "chunkRange": "Chunks {minX}..{maxX}, {minY}..{maxY}",
+      "emptyRegion": "區域 {x}, {y}",
+      "axisX": "Chunk X",
+      "axisY": "Chunk Y",
+      "center": "中心 {x}, {y}"
+    },
+    "boundaries": {
+      "aria": "Guardian 職責邊界",
+      "access": {
+        "title": "接入層",
+        "body": "Guardian 讓區域端點保持可存取，方便客戶端發現並連接附近的 Chunk 服務。"
+      },
+      "realtime": {
+        "title": "實時通訊",
+        "body": "它支持區域活動的實時協作，但不會取代錢包簽名或鏈上結算。"
+      },
+      "nonCustodial": {
+        "title": "非託管流程",
+        "body": "Guardian 不託管玩家資產，不替使用者簽名，也不代表玩家處理 Solana 交易。"
+      }
+    },
+    "error": {
+      "insufficientSol": "已連接錢包需要少量開發網 SOL 支付交易手续费。",
+      "insufficientNck": "已連接錢包沒有足够的開發網 NCK 支付 100,000 NCK 註冊费用。",
+      "noPriorCredit": "這個錢包還沒有開發網 SOL 記錄。註冊前请先领取開發網 SOL。",
+      "invalidTokenAccount": "NCK 代幣帳戶不正確。请確認錢包持有開發網 NCK。",
+      "regionAlreadyActive": "這個區域已經有活躍守護者。",
+      "invalidConnection": "連接端點格式不正確。请使用 ws://主机:端口 或 wss://主机:端口，不要带路徑。",
+      "invalidHost": "主机格式不正確。请只填寫域名、IP 或主机名，不要带 http:// 或 wss://。",
+      "invalidPort": "端口必須在 1 到 65535 之間。",
+      "missingAdjacentGuardian": "非創世守護者必須上下左右至少相邻一個活躍守護者。",
+      "invalidAdjacentGuardian": "相邻區域 PDA 不正確，请重新整理頁面後重试。",
+      "noGenesisPermission": "創世守護者必須由開發錢包註冊。请切换到開發錢包，或不要勾選創世註冊。",
+      "genesisAlreadyRegistered": "創世守護者已經註冊过。",
+      "guardianNotActive": "這個守護者目前不是活躍狀態。",
+      "unknownProgramError": "Guardian 合約返回錯誤：{code}"
+    }
+  }
+}

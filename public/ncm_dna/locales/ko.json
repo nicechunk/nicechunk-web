@@ -1,0 +1,198 @@
+{
+  "_meta": {
+    "language": "ko",
+    "label": "Korean",
+    "version": "ncm-dna-locale-ko-1b975f544de15509",
+    "contentHash": "1b975f544de15509"
+  },
+  "siteFooter": {
+    "tagline": "Solana 기반 시드형 복셀 월드 프로토콜.",
+    "navigationAria": "푸터 내비게이션",
+    "socialAria": "NiceChunk 소셜 링크",
+    "home": "홈",
+    "play": "월드 입장",
+    "roadmap": "로드북",
+    "docs": "문서",
+    "guardian": "가디언",
+    "contracts": "컨트랙트",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. All rights reserved."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "언어",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "ncmDna": {
+    "nav": {
+      "aria": "기본 내비게이션",
+      "home": "홈",
+      "roadbook": "로드맵",
+      "worldRules": "월드 규칙",
+      "resources": "리소스",
+      "ncm": "NCM",
+      "dna": "DNA Lab",
+      "elements": "원소",
+      "fairness": "공정성",
+      "proofOfFrontier": "증명",
+      "contracts": "계약",
+      "enterWorld": "월드 입장"
+    },
+    "page": {
+      "title": "NCM DNA Lab",
+      "description": "NCM DNA Lab은 같은 표준 직육면체 모델로 성장할 수 있는 결정적 짧은 유전자를 검색합니다."
+    },
+    "common": {
+      "yes": "예",
+      "no": "아니요",
+      "on": "켜짐",
+      "off": "꺼짐"
+    },
+    "hero": {
+      "eyebrow": "NCM 유전자 검색 실험",
+      "title": "NCM DNA Lab",
+      "body": "NCM DNA Lab은 온체인 3D 자산을 위한 실험적 유전자 검색 시스템입니다. 모든 큐브를 저장하는 대신 같은 모델로 다시 성장할 수 있는 더 짧은 결정적 유전자를 찾습니다.",
+      "pow": "앞으로 이 검색은 유용한 Proof of Work가 될 수 있습니다. 채굴자는 CPU 연산으로 더 짧은 유전자를 발견하고 PDA 저장 크기를 줄이며 절감된 저장 비용에서 보상을 받을 수 있습니다."
+    },
+    "flow": {
+      "raw": "원본 직육면체 모델",
+      "search": "NCM-DNA 유전자 검색",
+      "grow": "Grow(gene) 해시 일치"
+    },
+    "target": {
+      "eyebrow": "대상 모델",
+      "title": "결정적 직육면체 대상",
+      "seed": "대상 시드",
+      "source": "소스",
+      "ncmCharacter": "NCM 페이지 캐릭터",
+      "hiddenGene": "숨겨진 유전자",
+      "rawVariation": "원본 변형",
+      "ornaments": "장식",
+      "generate": "대상 생성",
+      "random": "랜덤 대상",
+      "reveal": "숨겨진 유전자 표시"
+    },
+    "search": {
+      "eyebrow": "CPU 검색",
+      "title": "Worker 제어 유전자 검색",
+      "mode": "검색 모드",
+      "seedSearch": "DNA 시드 자유 검색",
+      "ncmRandom": "NCM 아바타 랜덤",
+      "exact": "정확한 파라미터 복구",
+      "compression": "압축 검색",
+      "evolution": "진화 검색",
+      "threads": "스레드",
+      "auto": "자동",
+      "maxCandidates": "최대 후보",
+      "maxSeedLength": "DNA 시드 최대 길이",
+      "start": "검색 시작",
+      "continuous": "연속 검색",
+      "pause": "일시 중지",
+      "resume": "재개",
+      "stop": "중지",
+      "reset": "초기화"
+    },
+    "result": {
+      "eyebrow": "최고 결과",
+      "title": "시드와 컴파일된 유전자",
+      "seed": "최고 DNA 시드",
+      "gene": "컴파일된 유전자",
+      "copySeed": "시드 복사",
+      "growSeed": "시드로 생성",
+      "copy": "유전자 복사",
+      "grow": "유전자 성장",
+      "seedInput": "시드 입력",
+      "seedPlaceholder": "NCS1.AV...",
+      "geneInput": "유전자 입력",
+      "genePlaceholder": "NCD1.HM..."
+    },
+    "viewer": {
+      "eyebrow": "3D 미리보기",
+      "title": "표준 직육면체 모델",
+      "canvasAria": "NCM DNA 3D 모델 뷰어",
+      "modelAria": "뷰어 모델",
+      "renderAria": "렌더 모드",
+      "target": "대상 모델",
+      "best": "최고 유전자 모델",
+      "compare": "나란히 보기",
+      "diff": "차이 보기",
+      "cuboid": "직육면체",
+      "voxel": "복셀",
+      "wireframe": "와이어프레임",
+      "resetCamera": "카메라 초기화"
+    },
+    "cpu": {
+      "eyebrow": "CPU 친화적",
+      "title": "왜 CPU 우선인가?",
+      "body": "NCM-DNA v1은 GPU 친화적인 복셀 함수 대신 규칙 기반 직육면체 성장 언어를 사용합니다. 분기, 템플릿, 대칭 감지, 표준 정렬, 가변 길이 유전자가 포함되어 일반 CPU 실행에 더 적합합니다."
+    },
+    "chain": {
+      "eyebrow": "향후 온체인 흐름",
+      "title": "저장 공간을 절약하는 제출 경로",
+      "step1": "자산 PDA는 canonical_model_hash와 current_encoding을 저장합니다.",
+      "step2": "채굴자는 더 짧은 유전자를 제출합니다.",
+      "step3": "프로그램은 grow(gene) 해시가 canonical_model_hash와 같은지 검증합니다.",
+      "step4": "유전자가 더 짧으면 자산 인코딩이 업데이트됩니다.",
+      "step5": "해제된 PDA 렌트는 채굴자, 소유자, 프로토콜 풀 사이에서 공유될 수 있습니다."
+    },
+    "metrics": {
+      "status": "상태",
+      "candidates": "후보",
+      "speed": "속도",
+      "speedValue": "{value}/초",
+      "generation": "세대",
+      "bestGeneSize": "최고 유전자 크기",
+      "rawModelSize": "원본 모델 크기",
+      "ratio": "압축",
+      "score": "점수",
+      "targetHash": "대상 해시",
+      "bestHash": "최고 해시",
+      "bestSeed": "최고 시드",
+      "seedLength": "시드 길이",
+      "exact": "정확한 일치",
+      "threads": "스레드",
+      "threadValue": "{planned}개 중 {value}",
+      "elapsed": "경과",
+      "saved": "절감",
+      "bytes": "{value} 바이트"
+    },
+    "status": {
+      "idle": "대기",
+      "running": "실행 중",
+      "paused": "일시 중지",
+      "stopped": "중지됨",
+      "success": "성공"
+    },
+    "log": {
+      "eyebrow": "검색 로그",
+      "title": "Worker 이벤트",
+      "targetGenerated": "대상이 생성되었습니다: {hash}",
+      "ncmTargetLoaded": "{boxes}개 직육면체가 있는 NCM 캐릭터 대상을 불러왔습니다.",
+      "workerError": "Worker 오류: {message}",
+      "searchStarted": "검색이 시작되었습니다.",
+      "continuousStarted": "{threads}개 worker 스레드로 연속 검색을 시작했습니다.",
+      "searchPaused": "검색이 일시 중지되었습니다.",
+      "searchResumed": "검색이 재개되었습니다.",
+      "searchReset": "검색이 초기화되었습니다.",
+      "best": "최고 점수 {score}: {gene}",
+      "success": "{candidates}개 후보 후 정확한 일치를 찾았습니다.",
+      "copied": "유전자가 복사되었습니다.",
+      "seedCopied": "시드가 복사되었습니다.",
+      "geneGrown": "유전자가 성장했습니다: {hash}",
+      "seedGrown": "시드가 성장했습니다: {hash}",
+      "invalidGene": "잘못된 유전자: {message}",
+      "invalidSeed": "잘못된 시드: {message}"
+    }
+  }
+}

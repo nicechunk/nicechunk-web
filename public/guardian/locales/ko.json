@@ -1,0 +1,187 @@
+{
+  "_meta": {
+    "language": "ko",
+    "label": "Korean",
+    "version": "guardian-locale-ko-a41f891b8f7ea3dc",
+    "contentHash": "a41f891b8f7ea3dc"
+  },
+  "siteFooter": {
+    "tagline": "Solana 기반 시드형 복셀 월드 프로토콜.",
+    "navigationAria": "푸터 내비게이션",
+    "socialAria": "NiceChunk 소셜 링크",
+    "home": "홈",
+    "play": "월드 입장",
+    "roadmap": "로드북",
+    "docs": "문서",
+    "guardian": "가디언",
+    "contracts": "컨트랙트",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. All rights reserved."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "언어",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "guardian": {
+    "meta": {
+      "title": "NiceChunk Guardian Network Console"
+    },
+    "nav": {
+      "aria": "기본 내비게이션",
+      "home": "홈",
+      "roadbook": "로드북",
+      "worldRules": "월드 규칙",
+      "resources": "리소스",
+      "elements": "원소",
+      "fairness": "공정성",
+      "proofOfFrontier": "증명",
+      "guardians": "가디언",
+      "docs": "문서",
+      "enterWorld": "월드 입장"
+    },
+    "hero": {
+      "eyebrow": "Guardian 접근 계층",
+      "title": "Guardian Network Console",
+      "body": "Register a non-custodial Guardian to keep a region reachable, synchronize realtime chunk activity, and support local game services. Stable Guardians can earn NCK from future regional resource taxes and trading taxes while never holding player assets or signing for users.",
+      "actionsAria": "Guardian 작업",
+      "registerAction": "노드 등록",
+      "registryAction": "레지스트리 보기",
+      "metricsAria": "Guardian 레지스트리 상태"
+    },
+    "visual": {
+      "aria": "Guardian 네트워크 모델",
+      "core": "GUARDIAN"
+    },
+    "metrics": {
+      "network": "네트워크",
+      "networkValue": "Devnet-01",
+      "stake": "최소 스테이크",
+      "stakeValue": "100,000 NCK",
+      "region": "커버리지",
+      "regionValue": "100 x 100 Chunks",
+      "contract": "Contract",
+      "viewContract": "View Program"
+    },
+    "register": {
+      "eyebrow": "등록",
+      "title": "노드 등록",
+      "body": "Publish a connection endpoint for a 100 x 100 chunk service region. Offline or unstable nodes can be penalized; stable nodes can receive Guardian rewards from the treasury over time, paid back to the registration wallet."
+    },
+    "wallet": {
+      "connect": "지갑 연결",
+      "register": "Register Guardian",
+      "disconnected": "연결 안 됨"
+    },
+    "form": {
+      "chunkX": "Chunk X",
+      "chunkY": "Chunk Y",
+      "connection": "연결 endpoint",
+      "connectionPlaceholder": "wss://guardian.example.com/ws",
+      "host": "Host 또는 IP",
+      "hostPlaceholder": "guardian.example.com",
+      "port": "포트",
+      "operator": "운영자 권한",
+      "operatorPlaceholder": "기본값은 연결된 지갑",
+      "useTls": "WSS / TLS 전송 사용",
+      "genesis": "Genesis Guardian 등록",
+      "regionPreview": "지역",
+      "submit": "등록 및 100,000 NCK 스테이크",
+      "close": "Close"
+    },
+    "status": {
+      "ready": "준비됨.",
+      "noWallet": "Solana 지갑이 감지되지 않았습니다. Phantom 또는 Solflare를 설치하세요.",
+      "walletConnected": "지갑이 연결되었습니다.",
+      "connectFailed": "연결 실패.",
+      "confirmWallet": "지갑에서 등록 트랜잭션을 확인하세요.",
+      "registered": "등록 완료. 트랜잭션: {signature}",
+      "registerFailed": "등록 실패.",
+      "updateConfirm": "Confirm the endpoint update in your wallet.",
+      "updated": "Endpoint updated. Transaction: {signature}",
+      "updateFailed": "Endpoint update failed.",
+      "invalidInteger": "{field}는 정수여야 합니다."
+    },
+    "list": {
+      "eyebrow": "레지스트리",
+      "title": "활성 Guardians",
+      "body": "Guardian 운영자가 공개한 실시간 devnet 지역.",
+      "listView": "List View",
+      "mapView": "Map View",
+      "refresh": "새로고침",
+      "loading": "레지스트리 로딩 중...",
+      "registryMissing": "Guardian 레지스트리가 아직 초기화되지 않았습니다.",
+      "registrySummary": "활성 Guardians: {active}. 전체 등록: {total}.",
+      "connectFirst": "Connect a wallet to load the Guardian registry.",
+      "empty": "아직 등록된 활성 Guardian이 없습니다.",
+      "loadFailed": "Guardians를 불러올 수 없습니다."
+    },
+    "card": {
+      "title": "지역 {x}, {y}",
+      "chunkRange": "Chunk 범위",
+      "owner": "지갑",
+      "wallet": "Wallet",
+      "operator": "운영자",
+      "endpoint": "Endpoint",
+      "chainAddress": "Chain Address",
+      "stake": "남은 스테이크",
+      "proof": "마지막 증명",
+      "never": "없음",
+      "viewOnChain": "온체인 보기",
+      "mine": "Mine",
+      "edit": "Edit",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "map": {
+      "regionTitle": "Guardian {x}, {y}",
+      "chunkRange": "Chunks {minX}..{maxX}, {minY}..{maxY}",
+      "emptyRegion": "Region {x}, {y}",
+      "axisX": "Chunk X",
+      "axisY": "Chunk Y",
+      "center": "Center {x}, {y}"
+    },
+    "boundaries": {
+      "aria": "Guardian 역할 경계",
+      "access": {
+        "title": "접근 계층",
+        "body": "Guardian은 클라이언트가 근처 chunk 서비스를 찾고 통신할 수 있도록 지역 endpoint를 연결 가능한 상태로 유지합니다."
+      },
+      "realtime": {
+        "title": "실시간 전송",
+        "body": "지갑 서명이나 온체인 결제를 대체하지 않고 지역 활동의 실시간 조율을 지원합니다."
+      },
+      "nonCustodial": {
+        "title": "비수탁 흐름",
+        "body": "Guardian은 플레이어 자산을 보관하지 않고, 사용자를 대신해 서명하지 않으며, Solana 트랜잭션을 대리 처리하지 않습니다."
+      }
+    },
+    "error": {
+      "insufficientSol": "연결된 지갑에는 트랜잭션 수수료용 devnet SOL이 조금 필요합니다.",
+      "insufficientNck": "연결된 지갑에 100,000 NCK를 스테이크할 devnet NCK가 부족합니다.",
+      "noPriorCredit": "이 지갑에는 아직 devnet SOL 기록이 없습니다. 등록 전에 devnet SOL을 요청하세요.",
+      "invalidTokenAccount": "NCK 토큰 계정이 올바르지 않습니다. 지갑에 devnet NCK가 있는지 확인하세요.",
+      "regionAlreadyActive": "이 지역에는 이미 활성 Guardian이 있습니다.",
+      "invalidConnection": "잘못된 연결 endpoint입니다. 경로 없이 ws://host:port 또는 wss://host:port를 사용하세요.",
+      "invalidHost": "잘못된 host입니다. http:// 또는 wss:// 없이 도메인, IP, 호스트 이름만 사용하세요.",
+      "invalidPort": "포트는 1에서 65535 사이여야 합니다.",
+      "missingAdjacentGuardian": "Genesis가 아닌 Guardian은 최소 하나의 활성 Guardian과 인접해야 합니다.",
+      "invalidAdjacentGuardian": "인접 지역 PDA가 올바르지 않습니다. 새로고침 후 다시 시도하세요.",
+      "noGenesisPermission": "Genesis Guardian 등록은 개발 지갑이 서명해야 합니다. 지갑을 바꾸거나 genesis 등록을 비활성화하세요.",
+      "genesisAlreadyRegistered": "Genesis Guardian은 이미 등록되었습니다.",
+      "guardianNotActive": "This Guardian is not active.",
+      "unknownProgramError": "Guardian 프로그램 오류: {code}"
+    }
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "_meta": {
+    "language": "ja",
+    "label": "Japanese",
+    "version": "mining-locale-ja-f79edf9f4e785f9d",
+    "contentHash": "f79edf9f4e785f9d"
+  },
+  "siteFooter": {
+    "tagline": "Solana 上のシード型ボクセルワールドプロトコル。",
+    "navigationAria": "フッターナビゲーション",
+    "socialAria": "NiceChunk ソーシャルリンク",
+    "home": "ホーム",
+    "play": "ワールドへ",
+    "roadmap": "ロードブック",
+    "docs": "ドキュメント",
+    "guardian": "ガーディアン",
+    "contracts": "コントラクト",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. All rights reserved."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "言語",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "mining": {
+    "title": "Nicechunk 採掘",
+    "canvasLabel": "地下採掘洞窟",
+    "player": {
+      "title": "新人採掘者",
+      "wallet": "ウォレット"
+    },
+    "panel": {
+      "kicker": "現在の洞窟",
+      "title": "オンラインユーザー",
+      "depth": "洞窟深度",
+      "ore": "鉱石",
+      "oreCount": "残り {count}",
+      "contractAddress": "洞窟コントラクト",
+      "hashrate": "合計ハッシュレート",
+      "blockTime": "平均ブロック時間",
+      "totalBlocks": "合計ブロック",
+      "minedBlocks": "採掘済みブロック",
+      "remainingBlocks": "残りブロック",
+      "hashrateH": "{value} H/s",
+      "hashrateKh": "{value} KH/s",
+      "seconds": "{value}秒",
+      "meters": "{value} m"
+    },
+    "controls": {
+      "label": "採掘操作",
+      "mine": "採掘"
+    },
+    "inventory": {
+      "ore": "鉱石",
+      "energy": "エネルギー"
+    },
+    "status": {
+      "label": "状態",
+      "ready": "採掘準備完了",
+      "noTarget": "光る鉱脈を狙ってください",
+      "mined": "鉱石を採掘しました"
+    },
+    "userStatus": {
+      "mining": "中央鉱脈を採掘中",
+      "drilling": "側壁を掘削中",
+      "hauling": "鉱石カートを運搬中",
+      "scanning": "鉱石品質を調査中",
+      "resting": "エネルギー回復中",
+      "yield": "鉱石 {count}"
+    },
+    "system": {
+      "label": "コンピューター情報",
+      "cpu": "CPU",
+      "memory": "メモリ",
+      "cores": "{count} コア",
+      "memoryGb": "{value} GB",
+      "unknown": "不明"
+    },
+    "tools": {
+      "label": "ツール",
+      "slot": "スロット {slot}: {item}",
+      "drill": "採掘ドリル",
+      "scanner": "鉱石スキャナー",
+      "lantern": "洞窟ランタン",
+      "hammer": "ロックハンマー"
+    }
+  }
+}

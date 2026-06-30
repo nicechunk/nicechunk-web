@@ -58,21 +58,71 @@ const lawLayers = [
   },
 ];
 
+const tocGroups = ["understand", "govern", "verify", "build"];
+
 const tocItems = [
-  { id: "termDecoder", href: "#term-decoder", tone: "green" },
-  { id: "plainModel", href: "#plain-model", tone: "green" },
-  { id: "readerPath", href: "#reader-path", tone: "blue" },
-  { id: "trustJourney", href: "#trust-journey", tone: "green" },
-  { id: "ruleClassifier", href: "#rule-classifier", tone: "gold" },
-  { id: "threatModel", href: "#threat-model", tone: "red" },
-  { id: "challengeDesk", href: "#challenge-desk", tone: "red" },
-  { id: "caseWalkthrough", href: "#case-walkthrough", tone: "green" },
-  { id: "impactSimulator", href: "#impact-simulator", tone: "blue" },
-  { id: "civicPower", href: "#civic-power-ledger", tone: "green" },
-  { id: "executionProof", href: "#execution-proof", tone: "blue" },
-  { id: "pdaTransparency", href: "#pda-transparency", tone: "gold" },
-  { id: "civilizationDesign", href: "#civilization-blueprint", tone: "green" },
-  { id: "buildSpec", href: "#build-spec", tone: "blue" },
+  { id: "trustLadder", href: "#trust-ladder", tone: "green", group: "understand" },
+  { id: "termDecoder", href: "#term-decoder", tone: "green", group: "understand" },
+  { id: "plainModel", href: "#plain-model", tone: "green", group: "understand" },
+  { id: "readerPath", href: "#reader-path", tone: "blue", group: "understand" },
+  { id: "ruleAuthoring", href: "#rule-authoring", tone: "green", group: "understand" },
+  { id: "trustJourney", href: "#trust-journey", tone: "green", group: "understand" },
+  { id: "implementationBoundary", href: "#implementation-boundary", tone: "red", group: "understand" },
+  { id: "lawLayers", href: "#law-layers", tone: "blue", group: "understand" },
+  { id: "ruleClassifier", href: "#rule-classifier", tone: "gold", group: "govern" },
+  { id: "conservationLedger", href: "#conservation-ledger", tone: "green", group: "govern" },
+  { id: "naturalLaw", href: "#natural-law-warning", tone: "red", group: "govern" },
+  { id: "civilizationPower", href: "#civilization-power", tone: "green", group: "govern" },
+  { id: "powerSnapshot", href: "#power-snapshot-integrity", tone: "blue", group: "govern" },
+  { id: "threatModel", href: "#threat-model", tone: "red", group: "govern" },
+  { id: "challengeDesk", href: "#challenge-desk", tone: "red", group: "govern" },
+  { id: "caseWalkthrough", href: "#case-walkthrough", tone: "green", group: "govern" },
+  { id: "impactSimulator", href: "#impact-simulator", tone: "blue", group: "govern" },
+  { id: "signingSafety", href: "#signing-safety", tone: "red", group: "govern" },
+  { id: "decisionSplit", href: "#decision-split", tone: "blue", group: "govern" },
+  { id: "civicPower", href: "#civic-power-ledger", tone: "green", group: "govern" },
+  { id: "ruleLifecycle", href: "#rule-lifecycle", tone: "blue", group: "govern" },
+  { id: "ruleStructure", href: "#rule-structure", tone: "green", group: "verify" },
+  { id: "technicalFlow", href: "#technical-flow", tone: "blue", group: "verify" },
+  { id: "ruleValidator", href: "#rule-validator", tone: "red", group: "verify" },
+  { id: "executionProof", href: "#execution-proof", tone: "blue", group: "verify" },
+  { id: "executionReceipts", href: "#execution-receipts", tone: "gold", group: "verify" },
+  { id: "pdaTransparency", href: "#pda-transparency", tone: "gold", group: "verify" },
+  { id: "independentVerification", href: "#independent-verification", tone: "blue", group: "verify" },
+  { id: "versionedEvolution", href: "#versioned-evolution", tone: "blue", group: "verify" },
+  { id: "citizenRoles", href: "#citizen-role-matrix", tone: "green", group: "build" },
+  { id: "civilizationDesign", href: "#civilization-blueprint", tone: "green", group: "build" },
+  { id: "civicWorks", href: "#civic-works", tone: "blue", group: "build" },
+  { id: "buildSpec", href: "#build-spec", tone: "blue", group: "build" },
+  { id: "auditTrail", href: "#audit-trail", tone: "blue", group: "build" },
+  { id: "pdaBinding", href: "#pda-binding", tone: "green", group: "build" },
+  { id: "targetModules", href: "#target-modules", tone: "blue", group: "build" },
+  { id: "ruleExamples", href: "#rule-examples", tone: "gold", group: "build" },
+  { id: "executionModel", href: "#execution-model", tone: "green", group: "build" },
+  { id: "ruleBooks", href: "#rule-books", tone: "blue", group: "build" },
+  { id: "futureContractDirection", href: "#future-contract-direction", tone: "green", group: "build" },
+];
+
+const entryPaths = [
+  { id: "player", href: "#reader-path", tone: "green", proof: "rule_book_pda" },
+  { id: "builder", href: "#technical-flow", tone: "blue", proof: "machine_patch + RuleValidator" },
+  { id: "auditor", href: "#pda-transparency", tone: "gold", proof: "decoded PDA + receipt" },
+];
+
+const proofStripItems = [
+  { id: "promise", proof: "human_readable_text" },
+  { id: "machine", proof: "text_hash + patch_hash" },
+  { id: "pda", proof: "rule_book_pda + rule_signature_pda" },
+  { id: "failure", proof: "RuleRejected + challenge_pda" },
+];
+
+const trustLadderSteps = [
+  { id: "promise", proof: "human_readable_text" },
+  { id: "identity", proof: "text_hash + patch_hash" },
+  { id: "power", proof: "power_snapshot_pda" },
+  { id: "validator", proof: "RuleValidator dry_run_hash" },
+  { id: "execute", proof: "permissionless execute_rule" },
+  { id: "receipt", proof: "RuleExecuted | RuleRejected event" },
 ];
 
 const glossaryTerms = [
@@ -106,6 +156,23 @@ const classifierChecks = [
   "grantsPrivilege",
   "futureOnly",
   "knownAdapter",
+];
+
+const conservationStages = [
+  { id: "source", account: "resource_origin_pda", gate: "generated_source_hash" },
+  { id: "input", account: "inventory_item_pda", gate: "input_receipt_pda" },
+  { id: "burn", account: "consumption_event", gate: "input_burn_event" },
+  { id: "transform", account: "recipe_config_pda", gate: "recipe_version_hash" },
+  { id: "output", account: "output_receipt_pda", gate: "output_receipt_hash" },
+  { id: "audit", account: "conservation_ledger_pda", gate: "balance_delta_hash" },
+];
+
+const conservationChecks = [
+  "generatedSource",
+  "inputBurn",
+  "recipeBound",
+  "noDuplicateOutput",
+  "oldAssetProtection",
 ];
 
 const lifecycleSteps = [
@@ -180,6 +247,23 @@ const powerGuards = [
   "activeWindow",
   "decay",
   "anomalyPenalty",
+];
+
+const snapshotStages = [
+  { id: "receipts", proof: "participation_receipt_pda[]" },
+  { id: "eligibility", proof: "citizen_age + active_window" },
+  { id: "normalize", proof: "category_weight_table_hash" },
+  { id: "cap", proof: "wallet_cap + cluster_cap" },
+  { id: "freeze", proof: "power_snapshot_pda" },
+  { id: "recount", proof: "rule_signature_pda sum" },
+];
+
+const snapshotChecks = [
+  "receiptOnly",
+  "categoryBalance",
+  "capClusters",
+  "epochFreeze",
+  "publicRecount",
 ];
 
 const threatScenarios = [
@@ -258,6 +342,56 @@ const impactChecks = [
   "explainChoice",
 ];
 
+const signingChecks = [
+  "sameObject",
+  "snapshotPower",
+  "sideMeaning",
+  "riskPrompt",
+  "revocationLimit",
+];
+
+const signingRisks = [
+  { id: "asset", proof: "migration_mode + asset_scope" },
+  { id: "economy", proof: "conservation_result_hash" },
+  { id: "authority", proof: "writable_pda_allowlist" },
+  { id: "timing", proof: "cooldown_end + challenge_state" },
+  { id: "personal", proof: "wallet_scope_report" },
+  { id: "irreversible", proof: "finality_window + supersession_ref" },
+];
+
+const signingProofFields = [
+  ["side", "agree | reject | abstain"],
+  ["power", "power_at_snapshot"],
+  ["snapshot", "snapshot_epoch"],
+  ["text", "text_hash"],
+  ["patch", "patch_hash"],
+  ["risk", "risk_ack_hash"],
+];
+
+const decisionRoutes = [
+  { id: "agree", proof: "signature_side = agree", effect: "yes_power += power_at_snapshot" },
+  { id: "reject", proof: "signature_side = reject", effect: "no_power += power_at_snapshot" },
+  { id: "abstain", proof: "signature_side = abstain", effect: "abstain_power += power_at_snapshot" },
+  { id: "challenge", proof: "challenge_pda + evidence_hash", effect: "execution_state = paused" },
+];
+
+const decisionChecks = [
+  "oneIdentity",
+  "differentMeanings",
+  "challengeEvidence",
+  "publicMath",
+  "clearOutcome",
+];
+
+const decisionProofFields = [
+  ["side", "agree | reject | abstain"],
+  ["signature", "rule_signature_pda"],
+  ["challenge", "challenge_pda"],
+  ["pause", "unresolved_challenge_count"],
+  ["recount", "yes_power | no_power | abstain_power"],
+  ["outcome", "RuleFinalized | RulePaused | RuleRejected"],
+];
+
 const reputationSources = [
   { id: "discovery", proof: "chunk_discovery_receipt_pda" },
   { id: "backpack", proof: "backpack_ownership_snapshot" },
@@ -308,6 +442,30 @@ const reviewChecklist = [
   "hashProof",
   "thresholdPath",
   "failurePath",
+];
+
+const authoringChecks = [
+  "plainIntent",
+  "templateFit",
+  "boundedPatch",
+  "dryRun",
+  "freezeBeforeSign",
+];
+
+const authoringTemplates = [
+  { id: "production", proof: "target_module = smelting | forging" },
+  { id: "settlement", proof: "target_module = civic_project" },
+  { id: "safety", proof: "law_type = NaturalLaw" },
+  { id: "knowledge", proof: "target_module = world_knowledge" },
+];
+
+const authoringProofFields = [
+  ["intent", "human_readable_text"],
+  ["template", "rule_template_id"],
+  ["module", "target_module[]"],
+  ["patch", "machine_patch_hash"],
+  ["dryRun", "validator_dry_run_hash"],
+  ["freeze", "frozen_rule_book_pda"],
 ];
 
 const journeySteps = [
@@ -368,6 +526,23 @@ const executionProofItems = [
   "publicRejection",
 ];
 
+const receiptStages = [
+  { id: "transaction", proof: "execute_rule signature" },
+  { id: "precheck", proof: "expected_hash_set" },
+  { id: "write", proof: "written_pda + new_hash" },
+  { id: "event", proof: "RuleExecuted | RuleRejected" },
+  { id: "index", proof: "indexed_receipt_id" },
+  { id: "accountability", proof: "supersession_or_challenge_ref" },
+];
+
+const receiptChecks = [
+  "sameIdentity",
+  "beforeAfterHash",
+  "namedFailure",
+  "indexerParity",
+  "futureDispute",
+];
+
 const transparencySurfaces = [
   { id: "ruleLedger", account: "rule_book_pda", proof: "text_hash + patch_hash" },
   { id: "signatureLedger", account: "rule_signature_pda", proof: "power_at_snapshot" },
@@ -385,6 +560,23 @@ const transparencyChecks = [
   "watch",
 ];
 
+const verificationStages = [
+  { id: "claim", proof: "page_claim_id" },
+  { id: "account", proof: "decoded_pda_owner + seed" },
+  { id: "hash", proof: "sha256(text | patch | config)" },
+  { id: "recount", proof: "signature_pda_sum(snapshot_epoch)" },
+  { id: "simulate", proof: "RuleValidator dry_run" },
+  { id: "receipt", proof: "RuleExecuted | RuleRejected event" },
+];
+
+const verificationChecks = [
+  "independentSource",
+  "sameOwner",
+  "hashRecompute",
+  "thresholdReplay",
+  "publicReceipt",
+];
+
 const versioningStages = [
   { id: "activeV1", account: "rule_registry_pda", hash: "config_v1_hash" },
   { id: "proposalV2", account: "rule_book_pda", hash: "patch_v2_hash" },
@@ -398,6 +590,23 @@ const versioningPrinciples = [
   "compatibility",
   "supersession",
   "auditReplay",
+];
+
+const roleSurfaces = [
+  { id: "explorer", account: "chunk_discovery_receipt_pda", duty: "map_frontier + report_anomaly" },
+  { id: "miner", account: "resource_origin_pda", duty: "prove_source + conserve_output" },
+  { id: "forger", account: "forging_output_receipt_pda", duty: "consume_inputs + publish_recipe" },
+  { id: "builder", account: "civic_contribution_pda", duty: "fund_public_work + milestone" },
+  { id: "guardian", account: "guardian_coverage_pda", duty: "serve_region + submit_proof" },
+  { id: "auditor", account: "challenge_resolution_pda", duty: "verify_rule + file_evidence" },
+];
+
+const roleChecks = [
+  "notPermission",
+  "receiptBacked",
+  "rotatable",
+  "abuseBounded",
+  "publicBenefit",
 ];
 
 const designSurfaces = [
@@ -614,6 +823,12 @@ const validatorRules = [
 
 const heroLedger = document.querySelector("#heroLedger");
 const civilizationToc = document.querySelector("#civilizationToc");
+const civilizationEntryDiagram = document.querySelector("#civilizationEntryDiagram");
+const civilizationEntryPaths = document.querySelector("#civilizationEntryPaths");
+const civilizationProofStrip = document.querySelector("#civilizationProofStrip");
+const civilizationTrustLadderDiagram = document.querySelector("#civilizationTrustLadderDiagram");
+const trustLadderGrid = document.querySelector("#trustLadderGrid");
+const civilizationSectionNav = document.querySelector("#civilizationSectionNav");
 const civilizationGlossaryDiagram = document.querySelector("#civilizationGlossaryDiagram");
 const glossaryStack = document.querySelector("#glossaryStack");
 const glossaryGrid = document.querySelector("#glossaryGrid");
@@ -622,6 +837,10 @@ const civilizationSystemDiagram = document.querySelector("#civilizationSystemDia
 const civilizationReaderDiagram = document.querySelector("#civilizationReaderDiagram");
 const readerGuideLanesTarget = document.querySelector("#readerGuideLanes");
 const ruleReviewChecklist = document.querySelector("#ruleReviewChecklist");
+const civilizationAuthoringDiagram = document.querySelector("#civilizationAuthoringDiagram");
+const authoringStack = document.querySelector("#authoringStack");
+const authoringTemplateGrid = document.querySelector("#authoringTemplateGrid");
+const authoringProofGrid = document.querySelector("#authoringProofGrid");
 const civilizationJourneyDiagram = document.querySelector("#civilizationJourneyDiagram");
 const journeyStack = document.querySelector("#journeyStack");
 const journeyGrid = document.querySelector("#journeyGrid");
@@ -630,10 +849,16 @@ const lawLayerCards = document.querySelector("#lawLayerCards");
 const civilizationClassifierDiagram = document.querySelector("#civilizationClassifierDiagram");
 const classifierChecksTarget = document.querySelector("#classifierChecks");
 const classifierGrid = document.querySelector("#classifierGrid");
+const civilizationConservationDiagram = document.querySelector("#civilizationConservationDiagram");
+const conservationStack = document.querySelector("#conservationStack");
+const conservationGrid = document.querySelector("#conservationGrid");
 const constitutionChecksTarget = document.querySelector("#constitutionChecks");
 const powerSourcesTarget = document.querySelector("#powerSources");
 const powerGuardsTarget = document.querySelector("#powerGuards");
 const civilizationPowerDiagram = document.querySelector("#civilizationPowerDiagram");
+const civilizationSnapshotDiagram = document.querySelector("#civilizationSnapshotDiagram");
+const snapshotStack = document.querySelector("#snapshotStack");
+const snapshotGrid = document.querySelector("#snapshotGrid");
 const civilizationThreatDiagram = document.querySelector("#civilizationThreatDiagram");
 const defenseStackTarget = document.querySelector("#defenseStack");
 const threatModelGrid = document.querySelector("#threatModelGrid");
@@ -647,6 +872,14 @@ const caseEvidenceGrid = document.querySelector("#caseEvidenceGrid");
 const civilizationImpactDiagram = document.querySelector("#civilizationImpactDiagram");
 const impactStack = document.querySelector("#impactStack");
 const impactGrid = document.querySelector("#impactGrid");
+const civilizationSigningDiagram = document.querySelector("#civilizationSigningDiagram");
+const signingStack = document.querySelector("#signingStack");
+const signingRiskGrid = document.querySelector("#signingRiskGrid");
+const signingProofGrid = document.querySelector("#signingProofGrid");
+const civilizationDecisionDiagram = document.querySelector("#civilizationDecisionDiagram");
+const decisionStack = document.querySelector("#decisionStack");
+const decisionGrid = document.querySelector("#decisionGrid");
+const decisionProofGrid = document.querySelector("#decisionProofGrid");
 const civilizationReputationDiagram = document.querySelector("#civilizationReputationDiagram");
 const reputationStack = document.querySelector("#reputationStack");
 const reputationGrid = document.querySelector("#reputationGrid");
@@ -661,12 +894,21 @@ const civilizationTransactionDiagram = document.querySelector("#civilizationTran
 const executionProofStack = document.querySelector("#executionProofStack");
 const accountBlueprintGrid = document.querySelector("#accountBlueprintGrid");
 const failureCaseGrid = document.querySelector("#failureCaseGrid");
+const civilizationReceiptDiagram = document.querySelector("#civilizationReceiptDiagram");
+const receiptStack = document.querySelector("#receiptStack");
+const receiptGrid = document.querySelector("#receiptGrid");
 const civilizationTransparencyDiagram = document.querySelector("#civilizationTransparencyDiagram");
 const transparencyChecksTarget = document.querySelector("#transparencyChecks");
 const transparencyGrid = document.querySelector("#transparencyGrid");
+const civilizationVerificationDiagram = document.querySelector("#civilizationVerificationDiagram");
+const verificationStack = document.querySelector("#verificationStack");
+const verificationGrid = document.querySelector("#verificationGrid");
 const civilizationVersioningDiagram = document.querySelector("#civilizationVersioningDiagram");
 const versioningStack = document.querySelector("#versioningStack");
 const versioningGrid = document.querySelector("#versioningGrid");
+const civilizationRolesDiagram = document.querySelector("#civilizationRolesDiagram");
+const roleStack = document.querySelector("#roleStack");
+const roleGrid = document.querySelector("#roleGrid");
 const civilizationDesignDiagram = document.querySelector("#civilizationDesignDiagram");
 const designStack = document.querySelector("#designStack");
 const designGrid = document.querySelector("#designGrid");
@@ -690,6 +932,7 @@ const mockRuleBooksTarget = document.querySelector("#mockRuleBooks");
 const contractDirectionTarget = document.querySelector("#futureContractDirection");
 const toast = document.querySelector("#comingSoonToast");
 let svgMarkerCounter = 0;
+let activeTocItemId = tocItems[0]?.id ?? "";
 
 setSiteLoadingProgress(28);
 await initI18n();
@@ -698,6 +941,9 @@ renderCivilizationPage();
 finishSiteLoading();
 
 window.addEventListener("nicechunk:languagechange", renderCivilizationPage);
+window.addEventListener("scroll", updateActiveSectionNavigation, { passive: true });
+window.addEventListener("resize", updateActiveSectionNavigation, { passive: true });
+window.addEventListener("hashchange", updateActiveSectionNavigation);
 
 document.querySelectorAll("[data-civilization-action]").forEach((button) => {
   button.addEventListener("click", showComingSoon);
@@ -706,29 +952,39 @@ document.querySelectorAll("[data-civilization-action]").forEach((button) => {
 function renderCivilizationPage() {
   document.title = t("civilization.meta.title");
   renderHeroLedger();
+  renderEntryOrientation();
   renderDirectory();
+  renderTrustLadder();
   renderGlossary();
   renderConceptCards();
   renderSvgDiagrams();
   renderReaderGuide();
+  renderAuthoringWorkbench();
   renderTrustJourney();
   renderBoundaryGrid();
   renderLawLayerCards();
   renderRuleClassifier();
+  renderConservationLedger();
   renderConstitutionChecks();
   renderPowerExplainer();
+  renderSnapshotIntegrity();
   renderThreatModel();
   renderChallengeDesk();
   renderCaseWalkthrough();
   renderImpactSimulator();
+  renderSigningSafety();
+  renderDecisionSplit();
   renderReputationLedger();
   renderRuleLifecycleTimeline();
   renderRuleBookSchema();
   renderTechnicalAssurances();
   renderValidatorSpec();
   renderExecutionProof();
+  renderExecutionReceipts();
   renderTransparencyConsole();
+  renderIndependentVerification();
   renderVersioningModel();
+  renderCitizenRoles();
   renderCivilizationDesign();
   renderCivicWorks();
   renderBuildSpec();
@@ -739,6 +995,51 @@ function renderCivilizationPage() {
   renderExecutionModelSection();
   renderMockRuleBooks();
   renderFutureContractDirection();
+}
+
+function renderEntryOrientation() {
+  civilizationEntryPaths?.replaceChildren(
+    ...entryPaths.map((path) => {
+      const link = document.createElement("a");
+      link.className = `entry-path-card ${path.tone}`;
+      link.href = path.href;
+      link.innerHTML = "<span></span><strong></strong><p></p><code></code>";
+      link.querySelector("span").textContent = t(`civilization.entry.paths.${path.id}.label`);
+      link.querySelector("strong").textContent = t(`civilization.entry.paths.${path.id}.title`);
+      link.querySelector("p").textContent = t(`civilization.entry.paths.${path.id}.body`);
+      link.querySelector("code").textContent = path.proof;
+      return link;
+    }),
+  );
+
+  civilizationProofStrip?.replaceChildren(
+    ...proofStripItems.map((item) => {
+      const card = document.createElement("article");
+      card.className = "entry-proof-card";
+      card.innerHTML = "<span></span><strong></strong><p></p><code></code>";
+      card.querySelector("span").textContent = t(`civilization.entry.proof.${item.id}.label`);
+      card.querySelector("strong").textContent = t(`civilization.entry.proof.${item.id}.title`);
+      card.querySelector("p").textContent = t(`civilization.entry.proof.${item.id}.body`);
+      card.querySelector("code").textContent = item.proof;
+      return card;
+    }),
+  );
+}
+
+function renderTrustLadder() {
+  trustLadderGrid?.replaceChildren(
+    ...trustLadderSteps.map((step, index) => {
+      const card = document.createElement("article");
+      card.className = `trust-ladder-card ${step.id}`;
+      card.innerHTML = "<span></span><strong></strong><p></p><code></code><em></em>";
+      card.querySelector("span").textContent = String(index + 1).padStart(2, "0");
+      card.querySelector("strong").textContent = t(`civilization.trustLadder.steps.${step.id}.title`);
+      card.querySelector("p").textContent = t(`civilization.trustLadder.steps.${step.id}.body`);
+      card.querySelector("code").textContent = step.proof;
+      card.querySelector("em").textContent = t(`civilization.trustLadder.steps.${step.id}.failure`);
+      return card;
+    }),
+  );
 }
 
 function renderHeroLedger() {
@@ -756,6 +1057,7 @@ function renderDirectory() {
       const link = document.createElement("a");
       link.className = `toc-card ${item.tone}`;
       link.href = item.href;
+      link.addEventListener("click", (event) => activateTocLink(event, item));
       link.innerHTML = "<span></span><strong></strong><p></p>";
       link.querySelector("span").textContent = String(index + 1).padStart(2, "0");
       link.querySelector("strong").textContent = t(`civilization.toc.items.${item.id}.title`);
@@ -763,6 +1065,87 @@ function renderDirectory() {
       return link;
     }),
   );
+  renderSectionNavigation();
+  updateActiveSectionNavigation();
+}
+
+function renderSectionNavigation() {
+  civilizationSectionNav?.replaceChildren(
+    ...tocGroups.map((group) => {
+      const groupElement = document.createElement("div");
+      groupElement.className = "chapter-nav-group";
+
+      const title = document.createElement("span");
+      title.className = "chapter-nav-group-title";
+      title.textContent = t(`civilization.toc.groups.${group}`);
+      groupElement.append(title);
+
+      tocItems
+        .filter((item) => item.group === group)
+        .forEach((item) => {
+          const link = document.createElement("a");
+          link.href = item.href;
+          link.dataset.tocTarget = item.id;
+          link.textContent = t(`civilization.toc.items.${item.id}.title`);
+          link.addEventListener("click", (event) => activateTocLink(event, item));
+          if (item.id === activeTocItemId) {
+            link.classList.add("active");
+          }
+          groupElement.append(link);
+        });
+
+      return groupElement;
+    }),
+  );
+}
+
+function activateTocLink(event, item) {
+  event.preventDefault();
+  scrollToTocItem(item);
+  history.pushState(null, "", item.href);
+  setActiveSectionNavigationItem(item.id);
+}
+
+function scrollToTocItem(item) {
+  const section = document.querySelector(item.href);
+  if (!section) return;
+  const headerHeight = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--nc-header-height")) || 76;
+  const navRect = document.querySelector(".chapter-nav")?.getBoundingClientRect();
+  const navOccupiesTop = navRect ? navRect.width > window.innerWidth * 0.62 : false;
+  const navHeight = navOccupiesTop ? navRect.height : 0;
+  const targetTop = section.getBoundingClientRect().top + window.scrollY - headerHeight - navHeight - 20;
+  const root = document.documentElement;
+  const previousScrollBehavior = root.style.scrollBehavior;
+  root.style.scrollBehavior = "auto";
+  window.scrollTo({ top: Math.max(0, targetTop), behavior: "instant" });
+  window.requestAnimationFrame(() => {
+    root.style.scrollBehavior = previousScrollBehavior;
+  });
+}
+
+function updateActiveSectionNavigation() {
+  if (!civilizationSectionNav) return;
+  const activationLine = Math.min(420, window.innerHeight * 0.45);
+  const currentItem = tocItems.reduce((activeItem, item) => {
+    const section = document.querySelector(item.href);
+    if (!section) return activeItem;
+    return section.getBoundingClientRect().top <= activationLine ? item : activeItem;
+  }, tocItems[0]);
+
+  setActiveSectionNavigationItem(currentItem?.id ?? activeTocItemId);
+}
+
+function setActiveSectionNavigationItem(itemId) {
+  activeTocItemId = itemId;
+  civilizationSectionNav.querySelectorAll("[data-toc-target]").forEach((link) => {
+    const isActive = link.dataset.tocTarget === activeTocItemId;
+    link.classList.toggle("active", isActive);
+    if (isActive) {
+      link.setAttribute("aria-current", "true");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  });
 }
 
 function renderGlossary() {
@@ -855,6 +1238,37 @@ function renderReaderGuide() {
   );
 }
 
+function renderAuthoringWorkbench() {
+  authoringStack?.replaceChildren(
+    sectionMiniTitle("civilization.authoring.stackTitle"),
+    ...authoringChecks.map((key) => checkCard(t(`civilization.authoring.checks.${key}`))),
+  );
+  authoringTemplateGrid?.replaceChildren(
+    ...authoringTemplates.map((template, index) => {
+      const card = document.createElement("article");
+      card.className = `author-template-card ${template.id}`;
+      card.innerHTML = "<span></span><strong></strong><p></p><code></code>";
+      card.querySelector("span").textContent = String(index + 1).padStart(2, "0");
+      card.querySelector("strong").textContent = t(`civilization.authoring.templates.${template.id}.title`);
+      card.querySelector("p").textContent = t(`civilization.authoring.templates.${template.id}.body`);
+      card.querySelector("code").textContent = template.proof;
+      return card;
+    }),
+  );
+  authoringProofGrid?.replaceChildren(
+    ...authoringProofFields.map(([id, field], index) => {
+      const card = document.createElement("article");
+      card.className = "author-proof-card";
+      card.innerHTML = "<span></span><strong></strong><p></p><code></code>";
+      card.querySelector("span").textContent = String(index + 1).padStart(2, "0");
+      card.querySelector("strong").textContent = t(`civilization.authoring.proofFields.${id}.title`);
+      card.querySelector("p").textContent = t(`civilization.authoring.proofFields.${id}.body`);
+      card.querySelector("code").textContent = field;
+      return card;
+    }),
+  );
+}
+
 function renderTrustJourney() {
   journeyStack?.replaceChildren(
     sectionMiniTitle("civilization.journey.stackTitle"),
@@ -907,6 +1321,25 @@ function renderPowerExplainer() {
     sectionMiniTitle("civilization.power.guardsTitle"),
     ...powerGuards.map((key) => powerItem(t(`civilization.power.guards.${key}`), "guard")),
     powerSnapshotCard(),
+  );
+}
+
+function renderSnapshotIntegrity() {
+  snapshotStack?.replaceChildren(
+    sectionMiniTitle("civilization.snapshotIntegrity.stackTitle"),
+    ...snapshotChecks.map((key) => checkCard(t(`civilization.snapshotIntegrity.checks.${key}`))),
+  );
+  snapshotGrid?.replaceChildren(
+    ...snapshotStages.map((stage, index) => {
+      const card = document.createElement("article");
+      card.className = `snapshot-card ${stage.id}`;
+      card.innerHTML = "<span></span><strong></strong><p></p><code></code>";
+      card.querySelector("span").textContent = String(index + 1).padStart(2, "0");
+      card.querySelector("strong").textContent = t(`civilization.snapshotIntegrity.stages.${stage.id}.title`);
+      card.querySelector("p").textContent = t(`civilization.snapshotIntegrity.stages.${stage.id}.body`);
+      card.querySelector("code").textContent = stage.proof;
+      return card;
+    }),
   );
 }
 
@@ -1090,22 +1523,32 @@ function renderRuleModulesGrid() {
 }
 
 function renderSvgDiagrams() {
+  civilizationEntryDiagram?.replaceChildren(createEntryLoopDiagram());
+  civilizationTrustLadderDiagram?.replaceChildren(createTrustLadderDiagram());
   civilizationSystemDiagram?.replaceChildren(createSystemDiagram());
   civilizationGlossaryDiagram?.replaceChildren(createGlossaryDiagram());
   civilizationReaderDiagram?.replaceChildren(createReaderGuideDiagram());
+  civilizationAuthoringDiagram?.replaceChildren(createAuthoringDiagram());
   civilizationJourneyDiagram?.replaceChildren(createJourneyDiagram());
   civilizationClassifierDiagram?.replaceChildren(createClassifierDiagram());
+  civilizationConservationDiagram?.replaceChildren(createConservationDiagram());
   civilizationPowerDiagram?.replaceChildren(createPowerDiagram());
+  civilizationSnapshotDiagram?.replaceChildren(createSnapshotDiagram());
   civilizationThreatDiagram?.replaceChildren(createThreatModelDiagram());
   civilizationChallengeDiagram?.replaceChildren(createChallengeDiagram());
   civilizationCaseDiagram?.replaceChildren(createCaseWalkthroughDiagram());
   civilizationImpactDiagram?.replaceChildren(createImpactDiagram());
+  civilizationSigningDiagram?.replaceChildren(createSigningDiagram());
+  civilizationDecisionDiagram?.replaceChildren(createDecisionDiagram());
   civilizationReputationDiagram?.replaceChildren(createReputationDiagram());
   civilizationExecutionDiagram?.replaceChildren(createExecutionDiagram());
   civilizationValidatorDiagram?.replaceChildren(createValidatorDiagram());
   civilizationTransactionDiagram?.replaceChildren(createTransactionDiagram());
+  civilizationReceiptDiagram?.replaceChildren(createReceiptDiagram());
   civilizationTransparencyDiagram?.replaceChildren(createTransparencyDiagram());
+  civilizationVerificationDiagram?.replaceChildren(createVerificationDiagram());
   civilizationVersioningDiagram?.replaceChildren(createVersioningDiagram());
+  civilizationRolesDiagram?.replaceChildren(createRolesDiagram());
   civilizationDesignDiagram?.replaceChildren(createDesignDiagram());
   civilizationCivicDiagram?.replaceChildren(createCivicDiagram());
   civilizationAuditTrailDiagram?.replaceChildren(createAuditTrailDiagram());
@@ -1128,6 +1571,37 @@ function renderVersioningModel() {
       const facts = [
         [t("civilization.versioning.labels.account"), stage.account],
         [t("civilization.versioning.labels.hash"), stage.hash],
+      ];
+      card.querySelector("dl").replaceChildren(
+        ...facts.flatMap(([label, value]) => {
+          const dt = document.createElement("dt");
+          const dd = document.createElement("dd");
+          dt.textContent = label;
+          dd.textContent = value;
+          return [dt, dd];
+        }),
+      );
+      return card;
+    }),
+  );
+}
+
+function renderCitizenRoles() {
+  roleStack?.replaceChildren(
+    sectionMiniTitle("civilization.roles.stackTitle"),
+    ...roleChecks.map((key) => checkCard(t(`civilization.roles.checks.${key}`))),
+  );
+  roleGrid?.replaceChildren(
+    ...roleSurfaces.map((role) => {
+      const card = document.createElement("article");
+      card.className = `role-card ${role.id}`;
+      card.innerHTML = "<span></span><strong></strong><p></p><dl></dl>";
+      card.querySelector("span").textContent = t(`civilization.roles.surfaces.${role.id}.label`);
+      card.querySelector("strong").textContent = t(`civilization.roles.surfaces.${role.id}.title`);
+      card.querySelector("p").textContent = t(`civilization.roles.surfaces.${role.id}.body`);
+      const facts = [
+        [t("civilization.roles.labels.account"), role.account],
+        [t("civilization.roles.labels.duty"), role.duty],
       ];
       card.querySelector("dl").replaceChildren(
         ...facts.flatMap(([label, value]) => {
@@ -1252,6 +1726,37 @@ function renderRuleClassifier() {
   );
 }
 
+function renderConservationLedger() {
+  conservationStack?.replaceChildren(
+    sectionMiniTitle("civilization.conservation.stackTitle"),
+    ...conservationChecks.map((key) => checkCard(t(`civilization.conservation.checks.${key}`))),
+  );
+  conservationGrid?.replaceChildren(
+    ...conservationStages.map((stage, index) => {
+      const card = document.createElement("article");
+      card.className = `conservation-card ${stage.id}`;
+      card.innerHTML = "<span></span><strong></strong><p></p><dl></dl>";
+      card.querySelector("span").textContent = String(index + 1).padStart(2, "0");
+      card.querySelector("strong").textContent = t(`civilization.conservation.stages.${stage.id}.title`);
+      card.querySelector("p").textContent = t(`civilization.conservation.stages.${stage.id}.body`);
+      const facts = [
+        [t("civilization.conservation.labels.account"), stage.account],
+        [t("civilization.conservation.labels.gate"), stage.gate],
+      ];
+      card.querySelector("dl").replaceChildren(
+        ...facts.flatMap(([label, value]) => {
+          const dt = document.createElement("dt");
+          const dd = document.createElement("dd");
+          dt.textContent = label;
+          dd.textContent = value;
+          return [dt, dd];
+        }),
+      );
+      return card;
+    }),
+  );
+}
+
 function renderTransparencyConsole() {
   transparencyChecksTarget?.replaceChildren(
     sectionMiniTitle("civilization.transparency.checkTitle"),
@@ -1278,6 +1783,25 @@ function renderTransparencyConsole() {
           return [dt, dd];
         }),
       );
+      return card;
+    }),
+  );
+}
+
+function renderIndependentVerification() {
+  verificationStack?.replaceChildren(
+    sectionMiniTitle("civilization.verification.stackTitle"),
+    ...verificationChecks.map((key) => checkCard(t(`civilization.verification.checks.${key}`))),
+  );
+  verificationGrid?.replaceChildren(
+    ...verificationStages.map((stage, index) => {
+      const card = document.createElement("article");
+      card.className = `verification-card ${stage.id}`;
+      card.innerHTML = "<span></span><strong></strong><p></p><code></code>";
+      card.querySelector("span").textContent = String(index + 1).padStart(2, "0");
+      card.querySelector("strong").textContent = t(`civilization.verification.stages.${stage.id}.title`);
+      card.querySelector("p").textContent = t(`civilization.verification.stages.${stage.id}.body`);
+      card.querySelector("code").textContent = stage.proof;
       return card;
     }),
   );
@@ -1348,6 +1872,68 @@ function renderImpactSimulator() {
   );
 }
 
+function renderSigningSafety() {
+  signingStack?.replaceChildren(
+    sectionMiniTitle("civilization.signing.stackTitle"),
+    ...signingChecks.map((key) => checkCard(t(`civilization.signing.checks.${key}`))),
+  );
+  signingRiskGrid?.replaceChildren(
+    ...signingRisks.map((risk, index) => {
+      const card = document.createElement("article");
+      card.className = `signing-risk-card ${risk.id}`;
+      card.innerHTML = "<span></span><strong></strong><p></p><code></code>";
+      card.querySelector("span").textContent = String(index + 1).padStart(2, "0");
+      card.querySelector("strong").textContent = t(`civilization.signing.risks.${risk.id}.title`);
+      card.querySelector("p").textContent = t(`civilization.signing.risks.${risk.id}.body`);
+      card.querySelector("code").textContent = risk.proof;
+      return card;
+    }),
+  );
+  signingProofGrid?.replaceChildren(
+    ...signingProofFields.map(([id, field], index) => {
+      const card = document.createElement("article");
+      card.className = "signing-proof-card";
+      card.innerHTML = "<span></span><strong></strong><p></p><code></code>";
+      card.querySelector("span").textContent = String(index + 1).padStart(2, "0");
+      card.querySelector("strong").textContent = t(`civilization.signing.proofFields.${id}.title`);
+      card.querySelector("p").textContent = t(`civilization.signing.proofFields.${id}.body`);
+      card.querySelector("code").textContent = field;
+      return card;
+    }),
+  );
+}
+
+function renderDecisionSplit() {
+  decisionStack?.replaceChildren(
+    sectionMiniTitle("civilization.decision.stackTitle"),
+    ...decisionChecks.map((key) => checkCard(t(`civilization.decision.checks.${key}`))),
+  );
+  decisionGrid?.replaceChildren(
+    ...decisionRoutes.map((route) => {
+      const card = document.createElement("article");
+      card.className = `decision-card ${route.id}`;
+      card.innerHTML = "<span></span><strong></strong><p></p><code></code>";
+      card.querySelector("span").textContent = t(`civilization.decision.routes.${route.id}.label`);
+      card.querySelector("strong").textContent = t(`civilization.decision.routes.${route.id}.title`);
+      card.querySelector("p").textContent = t(`civilization.decision.routes.${route.id}.body`);
+      card.querySelector("code").textContent = `${route.proof} -> ${route.effect}`;
+      return card;
+    }),
+  );
+  decisionProofGrid?.replaceChildren(
+    ...decisionProofFields.map(([id, field], index) => {
+      const card = document.createElement("article");
+      card.className = "decision-proof-card";
+      card.innerHTML = "<span></span><strong></strong><p></p><code></code>";
+      card.querySelector("span").textContent = String(index + 1).padStart(2, "0");
+      card.querySelector("strong").textContent = t(`civilization.decision.proofFields.${id}.title`);
+      card.querySelector("p").textContent = t(`civilization.decision.proofFields.${id}.body`);
+      card.querySelector("code").textContent = field;
+      return card;
+    }),
+  );
+}
+
 function renderReputationLedger() {
   reputationStack?.replaceChildren(
     sectionMiniTitle("civilization.reputation.stackTitle"),
@@ -1412,6 +1998,25 @@ function renderExecutionProof() {
       card.querySelector("span").textContent = t(`civilization.executionProof.severity.${failure.severity}`);
       card.querySelector("strong").textContent = t(`civilization.executionProof.failures.${failure.id}.title`);
       card.querySelector("p").textContent = t(`civilization.executionProof.failures.${failure.id}.body`);
+      return card;
+    }),
+  );
+}
+
+function renderExecutionReceipts() {
+  receiptStack?.replaceChildren(
+    sectionMiniTitle("civilization.receipts.stackTitle"),
+    ...receiptChecks.map((key) => checkCard(t(`civilization.receipts.checks.${key}`))),
+  );
+  receiptGrid?.replaceChildren(
+    ...receiptStages.map((stage, index) => {
+      const card = document.createElement("article");
+      card.className = `receipt-card ${stage.id}`;
+      card.innerHTML = "<span></span><strong></strong><p></p><code></code>";
+      card.querySelector("span").textContent = String(index + 1).padStart(2, "0");
+      card.querySelector("strong").textContent = t(`civilization.receipts.stages.${stage.id}.title`);
+      card.querySelector("p").textContent = t(`civilization.receipts.stages.${stage.id}.body`);
+      card.querySelector("code").textContent = stage.proof;
       return card;
     }),
   );
@@ -1506,6 +2111,83 @@ function renderImplementationTrace() {
 function renderExamples() {
   naturalExamplesTarget?.replaceChildren(...naturalLawExamples.map((key) => exampleCard(t(`civilization.examples.natural.${key}`), "natural")));
   civilizationExamplesTarget?.replaceChildren(...civilizationLawExamples.map((key) => exampleCard(t(`civilization.examples.civilization.${key}`), "civilization")));
+}
+
+function createEntryLoopDiagram() {
+  const svg = createSvg("0 0 920 440", "civilization-flow-svg entry-loop-svg");
+  const markerId = addDefs(svg);
+  addGrid(svg, 920, 440);
+  const nodes = [
+    ["play", 54, 74, 144, 66, "blue"],
+    ["receipt", 258, 54, 154, 66, "green"],
+    ["power", 472, 74, 154, 66, "gold"],
+    ["rule", 706, 74, 150, 66, "blue"],
+    ["read", 706, 220, 150, 66, "green"],
+    ["validator", 472, 300, 154, 66, "red"],
+    ["write", 258, 300, 154, 66, "green"],
+    ["world", 54, 240, 144, 66, "gold"],
+  ];
+  nodes.forEach(([key, x, y, width, height, tone]) => {
+    addSvgNode(svg, x, y, width, height, t(`civilization.diagrams.entry.nodes.${key}`), tone);
+  });
+  [
+    [198, 107, 258, 87],
+    [412, 87, 472, 107],
+    [626, 107, 706, 107],
+    [781, 140, 781, 220],
+    [706, 253, 626, 330],
+    [472, 333, 412, 333],
+    [258, 333, 198, 273],
+    [126, 240, 126, 140],
+  ].forEach(([x1, y1, x2, y2]) => addArrow(svg, markerId, x1, y1, x2, y2));
+  addSvgBadge(svg, 50, 156, t("civilization.diagrams.entry.badges.player"));
+  addSvgBadge(svg, 230, 142, t("civilization.diagrams.entry.badges.receipts"));
+  addSvgBadge(svg, 448, 156, t("civilization.diagrams.entry.badges.snapshot"));
+  addSvgBadge(svg, 680, 156, t("civilization.diagrams.entry.badges.rulebook"));
+  addSvgBadge(svg, 678, 304, t("civilization.diagrams.entry.badges.sign"));
+  addSvgBadge(svg, 454, 384, t("civilization.diagrams.entry.badges.reject"));
+  addSvgBadge(svg, 244, 384, t("civilization.diagrams.entry.badges.pda"));
+  addSvgBadge(svg, 52, 324, t("civilization.diagrams.entry.badges.future"));
+  return svg;
+}
+
+function createTrustLadderDiagram() {
+  const svg = createSvg("0 0 920 470", "civilization-flow-svg trust-ladder-svg");
+  const markerId = addDefs(svg);
+  addGrid(svg, 920, 470);
+  const nodes = [
+    ["promise", 48, 82, 132, 66, "green"],
+    ["identity", 216, 82, 140, 66, "blue"],
+    ["power", 392, 82, 140, 66, "gold"],
+    ["validator", 568, 82, 150, 66, "red"],
+    ["execute", 748, 82, 132, 66, "green"],
+    ["receipt", 568, 302, 150, 66, "blue"],
+    ["browser", 392, 302, 140, 66, "gold"],
+    ["reject", 216, 302, 140, 66, "red"],
+  ];
+  nodes.forEach(([key, x, y, width, height, tone]) => {
+    addSvgNode(svg, x, y, width, height, t(`civilization.diagrams.trustLadder.nodes.${key}`), tone);
+  });
+  [
+    [180, 115, 216, 115],
+    [356, 115, 392, 115],
+    [532, 115, 568, 115],
+    [718, 115, 748, 115],
+    [814, 148, 814, 252],
+    [814, 252, 718, 335],
+    [568, 335, 532, 335],
+    [392, 335, 356, 335],
+    [286, 302, 286, 148],
+  ].forEach(([x1, y1, x2, y2]) => addArrow(svg, markerId, x1, y1, x2, y2));
+  addSvgBadge(svg, 46, 174, t("civilization.diagrams.trustLadder.badges.playerReadable"));
+  addSvgBadge(svg, 210, 174, t("civilization.diagrams.trustLadder.badges.hashLocked"));
+  addSvgBadge(svg, 386, 174, t("civilization.diagrams.trustLadder.badges.snapshot"));
+  addSvgBadge(svg, 562, 174, t("civilization.diagrams.trustLadder.badges.dryRun"));
+  addSvgBadge(svg, 708, 174, t("civilization.diagrams.trustLadder.badges.noAdmin"));
+  addSvgBadge(svg, 548, 388, t("civilization.diagrams.trustLadder.badges.event"));
+  addSvgBadge(svg, 356, 388, t("civilization.diagrams.trustLadder.badges.replay"));
+  addSvgBadge(svg, 198, 388, t("civilization.diagrams.trustLadder.badges.failClosed"));
+  return svg;
 }
 
 function createSystemDiagram() {
@@ -1610,6 +2292,41 @@ function createReaderGuideDiagram() {
   return svg;
 }
 
+function createAuthoringDiagram() {
+  const svg = createSvg("0 0 920 430", "civilization-flow-svg authoring-svg");
+  const markerId = addDefs(svg);
+  addGrid(svg, 920, 430);
+  const nodes = [
+    ["idea", 50, 70, 142, 66, "green"],
+    ["template", 242, 70, 150, 66, "blue"],
+    ["impact", 442, 70, 150, 66, "gold"],
+    ["patch", 642, 70, 150, 66, "blue"],
+    ["dryRun", 242, 258, 150, 66, "red"],
+    ["freeze", 442, 258, 150, 66, "green"],
+    ["publish", 642, 258, 150, 66, "gold"],
+  ];
+  nodes.forEach(([key, x, y, width, height, tone]) => {
+    addSvgNode(svg, x, y, width, height, t(`civilization.diagrams.authoring.nodes.${key}`), tone);
+  });
+  [
+    [192, 103, 242, 103],
+    [392, 103, 442, 103],
+    [592, 103, 642, 103],
+    [716, 136, 716, 258],
+    [642, 291, 592, 291],
+    [442, 291, 392, 291],
+    [318, 258, 318, 136],
+  ].forEach(([x1, y1, x2, y2]) => addArrow(svg, markerId, x1, y1, x2, y2));
+  addSvgBadge(svg, 54, 164, t("civilization.diagrams.authoring.badges.beginner"));
+  addSvgBadge(svg, 238, 164, t("civilization.diagrams.authoring.badges.template"));
+  addSvgBadge(svg, 454, 164, t("civilization.diagrams.authoring.badges.impact"));
+  addSvgBadge(svg, 610, 164, t("civilization.diagrams.authoring.badges.hashBound"));
+  addSvgBadge(svg, 250, 350, t("civilization.diagrams.authoring.badges.failClosed"));
+  addSvgBadge(svg, 486, 350, t("civilization.diagrams.authoring.badges.frozen"));
+  addSvgBadge(svg, 668, 350, t("civilization.diagrams.authoring.badges.signable"));
+  return svg;
+}
+
 function createJourneyDiagram() {
   const svg = createSvg("0 0 920 430", "civilization-flow-svg journey-svg");
   const markerId = addDefs(svg);
@@ -1667,6 +2384,37 @@ function createClassifierDiagram() {
   return svg;
 }
 
+function createConservationDiagram() {
+  const svg = createSvg("0 0 920 430", "civilization-flow-svg conservation-svg");
+  const markerId = addDefs(svg);
+  addGrid(svg, 920, 430);
+  const nodes = [
+    ["source", 48, 54, 154, 66, "green"],
+    ["input", 48, 214, 154, 66, "blue"],
+    ["burn", 282, 214, 154, 66, "red"],
+    ["recipe", 282, 54, 154, 66, "gold"],
+    ["output", 560, 124, 160, 72, "green"],
+    ["audit", 742, 274, 132, 66, "blue"],
+    ["reject", 560, 274, 132, 66, "red"],
+  ];
+  nodes.forEach(([key, x, y, width, height, tone]) => {
+    addSvgNode(svg, x, y, width, height, t(`civilization.diagrams.conservation.nodes.${key}`), tone);
+  });
+  addArrow(svg, markerId, 202, 87, 282, 87);
+  addArrow(svg, markerId, 202, 247, 282, 247);
+  addArrow(svg, markerId, 436, 87, 560, 150);
+  addArrow(svg, markerId, 436, 247, 560, 170);
+  addArrow(svg, markerId, 640, 196, 626, 274);
+  addArrow(svg, markerId, 720, 160, 792, 274);
+  addArrow(svg, markerId, 692, 307, 742, 307);
+  addSvgBadge(svg, 58, 140, t("civilization.diagrams.conservation.badges.origin"));
+  addSvgBadge(svg, 240, 304, t("civilization.diagrams.conservation.badges.consume"));
+  addSvgBadge(svg, 284, 140, t("civilization.diagrams.conservation.badges.version"));
+  addSvgBadge(svg, 532, 214, t("civilization.diagrams.conservation.badges.noMagic"));
+  addSvgBadge(svg, 720, 354, t("civilization.diagrams.conservation.badges.replay"));
+  return svg;
+}
+
 function createPowerDiagram() {
   const svg = createSvg("0 0 920 300", "civilization-flow-svg power-svg");
   const markerId = addDefs(svg);
@@ -1682,6 +2430,38 @@ function createPowerDiagram() {
   addSvgBadge(svg, 302, 202, t("civilization.diagrams.power.badges.reduce"));
   addSvgBadge(svg, 536, 202, t("civilization.diagrams.power.badges.freeze"));
   addSvgBadge(svg, 730, 202, t("civilization.diagrams.power.badges.sign"));
+  return svg;
+}
+
+function createSnapshotDiagram() {
+  const svg = createSvg("0 0 920 430", "civilization-flow-svg snapshot-svg");
+  const markerId = addDefs(svg);
+  addGrid(svg, 920, 430);
+  const nodes = [
+    ["receipts", 48, 72, 150, 66, "green"],
+    ["eligibility", 258, 44, 164, 64, "blue"],
+    ["normalize", 258, 164, 164, 64, "gold"],
+    ["cap", 492, 104, 160, 66, "red"],
+    ["freeze", 720, 68, 150, 66, "blue"],
+    ["recount", 720, 244, 150, 66, "green"],
+    ["reject", 492, 274, 160, 66, "red"],
+  ];
+  nodes.forEach(([key, x, y, width, height, tone]) => {
+    addSvgNode(svg, x, y, width, height, t(`civilization.diagrams.snapshot.nodes.${key}`), tone);
+  });
+  addArrow(svg, markerId, 198, 105, 258, 76);
+  addArrow(svg, markerId, 198, 105, 258, 196);
+  addArrow(svg, markerId, 422, 76, 492, 132);
+  addArrow(svg, markerId, 422, 196, 492, 138);
+  addArrow(svg, markerId, 652, 137, 720, 101);
+  addArrow(svg, markerId, 794, 134, 794, 244);
+  addArrow(svg, markerId, 720, 277, 652, 307);
+  addArrow(svg, markerId, 572, 274, 572, 170);
+  addSvgBadge(svg, 58, 164, t("civilization.diagrams.snapshot.badges.receipts"));
+  addSvgBadge(svg, 248, 250, t("civilization.diagrams.snapshot.badges.notRawCount"));
+  addSvgBadge(svg, 470, 190, t("civilization.diagrams.snapshot.badges.capped"));
+  addSvgBadge(svg, 696, 154, t("civilization.diagrams.snapshot.badges.epoch"));
+  addSvgBadge(svg, 700, 334, t("civilization.diagrams.snapshot.badges.recount"));
   return svg;
 }
 
@@ -1800,6 +2580,74 @@ function createImpactDiagram() {
   return svg;
 }
 
+function createSigningDiagram() {
+  const svg = createSvg("0 0 920 430", "civilization-flow-svg signing-svg");
+  const markerId = addDefs(svg);
+  addGrid(svg, 920, 430);
+  const nodes = [
+    ["read", 50, 70, 142, 66, "blue"],
+    ["risk", 242, 70, 150, 66, "red"],
+    ["side", 442, 70, 150, 66, "gold"],
+    ["wallet", 642, 70, 150, 66, "green"],
+    ["signature", 242, 258, 150, 66, "green"],
+    ["recount", 442, 258, 150, 66, "blue"],
+    ["receipt", 642, 258, 150, 66, "gold"],
+  ];
+  nodes.forEach(([key, x, y, width, height, tone]) => {
+    addSvgNode(svg, x, y, width, height, t(`civilization.diagrams.signing.nodes.${key}`), tone);
+  });
+  [
+    [192, 103, 242, 103],
+    [392, 103, 442, 103],
+    [592, 103, 642, 103],
+    [716, 136, 716, 258],
+    [642, 291, 592, 291],
+    [442, 291, 392, 291],
+    [318, 258, 318, 136],
+  ].forEach(([x1, y1, x2, y2]) => addArrow(svg, markerId, x1, y1, x2, y2));
+  addSvgBadge(svg, 52, 164, t("civilization.diagrams.signing.badges.sameRule"));
+  addSvgBadge(svg, 238, 164, t("civilization.diagrams.signing.badges.riskAck"));
+  addSvgBadge(svg, 438, 164, t("civilization.diagrams.signing.badges.clearSide"));
+  addSvgBadge(svg, 626, 164, t("civilization.diagrams.signing.badges.wallet"));
+  addSvgBadge(svg, 238, 350, t("civilization.diagrams.signing.badges.signaturePda"));
+  addSvgBadge(svg, 442, 350, t("civilization.diagrams.signing.badges.recount"));
+  addSvgBadge(svg, 652, 350, t("civilization.diagrams.signing.badges.receipt"));
+  return svg;
+}
+
+function createDecisionDiagram() {
+  const svg = createSvg("0 0 920 430", "civilization-flow-svg decision-svg");
+  const markerId = addDefs(svg);
+  addGrid(svg, 920, 430);
+  addSvgNode(svg, 58, 176, 150, 70, t("civilization.diagrams.decision.nodes.rule"), "blue");
+  addSvgNode(svg, 296, 42, 142, 64, t("civilization.diagrams.decision.nodes.agree"), "green");
+  addSvgNode(svg, 296, 136, 142, 64, t("civilization.diagrams.decision.nodes.reject"), "red");
+  addSvgNode(svg, 296, 230, 142, 64, t("civilization.diagrams.decision.nodes.abstain"), "gold");
+  addSvgNode(svg, 296, 324, 142, 64, t("civilization.diagrams.decision.nodes.challenge"), "red");
+  addSvgNode(svg, 560, 96, 150, 70, t("civilization.diagrams.decision.nodes.recount"), "blue");
+  addSvgNode(svg, 560, 278, 150, 70, t("civilization.diagrams.decision.nodes.pause"), "red");
+  addSvgNode(svg, 770, 176, 120, 76, t("civilization.diagrams.decision.nodes.outcome"), "green");
+  [
+    [208, 210, 296, 74],
+    [208, 210, 296, 168],
+    [208, 210, 296, 262],
+    [208, 210, 296, 356],
+    [438, 74, 560, 126],
+    [438, 168, 560, 126],
+    [438, 262, 560, 126],
+    [438, 356, 560, 312],
+    [710, 130, 770, 198],
+    [710, 312, 770, 228],
+  ].forEach(([x1, y1, x2, y2]) => addArrow(svg, markerId, x1, y1, x2, y2));
+  addSvgBadge(svg, 54, 266, t("civilization.diagrams.decision.badges.sameRule"));
+  addSvgBadge(svg, 280, 112, t("civilization.diagrams.decision.badges.threshold"));
+  addSvgBadge(svg, 278, 392, t("civilization.diagrams.decision.badges.evidence"));
+  addSvgBadge(svg, 536, 180, t("civilization.diagrams.decision.badges.publicMath"));
+  addSvgBadge(svg, 538, 362, t("civilization.diagrams.decision.badges.pause"));
+  addSvgBadge(svg, 744, 268, t("civilization.diagrams.decision.badges.namedResult"));
+  return svg;
+}
+
 function createReputationDiagram() {
   const svg = createSvg("0 0 920 430", "civilization-flow-svg reputation-svg");
   const markerId = addDefs(svg);
@@ -1897,6 +2745,38 @@ function createTransactionDiagram() {
   return svg;
 }
 
+function createReceiptDiagram() {
+  const svg = createSvg("0 0 920 440", "civilization-flow-svg receipt-svg");
+  const markerId = addDefs(svg);
+  addGrid(svg, 920, 440);
+  const nodes = [
+    ["transaction", 48, 74, 150, 66, "blue"],
+    ["precheck", 260, 48, 160, 64, "gold"],
+    ["write", 260, 176, 160, 64, "green"],
+    ["reject", 260, 304, 160, 64, "red"],
+    ["event", 510, 118, 170, 70, "blue"],
+    ["index", 734, 72, 132, 66, "green"],
+    ["accountability", 734, 266, 132, 66, "gold"],
+  ];
+  nodes.forEach(([key, x, y, width, height, tone]) => {
+    addSvgNode(svg, x, y, width, height, t(`civilization.diagrams.receipts.nodes.${key}`), tone);
+  });
+  addArrow(svg, markerId, 198, 107, 260, 80);
+  addArrow(svg, markerId, 198, 107, 260, 208);
+  addArrow(svg, markerId, 198, 107, 260, 336);
+  addArrow(svg, markerId, 420, 80, 510, 142);
+  addArrow(svg, markerId, 420, 208, 510, 154);
+  addArrow(svg, markerId, 420, 336, 510, 176);
+  addArrow(svg, markerId, 680, 153, 734, 105);
+  addArrow(svg, markerId, 680, 153, 734, 299);
+  addSvgBadge(svg, 58, 170, t("civilization.diagrams.receipts.badges.anyCaller"));
+  addSvgBadge(svg, 248, 260, t("civilization.diagrams.receipts.badges.beforeAfter"));
+  addSvgBadge(svg, 488, 218, t("civilization.diagrams.receipts.badges.oneReceipt"));
+  addSvgBadge(svg, 700, 156, t("civilization.diagrams.receipts.badges.sameForUi"));
+  addSvgBadge(svg, 690, 350, t("civilization.diagrams.receipts.badges.futureProof"));
+  return svg;
+}
+
 function createTransparencyDiagram() {
   const svg = createSvg("0 0 920 460", "civilization-flow-svg transparency-svg");
   const markerId = addDefs(svg);
@@ -1926,6 +2806,37 @@ function createTransparencyDiagram() {
   return svg;
 }
 
+function createVerificationDiagram() {
+  const svg = createSvg("0 0 920 440", "civilization-flow-svg verification-svg");
+  const markerId = addDefs(svg);
+  addGrid(svg, 920, 440);
+  const nodes = [
+    ["claim", 44, 76, 150, 66, "blue"],
+    ["account", 250, 46, 160, 64, "green"],
+    ["hash", 250, 168, 160, 64, "gold"],
+    ["recount", 480, 66, 170, 66, "blue"],
+    ["simulate", 480, 202, 170, 66, "red"],
+    ["receipt", 720, 126, 150, 70, "green"],
+    ["reject", 720, 286, 150, 70, "red"],
+  ];
+  nodes.forEach(([key, x, y, width, height, tone]) => {
+    addSvgNode(svg, x, y, width, height, t(`civilization.diagrams.verification.nodes.${key}`), tone);
+  });
+  addArrow(svg, markerId, 194, 109, 250, 78);
+  addArrow(svg, markerId, 194, 109, 250, 200);
+  addArrow(svg, markerId, 410, 78, 480, 98);
+  addArrow(svg, markerId, 410, 200, 480, 236);
+  addArrow(svg, markerId, 650, 99, 720, 156);
+  addArrow(svg, markerId, 650, 235, 720, 316);
+  addArrow(svg, markerId, 795, 196, 795, 286);
+  addSvgBadge(svg, 48, 170, t("civilization.diagrams.verification.badges.noWebsiteTrust"));
+  addSvgBadge(svg, 236, 284, t("civilization.diagrams.verification.badges.recompute"));
+  addSvgBadge(svg, 464, 308, t("civilization.diagrams.verification.badges.dryRun"));
+  addSvgBadge(svg, 690, 222, t("civilization.diagrams.verification.badges.receipt"));
+  addSvgBadge(svg, 676, 370, t("civilization.diagrams.verification.badges.failClosed"));
+  return svg;
+}
+
 function createVersioningDiagram() {
   const svg = createSvg("0 0 920 430", "civilization-flow-svg versioning-svg");
   const markerId = addDefs(svg);
@@ -1952,6 +2863,37 @@ function createVersioningDiagram() {
   addSvgBadge(svg, 506, 178, t("civilization.diagrams.versioning.badges.compat"));
   addSvgBadge(svg, 718, 178, t("civilization.diagrams.versioning.badges.forward"));
   addSvgBadge(svg, 366, 366, t("civilization.diagrams.versioning.badges.replay"));
+  return svg;
+}
+
+function createRolesDiagram() {
+  const svg = createSvg("0 0 920 440", "civilization-flow-svg roles-svg");
+  const markerId = addDefs(svg);
+  addGrid(svg, 920, 440);
+  const nodes = [
+    ["citizen", 50, 142, 150, 70, "green"],
+    ["role", 270, 60, 160, 64, "blue"],
+    ["receipt", 270, 224, 160, 64, "gold"],
+    ["duty", 510, 84, 164, 70, "green"],
+    ["power", 510, 246, 164, 70, "blue"],
+    ["reject", 724, 246, 140, 70, "red"],
+    ["public", 724, 84, 140, 70, "gold"],
+  ];
+  nodes.forEach(([key, x, y, width, height, tone]) => {
+    addSvgNode(svg, x, y, width, height, t(`civilization.diagrams.roles.nodes.${key}`), tone);
+  });
+  addArrow(svg, markerId, 200, 176, 270, 92);
+  addArrow(svg, markerId, 200, 176, 270, 256);
+  addArrow(svg, markerId, 430, 92, 510, 118);
+  addArrow(svg, markerId, 430, 256, 510, 282);
+  addArrow(svg, markerId, 674, 118, 724, 118);
+  addArrow(svg, markerId, 674, 282, 724, 282);
+  addArrow(svg, markerId, 794, 246, 794, 154);
+  addSvgBadge(svg, 54, 238, t("civilization.diagrams.roles.badges.identity"));
+  addSvgBadge(svg, 252, 144, t("civilization.diagrams.roles.badges.noRank"));
+  addSvgBadge(svg, 238, 314, t("civilization.diagrams.roles.badges.receipts"));
+  addSvgBadge(svg, 500, 172, t("civilization.diagrams.roles.badges.duty"));
+  addSvgBadge(svg, 684, 338, t("civilization.diagrams.roles.badges.noReceipt"));
   return svg;
 }
 

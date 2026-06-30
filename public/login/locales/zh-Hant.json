@@ -1,0 +1,159 @@
+{
+  "_meta": {
+    "language": "zh-Hant",
+    "label": "Traditional Chinese",
+    "version": "login-locale-zh-Hant-4a4a9af259918cb6",
+    "contentHash": "4a4a9af259918cb6"
+  },
+  "siteFooter": {
+    "tagline": "Solana 上的種子體素世界協議。",
+    "navigationAria": "頁腳導航",
+    "socialAria": "NiceChunk 社交連結",
+    "home": "首頁",
+    "play": "進入世界",
+    "roadmap": "路書",
+    "docs": "文檔",
+    "guardian": "守護者",
+    "contracts": "合約",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk。保留所有權利。"
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "語言",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "login": {
+    "title": "NICECHUNK 錢包登入",
+    "flowLabel": "登入流程",
+    "brandSubtitle": "體素宇宙",
+    "authEyebrow": "安全閘道",
+    "authTitle": "錢包存取",
+    "authSubtitle": "進入 NiceChunk 生態系統",
+    "heroStatus": "即時引擎渲染",
+    "steps": {
+      "wallet": "連接錢包",
+      "profile": "玩家設定",
+      "ready": "準備進入"
+    },
+    "section": {
+      "wallet": "連接錢包",
+      "profile": "玩家設定",
+      "ready": "進入世界"
+    },
+    "installPhantom": "安裝 Phantom",
+    "playerName": "玩家名",
+    "playerNamePlaceholder": "輸入 3-18 位名字",
+    "saveName": "保存玩家名",
+    "player": "玩家",
+    "wallet": "錢包",
+    "startGame": "開始遊戲",
+    "resetLogin": "重新登入",
+    "returnToBrowser": "返回瀏覽器",
+    "continueInWalletBrowser": "在錢包瀏覽器中繼續",
+    "signLoginMessage": "簽署登入訊息",
+    "completeCopiedLogin": "完成錢包登入",
+    "copyLoginProof": "複製登入憑證",
+    "manualProofLabel": "手動複製此登入憑證",
+    "selectLoginProof": "選取登入憑證",
+    "hudNetwork": "網路",
+    "hudNetworkValue": "SOLANA",
+    "hudBiome": "生態域",
+    "hudBiomeValue": "翡翠森林",
+    "hudWallet": "錢包",
+    "hudWalletValue": "就緒",
+    "status": {
+      "checking": "正在檢測 Solana 錢包...",
+      "walletDetected": "檢測到 Solana 錢包，選擇一個連接。",
+      "noWallet": "未偵測到注入式錢包。請在錢包 App 中開啟此頁，或安裝 Phantom。",
+      "openingWalletApp": "正在開啟 {wallet}...",
+      "connecting": "正在連接 {wallet}...",
+      "publicKeyMissing": "錢包沒有返回 publicKey。",
+      "connectFailed": "連接失敗，請重新嘗試。",
+      "profile": "錢包已連接，設定玩家名。",
+      "invalidUsername": "玩家名需要 3-18 位，只能包含字母、數字、底線和中文。",
+      "ready": "登入資訊已準備好。",
+      "returningToBrowser": "正在返回原本的瀏覽器...",
+      "continuingInWalletBrowser": "正在錢包瀏覽器中繼續...",
+      "signingChallenge": "請在錢包中確認登入訊息。",
+      "signatureFailed": "無法驗證錢包簽名，請重試。",
+      "proofCopied": "登入憑證已複製。返回瀏覽器後完成錢包登入。",
+      "proofCopyFailed": "無法複製登入憑證，請使用返回瀏覽器。",
+      "readingProof": "正在讀取複製的登入憑證...",
+      "noCopiedProof": "沒有找到已複製的 NiceChunk 登入憑證。",
+      "proofSelectReady": "登入憑證已選取。請複製後返回瀏覽器。",
+      "pasteProofReady": "貼上錢包簽名憑證，完成沒有自動跳回時的登入流程。",
+      "resourceFailed": "登入資源載入失敗，請重新整理後再試。"
+    },
+    "walletButton": {
+      "noWallet": "未檢測到錢包",
+      "installRefresh": "安裝錢包後刷新頁面",
+      "connectAuthorize": "連接並授權地址",
+      "openInApp": "在錢包瀏覽器中繼續"
+    },
+    "walletHint": {
+      "recommended": "推薦",
+      "compatible": "相容",
+      "generic": "通用",
+      "mobileApp": "行動 App"
+    },
+    "loading": {
+      "boot": "正在初始化錢包閘道",
+      "checking": "正在準備介面",
+      "waitingForLanguage": "等待語言資料",
+      "video": "載入視覺層",
+      "videoReady": "首屏動畫已就緒。",
+      "visualMetadata": "正在準備透明 Logo 動畫。",
+      "visualReady": "首屏動畫已就緒。",
+      "videoFallback": "影片暫時不可用，正在使用封面圖。",
+      "worldEyebrow": "世界閘道",
+      "worldTitle": "正在準備 NiceChunk 世界",
+      "worldBody": "正在載入玩家會話、地形引擎和第一批可見 Chunk。",
+      "route": "正在開啟遊戲客戶端",
+      "bytesKnown": "已傳輸 {loaded} / {total}",
+      "bytesUnknown": "已傳輸 {loaded}",
+      "stages": {
+        "gateway": {
+          "title": "正在初始化錢包閘道",
+          "body": "正在準備介面"
+        },
+        "visual": {
+          "title": "載入視覺層",
+          "body": "正在取得首屏 Logo 影片資產。"
+        },
+        "visualDecode": {
+          "title": "解碼視覺層",
+          "body": "正在準備透明 Logo 動畫。"
+        },
+        "visualReady": {
+          "title": "視覺層已就緒",
+          "body": "首屏動畫已就緒。"
+        },
+        "visualFallback": {
+          "title": "使用視覺備援",
+          "body": "影片暫時不可用，正在使用封面圖。"
+        },
+        "route": {
+          "title": "開啟遊戲客戶端",
+          "body": "正在把你的錢包會話交給世界閘道。"
+        }
+      }
+    },
+    "pasteProofAction": "貼上簽名憑證完成登入",
+    "pasteProofLabel": "錢包簽名憑證",
+    "pasteProofPlaceholder": "貼上 nicechunk-proof: 開頭的簽名憑證",
+    "pasteFromClipboard": "從剪貼簿貼上",
+    "completePastedProof": "驗證貼上的憑證"
+  }
+}

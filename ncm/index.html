@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-i18n-scope="ncm">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -218,13 +218,13 @@
               NCM-DNA continues the same direction: instead of only storing compact cuboids, it searches for deterministic genes that can reproduce the same model with fewer bytes.
             </p>
           </div>
+          <button id="loadNcmDnaFrame" type="button" data-i18n="ncm.dna.load">Load embedded lab</button>
           <a href="/ncm_dna/" data-i18n="ncm.dna.open">Open full lab</a>
         </div>
-        <div class="dna-frame-shell">
+        <div class="dna-frame-shell" id="ncmDnaFrameShell" hidden>
           <iframe
             id="ncmDnaFrame"
-            src="/ncm_dna/?embed=1"
-            loading="lazy"
+            data-src="/ncm_dna/?embed=1"
             title="NCM-DNA Lab"
             data-i18n-title="ncm.dna.frameTitle"
           ></iframe>

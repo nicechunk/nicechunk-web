@@ -1,0 +1,2665 @@
+{
+  "_meta": {
+    "language": "zh-Hant",
+    "label": "Traditional Chinese",
+    "version": "civilization-locale-zh-Hant-74ed82c0a7e39be2",
+    "contentHash": "74ed82c0a7e39be2"
+  },
+  "siteFooter": {
+    "tagline": "Solana 上的種子體素世界協議。",
+    "navigationAria": "頁腳導航",
+    "socialAria": "NiceChunk 社交連結",
+    "home": "首頁",
+    "play": "進入世界",
+    "roadmap": "路書",
+    "docs": "文檔",
+    "guardian": "守護者",
+    "contracts": "合約",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk。保留所有權利。"
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "語言",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "civilization": {
+    "meta": {
+      "title": "NiceChunk 文明法典",
+      "description": "NiceChunk 文明法典：玩家书寫、阅讀、簽署、校驗並執行世界規則，不依賴專案方特權。"
+    },
+    "nav": {
+      "aria": "主導航",
+      "home": "首頁",
+      "roadbook": "路书",
+      "worldRules": "世界規則",
+      "resources": "資源",
+      "civilization": "文明",
+      "trust": "信任",
+      "docs": "文件",
+      "enterWorld": "進入世界"
+    },
+    "hero": {
+      "eyebrow": "Civilization Codex",
+      "title": "Civilization Codex / 文明法典",
+      "subtitle": "玩家不只是進入世界，而是共同书寫世界的法則。",
+      "body": "NiceChunk 的文明規則服務于一個公開鏈上世界：資源、裝備、特權和世界参數都不能憑空出現。",
+      "panelAria": "文明共識模型",
+      "metric": {
+        "natural": "自然法則門檻",
+        "civilization": "文明法則門檻",
+        "epoch": "快照紀元",
+        "citizens": "活躍公民"
+      }
+    },
+    "actions": {
+      "create": "建立規則書",
+      "reviewMock": "查看模擬規則",
+      "read": "阅讀規則",
+      "signAgree": "簽署同意",
+      "signReject": "簽署反對",
+      "execute": "執行規則",
+      "comingSoon": "鏈上交互将在後續接入。"
+    },
+    "entry": {
+      "eyebrow": "法典入口",
+      "title": "先讀玩家承諾，再檢查公開證明。",
+      "body": "文明頁面是一份很深的技術文件。你可以先選擇一种閱讀路徑，再把每句聲明追到對應的哈希、PDA、校驗器、收據或拒絕原因。",
+      "paths": {
+        "player": {
+          "label": "玩家路徑",
+          "title": "這条規則會怎样影響我？",
+          "body": "先看白話解釋、個人影響、簽署含義，以及同意、反對、弃权、挑戰之間的区別。"
+        },
+        "builder": {
+          "label": "構建者路徑",
+          "title": "規則如何變成可執行狀態？",
+          "body": "沿着機器補丁、目標模組、校驗閘門、配置 PDA 寫入和執行收據往下看。"
+        },
+        "auditor": {
+          "label": "審計者路徑",
+          "title": "不信任 NiceChunk 也能證明吗？",
+          "body": "直接跳到 PDA 解碼、哈希重算、簽名重算、挑戰證據和事件收據。"
+        }
+      },
+      "proof": {
+        "promise": {
+          "label": "玩家承諾",
+          "title": "規則首先是可讀法則。",
+          "body": "玩家應先理解變化，再面對代碼、權重和簽名。"
+        },
+        "machine": {
+          "label": "機器證明",
+          "title": "文本和補丁被哈希綁定。",
+          "body": "任何文字或位元組被修改，簽名和校驗器檢查的身份都會改變。"
+        },
+        "pda": {
+          "label": "公開 PDA",
+          "title": "同一個身份必須可解碼。",
+          "body": "規則書、簽名、快照、挑戰和註冊表都應成為公開帳戶。"
+        },
+        "failure": {
+          "label": "失敗模式",
+          "title": "壞規則應該公開失敗。",
+          "body": "拒絕原因或挑戰收據是信任的一部分，不是需要藏起來的錯誤。"
+        }
+      }
+    },
+    "trustLadder": {
+      "eyebrow": "信任阶梯",
+      "title": "一條文明規則要爬过六級公開證明，才應該成為法則。",
+      "body": "這是判断 NiceChunk 文明系統最短的路徑：玩家讀懂承諾，審查者檢查證明物件，合約在任何一級缺失時拒絕這条規則。",
+      "steps": {
+        "promise": {
+          "title": "可讀承諾",
+          "body": "規則必須先用白話說明會怎样改變玩家體驗。",
+          "failure": "如果玩家讀不懂，介面就應該讓它停留在草稿阶段。"
+        },
+        "identity": {
+          "title": "凍結身份",
+          "body": "可讀文本和機器補丁必須在簽名计數前共享穩定哈希。",
+          "failure": "只要任一哈希改變，舊簽名就不再适用。"
+        },
+        "power": {
+          "title": "收據支撐的權重",
+          "body": "文明權重應來自公開參與收據，並在對應規則紀元凍結。",
+          "failure": "如果權重无法重算，門檻結果就沒有可信度。"
+        },
+        "validator": {
+          "title": "確定性校驗",
+          "body": "校驗器 dry-run 會在執行前證明範圍、守恆、舊資產策略和可寫 PDA 家族。",
+          "failure": "如果校驗失敗，規則應發出具名拒絕，而不是修改狀態。"
+        },
+        "execute": {
+          "title": "無許可執行",
+          "body": "門檻、冷卻和挑戰檢查通過後，任何呼叫者都應能提交 execute_rule。",
+          "failure": "如果必須依賴管理員簽名，文明承諾就還沒有完成。"
+        },
+        "receipt": {
+          "title": "公開收據",
+          "body": "成功和失敗都應該落到已解碼帳戶或事件裡，讓另一個讀者可以重放結果。",
+          "failure": "如果沒有收據，網站聲明就只是聲明。"
+        }
+      }
+    },
+    "toc": {
+      "aria": "文明頁面目錄",
+      "eyebrow": "頁面目錄",
+      "title": "進入完整文明法典之前，先選擇閱讀路徑。",
+      "body": "這個頁面故意讲得很深。你可以通過目錄在新手解釋、規則安全、簽署影響、文明權重、執行證明、PDA 透明和未來文明設定之間快速跳轉。",
+      "groups": {
+        "understand": "理解",
+        "govern": "治理",
+        "verify": "驗證",
+        "build": "構建"
+      },
+      "items": {
+        "trustLadder": {
+          "title": "信任阶梯",
+          "body": "看一條規則成為法則前必須通過的六級證明。"
+        },
+        "termDecoder": {
+          "title": "術語解碼器",
+          "body": "把黑話翻譯成白話含義和證明物件。"
+        },
+        "plainModel": {
+          "title": "白話模型",
+          "body": "先把文明層理解成公開規則引擎。"
+        },
+        "readerPath": {
+          "title": "閱讀路徑",
+          "body": "看玩家簽署前應該檢查什麼。"
+        },
+        "ruleAuthoring": {
+          "title": "規則書寫",
+          "body": "把玩家想法變成安全、模板化、已 dry-run 的規則書。"
+        },
+        "trustJourney": {
+          "title": "信任旅程",
+          "body": "把遊玩、證明、權重、提案和審計连成一條線。"
+        },
+        "implementationBoundary": {
+          "title": "實現邊界",
+          "body": "分清哪些已上線、哪些是下一步設計、哪些沒有被声称。"
+        },
+        "lawLayers": {
+          "title": "两層法則",
+          "body": "對比自然法則的保護邊界和文明法則的演進能力。"
+        },
+        "ruleClassifier": {
+          "title": "規則分類器",
+          "body": "理解哪些變更走 50%、90% 或直接拒絕。"
+        },
+        "conservationLedger": {
+          "title": "守恆帳本",
+          "body": "追蹤資源來源、輸入銷毀、配方版本、產出收據和審計餘額。"
+        },
+        "naturalLaw": {
+          "title": "自然法則警示",
+          "body": "理解世界級變更為什麼需要更強提示、校驗器和共識。"
+        },
+        "civilizationPower": {
+          "title": "文明權重",
+          "body": "理解權重為什麼來自可證明參與，而不是錢包數量。"
+        },
+        "powerSnapshot": {
+          "title": "權重快照",
+          "body": "查看收據如何變成封頂、凍結、可重算的規則權重。"
+        },
+        "threatModel": {
+          "title": "威脅模型",
+          "body": "審查危險規則如何在寫入狀態前失敗。"
+        },
+        "challengeDesk": {
+          "title": "挑戰台",
+          "body": "追蹤可疑規則如何變成證據、暫停、裁決和公開经驗。"
+        },
+        "caseWalkthrough": {
+          "title": "青銅時代案例",
+          "body": "追蹤一條規則如何從玩家故事變成可執行補丁。"
+        },
+        "impactSimulator": {
+          "title": "影響模擬器",
+          "body": "預覽個人、世界、經濟和技術層影響。"
+        },
+        "signingSafety": {
+          "title": "簽署前檢查",
+          "body": "確認哈希、風險、凍結權重，以及錢包正在簽署的明確立场。"
+        },
+        "decisionSplit": {
+          "title": "决策分流",
+          "body": "区分同意、反對、弃权和挑戰，讓玩家知道哪种動作會暫停執行。"
+        },
+        "civicPower": {
+          "title": "文明權重帳本",
+          "body": "查看可證明遊玩如何變成不可轉讓權重。"
+        },
+        "ruleLifecycle": {
+          "title": "規則生命週期",
+          "body": "追蹤規則書如何經過草稿、阅讀、冷卻、挑戰和執行。"
+        },
+        "ruleStructure": {
+          "title": "規則結構",
+          "body": "檢查可讀意圖如何與可執行補丁欄位綁定。"
+        },
+        "technicalFlow": {
+          "title": "技術流程",
+          "body": "理解執行為什麼是應用已驗證補丁，而不是模糊指令。"
+        },
+        "ruleValidator": {
+          "title": "規則校驗器",
+          "body": "審查規則寫入配置 PDA 之前必須通過的確定性閘門。"
+        },
+        "executionProof": {
+          "title": "執行證明",
+          "body": "檢查簽名、帳戶、失敗路徑和寫入。"
+        },
+        "executionReceipts": {
+          "title": "執行收據",
+          "body": "重放成功、拒絕、索引器和後續追責收據。"
+        },
+        "pdaTransparency": {
+          "title": "PDA 透明",
+          "body": "瀏覽支撐公開真相的帳戶家族。"
+        },
+        "independentVerification": {
+          "title": "獨立核驗",
+          "body": "從 PDA owner、哈希、重算、模擬和收據核驗頁面聲明。"
+        },
+        "versionedEvolution": {
+          "title": "版本化演進",
+          "body": "理解規則如何前進，同時不抹掉舊版本和舊資產。"
+        },
+        "citizenRoles": {
+          "title": "公民角色",
+          "body": "把探索者、礦工、建造者、守護者和審計者職責映射到公開證明。"
+        },
+        "civilizationDesign": {
+          "title": "文明設定",
+          "body": "阅讀未來社會引擎和 PDA 藍圖。"
+        },
+        "civicWorks": {
+          "title": "公共工程",
+          "body": "連接聚落项目、公共材料、守護者和規則效果。"
+        },
+        "buildSpec": {
+          "title": "構建規格",
+          "body": "把本頁当作後續編碼實現說明。"
+        },
+        "auditTrail": {
+          "title": "審計軌跡",
+          "body": "追蹤未來每條指令的哈希、變更 PDA 和事件。"
+        },
+        "pdaBinding": {
+          "title": "PDA 綁定",
+          "body": "把文明設計連接到 NiceChunk 真實帳戶表面。"
+        },
+        "targetModules": {
+          "title": "目標模組",
+          "body": "審查規則允許觸碰哪些有邊界的配置模組。"
+        },
+        "ruleExamples": {
+          "title": "規則案例",
+          "body": "對比自然法則保護規則和文明法則進步規則。"
+        },
+        "executionModel": {
+          "title": "執行模型",
+          "body": "理解自動執行為什麼是无許可合約校驗。"
+        },
+        "ruleBooks": {
+          "title": "模擬規則書",
+          "body": "查看按未來鏈上帳戶形態設計的本地模擬規則。"
+        },
+        "futureContractDirection": {
+          "title": "未來合約方向",
+          "body": "阅讀文明程式如何通過校驗器變更配置 PDA。"
+        }
+      }
+    },
+    "chapterNav": {
+      "aria": "文明章節導航",
+      "label": "章節導航"
+    },
+    "glossary": {
+      "eyebrow": "術語解碼器",
+      "title": "同一批詞，既要能讀成玩家承諾，也要能讀成技術證據。",
+      "body": "文明系統更容易被信任，是因為每個重要詞在頁面上都有两層含義：給玩家看的白話解釋，以及給審查者看的具體證明物件。",
+      "stackTitle": "如何不靠猜测阅讀技術詞",
+      "checks": {
+        "plainFirst": "先看玩家承諾：這個詞在玩法裡到底是什麼意思？",
+        "proofSecond": "再看證明物件：帳戶、哈希、快照、校驗器或事件。",
+        "sameIdentity": "保持白話詞和證明物件綁定到同一個規則身份。",
+        "replayable": "讓術語可重放，另一個讀者也能重新計算同一個答案。",
+        "shareable": "暴露足够细节，讓連結、截圖或解碼帳戶面板能證明這句聲明。"
+      },
+      "terms": {
+        "ruleBook": {
+          "label": "規則書",
+          "title": "公開提案，不是聊天消息。",
+          "body": "對玩家來說，它是要阅讀的可懂法則；對審計者來說，它是綁定文本、補丁、作者、風險、門檻和流程狀態的帳戶。"
+        },
+        "pda": {
+          "label": "PDA",
+          "title": "地址可預測的公開帳戶。",
+          "body": "頁面應該把每個 PDA 當成可驗證貨架：規則、簽名、配置、收據和挑戰都能從裡面解碼。"
+        },
+        "hash": {
+          "label": "哈希",
+          "title": "文本或機器補丁位元組的指紋。",
+          "body": "如果可讀規則或補丁發生變化，哈希也會變化。簽署者因此能確認自己正在審查同一個對象。"
+        },
+        "snapshot": {
+          "label": "快照",
+          "title": "某個紀元被凍結的公民權重視圖。",
+          "body": "快照防止臨時帳戶移動改寫一條已發布規則背後的權重。"
+        },
+        "validator": {
+          "label": "校驗器",
+          "title": "寫入前的確定性安全閘門。",
+          "body": "校驗器解析補丁，檢查範圍和守恆，並在任何配置 PDA 被寫入之前拒絕危險變更。"
+        },
+        "event": {
+          "label": "事件",
+          "title": "執行或拒絕後的公開收據。",
+          "body": "事件讓索引器和玩家看到發生了什麼、為什麼發生，以及哪個規則身份產生了結果。"
+        }
+      }
+    },
+    "concept": {
+      "eyebrow": "白話模型",
+      "title": "文明系統是可玩世界之上的規則引擎。",
+      "body": "新玩家可以把它理解成公開規則書；技術審查者可以把它理解成一個有邊界的狀態机：提案哈希、快照簽名、校驗器閘門和配置 PDA 寫入。",
+      "cards": {
+        "publicRulebook": {
+          "kicker": "給玩家",
+          "title": "先讀懂，再簽署。",
+          "body": "文明規則必須說明它改什麼、為什麼重要、舊資產如何保護，以及執行後世界會發生什麼。"
+        },
+        "boundedMachine": {
+          "kicker": "給開發者",
+          "title": "可執行部分是受约束的。",
+          "body": "機器補丁只能指向已知配置模組，不是可以隨意改合約、暗中增發資源的自由文本命令。"
+        },
+        "noSilentAdmin": {
+          "kicker": "給信任",
+          "title": "沒有靜默管理員通道。",
+          "body": "門檻、冷卻、簽名、校驗器和 PDA 寫入都應可檢查，而不是藏在專案方自由裁量後面。"
+        }
+      }
+    },
+    "readerGuide": {
+      "eyebrow": "閱讀路徑",
+      "title": "玩家簽署之前，應該知道如何判断一條規則。",
+      "body": "文明頁面不能只是技術宣言，也必須像規則阅讀介面。每個提案都應該回答玩家能懂的問題，同時暴露专家驗證同一個答案所需的精確證據。",
+      "lanes": {
+        "player": {
+          "kicker": "新手玩家",
+          "title": "我能用一句話讲清楚它改了什麼吗？",
+          "body": "非技術玩家不需要讀 Rust、PDA 位元組或治理黑話，也應該能理解規則。",
+          "checks": {
+            "plainChange": "這条規則執行後，世界會發生什麼變化？",
+            "personalImpact": "它會不會影響我的背包、物品、資源或未來收益？",
+            "signChoice": "我是在有明確理由的情況下簽署同意、反對或弃权吗？"
+          }
+        },
+        "builder": {
+          "kicker": "開發者",
+          "title": "我能把規則映射到有邊界的模組吗？",
+          "body": "開發者應該清楚看到哪個玩法表面會變化，哪些表面明確不在影響範圍内。",
+          "checks": {
+            "targetModule": "哪個 target_module 擁有這次變更？",
+            "patchDiff": "提案要修改哪個欄位路徑、old_value_hash 和 new_value_hash？",
+            "executionPath": "哪個 instruction 可以執行它，哪個帳戶家族可以被寫入？"
+          }
+        },
+        "auditor": {
+          "kicker": "審計者",
+          "title": "我能獨立拒絕一條壞規則吗？",
+          "body": "審查者應該能用公開哈希、PDA 讀取、簽名和事件日誌重現安全結論。",
+          "checks": {
+            "hashes": "text_hash 和 patch_hash 是否在每一步都指向同一條規則？",
+            "pdaWrites": "所有可寫 PDA 是否在執行前已經聲明？",
+            "rejectionProof": "門檻、哈希、範圍或資產安全失敗時，是否有具名拒絕路徑？"
+          }
+        }
+      },
+      "checklist": {
+        "whatChanges": {
+          "title": "它改什麼？",
+          "body": "規則必須先用白話描述玩法結果，再展示機器資料。",
+          "proof": "human_readable_text"
+        },
+        "affectedSurface": {
+          "title": "影響哪個表面？",
+          "body": "目標模組必須明確：熔煉、鍛造、資源規則、方塊参數、市場策略，或其它已聲明表面。",
+          "proof": "target_module[]"
+        },
+        "oldAssets": {
+          "title": "舊資產會受伤吗？",
+          "body": "如果會奪取、降級或改寫既有玩家資產，提案必須進入更強的自然法則路徑。",
+          "proof": "migration_mode"
+        },
+        "hashProof": {
+          "title": "什麼證明身份？",
+          "body": "可讀規則和可執行補丁必須用穩定哈希綁定，讓簽署者確認自己签的是同一個對象。",
+          "proof": "text_hash + patch_hash"
+        },
+        "thresholdPath": {
+          "title": "适用哪個門檻？",
+          "body": "文明法則和自然法則使用不同共識等級、冷卻期和挑戰要求。",
+          "proof": "law_type + threshold"
+        },
+        "failurePath": {
+          "title": "它如何安全失敗？",
+          "body": "可信規則要說明哈希過期、範圍錯誤、簽名不足或資產不安全時如何拒絕執行。",
+          "proof": "RuleRejected event"
+        }
+      }
+    },
+    "authoring": {
+      "eyebrow": "規則作者工作台",
+      "title": "好的文明系統，應該幫助普通玩家安全寫規則，同時不隱藏機器真相。",
+      "body": "作者流程應該從玩家白話想法開始，強制進入已知模板，預覽影響，生成哈希綁定的機器補丁，跑过校驗器 dry-run，然後才凍結成可簽署規則書。",
+      "stackTitle": "規則请求權重之前必須經過的作者閘門",
+      "checks": {
+        "plainIntent": "提案先是一句玩家能懂的承諾，不需要讀代碼也能理解。",
+        "templateFit": "介面必須選擇已知規則模板，讓合約能把想法映射到有邊界的模組。",
+        "boundedPatch": "生成的補丁要聲明模組、操作、欄位路徑、舊哈希、新哈希和遷移模式。",
+        "dryRun": "發布前，校驗器 dry-run 要顯示通過或拒絕，並給出精確失敗閘門。",
+        "freezeBeforeSign": "一旦發布供簽署，文本和補丁位元組必須凍結，讓簽署者審查同一個穩定對象。"
+      },
+      "templates": {
+        "production": {
+          "title": "生產解鎖",
+          "body": "用於新增配方、加工路線或只影響未來的材料路徑，不改寫舊資產。"
+        },
+        "settlement": {
+          "title": "聚落工程",
+          "body": "用於公共工程：玩家貢獻材料收據，並獲得有邊界的聚落效果。"
+        },
+        "safety": {
+          "title": "世界安全修正",
+          "body": "用於保護守恆、所有權、无管理員特權和舊資產安全的宪法級規則。"
+        },
+        "knowledge": {
+          "title": "知識記錄",
+          "body": "用於發現、時代記錄、公開解釋和應該進入已解碼文明记忆的世界事實。"
+        }
+      },
+      "proofFields": {
+        "intent": {
+          "title": "可讀承諾",
+          "body": "玩家阅讀的精確文本會被哈希，並在簽名計入前展示。"
+        },
+        "template": {
+          "title": "模板身份",
+          "body": "選中的模板防止作者把任意行為塞進模糊提案。"
+        },
+        "module": {
+          "title": "可寫表面",
+          "body": "目標模組告诉審查者哪些配置家族可能受影響，哪些明確不在範圍内。"
+        },
+        "patch": {
+          "title": "機器補丁",
+          "body": "可執行位元組和可讀文本分開哈希，並在簽署前對比。"
+        },
+        "dryRun": {
+          "title": "安全結果",
+          "body": "dry-run 哈希綁定校驗器結果、觸碰帳戶，以及草稿失敗時的拒絕原因。"
+        },
+        "freeze": {
+          "title": "凍結規則書",
+          "body": "最終規則 PDA 應在投票窗口内不可變，避免簽名被重定向到另一個對象。"
+        }
+      }
+    },
+    "journey": {
+      "eyebrow": "從新手到審計者",
+      "title": "新玩家應該看到一條從玩世界到相信規則的連續路徑。",
+      "body": "文明頁面不應該從抽象治理開始，而應該說明普通行動如何變成公開證據、證據如何變成文明權重，以及這种權重為什麼只能批准有邊界、可檢查的變更。",
+      "stackTitle": "简单玩法如何變成可信治理",
+      "translations": {
+        "plainAction": "先從玩家能理解的普通行動開始：探索、挖礦、鍛造、建造、交易、守護或书寫。",
+        "publicEvidence": "把行動转成公開證據：來源哈希、帳戶狀態、事件和已解碼 PDA 欄位。",
+        "powerSnapshot": "只有成熟且經過過濾的參與，才會變成規則簽名使用的快照權重。",
+        "boundedChange": "簽名不會授予无限權力；它只批准一個有邊界的規則對象和一個已聲明補丁。",
+        "replayableResult": "執行之後，結果必須能從規則文本、補丁哈希、帳戶和事件日誌重放。"
+      },
+      "steps": {
+        "enter": {
+          "title": "進入世界",
+          "body": "新手從錢包、種子 Chunk 和可見資源開始。頁面應說明這已經是公開世界狀態，不是私有遊戲存档。"
+        },
+        "gather": {
+          "title": "收集材料證明",
+          "body": "挖礦或發現資源會產生來源證明：哪個 Chunk、哪條生成規則、哪种資源，以及哪個帳戶記錄了它。"
+        },
+        "craft": {
+          "title": "按規則制作",
+          "body": "熔煉、鍛造和背包變化都應指向配方版本，讓玩家知道物品為什麼存在。"
+        },
+        "settle": {
+          "title": "加入聚落",
+          "body": "玩家可以围绕 Chunk、生產、守護者和公共项目協作，把個人行動變成公共狀態。"
+        },
+        "propose": {
+          "title": "提出或簽署規則",
+          "body": "規則需要玩家可讀理由、凍結權重、目標模組、哈希和門檻路徑，才可能進入執行。"
+        },
+        "verify": {
+          "title": "驗證結果",
+          "body": "最終狀態應通過已解碼 PDA 和事件展示，讓新手能相信結果，也讓審計者能重放。"
+        }
+      }
+    },
+    "boundary": {
+      "eyebrow": "實施邊界",
+      "title": "可信度從讲清楚什麼已上線、什麼在設計、什麼沒有声称開始。",
+      "body": "這個頁面是文明系統的技術产品方向。它把目前公開 UI 模型和未來鏈上治理合約分開說明，讓審查者能判断可行性，而不是靠猜。",
+      "cards": {
+        "liveNow": {
+          "label": "目前已上線",
+          "title": "公開文明法典 UI",
+          "items": {
+            "one": "網站已公開展示規則層級、生命週期、示例和技術帳戶模型。",
+            "two": "模擬規則書展示未來資料形態，但不假装它已經是最終鏈上治理。",
+            "three": "頁面把文明設計連接到熔煉、鍛造、資源規則和配置 PDA 等 NiceChunk 現有模組。"
+          }
+        },
+        "designedNext": {
+          "label": "下一步設計",
+          "title": "鏈上文明程式",
+          "items": {
+            "one": "rule_book_pda、rule_signature_pda、citizen_state_pda 和 rule_registry_pda 可以讓模型直接可審計。",
+            "two": "RuleValidator 應在任何配置 PDA 寫入前约束機器補丁。",
+            "three": "門檻、冷卻和挑戰條件滿足後，execute_rule 應允許任何人无許可呼叫。"
+          }
+        },
+        "notClaimed": {
+          "label": "沒有声称",
+          "title": "不做虚假去中心化承諾",
+          "items": {
+            "one": "本頁面不声称今天已經完成主网治理。",
+            "two": "不声称任意程式升級都可以被文本投票安全控制。",
+            "three": "不声称普通文明法則可以追溯修改舊玩家資產。"
+          }
+        }
+      }
+    },
+    "diagrams": {
+      "aria": "文明系統圖解",
+      "entry": {
+        "title": "一张圖看懂文明闭环",
+        "caption": "玩家行動變成公開證明，公開證明變成文明權重，只有通過校驗的規則才能寫入未來配置 PDA。",
+        "nodes": {
+          "play": "遊玩世界",
+          "receipt": "公開收據",
+          "power": "文明權重",
+          "rule": "規則書",
+          "read": "阅讀簽署",
+          "validator": "規則校驗器",
+          "write": "配置 PDA 寫入",
+          "world": "未來玩法"
+        },
+        "badges": {
+          "player": "玩家行動",
+          "receipts": "收據支撐",
+          "snapshot": "power_snapshot_pda",
+          "rulebook": "rule_book_pda",
+          "sign": "同意 / 反對 / 弃权 / 挑戰",
+          "reject": "寫入前失敗关闭",
+          "pda": "版本化公開狀態",
+          "future": "只影響未來"
+        }
+      },
+      "trustLadder": {
+        "title": "六級信任阶梯",
+        "caption": "每條規則都必須從可讀意圖走到凍結身份、可追責權重、確定性校驗、窄範圍執行和公開收據。",
+        "nodes": {
+          "promise": "可讀承諾",
+          "identity": "凍結身份",
+          "power": "權重快照",
+          "validator": "校驗閘門",
+          "execute": "execute_rule",
+          "receipt": "執行收據",
+          "browser": "PDA 瀏覽器",
+          "reject": "失敗关闭"
+        },
+        "badges": {
+          "playerReadable": "玩家能看懂",
+          "hashLocked": "text_hash + patch_hash",
+          "snapshot": "收據支撐權重",
+          "dryRun": "確定性 dry run",
+          "noAdmin": "沒有管理員執行者",
+          "event": "事件或帳戶差异",
+          "replay": "獨立重放",
+          "failClosed": "具名拒絕"
+        }
+      },
+      "system": {
+        "title": "從玩家行動到世界法則",
+        "caption": "每個关键步骤都會留下公開對象或公開哈希。",
+        "nodes": {
+          "player": "玩家撰寫",
+          "proposal": "RuleBook PDA",
+          "read": "公開阅讀",
+          "sign": "快照簽名",
+          "validator": "RuleValidator",
+          "config": "配置 PDA 寫入",
+          "gameplay": "玩法合約",
+          "world": "世界狀態"
+        },
+        "badges": {
+          "hashes": "text_hash + patch_hash",
+          "snapshot": "紀元權重快照",
+          "pdaWrite": "可審計狀態變更"
+        }
+      },
+      "glossary": {
+        "title": "白話詞到證明物件映射",
+        "caption": "讀者可以從简单语言移動到精確帳戶、哈希、快照、校驗器或事件，看到它如何被證明。",
+        "nodes": {
+          "plain": "白話承諾",
+          "term": "共享術語",
+          "proof": "證明物件",
+          "replay": "可重放答案",
+          "mistake": "模糊詞语",
+          "reject": "要求證據"
+        },
+        "badges": {
+          "player": "玩家含義",
+          "dictionary": "同一套詞典",
+          "account": "帳戶、哈希、事件",
+          "audit": "審計者可重放",
+          "noVagueWords": "不靠口號建立信任"
+        }
+      },
+      "readerGuide": {
+        "title": "從白話問題到可驗證證明",
+        "caption": "同一條規則既應該像玩家故事一樣可理解，也應該像確定性狀態一樣可審計。",
+        "nodes": {
+          "plain": "白話規則",
+          "impact": "玩家影響",
+          "evidence": "公開證據",
+          "decision": "簽署決定",
+          "patch": "機器補丁",
+          "validator": "校驗結果",
+          "pda": "PDA 寫入 / 拒絕"
+        },
+        "badges": {
+          "beginner": "新手可讀",
+          "builder": "開發者可查",
+          "auditor": "審計者可重放",
+          "sameRule": "文本、補丁和事件共享同一個規則身份"
+        }
+      },
+      "authoring": {
+        "title": "從想法到可簽署規則的管線",
+        "caption": "玩家用白話书寫，但每條發布規則最終都必須成為凍結、哈希綁定、經過校驗器测试的對象。",
+        "nodes": {
+          "idea": "玩家想法",
+          "template": "規則模板",
+          "impact": "影響預覽",
+          "patch": "機器補丁",
+          "dryRun": "校驗器 dry-run",
+          "freeze": "凍結規則",
+          "publish": "發布供簽署"
+        },
+        "badges": {
+          "beginner": "先用白話表达",
+          "template": "已知模板、已知模組",
+          "impact": "展示玩家影響",
+          "hashBound": "text_hash + patch_hash",
+          "failClosed": "不安全草稿在這裡失敗",
+          "frozen": "簽署前不可變",
+          "signable": "准备公開審查"
+        }
+      },
+      "journey": {
+        "title": "新玩家信任旅程",
+        "caption": "简单玩家故事和技術證明鏈應該描述同一個世界狀態。",
+        "nodes": {
+          "enter": "進入世界",
+          "gather": "收集證明",
+          "craft": "制作物品",
+          "settle": "加入聚落",
+          "propose": "簽署規則",
+          "verify": "驗證狀態"
+        },
+        "badges": {
+          "play": "先可玩",
+          "proof": "證據，不是声称",
+          "power": "快照權重",
+          "rule": "有邊界規則對象",
+          "audit": "已解碼 PDA + 事件日誌"
+        }
+      },
+      "classifier": {
+        "title": "規則分類決策樹",
+        "caption": "分類發生在投票前，所以人氣不能繞過資產安全或世界不變量。",
+        "nodes": {
+          "proposal": "新提案",
+          "classifier": "RuleClassifier",
+          "civilization": "僅影響未來配置",
+          "natural": "舊資產 / 不變量",
+          "reject": "特權或通膨",
+          "review": "未知 adapter",
+          "fifty": "50%",
+          "ninety": "90%",
+          "noVote": "拒絕"
+        },
+        "badges": {
+          "beforeSign": "簽名前分類",
+          "ask": "這条規則能觸及什麼？",
+          "noBypass": "人氣不能繞過安全",
+          "publicReason": "公開拒絕原因"
+        }
+      },
+      "conservation": {
+        "title": "資源守恆證明循環",
+        "caption": "一條規則只有在每個產出都能追溯到來源、輸入銷毀、配方版本和審計餘額時，才能改變生產。",
+        "nodes": {
+          "source": "生成來源",
+          "input": "玩家輸入",
+          "burn": "輸入銷毀",
+          "recipe": "版本化配方",
+          "output": "新產出",
+          "audit": "審計餘額",
+          "reject": "拒絕"
+        },
+        "badges": {
+          "origin": "不是專案方增發",
+          "consume": "輸入只消耗一次",
+          "version": "配方哈希固定",
+          "noMagic": "資源不能憑空出現",
+          "replay": "可重放公開帳本"
+        }
+      },
+      "power": {
+        "title": "文明權重是經過過濾的參與快照",
+        "caption": "參與貢獻信號，防刷過濾减少噪音，然後把投票權重凍結在快照裡。",
+        "nodes": {
+          "sources": "世界參與",
+          "filters": "防刷過濾",
+          "snapshot": "紀元快照",
+          "vote": "規則簽名"
+        },
+        "badges": {
+          "add": "探索、挖掘、鍛造、交易",
+          "reduce": "上限、成熟期、衰減",
+          "freeze": "防止臨時改權重",
+          "sign": "同意 / 反對 / 弃权"
+        }
+      },
+      "snapshot": {
+        "title": "從收據到快照的完整性流水線",
+        "caption": "參與只有經過收據檢查、歸一化、上限、紀元凍結和公開重算後，才會變成投票權重。",
+        "nodes": {
+          "receipts": "收據輸入",
+          "eligibility": "資格閘門",
+          "normalize": "歸一化",
+          "cap": "集中度上限",
+          "freeze": "凍結紀元",
+          "recount": "重算投票",
+          "reject": "拒絕噪音"
+        },
+        "badges": {
+          "receipts": "先有證明，再有分數",
+          "notRawCount": "不是原始行動數量",
+          "capped": "上限降低捕獲",
+          "epoch": "snapshot_epoch",
+          "recount": "公開門檻數學"
+        }
+      },
+      "threatModel": {
+        "title": "威脅到防線的映射圖",
+        "caption": "每條危險路徑都應該在變成狀態之前遇到可見防線。",
+        "nodes": {
+          "badRule": "不可信提案",
+          "identity": "公民成熟期",
+          "hash": "哈希身份",
+          "validator": "RuleValidator",
+          "challenge": "挑戰窗口",
+          "safeWrite": "限域 PDA 寫入",
+          "publicReject": "公開拒絕"
+        },
+        "badges": {
+          "untrusted": "預設每條規則都可能有攻擊性",
+          "prove": "證明身份與預期狀態",
+          "window": "留出審查和挑戰時間",
+          "noSilentPath": "沒有靜默管理員路徑"
+        }
+      },
+      "challenge": {
+        "title": "挑戰到裁決路徑",
+        "caption": "壞規則應該從怀疑進入證據、暫停執行、公開裁決和可重放经驗。",
+        "nodes": {
+          "suspicion": "可疑規則",
+          "evidence": "證據哈希",
+          "challenge": "挑戰 PDA",
+          "pause": "執行暫停",
+          "resolve": "公開裁決",
+          "record": "可重放经驗"
+        },
+        "badges": {
+          "review": "可見疑點",
+          "hash": "證據，不是传言",
+          "lock": "不能静默執行",
+          "verdict": "具名結論",
+          "replay": "後續審查者可学习"
+        }
+      },
+      "caseWalkthrough": {
+        "title": "青銅時代規則執行圖",
+        "caption": "同一個提案從玩家故事，進入機器補丁，再變成可審計的鏈上狀態。",
+        "nodes": {
+          "story": "玩家故事",
+          "patch": "機器補丁",
+          "signatures": "快照簽名",
+          "validator": "RuleValidator 閘門",
+          "config": "配置 PDA 寫入",
+          "event": "RuleExecuted 事件",
+          "gameplay": "玩法效果"
+        },
+        "badges": {
+          "playerPromise": "銅 + 錫解鎖青銅",
+          "boundPatch": "有邊界的熔煉與鍛造 diff",
+          "snapshot": "紀元 42 權重",
+          "gates": "範圍、守恆、舊資產",
+          "pda": "版本化配置 PDA",
+          "publicEvent": "公開審計記錄"
+        }
+      },
+      "impact": {
+        "title": "規則影響模擬路徑",
+        "caption": "同一次 dry run 應同時解釋玩家影響、PDA 讀取、校驗器閘門，以及最終簽署或拒絕决定。",
+        "nodes": {
+          "proposal": "拟議規則",
+          "accounts": "讀取帳戶",
+          "personal": "個人影響",
+          "validator": "校驗 dry run",
+          "diff": "世界 diff",
+          "decision": "簽署決定"
+        },
+        "badges": {
+          "beforeSign": "簽名計入前",
+          "readOnly": "只讀帳戶預覽",
+          "dryRun": "dry-run 結果",
+          "choice": "同意、拒絕或弃权"
+        }
+      },
+      "signing": {
+        "title": "簽署安全鏈",
+        "caption": "当錢包動作、風險確認、PDA 寫入和公開重算都綁定到同一個規則身份時，簽名才可信。",
+        "nodes": {
+          "read": "阅讀同一規則",
+          "risk": "確認風險",
+          "side": "選擇立场",
+          "wallet": "錢包簽名",
+          "signature": "簽名 PDA",
+          "recount": "公開重算",
+          "receipt": "簽署收據"
+        },
+        "badges": {
+          "sameRule": "同一文本和補丁",
+          "riskAck": "風險摘要哈希",
+          "clearSide": "同意 / 反對 / 弃权",
+          "wallet": "錢包簽署精確位元組",
+          "signaturePda": "每個投票者一個 PDA",
+          "recount": "門檻可重放",
+          "receipt": "可分享證明"
+        }
+      },
+      "decision": {
+        "title": "四路决策分流",
+        "caption": "玩家為門檻數學選擇立场，但只有带證據的挑戰會暫停執行。",
+        "nodes": {
+          "rule": "同一規則身份",
+          "agree": "同意",
+          "reject": "反對",
+          "abstain": "弃权",
+          "challenge": "挑戰",
+          "recount": "門檻重算",
+          "pause": "執行暫停",
+          "outcome": "公開結果"
+        },
+        "badges": {
+          "sameRule": "同一 rule_id、text_hash、patch_hash",
+          "threshold": "只影響投票數學",
+          "evidence": "證據可以阻止執行",
+          "publicMath": "yes / no / abstain 可重放",
+          "pause": "挑戰未解決前阻止寫入",
+          "namedResult": "已定案、已暫停或已拒絕"
+        }
+      },
+      "reputation": {
+        "title": "行動到文明權重流水線",
+        "caption": "文明權重由收據组装，歸一化進入快照，然後只用於有邊界的規則簽署。",
+        "nodes": {
+          "actions": "可證明行動",
+          "receipts": "收據 PDA",
+          "guards": "上限 + 衰減",
+          "snapshot": "公民快照",
+          "signature": "規則簽名",
+          "replay": "審計重放"
+        },
+        "badges": {
+          "provable": "NCM、背包、鍛造、聚落、審計",
+          "normalized": "先歸一化再计权",
+          "snapshot": "按紀元凍結公民狀態",
+          "bounded": "只簽署有邊界規則",
+          "replay": "任何人都能重新計算"
+        }
+      },
+      "execution": {
+        "title": "哈希綁定的執行路徑",
+        "caption": "簽名前，讀者可以核對 text_hash 和 patch_hash。",
+        "nodes": {
+          "text": "可讀文本",
+          "patch": "機器補丁",
+          "signature": "簽名达标",
+          "validator": "安全校驗器",
+          "registry": "註冊表 + 配置 PDA"
+        },
+        "badges": {
+          "bound": "同一個規則身份",
+          "threshold": "50% 或 90%",
+          "reject": "危險補丁在此停止"
+        }
+      },
+      "validator": {
+        "title": "RuleValidator 閘門序列",
+        "caption": "危險提案會在簽名變成可執行狀態變更之前失敗。",
+        "nodes": {
+          "parse": "解析",
+          "scope": "範圍",
+          "conservation": "守恆",
+          "asset": "資產安全",
+          "threshold": "門檻",
+          "write": "寫入"
+        },
+        "badges": {
+          "deterministic": "確定性檢查",
+          "reject": "寫入前拒絕",
+          "write": "狹窄 PDA 更新"
+        }
+      },
+      "transaction": {
+        "title": "無許可執行交易",
+        "caption": "任何呼叫者都可以執行，但交易必須證明同一條規則、同一個快照、同一組哈希和同一個預期帳戶狀態。",
+        "nodes": {
+          "caller": "任意呼叫者",
+          "rulebook": "RuleBook PDA",
+          "signatures": "簽名 PDA",
+          "citizens": "公民快照",
+          "execute": "execute_rule",
+          "reject": "拒絕原因",
+          "registry": "規則註冊表",
+          "config": "模組配置"
+        },
+        "badges": {
+          "anyone": "无專案方執行者",
+          "snapshot": "snapshot_epoch 凍結",
+          "hashes": "text_hash + patch_hash",
+          "reason": "公開失敗路徑"
+        }
+      },
+      "receipts": {
+        "title": "執行收據追責鏈",
+        "caption": "成功和失敗都會產生公開證據，所以網站、索引器和懷疑者可以重放同一個結果。",
+        "nodes": {
+          "transaction": "execute_rule 交易",
+          "precheck": "前置哈希檢查",
+          "write": "PDA 寫入",
+          "reject": "失敗閉合",
+          "event": "事件收據",
+          "index": "索引器視圖",
+          "accountability": "後續爭議"
+        },
+        "badges": {
+          "anyCaller": "任意呼叫者，同一證明",
+          "beforeAfter": "前後哈希",
+          "oneReceipt": "一個公開結果",
+          "sameForUi": "UI 與索引器一致",
+          "futureProof": "挑戰或取代版本連結"
+        }
+      },
+      "transparency": {
+        "title": "公開證據瀏覽器地圖",
+        "caption": "文明頁面上的每個結論，都應該指向一個已解碼帳戶、事件或拒絕原因。",
+        "nodes": {
+          "claim": "文明結論",
+          "rule": "規則帳戶",
+          "signatures": "簽名帳戶",
+          "config": "配置註冊表",
+          "challenge": "挑戰證據",
+          "decoder": "PDA 解碼器",
+          "indexer": "事件索引器",
+          "player": "玩家視圖"
+        },
+        "badges": {
+          "noTrust": "不要只信網站",
+          "sameAccounts": "合約讀取的同一批帳戶",
+          "decode": "已解碼欄位、哈希和 owner",
+          "shareable": "可分享證明連結"
+        }
+      },
+      "verification": {
+        "title": "從聲明到證明的核驗路徑",
+        "caption": "公開聲明只有在另一個讀者能獨立重新計算出同一條證明鏈時才可信。",
+        "nodes": {
+          "claim": "網站聲明",
+          "account": "已解碼 PDA",
+          "hash": "重算哈希",
+          "recount": "簽名重算",
+          "simulate": "校驗器乾跑",
+          "receipt": "事件收據",
+          "reject": "拒絕聲明"
+        },
+        "badges": {
+          "noWebsiteTrust": "不要只信網站",
+          "recompute": "同一批位元組得到同一批哈希",
+          "dryRun": "只讀安全檢查",
+          "receipt": "公開結論",
+          "failClosed": "缺證明就拒絕"
+        }
+      },
+      "versioning": {
+        "title": "規則版本鏈",
+        "caption": "模組可以前進到新配置，而不會讓舊資產或審計軌跡消失。",
+        "nodes": {
+          "v1": "生效 v1",
+          "proposal": "提案 v2",
+          "compat": "相容策略",
+          "v2": "生效 v2",
+          "oldAssets": "舊資產",
+          "history": "審計歷史"
+        },
+        "badges": {
+          "current": "目前規則保持可讀",
+          "supersede": "取代，但不擦除",
+          "compat": "舊資產保留解釋方式",
+          "forward": "未來行動使用 v2",
+          "replay": "两個版本都可重放"
+        }
+      },
+      "roles": {
+        "title": "公民角色到證明矩陣",
+        "caption": "角色只有映射到公開工作、公開收據、公開職責和可重放權重輸入時才可信。",
+        "nodes": {
+          "citizen": "公民檔案",
+          "role": "選擇角色",
+          "receipt": "工作收據",
+          "duty": "公開職責",
+          "power": "權重輸入",
+          "reject": "沒有收據",
+          "public": "公共收益"
+        },
+        "badges": {
+          "identity": "一個公民可以承擔多個職責",
+          "noRank": "角色不是管理員等級",
+          "receipts": "工作必須留下證明",
+          "duty": "先有職責，再談權限",
+          "noReceipt": "沒有收據，就沒有權重"
+        }
+      },
+      "design": {
+        "title": "從文明玩法到 PDA 的映射圖",
+        "caption": "頁面定義後續編碼模型：玩家行動創造公開狀態，公開狀態解鎖時代，規則只能改變有邊界的配置。",
+        "nodes": {
+          "actions": "玩家行動",
+          "resources": "材料證明",
+          "production": "生產圖谱",
+          "settlement": "聚落",
+          "citizen": "公民角色",
+          "knowledge": "知識記錄",
+          "rule": "文明規則"
+        },
+        "badges": {
+          "play": "普通玩法創造證據",
+          "material": "資源保留來源",
+          "build": "生產解鎖社會",
+          "law": "規則改變有邊界配置",
+          "pda": "每個結論都有已解碼 PDA 锚點"
+        }
+      },
+      "civic": {
+        "title": "聚落公共工程循環",
+        "caption": "聚落獲得收益前，材料、公民、守護者和規則應组成一個可檢查闭环。",
+        "nodes": {
+          "settlement": "聚落章程",
+          "contribute": "材料收據",
+          "guardian": "守護覆蓋",
+          "rule": "授權規則",
+          "project": "公共工程",
+          "benefit": "有邊界收益"
+        },
+        "badges": {
+          "charter": "公開章程",
+          "receipts": "資源收據",
+          "authorized": "規則批准效果",
+          "milestone": "裡程碑帳戶",
+          "visible": "收益保持可檢查"
+        }
+      },
+      "auditTrail": {
+        "title": "從 instruction 到事件的審計軌跡",
+        "caption": "審查者應該能從發布哈希一路重放到最終配置寫入。",
+        "nodes": {
+          "publish": "publish_rule",
+          "sign": "sign_rule",
+          "finalize": "finalize_threshold",
+          "challenge": "challenge_rule",
+          "execute": "execute_rule",
+          "eventLog": "事件日誌",
+          "indexer": "公開索引器",
+          "browser": "PDA 瀏覽器"
+        },
+        "badges": {
+          "hashes": "哈希身份",
+          "replay": "可重放狀態",
+          "public": "公開審計表面"
+        }
+      },
+      "binding": {
+        "title": "文明層到 PDA 的綁定圖",
+        "caption": "未來規則應寫入狹窄的配置 PDA，讓現有程式讀取，或由遷移校驗器安全應用。",
+        "nodes": {
+          "rulebook": "規則書 + 簽名",
+          "validator": "安全校驗器",
+          "registry": "版本化規則註冊表",
+          "core": "GlobalConfig",
+          "chunk": "ResourceDropTable",
+          "backpack": "背包資產",
+          "smelting": "RecipeTable",
+          "guardian": "Guardian 註冊表",
+          "market": "市場狀態"
+        },
+        "badges": {
+          "safety": "保護舊資產",
+          "versioned": "版本化配置表面",
+          "public": "公開 PDA 家族"
+        }
+      }
+    },
+    "lawType": {
+      "natural": "Natural Law / 自然法則",
+      "civilization": "Civilization Law / 文明法則"
+    },
+    "risk": {
+      "medium": "中等",
+      "high": "高",
+      "critical": "关键"
+    },
+    "status": {
+      "draft": "草稿",
+      "reading": "阅讀期",
+      "cooling": "冷卻期",
+      "challenge": "挑戰期",
+      "ready": "可執行",
+      "active": "已生效",
+      "not_enough": "共識不足"
+    },
+    "layers": {
+      "eyebrow": "两層規則",
+      "title": "世界宪法層與持续演進的文明層。",
+      "body": "自然法則保護世界不被任意權力破壞；文明法則讓玩家持续演進生產、建造、工藝和社會規則，而不是把治理變成資本投票。",
+      "natural": {
+        "title": "Natural Law / 自然法則",
+        "subtitle": "宪法級共識，保護資源守恆、資產归屬、世界生成、NCK 原則和零專案方特權。",
+        "meta": {
+          "constitution": "宪法級共識",
+          "longDelay": "更長延迟與挑戰期",
+          "strictValidator": "必須通過嚴格 RuleValidator"
+        }
+      },
+      "civilization": {
+        "title": "Civilization Law / 文明法則",
+        "subtitle": "面向生產、建造、工藝、資源加工、非宪法級参數和社會規則的開放演化層。",
+        "meta": {
+          "production": "生產與社會規則",
+          "normalDelay": "普通延迟",
+          "openEvolution": "開放文明演化"
+        }
+      }
+    },
+    "classifier": {
+      "eyebrow": "規則分類器",
+      "title": "第一問題不是誰想要它，而是它能觸碰什麼。",
+      "body": "NiceChunk 應該在簽名計入前分類每個提案。只影響未來的配置可以走文明法則；舊資產、世界不變量、供應規則或特權路徑必須走自然法則，或者直接拒絕。",
+      "checkTitle": "分類器問題",
+      "labels": {
+        "threshold": "門檻",
+        "proof": "證明"
+      },
+      "route": {
+        "civilization": "文明法則",
+        "natural": "自然法則",
+        "reject": "拒絕"
+      },
+      "checks": {
+        "touchesOldAssets": "它是否奪取、降級、遷移或改寫既有玩家資產？",
+        "changesSupply": "它是否改變資源守恆、生成供應、NCK 原則或世界創世假設？",
+        "grantsPrivilege": "它是否給某個地址授予繞過、增發或私有生產優勢？",
+        "futureOnly": "它是否僅向前生效，並且只限制在聲明的模組配置裡？",
+        "knownAdapter": "已知模組 adapter 是否能確定性解析並校驗機器補丁裡的每個欄位路徑？"
+      },
+      "routes": {
+        "futureConfig": {
+          "title": "僅影響未來的配置",
+          "body": "新配方、未來方塊参數、知識記錄或模組策略，如果不觸碰舊資產，可以使用普通文明法則。"
+        },
+        "oldAssets": {
+          "title": "既有玩家資產",
+          "body": "任何追溯改變背包、挂单、所有權、耐久或已創造價值的提案，都必須被視為自然法則。"
+        },
+        "coreInvariant": {
+          "title": "世界不變量",
+          "body": "世界生成、資源守恆、NCK 原則和零管理員假設，需要最高共識路徑。"
+        },
+        "privilegeMint": {
+          "title": "特權或通膨嘗試",
+          "body": "如果規則在沒有有界輸入時創造價值，或給某個地址私有繞過路徑，應在投票前拒絕。"
+        },
+        "unknownPatch": {
+          "title": "未知機器補丁",
+          "body": "如果合約不能確定性解析 adapter、operation 或 field_path，提案必須退回草稿。"
+        }
+      }
+    },
+    "conservation": {
+      "eyebrow": "守恆帳本",
+      "title": "可信經濟必須證明每個新產出從哪裡來。",
+      "body": "資源規則、配方、鍛造、熔煉和公共工程獎勵，都應該通過同一個經濟不變量：產出必須由生成來源、已消耗輸入、版本化轉化和公開收據支撐。",
+      "stackTitle": "經濟安全閘門",
+      "labels": {
+        "account": "帳戶",
+        "gate": "閘門"
+      },
+      "checks": {
+        "generatedSource": "生成資源必須指向任何讀者都能驗證的世界規則、種子、Chunk 或掉落來源。",
+        "inputBurn": "制作、熔煉、鍛造和公共工程獎勵必須證明所需輸入被且只被消耗一次。",
+        "recipeBound": "產出必須綁定到生效配方或規則版本，而不是綁定到私人伺服器决定。",
+        "noDuplicateOutput": "同一份輸入收據不能被重放來製造多個產出。",
+        "oldAssetProtection": "既有背包、挂单和玩家擁有資產保持受保護，除非自然法則路徑明確授權遷移。"
+      },
+      "stages": {
+        "source": {
+          "title": "來源被聲明",
+          "body": "新生成的礦石、植物、方塊或獎勵，先擁有公開來源哈希，讓玩家知道是哪條世界規則創造了它。"
+        },
+        "input": {
+          "title": "輸入被選中",
+          "body": "交易明確列出将為這次轉化提供成本的背包物品、聚落材料或資源收據。"
+        },
+        "burn": {
+          "title": "輸入被銷毀",
+          "body": "校驗器在產出存在前記錄銷毀或锁定事件，防止同一份輸入之後被重複使用。"
+        },
+        "transform": {
+          "title": "配方版本被固定",
+          "body": "生效配置 PDA 提供本次產出使用的配方、熔煉表、鍛造規則或公共工程獎勵公式。"
+        },
+        "output": {
+          "title": "產出獲得收據",
+          "body": "新物品或資源獲得收據哈希，綁定擁有者、數量、配方、來源和執行規則。"
+        },
+        "audit": {
+          "title": "餘額可以重放",
+          "body": "公開守恆帳本讓瀏覽器重新計算总輸入、总產出、被拒嘗試和版本變化。"
+        }
+      }
+    },
+    "constitution": {
+      "eyebrow": "世界級共識",
+      "title": "自然法則不是普通投票。",
+      "body": "自然法則變更會觸及世界最深層的公平假設，所以必須有更強提示、更嚴格校驗、更長冷卻期和更宽挑戰窗口。",
+      "checks": {
+        "higherRisk": "簽署前展示更高風險等級",
+        "longerCooldown": "執行前必須經過更長冷卻期",
+        "stricterValidation": "校驗器拒絕特權、通膨和資產没收",
+        "strongerPrompt": "玩家必須明確確認理解規則",
+        "widerChallenge": "給審計者和文明成员更長挑戰窗口"
+      }
+    },
+    "power": {
+      "eyebrow": "文明權重",
+      "title": "權重來自真實參與，不是錢包數量，也不是單純 NCK 持仓。",
+      "body": "未來合約應按玩家對世界的真實參與計算文明權重，同時用成熟期、上限、活躍窗口、衰減和異常懲罰限制刷权。",
+      "sourcesTitle": "參與來源",
+      "guardsTitle": "防刷约束",
+      "sources": {
+        "registration": "註冊公民狀態和成熟世界身份",
+        "exploration": "探索和访问 Chunk 的歷史",
+        "mining": "挖掘有可驗證生成來源的方塊",
+        "forging": "鍛造和材料加工參與",
+        "trading": "市場交易和結算歷史",
+        "guardianService": "守護者服務覆蓋與證明提交",
+        "ruleReading": "簽署前阅讀並理解規則書",
+        "longActivity": "跨紀元長期活躍"
+      },
+      "guards": {
+        "maturity": "新账号成熟期",
+        "walletCap": "單錢包權重上限",
+        "activeWindow": "近期活躍窗口要求",
+        "decay": "長期不活躍權重衰減",
+        "anomalyPenalty": "異常行為削减"
+      },
+      "snapshot": {
+        "total": "总權重",
+        "mature": "成熟公民"
+      }
+    },
+    "snapshotIntegrity": {
+      "eyebrow": "權重快照完整性",
+      "title": "文明權重應該像審計軌跡一樣計算，而不是像排行榜一樣估算。",
+      "body": "可信投票需要凍結且可重放的權重快照。系統應該只接受有收據支撐的參與，應用資格閘門，歸一化不同類別，限制集中度，凍結紀元，並讓任何人都能從公開帳戶重算簽名。",
+      "stackTitle": "快照安全檢查",
+      "checks": {
+        "receiptOnly": "只有公開收據計入權重。網站分數、私人分析記錄或鏈下承諾，不能單獨變成投票權。",
+        "categoryBalance": "挖礦、鍛造、公共工程、交易和審計工作應該歸一化，避免單一活動支配所有規則。",
+        "capClusters": "單錢包上限和可疑集群上限，會削弱廉價拆錢包和資本集中。",
+        "epochFreeze": "規則發布後，snapshot_epoch 凍結簽署者權重，後續活動不能改寫這次投票。",
+        "publicRecount": "門檻必須能從公民快照 PDA 和 rule_signature_pda 帳戶重新計算。"
+      },
+      "stages": {
+        "receipts": {
+          "title": "收集公開收據",
+          "body": "挖礦、鍛造、聚落貢獻、市場結算、守護者服務和審計行動，先產出收據，再可能影響權重。"
+        },
+        "eligibility": {
+          "title": "應用公民資格",
+          "body": "帳戶必須通過成熟期、活躍窗口、身份狀態和異常過濾後，收據才會貢獻權重。"
+        },
+        "normalize": {
+          "title": "歸一化類別",
+          "body": "不同參與類型通過公開權重表转换，避免原始行動數量直接變成治理控制权。"
+        },
+        "cap": {
+          "title": "限制集中度",
+          "body": "單錢包上限和可疑集群上限，同時限制資本捕獲和廉價拆錢包。"
+        },
+        "freeze": {
+          "title": "凍結紀元",
+          "body": "快照 PDA 儲存该紀元的最終權重哈希。規則簽名引用這個紀元，而不是可變實時分數。"
+        },
+        "recount": {
+          "title": "從簽名重算",
+          "body": "任何人都可以把 rule_signature_pda 帳戶按凍結快照求和，驗證門檻，而不必相信網站。"
+        }
+      }
+    },
+    "threatModel": {
+      "eyebrow": "威脅模型",
+      "title": "文明系統只有解釋壞規則如何失敗，才真正可信。",
+      "body": "如果投票可以繞過物理規則、所有權或透明度，治理就會變危險。NiceChunk 文明規則應預設把每個提案當成不可信對象，直到哈希、快照、校驗器、挑戰窗口和 PDA 範圍共同證明它安全。",
+      "defenseTitle": "防線堆疊",
+      "defenses": {
+        "identity": "文明權重基於快照，並經過成熟期、活躍度、上限、衰減和異常懲罰過濾。",
+        "hash": "可讀規則、機器補丁、舊狀態和新狀態在簽名計入前都通過哈希綁定。",
+        "validator": "RuleValidator 對範圍、守恆、舊資產、門檻和可寫 PDA 家族執行確定性檢查。",
+        "challenge": "冷卻和挑戰窗口給審計者時間發現誤導文本、不安全補丁或過期狀態。",
+        "publicFailure": "被拒絕的執行應發出具名原因，讓使用者看到規則為什麼沒有改變狀態。"
+      },
+      "scenarios": {
+        "sybil": {
+          "label": "女巫壓力",
+          "title": "大量新錢包试圖製造共識。",
+          "body": "新身份不應該立刻獲得完整文明權重。成熟期、活躍歷史、上限和異常懲罰會削弱廉價拆錢包。",
+          "proof": "citizen_state_pda + snapshot_epoch"
+        },
+        "whaleCapture": {
+          "label": "權重捕獲",
+          "title": "單一角色试圖用資本支配投票。",
+          "body": "設計上把參與推導出的文明權重，與錢包數量或單純 NCK 餘額分開，再用上限和衰減限制異常集中。",
+          "proof": "power_at_snapshot + cap policy"
+        },
+        "stalePatch": {
+          "label": "過期補丁",
+          "title": "規則簽署舊狀態，隨後覆蓋更新配置。",
+          "body": "執行前 old_value_hash 必須匹配目前目標配置。如果配置已經改變，規則失敗，而不是覆蓋更新成果。",
+          "proof": "old_value_hash mismatch"
+        },
+        "assetSeizure": {
+          "label": "資產奪取",
+          "title": "提案试圖降級或拿走既有玩家資產。",
+          "body": "追溯修改所有權或價值，應被視為自然法則範圍，必須有更強提示、更嚴格校驗和更高共識。",
+          "proof": "migration_mode = NaturalLaw"
+        },
+        "resourceInflation": {
+          "label": "資源通膨",
+          "title": "補丁试圖在沒有有界輸入時創造資源。",
+          "body": "守恆檢查要求生成來源、輸入燃燒或已驗證轉化，新產出才可以進入玩法。",
+          "proof": "conservation gate"
+        },
+        "hiddenAdmin": {
+          "label": "隱藏管理員",
+          "title": "執行暗中依賴專案方錢包。",
+          "body": "公開條件滿足後，execute_rule 應允許任何人呼叫。特權執行者會違背文明模型。",
+          "proof": "permissionless execute_rule"
+        }
+      }
+    },
+    "challenge": {
+      "eyebrow": "挑戰台",
+      "title": "玩家需要一條公開路徑，在可疑規則執行前阻止它。",
+      "body": "有分歧但有程式，信任才更強。挑戰路徑應該展示審查窗口、證據哈希、執行暫停、具名拒絕原因和最終公開結論。",
+      "stackTitle": "挑戰必須滿足的要求",
+      "checks": {
+        "clearWindow": "規則必須在可以執行之前暴露清晰的審查和挑戰窗口。",
+        "evidenceHash": "挑戰應引用穩定證據哈希、已解碼 PDA 或可复現校驗器結果。",
+        "executionPause": "只要未解決挑戰綁定到同一規則身份，執行就必須暫停。",
+        "namedReason": "裁決應發布具名原因，而不是私下人工审核結論。",
+        "publicOutcome": "最終接受或拒絕狀態應能從公開事件和帳戶重放。"
+      },
+      "stages": {
+        "detect": {
+          "title": "發現可疑規則",
+          "body": "玩家、開發者或審計者發現誤導文本、不安全範圍、過期哈希或缺少資產保護。"
+        },
+        "evidence": {
+          "title": "附上證據",
+          "body": "挑戰引用哈希、已解碼帳戶、校驗器輸出或狀態 diff，讓另一個審查者可以重新計算。"
+        },
+        "file": {
+          "title": "提交挑戰",
+          "body": "爭議變成公開對象，綁定同一個規則 ID、補丁哈希、挑戰者和審查窗口。"
+        },
+        "pause": {
+          "title": "暫停執行",
+          "body": "在挑戰解決或按公開條件過期之前，規則不能寫入配置 PDA。"
+        },
+        "resolve": {
+          "title": "带原因裁決",
+          "body": "有效裁決會說明被接受的證據、被拒絕的證據，或决定結果的校驗閘門。"
+        },
+        "learn": {
+          "title": "保留公開经驗",
+          "body": "事件和已解碼帳戶讓失敗模式可見，後續提案可以避開同样問題。"
+        }
+      }
+    },
+    "caseWalkthrough": {
+      "eyebrow": "規則案例推演",
+      "title": "青銅時代規則展示文明如何變成可執行代碼。",
+      "body": "這個例子可以作為未來文明程式的編碼目標：一條玩家可讀規則、一個機器補丁、一條簽名路徑、一個校驗結果，以及一次公開 PDA 寫入。",
+      "summaryTitle": "青銅時代規則載荷",
+      "summary": {
+        "lawType": "規則類型",
+        "ruleId": "規則 ID",
+        "targetModules": "目標模組",
+        "threshold": "門檻",
+        "snapshotEpoch": "快照紀元",
+        "execution": "執行路徑"
+      },
+      "views": {
+        "player": {
+          "kicker": "玩家視角",
+          "title": "規則解鎖青銅，但不觸碰舊背包。",
+          "body": "玩家把它讀成一次文明進步：社區批准後，銅和錫可以通過工藝變成青銅。",
+          "items": {
+            "one": "既有銅、錫、工具和背包仍然屬于原玩家。",
+            "two": "新的青銅產物必須消耗聲明輸入，並通過熔煉路徑校驗。",
+            "three": "玩家可以檢查最終 PDA，看到是哪條規則讓青銅生效。"
+          }
+        },
+        "builder": {
+          "kicker": "開發者視角",
+          "title": "補丁是有邊界的模組 diff。",
+          "body": "實現目標不是自由文本命令，而是针對熔煉與鍛造配置表面的結構化 diff。",
+          "items": {
+            "one": "新增熔煉配方：copper_ore + tin_ore + heat_tier_2 -> bronze_ingot。",
+            "two": "新增鍛造配方：bronze_ingot + handle_material -> bronze_tool_head。",
+            "three": "如果 field_path、operation 或模組 adapter 未知，就拒絕補丁。"
+          }
+        },
+        "auditor": {
+          "kicker": "審計視角",
+          "title": "每個主张都能用公開證據重放。",
+          "body": "審計者會在信任結果前，對比 text_hash、patch_hash、old_value_hash、簽名 PDA 和執行事件。",
+          "items": {
+            "one": "在 snapshot_epoch 42 下重算 yes/no/abstain 權重。",
+            "two": "執行前檢查 old_value_hash 是否匹配目前目標配置。",
+            "three": "確認 RuleExecuted 寫明精確 written_pda 和 new_value_hash。"
+          }
+        },
+        "contract": {
+          "kicker": "合約視角",
+          "title": "execute_rule 只寫聲明的配置帳戶。",
+          "body": "合約會在任何寫入前校驗身份、門檻、冷卻、挑戰狀態、範圍、守恆和舊資產安全。",
+          "items": {
+            "one": "可寫帳戶限制在 rule_registry_pda 和聲明的模組配置 PDA。",
+            "two": "背包 PDA 只用於資產安全推理讀取，不能被這条文明法則改寫。",
+            "three": "失敗時發出带穩定 failed_gate 的 RuleRejected，而不是寫入部分狀態。"
+          }
+        }
+      },
+      "evidence": {
+        "textHash": {
+          "title": "可讀規則身份",
+          "body": "玩家簽署的人類說明必須哈希到這個值。"
+        },
+        "patchHash": {
+          "title": "機器補丁身份",
+          "body": "可執行補丁位元組必須在計入簽名前哈希到這個值。"
+        },
+        "oldHash": {
+          "title": "預期目前配置",
+          "body": "如果鏈上熔煉或鍛造配置不再匹配已審查狀態，執行會停止。"
+        },
+        "newHash": {
+          "title": "承諾目標配置",
+          "body": "校驗器閘門通過後，被接受補丁會產生這個新配置哈希。"
+        },
+        "writtenPda": {
+          "title": "狹窄可寫表面",
+          "body": "交易只能寫聲明的配置 PDA，不能寫任意玩家或市場帳戶。"
+        },
+        "event": {
+          "title": "公開執行記錄",
+          "body": "索引器和網站可以展示同一個事件，作為規則生效的證明。"
+        }
+      }
+    },
+    "impact": {
+      "eyebrow": "規則影響模擬器",
+      "title": "簽署之前，玩家應該看到規則對個人、世界和技術層的影響。",
+      "body": "可信文明介面應在提案變成權力之前先模擬：我的背包會變吗、未來生產會變什麼、哪些 PDA 被讀取、哪些哈希必須匹配，以及校驗器為什麼接受或拒絕補丁。",
+      "stackTitle": "簽名計入前的 dry-run 檢查",
+      "checks": {
+        "readAccounts": "只讀聲明帳戶，不改變狀態：規則書、目標配置、背包、聚落效果和公民快照。",
+        "compareHashes": "任何人簽署前，對比 text_hash、patch_hash、old_value_hash 和預期 new_value_hash。",
+        "showDiff": "把人類可讀前後變化，和機器補丁 field_path 並排展示。",
+        "simulateFailure": "如果閘門失敗，展示精確拒絕原因：哈希過期、資產遷移不安全、守恆破壞、範圍錯誤或門檻不足。",
+        "explainChoice": "把 dry-run 結果翻譯成非技術玩家也能理解的同意、拒絕或弃权選擇。"
+      },
+      "surfaces": {
+        "personal": {
+          "label": "個人",
+          "title": "它會觸碰我的錢包或背包吗？",
+          "body": "模擬器應該說明規則會讀取我的帳戶、寫入我的帳戶，還是沒有直接個人影響。"
+        },
+        "assets": {
+          "label": "資產",
+          "title": "舊資產會被改變吗？",
+          "body": "既有背包、挂单、已制作物品和所有權記錄必須展示為受保護、只讀、遷移，或被自然法則阻斷。"
+        },
+        "production": {
+          "label": "生產",
+          "title": "未來玩法會發生什麼變化？",
+          "body": "玩家應該看到規則生效後哪些配方、掉落表、機器規則或方塊参數會變化。"
+        },
+        "settlement": {
+          "label": "聚落",
+          "title": "規則會影響公共工程吗？",
+          "body": "聚落變化應展示受影響土地、项目裡程碑、守護覆蓋和只向前生效的收益。"
+        },
+        "economy": {
+          "label": "經濟",
+          "title": "價值會憑空出現吗？",
+          "body": "dry run 應解釋輸入要求、資源守恆、费用影響，以及為什麼沒有私人地址獲得隱藏特權。"
+        },
+        "technical": {
+          "label": "技術",
+          "title": "哪個閘門接受或拒絕補丁？",
+          "body": "专业使用者應該看到已解析 operation、帳戶 owner、可寫 PDA、adapter 名称和確定性校驗輸出。"
+        }
+      }
+    },
+    "signing": {
+      "eyebrow": "簽署前檢查",
+      "title": "簽名應該像公開承諾，而不是盲點按钮。",
+      "body": "簽署介面應該證明玩家签的是同一份規則文本、同一份機器補丁、同一個凍結權重快照、同一份風險摘要，以及一個明確立场：同意、反對或弃权。",
+      "stackTitle": "錢包必須明確展示什麼",
+      "checks": {
+        "sameObject": "介面必須展示錢包正在簽署的精確 text_hash 和 patch_hash。",
+        "snapshotPower": "簽署者在選擇立场前，要看到凍結的 snapshot_epoch 和 power_at_snapshot。",
+        "sideMeaning": "同意、反對和弃权必須被解釋為不同公開承諾，而不是装饰按钮。",
+        "riskPrompt": "高風險規則需要更強提示，明確點名受影響資產、經濟、權限和時間。",
+        "revocationLimit": "如果窗口关闭前允許替换投票，替换規則必須明確且可審計。"
+      },
+      "risks": {
+        "asset": {
+          "title": "資產影響",
+          "body": "規則只是讀取玩家資產、影響未來資產、遷移舊資產，還是需要自然法則保護？"
+        },
+        "economy": {
+          "title": "經濟影響",
+          "body": "dry-run 是否證明守恆、輸入消耗、费用流向，以及沒有隱藏接收者？"
+        },
+        "authority": {
+          "title": "權限影響",
+          "body": "哪些 PDA 家族可以被寫入？是否有地址獲得補丁之外的特權？"
+        },
+        "timing": {
+          "title": "時間影響",
+          "body": "規則什麼時候可以執行，挑戰窗口多久，執行前哪些狀態可能變化？"
+        },
+        "personal": {
+          "title": "個人範圍",
+          "body": "這個簽名只是讀取我的錢包、使用我的權重，還是授權任何觸碰我帳戶的寫入？"
+        },
+        "irreversible": {
+          "title": "終局影響",
+          "body": "執行後會發生什麼，未來規則如何取代它，哪些事情不能撤回？"
+        }
+      },
+      "proofFields": {
+        "side": {
+          "title": "簽署立场",
+          "body": "簽名 PDA 記錄精確立场，讓同意、反對和弃权可以分開计數。"
+        },
+        "power": {
+          "title": "凍結權重",
+          "body": "簽署者貢獻的是引用快照中的權重，不是可變實時餘額。"
+        },
+        "snapshot": {
+          "title": "快照紀元",
+          "body": "每個簽名都指向同一紀元，所以門檻數學可以重放。"
+        },
+        "text": {
+          "title": "文本身份",
+          "body": "人類可讀規則文本通過哈希綁定到簽名。"
+        },
+        "patch": {
+          "title": "補丁身份",
+          "body": "可執行補丁哈希綁定到同一個簽名，防止已签文本隱藏另一份位元組。"
+        },
+        "risk": {
+          "title": "風險確認",
+          "body": "簽署者確認已顯示風險摘要，讓之後关于隱藏提示的爭議更容易審計。"
+        }
+      }
+    },
+    "decision": {
+      "eyebrow": "决策分流",
+      "title": "反對、弃权和挑戰是不同工具，不是同一种“不同意”。",
+      "body": "可信治理介面必須教玩家区分支持、反對、沉默和基於證據的阻斷。每個動作都應該寫入不同公開含義，同時共享同一條規則身份。",
+      "stackTitle": "如何讀懂四种選擇",
+      "checks": {
+        "oneIdentity": "四种動作都引用同一 rule_id、text_hash、patch_hash、snapshot_epoch 和風險摘要。",
+        "differentMeanings": "同意和反對進入門檻數學；弃权記錄參與，但不把權重加到 yes 或 no。",
+        "challengeEvidence": "挑戰不是更強烈的反對。它必須附带證據，並且可以暫停執行。",
+        "publicMath": "任何人都應該能從公開帳戶重算 yes_power、no_power、abstain_power 和未解決挑戰。",
+        "clearOutcome": "介面應說明規則已定案、被挑戰暫停、已拒絕，還是仍在等待。"
+      },
+      "routes": {
+        "agree": {
+          "label": "支持",
+          "title": "同意表示我希望這条規則通過。",
+          "body": "簽署者把凍結權重加入 yes_power。但這不會跳过冷卻、挑戰窗口或校驗器閘門。"
+        },
+        "reject": {
+          "label": "反對",
+          "title": "反對表示我把權重計入規則的反方。",
+          "body": "簽署者把凍結權重加入 no_power。它表达反對，但不會自動暫停執行。"
+        },
+        "abstain": {
+          "label": "在场",
+          "title": "弃权表示我被計入參與，但不選擇 yes 或 no。",
+          "body": "簽署者單獨記錄參與和權重，适合玩家沒有足够把握支持或反對時使用。"
+        },
+        "challenge": {
+          "label": "爭議",
+          "title": "挑戰表示我有證據證明執行應該停止。",
+          "body": "挑戰者提交公開證據哈希。未解決挑戰會阻止寫入，直到規則被裁決或挑戰過期。"
+        }
+      },
+      "proofFields": {
+        "side": {
+          "title": "立场值",
+          "body": "簽署立场是類型化值，所以 UI 标签不能悄悄改寫玩家签过的含義。"
+        },
+        "signature": {
+          "title": "簽名帳戶",
+          "body": "一個規則簽名 PDA 存储投票者、規則、立场、快照權重和簽署哈希。"
+        },
+        "challenge": {
+          "title": "挑戰帳戶",
+          "body": "挑戰有獨立 PDA，因為它攜帶證據，並可能暫停執行。"
+        },
+        "pause": {
+          "title": "暫停计數",
+          "body": "執行寫入配置 PDA 之前，會先檢查未解決挑戰。"
+        },
+        "recount": {
+          "title": "重算欄位",
+          "body": "同意、反對和弃权權重是同一快照上的公開求和。"
+        },
+        "outcome": {
+          "title": "結果事件",
+          "body": "定案、暫停、拒絕和執行都應該產生具名事件，供索引器和玩家讀取。"
+        }
+      }
+    },
+    "reputation": {
+      "eyebrow": "文明權重帳本",
+      "title": "文明權重應來自可證明的遊玩，而不是可轉讓的投票代幣。",
+      "body": "NiceChunk 的文明層可以把發現、背包所有權、鍛造、聚落勞動和審計挑戰變成公開公民快照。玩家能看懂自己的声音為什麼有效；審計者能看到權重背後的收據、上限、衰減和重放路徑。",
+      "stackTitle": "為什麼文明權重難以伪造",
+      "guards": {
+        "receiptOnly": "只有带解碼收據的行動才能進入計分；只存在于網站上的聲明不計入。",
+        "snapshotEpoch": "規則簽名使用紀元快照，臨時帳戶變化不能改寫簽署者權重。",
+        "capAndDecay": "每類來源都有上限和衰減曲線，防止單一活動或舊成就永远支配。",
+        "nonTransferable": "權重跟隨錢包背後的公民歷史，不是可以一筆买來的自由轉讓投票代幣。",
+        "replayableMath": "索引器、玩家和審計者都應該能從公開 PDA 資料重新計算同一個分數。"
+      },
+      "sources": {
+        "discovery": {
+          "label": "發現",
+          "title": "NCM 探索產生來源證據。",
+          "body": "發現並證明有價值的 Chunk 可以成為文明信號，因為來源、種子和發現收據都可檢查。"
+        },
+        "backpack": {
+          "label": "背包",
+          "title": "持有資產證明材料參與。",
+          "body": "背包狀態展示一個公民在世界中實际攜帶过哪些資源、產物和歷史持有記錄。"
+        },
+        "forging": {
+          "label": "鍛造",
+          "title": "制作產出證明生產勞動。",
+          "body": "熔煉和鍛造收據說明玩家是在公開配方規則下轉化輸入，而不僅僅是持有餘額。"
+        },
+        "market": {
+          "label": "市場",
+          "title": "已結算交易證明诚實交换。",
+          "body": "市場歷史可以獎勵完成且非濫用的交换，同時排除刷量循環和失敗結算記錄。"
+        },
+        "settlement": {
+          "label": "聚落",
+          "title": "公共工程證明公共貢獻。",
+          "body": "材料收據、裡程碑帳戶和守護覆蓋讓聚落勞動可見，而不需要相信私人金庫。"
+        },
+        "audit": {
+          "label": "審計",
+          "title": "挑戰證明規則審查勞動。",
+          "body": "有效挑戰、已解決證據和被捕獲的失敗可以成為文明信用，因為它们保護整個文明。"
+        }
+      }
+    },
+    "lifecycle": {
+      "eyebrow": "流程",
+      "title": "規則書從撰寫到執行，不需要專案方許可。",
+      "steps": {
+        "draft": {
+          "title": "Draft Rule Book / 撰寫規則書",
+          "body": "玩家為目標模組寫下可讀說明和機器補丁。"
+        },
+        "publish": {
+          "title": "Publish On-chain Hash / 發布鏈上哈希",
+          "body": "固定 text_hash、patch_hash、作者、規則類型、風險等級和快照紀元。"
+        },
+        "read": {
+          "title": "Read & Understand / 阅讀並理解",
+          "body": "公民查看文本、影響範圍、舊資產策略和校驗警告。"
+        },
+        "sign": {
+          "title": "Sign Civilization Power / 簽署文明權重",
+          "body": "公民按快照權重簽署同意、反對或弃权。"
+        },
+        "threshold": {
+          "title": "Reach Threshold / 达到門檻",
+          "body": "文明法則超过 50%；自然法則超过 90% 活躍文明權重。"
+        },
+        "cooling": {
+          "title": "Cooling & Challenge / 冷卻與挑戰",
+          "body": "規則等待冷卻和挑戰窗口，給錯誤與風險留下審查時間。"
+        },
+        "execute": {
+          "title": "Execute Rule / 執行規則",
+          "body": "鏈上條件滿足後，任何玩家都可呼叫 execute_rule。"
+        },
+        "active": {
+          "title": "Rule Becomes Active / 規則生效",
+          "body": "程式把批准配置寫入規則註冊表和目標模組配置 PDA。"
+        }
+      }
+    },
+    "schema": {
+      "eyebrow": "規則書結構",
+      "title": "可讀意圖和機器可執行補丁，通過哈希綁定在一起。",
+      "body": "目前頁面先用本地模擬資料展示結構。後續這些欄位可以直接映射到 rule_book_pda、rule_signature_pda 和 rule_registry_pda 帳戶佈局。",
+      "fields": {
+        "title": "展示給玩家和審查者的可讀規則名称。",
+        "author": "發布規則書哈希的錢包。",
+        "category": "自然法則或文明法則的門檻分類。",
+        "target_module": "補丁影響的一個或多個配置模組。",
+        "human_readable_text": "玩家簽署前阅讀的可理解說明。",
+        "machine_patch": "RuleValidator 消费的結構化補丁位元組。",
+        "risk_level": "UI 和校驗器使用的風險等級。",
+        "threshold": "所需活躍文明權重百分比。",
+        "snapshot_epoch": "凍結簽署權重的紀元。",
+        "status": "從草稿到生效的生命週期狀態。",
+        "yes_power": "同意方文明權重。",
+        "no_power": "反對方文明權重。",
+        "abstain_power": "弃权文明權重。",
+        "cooldown_end": "共識达成後的最早執行時間。",
+        "execute_status": "目前執行就绪狀態或結果。"
+      }
+    },
+    "technical": {
+      "eyebrow": "技術流程",
+      "title": "合約執行的是經過驗證的補丁，不是模糊的社會口號。",
+      "body": "可讀規則解釋意圖；機器補丁精確聲明哪些配置 PDA 欄位會改變；校驗器會在註冊表寫入前拒絕危險補丁。",
+      "assurances": {
+        "hashBinding": {
+          "title": "哈希綁定",
+          "body": "可讀文本和機器補丁都用哈希承諾，簽署者可以審計自己讀到的内容是否就是将被執行的内容。"
+        },
+        "validatorBeforeWrite": {
+          "title": "先校驗，再寫入",
+          "body": "危險更新在進入模組註冊表前被拒絕，包括无輸入產出、地址特權邏輯和奪取既有資產。"
+        },
+        "pdaRegistry": {
+          "title": "PDA 註冊表表面",
+          "body": "通過的規則寫入版本化註冊表和配置 PDA，公開工具可以拉取並解碼。"
+        },
+        "permissionlessExecution": {
+          "title": "無許可執行",
+          "body": "所有條件滿足後，執行不依賴專案方錢包；任何玩家都可以提交交易。"
+        }
+      }
+    },
+    "validatorSpec": {
+      "eyebrow": "RuleValidator 規格",
+      "title": "文明規則必須通過確定性閘門，才可以觸碰配置 PDA。",
+      "body": "校驗器是有意义治理和危險投票之間的区別。它把社會提案變成受约束的狀態遷移：解析、分類、證明安全、要求正確門檻，然後寫入狹窄結果。",
+      "patchTitle": "機器補丁信封",
+      "patchFields": {
+        "module": "目標模組家族，例如熔煉、資源規則、守護者策略或市場策略。",
+        "operation": "允許的變更類型。自由代碼執行不屬于補丁语言。",
+        "field_path": "版本化配置表面中被修改的精確欄位或記錄路徑。",
+        "old_value_hash": "預期目前值哈希，防止舊提案覆蓋已變化狀態。",
+        "new_value_hash": "目標值哈希承諾，簽署者知道提案将寫入什麼狀態。",
+        "migration_mode": "舊資產是否不受影響、僅向前生效，或必須走自然法則處理。",
+        "effective_epoch": "執行後補丁最早生效的紀元。",
+        "rollback_hash": "用於審計和恢复設計的可選回滚或取代引用。"
+      },
+      "risk": {
+        "low": {
+          "label": "低",
+          "title": "UI 或知識更新",
+          "body": "公開說明、審計備註或僅向前生效的元資料，不影響資產和經濟。"
+        },
+        "medium": {
+          "label": "中",
+          "title": "普通配置演化",
+          "body": "新配方、方塊参數或資源表，只影響未來玩法。"
+        },
+        "high": {
+          "label": "高",
+          "title": "經濟或服務策略",
+          "body": "费用、守護者参數、市場類別，或有間接經濟影響的規則。"
+        },
+        "critical": {
+          "label": "关键",
+          "title": "自然法則表面",
+          "body": "創世不變量、舊資產處理、資源守恆或特權邊界。"
+        }
+      }
+    },
+    "implementationTrace": {
+      "eyebrow": "實現追蹤",
+      "title": "每個 instruction 都應該留下可重放的審計軌跡。",
+      "body": "未來文明程式應該能從公開資料重建：呼叫了哪個 instruction、哪個 PDA 改變、檢查了哪個哈希、發出了哪個事件，以及規則為什麼通過或被拒絕。",
+      "invariantTitle": "審計不變量",
+      "labels": {
+        "input": "輸入",
+        "output": "輸出"
+      },
+      "invariants": {
+        "hashIdentity": "text_hash 和 patch_hash 必須在發布、簽名、結算、執行和事件日誌中指向同一條規則。",
+        "snapshotReplay": "門檻重算必須能從簽名 PDA 和 snapshot_epoch 完成，而不是信任網站快取。",
+        "singleSignature": "一個投票者對一條規則只能有一個有效簽名，除非明確設計後續替换路徑。",
+        "noPrivilegedExecute": "execute_rule 不得要求專案方錢包、管理員簽名或隱藏伺服器 authority。",
+        "boundedWrite": "成功執行只能寫入聲明的註冊表/配置 PDA 家族，不能寫任意帳戶資料。",
+        "rejectionReason": "每條拒絕路徑都應該有穩定、文件化的原因，方便使用者和索引器展示。"
+      },
+      "instructions": {
+        "publishRule": {
+          "phase": "發布",
+          "title": "publish_rule",
+          "body": "建立規則書帳戶，並凍結可讀文本哈希、機器補丁哈希、規則類型、風險等級、目標模組列表和快照紀元。",
+          "input": "rule_id, text_hash, patch_hash, law_type, risk_level, target_modules, snapshot_epoch",
+          "output": "RuleBook PDA 初始化；發出 RulePublished 事件。"
+        },
+        "signRule": {
+          "phase": "簽名",
+          "title": "sign_rule",
+          "body": "為某個投票者和某条規則建立或更新簽名 PDA，權重來自聲明的快照紀元。",
+          "input": "rule_id, voter, side, snapshot_epoch, expected_text_hash, expected_patch_hash",
+          "output": "RuleSignature PDA 寫入；發出 RuleSigned 事件。"
+        },
+        "finalizeThreshold": {
+          "phase": "結算",
+          "title": "finalize_threshold",
+          "body": "重算公開簽名，儲存最終 yes/no/abstain 權重，並標記門檻是否达成。",
+          "input": "rule_id, signature_index, threshold_policy, current_slot",
+          "output": "規則 tally 完成；發出 ThresholdFinalized 事件。"
+        },
+        "challengeRule": {
+          "phase": "挑戰",
+          "title": "challenge_rule",
+          "body": "在挑戰窗口内用公開 evidence_hash 記錄挑戰，並在解決前阻止執行。",
+          "input": "rule_id, challenger, evidence_hash, challenge_reason",
+          "output": "Challenge PDA 寫入；發出 RuleChallenged 事件。"
+        },
+        "executeRule": {
+          "phase": "執行",
+          "title": "execute_rule",
+          "body": "執行校驗器，檢查目前目標配置哈希，然後寫入通過的註冊表/配置 PDA，或發出具名拒絕原因。",
+          "input": "rule_id, target_module, old_value_hash, target_config_pda, registry_pda",
+          "output": "發出 RuleExecuted 或 RuleRejected 事件；只有全部閘門通過才寫配置。"
+        }
+      },
+      "events": {
+        "rulePublished": {
+          "level": "公開",
+          "title": "RulePublished",
+          "body": "表示規則已可阅讀，並且已經哈希綁定。",
+          "payload": "rule_id, author, text_hash, patch_hash, law_type, risk_level, snapshot_epoch"
+        },
+        "ruleSigned": {
+          "level": "公開",
+          "title": "RuleSigned",
+          "body": "表示某個公民簽名改變了門檻計算。",
+          "payload": "rule_id, voter, side, power_at_snapshot, snapshot_epoch, signature_pda"
+        },
+        "thresholdFinalized": {
+          "level": "公開",
+          "title": "ThresholdFinalized",
+          "body": "表示簽名已重算，規則可以進入冷卻或阻斷狀態。",
+          "payload": "rule_id, yes_power, no_power, abstain_power, threshold_met, finalized_slot"
+        },
+        "ruleChallenged": {
+          "level": "警告",
+          "title": "RuleChallenged",
+          "body": "表示執行已因公開證據進入暫停審查。",
+          "payload": "rule_id, challenger, evidence_hash, challenge_reason, expires_slot"
+        },
+        "ruleExecuted": {
+          "level": "公開",
+          "title": "RuleExecuted",
+          "body": "表示經過驗證的補丁寫入了狹窄配置或註冊表結果。",
+          "payload": "rule_id, executor, target_module, old_value_hash, new_value_hash, written_pda"
+        },
+        "ruleRejected": {
+          "level": "警告",
+          "title": "RuleRejected",
+          "body": "表示執行失敗且沒有寫入配置狀態。",
+          "payload": "rule_id, caller, rejection_code, checked_hash, failed_gate"
+        }
+      }
+    },
+    "executionProof": {
+      "eyebrow": "執行證明",
+      "title": "規則只有在簽名、帳戶和失敗路徑都可檢查時，才真正可信。",
+      "body": "這是可讀提案和可信狀態變更之間的桥梁：凍結權重快照、簽名 PDA、確定性帳戶讀取、校驗器拒絕原因，以及狹窄註冊表寫入。",
+      "labels": {
+        "seed": "Seed",
+        "writer": "寫入者",
+        "mutability": "可變性"
+      },
+      "severity": {
+        "medium": "中等風險",
+        "high": "高風險",
+        "critical": "关键阻斷"
+      },
+      "items": {
+        "snapshotFrozen": {
+          "kicker": "快照",
+          "title": "簽名計入前，簽署者權重先被凍結。",
+          "body": "簽名會儲存 snapshot_epoch 和 power_at_snapshot。後續挖礦、交易或錢包變動不能改寫已發布規則的投票權重。"
+        },
+        "signatureAccount": {
+          "kicker": "簽名 PDA",
+          "title": "每一票都是公開帳戶，不是隱藏資料庫行。",
+          "body": "rule_signature_pda 應綁定 voter、rule_id、side、power、timestamp、text_hash 和 patch_hash，讓观察者可以獨立重算門檻。"
+        },
+        "executeAccounts": {
+          "kicker": "交易",
+          "title": "execute_rule 先讀取證明，再寫入結果。",
+          "body": "交易會讀取規則書、簽名总量、公民快照元資料、目前目標配置哈希和校驗器範圍，再寫入註冊表或模組配置 PDA。"
+        },
+        "publicRejection": {
+          "kicker": "失敗",
+          "title": "被拒絕的規則應給出具名原因。",
+          "body": "失敗執行應公開為什麼失敗：舊哈希、門檻不足、窗口過期、模組錯誤、守恆破壞或資產安全违規。"
+        }
+      },
+      "accounts": {
+        "ruleBook": {
+          "title": "規則書帳戶",
+          "body": "儲存可讀元資料、規則類型、風險等級、目標模組、text_hash、patch_hash、snapshot_epoch 和生命週期時間戳。"
+        },
+        "signature": {
+          "title": "簽名帳戶",
+          "body": "儲存某個投票者對某条規則的立场和凍結文明權重，方便獨立重算投票。"
+        },
+        "citizen": {
+          "title": "公民狀態帳戶",
+          "body": "儲存由參與度推導出的權重輸入，以及規則簽名使用的紀元快照。"
+        },
+        "registry": {
+          "title": "規則註冊表帳戶",
+          "body": "儲存已接受規則版本、取代关系、執行 slot 和目前生效模組策略引用。"
+        },
+        "moduleConfig": {
+          "title": "模組配置帳戶",
+          "body": "儲存玩法程式讀取的狹窄結果，例如配方表、掉落表、费率策略或方塊参數。"
+        }
+      },
+      "failures": {
+        "staleHash": {
+          "title": "old_value_hash 過期",
+          "body": "提案發布後目標配置已經變化，所以規則必須重新審查，不能覆蓋更新狀態。"
+        },
+        "thresholdMissing": {
+          "title": "門檻未达成",
+          "body": "同意權重在凍結快照下沒有达到文明法則或自然法則要求。"
+        },
+        "snapshotChanged": {
+          "title": "快照窗口无效",
+          "body": "規則使用了過期、缺失或不匹配的快照紀元，所以簽名權重不可信。"
+        },
+        "assetViolation": {
+          "title": "舊資產安全违規",
+          "body": "補丁會奪取、降級或改寫既有玩家資產，却沒有走更強的自然法則路徑。"
+        },
+        "conservationFailure": {
+          "title": "資源守恆失敗",
+          "body": "補丁在沒有有界輸入、生成來源或允許轉化規則的情況下創造輸出。"
+        },
+        "wrongScope": {
+          "title": "模組範圍錯誤",
+          "body": "補丁试圖修改 declared target_module 列表之外的模組或欄位路徑。"
+        }
+      }
+    },
+    "receipts": {
+      "eyebrow": "執行收據帳本",
+      "title": "執行之後，規則應該留下玩家永久可重放的收據。",
+      "body": "可信文明系統不能停在一個綠色成功提示上。它應該公開前後哈希、被寫入的 PDA 地址、事件載荷、拒絕原因、索引器確認，以及後續取代版本或挑戰引用。",
+      "stackTitle": "收據檢查",
+      "checks": {
+        "sameIdentity": "收據必須綁定玩家簽署的同一個 rule_id、text_hash、patch_hash、snapshot_epoch 和目標模組。",
+        "beforeAfterHash": "成功寫入必須暴露 old_value_hash 和 new_value_hash，讓精確狀態轉移可以被重放。",
+        "namedFailure": "被拒絕的執行應該發出具名 rejection code，而不是只消失成一筆普通失敗交易。",
+        "indexerParity": "網站視圖和獨立索引器應該從同一組事件與 PDA 得到同一個狀態。",
+        "futureDispute": "後續挑戰、取代版本或相容性備註，都應該連結回原始執行收據。"
+      },
+      "stages": {
+        "transaction": {
+          "title": "交易被提交",
+          "body": "任何呼叫者都能提交 execute_rule，但交易必須攜帶同一條規則身份和預期狀態。"
+        },
+        "precheck": {
+          "title": "先檢查哈希",
+          "body": "合約在任何寫入前驗證 text_hash、patch_hash、old_value_hash、snapshot_epoch、挑戰狀態和目標模組。"
+        },
+        "write": {
+          "title": "只寫入狹窄 PDA 狀態",
+          "body": "如果每個閘門都通過，交易會寫入註冊表或模組配置 PDA，並記錄新的生效哈希。"
+        },
+        "event": {
+          "title": "一個公開事件解釋結果",
+          "body": "成功和拒絕都會產生事件載荷，讓使用者看到發生了什麼，以及為什麼發生。"
+        },
+        "index": {
+          "title": "索引器重建同一狀態",
+          "body": "UI 不應該發明狀態；它應該展示獨立索引器也能從帳戶和事件重建出來的同一個結果。"
+        },
+        "accountability": {
+          "title": "未來規則可以向後引用",
+          "body": "後續挑戰、相容性備註或取代版本，應該引用原始收據，而不是改寫歷史。"
+        }
+      }
+    },
+    "transparency": {
+      "eyebrow": "公開透明控制台",
+      "title": "玩家應該能不信任網站，也能檢查文明真相。",
+      "body": "未來 PDA 瀏覽器應該解碼合約讀取的同一批公開帳戶：規則、簽名、公民快照、模組註冊表、配置 PDA、挑戰和執行事件。",
+      "checkTitle": "瀏覽器必須證明什麼",
+      "labels": {
+        "account": "帳戶",
+        "proof": "證明欄位"
+      },
+      "checks": {
+        "decode": "把原始 PDA 位元組解碼成具名欄位，而不是只展示不透明 base64。",
+        "compare": "並排對比 text_hash、patch_hash、old_value_hash 和 active_config_hash。",
+        "recount": "從簽名帳戶和 snapshot_epoch 重算門檻數學。",
+        "simulate": "在使用者簽署或執行前，執行只讀 RuleValidator 模擬。",
+        "watch": "把 RuleExecuted、RuleRejected、RuleChallenged 事件展示成公開時間線。"
+      },
+      "surfaces": {
+        "ruleLedger": {
+          "label": "規則帳本",
+          "title": "每個提案都有公開身份。",
+          "body": "瀏覽器應展示作者、規則類型、風險等級、目標模組、可讀哈希、補丁哈希、冷卻時間和目前生命週期狀態。"
+        },
+        "signatureLedger": {
+          "label": "簽名帳本",
+          "title": "每一票都可以重算。",
+          "body": "使用者應該看到哪些帳戶簽署了、選擇哪一边，以及每個簽名貢獻了多少凍結文明權重。"
+        },
+        "citizenSnapshot": {
+          "label": "公民快照",
+          "title": "文明權重是可檢查輸入。",
+          "body": "快照面板應該解釋成熟身份、活躍度、上限、衰減，以及某条規則使用的最終權重。"
+        },
+        "configRegistry": {
+          "label": "配置註冊表",
+          "title": "通過的規則指向生效模組狀態。",
+          "body": "註冊表應該暴露哪一個規則版本控制熔煉、鍛造、資源掉落、方塊参數或其它模組配置。"
+        },
+        "assetSafety": {
+          "label": "資產安全",
+          "title": "玩家擁有的資產保持可見且受保護。",
+          "body": "当規則声称不觸碰舊資產時，瀏覽器應該展示相关只讀背包或市場帳戶檢查。"
+        },
+        "challengeCourt": {
+          "label": "挑戰法庭",
+          "title": "反對意见變成公開證據，不是私下争论。",
+          "body": "挑戰應有帳戶狀態、證據哈希、過期時間、解決狀態，以及執行被拒絕時的 failed_gate。"
+        }
+      }
+    },
+    "verification": {
+      "eyebrow": "獨立核驗路徑",
+      "title": "第三方應該不需要詢問 NiceChunk，也能證明或拒絕每個文明聲明。",
+      "body": "頁面應該教會懷疑者如何從網站聲明走到已解碼 PDA owner、重算哈希、簽名重算、校驗器乾跑和最終事件收據。",
+      "stackTitle": "不依賴信任的證明規則",
+      "checks": {
+        "independentSource": "從公開 RPC 響應、瀏覽器或導出的帳戶 dump 開始，而不是從私有網站資料庫開始。",
+        "sameOwner": "確認每個 PDA 都由預期程式擁有，並且來自文件說明的 seed 家族。",
+        "hashRecompute": "接受可讀聲明之前，先從位元組重算 text_hash、patch_hash 和配置哈希。",
+        "thresholdReplay": "從凍結 snapshot_epoch 的 rule_signature_pda 帳戶重算簽名門檻。",
+        "publicReceipt": "以公開事件或拒絕原因結束，讓結果可以分享和重放。"
+      },
+      "stages": {
+        "claim": {
+          "title": "命名具體聲明。",
+          "body": "讀者先選頁面上的一句具體話，例如哪條規則生效，或者某個提案為什麼被拒絕。"
+        },
+        "account": {
+          "title": "打開已解碼帳戶。",
+          "body": "核驗者檢查 owner program、PDA seeds、帳戶 discriminator、rule_id、模組和生命週期欄位。"
+        },
+        "hash": {
+          "title": "重新計算哈希。",
+          "body": "可讀文本、機器補丁位元組和配置狀態，必須得到介面展示的同一批哈希。"
+        },
+        "recount": {
+          "title": "從簽名重算權重。",
+          "body": "門檻數學應該從簽名帳戶和公民快照重建，而不是直接相信頁面顯示的數字。"
+        },
+        "simulate": {
+          "title": "執行校驗器乾跑。",
+          "body": "聲明被信任之前，同一份補丁應通過範圍、守恆、資產安全和預期狀態檢查。"
+        },
+        "receipt": {
+          "title": "檢查公開結論。",
+          "body": "最終證明是事件、寫入的 PDA 或具名拒絕原因，另一個審查者可以重新播放。"
+        }
+      }
+    },
+    "versioning": {
+      "eyebrow": "版本化演進",
+      "title": "文明通過公開版本鏈前進，而不是擦除舊規則。",
+      "body": "可信世界需要歷史連續性。当新規則取代舊規則時，註冊表應該保留舊哈希、生效紀元、取代連結和資產相容說明。",
+      "stackTitle": "版本化保证",
+      "labels": {
+        "account": "帳戶",
+        "hash": "哈希"
+      },
+      "principles": {
+        "appendOnly": "規則歷史只追加：新的生效規則連結到上一版本，而不是删除它。",
+        "effectiveEpoch": "每個版本都有 effective_epoch，玩家能知道某次行動發生時适用哪條規則。",
+        "compatibility": "相容策略解釋舊背包、配方、挂单和已鍛造物品如何继续有效。",
+        "supersession": "取代連結說明 v2 為什麼取代 v1，以及是哪條規則批准了變更。",
+        "auditReplay": "審查者可以用公開哈希重放 v1 行為、v2 行為，以及它们之間的遷移。"
+      },
+      "stages": {
+        "activeV1": {
+          "title": "目前生效版本",
+          "body": "目前模組配置應保持可讀，包含 rule_id、配置哈希、生效紀元和 owner program。"
+        },
+        "proposalV2": {
+          "title": "提議取代版本",
+          "body": "新規則提出補丁，引用目前生效哈希，並聲明被取代的版本。"
+        },
+        "compatibility": {
+          "title": "相容策略",
+          "body": "校驗器記錄舊資產是否保持 v1 语义、向前遷移，或必須進入自然法則路徑。"
+        },
+        "activeV2": {
+          "title": "新的生效版本",
+          "body": "執行後，新玩法讀取 v2；舊歷史、事件和相容說明仍然可以檢查。"
+        }
+      }
+    },
+    "roles": {
+      "eyebrow": "公民角色矩陣",
+      "title": "文明角色應該描述公開職責，而不是私有權力。",
+      "body": "玩家可以通過公開收據成為探索者、礦工、鍛造者、建造者、守護者或審計者。角色解釋一個公民如何幫助世界，以及哪個證明物件支撐這份貢獻；它不應該變成隱藏管理員權限。",
+      "stackTitle": "角色安全規則",
+      "labels": {
+        "account": "證明帳戶",
+        "duty": "職責"
+      },
+      "checks": {
+        "notPermission": "角色不是管理員權限，不能繞過所有權、守恆、校驗器閘門或規則門檻。",
+        "receiptBacked": "角色貢獻必須由公開收據支撐，而不是網站徽章或私人聲譽記錄。",
+        "rotatable": "公民可以隨時間成長出多個角色；系統應該記錄歷史，而不是鎖死永久職業。",
+        "abuseBounded": "每個角色影響文明權重前，都需要上限、成熟期檢查和異常過濾。",
+        "publicBenefit": "角色應該通過地圖、資源、配方、公共工程、覆蓋或審計，讓其他玩家能檢查世界收益。"
+      },
+      "surfaces": {
+        "explorer": {
+          "label": "探索者",
+          "title": "發現並解釋邊界。",
+          "body": "探索者把 Chunk 發現、路線繪製、異常報告和世界知識變成後續規則可讀取的公開信號。"
+        },
+        "miner": {
+          "label": "礦工",
+          "title": "證明資源從哪裡來。",
+          "body": "礦工連接生成來源、採集收據和守恆檢查，讓材料進入生產前先被信任。"
+        },
+        "forger": {
+          "label": "鍛造者",
+          "title": "把資源變成耐久產物。",
+          "body": "鍛造者公開輸入消耗、配方版本、產出收據和裝備譜系，而不是只展示餘額。"
+        },
+        "builder": {
+          "label": "建造者",
+          "title": "貢獻共享公共工程。",
+          "body": "建造者把材料和勞動變成聚落、道路、熔爐、檔案、市場和文明機器的裡程碑收據。"
+        },
+        "guardian": {
+          "label": "守護者",
+          "title": "提供可驗證的服務覆蓋。",
+          "body": "守護者提交覆蓋證明、區域承諾、在線記錄和懲罰證據，用於土地或服務收益。"
+        },
+        "auditor": {
+          "label": "審計者",
+          "title": "保護文明免受危險規則影響。",
+          "body": "審計者對比哈希、執行乾跑、提交挑戰，並在提案誤導或危險時儲存公開證據。"
+        }
+      }
+    },
+    "design": {
+      "eyebrow": "文明系統設定藍圖",
+      "title": "文明系統應該成為可遊玩的社會引擎，而不只是投票頁面。",
+      "body": "後續編碼應把文明視為連接時代、公民、聚落、生產、知識和規則執行的公開層。每個設定對象都需要一個玩家能讀懂的承諾，以及一個已解碼的 PDA 锚點。",
+      "stackTitle": "後續編碼應遵守的設計規則",
+      "blueprintTitle": "第一批帳戶與 instruction 目標",
+      "labels": {
+        "account": "帳戶",
+        "anchor": "證明锚點"
+      },
+      "principles": {
+        "readablePromise": "每個功能先有玩家能讀懂的承諾，再變成帳戶資料。",
+        "pdaAnchor": "每個承諾都必須映射到 PDA、事件、哈希或確定性拒絕原因。",
+        "materialContinuity": "文明進步必須尊重材料來源：資源、配方和已鍛造物品不能憑空出現。",
+        "forwardUnlocks": "新時代和新科技應該解鎖未來行動，而不是静默改寫舊玩家歷史。",
+        "publicDecoder": "網站最終應該在產生该狀態的規則旁边，解碼每個文明帳戶。"
+      },
+      "surfaces": {
+        "era": {
+          "label": "時代",
+          "title": "時代是公開解鎖層。",
+          "body": "石器、青銅、鐵器、能源、自動化或更未來的時代，應由已證明的世界活動和已接受規則版本激活，而不是私有開关。"
+        },
+        "citizen": {
+          "label": "公民",
+          "title": "公民擁有角色、记忆和快照權重。",
+          "body": "玩家可以是礦工、建造者、交易者、守護者、作者或審計者。角色不取代所有權；它解釋參與度和規則權重。"
+        },
+        "settlement": {
+          "label": "聚落",
+          "title": "城市與土地是協作狀態。",
+          "body": "聚落可以把 Chunk、公共工程、保護覆蓋、生產加成和公共项目綁定到透明共享帳戶。"
+        },
+        "production": {
+          "label": "生產",
+          "title": "生產是圖谱，不是魔法產出。",
+          "body": "配方、機器、熔煉、鍛造和未來工业應讀取明確輸入輸出規則，並保護舊的已制作資產。"
+        },
+        "knowledge": {
+          "label": "知識",
+          "title": "發現會成為公開知識記錄。",
+          "body": "当探索、材料、規則文本和校驗證明都指向同一個發現時，文明可以解鎖科技。"
+        },
+        "proof": {
+          "label": "證明",
+          "title": "公開瀏覽器是玩法的一部分。",
+          "body": "玩家應該能瀏覽公民、背包、聚落、项目、規則、簽名和已解碼 PDA 資料，把它作為世界的信任介面。"
+        }
+      },
+      "blueprints": {
+        "epoch": {
+          "title": "紀元與時代註冊表",
+          "body": "儲存目前時代、生效紀元、解鎖規則哈希，以及舊時代的相容說明。"
+        },
+        "role": {
+          "title": "公民角色狀態",
+          "body": "儲存參與角色、成熟度、活躍分、快照權重輸入，以及最新公開權重哈希。"
+        },
+        "settlement": {
+          "title": "聚落帳戶",
+          "body": "儲存土地連結、成员策略、公共工程、生產修正和守護者覆蓋引用。"
+        },
+        "project": {
+          "title": "公共项目帳戶",
+          "body": "儲存已貢獻資源、目標狀態、解鎖效果，以及授權该项目的規則或聚落。"
+        },
+        "knowledge": {
+          "title": "知識記錄帳戶",
+          "body": "儲存發現聲明、材料證明、作者、文本哈希、关联規則 id，以及它是否解鎖未來配置。"
+        }
+      }
+    },
+    "civic": {
+      "eyebrow": "公共工程循環",
+      "title": "聚落把共同勞動變成公開狀態，讓文明真正可玩。",
+      "body": "文明系統不只需要規則簽名，還需要玩家貢獻材料、守護者證明覆蓋、規則授權效果、每個收益都能追溯到公開帳戶的協作项目。",
+      "stackTitle": "公共工程為什麼可信",
+      "labels": {
+        "account": "帳戶",
+        "proof": "證明"
+      },
+      "guarantees": {
+        "noPrivateTreasury": "沒有隱藏金庫：貢獻材料應記錄成收據，而不是被私人伺服器吞掉。",
+        "materialReceipts": "每次貢獻都應保留資源來源、數量、貢獻者、项目 id 和被接受的配方版本。",
+        "guardianProof": "保護或服務加成需要對應紀元和土地範圍的守護者覆蓋證明。",
+        "ruleAuthorized": "聚落收益必須引用授權它的規則或章程。",
+        "benefitBounded": "收益是有邊界的配置效果，不是任意增發、没收所有權或私人特權。"
+      },
+      "surfaces": {
+        "charter": {
+          "label": "章程",
+          "title": "聚落從公開章程開始。",
+          "body": "章程說明土地範圍、成员策略、公共工程权利、守護者要求，以及哪些規則可以改變聚落。"
+        },
+        "contribution": {
+          "label": "貢獻",
+          "title": "材料先成為收據，再成為力量。",
+          "body": "玩家應能看到誰貢獻了銅、木头、石头、燃料或制作零件，以及哪個裡程碑接受了輸入。"
+        },
+        "guardian": {
+          "label": "守護",
+          "title": "服務覆蓋需要證明，而不是假設。",
+          "body": "守護者記錄應展示覆蓋區域、紀元、校驗結果，以及项目是否能獲得保護相关收益。"
+        },
+        "project": {
+          "label": "工程",
+          "title": "公共工程按裡程碑推進。",
+          "body": "道路、熔爐、檔案馆、市場、防御或未來機器，都應該有明確目標、已接受輸入和完成事件。"
+        },
+        "benefit": {
+          "label": "收益",
+          "title": "聚落加成狹窄且只向前生效。",
+          "body": "完成项目可以解鎖未來生產或可見性效果，但不能改寫舊資產，也不能无輸入創造資源。"
+        },
+        "audit": {
+          "label": "審計",
+          "title": "任何人都能檢查聚落為什麼變化。",
+          "body": "瀏覽器應該把章程、收據、守護證明、規則授權、裡程碑和最終效果連結成一條可讀鏈。"
+        }
+      }
+    },
+    "buildSpec": {
+      "eyebrow": "Codex 實現規格",
+      "title": "這個頁面也作為未來文明程式的實現說明书。",
+      "body": "後續編碼應先實現最小可信閉環：發布哈希綁定規則書、用凍結文明權重簽名、校驗有邊界補丁、无專案方特權執行，並在瀏覽器公開每個 PDA。",
+      "orderTitle": "建議實現順序",
+      "groups": {
+        "program": {
+          "kicker": "程式",
+          "title": "文明程式表面",
+          "body": "先做專用程式，擁有規則帳戶，並且只寫入狹窄配置輸出。",
+          "items": {
+            "stateAccounts": "實現 RuleBook、RuleSignature、CitizenState、RuleRegistry 和模組配置帳戶佈局。",
+            "instructions": "把 publish_rule、sign_rule、finalize_threshold、execute_rule、challenge_rule 拆成獨立 instruction。",
+            "errors": "為舊哈希、不安全補丁、錯誤快照、範圍錯誤和門檻不足返回明確錯誤码。"
+          }
+        },
+        "validator": {
+          "kicker": "校驗器",
+          "title": "確定性安全引擎",
+          "body": "把校驗器當成合約邏輯，而不是前端建議。",
+          "items": {
+            "patchParser": "解析固定二進位補丁信封；拒絕未知操作和超大 payload。",
+            "safetyGates": "任何寫入前執行範圍、守恆、資產安全、門檻、冷卻和挑戰閘門。",
+            "moduleAdapters": "每個模組一個 adapter，讓熔煉、資源掉落、守護者策略和市場策略都有明確欄位規則。"
+          }
+        },
+        "client": {
+          "kicker": "客戶端",
+          "title": "可讀治理介面",
+          "body": "UI 必須讓簽署變得可理解，同時不隱藏機器補丁。",
+          "items": {
+            "ruleEditor": "並排展示人類文本、機器 diff、目標模組、風險等級、old_value_hash 和 new_value_hash。",
+            "signaturePanel": "展示快照權重、簽署立场、門檻進度、冷卻窗口和挑戰狀態。",
+            "pdaBrowser": "在現有合約瀏覽器裡公開每條規則、簽名、公民快照、註冊表和配置 PDA。"
+          }
+        },
+        "audit": {
+          "kicker": "審計",
+          "title": "公開驗證工具",
+          "body": "每條成功或失敗的規則都應該能事後重建。",
+          "items": {
+            "hashCompare": "提供 text_hash、patch_hash、old_value_hash 和寫入配置哈希的對比面板。",
+            "simulation": "在收集簽名前提供 dry-run 校驗器輸出。",
+            "eventLog": "記錄 published、signed、finalized、challenged、executed、rejected 事件和公開原因。"
+          }
+        }
+      },
+      "order": {
+        "mockFirst": {
+          "title": "先定模擬規格",
+          "body": "先在 UI 中凍結 JSON/帳戶形狀，讓審查者在鏈上代碼出現前挑戰模型。"
+        },
+        "readOnlyPdas": {
+          "title": "只讀 PDA 瀏覽器",
+          "body": "先加解碼器和帳戶面板，再開啟寫入；透明度必須早于權力。"
+        },
+        "signatureFlow": {
+          "title": "簽名流程",
+          "body": "實現 rule_signature_pda，並按凍結快照權重重算門檻。"
+        },
+        "validatorDryRun": {
+          "title": "校驗器 dry run",
+          "body": "在不寫配置的情況下執行確定性補丁檢查，證明拒絕原因。"
+        },
+        "permissionlessExecute": {
+          "title": "無許可執行",
+          "body": "只有哈希、門檻、冷卻、挑戰和目標配置狀態都通過後，才開啟 execute_rule。"
+        }
+      }
+    },
+    "binding": {
+      "eyebrow": "目前合約表面",
+      "title": "文明系統必須綁定到真實 PDA 表面，而不只是概念。",
+      "body": "NiceChunk 已經有世界配置、資源掉落、背包、配方、守護者和市場狀態等具體帳戶家族。文明層應該围绕這些模組治理版本化配置表面，同時保護舊資產安全。",
+      "labels": {
+        "account": "帳戶",
+        "magic": "Magic",
+        "seed": "Seed",
+        "civilizationPath": "文明路徑"
+      },
+      "openContracts": "打開合約 PDA 瀏覽器",
+      "status": {
+        "immutable": "不可變基礎",
+        "config": "配置表面",
+        "asset": "玩家資產",
+        "service": "服務註冊表",
+        "settlement": "結算狀態"
+      },
+      "modules": {
+        "core": {
+          "title": "核心世界配置",
+          "body": "GlobalConfig 從编译常量寫入世界種子、地形/資源/客戶端哈希、經濟参數、守護者参數和建造邊界。",
+          "path": "自然法則保護創世不變量；未來演化應使用版本化 override PDA，而不是重寫不可變創世配置。"
+        },
+        "chunk": {
+          "title": "Chunk 與資源掉落",
+          "body": "Chunk 邏輯從 GlobalConfig 校驗生成坐标，並用 ResourceDropTable 規則處理公開掉落概率。",
+          "path": "文明法則可以提議新的資源掉落表；自然法則保護資源守恆和世界生成假設。"
+        },
+        "backpack": {
+          "title": "背包庫存",
+          "body": "Backpack 帳戶儲存玩家擁有的資源和物品，並包含 owner 校驗、容量限制、物品數量和更新 slot。",
+          "path": "文明規則不能奪取舊背包；可以定義未來容量等級、物品類別或加工產物。"
+        },
+        "smelting": {
+          "title": "熔煉配方",
+          "body": "RecipeTable 儲存有邊界的配方記錄、輸入/輸出 slot 記錄、熱量等級和更新 slot。",
+          "path": "文明法則非常适合在校驗器檢查輸入銷毀和產出守恆後，新增或停用配方。"
+        },
+        "guardian": {
+          "title": "守護者服務",
+          "body": "Guardian 註冊表和區域 PDA 跟踪活躍覆蓋、質押金额、操作者、端點、證明和懲罰。",
+          "path": "文明可以通過配置 PDA 调整服務策略；自然法則保護 slashing 和質押公平性。"
+        },
+        "market": {
+          "title": "市場結算",
+          "body": "Market listing 和 asset 帳戶編碼卖家、價格、币种、來源庫存、狀態、买家和結算 slot。",
+          "path": "文明可以治理费率和類別；既有挂单與資產归屬需要更強保護。"
+        }
+      }
+    },
+    "modules": {
+      "eyebrow": "目標模組",
+      "title": "文明改變的是配置層，不是用文本命令改核心代碼。",
+      "short": {
+        "smelting": "熔煉",
+        "forging": "鍛造",
+        "block_properties": "方塊屬性",
+        "resource_rules": "資源規則",
+        "element_rules": "元素規則",
+        "world_knowledge": "世界知識"
+      },
+      "items": {
+        "smelting": {
+          "title": "熔煉",
+          "body": "燃料等級、原始輸入、守恆檢查、材料產出和加工要求。"
+        },
+        "forging": {
+          "title": "鍛造",
+          "body": "消耗已驗證材料資源的工具、裝備和建築配方。"
+        },
+        "block_properties": {
+          "title": "方塊屬性",
+          "body": "硬度、掉落、破壞要求、危險標記和世界交互参數。"
+        },
+        "resource_rules": {
+          "title": "資源規則",
+          "body": "生成資源來源、產出邏輯、來源證明要求和守恆邊界。"
+        },
+        "element_rules": {
+          "title": "元素規則",
+          "body": "元素画像、材料傾向，以及未來化學或合金约束。"
+        },
+        "world_knowledge": {
+          "title": "世界知識",
+          "body": "版本化公開知識、文明記錄、規則解釋和審計備註。"
+        }
+      }
+    },
+    "examples": {
+      "aria": "規則示例",
+      "naturalEyebrow": "自然法則示例",
+      "naturalTitle": "保護世界本身的規則。",
+      "civilizationEyebrow": "文明法則示例",
+      "civilizationTitle": "讓文明继续進步的規則。",
+      "natural": {
+        "resourceConservation": "資源不能在沒有生成來源、輸入銷毀或有效轉化的情況下憑空產生。",
+        "assetProtection": "玩家擁有的資產不能在沒有有效規則授權的情況下被夺走或重分配。",
+        "publicWorldGeneration": "世界種子和生成原則不能被悄悄改變。",
+        "noProjectPrivilege": "任何地址都不能獲得隱藏增發、繞過或特權生產权。",
+        "transparentAuthority": "合約權限和配置所有者必須保持可檢查。",
+        "nckPrinciples": "NCK 和核心經濟原則不能被隨意破壞。"
+      },
+      "civilization": {
+        "bronze": "銅 + 錫可以通過熔煉和鍛造配置解鎖青銅時代。",
+        "oreEnergy": "規則可以提高稀有礦石熔煉路徑的能量要求。",
+        "blockHardness": "新方塊可以獲得硬度、掉落和所需工具等級。",
+        "toolRecipe": "文明可以用材料輸入新增工具鍛造配方。",
+        "materialProcessing": "某种材料可以在建築使用前要求额外加工。"
+      }
+    },
+    "execution": {
+      "eyebrow": "執行模型",
+      "title": "自動執行指的是無許可執行，不是伺服器改代碼。",
+      "body": "当門檻、冷卻和挑戰條件都滿足後，任何玩家都可以呼叫 execute_rule。合約只檢查鏈上狀態，並把已批准配置寫入 PDA 註冊表。",
+      "items": {
+        "ruleValidator": {
+          "title": "RuleValidator 閘門",
+          "body": "拒絕憑空創造資源、繞過輸入、授予地址特權或奪取既有資產的補丁。"
+        },
+        "registryWrite": {
+          "title": "註冊表寫入",
+          "body": "批准後的補丁會更新 rule_registry、smelting_config、forging_config、block_property_config 或 resource_config PDA。"
+        },
+        "permissionlessCaller": {
+          "title": "沒有特權執行者",
+          "body": "執行沒有專案方白名单；條件滿足後，任何玩家都能提交交易。"
+        },
+        "fixedCoreContracts": {
+          "title": "固定核心合約",
+          "body": "玩法合約應讀取生效配置 PDA，而不是讓文本規則升級程式代碼。"
+        }
+      }
+    },
+    "mock": {
+      "eyebrow": "模擬規則書",
+      "title": "今天是本地資料，明天可映射為鏈上帳戶。",
+      "body": "這些示例刻意按未來鏈上資料結構组织，之後可以由錢包簽名、PDA 讀取和 execute_rule 流程替换模擬層。",
+      "yesPower": "同意權重",
+      "threshold": "門檻",
+      "risk": "風險",
+      "epoch": "紀元",
+      "rules": {
+        "bronze": {
+          "title": "青銅時代規則"
+        },
+        "conservation": {
+          "title": "世界守恆修正案"
+        },
+        "cactus": {
+          "title": "沙漠仙人掌方塊規則"
+        },
+        "noAdminMint": {
+          "title": "无管理員增發原則"
+        }
+      }
+    },
+    "contract": {
+      "eyebrow": "未來合約方向",
+      "title": "文明程式應通過校驗器修改規則配置 PDA。",
+      "body": "核心玩法合約應尽量保持固定，並讀取生效配置 PDA。文明共識改變配置，而不是用特權直接改归屬。",
+      "accountsTitle": "程式與 PDA 表面",
+      "validatorTitle": "RuleValidator 必須拒絕",
+      "assetProtectionTitle": "舊資產保護原則",
+      "assetProtectionBody": "文明法則預設只影響新生成資源、裝備和方塊規則。對既有玩家資產的追溯影響必須走自然法則共識、更強提示和 90% 世界級同意。",
+      "validator": {
+        "noResourceFromNothing": "憑空創造資源",
+        "noInputBypass": "繞過所需輸入資源",
+        "noAddressPrivilege": "授予單一地址特權",
+        "noOwnershipSeizure": "改變既有玩家資產所有權"
+      }
+    }
+  }
+}

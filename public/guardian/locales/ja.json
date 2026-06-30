@@ -1,0 +1,187 @@
+{
+  "_meta": {
+    "language": "ja",
+    "label": "Japanese",
+    "version": "guardian-locale-ja-3f8ededca9a5b1b6",
+    "contentHash": "3f8ededca9a5b1b6"
+  },
+  "siteFooter": {
+    "tagline": "Solana 上のシード型ボクセルワールドプロトコル。",
+    "navigationAria": "フッターナビゲーション",
+    "socialAria": "NiceChunk ソーシャルリンク",
+    "home": "ホーム",
+    "play": "ワールドへ",
+    "roadmap": "ロードブック",
+    "docs": "ドキュメント",
+    "guardian": "ガーディアン",
+    "contracts": "コントラクト",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. All rights reserved."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "言語",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "guardian": {
+    "meta": {
+      "title": "NiceChunk Guardian Network Console"
+    },
+    "nav": {
+      "aria": "メインナビゲーション",
+      "home": "ホーム",
+      "roadbook": "ロードブック",
+      "worldRules": "ワールドルール",
+      "resources": "リソース",
+      "elements": "元素",
+      "fairness": "公平性",
+      "proofOfFrontier": "証明",
+      "guardians": "ガーディアン",
+      "docs": "Docs",
+      "enterWorld": "世界に入る"
+    },
+    "hero": {
+      "eyebrow": "Guardian アクセスレイヤー",
+      "title": "Guardian Network Console",
+      "body": "Register a non-custodial Guardian to keep a region reachable, synchronize realtime chunk activity, and support local game services. Stable Guardians can earn NCK from future regional resource taxes and trading taxes while never holding player assets or signing for users.",
+      "actionsAria": "Guardian アクション",
+      "registerAction": "ノード登録",
+      "registryAction": "レジストリ表示",
+      "metricsAria": "Guardian レジストリ状態"
+    },
+    "visual": {
+      "aria": "Guardian ネットワークモデル",
+      "core": "GUARDIAN"
+    },
+    "metrics": {
+      "network": "ネットワーク",
+      "networkValue": "Devnet-01",
+      "stake": "最低ステーク",
+      "stakeValue": "100,000 NCK",
+      "region": "カバレッジ",
+      "regionValue": "100 x 100 Chunks",
+      "contract": "Contract",
+      "viewContract": "View Program"
+    },
+    "register": {
+      "eyebrow": "登録",
+      "title": "ノード登録",
+      "body": "Publish a connection endpoint for a 100 x 100 chunk service region. Offline or unstable nodes can be penalized; stable nodes can receive Guardian rewards from the treasury over time, paid back to the registration wallet."
+    },
+    "wallet": {
+      "connect": "ウォレット接続",
+      "register": "Register Guardian",
+      "disconnected": "未接続"
+    },
+    "form": {
+      "chunkX": "Chunk X",
+      "chunkY": "Chunk Y",
+      "connection": "接続エンドポイント",
+      "connectionPlaceholder": "wss://guardian.example.com/ws",
+      "host": "ホストまたは IP",
+      "hostPlaceholder": "guardian.example.com",
+      "port": "ポート",
+      "operator": "オペレーター権限",
+      "operatorPlaceholder": "接続中のウォレットを既定で使用",
+      "useTls": "WSS / TLS 通信を使用",
+      "genesis": "Genesis Guardian 登録",
+      "regionPreview": "リージョン",
+      "submit": "登録して 100,000 NCK をステーク",
+      "close": "Close"
+    },
+    "status": {
+      "ready": "準備完了。",
+      "noWallet": "Solana ウォレットが検出されません。Phantom または Solflare をインストールしてください。",
+      "walletConnected": "ウォレット接続済み。",
+      "connectFailed": "接続に失敗しました。",
+      "confirmWallet": "ウォレットで登録トランザクションを確認してください。",
+      "registered": "登録完了。トランザクション: {signature}",
+      "registerFailed": "登録に失敗しました。",
+      "updateConfirm": "Confirm the endpoint update in your wallet.",
+      "updated": "Endpoint updated. Transaction: {signature}",
+      "updateFailed": "Endpoint update failed.",
+      "invalidInteger": "{field} は整数である必要があります。"
+    },
+    "list": {
+      "eyebrow": "レジストリ",
+      "title": "アクティブ Guardians",
+      "body": "Guardian オペレーターが公開した Devnet 上の稼働リージョン。",
+      "listView": "List View",
+      "mapView": "Map View",
+      "refresh": "更新",
+      "loading": "レジストリを読み込み中...",
+      "registryMissing": "Guardian レジストリはまだ初期化されていません。",
+      "registrySummary": "アクティブ Guardians: {active}。総登録数: {total}。",
+      "connectFirst": "Connect a wallet to load the Guardian registry.",
+      "empty": "アクティブな Guardian はまだ登録されていません。",
+      "loadFailed": "Guardians を読み込めませんでした。"
+    },
+    "card": {
+      "title": "リージョン {x}, {y}",
+      "chunkRange": "Chunk 範囲",
+      "owner": "ウォレット",
+      "wallet": "Wallet",
+      "operator": "オペレーター",
+      "endpoint": "エンドポイント",
+      "chainAddress": "Chain Address",
+      "stake": "残りステーク",
+      "proof": "最終証明",
+      "never": "なし",
+      "viewOnChain": "オンチェーンで表示",
+      "mine": "Mine",
+      "edit": "Edit",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "map": {
+      "regionTitle": "Guardian {x}, {y}",
+      "chunkRange": "Chunks {minX}..{maxX}, {minY}..{maxY}",
+      "emptyRegion": "Region {x}, {y}",
+      "axisX": "Chunk X",
+      "axisY": "Chunk Y",
+      "center": "Center {x}, {y}"
+    },
+    "boundaries": {
+      "aria": "Guardian ロール境界",
+      "access": {
+        "title": "アクセスレイヤー",
+        "body": "Guardian はリージョンのエンドポイントを到達可能に保ち、クライアントが近くの Chunk サービスを発見して通信できるようにします。"
+      },
+      "realtime": {
+        "title": "リアルタイム通信",
+        "body": "ウォレット署名やオンチェーン決済を置き換えずに、リージョン活動のライブ連携を支えます。"
+      },
+      "nonCustodial": {
+        "title": "非カストディ型フロー",
+        "body": "Guardian はプレイヤー資産を保管せず、ユーザーの代わりに署名せず、Solana 取引を代行しません。"
+      }
+    },
+    "error": {
+      "insufficientSol": "接続中のウォレットには、手数料用の少量の Devnet SOL が必要です。",
+      "insufficientNck": "接続中のウォレットには、100,000 NCK をステークするための Devnet NCK が不足しています。",
+      "noPriorCredit": "このウォレットにはまだ Devnet SOL の記録がありません。登録前に Devnet SOL を取得してください。",
+      "invalidTokenAccount": "NCK トークン口座が無効です。ウォレットが Devnet NCK を保有しているか確認してください。",
+      "regionAlreadyActive": "このリージョンにはすでにアクティブな Guardian があります。",
+      "invalidConnection": "接続エンドポイントが無効です。パスなしで ws://host:port または wss://host:port を使用してください。",
+      "invalidHost": "ホストが無効です。http:// や wss:// を付けず、ドメイン、IP、ホスト名のみを使用してください。",
+      "invalidPort": "ポートは 1 から 65535 の範囲で指定してください。",
+      "missingAdjacentGuardian": "Genesis 以外の Guardian は少なくとも 1 つのアクティブ Guardian に隣接する必要があります。",
+      "invalidAdjacentGuardian": "隣接リージョン PDA が無効です。ページを更新して再試行してください。",
+      "noGenesisPermission": "Genesis Guardian 登録は開発ウォレットで署名する必要があります。ウォレットを切り替えるか Genesis 登録を無効にしてください。",
+      "genesisAlreadyRegistered": "Genesis Guardian はすでに登録済みです。",
+      "guardianNotActive": "This Guardian is not active.",
+      "unknownProgramError": "Guardian プログラムがエラーを返しました: {code}"
+    }
+  }
+}

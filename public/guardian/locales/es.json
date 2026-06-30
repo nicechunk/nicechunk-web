@@ -1,0 +1,187 @@
+{
+  "_meta": {
+    "language": "es",
+    "label": "Spanish",
+    "version": "guardian-locale-es-36ed02c785982989",
+    "contentHash": "36ed02c785982989"
+  },
+  "siteFooter": {
+    "tagline": "Un protocolo de mundo voxel con semillas en Solana.",
+    "navigationAria": "Navegación del pie de página",
+    "socialAria": "Enlaces sociales de NiceChunk",
+    "home": "Inicio",
+    "play": "Entrar al mundo",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Guardianes",
+    "contracts": "Contratos",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Todos los derechos reservados."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "Idioma",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "guardian": {
+    "meta": {
+      "title": "Consola de Red Guardian de NiceChunk"
+    },
+    "nav": {
+      "aria": "Navegación principal",
+      "home": "Inicio",
+      "roadbook": "Hoja de ruta",
+      "worldRules": "Reglas del mundo",
+      "resources": "Recursos",
+      "elements": "Elementos",
+      "fairness": "Equidad",
+      "proofOfFrontier": "Prueba",
+      "guardians": "Guardianes",
+      "docs": "Docs",
+      "enterWorld": "Entrar al mundo"
+    },
+    "hero": {
+      "eyebrow": "Capa de acceso Guardian",
+      "title": "Consola de Red Guardian",
+      "body": "Register a non-custodial Guardian to keep a region reachable, synchronize realtime chunk activity, and support local game services. Stable Guardians can earn NCK from future regional resource taxes and trading taxes while never holding player assets or signing for users.",
+      "actionsAria": "Acciones de Guardian",
+      "registerAction": "Registrar nodo",
+      "registryAction": "Ver registro",
+      "metricsAria": "Estado del registro Guardian"
+    },
+    "visual": {
+      "aria": "Modelo de red Guardian",
+      "core": "GUARDIAN"
+    },
+    "metrics": {
+      "network": "Red",
+      "networkValue": "Devnet-01",
+      "stake": "Stake mínimo",
+      "stakeValue": "100,000 NCK",
+      "region": "Cobertura",
+      "regionValue": "100 x 100 Chunks",
+      "contract": "Contract",
+      "viewContract": "View Program"
+    },
+    "register": {
+      "eyebrow": "Registrar",
+      "title": "Registrar nodo",
+      "body": "Publish a connection endpoint for a 100 x 100 chunk service region. Offline or unstable nodes can be penalized; stable nodes can receive Guardian rewards from the treasury over time, paid back to the registration wallet."
+    },
+    "wallet": {
+      "connect": "Conectar wallet",
+      "register": "Register Guardian",
+      "disconnected": "Desconectado"
+    },
+    "form": {
+      "chunkX": "Chunk X",
+      "chunkY": "Chunk Y",
+      "connection": "Endpoint de conexión",
+      "connectionPlaceholder": "wss://guardian.example.com/ws",
+      "host": "Host o IP",
+      "hostPlaceholder": "guardian.example.com",
+      "port": "Puerto",
+      "operator": "Autoridad operadora",
+      "operatorPlaceholder": "Usa la wallet conectada por defecto",
+      "useTls": "Usar transporte WSS / TLS",
+      "genesis": "Registro Guardian génesis",
+      "regionPreview": "Región",
+      "submit": "Registrar y apostar 100,000 NCK",
+      "close": "Close"
+    },
+    "status": {
+      "ready": "Listo.",
+      "noWallet": "No se detectó una wallet de Solana. Instala Phantom o Solflare.",
+      "walletConnected": "Wallet conectada.",
+      "connectFailed": "Falló la conexión.",
+      "confirmWallet": "Confirma la transacción de registro en tu wallet.",
+      "registered": "Registrado. Transacción: {signature}",
+      "registerFailed": "Falló el registro.",
+      "updateConfirm": "Confirm the endpoint update in your wallet.",
+      "updated": "Endpoint updated. Transaction: {signature}",
+      "updateFailed": "Endpoint update failed.",
+      "invalidInteger": "{field} debe ser un entero."
+    },
+    "list": {
+      "eyebrow": "Registro",
+      "title": "Guardians activos",
+      "body": "Regiones devnet en vivo publicadas por operadores Guardian.",
+      "listView": "List View",
+      "mapView": "Map View",
+      "refresh": "Actualizar",
+      "loading": "Cargando registro...",
+      "registryMissing": "El registro Guardian aún no se ha inicializado.",
+      "registrySummary": "Guardians activos: {active}. Registros totales: {total}.",
+      "connectFirst": "Connect a wallet to load the Guardian registry.",
+      "empty": "Todavía no hay Guardians activos registrados.",
+      "loadFailed": "No se pudieron cargar los Guardians."
+    },
+    "card": {
+      "title": "Región {x}, {y}",
+      "chunkRange": "Rango de chunks",
+      "owner": "Wallet",
+      "wallet": "Wallet",
+      "operator": "Operador",
+      "endpoint": "Endpoint",
+      "chainAddress": "Chain Address",
+      "stake": "Stake restante",
+      "proof": "Última prueba",
+      "never": "Nunca",
+      "viewOnChain": "Ver on-chain",
+      "mine": "Mine",
+      "edit": "Edit",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "map": {
+      "regionTitle": "Guardian {x}, {y}",
+      "chunkRange": "Chunks {minX}..{maxX}, {minY}..{maxY}",
+      "emptyRegion": "Region {x}, {y}",
+      "axisX": "Chunk X",
+      "axisY": "Chunk Y",
+      "center": "Center {x}, {y}"
+    },
+    "boundaries": {
+      "aria": "Límites del rol Guardian",
+      "access": {
+        "title": "Capa de acceso",
+        "body": "Los Guardians mantienen endpoints regionales accesibles para que los clientes descubran y contacten servicios de chunks cercanos."
+      },
+      "realtime": {
+        "title": "Transporte en tiempo real",
+        "body": "Soportan coordinación en vivo de actividad regional sin reemplazar firmas de wallet ni liquidación on-chain."
+      },
+      "nonCustodial": {
+        "title": "Flujo no custodial",
+        "body": "Los Guardians nunca custodian activos, firman por usuarios ni procesan transacciones de Solana en nombre del jugador."
+      }
+    },
+    "error": {
+      "insufficientSol": "La wallet conectada necesita una pequeña cantidad de SOL de devnet para comisiones.",
+      "insufficientNck": "La wallet conectada no tiene suficiente NCK de devnet para apostar 100,000 NCK.",
+      "noPriorCredit": "La wallet aún no tiene registro de SOL en devnet. Solicita SOL de devnet antes de registrar.",
+      "invalidTokenAccount": "La cuenta de token NCK no es válida. Confirma que la wallet tenga NCK de devnet.",
+      "regionAlreadyActive": "Esta región ya tiene un Guardian activo.",
+      "invalidConnection": "Endpoint de conexión no válido. Usa ws://host:puerto o wss://host:puerto sin ruta.",
+      "invalidHost": "Host no válido. Usa solo dominio, IP o nombre de host sin http:// ni wss://.",
+      "invalidPort": "El puerto debe estar entre 1 y 65535.",
+      "missingAdjacentGuardian": "Un Guardian no génesis debe estar adyacente a al menos un Guardian activo.",
+      "invalidAdjacentGuardian": "La PDA de región adyacente no es válida. Actualiza e inténtalo de nuevo.",
+      "noGenesisPermission": "El registro Guardian génesis debe firmarlo la wallet de desarrollo. Cambia de wallet o desactiva el registro génesis.",
+      "genesisAlreadyRegistered": "El Guardian génesis ya fue registrado.",
+      "guardianNotActive": "This Guardian is not active.",
+      "unknownProgramError": "El programa Guardian devolvió el error: {code}"
+    }
+  }
+}

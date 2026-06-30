@@ -1,0 +1,152 @@
+{
+  "_meta": {
+    "language": "zh-Hant",
+    "label": "Traditional Chinese",
+    "version": "fourier-voxel-locale-zh-Hant-779c443c9d9d2aab",
+    "contentHash": "779c443c9d9d2aab"
+  },
+  "siteFooter": {
+    "tagline": "Solana 上的種子體素世界協議。",
+    "navigationAria": "頁腳導航",
+    "socialAria": "NiceChunk 社交連結",
+    "home": "首頁",
+    "play": "進入世界",
+    "roadmap": "路書",
+    "docs": "文檔",
+    "guardian": "守護者",
+    "contracts": "合約",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk。保留所有權利。"
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "語言",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "ncmFourier": {
+    "common": {
+      "yes": "是",
+      "budget": "预算預覽"
+    },
+    "page": {
+      "title": "NCM 函數模型實驗室",
+      "description": "NiceChunk 實驗頁：載入 VOX 模型，把顏色映射到公共色表，生成紧凑鏈上函數位元組，並用 payload 重新繪製模型。"
+    },
+    "hero": {
+      "eyebrow": "NiceChunk 函數資產實驗室",
+      "title": "載入 VOX 模型，並用函數重新繪製"
+    },
+    "viewer": {
+      "source": "元素模型",
+      "function": "函數重绘",
+      "pow": "PoW 目前最优模型",
+      "sourceAria": "已載入的元素模型",
+      "functionAria": "由函數生成的模型",
+      "powAria": "由 PoW 目前最优表达式生成的模型"
+    },
+    "controls": {
+      "drop": "拖入或選擇 .vox",
+      "compute": "計算函數",
+      "optimize": "优化函數",
+      "exprBytes": "表达式位元組",
+      "maxBasis": "最大 basis",
+      "scale": "視圖缩放"
+    },
+    "metrics": {
+      "grid": "模型尺寸",
+      "coefficients": "函數 basis",
+      "voxels": "重绘體素",
+      "storage": "鏈上位元組"
+    },
+    "badges": {
+      "noVoxels": "0 體素",
+      "voxels": "{value} 體素",
+      "waiting": "等待計算",
+      "basis": "{value} basis"
+    },
+    "palette": {
+      "title": "G0 公共色表已用顏色"
+    },
+    "tech": {
+      "title": "技術思路",
+      "body": "函數 payload 只存 G0 公共色表索引和 box-basis 位元組。後續礦工可以把精確模型 hash 作為目標，继续搜尋更短的 Fourier gene。"
+    },
+    "static": {
+      "title": "僅文件審查",
+      "body": "目前环境不能證明 GPU 工作负载。這個面板作為静態展示：只說明預期流程、審查邊界和後續 GPU 證據，不声称截圖或性能資料。",
+      "surfaceLabel": "介面",
+      "surfaceValue": "面向 GPU 的體素函數研究頁",
+      "inputLabel": "輸入",
+      "inputValue": "本地 MagicaVoxel .vox 文件",
+      "outputLabel": "輸出",
+      "outputValue": "0:<base64url-bytes> 函數 payload",
+      "evidenceLabel": "静態證據",
+      "evidenceValue": "README、展示文件、HTML 控件、codec 路徑、parser 邊界",
+      "deferredLabel": "延後證據",
+      "deferredValue": "WebGL 保真度、帧穩定性、證明搜尋速度、截圖",
+      "securityLabel": "安全邊界",
+      "securityValue": "无上传接口、錢包簽名、伺服器地址、token 或部署脚本"
+    },
+    "steps": {
+      "sample": "載入 VOX，並規範化體素/顏色网格。",
+      "fit": "把顏色映射到 G0 公共色表，並把同色體素合並成 box basis 函數。",
+      "rebuild": "執行函數位元組，用 G0 色表索引重新繪製模型。",
+      "bake": "把精確結果 hash 作為未來短 gene PoW 的目標。"
+    },
+    "formula": {
+      "title": "鏈上函數資料",
+      "copy": "复制函數",
+      "copied": "已复制",
+      "copyFailed": "复制失敗",
+      "chainPayload": "鏈上 payload",
+      "chainBytes": "Payload 大小",
+      "modelHash": "模型 hash",
+      "exact": "精確重绘",
+      "empty": "拖入 VOX 文件，然後點击計算函數。"
+    },
+    "algorithm": {
+      "title": "原始算法",
+      "empty": "先計算函數，然後這裡會顯示解碼執行算法。"
+    },
+    "pow": {
+      "title": "PoW 表达式搜尋",
+      "start": "開始 PoW",
+      "stop": "停止",
+      "hashrate": "算力",
+      "attempts": "嘗試次數",
+      "best": "最佳命中",
+      "bytes": "表达式位元組",
+      "empty": "載入 VOX 模型後，可以開始本地 PoW。",
+      "started": "target={hash}，體素={voxels}；開始在本地搜尋 seed 表达式",
+      "stopped": "已停止",
+      "bestLog": "best seed={seed} iou={score} hit={hit}/{union} bytes={bytes} proof={proof} expr={expr}"
+    },
+    "coefficients": {
+      "title": "Basis 預覽",
+      "empty": "還沒有 basis 函數。"
+    },
+    "status": {
+      "ready": "拖入 VOX 文件",
+      "loading": "正在載入 VOX...",
+      "loaded": "VOX 已載入，點击計算函數。",
+      "computing": "正在計算函數...",
+      "optimizing": "正在搜尋更短的精確函數...",
+      "computedExact": "已生成精確函數重绘。",
+      "computedBudget": "已生成预算内函數預覽。",
+      "optimized": "已從 {count} 种策略中优化出精確函數。",
+      "optimizedBudget": "已從 {count} 种策略中优化出预算預覽。",
+      "failed": "失敗：{reason}"
+    }
+  }
+}

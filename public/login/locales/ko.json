@@ -1,0 +1,159 @@
+{
+  "_meta": {
+    "language": "ko",
+    "label": "Korean",
+    "version": "login-locale-ko-414aac548ef420c5",
+    "contentHash": "414aac548ef420c5"
+  },
+  "siteFooter": {
+    "tagline": "Solana 기반 시드형 복셀 월드 프로토콜.",
+    "navigationAria": "푸터 내비게이션",
+    "socialAria": "NiceChunk 소셜 링크",
+    "home": "홈",
+    "play": "월드 입장",
+    "roadmap": "로드북",
+    "docs": "문서",
+    "guardian": "가디언",
+    "contracts": "컨트랙트",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. All rights reserved."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "언어",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "login": {
+    "title": "NICECHUNK 지갑 로그인",
+    "flowLabel": "로그인 흐름",
+    "brandSubtitle": "복셀 유니버스",
+    "authEyebrow": "보안 게이트웨이",
+    "authTitle": "지갑 접근",
+    "authSubtitle": "NiceChunk 생태계 입장",
+    "heroStatus": "라이브 엔진 렌더",
+    "steps": {
+      "wallet": "지갑 연결",
+      "profile": "플레이어 설정",
+      "ready": "준비 완료"
+    },
+    "section": {
+      "wallet": "지갑 연결",
+      "profile": "플레이어 설정",
+      "ready": "월드 입장"
+    },
+    "installPhantom": "Phantom 설치",
+    "playerName": "플레이어 이름",
+    "playerNamePlaceholder": "3-18자 이름 입력",
+    "saveName": "플레이어 이름 저장",
+    "player": "플레이어",
+    "wallet": "지갑",
+    "startGame": "게임 시작",
+    "resetLogin": "다시 로그인",
+    "returnToBrowser": "브라우저로 돌아가기",
+    "continueInWalletBrowser": "지갑 브라우저에서 계속",
+    "signLoginMessage": "로그인 메시지 서명",
+    "completeCopiedLogin": "지갑 로그인 완료",
+    "copyLoginProof": "로그인 증명 복사",
+    "manualProofLabel": "이 로그인 증명을 수동으로 복사",
+    "selectLoginProof": "로그인 증명 선택",
+    "hudNetwork": "네트워크",
+    "hudNetworkValue": "SOLANA",
+    "hudBiome": "바이옴",
+    "hudBiomeValue": "에메랄드 숲",
+    "hudWallet": "지갑",
+    "hudWalletValue": "준비됨",
+    "status": {
+      "checking": "Solana 지갑 확인 중...",
+      "walletDetected": "Solana 지갑을 감지했습니다. 연결할 지갑을 선택하세요.",
+      "noWallet": "주입된 지갑을 감지하지 못했습니다. 이 페이지를 지갑 앱에서 열거나 Phantom을 설치하세요.",
+      "openingWalletApp": "{wallet} 여는 중...",
+      "connecting": "{wallet} 연결 중...",
+      "publicKeyMissing": "지갑이 공개 키를 반환하지 않았습니다.",
+      "connectFailed": "연결에 실패했습니다. 다시 시도하세요.",
+      "profile": "지갑이 연결되었습니다. 플레이어 이름을 설정하세요.",
+      "invalidUsername": "플레이어 이름은 3-18자이며 문자, 숫자, 밑줄 또는 중국어 문자를 사용할 수 있습니다.",
+      "ready": "로그인 정보가 준비되었습니다.",
+      "returningToBrowser": "원래 브라우저로 돌아가는 중...",
+      "continuingInWalletBrowser": "지갑 브라우저에서 계속 진행 중...",
+      "signingChallenge": "지갑에서 로그인 메시지를 확인하세요.",
+      "signatureFailed": "지갑 서명을 확인할 수 없습니다. 다시 시도하세요.",
+      "proofCopied": "로그인 증명이 복사되었습니다. 브라우저로 돌아가 지갑 로그인을 완료하세요.",
+      "proofCopyFailed": "로그인 증명을 복사할 수 없습니다. 브라우저로 돌아가기를 사용하세요.",
+      "readingProof": "복사된 로그인 증명을 읽는 중...",
+      "noCopiedProof": "복사된 NiceChunk 로그인 증명을 찾을 수 없습니다.",
+      "proofSelectReady": "로그인 증명이 선택되었습니다. 복사한 뒤 브라우저로 돌아가세요.",
+      "pasteProofReady": "Paste your wallet signature proof to finish login when the wallet does not return automatically.",
+      "resourceFailed": "Login resources failed to load. Refresh and try again."
+    },
+    "walletButton": {
+      "noWallet": "지갑을 감지하지 못함",
+      "installRefresh": "지갑 설치 후 새로고침",
+      "connectAuthorize": "연결하고 주소 승인",
+      "openInApp": "지갑 브라우저에서 계속"
+    },
+    "walletHint": {
+      "recommended": "추천",
+      "compatible": "호환",
+      "generic": "범용",
+      "mobileApp": "모바일 앱"
+    },
+    "loading": {
+      "boot": "Initializing wallet gateway",
+      "checking": "Preparing interface",
+      "waitingForLanguage": "Waiting for language data",
+      "video": "Loading visual layer",
+      "videoReady": "Hero animation is ready.",
+      "visualMetadata": "Preparing transparent logo animation.",
+      "visualReady": "Hero animation is ready.",
+      "videoFallback": "Using poster image while video loading is unavailable.",
+      "worldEyebrow": "World Gateway",
+      "worldTitle": "Preparing NiceChunk world",
+      "worldBody": "Loading player session, terrain engine, and first visible chunks.",
+      "route": "Opening game client",
+      "bytesKnown": "Transferred {loaded} / {total}",
+      "bytesUnknown": "Transferred {loaded}",
+      "stages": {
+        "gateway": {
+          "title": "Initializing wallet gateway",
+          "body": "Preparing interface"
+        },
+        "visual": {
+          "title": "Loading visual layer",
+          "body": "Fetching hero video asset."
+        },
+        "visualDecode": {
+          "title": "Decoding visual layer",
+          "body": "Preparing transparent logo animation."
+        },
+        "visualReady": {
+          "title": "Visual layer ready",
+          "body": "Hero animation is ready."
+        },
+        "visualFallback": {
+          "title": "Visual fallback active",
+          "body": "Using poster image while video loading is unavailable."
+        },
+        "route": {
+          "title": "Opening game client",
+          "body": "Handing your wallet session to the world gateway."
+        }
+      }
+    },
+    "pasteProofAction": "Paste signed proof to finish login",
+    "pasteProofLabel": "Wallet signature proof",
+    "pasteProofPlaceholder": "Paste the signature proof that starts with nicechunk-proof:",
+    "pasteFromClipboard": "Paste from clipboard",
+    "completePastedProof": "Verify pasted proof"
+  }
+}

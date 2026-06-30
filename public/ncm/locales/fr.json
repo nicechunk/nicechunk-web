@@ -1,0 +1,174 @@
+{
+  "_meta": {
+    "language": "fr",
+    "label": "French",
+    "version": "ncm-locale-fr-8c3b1e3f4ee20ad4",
+    "contentHash": "8c3b1e3f4ee20ad4"
+  },
+  "siteFooter": {
+    "tagline": "Un protocole de monde voxel seedé sur Solana.",
+    "navigationAria": "Navigation du pied de page",
+    "socialAria": "Liens sociaux de NiceChunk",
+    "home": "Accueil",
+    "play": "Entrer dans le monde",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Gardiens",
+    "contracts": "Contrats",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Tous droits réservés."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "Langue",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "ncm": {
+    "nav": {
+      "aria": "Primary navigation",
+      "home": "Home",
+      "roadbook": "Roadbook",
+      "worldRules": "World Rules",
+      "resources": "Resources",
+      "ncm": "NCM",
+      "elements": "Elements",
+      "fairness": "Fairness",
+      "proofOfFrontier": "Proof",
+      "guardians": "Guardians",
+      "contracts": "Contracts",
+      "docs": "Docs",
+      "enterWorld": "Enter World"
+    },
+    "page": {
+      "title": "Format d'actif 3D on-chain NCM",
+      "description": "NCM is NiceChunk's compact Solana game asset format. Store voxel 3D models as PDA-friendly chain text without IPFS."
+    },
+    "hero": {
+      "eyebrow": "ON-CHAIN 3D ASSET FORMAT",
+      "title": "We designed NCM so Solana games can own their 3D assets on-chain.",
+      "body": "NCM is NiceChunk's compact 3D asset format for Solana and other chains. We are building deeper R&D around this format because it can compress voxel assets into tiny text records that clients fetch directly through RPC, verify publicly, and keep available without IPFS.",
+      "convert": "Convertir VOX",
+      "sample": "Charger un exemple",
+      "formatLabel": "Format prefix",
+      "formatBody": "Palette, box count, signed positions, and dimensions encoded as compact varints.",
+      "dna": "NCM-DNA Lab"
+    },
+    "principles": {
+      "aria": "NCM principles",
+      "rpc": {
+        "title": "RPC native",
+        "body": "A client can read the text from account data and reconstruct the model immediately."
+      },
+      "public": {
+        "title": "Public forever",
+        "body": "The asset is stored with the program state, not hidden behind a mutable external gateway."
+      },
+      "compact": {
+        "title": "Cost aware",
+        "body": "Same-color voxels are merged into boxes before encoding to reduce storage size."
+      },
+      "portable": {
+        "title": "Chain portable",
+        "body": "NCM is plain text, so the same asset format can be used beyond one runtime."
+      }
+    },
+    "thesis": {
+      "aria": "Why NCM matters",
+      "eyebrow": "WHY WE DESIGNED NCM",
+      "title": "A Solana game asset should be part of the state, not a URL attached to it.",
+      "body": "NiceChunk is building around NCM because a voxel object can be small enough to live directly inside a program-owned PDA. The asset, its rules, and its ownership can move together, so a game item or NFT does not depend on an external gateway staying online.",
+      "metricsAria": "NCM compression examples",
+      "metricSource": "VOX source",
+      "metricNcm": "NCM record",
+      "metricGirl": "Peasant girl source file",
+      "metricGirlNcm": "Same model as PDA-friendly text",
+      "metricGuy": "Peasant guy source file",
+      "metricGuyNcm": "About a 400-byte class payload"
+    },
+    "roadmap": {
+      "aria": "NCM research direction",
+      "pda": {
+        "title": "PDA-native resources",
+        "body": "NCM turns small characters, props, equipment, and block decorations into account data that Solana clients can read through normal RPC calls."
+      },
+      "trade": {
+        "title": "Safer NFT trading",
+        "body": "When the visual asset is stored with the asset record, buyers do not need to trust that an IPFS gateway, metadata server, or mutable JSON link will keep resolving later."
+      },
+      "research": {
+        "title": "Useful compression research",
+        "body": "NCM is also the base for our NCM-DNA exploration: searching for shorter deterministic genes that reproduce the same model and can turn asset compression into useful computation."
+      }
+    },
+    "dna": {
+      "aria": "NCM-DNA Lab",
+      "eyebrow": "NCM-DNA LAB",
+      "title": "View the NCM-DNA experiment beside the format it builds on.",
+      "body": "NCM-DNA continues the same direction: instead of only storing compact cuboids, it searches for deterministic genes that can reproduce the same model with fewer bytes.",
+      "load": "Load embedded lab",
+      "open": "Open full lab",
+      "frameTitle": "NCM-DNA Lab"
+    },
+    "converter": {
+      "eyebrow": "VOX TO NCM",
+      "title": "Convertisseur local du navigateur",
+      "body": "Upload a MagicaVoxel .vox file. The file is parsed locally in your browser and converted into NCM text.",
+      "dropTitle": "Déposez ou sélectionnez un fichier .vox",
+      "dropBody": "MagicaVoxel SIZE, XYZI, and RGBA chunks are supported.",
+      "mode": "Mode",
+      "merge": "Merge boxes",
+      "raw": "Raw voxels",
+      "height": "Target height"
+    },
+    "license": {
+      "title": "Sample attribution",
+      "body": "Sample VOX characters are from OpenGameArt, created by JoshMckay, licensed under CC-BY 4.0."
+    },
+    "preview": {
+      "eyebrow": "LIVE PREVIEW",
+      "title": "No model loaded",
+      "titleLoaded": "NCM model",
+      "reset": "Reset view"
+    },
+    "output": {
+      "eyebrow": "NCM OUTPUT",
+      "title": "Compact chain text",
+      "body": "Store this payload in account data or a program-owned asset record. Clients can decode it without IPFS.",
+      "placeholder": "NCM2:...",
+      "copy": "Copier NCM",
+      "download": "Télécharger .ncm"
+    },
+    "stats": {
+      "voxels": "Source voxels",
+      "boxes": "NCM boxes",
+      "chars": "Text characters",
+      "size": "Source size"
+    },
+    "samples": {
+      "girl": "Peasant Girl",
+      "guy": "Peasant Guy"
+    },
+    "status": {
+      "ready": "Prêt.",
+      "loadingSample": "Loading sample NCM...",
+      "sampleLoaded": "Sample loaded.",
+      "converting": "Converting VOX to NCM...",
+      "converted": "Converti.",
+      "copied": "NCM copié.",
+      "copyFailed": "Copy failed.",
+      "downloaded": "NCM downloaded.",
+      "failed": "Failed: {reason}"
+    }
+  }
+}

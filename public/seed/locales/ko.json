@@ -1,0 +1,172 @@
+{
+  "_meta": {
+    "language": "ko",
+    "label": "Korean",
+    "version": "seed-locale-ko-e5fbda16b008618b",
+    "contentHash": "e5fbda16b008618b"
+  },
+  "meta": {
+    "title": "NiceChunk Seed User Campaign",
+    "description": "NiceChunk Seed User Campaign, 퍼블릭 베타 whitelist 등록, wallet 연결, 100 NCK Seed Airdrop 안내입니다."
+  },
+  "nav": {
+    "aria": "기본 내비게이션",
+    "register": "등록"
+  },
+  "language": {
+    "aria": "언어",
+    "active": "선택됨"
+  },
+  "hero": {
+    "eyebrow": "Seed User Campaign",
+    "title": "NiceChunk Seed User Campaign",
+    "subtitle": "Public Beta & Whitelist Registration is Live",
+    "body": "NiceChunk는 공정하고 자유로운 완전 온체인 voxel 월드에 처음부터 참여하려는 플레이어를 위해 첫 Seed User Campaign을 시작합니다.",
+    "register": "Whitelist 등록",
+    "connect": "Wallet 연결",
+    "disclaimer": "Treasury 가격은 프로토콜 부트스트랩 구매 가격으로만 표시됩니다. 투자 수익, 2차 시장 가격 약속, 보장된 바닥가 또는 금융 홍보가 아닙니다."
+  },
+  "visual": {
+    "aria": "NiceChunk voxel 캠페인 비주얼",
+    "label": "Whitelist route"
+  },
+  "cards": {
+    "aria": "캠페인 핵심 정보",
+    "open": {
+      "title": "Whitelist Registration Open",
+      "body": "NiceChunk 계정을 만들고 Solana wallet을 연결해 첫 퍼블릭 베타 whitelist에 참여하세요."
+    },
+    "airdrop": {
+      "title": "100 NCK Seed Airdrop",
+      "body": "첫 번째 자격 whitelist 사용자는 캠페인 settlement 이후 게임 시작 자금으로 100 NCK를 받습니다."
+    },
+    "price": {
+      "title": "Treasury 가격: 1 NCK = 0.01 SOL",
+      "body": "Treasury Fixed Purchase Price는 부트스트랩 접근과 프로토콜 회계 용도로만 사용됩니다."
+    },
+    "chain": {
+      "title": "완전 온체인 월드",
+      "body": "자산, 게임플레이 약속, 사용자 데이터는 체인에서 읽을 수 있는 소유권과 검증을 위해 설계됩니다."
+    }
+  },
+  "steps": {
+    "eyebrow": "참여 절차",
+    "title": "계정부터 Seed 자금까지 다섯 단계.",
+    "body": "화이트리스트 등록은 실제 지갑 서명과 캠페인 등록 기록을 사용합니다. 서명 메시지는 지갑 소유권만 증명하며 거래나 송금을 승인하지 않습니다.",
+    "items": {
+      "account": "계정 생성",
+      "wallet": "Solana Wallet 연결",
+      "whitelist": "Whitelist 참여",
+      "settlement": "캠페인 Settlement 대기",
+      "receive": "100 NCK 시작 자금 수령"
+    }
+  },
+  "fairness": {
+    "eyebrow": "코드로 보장되는 공정성",
+    "title": "공개 voxel 월드는 숨겨진 자산 서버에 의존해서는 안 됩니다.",
+    "body": "NiceChunk의 핵심 주장은 단순합니다. 자원은 공개 월드맵에서, 재료는 자원 smelting에서, 아이템은 재료 forging에서 나오며, 소유권은 온체인에서 확인 가능해야 합니다.",
+    "items": {
+      "noIpfs": {
+        "title": "IPFS 없음",
+        "body": "게임 자원 출처나 아이템 정체성을 정의하기 위해 외부 gateway가 필요하지 않습니다."
+      },
+      "noStorage": {
+        "title": "중앙화 자산 저장 없음",
+        "body": "목표는 체인에서 읽을 수 있는 자산과 결정론적 재구성이며, 비공개 호스팅 metadata가 아닙니다."
+      },
+      "noMint": {
+        "title": "팀 발행 자원 없음",
+        "body": "팀은 resource, smelting, forging 경로 밖에서 임의의 자원이나 아이템을 만들 수 없습니다."
+      },
+      "onChain": {
+        "title": "자산 / 게임플레이 / 사용자 데이터 On-Chain",
+        "body": "중요한 상태 표면은 공개적이고 재현 가능하며 wallet이 소유하도록 설계됩니다."
+      },
+      "map": {
+        "title": "공개 공정 월드맵",
+        "body": "자원은 결정론적 지형 및 자원 규칙에서 나오며, 비공개 인벤토리 DB에서 나오지 않습니다."
+      }
+    }
+  },
+  "status": {
+    "eyebrow": "실시간 등록",
+    "title": "화이트리스트 등록 콘솔.",
+    "body": "Solana 지갑을 연결하고 일회성 증명에 서명한 뒤 시드 사용자 등록을 제출합니다.",
+    "walletLabel": "Wallet",
+    "notConnected": "연결되지 않음",
+    "connect": "지갑 연결",
+    "join": "화이트리스트 참여",
+    "note": "Solana 지갑을 연결하고 화이트리스트 증명에 서명해 등록을 제출합니다.",
+    "states": [
+      {
+        "key": "wallet",
+        "label": "지갑 연결됨",
+        "idle": "Solana 지갑을 연결하세요.",
+        "done": "지갑 주소가 기록되었습니다."
+      },
+      {
+        "key": "challenge",
+        "label": "챌린지 발급됨",
+        "idle": "백엔드가 일회성 nonce를 발급합니다.",
+        "done": "API에서 nonce를 받았습니다."
+      },
+      {
+        "key": "signature",
+        "label": "서명 검증됨",
+        "idle": "지갑 연결 후 증명에 서명하세요.",
+        "done": "지갑 소유권 증명이 승인되었습니다."
+      },
+      {
+        "key": "database",
+        "label": "등록 제출됨",
+        "idle": "등록 정보가 아직 제출되지 않았습니다.",
+        "done": "등록 정보를 받았습니다. 캠페인 공지를 확인해 주세요."
+      }
+    ],
+    "noEntry": "아직 등록 기록 없음",
+    "entryPrefix": "등록",
+    "registeredMessage": "등록 정보를 받았습니다. 캠페인 공지를 확인해 주세요.",
+    "walletConnectedMessage": "지갑이 연결되었습니다. 화이트리스트 증명에 서명해 등록을 제출하세요."
+  },
+  "rules": {
+    "eyebrow": "캠페인 규칙",
+    "title": "첫 자격 whitelist 사용자를 위한 Seed 자금.",
+    "body": "첫 번째 적격 화이트리스트 사용자는 캠페인 종료 후 100 NCK를 받습니다. 이 보상은 초기 게임 플레이 자금입니다. 최종 자격은 공개 규칙과 부정 방지 검사를 따릅니다.",
+    "rewardLabel": "Seed 보상",
+    "priceLabel": "Treasury Bootstrap Purchase Price",
+    "scopeLabel": "범위",
+    "scopeValue": "퍼블릭 베타 whitelist 캠페인"
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "wallet 연결 전 확인할 수 있는 명확한 답변.",
+    "items": [
+      {
+        "question": "NCK란 무엇인가요?",
+        "answer": "NCK는 초기 게임 흐름, treasury bootstrap accounting, 향후 월드 내 액션에 쓰이는 NiceChunk 게임 토큰입니다. 이 페이지는 캠페인 utility를 설명하며 투자 가치를 설명하지 않습니다."
+      },
+      {
+        "question": "왜 NiceChunk는 IPFS가 없다고 하나요?",
+        "answer": "NiceChunk의 방향은 IPFS gateway, pinned file, 변경 가능한 metadata route에 의존하지 않고 게임 자산과 결정론적 정의를 체인에서 읽을 수 있게 유지하는 것입니다."
+      },
+      {
+        "question": "왜 팀은 자원을 직접 발행할 수 없나요?",
+        "answer": "자원 경로는 공개 월드 생성 중심으로 설계됩니다. 자원은 월드맵에서, 재료는 smelting에서, 아이템은 forging에서 나옵니다."
+      },
+      {
+        "question": "100 NCK는 어디에 쓰이나요?",
+        "answer": "Seed airdrop은 퍼블릭 베타 게임플레이 시작 자금으로, 첫 사용자들이 계정, wallet, marketplace, 자원, crafting 흐름을 테스트하도록 돕습니다."
+      },
+      {
+        "question": "Airdrop은 언제 배포되나요?",
+        "answer": "배포는 캠페인 settlement 이후 진행됩니다. 최종 eligibility는 캠페인 규칙, anti-abuse 검사, on-chain 기록에 따릅니다."
+      }
+    ]
+  },
+  "bottom": {
+    "eyebrow": "완전 온체인 월드로 입장",
+    "title": "첫 Seed 사용자에 참여하세요.",
+    "register": "Whitelist 등록",
+    "wallet": "Wallet 연결"
+  }
+}

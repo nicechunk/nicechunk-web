@@ -1,0 +1,101 @@
+{
+  "_meta": {
+    "language": "en",
+    "label": "English",
+    "version": "mining-locale-en-a00da5655330de61",
+    "contentHash": "a00da5655330de61"
+  },
+  "siteFooter": {
+    "tagline": "A seeded voxel world protocol on Solana.",
+    "navigationAria": "Footer navigation",
+    "socialAria": "NiceChunk social links",
+    "home": "Home",
+    "play": "Enter World",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Guardians",
+    "contracts": "Contracts",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. All rights reserved."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "Language",
+    "comingSoon": "Planned",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "mining": {
+    "title": "Nicechunk Mining",
+    "canvasLabel": "Underground mining cave",
+    "player": {
+      "title": "Novice Miner",
+      "wallet": "Wallet"
+    },
+    "panel": {
+      "kicker": "Current Cave",
+      "title": "Online Users",
+      "depth": "Cave Depth",
+      "ore": "Ore",
+      "oreCount": "{count} left",
+      "contractAddress": "Cave Contract",
+      "hashrate": "Total Hashrate",
+      "blockTime": "Avg Block Time",
+      "totalBlocks": "Total Blocks",
+      "minedBlocks": "Mined Blocks",
+      "remainingBlocks": "Remaining Blocks",
+      "hashrateH": "{value} H/s",
+      "hashrateKh": "{value} KH/s",
+      "seconds": "{value}s",
+      "meters": "{value} m"
+    },
+    "controls": {
+      "label": "Mining controls",
+      "mine": "Mine"
+    },
+    "inventory": {
+      "ore": "Ore",
+      "energy": "Energy"
+    },
+    "status": {
+      "label": "Status",
+      "ready": "Ready to mine",
+      "noTarget": "Aim at a glowing ore vein",
+      "mined": "Ore extracted"
+    },
+    "userStatus": {
+      "mining": "Mining near the center vein",
+      "drilling": "Drilling side wall",
+      "hauling": "Hauling ore cart",
+      "scanning": "Scanning ore quality",
+      "resting": "Recovering energy",
+      "yield": "{count} ore"
+    },
+    "system": {
+      "label": "Computer information",
+      "cpu": "CPU",
+      "memory": "Memory",
+      "cores": "{count} cores",
+      "memoryGb": "{value} GB",
+      "unknown": "Unknown"
+    },
+    "tools": {
+      "label": "Tools",
+      "slot": "Slot {slot}: {item}",
+      "drill": "Mining Drill",
+      "scanner": "Ore Scanner",
+      "lantern": "Cave Lantern",
+      "hammer": "Rock Hammer"
+    }
+  }
+}

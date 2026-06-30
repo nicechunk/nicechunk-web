@@ -228,6 +228,7 @@ h3 {
 .asset-protection,
 .diagram-card,
 .concept-card,
+.trust-ladder-card,
 .boundary-card,
 .module-binding-card,
 .patch-schema-panel,
@@ -332,6 +333,131 @@ h3 {
   margin-top: 0;
 }
 
+.civilization-entry {
+  padding: 22px;
+  border: 1px solid rgba(152, 203, 255, 0.14);
+  border-radius: var(--civ-radius);
+  background:
+    linear-gradient(180deg, rgba(152, 203, 255, 0.06), transparent),
+    rgba(7, 12, 18, 0.64);
+  box-shadow: 0 18px 52px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(18px);
+}
+
+.entry-path-grid,
+.entry-proof-strip {
+  display: grid;
+  gap: 12px;
+}
+
+.entry-path-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.entry-proof-strip {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 14px;
+}
+
+.entry-path-card,
+.entry-proof-card {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--civ-line);
+  border-radius: var(--civ-radius);
+  background:
+    linear-gradient(180deg, rgba(152, 203, 255, 0.045), transparent),
+    rgba(5, 10, 15, 0.62);
+}
+
+.entry-path-card {
+  color: inherit;
+  text-decoration: none;
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease,
+    background 160ms ease;
+}
+
+.entry-path-card:hover,
+.entry-path-card:focus-visible {
+  border-color: rgba(140, 255, 0, 0.34);
+  background:
+    linear-gradient(180deg, rgba(140, 255, 0, 0.065), transparent),
+    rgba(8, 16, 18, 0.78);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.entry-path-card span,
+.entry-proof-card span {
+  display: inline-flex;
+  min-height: 26px;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 0 8px;
+  border: 1px solid rgba(140, 255, 0, 0.18);
+  border-radius: 999px;
+  color: var(--civ-green);
+  background: rgba(140, 255, 0, 0.055);
+  font-size: 10px;
+  font-weight: 940;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.entry-path-card.blue span,
+.entry-proof-card:nth-child(2) span {
+  color: var(--civ-blue);
+  border-color: rgba(152, 203, 255, 0.22);
+  background: rgba(152, 203, 255, 0.055);
+}
+
+.entry-path-card.gold span,
+.entry-proof-card:nth-child(3) span {
+  color: var(--civ-gold);
+  border-color: rgba(255, 211, 110, 0.22);
+  background: rgba(255, 211, 110, 0.055);
+}
+
+.entry-proof-card:nth-child(4) span {
+  color: var(--civ-red);
+  border-color: rgba(255, 110, 127, 0.24);
+  background: rgba(255, 110, 127, 0.055);
+}
+
+.entry-path-card strong,
+.entry-proof-card strong {
+  display: block;
+  color: var(--civ-text);
+  font-size: 17px;
+  font-weight: 920;
+  line-height: 1.24;
+}
+
+.entry-path-card p,
+.entry-proof-card p {
+  margin: 10px 0 0;
+  color: var(--civ-muted);
+  font-size: 13px;
+  line-height: 1.52;
+}
+
+.entry-path-card code,
+.entry-proof-card code {
+  display: block;
+  margin-top: 14px;
+  padding: 10px;
+  border: 1px solid rgba(152, 203, 255, 0.12);
+  border-radius: 6px;
+  color: var(--civ-green);
+  background: rgba(0, 0, 0, 0.22);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
 .toc-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -412,6 +538,123 @@ h3 {
   line-height: 1.48;
 }
 
+.civilization-content-layout {
+  display: grid;
+  grid-template-columns: minmax(188px, 220px) minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+  margin-top: 18px;
+}
+
+.civilization-content-main {
+  min-width: 0;
+}
+
+.civilization-content-main > .civilization-section:first-child {
+  margin-top: 0;
+}
+
+.chapter-nav {
+  position: sticky;
+  top: 8px;
+  z-index: 18;
+  max-height: calc(100dvh - 16px);
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(152, 203, 255, 0.14);
+  border-radius: var(--civ-radius);
+  background: rgba(7, 12, 18, 0.88);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(18px);
+}
+
+.chapter-nav-inner {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  padding: 10px;
+}
+
+.chapter-nav-label {
+  display: inline-grid;
+  place-items: center;
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid rgba(140, 255, 0, 0.2);
+  border-radius: 6px;
+  color: var(--civ-green);
+  background: rgba(140, 255, 0, 0.055);
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.chapter-nav-links {
+  display: grid;
+  gap: 11px;
+  max-height: calc(100dvh - var(--nc-header-height, 76px) - 92px);
+  min-width: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-right: 2px;
+  scrollbar-width: thin;
+}
+
+.chapter-nav-group {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.chapter-nav-group-title {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: block;
+  padding: 4px 2px 3px;
+  color: var(--civ-blue);
+  background: rgba(7, 12, 18, 0.92);
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.chapter-nav-links a {
+  display: grid;
+  align-items: center;
+  min-height: 30px;
+  min-width: 0;
+  padding: 7px 9px;
+  border: 1px solid rgba(152, 203, 255, 0.12);
+  border-radius: 6px;
+  color: var(--civ-muted);
+  background: rgba(152, 203, 255, 0.045);
+  font-size: 11px;
+  font-weight: 820;
+  line-height: 1.24;
+  text-align: left;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.chapter-nav-links a:hover,
+.chapter-nav-links a:focus-visible,
+.chapter-nav-links a.active {
+  border-color: rgba(140, 255, 0, 0.34);
+  color: var(--civ-text);
+  background: rgba(140, 255, 0, 0.09);
+  outline: none;
+}
+
 .section-heading {
   max-width: 860px;
   margin-bottom: 24px;
@@ -439,6 +682,13 @@ h3 {
   align-items: start;
 }
 
+.authoring-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(320px, 0.52fr);
+  gap: 18px;
+  align-items: start;
+}
+
 .journey-layout {
   grid-template-columns: minmax(0, 1.04fr) minmax(320px, 0.52fr);
   align-items: start;
@@ -459,7 +709,35 @@ h3 {
   align-items: start;
 }
 
+.signing-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(320px, 0.52fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.decision-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(320px, 0.52fr);
+  gap: 18px;
+  align-items: start;
+}
+
 .challenge-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.98fr) minmax(320px, 0.5fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.conservation-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.98fr) minmax(320px, 0.5fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.snapshot-layout {
   display: grid;
   grid-template-columns: minmax(0, 0.98fr) minmax(320px, 0.5fr);
   gap: 18px;
@@ -515,6 +793,13 @@ h3 {
   align-items: start;
 }
 
+.receipt-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.96fr) minmax(320px, 0.5fr);
+  gap: 18px;
+  align-items: start;
+}
+
 .transparency-layout {
   display: grid;
   grid-template-columns: minmax(0, 0.96fr) minmax(320px, 0.5fr);
@@ -522,7 +807,21 @@ h3 {
   align-items: start;
 }
 
+.verification-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.96fr) minmax(320px, 0.5fr);
+  gap: 18px;
+  align-items: start;
+}
+
 .versioning-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.98fr) minmax(320px, 0.5fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.roles-layout {
   display: grid;
   grid-template-columns: minmax(0, 0.98fr) minmax(320px, 0.5fr);
   gap: 18px;
@@ -567,6 +866,11 @@ h3 {
   border-top: 1px solid rgba(152, 203, 255, 0.1);
 }
 
+.validator-layout .patch-schema-row {
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+}
+
 .patch-schema-row code {
   color: var(--civ-green);
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
@@ -601,18 +905,29 @@ h3 {
 .build-spec-grid,
 .reader-lanes,
 .review-checklist,
+.author-template-grid,
+.author-proof-grid,
 .journey-grid,
 .defense-stack,
 .challenge-stack,
 .threat-grid,
 .challenge-grid,
 .classifier-grid,
+.conservation-grid,
+.snapshot-grid,
 .case-view-grid,
 .case-evidence-grid,
 .impact-grid,
+.signing-risk-grid,
+.signing-proof-grid,
+.decision-grid,
+.decision-proof-grid,
 .reputation-grid,
+.receipt-grid,
 .transparency-grid,
+.verification-grid,
 .versioning-grid,
+.role-grid,
 .design-grid,
 .civic-grid,
 .instruction-grid,
@@ -640,6 +955,16 @@ h3 {
   margin-top: 16px;
 }
 
+.author-template-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.author-proof-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
 .journey-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 16px;
@@ -657,6 +982,16 @@ h3 {
 
 .classifier-grid {
   grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.conservation-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.snapshot-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 16px;
 }
 
@@ -685,7 +1020,28 @@ h3 {
   margin-top: 16px;
 }
 
+.signing-risk-grid,
+.signing-proof-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.decision-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.decision-proof-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
 .reputation-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.receipt-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 16px;
 }
@@ -695,8 +1051,18 @@ h3 {
   margin-top: 16px;
 }
 
+.verification-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
 .versioning-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.role-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 16px;
 }
 
@@ -731,6 +1097,9 @@ h3 {
 .build-order-panel,
 .reader-lane-card,
 .review-check-card,
+.authoring-stack,
+.author-template-card,
+.author-proof-card,
 .journey-stack,
 .journey-card,
 .defense-stack,
@@ -739,6 +1108,10 @@ h3 {
 .threat-card,
 .classifier-checks,
 .classifier-card,
+.conservation-stack,
+.conservation-card,
+.snapshot-stack,
+.snapshot-card,
 .case-summary-panel,
 .case-view-card,
 .case-evidence-card,
@@ -748,12 +1121,24 @@ h3 {
 .glossary-card,
 .impact-stack,
 .impact-card,
+.signing-stack,
+.signing-risk-card,
+.signing-proof-card,
+.decision-stack,
+.decision-card,
+.decision-proof-card,
 .reputation-stack,
 .reputation-card,
+.receipt-stack,
+.receipt-card,
 .transparency-checks,
 .transparency-card,
+.verification-stack,
+.verification-card,
 .versioning-stack,
 .versioning-card,
+.role-stack,
+.role-card,
 .design-stack,
 .design-card,
 .design-blueprint-panel,
@@ -778,18 +1163,29 @@ h3 {
 .build-spec-card span,
 .reader-lane-card span,
 .review-check-card span,
+.author-template-card span,
+.author-proof-card span,
 .journey-card span,
 .challenge-card span,
 .threat-card span,
 .classifier-card span,
+.conservation-card span,
+.snapshot-card span,
 .case-view-card span,
 .case-evidence-card span,
 .challenge-card span,
 .glossary-card span,
 .impact-card span,
+.signing-risk-card span,
+.signing-proof-card span,
+.decision-card span,
+.decision-proof-card span,
 .reputation-card span,
+.receipt-card span,
 .transparency-card span,
+.verification-card span,
 .versioning-card span,
+.role-card span,
 .design-card span,
 .design-blueprint-card span,
 .civic-card span,
@@ -818,13 +1214,18 @@ h3 {
 .challenge-card strong,
 .threat-card strong,
 .classifier-card strong,
+.conservation-card strong,
+.snapshot-card strong,
 .case-evidence-card strong,
 .challenge-card strong,
 .glossary-card strong,
 .impact-card strong,
 .reputation-card strong,
+.receipt-card strong,
 .transparency-card strong,
+.verification-card strong,
 .versioning-card strong,
+.role-card strong,
 .design-card strong,
 .design-blueprint-card strong,
 .civic-card strong,
@@ -847,14 +1248,20 @@ h3 {
 .challenge-card p,
 .threat-card p,
 .classifier-card p,
+.conservation-card p,
+.snapshot-card p,
 .case-view-card p,
 .case-evidence-card p,
 .challenge-card p,
 .glossary-card p,
 .impact-card p,
+.decision-card p,
 .reputation-card p,
+.receipt-card p,
 .transparency-card p,
+.verification-card p,
 .versioning-card p,
+.role-card p,
 .design-card p,
 .design-blueprint-card p,
 .civic-card p,
@@ -1179,6 +1586,49 @@ h3 {
   overflow-wrap: anywhere;
 }
 
+.verification-stack {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.verification-card span {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-color: rgba(152, 203, 255, 0.22);
+  border-radius: 6px;
+  color: var(--civ-blue);
+  background: rgba(152, 203, 255, 0.06);
+}
+
+.verification-card:nth-child(2n) span {
+  border-color: rgba(140, 255, 0, 0.2);
+  color: var(--civ-green);
+  background: rgba(140, 255, 0, 0.055);
+}
+
+.verification-card:nth-child(3n) span {
+  border-color: rgba(255, 211, 110, 0.22);
+  color: var(--civ-gold);
+  background: rgba(255, 211, 110, 0.06);
+}
+
+.verification-card code {
+  display: block;
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid rgba(152, 203, 255, 0.14);
+  border-radius: 6px;
+  color: var(--civ-blue);
+  background: rgba(0, 0, 0, 0.22);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
 .versioning-stack {
   display: grid;
   gap: 10px;
@@ -1224,6 +1674,57 @@ h3 {
 }
 
 .versioning-card dd {
+  min-width: 0;
+  margin: 0;
+  color: var(--civ-green);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+.role-stack {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.role-card span {
+  color: var(--civ-green);
+  border-color: rgba(140, 255, 0, 0.2);
+  background: rgba(140, 255, 0, 0.055);
+}
+
+.role-card.miner span,
+.role-card.forger span {
+  color: var(--civ-gold);
+  border-color: rgba(255, 211, 110, 0.22);
+  background: rgba(255, 211, 110, 0.055);
+}
+
+.role-card.guardian span,
+.role-card.auditor span {
+  color: var(--civ-blue);
+  border-color: rgba(152, 203, 255, 0.2);
+  background: rgba(152, 203, 255, 0.055);
+}
+
+.role-card dl {
+  display: grid;
+  grid-template-columns: minmax(82px, 0.28fr) minmax(0, 1fr);
+  gap: 8px 10px;
+  margin: 14px 0 0;
+}
+
+.role-card dt {
+  color: var(--civ-dim);
+  font-size: 10px;
+  font-weight: 920;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.role-card dd {
   min-width: 0;
   margin: 0;
   color: var(--civ-green);
@@ -1476,6 +1977,146 @@ h3 {
   min-width: 0;
   margin: 0;
   color: var(--civ-green);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+.conservation-stack {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.conservation-card span {
+  color: var(--civ-green);
+  border-color: rgba(140, 255, 0, 0.2);
+  background: rgba(140, 255, 0, 0.055);
+}
+
+.conservation-card.burn span,
+.conservation-card.audit span {
+  color: var(--civ-blue);
+  border-color: rgba(152, 203, 255, 0.2);
+  background: rgba(152, 203, 255, 0.055);
+}
+
+.conservation-card.transform span {
+  color: var(--civ-gold);
+  border-color: rgba(255, 211, 110, 0.22);
+  background: rgba(255, 211, 110, 0.055);
+}
+
+.conservation-card dl {
+  display: grid;
+  grid-template-columns: minmax(82px, 0.28fr) minmax(0, 1fr);
+  gap: 8px 10px;
+  margin: 14px 0 0;
+}
+
+.conservation-card dt {
+  color: var(--civ-dim);
+  font-size: 10px;
+  font-weight: 920;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.conservation-card dd {
+  min-width: 0;
+  margin: 0;
+  color: var(--civ-green);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+.snapshot-stack {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.snapshot-card span {
+  color: var(--civ-blue);
+  border-color: rgba(152, 203, 255, 0.2);
+  background: rgba(152, 203, 255, 0.055);
+}
+
+.snapshot-card.normalize span {
+  color: var(--civ-gold);
+  border-color: rgba(255, 211, 110, 0.22);
+  background: rgba(255, 211, 110, 0.055);
+}
+
+.snapshot-card.cap span {
+  color: var(--civ-red);
+  border-color: rgba(255, 110, 127, 0.22);
+  background: rgba(255, 110, 127, 0.055);
+}
+
+.snapshot-card.freeze span,
+.snapshot-card.recount span {
+  color: var(--civ-green);
+  border-color: rgba(140, 255, 0, 0.2);
+  background: rgba(140, 255, 0, 0.055);
+}
+
+.snapshot-card code {
+  display: block;
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid rgba(152, 203, 255, 0.13);
+  border-radius: 6px;
+  color: var(--civ-green);
+  background: rgba(0, 0, 0, 0.22);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+.receipt-stack {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.receipt-card span {
+  color: var(--civ-gold);
+  border-color: rgba(255, 211, 110, 0.22);
+  background: rgba(255, 211, 110, 0.055);
+}
+
+.receipt-card.write span,
+.receipt-card.index span {
+  color: var(--civ-green);
+  border-color: rgba(140, 255, 0, 0.2);
+  background: rgba(140, 255, 0, 0.055);
+}
+
+.receipt-card.event span {
+  color: var(--civ-blue);
+  border-color: rgba(152, 203, 255, 0.2);
+  background: rgba(152, 203, 255, 0.055);
+}
+
+.receipt-card.accountability span {
+  color: var(--civ-red);
+  border-color: rgba(255, 110, 127, 0.22);
+  background: rgba(255, 110, 127, 0.055);
+}
+
+.receipt-card code {
+  display: block;
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid rgba(255, 211, 110, 0.14);
+  border-radius: 6px;
+  color: var(--civ-green);
+  background: rgba(0, 0, 0, 0.22);
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 11px;
   line-height: 1.42;
@@ -1848,6 +2489,78 @@ h3 {
   margin-top: 16px;
 }
 
+.entry-diagram-card {
+  margin-bottom: 18px;
+}
+
+.trust-ladder-layout {
+  display: grid;
+  gap: 16px;
+  align-items: start;
+}
+
+.trust-ladder-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  min-width: 0;
+}
+
+.trust-ladder-card {
+  min-width: 0;
+  padding: 14px;
+}
+
+.trust-ladder-card span {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 26px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(140, 255, 0, 0.2);
+  border-radius: 999px;
+  color: var(--civ-green);
+  background: rgba(140, 255, 0, 0.07);
+  font-size: 10px;
+  font-weight: 950;
+}
+
+.trust-ladder-card strong {
+  display: block;
+  color: var(--civ-text);
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.trust-ladder-card p {
+  margin: 7px 0 10px;
+  color: var(--civ-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.trust-ladder-card code {
+  display: block;
+  min-width: 0;
+  padding: 8px 9px;
+  border: 1px solid rgba(152, 203, 255, 0.14);
+  border-radius: 6px;
+  color: var(--civ-blue);
+  background: rgba(3, 7, 10, 0.45);
+  font-size: 11px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.trust-ladder-card em {
+  display: block;
+  margin-top: 8px;
+  color: var(--civ-red);
+  font-size: 12px;
+  font-style: normal;
+  line-height: 1.35;
+}
+
 .boundary-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1934,6 +2647,14 @@ h3 {
   min-height: 330px;
 }
 
+.entry-loop-svg {
+  min-height: 340px;
+}
+
+.trust-ladder-svg {
+  min-height: 360px;
+}
+
 .power-svg {
   min-height: 230px;
 }
@@ -1955,6 +2676,10 @@ h3 {
 }
 
 .impact-svg {
+  min-height: 350px;
+}
+
+.decision-svg {
   min-height: 350px;
 }
 
@@ -2555,29 +3280,101 @@ h3 {
 }
 
 @media (max-width: 980px) {
+  .entry-path-grid,
+  .entry-proof-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .toc-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .civilization-content-layout {
+    display: block;
+  }
+
+  .chapter-nav {
+    margin-top: 18px;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .chapter-nav-inner {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 14px;
+    align-items: center;
+  }
+
+  .chapter-nav-label {
+    padding: 0 12px;
+    white-space: nowrap;
+  }
+
+  .chapter-nav-links {
+    display: flex;
+    gap: 8px;
+    max-height: none;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0 0 1px;
+  }
+
+  .chapter-nav-group {
+    display: flex;
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    max-width: min(720px, 82vw);
+  }
+
+  .chapter-nav-group-title {
+    position: static;
+    flex: 0 0 auto;
+    padding: 0 2px;
+    background: transparent;
+    white-space: nowrap;
+  }
+
+  .chapter-nav-links a {
+    min-height: 34px;
+    flex: 0 0 auto;
+    max-width: min(220px, 58vw);
+    padding: 0 12px;
+    text-align: center;
+    white-space: nowrap;
+  }
+
   .civilization-hero,
   .warning-section,
+  .trust-ladder-layout,
   .power-layout,
   .concept-layout,
   .glossary-layout,
   .reader-layout,
+  .authoring-layout,
   .journey-layout,
   .threat-layout,
   .challenge-layout,
   .case-layout,
   .impact-layout,
+  .signing-layout,
+  .decision-layout,
   .reputation-layout,
   .classifier-layout,
+  .conservation-layout,
+  .snapshot-layout,
   .technical-layout,
   .binding-layout,
   .validator-layout,
   .proof-layout,
+  .receipt-layout,
   .transparency-layout,
+  .verification-layout,
   .versioning-layout,
+  .roles-layout,
   .design-layout,
   .civic-layout,
   .trace-layout,
@@ -2597,17 +3394,28 @@ h3 {
   .account-blueprint-grid,
   .failure-grid,
   .review-checklist,
+  .author-template-grid,
+  .author-proof-grid,
   .journey-grid,
   .threat-grid,
   .challenge-grid,
   .classifier-grid,
+  .conservation-grid,
+  .snapshot-grid,
   .case-view-grid,
   .case-evidence-grid,
   .glossary-grid,
   .impact-grid,
+  .signing-risk-grid,
+  .signing-proof-grid,
+  .decision-grid,
+  .decision-proof-grid,
   .reputation-grid,
+  .receipt-grid,
   .transparency-grid,
+  .verification-grid,
   .versioning-grid,
+  .role-grid,
   .design-grid,
   .civic-grid,
   .design-blueprint-panel > div,
@@ -2631,6 +3439,15 @@ h3 {
 }
 
 @media (max-width: 640px) {
+  .civilization-entry {
+    padding: 16px;
+  }
+
+  .entry-path-grid,
+  .entry-proof-strip {
+    grid-template-columns: 1fr;
+  }
+
   .toc-grid {
     grid-template-columns: 1fr;
   }
@@ -2687,6 +3504,14 @@ h3 {
     min-height: 250px;
   }
 
+  .entry-loop-svg {
+    min-height: 260px;
+  }
+
+  .trust-ladder-svg {
+    min-height: 300px;
+  }
+
   .svg-node text {
     font-size: 17px;
   }
@@ -2724,6 +3549,14 @@ h3 {
   }
 
   .module-binding-card dl {
+    grid-template-columns: 1fr;
+  }
+
+  .conservation-card dl {
+    grid-template-columns: 1fr;
+  }
+
+  .role-card dl {
     grid-template-columns: 1fr;
   }
 

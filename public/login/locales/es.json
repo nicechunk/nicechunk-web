@@ -1,0 +1,159 @@
+{
+  "_meta": {
+    "language": "es",
+    "label": "Spanish",
+    "version": "login-locale-es-0e8eb38ae7fb3d8b",
+    "contentHash": "0e8eb38ae7fb3d8b"
+  },
+  "siteFooter": {
+    "tagline": "Un protocolo de mundo voxel con semillas en Solana.",
+    "navigationAria": "Navegación del pie de página",
+    "socialAria": "Enlaces sociales de NiceChunk",
+    "home": "Inicio",
+    "play": "Entrar al mundo",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Guardianes",
+    "contracts": "Contratos",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Todos los derechos reservados."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "Idioma",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "login": {
+    "title": "Inicio de sesión de cartera NICECHUNK",
+    "flowLabel": "Flujo de inicio",
+    "brandSubtitle": "Universo Voxel",
+    "authEyebrow": "Puerta de seguridad",
+    "authTitle": "Acceso con cartera",
+    "authSubtitle": "Entrar al ecosistema NiceChunk",
+    "heroStatus": "Render del motor en vivo",
+    "steps": {
+      "wallet": "Conectar cartera",
+      "profile": "Configurar jugador",
+      "ready": "Listo"
+    },
+    "section": {
+      "wallet": "Conectar cartera",
+      "profile": "Configurar jugador",
+      "ready": "Entrar al mundo"
+    },
+    "installPhantom": "Instalar Phantom",
+    "playerName": "Nombre de jugador",
+    "playerNamePlaceholder": "Introduce un nombre de 3 a 18 caracteres",
+    "saveName": "Guardar nombre",
+    "player": "Jugador",
+    "wallet": "Cartera",
+    "startGame": "Iniciar juego",
+    "resetLogin": "Iniciar sesión otra vez",
+    "returnToBrowser": "Volver al navegador",
+    "continueInWalletBrowser": "Continuar en el navegador de la cartera",
+    "signLoginMessage": "Firmar mensaje de inicio",
+    "completeCopiedLogin": "Completar inicio con cartera",
+    "copyLoginProof": "Copiar prueba de inicio",
+    "manualProofLabel": "Copia manualmente esta prueba de inicio",
+    "selectLoginProof": "Seleccionar prueba de inicio",
+    "hudNetwork": "RED",
+    "hudNetworkValue": "SOLANA",
+    "hudBiome": "BIOMA",
+    "hudBiomeValue": "BOSQUE ESMERALDA",
+    "hudWallet": "CARTERA",
+    "hudWalletValue": "LISTA",
+    "status": {
+      "checking": "Buscando carteras de Solana...",
+      "walletDetected": "Cartera de Solana detectada. Elige una para conectar.",
+      "noWallet": "No se detectó una cartera inyectada. Abre esta página en una app de cartera o instala Phantom.",
+      "openingWalletApp": "Abriendo {wallet}...",
+      "connecting": "Conectando {wallet}...",
+      "publicKeyMissing": "La cartera no devolvió una clave pública.",
+      "connectFailed": "Conexión fallida. Inténtalo de nuevo.",
+      "profile": "Cartera conectada. Configura tu nombre de jugador.",
+      "invalidUsername": "El nombre debe tener 3-18 caracteres y puede usar letras, números, guiones bajos o caracteres chinos.",
+      "ready": "Los datos de inicio están listos.",
+      "returningToBrowser": "Volviendo a tu navegador original...",
+      "continuingInWalletBrowser": "Continuando en el navegador de la cartera...",
+      "signingChallenge": "Confirma el mensaje de inicio en tu cartera.",
+      "signatureFailed": "No se pudo verificar la firma de la cartera. Inténtalo de nuevo.",
+      "proofCopied": "Prueba de inicio copiada. Vuelve al navegador y completa el inicio con cartera.",
+      "proofCopyFailed": "No se pudo copiar la prueba de inicio. Usa Volver al navegador.",
+      "readingProof": "Leyendo prueba de inicio copiada...",
+      "noCopiedProof": "No se encontró una prueba de inicio de NiceChunk copiada.",
+      "proofSelectReady": "Prueba de inicio seleccionada. Cópiala y vuelve a tu navegador.",
+      "pasteProofReady": "Paste your wallet signature proof to finish login when the wallet does not return automatically.",
+      "resourceFailed": "Login resources failed to load. Refresh and try again."
+    },
+    "walletButton": {
+      "noWallet": "No se detectó cartera",
+      "installRefresh": "Instala una cartera y actualiza",
+      "connectAuthorize": "Conectar y autorizar dirección",
+      "openInApp": "Continuar en navegador de cartera"
+    },
+    "walletHint": {
+      "recommended": "Recomendada",
+      "compatible": "Compatible",
+      "generic": "Universal",
+      "mobileApp": "App móvil"
+    },
+    "loading": {
+      "boot": "Initializing wallet gateway",
+      "checking": "Preparing interface",
+      "waitingForLanguage": "Waiting for language data",
+      "video": "Loading visual layer",
+      "videoReady": "Hero animation is ready.",
+      "visualMetadata": "Preparing transparent logo animation.",
+      "visualReady": "Hero animation is ready.",
+      "videoFallback": "Using poster image while video loading is unavailable.",
+      "worldEyebrow": "World Gateway",
+      "worldTitle": "Preparing NiceChunk world",
+      "worldBody": "Loading player session, terrain engine, and first visible chunks.",
+      "route": "Opening game client",
+      "bytesKnown": "Transferred {loaded} / {total}",
+      "bytesUnknown": "Transferred {loaded}",
+      "stages": {
+        "gateway": {
+          "title": "Initializing wallet gateway",
+          "body": "Preparing interface"
+        },
+        "visual": {
+          "title": "Loading visual layer",
+          "body": "Fetching hero video asset."
+        },
+        "visualDecode": {
+          "title": "Decoding visual layer",
+          "body": "Preparing transparent logo animation."
+        },
+        "visualReady": {
+          "title": "Visual layer ready",
+          "body": "Hero animation is ready."
+        },
+        "visualFallback": {
+          "title": "Visual fallback active",
+          "body": "Using poster image while video loading is unavailable."
+        },
+        "route": {
+          "title": "Opening game client",
+          "body": "Handing your wallet session to the world gateway."
+        }
+      }
+    },
+    "pasteProofAction": "Paste signed proof to finish login",
+    "pasteProofLabel": "Wallet signature proof",
+    "pasteProofPlaceholder": "Paste the signature proof that starts with nicechunk-proof:",
+    "pasteFromClipboard": "Paste from clipboard",
+    "completePastedProof": "Verify pasted proof"
+  }
+}

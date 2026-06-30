@@ -1,0 +1,198 @@
+{
+  "_meta": {
+    "language": "es",
+    "label": "Spanish",
+    "version": "ncm-dna-locale-es-63c105e5526544dd",
+    "contentHash": "63c105e5526544dd"
+  },
+  "siteFooter": {
+    "tagline": "Un protocolo de mundo voxel con semillas en Solana.",
+    "navigationAria": "Navegación del pie de página",
+    "socialAria": "Enlaces sociales de NiceChunk",
+    "home": "Inicio",
+    "play": "Entrar al mundo",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Guardianes",
+    "contracts": "Contratos",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Todos los derechos reservados."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "Idioma",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "ncmDna": {
+    "nav": {
+      "aria": "Navegación principal",
+      "home": "Inicio",
+      "roadbook": "Hoja de ruta",
+      "worldRules": "Reglas del mundo",
+      "resources": "Recursos",
+      "ncm": "NCM",
+      "dna": "Laboratorio DNA",
+      "elements": "Elementos",
+      "fairness": "Equidad",
+      "proofOfFrontier": "Prueba",
+      "contracts": "Contratos",
+      "enterWorld": "Entrar al mundo"
+    },
+    "page": {
+      "title": "Laboratorio NCM DNA",
+      "description": "NCM DNA Lab busca genes cortos deterministas que pueden crecer hasta el mismo modelo cuboide canónico."
+    },
+    "common": {
+      "yes": "Sí",
+      "no": "No",
+      "on": "Activado",
+      "off": "Desactivado"
+    },
+    "hero": {
+      "eyebrow": "EXPERIMENTO DE BÚSQUEDA GENÉTICA NCM",
+      "title": "Laboratorio NCM DNA",
+      "body": "NCM DNA Lab es un sistema experimental de búsqueda genética para activos 3D on-chain. En lugar de guardar cada cubo, busca un gen determinista más corto que pueda regenerar el mismo modelo.",
+      "pow": "En el futuro, esta búsqueda puede convertirse en una prueba de trabajo útil: los mineros usan CPU para encontrar genes más cortos, reducir almacenamiento PDA y recibir recompensas por el coste ahorrado."
+    },
+    "flow": {
+      "raw": "Modelo cuboide bruto",
+      "search": "Búsqueda genética NCM-DNA",
+      "grow": "Coincidencia hash Grow(gene)"
+    },
+    "target": {
+      "eyebrow": "MODELO OBJETIVO",
+      "title": "Objetivo cuboide determinista",
+      "seed": "Semilla objetivo",
+      "source": "Origen",
+      "ncmCharacter": "Personaje de la página NCM",
+      "hiddenGene": "Gen oculto",
+      "rawVariation": "Variación bruta",
+      "ornaments": "Adornos",
+      "generate": "Generar objetivo",
+      "random": "Objetivo aleatorio",
+      "reveal": "Mostrar gen oculto"
+    },
+    "search": {
+      "eyebrow": "BÚSQUEDA CPU",
+      "title": "Búsqueda genética controlada por workers",
+      "mode": "Modo de búsqueda",
+      "seedSearch": "Búsqueda libre de semilla DNA",
+      "ncmRandom": "Aleatorio de avatar NCM",
+      "exact": "Recuperación exacta de parámetros",
+      "compression": "Búsqueda de compresión",
+      "evolution": "Búsqueda evolutiva",
+      "threads": "Hilos",
+      "auto": "Auto",
+      "maxCandidates": "Candidatos máximos",
+      "maxSeedLength": "Longitud máxima de semilla DNA",
+      "start": "Iniciar búsqueda",
+      "continuous": "Búsqueda continua",
+      "pause": "Pausar",
+      "resume": "Reanudar",
+      "stop": "Detener",
+      "reset": "Restablecer"
+    },
+    "result": {
+      "eyebrow": "MEJOR RESULTADO",
+      "title": "Semilla y gen compilado",
+      "seed": "Mejor semilla DNA",
+      "gene": "Gen compilado",
+      "copySeed": "Copiar semilla",
+      "growSeed": "Crear desde semilla",
+      "copy": "Copiar gen",
+      "grow": "Generar gen",
+      "seedInput": "Entrada de semilla",
+      "seedPlaceholder": "NCS1.AV...",
+      "geneInput": "Entrada de gen",
+      "genePlaceholder": "NCD1.HM..."
+    },
+    "viewer": {
+      "eyebrow": "VISTA 3D",
+      "title": "Modelo cuboide canónico",
+      "canvasAria": "Visor 3D de modelo NCM DNA",
+      "modelAria": "Modelo del visor",
+      "renderAria": "Modo de renderizado",
+      "target": "Modelo objetivo",
+      "best": "Mejor modelo genético",
+      "compare": "Lado a lado",
+      "diff": "Vista de diferencias",
+      "cuboid": "Cuboide",
+      "voxel": "Vóxel",
+      "wireframe": "Alambre",
+      "resetCamera": "Restablecer cámara"
+    },
+    "cpu": {
+      "eyebrow": "AMIGABLE CON CPU",
+      "title": "¿Por qué CPU primero?",
+      "body": "NCM-DNA v1 usa un lenguaje de crecimiento cuboide basado en reglas, no funciones de vóxeles orientadas a GPU. La búsqueda contiene ramas, plantillas, simetría, orden canónico y genes de longitud variable; estas operaciones encajan mejor en CPU."
+    },
+    "chain": {
+      "eyebrow": "FLUJO ON-CHAIN FUTURO",
+      "title": "Ruta de envío que ahorra almacenamiento",
+      "step1": "El PDA del activo guarda canonical_model_hash y current_encoding.",
+      "step2": "El minero envía un gen más corto.",
+      "step3": "El programa verifica que el hash de grow(gene) coincida con canonical_model_hash.",
+      "step4": "Si el gen es más corto, se actualiza la codificación del activo.",
+      "step5": "La renta PDA liberada puede compartirse entre minero, propietario y fondo del protocolo."
+    },
+    "metrics": {
+      "status": "Estado",
+      "candidates": "Candidatos",
+      "speed": "Velocidad",
+      "speedValue": "{value}/seg",
+      "generation": "Generación",
+      "bestGeneSize": "Tamaño del mejor gen",
+      "rawModelSize": "Tamaño del modelo bruto",
+      "ratio": "Compresión",
+      "score": "Puntuación",
+      "targetHash": "Hash objetivo",
+      "bestHash": "Mejor hash",
+      "bestSeed": "Mejor semilla",
+      "seedLength": "Longitud de semilla",
+      "exact": "Coincidencia exacta",
+      "threads": "Hilos",
+      "threadValue": "{value} de {planned}",
+      "elapsed": "Transcurrido",
+      "saved": "Ahorrado",
+      "bytes": "{value} bytes"
+    },
+    "status": {
+      "idle": "Inactivo",
+      "running": "En ejecución",
+      "paused": "Pausado",
+      "stopped": "Detenido",
+      "success": "Éxito"
+    },
+    "log": {
+      "eyebrow": "REGISTRO DE BÚSQUEDA",
+      "title": "Eventos de worker",
+      "targetGenerated": "Objetivo generado: {hash}",
+      "ncmTargetLoaded": "Objetivo de personaje NCM cargado con {boxes} cuboides.",
+      "workerError": "Error de worker: {message}",
+      "searchStarted": "Búsqueda iniciada.",
+      "continuousStarted": "Búsqueda continua iniciada con {threads} hilos worker.",
+      "searchPaused": "Búsqueda pausada.",
+      "searchResumed": "Búsqueda reanudada.",
+      "searchReset": "Búsqueda restablecida.",
+      "best": "Mejor puntuación {score}: {gene}",
+      "success": "Coincidencia exacta encontrada tras {candidates} candidatos.",
+      "copied": "Gen copiado.",
+      "seedCopied": "Semilla copiada.",
+      "geneGrown": "Gen generado: {hash}",
+      "seedGrown": "Semilla generada: {hash}",
+      "invalidGene": "Gen inválido: {message}",
+      "invalidSeed": "Semilla inválida: {message}"
+    }
+  }
+}

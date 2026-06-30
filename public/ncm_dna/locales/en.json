@@ -1,0 +1,199 @@
+{
+  "_meta": {
+    "language": "en",
+    "label": "English",
+    "version": "ncm-dna-locale-en-05635db7cbf5cc57",
+    "contentHash": "05635db7cbf5cc57"
+  },
+  "siteFooter": {
+    "tagline": "A seeded voxel world protocol on Solana.",
+    "navigationAria": "Footer navigation",
+    "socialAria": "NiceChunk social links",
+    "home": "Home",
+    "play": "Enter World",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Guardians",
+    "contracts": "Contracts",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. All rights reserved."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "Language",
+    "comingSoon": "Planned",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "ncmDna": {
+    "nav": {
+      "aria": "Primary navigation",
+      "home": "Home",
+      "roadbook": "Roadbook",
+      "worldRules": "World Rules",
+      "resources": "Resources",
+      "ncm": "NCM",
+      "dna": "DNA Lab",
+      "elements": "Elements",
+      "fairness": "Fairness",
+      "proofOfFrontier": "Proof",
+      "contracts": "Contracts",
+      "enterWorld": "Enter World"
+    },
+    "page": {
+      "title": "NCM DNA Lab",
+      "description": "NCM DNA Lab searches for deterministic short genes that can grow into the same canonical cuboid model."
+    },
+    "common": {
+      "yes": "Yes",
+      "no": "No",
+      "on": "On",
+      "off": "Off"
+    },
+    "hero": {
+      "eyebrow": "NCM GENE SEARCH EXPERIMENT",
+      "title": "NCM DNA Lab",
+      "body": "NCM DNA Lab is an experimental gene search system for on-chain 3D assets. Instead of storing every cube, it searches for a shorter deterministic gene that can grow into the same model.",
+      "pow": "In the future, this search can become a useful Proof of Work: miners spend CPU power to discover shorter genes, reduce PDA storage size, and earn rewards from the storage cost saved."
+    },
+    "flow": {
+      "raw": "Raw Cuboid Model",
+      "search": "NCM-DNA Gene Search",
+      "grow": "Grow(gene) Hash Match"
+    },
+    "target": {
+      "eyebrow": "TARGET MODEL",
+      "title": "Deterministic cuboid target",
+      "seed": "Target Seed",
+      "source": "Source",
+      "ncmCharacter": "NCM page character",
+      "hiddenGene": "Hidden Gene",
+      "rawVariation": "Raw Variation",
+      "ornaments": "Ornaments",
+      "generate": "Generate Target",
+      "random": "Random Target",
+      "reveal": "Reveal Hidden Gene"
+    },
+    "search": {
+      "eyebrow": "CPU SEARCH",
+      "title": "Worker controlled gene search",
+      "mode": "Search Mode",
+      "seedSearch": "DNA Seed Free Search",
+      "ncmRandom": "NCM Avatar Random",
+      "exact": "Exact Parameter Recovery",
+      "compression": "Compression Search",
+      "evolution": "Evolution Search",
+      "threads": "Threads",
+      "auto": "Auto",
+      "maxCandidates": "Max candidates",
+      "maxSeedLength": "Max DNA seed length",
+      "start": "Start Search",
+      "continuous": "Continuous Search",
+      "pause": "Pause",
+      "resume": "Resume",
+      "stop": "Stop",
+      "reset": "Reset"
+    },
+    "result": {
+      "eyebrow": "BEST RESULT",
+      "title": "Seed and compiled gene",
+      "seed": "Best DNA seed",
+      "gene": "Compiled gene",
+      "copySeed": "Copy Seed",
+      "growSeed": "Create From Seed",
+      "copy": "Copy Gene",
+      "grow": "Grow Gene",
+      "seedInput": "Seed input",
+      "seedPlaceholder": "NCS1.AV...",
+      "geneInput": "Gene input",
+      "genePlaceholder": "NCD1.HM..."
+    },
+    "viewer": {
+      "eyebrow": "3D PREVIEW",
+      "title": "Canonical cuboid model",
+      "canvasAria": "NCM DNA 3D model viewer",
+      "modelAria": "Viewer model",
+      "renderAria": "Render mode",
+      "target": "Target Model",
+      "best": "Best Gene Model",
+      "compare": "Side by Side",
+      "diff": "Difference View",
+      "cuboid": "Cuboid",
+      "voxel": "Voxel",
+      "wireframe": "Wireframe",
+      "resetCamera": "Reset Camera"
+    },
+    "cpu": {
+      "eyebrow": "CPU FRIENDLY",
+      "title": "Why CPU-first?",
+      "body": "NCM-DNA v1 uses a rule-based cuboid growth language instead of GPU-friendly voxel functions. The search contains branching, templates, symmetry detection, canonical sorting, and variable-length genes. These operations are more suitable for general CPU execution and harder to fully parallelize on GPU."
+    },
+    "chain": {
+      "eyebrow": "FUTURE ON-CHAIN FLOW",
+      "title": "Storage-saving submission path",
+      "step1": "Asset PDA stores canonical_model_hash and current_encoding.",
+      "step2": "Miner submits a shorter gene.",
+      "step3": "Program verifies grow(gene) hash equals canonical_model_hash.",
+      "step4": "If gene is shorter, asset encoding is updated.",
+      "step5": "Released PDA rent can be shared between miner, owner, and protocol pool."
+    },
+    "metrics": {
+      "status": "Status",
+      "candidates": "Candidates",
+      "speed": "Speed",
+      "speedValue": "{value}/s",
+      "generation": "Generation",
+      "bestGeneSize": "Best gene size",
+      "rawModelSize": "Raw model size",
+      "ratio": "Compression",
+      "score": "Score",
+      "targetHash": "Target hash",
+      "bestHash": "Best hash",
+      "bestSeed": "Best seed",
+      "seedLength": "Seed length",
+      "exact": "Exact match",
+      "threads": "Threads",
+      "threadValue": "{value}/{planned}",
+      "elapsed": "Elapsed",
+      "saved": "Saved",
+      "bytes": "{value} bytes"
+    },
+    "status": {
+      "idle": "Idle",
+      "running": "Running",
+      "paused": "Paused",
+      "stopped": "Stopped",
+      "success": "Success"
+    },
+    "log": {
+      "eyebrow": "SEARCH LOG",
+      "title": "Worker events",
+      "targetGenerated": "Target generated: {hash}",
+      "ncmTargetLoaded": "NCM character target loaded with {boxes} cuboids.",
+      "workerError": "Worker error: {message}",
+      "searchStarted": "Search started.",
+      "continuousStarted": "Continuous search started across {threads} worker threads.",
+      "searchPaused": "Search paused.",
+      "searchResumed": "Search resumed.",
+      "searchReset": "Search reset.",
+      "best": "Best score {score}: {gene}",
+      "success": "Exact match found after {candidates} candidates.",
+      "copied": "Gene copied.",
+      "seedCopied": "Seed copied.",
+      "geneGrown": "Gene grown: {hash}",
+      "seedGrown": "Seed grown: {hash}",
+      "invalidGene": "Invalid gene: {message}",
+      "invalidSeed": "Invalid seed: {message}"
+    }
+  }
+}

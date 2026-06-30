@@ -6,30 +6,11 @@ import * as THREE from "three";
 import { finishSiteLoading, setSiteLoadingProgress } from "../src/site-ui.js";
 import { persistConnectedWallet } from "../src/walletSession.js";
 import { assertNicechunkWalletNetwork, solanaClusterLabel } from "../src/solanaNetwork.js";
-import enDictionary from "./locales/en.json";
-import esDictionary from "./locales/es.json";
-import frDictionary from "./locales/fr.json";
-import deDictionary from "./locales/de.json";
-import jaDictionary from "./locales/ja.json";
-import ruDictionary from "./locales/ru.json";
-import koDictionary from "./locales/ko.json";
-import zhHantDictionary from "./locales/zh-Hant.json";
-import zhHansDictionary from "./locales/zh-Hans.json";
 
 const languageStorageKey = "nicechunk.language";
 const seedWalletStorageKey = "nicechunk.seed.wallet";
 const seedEntryStorageKey = "nicechunk.seed.entry";
-const dictionaries = {
-  en: enDictionary,
-  es: esDictionary,
-  fr: frDictionary,
-  de: deDictionary,
-  ja: jaDictionary,
-  ru: ruDictionary,
-  ko: koDictionary,
-  "zh-Hant": zhHantDictionary,
-  "zh-Hans": zhHansDictionary,
-};
+const buildVersion = typeof __BUILD_VERSION__ === "string" ? __BUILD_VERSION__ : String(Date.now());
 const plannedLanguages = [
   { code: "en", englishName: "English", nativeName: "English", enabled: true },
   { code: "es", englishName: "Spanish", nativeName: "Español", enabled: true },
@@ -41,6 +22,8 @@ const plannedLanguages = [
   { code: "zh-Hant", englishName: "Traditional Chinese", nativeName: "Traditional Chinese", enabled: true },
   { code: "zh-Hans", englishName: "Simplified Chinese", nativeName: "Simplified Chinese", enabled: true },
 ];
+const languageCodes = new Set(plannedLanguages.map((language) => language.code));
+const dictionaryCache = new Map();
 
 const languagePicker = document.querySelector(".seed-language");
 const languageTrigger = document.querySelector(".seed-language-trigger");
@@ -54,7 +37,8 @@ const statusMessage = document.querySelector("#seedStatusMessage");
 const faqList = document.querySelector("#seedFaqList");
 
 let activeLanguage = normalizeLanguage(localStorage.getItem(languageStorageKey)) || "en";
-let dictionary = dictionaries[activeLanguage] || dictionaries.en;
+let dictionary = {};
+let fallbackDictionary = {};
 let selectedWallet = null;
 let seedState = {
   provider: null,
@@ -66,10 +50,11 @@ let seedState = {
   error: "",
 };
 
-initSeedPage();
+void initSeedPage();
 
-function initSeedPage() {
+async function initSeedPage() {
   setSiteLoadingProgress(34);
+  dictionary = await loadDictionary(activeLanguage);
   applyTranslations(document);
   setupLanguageSwitcher();
   setupSeedActions();
@@ -281,7 +266,7 @@ function applyTranslations(root) {
 
 function text(path) {
   return path.split(".").reduce((current, part) => (current && Object.hasOwn(current, part) ? current[part] : undefined), dictionary)
-    ?? path.split(".").reduce((current, part) => (current && Object.hasOwn(current, part) ? current[part] : undefined), dictionaries.en)
+    ?? path.split(".").reduce((current, part) => (current && Object.hasOwn(current, part) ? current[part] : undefined), fallbackDictionary)
     ?? "";
 }
 
@@ -313,11 +298,11 @@ function renderLanguageMenu() {
       `;
       option.querySelector(".language-option-name").textContent = language.englishName;
       option.querySelector(".language-option-native").textContent = language.nativeName;
-      option.addEventListener("click", () => {
+      option.addEventListener("click", async () => {
         const nextLanguage = normalizeLanguage(option.dataset.seedLanguage);
         if (!nextLanguage) return;
         activeLanguage = nextLanguage;
-        dictionary = dictionaries[activeLanguage] || dictionaries.en;
+        dictionary = await loadDictionary(activeLanguage);
         localStorage.setItem(languageStorageKey, activeLanguage);
         applyTranslations(document);
         renderStatus();
@@ -345,6 +330,20 @@ function updateLanguagePicker() {
 function setLanguageMenuOpen(open) {
   languagePicker?.classList.toggle("open", open);
   languageTrigger?.setAttribute("aria-expanded", String(open));
+}
+
+async function loadDictionary(language) {
+  const normalized = normalizeLanguage(language) || "en";
+  if (dictionaryCache.has(normalized)) return dictionaryCache.get(normalized);
+  const response = await fetch(`/seed/locales/${normalized}.json?v=${encodeURIComponent(buildVersion)}`, { cache: "no-store" });
+  if (!response.ok) {
+    if (normalized !== "en") return loadDictionary("en");
+    return {};
+  }
+  const nextDictionary = await response.json();
+  dictionaryCache.set(normalized, nextDictionary);
+  if (normalized === "en") fallbackDictionary = nextDictionary;
+  return nextDictionary;
 }
 
 function setupSeedActions() {
@@ -513,7 +512,7 @@ function renderStatus() {
         : text("status.note") || "Connect a Solana wallet, sign a whitelist proof, and submit your registration.");
   }
   if (!statusList) return;
-  const statusCopy = Array.isArray(dictionary.status?.states) ? dictionary.status.states : dictionaries.en.status.states;
+  const statusCopy = Array.isArray(dictionary.status?.states) ? dictionary.status.states : (fallbackDictionary.status?.states ?? []);
   const rows = [
     { done: walletConnected, copy: statusCopy[0] },
     { done: registered, copy: statusCopy[2] },
@@ -541,7 +540,7 @@ function renderStatus() {
 
 function renderFaq() {
   if (!faqList) return;
-  const items = Array.isArray(dictionary.faq?.items) ? dictionary.faq.items : dictionaries.en.faq.items;
+  const items = Array.isArray(dictionary.faq?.items) ? dictionary.faq.items : (fallbackDictionary.faq?.items ?? []);
   faqList.replaceChildren(
     ...items.map((item, index) => {
       const details = document.createElement("details");
@@ -615,7 +614,7 @@ function normalizeLanguage(language) {
   if (!language) return "";
   if (language === "zh" || language === "zh-CN" || language === "zh-SG") return "zh-Hans";
   if (language === "zh-TW" || language === "zh-HK" || language === "zh-MO") return "zh-Hant";
-  if (Object.hasOwn(dictionaries, language)) return language;
+  if (languageCodes.has(language)) return language;
   const base = language.split("-")[0];
-  return Object.hasOwn(dictionaries, base) ? base : "";
+  return languageCodes.has(base) ? base : "";
 }

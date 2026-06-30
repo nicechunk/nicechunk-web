@@ -1,0 +1,198 @@
+{
+  "_meta": {
+    "language": "fr",
+    "label": "French",
+    "version": "ncm-dna-locale-fr-110f48bf38d4d926",
+    "contentHash": "110f48bf38d4d926"
+  },
+  "siteFooter": {
+    "tagline": "Un protocole de monde voxel seedé sur Solana.",
+    "navigationAria": "Navigation du pied de page",
+    "socialAria": "Liens sociaux de NiceChunk",
+    "home": "Accueil",
+    "play": "Entrer dans le monde",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Gardiens",
+    "contracts": "Contrats",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Tous droits réservés."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "Langue",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "ncmDna": {
+    "nav": {
+      "aria": "Navigation principale",
+      "home": "Accueil",
+      "roadbook": "Feuille de route",
+      "worldRules": "Règles du monde",
+      "resources": "Ressources",
+      "ncm": "NCM",
+      "dna": "Laboratoire DNA",
+      "elements": "Éléments",
+      "fairness": "Équité",
+      "proofOfFrontier": "Preuve",
+      "contracts": "Contrats",
+      "enterWorld": "Entrer dans le monde"
+    },
+    "page": {
+      "title": "Laboratoire NCM DNA",
+      "description": "NCM DNA Lab recherche des gènes courts déterministes capables de recréer le même modèle cuboïde canonique."
+    },
+    "common": {
+      "yes": "Oui",
+      "no": "Non",
+      "on": "Activé",
+      "off": "Désactivé"
+    },
+    "hero": {
+      "eyebrow": "EXPÉRIENCE DE RECHERCHE DE GÈNES NCM",
+      "title": "Laboratoire NCM DNA",
+      "body": "NCM DNA Lab est un système expérimental de recherche de gènes pour actifs 3D on-chain. Au lieu de stocker chaque cube, il cherche un gène déterministe plus court qui peut régénérer le même modèle.",
+      "pow": "À l'avenir, cette recherche peut devenir une preuve de travail utile : des mineurs dépensent du CPU pour découvrir des gènes plus courts, réduire le stockage PDA et gagner une partie du coût économisé."
+    },
+    "flow": {
+      "raw": "Modèle cuboïde brut",
+      "search": "Recherche de gène NCM-DNA",
+      "grow": "Correspondance hash Grow(gene)"
+    },
+    "target": {
+      "eyebrow": "MODÈLE CIBLE",
+      "title": "Cible cuboïde déterministe",
+      "seed": "Graine cible",
+      "source": "Origine",
+      "ncmCharacter": "Personnage de la page NCM",
+      "hiddenGene": "Gène caché",
+      "rawVariation": "Variation brute",
+      "ornaments": "Ornements",
+      "generate": "Générer la cible",
+      "random": "Cible aléatoire",
+      "reveal": "Révéler le gène caché"
+    },
+    "search": {
+      "eyebrow": "RECHERCHE CPU",
+      "title": "Recherche de gènes pilotée par workers",
+      "mode": "Mode de recherche",
+      "seedSearch": "Recherche libre de graine DNA",
+      "ncmRandom": "Avatar NCM aléatoire",
+      "exact": "Récupération exacte des paramètres",
+      "compression": "Recherche de compression",
+      "evolution": "Recherche évolutive",
+      "threads": "Fils",
+      "auto": "Auto",
+      "maxCandidates": "Candidats max",
+      "maxSeedLength": "Longueur max de graine DNA",
+      "start": "Lancer la recherche",
+      "continuous": "Recherche continue",
+      "pause": "Mettre en pause",
+      "resume": "Reprendre",
+      "stop": "Arrêter",
+      "reset": "Réinitialiser"
+    },
+    "result": {
+      "eyebrow": "MEILLEUR RÉSULTAT",
+      "title": "Graine et gène compilé",
+      "seed": "Meilleure graine DNA",
+      "gene": "Gène compilé",
+      "copySeed": "Copier la graine",
+      "growSeed": "Créer depuis la graine",
+      "copy": "Copier le gène",
+      "grow": "Faire croître le gène",
+      "seedInput": "Entrée de graine",
+      "seedPlaceholder": "NCS1.AV...",
+      "geneInput": "Entrée de gène",
+      "genePlaceholder": "NCD1.HM..."
+    },
+    "viewer": {
+      "eyebrow": "APERÇU 3D",
+      "title": "Modèle cuboïde canonique",
+      "canvasAria": "Visionneuse 3D de modèle NCM DNA",
+      "modelAria": "Modèle du visualiseur",
+      "renderAria": "Mode de rendu",
+      "target": "Modèle cible",
+      "best": "Meilleur modèle génétique",
+      "compare": "Côte à côte",
+      "diff": "Vue des différences",
+      "cuboid": "Cuboïde",
+      "voxel": "Voxel 3D",
+      "wireframe": "Fil de fer",
+      "resetCamera": "Réinitialiser la caméra"
+    },
+    "cpu": {
+      "eyebrow": "ADAPTÉ AU CPU",
+      "title": "Pourquoi CPU d'abord ?",
+      "body": "NCM-DNA v1 utilise un langage de croissance cuboïde basé sur des règles plutôt que des fonctions voxel adaptées au GPU. Branches, modèles, symétrie, tri canonique et gènes variables conviennent mieux au CPU."
+    },
+    "chain": {
+      "eyebrow": "FLUX ON-CHAIN FUTUR",
+      "title": "Chemin de soumission économisant le stockage",
+      "step1": "Le PDA d'actif stocke canonical_model_hash et current_encoding.",
+      "step2": "Le mineur soumet un gène plus court.",
+      "step3": "Le programme vérifie que le hash grow(gene) égale canonical_model_hash.",
+      "step4": "Si le gène est plus court, l'encodage de l'actif est mis à jour.",
+      "step5": "Le loyer PDA libéré peut être partagé entre mineur, propriétaire et pool du protocole."
+    },
+    "metrics": {
+      "status": "État",
+      "candidates": "Candidats",
+      "speed": "Vitesse",
+      "speedValue": "{value}/sec",
+      "generation": "Génération",
+      "bestGeneSize": "Taille du meilleur gène",
+      "rawModelSize": "Taille du modèle brut",
+      "ratio": "Taux de compression",
+      "score": "Note",
+      "targetHash": "Hash cible",
+      "bestHash": "Meilleur hash",
+      "bestSeed": "Meilleure graine",
+      "seedLength": "Longueur de graine",
+      "exact": "Correspondance exacte",
+      "threads": "Fils",
+      "threadValue": "{value} sur {planned}",
+      "elapsed": "Écoulé",
+      "saved": "Économisé",
+      "bytes": "{value} octets"
+    },
+    "status": {
+      "idle": "Inactif",
+      "running": "En cours",
+      "paused": "En pause",
+      "stopped": "Arrêté",
+      "success": "Succès"
+    },
+    "log": {
+      "eyebrow": "JOURNAL DE RECHERCHE",
+      "title": "Événements worker",
+      "targetGenerated": "Cible générée : {hash}",
+      "ncmTargetLoaded": "Cible personnage NCM chargée avec {boxes} cuboïdes.",
+      "workerError": "Erreur worker : {message}",
+      "searchStarted": "Recherche lancée.",
+      "continuousStarted": "Recherche continue lancée sur {threads} threads worker.",
+      "searchPaused": "Recherche mise en pause.",
+      "searchResumed": "Recherche reprise.",
+      "searchReset": "Recherche réinitialisée.",
+      "best": "Meilleur score {score} : {gene}",
+      "success": "Correspondance exacte trouvée après {candidates} candidats.",
+      "copied": "Gène copié.",
+      "seedCopied": "Graine copiée.",
+      "geneGrown": "Gène généré : {hash}",
+      "seedGrown": "Graine générée : {hash}",
+      "invalidGene": "Gène invalide : {message}",
+      "invalidSeed": "Graine invalide : {message}"
+    }
+  }
+}

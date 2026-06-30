@@ -1,0 +1,100 @@
+{
+  "_meta": {
+    "language": "de",
+    "label": "German",
+    "version": "mining-locale-de-2bf1329d3b0d8f7f",
+    "contentHash": "2bf1329d3b0d8f7f"
+  },
+  "siteFooter": {
+    "tagline": "Ein Seed-Voxelwelt-Protokoll auf Solana.",
+    "navigationAria": "Footer-Navigation",
+    "socialAria": "NiceChunk Social Links",
+    "home": "Home",
+    "play": "Welt betreten",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Guardians",
+    "contracts": "Contracts",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Alle Rechte vorbehalten."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "Sprache",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "mining": {
+    "title": "Nicechunk Bergbau",
+    "canvasLabel": "Unterirdische Bergbauhoehle",
+    "player": {
+      "title": "Anfaenger-Bergmann",
+      "wallet": "Wallet"
+    },
+    "panel": {
+      "kicker": "Aktuelle Hoehle",
+      "title": "Online-Nutzer",
+      "depth": "Hoehlentiefe",
+      "ore": "Erz",
+      "oreCount": "{count} uebrig",
+      "contractAddress": "Hoehlenvertrag",
+      "hashrate": "Gesamte Hashrate",
+      "blockTime": "Durchschn. Blockzeit",
+      "totalBlocks": "Bloecke gesamt",
+      "minedBlocks": "Abgebaute Bloecke",
+      "remainingBlocks": "Verbleibende Bloecke",
+      "hashrateH": "{value} H/s",
+      "hashrateKh": "{value} KH/s",
+      "seconds": "{value}s",
+      "meters": "{value} m"
+    },
+    "controls": {
+      "label": "Bergbau-Steuerung",
+      "mine": "Abbauen"
+    },
+    "inventory": {
+      "ore": "Erz",
+      "energy": "Energie"
+    },
+    "status": {
+      "label": "Status",
+      "ready": "Bereit zum Abbau",
+      "noTarget": "Ziele auf eine leuchtende Erzader",
+      "mined": "Erz gewonnen"
+    },
+    "userStatus": {
+      "mining": "Baut an der zentralen Ader ab",
+      "drilling": "Bohrt Seitenwand",
+      "hauling": "Zieht Erzwagen",
+      "scanning": "Prueft Erzqualitaet",
+      "resting": "Regeneriert Energie",
+      "yield": "{count} Erz"
+    },
+    "system": {
+      "label": "Computerinformationen",
+      "cpu": "CPU",
+      "memory": "Speicher",
+      "cores": "{count} Kerne",
+      "memoryGb": "{value} GB",
+      "unknown": "Unbekannt"
+    },
+    "tools": {
+      "label": "Werkzeuge",
+      "slot": "Slot {slot}: {item}",
+      "drill": "Bergbaubohrer",
+      "scanner": "Erzscanner",
+      "lantern": "Hoehlenlaterne",
+      "hammer": "Felshammer"
+    }
+  }
+}

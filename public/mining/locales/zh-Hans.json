@@ -1,0 +1,101 @@
+{
+  "_meta": {
+    "language": "zh-Hans",
+    "label": "Simplified Chinese",
+    "version": "mining-locale-zh-Hans-c369740ef982c922",
+    "contentHash": "c369740ef982c922"
+  },
+  "siteFooter": {
+    "tagline": "Solana 上的种子体素世界协议。",
+    "navigationAria": "页脚导航",
+    "socialAria": "NiceChunk 社交链接",
+    "home": "首页",
+    "play": "进入世界",
+    "roadmap": "路书",
+    "docs": "文档",
+    "guardian": "守护者",
+    "contracts": "合约",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk。保留所有权利。"
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "语言",
+    "comingSoon": "即将开放",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "mining": {
+    "title": "Nicechunk 挖矿",
+    "canvasLabel": "地下矿洞",
+    "player": {
+      "title": "新手矿工",
+      "wallet": "钱包"
+    },
+    "panel": {
+      "kicker": "当前矿洞",
+      "title": "在线用户",
+      "depth": "矿洞深度",
+      "ore": "矿石",
+      "oreCount": "剩余 {count}",
+      "contractAddress": "矿洞合约地址",
+      "hashrate": "总算力",
+      "blockTime": "平均出块时间",
+      "totalBlocks": "总区块",
+      "minedBlocks": "已挖区块",
+      "remainingBlocks": "剩余区块",
+      "hashrateH": "{value} H/s",
+      "hashrateKh": "{value} KH/s",
+      "seconds": "{value} 秒",
+      "meters": "{value} 米"
+    },
+    "controls": {
+      "label": "挖矿控制",
+      "mine": "挖矿"
+    },
+    "inventory": {
+      "ore": "矿石",
+      "energy": "体力"
+    },
+    "status": {
+      "label": "状态",
+      "ready": "准备挖矿",
+      "noTarget": "请瞄准发光矿脉",
+      "mined": "已采出矿石"
+    },
+    "userStatus": {
+      "mining": "正在中心矿脉附近挖矿",
+      "drilling": "正在钻探侧壁",
+      "hauling": "正在搬运矿车",
+      "scanning": "正在扫描矿石品质",
+      "resting": "正在恢复体力",
+      "yield": "{count} 矿石"
+    },
+    "system": {
+      "label": "电脑信息",
+      "cpu": "CPU",
+      "memory": "内存",
+      "cores": "{count} 核心",
+      "memoryGb": "{value} GB",
+      "unknown": "未知"
+    },
+    "tools": {
+      "label": "工具",
+      "slot": "第 {slot} 格：{item}",
+      "drill": "采矿钻机",
+      "scanner": "矿石扫描器",
+      "lantern": "矿洞提灯",
+      "hammer": "岩石锤"
+    }
+  }
+}

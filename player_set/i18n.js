@@ -23,7 +23,6 @@ const buildVersion = typeof __BUILD_VERSION__ === "string" ? __BUILD_VERSION__ :
 
 let activeLanguage = normalizeLanguage(localStorage.getItem(languageStorageKey)) || defaultLanguage;
 let activeDictionary = {};
-let mainnetIndex = null;
 let readyPromise = null;
 
 export async function initI18n(root = document) {
@@ -126,30 +125,16 @@ async function loadLanguage(language) {
 }
 
 async function loadDictionary(language) {
-  const mainnet = await fetchMainnetIndex().catch(() => null);
-  const remoteLocale = mainnet?.playerSetI18n?.locales?.[language];
-  const cached = readCachedDictionary(language, remoteLocale?.version);
+  const cached = readCachedDictionary(language, buildVersion);
   if (cached) return cached;
 
-  const dictionary = await fetchDictionary(language, remoteLocale);
-  writeCachedDictionary(language, dictionary, remoteLocale?.version ?? dictionary?._meta?.version ?? buildVersion);
+  const dictionary = await fetchDictionary(language);
+  writeCachedDictionary(language, dictionary, buildVersion);
   return dictionary;
 }
 
-async function fetchMainnetIndex() {
-  if (mainnetIndex) return mainnetIndex;
-  const response = await fetch(`/mainnet.json?v=${encodeURIComponent(buildVersion)}`, {
-    cache: "no-store",
-  });
-  if (!response.ok) throw new Error("Failed to load mainnet index");
-  mainnetIndex = await response.json();
-  return mainnetIndex;
-}
-
-async function fetchDictionary(language, remoteLocale = null) {
-  const url = remoteLocale?.url || `/player_set/locales/${language}.json`;
-  const version = remoteLocale?.version || buildVersion;
-  const response = await fetch(`${url}?v=${encodeURIComponent(version)}`, {
+async function fetchDictionary(language) {
+  const response = await fetch(`/player_set/locales/${language}.json?v=${encodeURIComponent(buildVersion)}`, {
     cache: "no-store",
   });
   if (!response.ok) throw new Error(`Failed to load locale ${language}`);

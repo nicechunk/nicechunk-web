@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ru",
     "label": "Russian",
-    "version": "locale-ru-f5ac0d7354d9b991",
-    "contentHash": "f5ac0d7354d9b991"
+    "version": "locale-ru-3aadbdb0f49a5cd0",
+    "contentHash": "3aadbdb0f49a5cd0"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -166,7 +166,16 @@
       "chunks": "Известные чанки",
       "model": "Модель персонажа",
       "close": "Закрыть профиль",
-      "logout": "Выход"
+      "logout": "Выход",
+      "rpc": "RPC",
+      "rpcPublic": "Public RPC",
+      "rpcKey": "RPCKEY {key}",
+      "rpcRecommend": "Set a private RPC key for steadier mining.",
+      "rpcConfigured": "Private RPC key is active for chain calls.",
+      "rpcSet": "Set",
+      "rpcUpdate": "UPDATE",
+      "rpcSetPrompt": "Set a Helius API key to avoid public RPC limits.",
+      "rpcUpdatePrompt": "Update your Helius API key for NiceChunk chain calls."
     },
     "debug": "Отладка",
     "minimap": "Мини-карта",
@@ -205,7 +214,8 @@
       "noSignature": "no signature",
       "walletUnexpectedError": "wallet returned an unexpected error",
       "sessionFundingCancelled": "session funding cancelled",
-      "sessionFundingFailed": "session funding failed"
+      "sessionFundingFailed": "session funding failed",
+      "notTreeTrunk": "not a tree trunk"
     },
     "chainSession": {
       "eyebrow": "Mining Session",
@@ -1273,6 +1283,1023 @@
       "execute": "Execute Rule",
       "comingSoon": "On-chain interaction is planned for a later release."
     },
+    "toc": {
+      "aria": "Civilization page directory",
+      "eyebrow": "Page Directory",
+      "title": "Choose a reading path before entering the full civilization codex.",
+      "body": "The page is intentionally deep. Use this directory to jump between beginner explanations, rule safety, signing impact, civic power, execution proofs, PDA transparency, and future civilization design.",
+      "items": {
+        "plainModel": {
+          "title": "Plain Model",
+          "body": "Understand the civilization layer as a public rule engine."
+        },
+        "readerPath": {
+          "title": "Reader Path",
+          "body": "See what a player should check before signing."
+        },
+        "trustJourney": {
+          "title": "Trust Journey",
+          "body": "Follow play, proof, power, proposal, and audit in one line."
+        },
+        "ruleClassifier": {
+          "title": "Rule Classifier",
+          "body": "Learn which changes use 50%, 90%, or direct rejection."
+        },
+        "threatModel": {
+          "title": "Threat Model",
+          "body": "Review how hostile rules fail before state writes."
+        },
+        "caseWalkthrough": {
+          "title": "Bronze Age Case",
+          "body": "Trace one rule from player story to executable patch."
+        },
+        "impactSimulator": {
+          "title": "Impact Simulator",
+          "body": "Preview personal, world, economic, and technical impact."
+        },
+        "civicPower": {
+          "title": "Civic Power Ledger",
+          "body": "See how provable play becomes non-transferable power."
+        },
+        "executionProof": {
+          "title": "Execution Proof",
+          "body": "Inspect signatures, accounts, failure paths, and writes."
+        },
+        "pdaTransparency": {
+          "title": "PDA Transparency",
+          "body": "Browse the account families behind public truth."
+        },
+        "civilizationDesign": {
+          "title": "Civilization Design",
+          "body": "Read the future society engine and PDA blueprint."
+        },
+        "buildSpec": {
+          "title": "Build Spec",
+          "body": "Use the page as an implementation brief for coding."
+        }
+      }
+    },
+    "concept": {
+      "eyebrow": "Plain Model",
+      "title": "Civilization is the rule engine above the playable world.",
+      "body": "A new player can read it as a public rule book. A technical reviewer can read it as a bounded state machine: hashed proposals, snapshot signatures, validator gates, and config PDA writes.",
+      "cards": {
+        "publicRulebook": {
+          "kicker": "For players",
+          "title": "Rules are readable before they are signed.",
+          "body": "A civilization rule must explain what it changes, why it matters, which old assets are protected, and what happens after execution."
+        },
+        "boundedMachine": {
+          "kicker": "For builders",
+          "title": "The executable part is constrained.",
+          "body": "The machine patch targets known configuration modules. It is not a free-form command that can rewrite contracts or secretly mint resources."
+        },
+        "noSilentAdmin": {
+          "kicker": "For trust",
+          "title": "No silent administrator path.",
+          "body": "Thresholds, cooling windows, signatures, validators, and PDA writes are designed to be inspectable instead of hidden behind project-side discretion."
+        }
+      }
+    },
+    "readerGuide": {
+      "eyebrow": "Reader Path",
+      "title": "A player should know how to judge a rule before signing it.",
+      "body": "The civilization page must work as a rule-reading interface, not only a technical manifesto. Every proposal should answer simple player questions and expose the exact evidence experts need to verify the same answer.",
+      "lanes": {
+        "player": {
+          "kicker": "Beginner",
+          "title": "Can I explain the change in one sentence?",
+          "body": "A nontechnical player should understand the rule without reading Rust, PDA bytes, or governance jargon.",
+          "checks": {
+            "plainChange": "What changes in the world after this rule?",
+            "personalImpact": "Can it affect my backpack, items, resources, or future rewards?",
+            "signChoice": "Am I signing agree, reject, or abstain with a clear reason?"
+          }
+        },
+        "builder": {
+          "kicker": "Builder",
+          "title": "Can I map the rule to a bounded module?",
+          "body": "A developer should see exactly which gameplay surface will change and which surfaces are intentionally out of scope.",
+          "checks": {
+            "targetModule": "Which target_module owns the change?",
+            "patchDiff": "What field path, old_value_hash, and new_value_hash are being proposed?",
+            "executionPath": "Which instruction can execute it and which account family can be written?"
+          }
+        },
+        "auditor": {
+          "kicker": "Auditor",
+          "title": "Can I independently reject a bad rule?",
+          "body": "A reviewer should be able to reproduce the safety result from public hashes, PDA reads, signatures, and event logs.",
+          "checks": {
+            "hashes": "Do text_hash and patch_hash identify the same rule across every step?",
+            "pdaWrites": "Are all writable PDAs declared before execution?",
+            "rejectionProof": "Is there a named failure path if a threshold, hash, scope, or asset rule fails?"
+          }
+        }
+      },
+      "checklist": {
+        "whatChanges": {
+          "title": "What changes?",
+          "body": "The rule must describe the gameplay result in plain language before showing machine data.",
+          "proof": "human_readable_text"
+        },
+        "affectedSurface": {
+          "title": "Which surface is affected?",
+          "body": "The target module should be explicit: smelting, forging, resource rules, block parameters, market policy, or another declared surface.",
+          "proof": "target_module[]"
+        },
+        "oldAssets": {
+          "title": "Can old assets be harmed?",
+          "body": "If existing player-owned assets can be seized, downgraded, or rewritten, the proposal must move to the stronger Natural Law path.",
+          "proof": "migration_mode"
+        },
+        "hashProof": {
+          "title": "What proves identity?",
+          "body": "The readable rule and executable patch must be bound by stable hashes so signers can verify they are signing the same object.",
+          "proof": "text_hash + patch_hash"
+        },
+        "thresholdPath": {
+          "title": "Which threshold applies?",
+          "body": "Civilization Law and Natural Law use different consensus levels, cooling periods, and challenge expectations.",
+          "proof": "law_type + threshold"
+        },
+        "failurePath": {
+          "title": "How can it fail safely?",
+          "body": "A credible rule explains how execution is rejected when hashes are stale, scope is wrong, signatures are insufficient, or assets are unsafe.",
+          "proof": "RuleRejected event"
+        }
+      }
+    },
+    "journey": {
+      "eyebrow": "Beginner-to-Auditor Journey",
+      "title": "A newcomer should see one continuous path from playing the world to trusting a rule.",
+      "body": "The civilization page should not start from abstract governance. It should show how ordinary actions become public evidence, how evidence becomes civilization power, and how that power can approve only bounded, inspectable changes.",
+      "stackTitle": "How simple play becomes trustworthy governance",
+      "translations": {
+        "plainAction": "Start with the player's plain action: explore, mine, craft, build, trade, protect, or write.",
+        "publicEvidence": "Convert that action into public evidence: origin hashes, account state, events, and decoded PDA fields.",
+        "powerSnapshot": "Only mature, filtered participation becomes snapshot power for rule signatures.",
+        "boundedChange": "A signature never gives unlimited authority; it approves one bounded rule object and one declared patch.",
+        "replayableResult": "After execution, the result must be replayable from rule text, patch hash, accounts, and event logs."
+      },
+      "steps": {
+        "enter": {
+          "title": "Enter the world",
+          "body": "A beginner starts with a wallet, a seed chunk, and visible resources. The page should explain that this is already public world state, not a private game save."
+        },
+        "gather": {
+          "title": "Gather material proof",
+          "body": "Mining or finding resources creates provenance: which chunk, which generation rule, which resource, and which account recorded it."
+        },
+        "craft": {
+          "title": "Craft through rules",
+          "body": "Smelting, forging, and backpack changes should point to recipe versions so players know why an item exists."
+        },
+        "settle": {
+          "title": "Join a settlement",
+          "body": "Players can cooperate around chunks, production, guardians, and public projects, turning individual activity into civic state."
+        },
+        "propose": {
+          "title": "Propose or sign a rule",
+          "body": "A rule uses the player's readable reason, frozen power, target module, hashes, and threshold path before it can execute."
+        },
+        "verify": {
+          "title": "Verify the result",
+          "body": "The final state should be visible through decoded PDAs and events so a beginner can trust the outcome and an auditor can replay it."
+        }
+      }
+    },
+    "boundary": {
+      "eyebrow": "Implementation Boundary",
+      "title": "Credibility starts with saying what is live, what is designed, and what is not claimed.",
+      "body": "This page is a technical product direction for the civilization system. It separates the current public UI model from the future on-chain governance contract so reviewers can judge feasibility without guessing.",
+      "cards": {
+        "liveNow": {
+          "label": "Live now",
+          "title": "Public civilization codex UI",
+          "items": {
+            "one": "Readable law layers, lifecycle, examples, and technical account model are published on the website.",
+            "two": "Mock rule books show the future data shape without pretending they are already final chain governance.",
+            "three": "The page connects civilization design to existing NiceChunk modules such as smelting, forging, resource rules, and config PDAs."
+          }
+        },
+        "designedNext": {
+          "label": "Designed next",
+          "title": "On-chain civilization program",
+          "items": {
+            "one": "rule_book_pda, rule_signature_pda, citizen_state_pda, and rule_registry_pda can make the model directly auditable.",
+            "two": "RuleValidator should constrain machine patches before any config PDA write.",
+            "three": "execute_rule should be permissionless after threshold, cooling, and challenge conditions pass."
+          }
+        },
+        "notClaimed": {
+          "label": "Not claimed",
+          "title": "No false decentralization promise",
+          "items": {
+            "one": "This page does not claim mainnet governance is complete today.",
+            "two": "It does not claim arbitrary program upgrades can be safely controlled by text votes.",
+            "three": "It does not claim old player assets can be retroactively changed by ordinary Civilization Law."
+          }
+        }
+      }
+    },
+    "diagrams": {
+      "aria": "Civilization system diagram",
+      "system": {
+        "title": "From player action to world law",
+        "caption": "Every important step leaves a public object or public hash.",
+        "nodes": {
+          "player": "Player writes",
+          "proposal": "RuleBook PDA",
+          "read": "Public reading",
+          "sign": "Snapshot signatures",
+          "validator": "RuleValidator",
+          "config": "Config PDA write",
+          "gameplay": "Gameplay contracts",
+          "world": "World state"
+        },
+        "badges": {
+          "hashes": "text_hash + patch_hash",
+          "snapshot": "epoch power snapshot",
+          "pdaWrite": "auditable state change"
+        }
+      },
+      "readerGuide": {
+        "title": "From plain question to verifiable proof",
+        "caption": "The same rule should be understandable as a player story and auditable as deterministic state.",
+        "nodes": {
+          "plain": "Plain rule",
+          "impact": "Player impact",
+          "evidence": "Public evidence",
+          "decision": "Sign decision",
+          "patch": "Machine patch",
+          "validator": "Validator result",
+          "pda": "PDA write / reject"
+        },
+        "badges": {
+          "beginner": "beginner-readable",
+          "builder": "builder-checkable",
+          "auditor": "auditor-replayable",
+          "sameRule": "one rule identity across text, patch, and event"
+        }
+      },
+      "journey": {
+        "title": "New player trust journey",
+        "caption": "A simple player story and the technical proof chain should describe the same world state.",
+        "nodes": {
+          "enter": "Enter world",
+          "gather": "Gather proof",
+          "craft": "Craft item",
+          "settle": "Join settlement",
+          "propose": "Sign rule",
+          "verify": "Verify state"
+        },
+        "badges": {
+          "play": "playable first",
+          "proof": "evidence, not claims",
+          "power": "snapshot power",
+          "rule": "bounded rule object",
+          "audit": "decoded PDA + event log"
+        }
+      },
+      "classifier": {
+        "title": "Rule classification decision tree",
+        "caption": "Classification happens before voting so popularity cannot bypass asset safety or world invariants.",
+        "nodes": {
+          "proposal": "New proposal",
+          "classifier": "RuleClassifier",
+          "civilization": "Future-only config",
+          "natural": "Old assets / invariants",
+          "reject": "Privilege or inflation",
+          "review": "Unknown adapter",
+          "fifty": "50%",
+          "ninety": "90%",
+          "noVote": "Reject"
+        },
+        "badges": {
+          "beforeSign": "classification before signatures",
+          "ask": "what can this rule touch?",
+          "noBypass": "no popularity bypass",
+          "publicReason": "public rejection reason"
+        }
+      },
+      "power": {
+        "title": "Civilization power is a filtered participation snapshot",
+        "caption": "Participation adds signal; anti-abuse filters reduce noise before voting power is frozen.",
+        "nodes": {
+          "sources": "World participation",
+          "filters": "Anti-abuse filters",
+          "snapshot": "Epoch snapshot",
+          "vote": "Rule signature"
+        },
+        "badges": {
+          "add": "explore, mine, forge, trade",
+          "reduce": "caps, maturity, decay",
+          "freeze": "no last-minute power edits",
+          "sign": "agree / reject / abstain"
+        }
+      },
+      "threatModel": {
+        "title": "Threat-to-defense map",
+        "caption": "Every dangerous path should meet a visible defense before it can become state.",
+        "nodes": {
+          "badRule": "Untrusted proposal",
+          "identity": "Citizen maturity",
+          "hash": "Hash identity",
+          "validator": "RuleValidator",
+          "challenge": "Challenge window",
+          "safeWrite": "Scoped PDA write",
+          "publicReject": "Public rejection"
+        },
+        "badges": {
+          "untrusted": "assume every rule can be hostile",
+          "prove": "prove identity and expected state",
+          "window": "time for review and challenge",
+          "noSilentPath": "no silent admin path"
+        }
+      },
+      "caseWalkthrough": {
+        "title": "Bronze Age rule execution map",
+        "caption": "The same proposal moves from player story to machine patch to audited on-chain state.",
+        "nodes": {
+          "story": "Player story",
+          "patch": "Machine patch",
+          "signatures": "Snapshot signatures",
+          "validator": "RuleValidator gates",
+          "config": "Config PDA write",
+          "event": "RuleExecuted event",
+          "gameplay": "Gameplay effect"
+        },
+        "badges": {
+          "playerPromise": "copper + tin unlock bronze",
+          "boundPatch": "bounded smelting and forging diff",
+          "snapshot": "epoch 42 power",
+          "gates": "scope, conservation, old assets",
+          "pda": "versioned config PDA",
+          "publicEvent": "public audit record"
+        }
+      },
+      "impact": {
+        "title": "Rule impact simulation path",
+        "caption": "The same dry run should explain player impact, PDA reads, validator gates, and the final sign-or-reject decision.",
+        "nodes": {
+          "proposal": "Proposed rule",
+          "accounts": "Read accounts",
+          "personal": "Personal impact",
+          "validator": "Validator dry run",
+          "diff": "World diff",
+          "decision": "Sign decision"
+        },
+        "badges": {
+          "beforeSign": "before signatures count",
+          "readOnly": "read-only account preview",
+          "dryRun": "dry-run result",
+          "choice": "agree, reject, or abstain"
+        }
+      },
+      "reputation": {
+        "title": "Action-to-civic-power pipeline",
+        "caption": "Civilization power is assembled from receipts, normalized into a snapshot, then used only for bounded rule signatures.",
+        "nodes": {
+          "actions": "Provable play",
+          "receipts": "Receipt PDAs",
+          "guards": "Caps + decay",
+          "snapshot": "Citizen snapshot",
+          "signature": "Rule signature",
+          "replay": "Audit replay"
+        },
+        "badges": {
+          "provable": "NCM, backpack, forging, settlement, audit",
+          "normalized": "normalize before power",
+          "snapshot": "epoch-frozen citizen state",
+          "bounded": "sign only bounded rules",
+          "replay": "anyone can recalculate"
+        }
+      },
+      "execution": {
+        "title": "Hash-bound execution path",
+        "caption": "Readers can compare text_hash and patch_hash before signing.",
+        "nodes": {
+          "text": "Human text",
+          "patch": "Machine patch",
+          "signature": "Signed threshold",
+          "validator": "Safety validator",
+          "registry": "Registry + config PDAs"
+        },
+        "badges": {
+          "bound": "same rule identity",
+          "threshold": "50% or 90%",
+          "reject": "unsafe patch stops here"
+        }
+      },
+      "validator": {
+        "title": "RuleValidator gate sequence",
+        "caption": "Unsafe proposals fail before signatures can become executable state changes.",
+        "nodes": {
+          "parse": "Parse",
+          "scope": "Scope",
+          "conservation": "Conserve",
+          "asset": "Asset safety",
+          "threshold": "Threshold",
+          "write": "Write"
+        },
+        "badges": {
+          "deterministic": "deterministic checks",
+          "reject": "reject before state write",
+          "write": "narrow PDA update"
+        }
+      },
+      "transaction": {
+        "title": "Permissionless execution transaction",
+        "caption": "Any caller can execute, but only if the transaction proves the same rule, same snapshot, same hashes, and same expected account state.",
+        "nodes": {
+          "caller": "Any caller",
+          "rulebook": "RuleBook PDA",
+          "signatures": "Signature PDAs",
+          "citizens": "Citizen snapshots",
+          "execute": "execute_rule",
+          "reject": "Rejected reason",
+          "registry": "Rule registry",
+          "config": "Module config"
+        },
+        "badges": {
+          "anyone": "no project executor",
+          "snapshot": "snapshot_epoch frozen",
+          "hashes": "text_hash + patch_hash",
+          "reason": "public failure path"
+        }
+      },
+      "transparency": {
+        "title": "Public evidence browser map",
+        "caption": "Every claim on the civilization page should point to a decoded account, event, or rejection reason.",
+        "nodes": {
+          "claim": "Civilization claim",
+          "rule": "Rule account",
+          "signatures": "Signature accounts",
+          "config": "Config registry",
+          "challenge": "Challenge evidence",
+          "decoder": "PDA decoder",
+          "indexer": "Event indexer",
+          "player": "Player view"
+        },
+        "badges": {
+          "noTrust": "do not trust the website alone",
+          "sameAccounts": "same accounts the contract reads",
+          "decode": "decoded fields, hashes, and owners",
+          "shareable": "shareable proof link"
+        }
+      },
+      "versioning": {
+        "title": "Rule version chain",
+        "caption": "A module can advance to a new config without making previous assets or audit trails disappear.",
+        "nodes": {
+          "v1": "Active v1",
+          "proposal": "Proposal v2",
+          "compat": "Compatibility policy",
+          "v2": "Active v2",
+          "oldAssets": "Old assets",
+          "history": "Audit history"
+        },
+        "badges": {
+          "current": "current rule remains readable",
+          "supersede": "supersedes, never erases",
+          "compat": "old assets keep their interpretation",
+          "forward": "future actions use v2",
+          "replay": "both versions stay replayable"
+        }
+      },
+      "design": {
+        "title": "Civilization gameplay-to-PDA map",
+        "caption": "The page defines the future coding model: player actions create public state, public state unlocks eras, and rules change only bounded config.",
+        "nodes": {
+          "actions": "Player actions",
+          "resources": "Material proof",
+          "production": "Production graph",
+          "settlement": "Settlements",
+          "citizen": "Citizen role",
+          "knowledge": "Knowledge record",
+          "rule": "Civilization rule"
+        },
+        "badges": {
+          "play": "ordinary gameplay creates evidence",
+          "material": "resources keep provenance",
+          "build": "production unlocks society",
+          "law": "rules change bounded config",
+          "pda": "decoded PDA anchor for every claim"
+        }
+      },
+      "civic": {
+        "title": "Settlement public works loop",
+        "caption": "Materials, citizens, guardians, and rules form one inspectable loop before a settlement receives a benefit.",
+        "nodes": {
+          "settlement": "Settlement charter",
+          "contribute": "Material receipts",
+          "guardian": "Guardian coverage",
+          "rule": "Authorized rule",
+          "project": "Civic project",
+          "benefit": "Bounded benefit"
+        },
+        "badges": {
+          "charter": "public charter",
+          "receipts": "resource receipts",
+          "authorized": "rule-approved effect",
+          "milestone": "milestone account",
+          "visible": "benefit stays inspectable"
+        }
+      },
+      "auditTrail": {
+        "title": "Instruction-to-event audit trail",
+        "caption": "A reviewer should be able to replay the same rule from published hash to final config write.",
+        "nodes": {
+          "publish": "publish_rule",
+          "sign": "sign_rule",
+          "finalize": "finalize_threshold",
+          "challenge": "challenge_rule",
+          "execute": "execute_rule",
+          "eventLog": "Event log",
+          "indexer": "Public indexer",
+          "browser": "PDA browser"
+        },
+        "badges": {
+          "hashes": "hash identity",
+          "replay": "replayable state",
+          "public": "public audit surface"
+        }
+      },
+      "binding": {
+        "title": "Civilization-to-PDA binding map",
+        "caption": "Future rules should write narrow config PDAs that existing programs can read or that migration validators can safely apply.",
+        "nodes": {
+          "rulebook": "RuleBook + signatures",
+          "validator": "Safety validator",
+          "registry": "Versioned rule registry",
+          "core": "GlobalConfig",
+          "chunk": "ResourceDropTable",
+          "backpack": "Backpack assets",
+          "smelting": "RecipeTable",
+          "guardian": "Guardian registry",
+          "market": "Market state"
+        },
+        "badges": {
+          "safety": "old assets protected",
+          "versioned": "versioned config surface",
+          "public": "public PDA families"
+        }
+      }
+    },
+    "implementationTrace": {
+      "eyebrow": "Implementation Trace",
+      "title": "Every instruction should leave a replayable audit trail.",
+      "body": "The future civilization program should be easy to reconstruct from public data: which instruction was called, which PDA changed, which hash was checked, which event was emitted, and why a rule was accepted or rejected.",
+      "invariantTitle": "Audit invariants",
+      "labels": {
+        "input": "Input",
+        "output": "Output"
+      },
+      "invariants": {
+        "hashIdentity": "text_hash and patch_hash must identify the same rule through publish, sign, finalize, execute, and event logs.",
+        "snapshotReplay": "A threshold recount must be possible from signature PDAs and snapshot_epoch without trusting a website cache.",
+        "singleSignature": "One voter can have one effective signature per rule unless a later replacement path is explicitly designed.",
+        "noPrivilegedExecute": "execute_rule must not require a project wallet, admin signer, or hidden server authority.",
+        "boundedWrite": "A successful execution writes only the declared registry/config PDA family and never arbitrary account data.",
+        "rejectionReason": "Every rejected execution path should have a stable, documented reason that users and indexers can display."
+      },
+      "instructions": {
+        "publishRule": {
+          "phase": "Publish",
+          "title": "publish_rule",
+          "body": "Creates a rule book account and freezes the readable text hash, machine patch hash, law type, risk level, target module list, and snapshot epoch.",
+          "input": "rule_id, text_hash, patch_hash, law_type, risk_level, target_modules, snapshot_epoch",
+          "output": "RuleBook PDA initialized; RulePublished event emitted."
+        },
+        "signRule": {
+          "phase": "Sign",
+          "title": "sign_rule",
+          "body": "Creates or updates the voter's signature PDA for one rule, using civilization power from the declared snapshot epoch.",
+          "input": "rule_id, voter, side, snapshot_epoch, expected_text_hash, expected_patch_hash",
+          "output": "RuleSignature PDA written; RuleSigned event emitted."
+        },
+        "finalizeThreshold": {
+          "phase": "Finalize",
+          "title": "finalize_threshold",
+          "body": "Recounts public signatures, stores final yes/no/abstain power, and marks whether the threshold is met.",
+          "input": "rule_id, signature_index, threshold_policy, current_slot",
+          "output": "Rule tally finalized; ThresholdFinalized event emitted."
+        },
+        "challengeRule": {
+          "phase": "Challenge",
+          "title": "challenge_rule",
+          "body": "Records a challenge during the challenge window with a public evidence hash and blocks execution until resolved.",
+          "input": "rule_id, challenger, evidence_hash, challenge_reason",
+          "output": "Challenge PDA written; RuleChallenged event emitted."
+        },
+        "executeRule": {
+          "phase": "Execute",
+          "title": "execute_rule",
+          "body": "Runs the validator, checks current target config hash, then writes the accepted registry/config PDA or emits a named rejection reason.",
+          "input": "rule_id, target_module, old_value_hash, target_config_pda, registry_pda",
+          "output": "RuleExecuted or RuleRejected event emitted; config write only if all gates pass."
+        }
+      },
+      "events": {
+        "rulePublished": {
+          "level": "Public",
+          "title": "RulePublished",
+          "body": "Signals that a rule is now readable and hash-bound.",
+          "payload": "rule_id, author, text_hash, patch_hash, law_type, risk_level, snapshot_epoch"
+        },
+        "ruleSigned": {
+          "level": "Public",
+          "title": "RuleSigned",
+          "body": "Signals that a citizen signature changed threshold math.",
+          "payload": "rule_id, voter, side, power_at_snapshot, snapshot_epoch, signature_pda"
+        },
+        "thresholdFinalized": {
+          "level": "Public",
+          "title": "ThresholdFinalized",
+          "body": "Signals that signatures were recounted and the rule can move to cooling or blocked state.",
+          "payload": "rule_id, yes_power, no_power, abstain_power, threshold_met, finalized_slot"
+        },
+        "ruleChallenged": {
+          "level": "Warning",
+          "title": "RuleChallenged",
+          "body": "Signals that execution is paused for review with public evidence.",
+          "payload": "rule_id, challenger, evidence_hash, challenge_reason, expires_slot"
+        },
+        "ruleExecuted": {
+          "level": "Public",
+          "title": "RuleExecuted",
+          "body": "Signals that a validated patch wrote a narrow config or registry result.",
+          "payload": "rule_id, executor, target_module, old_value_hash, new_value_hash, written_pda"
+        },
+        "ruleRejected": {
+          "level": "Warning",
+          "title": "RuleRejected",
+          "body": "Signals that execution failed without writing config state.",
+          "payload": "rule_id, caller, rejection_code, checked_hash, failed_gate"
+        }
+      }
+    },
+    "executionProof": {
+      "eyebrow": "Execution Proof",
+      "title": "A rule becomes credible only when its signatures, accounts, and failure paths are inspectable.",
+      "body": "This is the bridge between a readable proposal and a trustworthy state change: frozen power snapshots, signature PDAs, deterministic account reads, validator rejection reasons, and a narrow registry write.",
+      "labels": {
+        "seed": "Seed",
+        "writer": "Writer",
+        "mutability": "Mutability"
+      },
+      "severity": {
+        "medium": "Medium risk",
+        "high": "High risk",
+        "critical": "Critical block"
+      },
+      "items": {
+        "snapshotFrozen": {
+          "kicker": "Snapshot",
+          "title": "Signer power is frozen before signatures count.",
+          "body": "The signature stores snapshot_epoch and power_at_snapshot. Later mining, trading, or wallet movement cannot rewrite the voting weight of an already published rule."
+        },
+        "signatureAccount": {
+          "kicker": "Signature PDA",
+          "title": "Every vote is a public account, not a hidden database row.",
+          "body": "A rule_signature_pda should bind voter, rule_id, side, power, timestamp, text_hash, and patch_hash so observers can recount the threshold."
+        },
+        "executeAccounts": {
+          "kicker": "Transaction",
+          "title": "execute_rule reads proofs before it writes results.",
+          "body": "The transaction reads the rule book, signature totals, citizen snapshot metadata, current target config hash, and validator scope before writing a registry or module config PDA."
+        },
+        "publicRejection": {
+          "kicker": "Failure",
+          "title": "Rejected rules should fail with named reasons.",
+          "body": "A failed execution should expose why it failed: stale hash, missing threshold, expired window, wrong module, conservation break, or asset safety violation."
+        }
+      },
+      "accounts": {
+        "ruleBook": {
+          "title": "Rule book account",
+          "body": "Stores readable metadata, law type, risk level, target modules, text_hash, patch_hash, snapshot_epoch, and lifecycle timestamps."
+        },
+        "signature": {
+          "title": "Signature account",
+          "body": "Stores a voter's side and frozen civilization power for one rule so votes can be independently recounted."
+        },
+        "citizen": {
+          "title": "Citizen state account",
+          "body": "Stores participation-derived power inputs and epoch snapshots used by rule signatures."
+        },
+        "registry": {
+          "title": "Rule registry account",
+          "body": "Stores accepted rule versions, supersession links, execution slots, and active module policy references."
+        },
+        "moduleConfig": {
+          "title": "Module config account",
+          "body": "Stores the narrow result that gameplay programs read, such as recipe tables, drop tables, fee policy, or block parameters."
+        }
+      },
+      "failures": {
+        "staleHash": {
+          "title": "Stale old_value_hash",
+          "body": "The target config changed after the proposal was published, so the rule must be reviewed again instead of overwriting newer state."
+        },
+        "thresholdMissing": {
+          "title": "Threshold not reached",
+          "body": "The yes power does not satisfy the required Civilization Law or Natural Law threshold at the frozen snapshot."
+        },
+        "snapshotChanged": {
+          "title": "Invalid snapshot window",
+          "body": "The rule is using an expired, missing, or mismatched snapshot epoch, so signature power cannot be trusted."
+        },
+        "assetViolation": {
+          "title": "Old asset safety violation",
+          "body": "The patch would seize, downgrade, or rewrite existing player-owned assets without the stronger Natural Law path."
+        },
+        "conservationFailure": {
+          "title": "Resource conservation failure",
+          "body": "The patch creates outputs without bounded inputs, generated sources, or an allowed transformation rule."
+        },
+        "wrongScope": {
+          "title": "Wrong module scope",
+          "body": "The patch tries to mutate a module or field path outside the declared target_module list."
+        }
+      }
+    },
+    "transparency": {
+      "eyebrow": "Public Transparency Console",
+      "title": "Players should be able to inspect civilization truth without trusting the website.",
+      "body": "The future PDA browser should decode the same public accounts that the contract reads: rules, signatures, citizen snapshots, module registries, config PDAs, challenges, and execution events.",
+      "checkTitle": "What the browser must prove",
+      "labels": {
+        "account": "Account",
+        "proof": "Proof field"
+      },
+      "checks": {
+        "decode": "Decode raw PDA bytes into named fields instead of showing opaque base64.",
+        "compare": "Compare text_hash, patch_hash, old_value_hash, and active_config_hash side by side.",
+        "recount": "Recount threshold math from signature accounts and snapshot_epoch.",
+        "simulate": "Run read-only validator simulation before users sign or execute.",
+        "watch": "Show RuleExecuted, RuleRejected, and RuleChallenged events as a public timeline."
+      },
+      "surfaces": {
+        "ruleLedger": {
+          "label": "Rule ledger",
+          "title": "Every proposal has a public identity.",
+          "body": "The browser should show author, law type, risk level, target modules, readable hash, patch hash, cooldown, and current lifecycle state."
+        },
+        "signatureLedger": {
+          "label": "Signature ledger",
+          "title": "Every vote can be recounted.",
+          "body": "A user should see which accounts signed, which side they chose, and how much frozen civilization power each signature contributed."
+        },
+        "citizenSnapshot": {
+          "label": "Citizen snapshot",
+          "title": "Civilization power is inspectable input.",
+          "body": "The snapshot panel should explain mature identity, activity, caps, decay, and the final power used by a rule."
+        },
+        "configRegistry": {
+          "label": "Config registry",
+          "title": "Accepted rules point to active module state.",
+          "body": "The registry should expose which rule version controls smelting, forging, resource drops, block parameters, or other module configs."
+        },
+        "assetSafety": {
+          "label": "Asset safety",
+          "title": "Player-owned assets stay visible and protected.",
+          "body": "When a rule claims it does not touch old assets, the browser should show relevant read-only backpack or market account checks."
+        },
+        "challengeCourt": {
+          "label": "Challenge court",
+          "title": "Objections become public evidence, not private arguments.",
+          "body": "Challenges should have account state, evidence hashes, expiry, resolution status, and the failed gate if execution is rejected."
+        }
+      }
+    },
+    "versioning": {
+      "eyebrow": "Versioned Evolution",
+      "title": "Civilization advances by creating a public version chain, not by erasing old rules.",
+      "body": "A credible world needs historical continuity. When a new rule replaces an old one, the registry should preserve old hashes, effective epochs, supersession links, and asset compatibility notes.",
+      "stackTitle": "Versioning guarantees",
+      "labels": {
+        "account": "Account",
+        "hash": "Hash"
+      },
+      "principles": {
+        "appendOnly": "Rule history is append-only: a new active rule links to the previous version instead of deleting it.",
+        "effectiveEpoch": "Each version has an effective_epoch so players know which rule applied when an action happened.",
+        "compatibility": "Compatibility policy explains how old backpacks, recipes, listings, and crafted items remain valid.",
+        "supersession": "Supersession links show why v2 replaced v1 and which rule approved the change.",
+        "auditReplay": "A reviewer can replay v1 behavior, v2 behavior, and the transition between them from public hashes."
+      },
+      "stages": {
+        "activeV1": {
+          "title": "Active version",
+          "body": "The current module config remains readable with rule_id, config hash, effective epoch, and owner program."
+        },
+        "proposalV2": {
+          "title": "Proposed replacement",
+          "body": "A new rule proposes a patch that references the current active hash and declares the superseded version."
+        },
+        "compatibility": {
+          "title": "Compatibility policy",
+          "body": "The validator records whether old assets keep v1 semantics, migrate forward, or require Natural Law."
+        },
+        "activeV2": {
+          "title": "New active version",
+          "body": "After execution, new gameplay reads v2 while old history, events, and compatibility notes remain inspectable."
+        }
+      }
+    },
+    "design": {
+      "eyebrow": "Civilization Setting Blueprint",
+      "title": "The civilization system should become a playable society engine, not only a voting page.",
+      "body": "Future coding should treat civilization as the public layer that connects eras, citizens, settlements, production, knowledge, and rule execution. Each design object needs a readable player promise and a decoded PDA anchor.",
+      "stackTitle": "Design rules for future coding",
+      "blueprintTitle": "Initial account and instruction targets",
+      "labels": {
+        "account": "Account",
+        "anchor": "Proof anchor"
+      },
+      "principles": {
+        "readablePromise": "Every feature starts with a player-readable promise before it becomes account data.",
+        "pdaAnchor": "Every promise must map to a PDA, event, hash, or deterministic rejection reason.",
+        "materialContinuity": "Civilization progress must respect material provenance: resources, recipes, and crafted items cannot appear from nowhere.",
+        "forwardUnlocks": "New eras and technologies should unlock future actions without silently rewriting old player history.",
+        "publicDecoder": "The website should eventually decode each civilization account beside the rule that produced it."
+      },
+      "surfaces": {
+        "era": {
+          "label": "Era",
+          "title": "Eras are public unlock layers.",
+          "body": "Stone, bronze, iron, energy, automation, or future eras should be activated by proven world activity and accepted rule versions, not by a private switch."
+        },
+        "citizen": {
+          "label": "Citizen",
+          "title": "Citizens have roles, memory, and snapshot power.",
+          "body": "A player can be miner, builder, trader, guardian, author, or auditor. The role does not replace ownership; it explains participation and rule power."
+        },
+        "settlement": {
+          "label": "Settlement",
+          "title": "Cities and territories are cooperative state.",
+          "body": "Settlements can bind chunks, public works, protection coverage, production bonuses, and civic projects into transparent shared accounts."
+        },
+        "production": {
+          "label": "Production",
+          "title": "Production is a graph, not magic output.",
+          "body": "Recipes, machines, smelting, forging, and future industry should read explicit input-output rules and preserve old crafted assets."
+        },
+        "knowledge": {
+          "label": "Knowledge",
+          "title": "Discoveries become public knowledge records.",
+          "body": "A civilization can unlock technology when exploration, materials, rule text, and validator proof all point to the same discovery."
+        },
+        "proof": {
+          "label": "Proof",
+          "title": "The public browser is part of gameplay.",
+          "body": "Players should browse citizens, backpacks, settlements, projects, rules, signatures, and decoded PDA data as the trust interface of the world."
+        }
+      },
+      "blueprints": {
+        "epoch": {
+          "title": "Epoch and era registry",
+          "body": "Stores active era, effective epoch, unlock rule hash, and compatibility notes for earlier eras."
+        },
+        "role": {
+          "title": "Citizen role state",
+          "body": "Stores participation role, maturity, activity score, snapshot weight inputs, and the latest public power hash."
+        },
+        "settlement": {
+          "title": "Settlement account",
+          "body": "Stores territory links, member policy, public works, production modifiers, and guardian coverage references."
+        },
+        "project": {
+          "title": "Civic project account",
+          "body": "Stores contributed resources, goal state, unlock effects, and the rule or settlement that authorized the project."
+        },
+        "knowledge": {
+          "title": "Knowledge record account",
+          "body": "Stores discovery claim, material proof, author, text hash, related rule id, and whether it unlocks a future config."
+        }
+      }
+    },
+    "civic": {
+      "eyebrow": "Civic Works Loop",
+      "title": "Settlements make civilization playable by turning shared work into public state.",
+      "body": "A civilization system needs more than rule signatures. It needs cooperative projects where players contribute materials, guardians prove coverage, rules authorize effects, and every benefit can be traced back to public accounts.",
+      "stackTitle": "What makes public works trustworthy",
+      "labels": {
+        "account": "Account",
+        "proof": "Proof"
+      },
+      "guarantees": {
+        "noPrivateTreasury": "No hidden treasury: contributed materials should be recorded as receipts, not swallowed by a private server.",
+        "materialReceipts": "Every contribution should preserve resource origin, amount, contributor, project id, and accepted recipe version.",
+        "guardianProof": "Protection or service bonuses require guardian coverage proof for the relevant epoch and territory.",
+        "ruleAuthorized": "A settlement benefit must reference the rule or charter that authorized it.",
+        "benefitBounded": "Benefits are bounded config effects, not arbitrary minting, ownership seizure, or private privilege."
+      },
+      "surfaces": {
+        "charter": {
+          "label": "Charter",
+          "title": "A settlement starts with a public charter.",
+          "body": "The charter explains territory, member policy, public works rights, guardian requirements, and which rules can change the settlement."
+        },
+        "contribution": {
+          "label": "Contribution",
+          "title": "Materials become receipts before they become power.",
+          "body": "Players can see who contributed copper, wood, stone, fuel, or crafted parts, and which milestone accepted the input."
+        },
+        "guardian": {
+          "label": "Guardian",
+          "title": "Service coverage is proven, not assumed.",
+          "body": "Guardian records should show coverage area, epoch, validator result, and whether the project can claim protection-related benefits."
+        },
+        "project": {
+          "label": "Project",
+          "title": "Public works progress through milestones.",
+          "body": "Roads, furnaces, archives, markets, defenses, or future machines should have explicit goals, accepted inputs, and completion events."
+        },
+        "benefit": {
+          "label": "Benefit",
+          "title": "Settlement bonuses are narrow and forward-looking.",
+          "body": "A completed project can unlock future production or visibility effects, but it cannot rewrite old assets or create resources without inputs."
+        },
+        "audit": {
+          "label": "Audit",
+          "title": "Anyone can inspect why the settlement changed.",
+          "body": "The browser should link charter, receipts, guardian proof, rule authorization, milestones, and final effect into one readable chain."
+        }
+      }
+    },
+    "buildSpec": {
+      "eyebrow": "Codex Build Spec",
+      "title": "This page is also the implementation brief for the future civilization program.",
+      "body": "Future coding work should implement the smallest trustworthy loop first: publish a hash-bound rule book, sign with frozen civilization power, validate a bounded patch, execute it without a privileged wallet, and expose every PDA in the browser.",
+      "orderTitle": "Recommended build order",
+      "groups": {
+        "program": {
+          "kicker": "Program",
+          "title": "Civilization program surface",
+          "body": "Start with a dedicated program that owns the rule accounts and only writes narrow configuration outputs.",
+          "items": {
+            "stateAccounts": "Implement RuleBook, RuleSignature, CitizenState, RuleRegistry, and module config account layouts.",
+            "instructions": "Implement publish_rule, sign_rule, finalize_threshold, execute_rule, and challenge_rule as separate instructions.",
+            "errors": "Return explicit error codes for stale hash, unsafe patch, bad snapshot, wrong scope, and insufficient threshold."
+          }
+        },
+        "validator": {
+          "kicker": "Validator",
+          "title": "Deterministic safety engine",
+          "body": "Treat the validator as contract logic, not frontend advice.",
+          "items": {
+            "patchParser": "Parse a fixed binary patch envelope; reject unknown operations and oversized payloads.",
+            "safetyGates": "Run scope, conservation, asset safety, threshold, cooling, and challenge gates before any write.",
+            "moduleAdapters": "Add one adapter per module so smelting, resource drops, guardian policy, and market policy have explicit field rules."
+          }
+        },
+        "client": {
+          "kicker": "Client",
+          "title": "Readable governance interface",
+          "body": "The UI must make signing understandable without hiding the machine patch.",
+          "items": {
+            "ruleEditor": "Show human text, machine diff, target modules, risk level, old_value_hash, and new_value_hash side by side.",
+            "signaturePanel": "Show snapshot power, signer side, threshold progress, cooling window, and challenge state.",
+            "pdaBrowser": "Expose every rule, signature, citizen snapshot, registry, and config PDA in the existing contract browser."
+          }
+        },
+        "audit": {
+          "kicker": "Audit",
+          "title": "Public verification tools",
+          "body": "Every successful or failed rule should be easy to reconstruct after the fact.",
+          "items": {
+            "hashCompare": "Provide a hash comparison panel for text_hash, patch_hash, old_value_hash, and written config hash.",
+            "simulation": "Provide a dry-run validator output before signatures are collected.",
+            "eventLog": "Log published, signed, finalized, challenged, executed, and rejected events with public reasons."
+          }
+        }
+      },
+      "order": {
+        "mockFirst": {
+          "title": "Mock data spec",
+          "body": "Freeze the JSON/account shapes in UI first so reviewers can challenge the model before chain code exists."
+        },
+        "readOnlyPdas": {
+          "title": "Read-only PDA browser",
+          "body": "Add decoders and account panels before enabling writes, so transparency arrives before power."
+        },
+        "signatureFlow": {
+          "title": "Signature flow",
+          "body": "Implement rule_signature_pda and threshold recounting with frozen snapshot power."
+        },
+        "validatorDryRun": {
+          "title": "Validator dry run",
+          "body": "Run deterministic patch checks without writing config to prove reject reasons."
+        },
+        "permissionlessExecute": {
+          "title": "Permissionless execute",
+          "body": "Enable execute_rule only after hashes, threshold, cooling, challenge, and target config state all pass."
+        }
+      }
+    },
     "lawType": {
       "natural": "Natural Law",
       "civilization": "Civilization Law"
@@ -1314,6 +2341,50 @@
         }
       }
     },
+    "classifier": {
+      "eyebrow": "Rule Classifier",
+      "title": "The first question is what the rule can touch, not who wants it.",
+      "body": "NiceChunk should classify every proposal before signatures count. Future-only configuration can use Civilization Law; old assets, world invariants, supply rules, or privileged paths require Natural Law or immediate rejection.",
+      "checkTitle": "Classifier questions",
+      "labels": {
+        "threshold": "Threshold",
+        "proof": "Proof"
+      },
+      "route": {
+        "civilization": "Civilization Law",
+        "natural": "Natural Law",
+        "reject": "Reject"
+      },
+      "checks": {
+        "touchesOldAssets": "Does it seize, downgrade, migrate, or rewrite existing player-owned assets?",
+        "changesSupply": "Does it change resource conservation, generated supply, NCK principles, or world genesis assumptions?",
+        "grantsPrivilege": "Does it grant one address a bypass, mint path, or private production advantage?",
+        "futureOnly": "Is the change forward-only and limited to a declared module configuration?",
+        "knownAdapter": "Can a known module adapter parse and validate every field path in the machine patch?"
+      },
+      "routes": {
+        "futureConfig": {
+          "title": "Future-only configuration",
+          "body": "New recipes, future block parameters, knowledge records, or module policy changes can use normal Civilization Law when old assets are untouched."
+        },
+        "oldAssets": {
+          "title": "Existing player assets",
+          "body": "Any retroactive change to backpacks, listings, ownership, durability, or already-created value must be treated as Natural Law."
+        },
+        "coreInvariant": {
+          "title": "World invariants",
+          "body": "World generation, conservation, NCK principles, and zero-admin assumptions require the highest consensus path."
+        },
+        "privilegeMint": {
+          "title": "Privilege or inflation attempt",
+          "body": "A rule that creates value without bounded input or gives one address a private bypass should be rejected before voting."
+        },
+        "unknownPatch": {
+          "title": "Unknown machine patch",
+          "body": "If the contract cannot parse the adapter, operation, or field path deterministically, the proposal must return to draft."
+        }
+      }
+    },
     "constitution": {
       "eyebrow": "World-level consensus",
       "title": "Natural Law is not a normal vote.",
@@ -1352,6 +2423,229 @@
       "snapshot": {
         "total": "Total power",
         "mature": "Mature citizens"
+      }
+    },
+    "threatModel": {
+      "eyebrow": "Threat Model",
+      "title": "A civilization system is credible only if it explains how bad rules fail.",
+      "body": "Governance is dangerous when voting can bypass physics, ownership, or transparency. NiceChunk civilization rules should treat every proposal as untrusted until hashes, snapshots, validators, challenge windows, and PDA scopes prove otherwise.",
+      "defenseTitle": "Defense stack",
+      "defenses": {
+        "identity": "Civilization power is snapshot-based and filtered by maturity, activity, caps, decay, and anomaly penalties.",
+        "hash": "The readable rule, machine patch, old state, and new state are bound by hashes before signatures count.",
+        "validator": "RuleValidator runs deterministic checks for scope, conservation, old assets, thresholds, and writable PDA families.",
+        "challenge": "Cooling and challenge windows give auditors time to detect misleading text, unsafe patches, or stale state.",
+        "publicFailure": "A rejected execution should emit a named reason so users can see why the rule did not mutate state."
+      },
+      "scenarios": {
+        "sybil": {
+          "label": "Sybil pressure",
+          "title": "Many fresh wallets try to manufacture consensus.",
+          "body": "New identities should not immediately become full civilization power. Maturity, activity history, caps, and anomaly penalties reduce cheap wallet splitting.",
+          "proof": "citizen_state_pda + snapshot_epoch"
+        },
+        "whaleCapture": {
+          "label": "Power capture",
+          "title": "One actor tries to dominate votes with raw capital.",
+          "body": "The design separates participation-derived civilization power from simple wallet count or raw NCK balance, then caps and decays abnormal concentration.",
+          "proof": "power_at_snapshot + cap policy"
+        },
+        "stalePatch": {
+          "label": "Stale patch",
+          "title": "A rule signs old state and later overwrites newer config.",
+          "body": "old_value_hash must match the current target config before execution. If the config has changed, the rule fails instead of overwriting newer work.",
+          "proof": "old_value_hash mismatch"
+        },
+        "assetSeizure": {
+          "label": "Asset seizure",
+          "title": "A proposal tries to downgrade or take existing player assets.",
+          "body": "Retroactive ownership or value changes are treated as Natural Law territory with stronger prompts, stricter validation, and higher consensus.",
+          "proof": "migration_mode = NaturalLaw"
+        },
+        "resourceInflation": {
+          "label": "Inflation",
+          "title": "A patch tries to create resources without bounded input.",
+          "body": "Conservation checks require generated source, input burn, or validated transformation before new outputs can enter gameplay.",
+          "proof": "conservation gate"
+        },
+        "hiddenAdmin": {
+          "label": "Hidden admin",
+          "title": "Execution secretly depends on a project-side wallet.",
+          "body": "execute_rule should be callable by anyone after public conditions pass. A privileged executor would contradict the civilization model.",
+          "proof": "permissionless execute_rule"
+        }
+      }
+    },
+    "caseWalkthrough": {
+      "eyebrow": "Rule Case Walkthrough",
+      "title": "A Bronze Age rule shows how civilization becomes executable code.",
+      "body": "This example is written as the coding target for the future civilization program: one player-readable rule, one machine patch, one signature path, one validator result, and one public PDA write.",
+      "summaryTitle": "Bronze Age Rule payload",
+      "summary": {
+        "lawType": "Law type",
+        "ruleId": "Rule ID",
+        "targetModules": "Target modules",
+        "threshold": "Threshold",
+        "snapshotEpoch": "Snapshot epoch",
+        "execution": "Execution path"
+      },
+      "views": {
+        "player": {
+          "kicker": "Player view",
+          "title": "The rule unlocks bronze without touching old backpacks.",
+          "body": "Players read it as a civilization advancement: copper and tin can become bronze after the community approves the process.",
+          "items": {
+            "one": "Existing copper, tin, tools, and backpacks remain owned by their current players.",
+            "two": "New bronze output requires declared inputs and a validated smelting path.",
+            "three": "A player can inspect the final PDA and see which rule made bronze active."
+          }
+        },
+        "builder": {
+          "kicker": "Builder view",
+          "title": "The patch is a bounded module diff.",
+          "body": "The implementation target is not a free-form text command. It is a structured diff against smelting and forging configuration surfaces.",
+          "items": {
+            "one": "Add smelting recipe: copper_ore + tin_ore + heat_tier_2 -> bronze_ingot.",
+            "two": "Add forging recipe: bronze_ingot + handle_material -> bronze_tool_head.",
+            "three": "Reject the patch if field_path, operation, or module adapter is unknown."
+          }
+        },
+        "auditor": {
+          "kicker": "Auditor view",
+          "title": "Every claim can be replayed from public evidence.",
+          "body": "An auditor compares text_hash, patch_hash, old_value_hash, signature PDAs, and execution events before trusting the outcome.",
+          "items": {
+            "one": "Recount yes/no/abstain power at snapshot_epoch 42.",
+            "two": "Check old_value_hash against the current target config before execution.",
+            "three": "Confirm RuleExecuted names the exact written PDA and new_value_hash."
+          }
+        },
+        "contract": {
+          "kicker": "Contract view",
+          "title": "execute_rule writes only the declared configuration accounts.",
+          "body": "The contract validates identity, threshold, cooldown, challenge state, scope, conservation, and asset safety before any write.",
+          "items": {
+            "one": "Writable accounts are limited to rule_registry_pda and declared module config PDAs.",
+            "two": "Backpack PDA is read only for asset-safety reasoning, never rewritten by this Civilization Law.",
+            "three": "Failure emits RuleRejected with a stable failed_gate instead of partial state."
+          }
+        }
+      },
+      "evidence": {
+        "textHash": {
+          "title": "Readable rule identity",
+          "body": "The human explanation that players sign must hash to this value."
+        },
+        "patchHash": {
+          "title": "Machine patch identity",
+          "body": "The executable patch bytes must hash to this value before signatures count."
+        },
+        "oldHash": {
+          "title": "Expected current config",
+          "body": "Execution stops if the live smelting or forging config no longer matches the reviewed state."
+        },
+        "newHash": {
+          "title": "Committed target config",
+          "body": "The accepted patch produces this new config hash after validator gates pass."
+        },
+        "writtenPda": {
+          "title": "Narrow writable surface",
+          "body": "The transaction may write only the declared config PDAs, not arbitrary player or market accounts."
+        },
+        "event": {
+          "title": "Public execution record",
+          "body": "Indexers and the website can show the same event as proof that the rule became active."
+        }
+      }
+    },
+    "impact": {
+      "eyebrow": "Rule Impact Simulator",
+      "title": "Before signing, a player should see the rule's personal, world, and technical impact.",
+      "body": "A trustworthy civilization interface should simulate a proposal before it becomes power: what changes for my backpack, what changes for future production, which PDAs are read, which hashes must match, and why the validator accepts or rejects the patch.",
+      "stackTitle": "Dry-run checks before signatures count",
+      "checks": {
+        "readAccounts": "Read the declared accounts without mutating state: rule book, target configs, backpacks, settlement effects, and citizen snapshots.",
+        "compareHashes": "Compare text_hash, patch_hash, old_value_hash, and expected new_value_hash before anyone signs.",
+        "showDiff": "Show the human-readable before/after diff beside the machine patch field path.",
+        "simulateFailure": "Show the exact rejection reason if a gate fails: stale hash, unsafe asset migration, conservation break, wrong scope, or missing threshold.",
+        "explainChoice": "Translate the dry-run result into a clear agree, reject, or abstain decision for nontechnical players."
+      },
+      "surfaces": {
+        "personal": {
+          "label": "Personal",
+          "title": "Will this touch my wallet or backpack?",
+          "body": "The simulator should say whether the rule reads my accounts, writes my accounts, or has no direct personal effect."
+        },
+        "assets": {
+          "label": "Assets",
+          "title": "Can old assets be changed?",
+          "body": "Existing backpacks, listings, crafted items, and ownership records must be shown as protected, read-only, migrated, or blocked by Natural Law."
+        },
+        "production": {
+          "label": "Production",
+          "title": "What future gameplay changes?",
+          "body": "Players should see which recipes, drop tables, machine rules, or block parameters change after the rule becomes active."
+        },
+        "settlement": {
+          "label": "Settlement",
+          "title": "Does the rule affect a civic project?",
+          "body": "Settlement changes should show affected territory, project milestones, guardian coverage, and forward-only benefits."
+        },
+        "economy": {
+          "label": "Economy",
+          "title": "Does value appear from nowhere?",
+          "body": "The dry run should explain input requirements, resource conservation, fee effects, and why no private address receives hidden privilege."
+        },
+        "technical": {
+          "label": "Technical",
+          "title": "Which gate accepts or rejects the patch?",
+          "body": "Professional users should see parsed operations, account owners, writable PDAs, adapter names, and deterministic validator output."
+        }
+      }
+    },
+    "reputation": {
+      "eyebrow": "Civic Power Ledger",
+      "title": "Civilization power should come from provable play, not a transferable vote token.",
+      "body": "NiceChunk's civilization layer can turn discovery, backpack ownership, forging, settlement work, and audit challenges into a public citizen snapshot. A player sees why their voice counts; an auditor sees the receipts, caps, decay, and replay path behind that power.",
+      "stackTitle": "Why civic power is hard to fake",
+      "guards": {
+        "receiptOnly": "Only actions with decoded receipts can enter the score; website-only claims do not count.",
+        "snapshotEpoch": "Rule signatures use an epoch snapshot, so last-minute account changes cannot rewrite signer power.",
+        "capAndDecay": "Each source has a cap and decay curve, preventing one activity or one old achievement from dominating forever.",
+        "nonTransferable": "Power follows the citizen history behind a wallet; it is not a free-transfer vote token that can be bought in one trade.",
+        "replayableMath": "Indexers, players, and auditors should be able to recompute the same score from public PDA data."
+      },
+      "sources": {
+        "discovery": {
+          "label": "Discovery",
+          "title": "NCM exploration creates origin evidence.",
+          "body": "Finding and proving valuable chunks can become a civilization signal because the source, seed, and discovery receipt are inspectable."
+        },
+        "backpack": {
+          "label": "Backpack",
+          "title": "Owned assets prove material participation.",
+          "body": "Backpack state shows which resources, crafted items, and historical holdings a citizen actually carried through the world."
+        },
+        "forging": {
+          "label": "Forging",
+          "title": "Craft outputs prove productive work.",
+          "body": "Smelting and forging receipts show that the player transformed inputs under public recipe rules instead of only holding balance."
+        },
+        "market": {
+          "label": "Market",
+          "title": "Settled trades prove honest exchange.",
+          "body": "Market history can reward completed, non-abusive exchange while excluding wash loops and failed settlement records."
+        },
+        "settlement": {
+          "label": "Settlement",
+          "title": "Civic work proves public contribution.",
+          "body": "Material receipts, milestone accounts, and guardian coverage make settlement labor visible without trusting a private treasury."
+        },
+        "audit": {
+          "label": "Audit",
+          "title": "Challenges prove rule-review labor.",
+          "body": "Valid challenges, resolved evidence, and caught failures can become civic credit because they protect the whole civilization."
+        }
       }
     },
     "lifecycle": {
@@ -1412,6 +2706,118 @@
         "abstain_power": "Abstaining civilization power.",
         "cooldown_end": "Earliest execution time after consensus.",
         "execute_status": "Current execution readiness or result."
+      }
+    },
+    "technical": {
+      "eyebrow": "Technical Flow",
+      "title": "The contract executes a verified patch, not a vague social instruction.",
+      "body": "The human rule explains the intent. The machine patch states exactly which config PDA fields change. The validator rejects unsafe patches before a registry write can happen.",
+      "assurances": {
+        "hashBinding": {
+          "title": "Hash binding",
+          "body": "The readable text and machine patch are committed by hash so a signer can audit whether the thing they read is the thing being executed."
+        },
+        "validatorBeforeWrite": {
+          "title": "Validator before write",
+          "body": "Unsafe updates are rejected before they reach module registries, including no-input output, privileged address logic, and ownership seizure."
+        },
+        "pdaRegistry": {
+          "title": "PDA registry surface",
+          "body": "Accepted rules write into versioned registry and configuration PDAs that public tools can fetch and decode."
+        },
+        "permissionlessExecution": {
+          "title": "Permissionless execution",
+          "body": "When all conditions pass, execution does not depend on a project wallet. Any player can submit the transaction."
+        }
+      }
+    },
+    "validatorSpec": {
+      "eyebrow": "RuleValidator Spec",
+      "title": "A civilization rule must pass deterministic gates before it can touch a config PDA.",
+      "body": "The validator is the difference between meaningful governance and dangerous voting. It turns a social proposal into a constrained state transition: parse, classify, prove safety, require the correct threshold, then write a narrow result.",
+      "patchTitle": "Machine patch envelope",
+      "patchFields": {
+        "module": "The target module family such as smelting, resource rules, guardian policy, or market policy.",
+        "operation": "The allowed mutation kind. Free-form code execution is not part of the patch language.",
+        "field_path": "The exact field or record path being changed inside the versioned config surface.",
+        "old_value_hash": "Expected current value hash. Prevents executing a stale proposal over changed state.",
+        "new_value_hash": "Committed target value hash. Signers know what state the proposal will write.",
+        "migration_mode": "Whether old assets are untouched, forward-only, or require Natural Law treatment.",
+        "effective_epoch": "Earliest epoch where the patch becomes active after execution.",
+        "rollback_hash": "Optional rollback or supersession reference for audit and recovery design."
+      },
+      "risk": {
+        "low": {
+          "label": "Low",
+          "title": "UI or knowledge update",
+          "body": "Public explanations, audit notes, or forward-only metadata with no asset or economy impact."
+        },
+        "medium": {
+          "label": "Medium",
+          "title": "Normal config evolution",
+          "body": "New recipes, block parameters, or resource tables that affect future gameplay only."
+        },
+        "high": {
+          "label": "High",
+          "title": "Economic or service policy",
+          "body": "Fees, guardian parameters, market categories, or rules with indirect economic impact."
+        },
+        "critical": {
+          "label": "Critical",
+          "title": "Natural Law surface",
+          "body": "Genesis invariants, old asset treatment, conservation, or privilege boundaries."
+        }
+      }
+    },
+    "binding": {
+      "eyebrow": "Current Contract Surface",
+      "title": "Civilization has to bind to real PDA surfaces, not only ideas.",
+      "body": "NiceChunk already exposes concrete account families for world config, resource drops, backpacks, recipes, guardians, and market state. Civilization should govern versioned configuration surfaces around these modules, while preserving old asset safety.",
+      "labels": {
+        "account": "Account",
+        "magic": "Magic",
+        "seed": "Seed",
+        "civilizationPath": "Civilization path"
+      },
+      "openContracts": "Open Contract PDA Browser",
+      "status": {
+        "immutable": "Immutable base",
+        "config": "Config surface",
+        "asset": "Player asset",
+        "service": "Service registry",
+        "settlement": "Settlement state"
+      },
+      "modules": {
+        "core": {
+          "title": "Core world config",
+          "body": "GlobalConfig stores the world seed, terrain/resource/client hashes, economics, guardian parameters, and build limits from compiled constants.",
+          "path": "Natural Law should protect genesis invariants; future evolution should use versioned override PDAs instead of rewriting immutable genesis."
+        },
+        "chunk": {
+          "title": "Chunk and resource drops",
+          "body": "Chunk logic validates generated coordinates from GlobalConfig and uses ResourceDropTable rules for public drop probabilities.",
+          "path": "Civilization Law can propose new resource-drop tables; Natural Law protects conservation and world-generation assumptions."
+        },
+        "backpack": {
+          "title": "Backpack inventory",
+          "body": "Backpack accounts hold player-owned resources and items with owner validation, capacity limits, item counts, and updated slots.",
+          "path": "Civilization rules should not seize old backpacks; they can define future capacity classes, item categories, or processing outputs."
+        },
+        "smelting": {
+          "title": "Smelting recipes",
+          "body": "RecipeTable stores bounded recipe records, input/output slot records, heat tiers, and update slots.",
+          "path": "Civilization Law is a natural fit for adding or disabling recipes after validator checks for input burn and output conservation."
+        },
+        "guardian": {
+          "title": "Guardian service",
+          "body": "Guardian registry and region PDAs track active coverage, stake amounts, operators, endpoints, proofs, and penalties.",
+          "path": "Civilization can tune service policy through config PDAs while Natural Law protects slashing and stake fairness."
+        },
+        "market": {
+          "title": "Market settlement",
+          "body": "Market listing and asset accounts encode seller, price, currency, source inventory, state, buyer, and settlement slots.",
+          "path": "Civilization can govern fee policy and categories; existing listings and asset ownership need stronger protection."
+        }
       }
     },
     "modules": {
@@ -3241,6 +4647,7 @@
       "hit": "Грань сжата",
       "gripSet": "Хват задан",
       "gripTooLarge": "Сечение слишком велико для руки",
+      "gripBlocked": "Хват пересечется с аватаром",
       "sawCut": "Пропил углублен",
       "sawComplete": "Пропил открыт",
       "drillCut": "Отверстие углублено",

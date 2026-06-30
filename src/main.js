@@ -3,11 +3,18 @@ import "./styles.css";
 import "./polyfills.js";
 import { applyWorldConfigFromChain, chunkSize, cloudSectorSize, maxBuildY, maxTerrainHeight, minBuildY, renderDistance, seaLevel } from "./world/config.js";
 import { setWorldSeed } from "./world/generator.js";
-import { canonicalRenderTypeAt, canonicalSurfaceHeightAt, canonicalWaterLevelAt, setCanonicalWorldConfig } from "./world/canonicalResource.js";
+import {
+  canonicalAboveSurfaceBlocksInArea,
+  canonicalRenderTypeAt,
+  canonicalSurfaceHeightAt,
+  canonicalTreeFellBlocks,
+  canonicalWaterLevelAt,
+  setCanonicalWorldConfig,
+} from "./world/canonicalResource.js";
 import { defaultWorldSeed, persistPlayWorldSeed } from "./world/seedStorage.js";
 import { renderTypeForBlock, WORLD_MAP_BLOCK_DEBUG_COLOR, WorldMapBlock } from "./world/blocks.js";
 import { blockKey, chunkKey, parseCellKey } from "./world/keys.js";
-import { createWorldState, isSolidCell as querySolidCell, surfaceHeight as querySurfaceHeight } from "./world/state.js";
+import { createWorldState, surfaceHeight as querySurfaceHeight } from "./world/state.js";
 import { flowWaterFromBreak as simulateWaterFlow, hasWaterAt } from "./world/fluid.js";
 import { blockTint, createChunkGroup, createCloudSectorGroup, generatedBlockTypeAt } from "./world/chunks.js";
 import { createAvatar, createAvatarMaterials } from "./render/avatar.js";
@@ -60,6 +67,7 @@ import {
 import {
   getNicechunkRpcUrl,
   getStoredHeliusApiKey,
+  rpcConfigChangedEventName,
   rpcErrorEventName,
   saveHeliusApiKey,
 } from "./rpcConfig.js";
@@ -123,6 +131,9 @@ const profilePosition = document.querySelector("#profilePosition");
 const profileChunks = document.querySelector("#profileChunks");
 const profileBackpackStatus = document.querySelector("#profileBackpackStatus");
 const profileBackpackBuy = document.querySelector("#profileBackpackBuy");
+const profileRpcValue = document.querySelector("#profileRpcValue");
+const profileRpcHint = document.querySelector("#profileRpcHint");
+const profileRpcAction = document.querySelector("#profileRpcAction");
 const mobileJoystick = document.querySelector("#mobileJoystick");
 const mobileJoystickKnob = document.querySelector("#mobileJoystickKnob");
 const hotbar = document.querySelector("#hotbar");
@@ -582,11 +593,17 @@ function setupRpcConfigPanel() {
     saveHeliusApiKey(apiKey);
     showRpcConfigPanel("main.rpcConfig.saved", "Saved. NiceChunk will use your Helius devnet RPC for chain calls.");
     updateRpcConfigStatusText({ rpcUrl: getNicechunkRpcUrl() });
+    updateProfileRpcDetails();
     if (rpcConfigPanel) rpcConfigPanel.hidden = true;
   });
 
   rpcConfigDismiss?.addEventListener("click", () => {
     if (rpcConfigPanel) rpcConfigPanel.hidden = true;
+  });
+
+  window.addEventListener(rpcConfigChangedEventName, () => {
+    if (rpcConfigApiKey) rpcConfigApiKey.value = getStoredHeliusApiKey();
+    updateProfileRpcDetails();
   });
 }
 
@@ -594,6 +611,7 @@ function showRpcConfigPanel(statusKey, statusFallback, statusParams = {}) {
   rpcConfigState.statusKey = statusKey;
   rpcConfigState.statusFallback = statusFallback;
   rpcConfigState.statusParams = statusParams;
+  if (rpcConfigApiKey) rpcConfigApiKey.value = getStoredHeliusApiKey();
   updateRpcConfigStatusText();
   if (rpcConfigPanel) rpcConfigPanel.hidden = false;
 }
@@ -701,8 +719,11 @@ const cloudUpdateState = { sectorX: null, sectorZ: null };
 const worldState = createWorldState();
 const { solidBlocks, removedBlocks, pendingMinedBlocks, placedBlocks, blockDamage } = worldState;
 const breakParticles = [];
+const fallingTreeResourceBlocks = [];
 const breakParticlePools = new Map();
+const fallingTreeResourcePools = new Map();
 const dirtyBreakParticlePools = new Set();
+const dirtyFallingTreeResourcePools = new Set();
 const surfaceHeightFrameCache = new Map();
 const worldEditIndex = {
   version: -1,
@@ -737,6 +758,7 @@ let placementPreviewFrame = 0;
 
 const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
 const breakParticleTransform = new THREE.Object3D();
+const fallingTreeResourceTransform = new THREE.Object3D();
 const placementPreviewGeometry = new THREE.EdgesGeometry(cubeGeometry);
 const cloudGeometry = new THREE.SphereGeometry(1, 18, 12);
 const guardianFogVolumeRadius = renderDistance + 1;
@@ -974,6 +996,7 @@ const jumpImpulse = 9.2;
 const stepBlockEpsilon = 0.08;
 const autoStepHeight = 1.08;
 const autoJumpHeight = 1.65;
+const playerGroundProbeDepth = 8;
 const autoJumpRetryMs = 420;
 const autoJumpCommitMs = 760;
 const autoDirectPathSampleSpacing = 0.35;
@@ -981,9 +1004,9 @@ const autoPathSearchRadius = 72;
 const autoPathMaxNodes = 1800;
 const miningSwingDuration = 260;
 const miningStandDistance = 1.28;
-const miningReachDown = 1;
+const miningReachDown = 3;
 const miningReachUp = 4;
-const miningHorizontalRadius = 1;
+const miningHorizontalRadius = 3;
 const miningCollisionStartProgress = 0.22;
 const miningBlockCollisionPadding = 0.06;
 const placementReach = 3;
@@ -1017,6 +1040,12 @@ const preloadChunkBuildBudget = lowPowerChunkLoading ? 2 : 4;
 const movingPreloadChunkBuildBudget = lowPowerChunkLoading ? 1 : 2;
 const chunkRefreshBudget = lowPowerChunkLoading ? 2 : 5;
 const startupChunkLoadRadius = initialChunkRadius;
+const maxFallingTreeResourceBlocks = lowPowerChunkLoading ? 96 : 220;
+const fallingTreeResourceLifetime = 3.2;
+const supportCollapseHorizontalRadius = lowPowerChunkLoading ? 5 : 7;
+const supportCollapseDownReach = 8;
+const supportCollapseUpReach = lowPowerChunkLoading ? 14 : 20;
+const supportCollapseMaxBlocks = lowPowerChunkLoading ? 24 : 48;
 const cameraPitchMin = -0.92;
 const cameraPitchMax = 0.42;
 const headPitchMin = -0.48;
@@ -1233,6 +1262,7 @@ profileOverlay?.addEventListener("pointerdown", (event) => {
 profileClose?.addEventListener("click", closeProfilePanel);
 profileLogout?.addEventListener("click", logoutProfile);
 profileBackpackBuy?.addEventListener("click", handleBuyBackpack);
+profileRpcAction?.addEventListener("click", handleProfileRpcAction);
 profileTabs.forEach((tab) => {
   tab.addEventListener("click", () => setProfileTab(tab.dataset.profileTab || "attributes"));
 });
@@ -1604,6 +1634,7 @@ async function syncInitialChainViewport(center, { updateLoading = true, rebuildC
           appliedSequence: Math.max(previous?.appliedSequence ?? 0, maxSequence),
         });
         if (changed && rebuildChanged) rebuildChunkByKey(key);
+        else markLoadedChunkForMinimap({ key, chunkX: chunk.chunkX, chunkZ: chunk.chunkZ, refresh: changed });
       }
       const progress = (batchIndex + 1) / totalBatches;
       if (updateLoading) setGameLoadingStage("chainSync", 44 + progress * 12);
@@ -1850,7 +1881,50 @@ function updateProfilePanelDetails() {
   if (profileWallet) profileWallet.textContent = session.walletAddress ? formatWalletAddress(session.walletAddress) : t("main.account.notConnected");
   if (profilePosition) profilePosition.textContent = `${Math.round(player.position.x)}, ${Math.round(player.position.y)}, ${Math.round(player.position.z)}`;
   if (profileChunks) profileChunks.textContent = String(knownChunks.size);
+  updateProfileRpcDetails();
   updateProfileBackpackDetails();
+}
+
+function handleProfileRpcAction(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  const apiKey = getStoredHeliusApiKey();
+  showRpcConfigPanel(
+    apiKey ? "main.profile.rpcUpdatePrompt" : "main.profile.rpcSetPrompt",
+    apiKey
+      ? "Update your Helius API key for NiceChunk chain calls."
+      : "Set a Helius API key to avoid public RPC limits.",
+  );
+  rpcConfigApiKey?.focus();
+}
+
+function updateProfileRpcDetails() {
+  if (!profilePanel || profilePanel.hidden) return;
+  const apiKey = getStoredHeliusApiKey();
+  const configured = Boolean(apiKey);
+  if (profileRpcValue) {
+    profileRpcValue.textContent = configured
+      ? gameText("main.profile.rpcKey", "RPCKEY {key}", { key: formatRpcKey(apiKey) })
+      : gameText("main.profile.rpcPublic", "Public RPC");
+    profileRpcValue.title = configured ? apiKey : getNicechunkRpcUrl();
+  }
+  if (profileRpcHint) {
+    profileRpcHint.textContent = configured
+      ? gameText("main.profile.rpcConfigured", "Private RPC key is active for chain calls.")
+      : gameText("main.profile.rpcRecommend", "Set a private RPC key for steadier mining.");
+  }
+  if (profileRpcAction) {
+    profileRpcAction.textContent = configured
+      ? gameText("main.profile.rpcUpdate", "UPDATE")
+      : gameText("main.profile.rpcSet", "Set");
+  }
+}
+
+function formatRpcKey(apiKey) {
+  const key = String(apiKey ?? "").trim();
+  if (!key) return "";
+  if (key.length <= 10) return key;
+  return `${key.slice(0, 4)}...${key.slice(-4)}`;
 }
 
 function setProfileTab(tabName) {
@@ -2123,6 +2197,7 @@ function updateSessionFundingCurrent(status) {
 function logoutProfile() {
   savePlayerPosition(true);
   saveKnownChunksToStorage(true);
+  resetEquippedBackpackUiState();
   clearWalletSession();
   clearLocalSessionAuthorities();
   closeProfilePanel();
@@ -2132,9 +2207,29 @@ function logoutProfile() {
 function clearLocalSessionAuthorities() {
   for (const key of Object.keys(localStorage)) {
     if (key.startsWith("nicechunk.session.v1.")) localStorage.removeItem(key);
+    if (key.startsWith("nicechunk.equippedBackpack.v1.")) localStorage.removeItem(key);
   }
   localStorage.removeItem("nicechunk.phantomRedirectConnect");
   localStorage.removeItem("nicechunk.walletLoginChallenge");
+}
+
+function resetEquippedBackpackUiState() {
+  equippedBackpackStatus = null;
+  equippedBackpackLoading = false;
+  equippedBackpackLastLoadedAt = 0;
+  backpackSelectedSourceItemId = "";
+  backpackDiscardingSlotIndexes.clear();
+  backpackSelectedSlotIndexes.clear();
+  backpackSelectionMode = false;
+  backpackDiscardingBatch = false;
+  backpackPreviewHydrationToken += 1;
+  invalidateBackpackSlotCache();
+  syncEquippedBackpackSlot();
+  renderHotbar();
+  if (backpackPanel && !backpackPanel.hidden) renderBackpackPanel();
+  if (marketPanel && !marketPanel.hidden) updateMarketPanel();
+  scheduleSmeltingPanelUpdate({ reset: true });
+  updateProfileBackpackDetails();
 }
 
 function resizeProfilePreview() {
@@ -6913,6 +7008,7 @@ function animate() {
   updateChatBubbles();
   updateMiningToolCollision();
   updateBreakParticles(dt);
+  updateFallingTreeResourceBlocks(dt);
   updateCrackMarker();
   updateMiningDebug();
   generateAround(player.position);
@@ -6937,9 +7033,10 @@ function animate() {
 function updatePlayer(dt) {
   player.moving = false;
   resolvePlayerOverlap();
-  const groundAtStart = surfaceHeight(player.position.x, player.position.z) + 1.01;
+  const groundAtStart = playerGroundHeightAt(player.position.x, player.position.z, player.position.y, { allowStepUp: true });
   const canUseGroundControl =
-    player.grounded || (player.position.y <= groundAtStart + 0.04 && player.velocity.y <= 0);
+    player.grounded ||
+    (Number.isFinite(groundAtStart) && player.position.y <= groundAtStart + 0.04 && player.velocity.y <= 0);
   const input = playerMoveInput();
   const inputLengthSq = input.lengthSq();
   if (inputLengthSq > 0 && player.autoMoveTarget) clearAutoMove();
@@ -6995,17 +7092,19 @@ function updatePlayer(dt) {
     player.moving = applyAirborneHorizontalVelocity(dt);
   }
 
-  const ground = surfaceHeight(player.position.x, player.position.z) + 1.01;
-  const canJump = player.grounded || (player.position.y <= ground + 0.04 && player.velocity.y <= 0);
+  const groundBeforeFall = playerGroundHeightAt(player.position.x, player.position.z, player.position.y, { allowStepUp: true });
+  const canJump = player.grounded || (Number.isFinite(groundBeforeFall) && player.position.y <= groundBeforeFall + 0.04 && player.velocity.y <= 0);
   if (keys.has("Space") && canJump) {
     if (requestedTakeoffDirection) setHorizontalVelocity(requestedTakeoffDirection, requestedTakeoffSpeed);
     player.velocity.y = jumpImpulse;
     player.grounded = false;
   }
 
+  const previousY = player.position.y;
   player.velocity.y -= gravity * dt;
   player.position.y += player.velocity.y * dt;
 
+  const ground = playerLandingGroundHeightAt(player.position.x, player.position.z, previousY, player.position.y);
   if (player.position.y <= ground && player.velocity.y <= 0) {
     player.position.y = ground;
     player.velocity.y = 0;
@@ -7180,10 +7279,10 @@ function tryMoveHorizontal(direction, distance, options = {}) {
 }
 
 function moveHorizontalTo(x, z, options = {}) {
-  const currentGround = surfaceHeight(player.position.x, player.position.z) + 1.01;
-  const nextGround = surfaceHeight(x, z) + 1.01;
-  const groundDelta = nextGround - currentGround;
-  const nearGround = player.grounded || Math.abs(player.position.y - currentGround) < 0.12;
+  const currentGround = playerGroundHeightAt(player.position.x, player.position.z, player.position.y, { allowStepUp: true });
+  const nextGround = playerGroundHeightAt(x, z, player.position.y, { allowStepUp: options.allowStepUp });
+  const groundDelta = Number.isFinite(currentGround) && Number.isFinite(nextGround) ? nextGround - currentGround : -Infinity;
+  const nearGround = player.grounded || (Number.isFinite(currentGround) && Math.abs(player.position.y - currentGround) < 0.12);
   const canStepUp =
     options.allowStepUp &&
     nearGround &&
@@ -7262,8 +7361,7 @@ function playerBodyCollisionPush(x, z, y) {
   for (let bx = firstBlockX; bx <= lastBlockX; bx++) {
     for (let bz = firstBlockZ; bz <= lastBlockZ; bz++) {
       for (let by = firstBodyY; by <= lastBodyY; by++) {
-        const key = blockKey(bx, by, bz);
-        if (!solidBlocks.has(key) || removedBlocks.has(key)) continue;
+        if (!isSolidCell(bx, by, bz)) continue;
 
         const overlapX = Math.min(maxX - (bx - 0.5), bx + 0.5 - minX);
         const overlapZ = Math.min(maxZ - (bz - 0.5), bz + 0.5 - minZ);
@@ -8749,7 +8847,7 @@ function pickBlockAtClientPoint(clientX, clientY, raycaster, options = {}) {
       : Number.isInteger(hit.instanceId)
         ? blocks?.[hit.instanceId]
         : hit.object.userData.faceBlocks?.[hit.faceIndex];
-    if (!block || removedBlocks.has(block.key)) continue;
+    if (!block || removedBlocks.has(block.key) || pendingMinedBlocks.has(block.key)) continue;
     return { block, point: hit.point.clone(), normal: normal.clone() };
   }
 
@@ -8876,8 +8974,7 @@ function placeHeldPlant(hit, type) {
     startHandSwing();
     return false;
   }
-  const belowKey = blockKey(target.x, target.y - 1, target.z);
-  if (!solidBlocks.has(belowKey) || removedBlocks.has(belowKey)) {
+  if (!isSolidCell(target.x, target.y - 1, target.z)) {
     startHandSwing();
     return false;
   }
@@ -8963,7 +9060,9 @@ function horizontalStandDirection(normal) {
 }
 
 function isColumnBlockedForPlayer(x, z) {
-  return playerBodyCollides(x, z, surfaceHeight(x, z) + 1.01);
+  const ground = playerGroundHeightAt(x, z, player.position.y, { allowStepUp: true });
+  if (!Number.isFinite(ground)) return false;
+  return playerBodyCollides(x, z, ground);
 }
 
 function isWaterVisualBlock(block) {
@@ -9655,6 +9754,7 @@ function updateChunkChainViewportSync() {
           appliedSequence: Math.max(previous?.appliedSequence ?? 0, maxSequence),
         });
         if (changed) rebuildChunkByKey(chunk.key);
+        else markLoadedChunkForMinimap(chunk);
       }
       pruneChunkChainSyncCache(visibleKeys);
     })
@@ -9727,6 +9827,17 @@ function updateRealtimeChunkSubscription() {
   realtimeChunkAppliedSequence = 0;
 }
 
+function markLoadedChunkForMinimap({ key = "", chunkX, chunkZ, refresh = false } = {}) {
+  const resolvedKey = key || chunkKey(chunkX, chunkZ);
+  if ((!Number.isFinite(chunkX) || !Number.isFinite(chunkZ)) && resolvedKey) {
+    [chunkX, chunkZ] = resolvedKey.split(",").map(Number);
+  }
+  if (!Number.isFinite(chunkX) || !Number.isFinite(chunkZ)) return;
+  if (refresh) refreshKnownChunkByKey(resolvedKey);
+  else ensureKnownChunk(chunkX, chunkZ);
+  minimapState.lastDrawAt = 0;
+}
+
 function ensureKnownChunk(chunkX, chunkZ) {
   const key = chunkKey(chunkX, chunkZ);
   if (knownChunks.has(key)) return knownChunks.get(key);
@@ -9769,11 +9880,12 @@ function refreshKnownChunkByKey(key) {
 
 function refreshKnownChunkData(data) {
   const image = data.context.createImageData(chunkSize, chunkSize);
+  const aboveSurfaceByColumn = createMinimapAboveSurfaceColumnMap(data.chunkX, data.chunkZ);
   for (let localZ = 0; localZ < chunkSize; localZ++) {
     for (let localX = 0; localX < chunkSize; localX++) {
       const x = data.chunkX * chunkSize + localX;
       const z = data.chunkZ * chunkSize + localZ;
-      const color = minimapCellColor(x, z);
+      const color = minimapCellColor(x, z, aboveSurfaceByColumn);
       const offset = (localZ * chunkSize + localX) * 4;
       image.data[offset] = color[0];
       image.data[offset + 1] = color[1];
@@ -9931,7 +10043,29 @@ function byteToHex(value) {
   return value.toString(16).padStart(2, "0");
 }
 
-function minimapCellColor(x, z) {
+function createMinimapAboveSurfaceColumnMap(chunkX, chunkZ) {
+  const minX = chunkX * chunkSize;
+  const minZ = chunkZ * chunkSize;
+  const blocks = canonicalAboveSurfaceBlocksInArea({
+    minX,
+    maxX: minX + chunkSize - 1,
+    minZ,
+    maxZ: minZ + chunkSize - 1,
+  });
+  const byColumn = new Map();
+  for (const block of blocks) {
+    let byZ = byColumn.get(block.x);
+    if (!byZ) {
+      byZ = new Map();
+      byColumn.set(block.x, byZ);
+    }
+    if (!byZ.has(block.z)) byZ.set(block.z, []);
+    byZ.get(block.z).push(block);
+  }
+  return byColumn;
+}
+
+function minimapCellColor(x, z, aboveSurfaceByColumn = null) {
   const surfaceY = canonicalSurfaceHeightAt({ x, z });
   const waterLevel = canonicalWaterLevelAt({ x, z, surface: surfaceY });
   let topY = surfaceY;
@@ -9946,6 +10080,12 @@ function minimapCellColor(x, z) {
     const fallback = highestCanonicalVisibleBlockBelow(x, surfaceY - 1, z);
     topY = fallback.y;
     topType = fallback.type;
+  }
+
+  const aboveSurface = highestMinimapAboveSurfaceBlock(aboveSurfaceByColumn, x, z, topY);
+  if (aboveSurface) {
+    topY = aboveSurface.y;
+    topType = aboveSurface.type;
   }
 
   for (const [key, type] of placedBlocks) {
@@ -9967,6 +10107,20 @@ function minimapCellColor(x, z) {
   }
 
   return minimapColorForType(topType, topY);
+}
+
+function highestMinimapAboveSurfaceBlock(aboveSurfaceByColumn, x, z, topY) {
+  const blocks = aboveSurfaceByColumn?.get(x)?.get(z);
+  if (!blocks?.length) return null;
+  let best = null;
+  for (const block of blocks) {
+    if (!block?.type || block.y < topY) continue;
+    const key = blockKey(block.x, block.y, block.z);
+    if (removedBlocks.has(key)) continue;
+    if (placedBlocks.has(key) && !removedBlocks.has(key)) continue;
+    if (!best || block.y > best.y) best = block;
+  }
+  return best;
 }
 
 function highestCanonicalVisibleBlockBelow(x, startY, z) {
@@ -9995,6 +10149,8 @@ function minimapColorForType(type, y) {
     stone: [128, 132, 124],
     trunk: [115, 72, 39],
     trunkDark: [82, 50, 32],
+    pineTrunk: [90, 58, 37],
+    deadWood: [74, 58, 42],
     leaves: [54, 130, 55],
     leavesDark: [37, 105, 55],
     leavesLight: [106, 176, 70],
@@ -10065,19 +10221,21 @@ function cloneMiningHit(hit) {
 function applyMiningDamage(hit) {
   markMiningInteraction();
   if (pendingMinedBlocks.has(hit.block.key)) return false;
+  const miningPlan = createMiningPlanForBlock(hit.block);
   const nextDamage = (blockDamage.get(hit.block.key) ?? 0) + 1;
-  const requiredDamage = debugMiningEnabled ? 1 : 3;
+  const requiredDamage = debugMiningEnabled ? 1 : miningPlan.requiredDamage;
   blockDamage.set(hit.block.key, nextDamage);
   player.miningContact = createMiningContact(hit);
   spawnHitParticles(hit.block, hit.point, hit.normal, nextDamage);
 
   if (nextDamage >= requiredDamage) {
-    if (!markMinedBlockPending(hit.block)) return false;
+    const minedBlocks = miningPlan.blocks;
+    if (!markMinedBlocksPending(minedBlocks)) return false;
     player.miningContact = null;
     crackMarker.visible = false;
     spawnBreakParticles(hit.block);
-    rebuildChunksAroundBlock(hit.block);
-    submitMinedBlockToChain(hit.block);
+    rebuildChunksAroundBlocks(minedBlocks);
+    submitMinedBlockToChain(hit.block, miningPlan);
     if (!isNicechunkChainFeatureEnabled()) {
       const discovery = simulateResourceDiscovery({ block: hit.block, debug: debugMiningEnabled });
       if (addResourceToHotbar(hotbarSlots, hotbarItems, discovery.resourceId, discovery.amount, maxStackSize)) {
@@ -10109,7 +10267,7 @@ function updateMiningToolCollision() {
   }
   if (player.miningHitDone || !player.selectedBlock) return;
   if (!isBlockInMiningArea(player.selectedBlock) || isUnbreakableBlock(player.selectedBlock)) return;
-  if (removedBlocks.has(player.selectedBlock.key) || pendingMinedBlocks.has(player.selectedBlock.key) || !solidBlocks.has(player.selectedBlock.key)) return;
+  if (removedBlocks.has(player.selectedBlock.key) || pendingMinedBlocks.has(player.selectedBlock.key) || !isSolidCell(player.selectedBlock.x, player.selectedBlock.y, player.selectedBlock.z)) return;
 
   avatar.updateMatrixWorld(true);
   const boxes = miningToolCollisionBoxes();
@@ -10129,6 +10287,11 @@ function updateMiningToolCollision() {
     player.miningPreviousToolBoxes = null;
     applyMiningDamage(createToolCollisionMiningHit(player.selectedBlock, sweptBox));
     return;
+  }
+  if (player.miningTargetHit?.block?.key === player.selectedBlock.key) {
+    player.miningHitDone = true;
+    player.miningPreviousToolBoxes = null;
+    applyMiningDamage(cloneMiningHit(player.miningTargetHit));
   }
 }
 
@@ -10178,6 +10341,271 @@ function clampPointToBox(point, box) {
   );
 }
 
+function createMiningPlanForBlock(block) {
+  const treeBlocks = collectTreeFellBlocksForMining(block);
+  if (treeBlocks.length) {
+    return {
+      blocks: treeBlocks,
+      collapseBlocks: [],
+      rewardBlocks: [],
+      requiredDamage: Math.max(1, treeBlocks.length),
+    };
+  }
+  const collapseBlocks = collectSupportCollapseBlocksAfterMining(block);
+  return {
+    blocks: [block, ...collapseBlocks],
+    collapseBlocks,
+    rewardBlocks: selectSupportCollapseRewardBlocks(collapseBlocks),
+    requiredDamage: 3,
+  };
+}
+
+function collectSupportCollapseBlocksAfterMining(originBlock) {
+  if (!originBlock?.key) return [];
+  const plannedRemoved = new Set([originBlock.key]);
+  const collapsed = [];
+  const bounds = supportCollapseBounds(originBlock);
+  let changed = true;
+  while (changed && collapsed.length < supportCollapseMaxBlocks) {
+    changed = false;
+    const starts = supportCollapseCandidateStarts(plannedRemoved, bounds);
+    const scanned = new Set();
+    for (const start of starts) {
+      if (scanned.has(start.key) || plannedRemoved.has(start.key)) continue;
+      const component = traceSupportComponent(start, plannedRemoved, bounds, scanned);
+      if (!component.length || component.supported) continue;
+      for (const block of component.blocks) {
+        if (plannedRemoved.has(block.key)) continue;
+        plannedRemoved.add(block.key);
+        collapsed.push(block);
+        changed = true;
+        if (collapsed.length >= supportCollapseMaxBlocks) break;
+      }
+      if (collapsed.length >= supportCollapseMaxBlocks) break;
+    }
+    if (collapsed.length < supportCollapseMaxBlocks) {
+      const isolatedBlocks = collectIsolatedSupportCollapseBlocks(plannedRemoved, bounds, supportCollapseMaxBlocks - collapsed.length);
+      for (const block of isolatedBlocks) {
+        if (plannedRemoved.has(block.key)) continue;
+        plannedRemoved.add(block.key);
+        collapsed.push(block);
+        changed = true;
+        if (collapsed.length >= supportCollapseMaxBlocks) break;
+      }
+    }
+  }
+  return collapsed;
+}
+
+function supportCollapseBounds(originBlock) {
+  return {
+    minX: originBlock.x - supportCollapseHorizontalRadius,
+    maxX: originBlock.x + supportCollapseHorizontalRadius,
+    minY: originBlock.y - supportCollapseDownReach,
+    maxY: originBlock.y + supportCollapseUpReach,
+    minZ: originBlock.z - supportCollapseHorizontalRadius,
+    maxZ: originBlock.z + supportCollapseHorizontalRadius,
+  };
+}
+
+function supportCollapseCandidateStarts(plannedRemoved, bounds) {
+  const starts = [];
+  const seen = new Set();
+  for (let y = bounds.minY; y <= bounds.maxY; y += 1) {
+    for (let z = bounds.minZ; z <= bounds.maxZ; z += 1) {
+      for (let x = bounds.minX; x <= bounds.maxX; x += 1) {
+        const block = supportCollapseBlockAt(x, y, z, plannedRemoved, bounds);
+        if (!block || seen.has(block.key)) continue;
+        seen.add(block.key);
+        starts.push(block);
+      }
+    }
+  }
+  return starts;
+}
+
+const supportFaceOffsets = Object.freeze([
+  [1, 0, 0],
+  [-1, 0, 0],
+  [0, 1, 0],
+  [0, -1, 0],
+  [0, 0, 1],
+  [0, 0, -1],
+]);
+
+function traceSupportComponent(start, plannedRemoved, bounds, scanned) {
+  const queue = [start];
+  const blocks = [];
+  const local = new Set([start.key]);
+  let supported = false;
+  for (let cursor = 0; cursor < queue.length; cursor += 1) {
+    const block = queue[cursor];
+    scanned.add(block.key);
+    blocks.push(block);
+    if (isSupportAnchoredBlock(block)) supported = true;
+    for (const [dx, dy, dz] of supportFaceOffsets) {
+      const nx = block.x + dx;
+      const ny = block.y + dy;
+      const nz = block.z + dz;
+      if (!isWithinSupportCollapseBounds(nx, ny, nz, bounds)) {
+        supported = true;
+        continue;
+      }
+      const next = supportCollapseBlockAt(nx, ny, nz, plannedRemoved, bounds);
+      if (!next) {
+        if (isSupportAnchorCell(nx, ny, nz, plannedRemoved)) supported = true;
+        continue;
+      }
+      if (local.has(next.key)) continue;
+      local.add(next.key);
+      queue.push(next);
+    }
+  }
+  return { blocks, supported };
+}
+
+function supportCollapseBlockAt(x, y, z, plannedRemoved, bounds) {
+  if (!isWithinSupportCollapseBounds(x, y, z, bounds)) return null;
+  const key = blockKey(x, y, z);
+  if (plannedRemoved.has(key) || removedBlocks.has(key) || pendingMinedBlocks.has(key)) return null;
+  const type = supportCollapseTypeAt(x, y, z, key);
+  if (!type || isNonMiningSupportType(type)) return null;
+  if (!isAuthoritativeSolidCell(x, y, z)) return null;
+  return { x, y, z, type, key };
+}
+
+function isSupportAnchorCell(x, y, z, plannedRemoved) {
+  const key = blockKey(x, y, z);
+  if (plannedRemoved.has(key) || removedBlocks.has(key) || pendingMinedBlocks.has(key)) return false;
+  const type = supportCollapseTypeAt(x, y, z, key);
+  return type === "bedrock";
+}
+
+function collectIsolatedSupportCollapseBlocks(plannedRemoved, bounds, limit) {
+  const isolated = [];
+  for (let y = bounds.minY; y <= bounds.maxY; y += 1) {
+    for (let z = bounds.minZ; z <= bounds.maxZ; z += 1) {
+      for (let x = bounds.minX; x <= bounds.maxX; x += 1) {
+        if (isolated.length >= limit) return isolated;
+        const block = supportCollapseBlockAt(x, y, z, plannedRemoved, bounds);
+        if (!block || hasSupportFaceConnection(block, plannedRemoved)) continue;
+        isolated.push(block);
+      }
+    }
+  }
+  return isolated;
+}
+
+function hasSupportFaceConnection(block, plannedRemoved) {
+  for (const [dx, dy, dz] of supportFaceOffsets) {
+    const x = block.x + dx;
+    const y = block.y + dy;
+    const z = block.z + dz;
+    const key = blockKey(x, y, z);
+    if (plannedRemoved.has(key) || removedBlocks.has(key) || pendingMinedBlocks.has(key)) continue;
+    if (isAuthoritativeSolidCell(x, y, z)) return true;
+  }
+  return false;
+}
+
+function supportCollapseTypeAt(x, y, z, key = blockKey(x, y, z)) {
+  return placedBlocks.get(key) || canonicalRenderTypeAt({ x, y, z });
+}
+
+function isWithinSupportCollapseBounds(x, y, z, bounds) {
+  return (
+    x >= bounds.minX &&
+    x <= bounds.maxX &&
+    y >= bounds.minY &&
+    y <= bounds.maxY &&
+    z >= bounds.minZ &&
+    z <= bounds.maxZ
+  );
+}
+
+function isSupportAnchoredBlock(block) {
+  if (block.y <= minBuildY) return true;
+  return false;
+}
+
+function isTreeBlockType(type) {
+  return type === "trunk" || type === "trunkDark" || type === "pineTrunk" || type === "leaves" || type === "leavesDark" || type === "leavesLight" || type === "leavesTeal" || type === "leavesWarm" || type === "pineLeaves" || type === "snowLeaves";
+}
+
+function isNonMiningSupportType(type) {
+  return type === "water" || type === "swampWater" || type === "toxicWater" || type === "lava" || type === "bedrock";
+}
+
+function selectSupportCollapseRewardBlocks(blocks) {
+  const normalized = Array.isArray(blocks) ? blocks.filter(Boolean) : [];
+  if (!normalized.length) return [];
+  if (normalized.length === 1) return normalized;
+  const count = Math.max(1, Math.floor(normalized.length * 0.3));
+  return [...normalized]
+    .sort((a, b) => supportCollapseRewardScore(a) - supportCollapseRewardScore(b))
+    .slice(0, count);
+}
+
+function supportCollapseRewardScore(block) {
+  const x = Math.imul((Number(block.x) | 0) ^ 0x45d9f3b, 0x27d4eb2d);
+  const y = Math.imul((Number(block.y) | 0) ^ 0x165667b1, 0x85ebca6b);
+  const z = Math.imul((Number(block.z) | 0) ^ 0x9e3779b9, 0xc2b2ae35);
+  return (x ^ y ^ z) >>> 0;
+}
+
+function collectTreeFellBlocksForMining(block) {
+  const canonicalType = canonicalRenderTypeAt({ x: block?.x, y: block?.y, z: block?.z });
+  const type = canonicalType ?? block?.type;
+  if (type !== "trunk" && type !== "pineTrunk") return [];
+  const candidates = canonicalTreeFellBlocks(block)
+    .map((treeBlock) => ({
+      ...treeBlock,
+      key: treeBlock.key ?? blockKey(treeBlock.x, treeBlock.y, treeBlock.z),
+    }))
+    .filter((treeBlock) => {
+      if (!treeBlock?.key || removedBlocks.has(treeBlock.key) || pendingMinedBlocks.has(treeBlock.key)) return false;
+      if (placedBlocks.has(treeBlock.key)) return false;
+      return true;
+    });
+  return connectedUpperTreeBlocksFrom(block, candidates);
+}
+
+function connectedUpperTreeBlocksFrom(originBlock, candidates) {
+  if (!originBlock?.key || !Array.isArray(candidates) || !candidates.length) return [];
+  const originY = Math.trunc(Number(originBlock.y) || 0);
+  const byKey = new Map(candidates
+    .filter((block) => Number.isFinite(block?.x) && Number.isFinite(block?.y) && Number.isFinite(block?.z) && block.y >= originY)
+    .map((block) => [block.key ?? blockKey(block.x, block.y, block.z), block]));
+  const originKey = originBlock.key ?? blockKey(originBlock.x, originBlock.y, originBlock.z);
+  if (!byKey.has(originKey)) return [];
+
+  const visited = new Set([originKey]);
+  const queue = [originKey];
+  for (let cursor = 0; cursor < queue.length; cursor += 1) {
+    const current = byKey.get(queue[cursor]);
+    if (!current) continue;
+    for (let dy = 0; dy <= 1; dy += 1) {
+      for (let dz = -1; dz <= 1; dz += 1) {
+        for (let dx = -1; dx <= 1; dx += 1) {
+          if (dx === 0 && dy === 0 && dz === 0) continue;
+          const nextKey = blockKey(current.x + dx, current.y + dy, current.z + dz);
+          if (visited.has(nextKey) || !byKey.has(nextKey)) continue;
+          visited.add(nextKey);
+          queue.push(nextKey);
+        }
+      }
+    }
+  }
+  return candidates.filter((block) => visited.has(block.key ?? blockKey(block.x, block.y, block.z)));
+}
+
+function isTreeFellMiningBatch(originBlock, minedBlocks) {
+  if (!Array.isArray(minedBlocks) || minedBlocks.length <= 1) return false;
+  const canonicalType = canonicalRenderTypeAt({ x: originBlock?.x, y: originBlock?.y, z: originBlock?.z });
+  const type = canonicalType ?? originBlock?.type;
+  return type === "trunk" || type === "pineTrunk";
+}
+
 function markMinedBlockPending(block) {
   if (!block?.key || removedBlocks.has(block.key)) return false;
   pendingMinedBlocks.set(block.key, {
@@ -10186,6 +10614,20 @@ function markMinedBlockPending(block) {
   });
   blockDamage.delete(block.key);
   markWorldEditsChanged();
+  return true;
+}
+
+function markMinedBlocksPending(blocks) {
+  const normalized = Array.isArray(blocks) && blocks.length ? blocks : [];
+  if (!normalized.length) return false;
+  const marked = [];
+  for (const block of normalized) {
+    if (!markMinedBlockPending(block)) {
+      marked.forEach((markedBlock) => restorePendingMinedBlock(markedBlock));
+      return false;
+    }
+    marked.push(block);
+  }
   return true;
 }
 
@@ -10202,6 +10644,15 @@ function finalizePendingMinedBlock(block) {
   return true;
 }
 
+function finalizePendingMinedBlocks(blocks) {
+  const normalized = Array.isArray(blocks) && blocks.length ? blocks : [];
+  let changed = false;
+  for (const block of normalized) {
+    if (finalizePendingMinedBlock(block)) changed = true;
+  }
+  return changed;
+}
+
 function restorePendingMinedBlock(block) {
   if (!block?.key || !pendingMinedBlocks.has(block.key)) return false;
   pendingMinedBlocks.delete(block.key);
@@ -10212,12 +10663,39 @@ function restorePendingMinedBlock(block) {
   return true;
 }
 
-function submitMinedBlockToChain(block) {
+function restorePendingMinedBlocks(blocks) {
+  const normalized = Array.isArray(blocks) && blocks.length ? blocks : [];
+  let changed = false;
+  for (const block of normalized) {
+    if (restorePendingMinedBlock(block)) changed = true;
+  }
+  return changed;
+}
+
+function rebuildChunksAroundBlocks(blocks) {
+  const normalized = Array.isArray(blocks) && blocks.length ? blocks : [];
+  const rebuilt = new Set();
+  for (const block of normalized) {
+    const key = `${Math.floor(block.x / chunkSize)},${Math.floor(block.z / chunkSize)},${block.y}`;
+    if (rebuilt.has(key)) continue;
+    rebuilt.add(key);
+    rebuildChunksAroundBlock(block);
+  }
+}
+
+function submitMinedBlockToChain(block, miningPlanOrBlocks = [block]) {
+  const pendingBlocks = Array.isArray(miningPlanOrBlocks)
+    ? (miningPlanOrBlocks.length ? miningPlanOrBlocks : [block])
+    : (Array.isArray(miningPlanOrBlocks?.blocks) && miningPlanOrBlocks.blocks.length ? miningPlanOrBlocks.blocks : [block]);
+  const collapseBlocks = Array.isArray(miningPlanOrBlocks?.collapseBlocks) ? miningPlanOrBlocks.collapseBlocks : [];
+  const collapseRewardBlocks = Array.isArray(miningPlanOrBlocks?.rewardBlocks) ? miningPlanOrBlocks.rewardBlocks : [];
+  const useTreeFell = isTreeFellMiningBatch(block, pendingBlocks);
+  const useSupportCollapse = !useTreeFell && collapseBlocks.length > 0;
   const coords = formatBlockCoords(block);
   const pendingLogBlock = normalizedMinedLogBlock(block);
   const pendingResource = minedResourceNameForBlock(pendingLogBlock);
   if (!isNicechunkChainFeatureEnabled()) {
-    finalizePendingMinedBlock(block);
+    finalizePendingMinedBlocks(pendingBlocks);
     const row = appendChainEventLog("warn", gameText("main.chainLog.mineSkipped", "Mining sync skipped"), gameText("main.chainLog.disabled", "On-chain sync is disabled for {resource} at {coords}", { coords, resource: pendingResource }), { block: pendingLogBlock });
     scheduleChainEventLogRemoval(row);
     return;
@@ -10227,28 +10705,40 @@ function submitMinedBlockToChain(block) {
     const ready = await ensureGameplaySessionFundingForMining(chainModule);
     if (!ready) return { submitted: false, reason: "session-funding-cancelled" };
     logEntry = appendChainEventLog("info", gameText("main.chainLog.minePending", "Mining submitted, awaiting confirmation"), gameText("main.chainLog.minePendingDetail", "Submitting {resource} at {coords} to devnet", { coords, resource: pendingResource }), { block: pendingLogBlock });
-    return chainModule.recordBlockBreakOnChain(block, selectedHotbarSlot, {
+    const options = {
       backpackAddress: equippedBackpackStatus?.backpack?.publicKey ?? null,
       backpackItemCount: equippedBackpackStatus?.backpack?.itemCount ?? null,
       backpackCapacity: equippedBackpackStatus?.backpack?.capacity ?? null,
-    });
+    };
+    if (useTreeFell) return chainModule.recordTreeFellOnChain(block, selectedHotbarSlot, options);
+    if (useSupportCollapse && typeof chainModule.recordSupportCollapseOnChain === "function") {
+      return chainModule.recordSupportCollapseOnChain(block, {
+        collapseBlocks,
+        rewardBlocks: collapseRewardBlocks,
+        toolSlot: selectedHotbarSlot,
+        ...options,
+      });
+    }
+    return chainModule.recordBlockBreakOnChain(block, selectedHotbarSlot, options);
   }).then((result) => {
     const resultLogBlock = normalizedMinedLogBlock(result?.block ?? pendingLogBlock);
     const resource = minedResourceNameForBlock(resultLogBlock);
     if (!result?.submitted) {
       const reason = chainSubmitReasonLabel(result?.reason);
       if (result?.reason === "already-mined") {
-        finalizePendingMinedBlock(block);
+        finalizePendingMinedBlocks(pendingBlocks);
         logEntry = updateChainEventLog(logEntry, "warn", gameText("main.chainLog.alreadyMined", "Block already recorded"), gameText("main.chainLog.mineSkippedDetail", "{resource} at {coords}: {reason}", { coords, reason, resource }), { block: resultLogBlock });
         scheduleChainEventLogRemoval(logEntry);
         return;
       }
-      restoreMinedBlockAfterSubmitFailure(block);
+      restoreMinedBlocksAfterSubmitFailure(pendingBlocks);
       logEntry = updateChainEventLog(logEntry, "warn", gameText("main.chainLog.mineSkipped", "Mining sync skipped"), gameText("main.chainLog.mineSkippedDetail", "{resource} at {coords}: {reason}", { coords, reason, resource }), { block: resultLogBlock });
       scheduleChainEventLogRemoval(logEntry);
       return;
     }
-    finalizePendingMinedBlock(block);
+    finalizePendingMinedBlocks(pendingBlocks);
+    if (useTreeFell) spawnFallingTreeResourceBlocks(pendingBlocks, block);
+    else if (useSupportCollapse) spawnFallingTreeResourceBlocks(collapseBlocks, block);
     updateChainEventLog(logEntry, "success", gameText("main.chainLog.mineSubmitted", "Mining confirmed"), gameText("main.chainLog.signature", "{resource} at {coords}: {signature}", {
       coords,
       resource,
@@ -10262,8 +10752,8 @@ function submitMinedBlockToChain(block) {
     const title = isBlockAlreadyMinedError(error)
       ? gameText("main.chainLog.alreadyMined", "Block already recorded")
       : gameText("main.chainLog.mineFailed", "Mining transaction failed");
-    if (isBlockAlreadyMinedError(error)) finalizePendingMinedBlock(block);
-    else restoreMinedBlockAfterSubmitFailure(block);
+    if (isBlockAlreadyMinedError(error)) finalizePendingMinedBlocks(pendingBlocks);
+    else restoreMinedBlocksAfterSubmitFailure(pendingBlocks);
     if (!logEntry) {
       const failedLogEntry = appendChainEventLog(kind, title, gameText("main.chainLog.mineFailedDetail", "{resource} at {coords}: {reason}", {
         coords,
@@ -10280,6 +10770,12 @@ function submitMinedBlockToChain(block) {
     }), { block: pendingLogBlock });
     scheduleChainEventLogRemoval(logEntry);
   });
+}
+
+function restoreMinedBlocksAfterSubmitFailure(blocks) {
+  const normalized = Array.isArray(blocks) && blocks.length ? blocks : [];
+  if (restorePendingMinedBlocks(normalized)) return;
+  normalized.forEach((block) => restoreMinedBlockAfterSubmitFailure(block));
 }
 
 function restoreMinedBlockAfterSubmitFailure(block) {
@@ -10713,6 +11209,7 @@ function chainSubmitReasonLabel(reason) {
   if (reason === "no-backpack") return gameText("main.chainLog.noBackpack", "no backpack equipped");
   if (reason === "backpack-full") return gameText("main.chainLog.backpackFull", "backpack full");
   if (reason === "unmineable-block") return gameText("main.chainLog.unmineableBlock", "unmineable block");
+  if (reason === "not-tree-trunk") return gameText("main.chainLog.notTreeTrunk", "not a tree trunk");
   if (reason === "invalid-backpack-index") return gameText("main.backpack.invalidIndex", "invalid backpack slot");
   if (reason === "listing-unavailable") return gameText("main.market.listingUnavailable", "listing unavailable");
   if (reason === "self-purchase") return gameText("main.market.selfPurchase", "cannot buy your own listing");
@@ -10957,6 +11454,173 @@ function flowWaterFromBreak(block) {
   for (const key of changedChunks) rebuildChunkByKey(key);
 }
 
+function spawnFallingTreeResourceBlocks(blocks, originBlock = null) {
+  const normalized = Array.isArray(blocks) ? blocks.filter((block) => block?.key) : [];
+  if (!normalized.length) return;
+  const origin = originBlock
+    ? new THREE.Vector3(originBlock.x, originBlock.y, originBlock.z)
+    : new THREE.Vector3(normalized[0].x, normalized[0].y, normalized[0].z);
+  for (const block of normalized) {
+    while (fallingTreeResourceBlocks.length >= maxFallingTreeResourceBlocks) {
+      const oldest = fallingTreeResourceBlocks.shift();
+      if (oldest) removeFallingTreeResourceFromPool(oldest);
+    }
+    const type = block.type ?? canonicalRenderTypeAt({ x: block.x, y: block.y, z: block.z }) ?? "trunk";
+    const position = new THREE.Vector3(
+      block.x + (Math.random() - 0.5) * 0.06,
+      block.y + (Math.random() - 0.5) * 0.06,
+      block.z + (Math.random() - 0.5) * 0.06,
+    );
+    const outward = position.clone().sub(origin);
+    outward.y = 0;
+    if (outward.lengthSq() > 0.001) outward.normalize();
+    const resourceBlock = {
+      type,
+      pool: null,
+      poolIndex: -1,
+      position,
+      velocity: new THREE.Vector3(
+        outward.x * (0.65 + Math.random() * 0.55) + (Math.random() - 0.5) * 0.35,
+        0.35 + Math.random() * 1.25,
+        outward.z * (0.65 + Math.random() * 0.55) + (Math.random() - 0.5) * 0.35,
+      ),
+      rotation: new THREE.Euler(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI),
+      angularVelocity: new THREE.Vector3(
+        (Math.random() - 0.5) * 5.5,
+        (Math.random() - 0.5) * 5.5,
+        (Math.random() - 0.5) * 5.5,
+      ),
+      baseScale: type.includes("leaves") || type.includes("Leaves") ? 0.86 : 0.96,
+      scale: 1,
+      life: fallingTreeResourceLifetime + Math.random() * 0.55,
+      restY: fallingTreeResourceRestY(block),
+      bounces: 0,
+      settledFor: 0,
+    };
+    resourceBlock.scale = resourceBlock.baseScale;
+    addFallingTreeResourceToPool(resourceBlock);
+    fallingTreeResourceBlocks.push(resourceBlock);
+  }
+}
+
+function fallingTreeResourceRestY(block) {
+  const x = Math.round(block.x);
+  const z = Math.round(block.z);
+  return surfaceHeight(x, z) + 1;
+}
+
+function updateFallingTreeResourceBlocks(dt) {
+  for (let i = fallingTreeResourceBlocks.length - 1; i >= 0; i--) {
+    const block = fallingTreeResourceBlocks[i];
+    block.life -= dt;
+    block.velocity.y -= gravity * 0.92 * dt;
+    block.position.addScaledVector(block.velocity, dt);
+    block.rotation.x += block.angularVelocity.x * dt;
+    block.rotation.y += block.angularVelocity.y * dt;
+    block.rotation.z += block.angularVelocity.z * dt;
+
+    if (block.position.y <= block.restY) {
+      block.position.y = block.restY;
+      if (Math.abs(block.velocity.y) > 1.05 && block.bounces < 3) {
+        const bounce = 0.36 - block.bounces * 0.07;
+        block.velocity.y = Math.abs(block.velocity.y) * bounce;
+        block.velocity.x *= 0.62;
+        block.velocity.z *= 0.62;
+        block.angularVelocity.multiplyScalar(0.72);
+        block.bounces += 1;
+      } else {
+        block.velocity.set(0, 0, 0);
+        block.angularVelocity.multiplyScalar(0.5);
+        block.settledFor += dt;
+      }
+    }
+
+    if (block.settledFor > 0) {
+      const shrink = THREE.MathUtils.clamp((block.settledFor - 0.22) / 0.85, 0, 1);
+      block.scale = block.baseScale * (1 - shrink);
+    } else if (block.life < 0.7) {
+      block.scale = block.baseScale * THREE.MathUtils.clamp(block.life / 0.7, 0, 1);
+    }
+
+    if (block.life <= 0 || block.scale <= 0.025) {
+      markFallingTreeResourcePoolDirty(block.pool);
+      removeFallingTreeResourceFromPool(block);
+      fallingTreeResourceBlocks.splice(i, 1);
+      continue;
+    }
+    markFallingTreeResourcePoolDirty(block.pool);
+  }
+  flushDirtyFallingTreeResourcePools();
+}
+
+function fallingTreeResourcePool(type) {
+  const key = materials[type] ? type : "trunk";
+  let pool = fallingTreeResourcePools.get(key);
+  if (pool) return pool;
+  const mesh = new THREE.InstancedMesh(cubeGeometry, materials[key] ?? materials.trunk ?? materials.dirt, maxFallingTreeResourceBlocks);
+  mesh.name = `falling-tree-resources:${key}`;
+  mesh.count = 0;
+  mesh.castShadow = true;
+  mesh.receiveShadow = false;
+  mesh.frustumCulled = false;
+  pool = { key, mesh, blocks: [] };
+  fallingTreeResourcePools.set(key, pool);
+  scene.add(mesh);
+  return pool;
+}
+
+function addFallingTreeResourceToPool(block) {
+  const pool = fallingTreeResourcePool(block.type);
+  block.pool = pool;
+  block.poolIndex = pool.blocks.length;
+  pool.blocks.push(block);
+  pool.mesh.count = pool.blocks.length;
+  markFallingTreeResourcePoolDirty(pool);
+}
+
+function removeFallingTreeResourceFromPool(block) {
+  const pool = block?.pool;
+  if (!pool) return;
+  const index = block.poolIndex;
+  if (index < 0 || index >= pool.blocks.length) return;
+  const lastIndex = pool.blocks.length - 1;
+  const last = pool.blocks[lastIndex];
+  if (index !== lastIndex) {
+    pool.blocks[index] = last;
+    last.poolIndex = index;
+  }
+  pool.blocks.pop();
+  pool.mesh.count = pool.blocks.length;
+  pool.mesh.instanceMatrix.needsUpdate = true;
+  block.pool = null;
+  block.poolIndex = -1;
+  markFallingTreeResourcePoolDirty(pool);
+}
+
+function markFallingTreeResourcePoolDirty(pool) {
+  if (pool) dirtyFallingTreeResourcePools.add(pool);
+}
+
+function flushDirtyFallingTreeResourcePools() {
+  if (!dirtyFallingTreeResourcePools.size) return;
+  for (const pool of dirtyFallingTreeResourcePools) updateFallingTreeResourcePool(pool);
+  dirtyFallingTreeResourcePools.clear();
+}
+
+function updateFallingTreeResourcePool(pool) {
+  if (!pool) return;
+  for (let index = 0; index < pool.blocks.length; index++) {
+    const block = pool.blocks[index];
+    fallingTreeResourceTransform.position.copy(block.position);
+    fallingTreeResourceTransform.rotation.copy(block.rotation);
+    fallingTreeResourceTransform.scale.setScalar(Math.max(0.01, block.scale));
+    fallingTreeResourceTransform.updateMatrix();
+    pool.mesh.setMatrixAt(index, fallingTreeResourceTransform.matrix);
+  }
+  pool.mesh.count = pool.blocks.length;
+  pool.mesh.instanceMatrix.needsUpdate = true;
+}
+
 function spawnHitParticles(block, point, normal, damage) {
   const count = breakParticleCount(damage >= 3 ? 16 : 9);
   for (let i = 0; i < count; i++) {
@@ -11110,14 +11774,64 @@ function updateCrackMarker() {
   }
 
   const damage = blockDamage.get(contact.block.key);
+  const requiredDamage = debugMiningEnabled ? 1 : createMiningPlanForBlock(contact.block).requiredDamage;
+  const progress = THREE.MathUtils.clamp(damage / Math.max(1, requiredDamage), 0, 1);
   crackMarker.visible = true;
   crackMarker.position.set(contact.block.x, contact.block.y, contact.block.z);
-  crackMarker.scale.setScalar(0.75 + damage * 0.18);
+  crackMarker.scale.setScalar(0.75 + progress * 0.54);
   crackMarker.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, -1), contact.normal);
 }
 
 function isSolidCell(x, y, z) {
-  return querySolidCell(worldState, x, y, z);
+  return isAuthoritativeSolidCell(x, y, z);
+}
+
+function isAuthoritativeSolidCell(x, y, z) {
+  const blockX = Math.trunc(Number(x) || 0);
+  const blockY = Math.trunc(Number(y) || 0);
+  const blockZ = Math.trunc(Number(z) || 0);
+  const key = blockKey(blockX, blockY, blockZ);
+  if (removedBlocks.has(key) || pendingMinedBlocks.has(key)) return false;
+  if (placedBlocks.has(key)) return true;
+  if (worldState.dynamicWater?.has(key)) return false;
+  const type = canonicalRenderTypeAt({ x: blockX, y: blockY, z: blockZ });
+  return isSolidRenderType(type);
+}
+
+function isSolidRenderType(type) {
+  return Boolean(type) &&
+    type !== "water" &&
+    type !== "swampWater" &&
+    type !== "toxicWater";
+}
+
+function playerGroundHeightAt(x, z, referenceY = player.position.y, options = {}) {
+  const stepAllowance = options.allowStepUp ? autoStepHeight : 0.08;
+  const maxBlockY = Math.floor(referenceY + stepAllowance - 1.01);
+  const minBlockY = Math.max(minBuildY, Math.floor(referenceY - playerGroundProbeDepth - 1.01));
+  return playerGroundHeightInBlockRangeAt(x, z, minBlockY, maxBlockY);
+}
+
+function playerLandingGroundHeightAt(x, z, previousY, nextY) {
+  if (!Number.isFinite(previousY) || !Number.isFinite(nextY)) return playerGroundHeightAt(x, z, nextY);
+  const upperY = Math.max(previousY, nextY);
+  const lowerY = Math.min(previousY, nextY);
+  const maxBlockY = Math.floor(upperY + 0.12 - 1.01);
+  const minBlockY = Math.max(minBuildY, Math.floor(lowerY - playerGroundProbeDepth - 1.01));
+  return playerGroundHeightInBlockRangeAt(x, z, minBlockY, maxBlockY);
+}
+
+function playerGroundHeightInBlockRangeAt(x, z, minBlockY, maxBlockY) {
+  const blockX = Math.round(x);
+  const blockZ = Math.round(z);
+  for (let y = maxBlockY; y >= minBlockY; y -= 1) {
+    if (!isSolidCell(blockX, y, blockZ)) continue;
+    const groundY = y + 1.01;
+    if (playerBodyCollides(x, z, groundY)) continue;
+    return groundY;
+  }
+
+  return -Infinity;
 }
 
 function surfaceHeight(x, z) {

@@ -186,6 +186,13 @@ h3 {
   margin-top: 28px;
 }
 
+.section-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 18px;
+}
+
 .primary-action,
 .secondary-action,
 .rule-action-button {
@@ -219,6 +226,13 @@ h3 {
 .warning-section,
 .execution-panel,
 .asset-protection,
+.diagram-card,
+.concept-card,
+.boundary-card,
+.module-binding-card,
+.patch-schema-panel,
+.risk-matrix-card,
+.technical-assurance,
 .law-layer-card,
 .module-card,
 .rule-book-card,
@@ -311,11 +325,1601 @@ h3 {
 
 .civilization-section {
   margin-top: clamp(54px, 8vw, 104px);
+  scroll-margin-top: calc(var(--nc-header-height, 76px) + 22px);
+}
+
+.toc-section {
+  margin-top: 0;
+}
+
+.toc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.toc-card {
+  min-width: 0;
+  min-height: 142px;
+  padding: 15px;
+  border: 1px solid var(--civ-line);
+  border-radius: var(--civ-radius);
+  color: inherit;
+  background:
+    linear-gradient(180deg, rgba(152, 203, 255, 0.05), transparent),
+    rgba(10, 16, 23, 0.66);
+  text-decoration: none;
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease,
+    background 160ms ease;
+}
+
+.toc-card:hover,
+.toc-card:focus-visible {
+  border-color: var(--civ-line-strong);
+  background:
+    linear-gradient(180deg, rgba(152, 203, 255, 0.08), transparent),
+    rgba(13, 21, 29, 0.8);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.toc-card span {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 28px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(140, 255, 0, 0.2);
+  border-radius: 6px;
+  color: var(--civ-green);
+  background: rgba(140, 255, 0, 0.055);
+  font-size: 11px;
+  font-weight: 950;
+}
+
+.toc-card.blue span {
+  color: var(--civ-blue);
+  border-color: rgba(152, 203, 255, 0.22);
+  background: rgba(152, 203, 255, 0.06);
+}
+
+.toc-card.gold span {
+  color: var(--civ-gold);
+  border-color: rgba(255, 211, 110, 0.22);
+  background: rgba(255, 211, 110, 0.06);
+}
+
+.toc-card.red span {
+  color: var(--civ-red);
+  border-color: rgba(255, 110, 127, 0.24);
+  background: rgba(255, 110, 127, 0.06);
+}
+
+.toc-card strong {
+  display: block;
+  color: var(--civ-text);
+  font-size: 15px;
+  font-weight: 920;
+  line-height: 1.25;
+}
+
+.toc-card p {
+  margin: 9px 0 0;
+  color: var(--civ-muted);
+  font-size: 12px;
+  line-height: 1.48;
 }
 
 .section-heading {
   max-width: 860px;
   margin-bottom: 24px;
+}
+
+.concept-layout,
+.technical-layout,
+.reader-layout,
+.journey-layout,
+.threat-layout,
+.case-layout {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.42fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.technical-layout {
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.38fr);
+}
+
+.reader-layout {
+  grid-template-columns: minmax(0, 1.04fr) minmax(320px, 0.56fr);
+  align-items: start;
+}
+
+.journey-layout {
+  grid-template-columns: minmax(0, 1.04fr) minmax(320px, 0.52fr);
+  align-items: start;
+}
+
+.threat-layout {
+  grid-template-columns: minmax(0, 0.98fr) minmax(320px, 0.58fr);
+  align-items: start;
+}
+
+.case-layout {
+  grid-template-columns: minmax(0, 0.96fr) minmax(320px, 0.5fr);
+  align-items: start;
+}
+
+.impact-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.98fr) minmax(320px, 0.5fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.reputation-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.98fr) minmax(320px, 0.5fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.classifier-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.98fr) minmax(320px, 0.52fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.binding-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(320px, 0.58fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.validator-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.5fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.proof-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(320px, 0.52fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.transparency-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.96fr) minmax(320px, 0.5fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.versioning-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.98fr) minmax(320px, 0.5fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.design-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.98fr) minmax(320px, 0.5fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.civic-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.98fr) minmax(320px, 0.5fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.trace-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.5fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.patch-schema-panel {
+  overflow: hidden;
+}
+
+.patch-schema-panel .mini-title {
+  padding: 16px 16px 8px;
+}
+
+.patch-schema-row {
+  display: grid;
+  grid-template-columns: minmax(112px, 0.48fr) minmax(130px, 0.55fr) minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  padding: 12px 16px;
+  border-top: 1px solid rgba(152, 203, 255, 0.1);
+}
+
+.patch-schema-row code {
+  color: var(--civ-green);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.patch-schema-row span {
+  color: var(--civ-blue);
+  font-size: 11px;
+  font-weight: 840;
+  overflow-wrap: anywhere;
+}
+
+.patch-schema-row p {
+  margin: 0;
+  color: var(--civ-muted);
+  font-size: 12px;
+  line-height: 1.42;
+}
+
+.risk-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.proof-stack,
+.account-blueprint-grid,
+.failure-grid,
+.build-spec-grid,
+.reader-lanes,
+.review-checklist,
+.journey-grid,
+.defense-stack,
+.threat-grid,
+.classifier-grid,
+.case-view-grid,
+.case-evidence-grid,
+.impact-grid,
+.reputation-grid,
+.transparency-grid,
+.versioning-grid,
+.design-grid,
+.civic-grid,
+.instruction-grid,
+.event-log-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.proof-stack {
+  align-self: stretch;
+}
+
+.account-blueprint-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.failure-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.review-checklist {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.journey-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.threat-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.classifier-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.case-view-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.case-evidence-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.impact-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.reputation-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.transparency-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.versioning-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.design-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.civic-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.build-spec-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.instruction-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.event-log-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.proof-card,
+.account-blueprint-card,
+.failure-card,
+.build-spec-card,
+.build-order-panel,
+.reader-lane-card,
+.review-check-card,
+.journey-stack,
+.journey-card,
+.defense-stack,
+.threat-card,
+.classifier-checks,
+.classifier-card,
+.case-summary-panel,
+.case-view-card,
+.case-evidence-card,
+.impact-stack,
+.impact-card,
+.reputation-stack,
+.reputation-card,
+.transparency-checks,
+.transparency-card,
+.versioning-stack,
+.versioning-card,
+.design-stack,
+.design-card,
+.design-blueprint-panel,
+.design-blueprint-card,
+.civic-stack,
+.civic-card,
+.invariant-panel,
+.instruction-card,
+.event-card {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--civ-line);
+  border-radius: var(--civ-radius);
+  background:
+    linear-gradient(180deg, rgba(152, 203, 255, 0.045), transparent),
+    rgba(10, 16, 23, 0.66);
+}
+
+.proof-card span,
+.failure-card span,
+.account-blueprint-card span,
+.build-spec-card span,
+.reader-lane-card span,
+.review-check-card span,
+.journey-card span,
+.threat-card span,
+.classifier-card span,
+.case-view-card span,
+.case-evidence-card span,
+.impact-card span,
+.reputation-card span,
+.transparency-card span,
+.versioning-card span,
+.design-card span,
+.design-blueprint-card span,
+.civic-card span,
+.instruction-card span,
+.event-card span {
+  display: inline-flex;
+  min-height: 26px;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 0 8px;
+  border: 1px solid rgba(140, 255, 0, 0.18);
+  border-radius: 999px;
+  color: var(--civ-green);
+  background: rgba(140, 255, 0, 0.055);
+  font-size: 10px;
+  font-weight: 940;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.proof-card strong,
+.failure-card strong,
+.account-blueprint-card strong,
+.review-check-card strong,
+.journey-card strong,
+.threat-card strong,
+.classifier-card strong,
+.case-evidence-card strong,
+.impact-card strong,
+.reputation-card strong,
+.transparency-card strong,
+.versioning-card strong,
+.design-card strong,
+.design-blueprint-card strong,
+.civic-card strong,
+.build-order-step strong,
+.instruction-card strong,
+.event-card strong {
+  display: block;
+  color: var(--civ-text);
+  font-size: 15px;
+  line-height: 1.28;
+}
+
+.proof-card p,
+.failure-card p,
+.account-blueprint-card p,
+.build-spec-card p,
+.reader-lane-card p,
+.review-check-card p,
+.journey-card p,
+.threat-card p,
+.classifier-card p,
+.case-view-card p,
+.case-evidence-card p,
+.impact-card p,
+.reputation-card p,
+.transparency-card p,
+.versioning-card p,
+.design-card p,
+.design-blueprint-card p,
+.civic-card p,
+.build-order-step p,
+.instruction-card p,
+.event-card p {
+  margin: 9px 0 0;
+  color: var(--civ-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.build-spec-card h3,
+.design-blueprint-panel h3,
+.reader-lane-card h3,
+.case-view-card h3,
+.build-order-panel h3 {
+  margin-bottom: 9px;
+  font-size: 16px;
+}
+
+.reader-lane-card ul,
+.case-view-card ul {
+  display: grid;
+  gap: 9px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.reader-lane-card li,
+.case-view-card li {
+  position: relative;
+  padding-left: 16px;
+  color: rgba(232, 241, 255, 0.78);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.reader-lane-card li::before,
+.case-view-card li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--civ-blue);
+}
+
+.case-summary-panel {
+  display: grid;
+  gap: 10px;
+}
+
+.case-summary-row {
+  display: grid;
+  grid-template-columns: minmax(110px, 0.44fr) minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid rgba(152, 203, 255, 0.11);
+  border-radius: 6px;
+  background: rgba(5, 10, 15, 0.48);
+}
+
+.case-summary-row span {
+  color: var(--civ-dim);
+  font-size: 10px;
+  font-weight: 920;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.case-summary-row code,
+.case-evidence-card code {
+  min-width: 0;
+  color: var(--civ-green);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.case-view-card.green span {
+  color: var(--civ-green);
+  border-color: rgba(140, 255, 0, 0.22);
+}
+
+.case-view-card.blue span {
+  color: var(--civ-blue);
+  border-color: rgba(152, 203, 255, 0.22);
+}
+
+.case-view-card.gold span {
+  color: var(--civ-gold);
+  border-color: rgba(255, 211, 110, 0.22);
+}
+
+.case-view-card.red span {
+  color: var(--civ-red);
+  border-color: rgba(255, 110, 127, 0.22);
+}
+
+.case-evidence-card span {
+  max-width: 100%;
+  color: var(--civ-blue);
+  border-color: rgba(152, 203, 255, 0.2);
+  background: rgba(152, 203, 255, 0.055);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  overflow-wrap: anywhere;
+}
+
+.case-evidence-card code {
+  display: block;
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid rgba(140, 255, 0, 0.12);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.impact-stack {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.impact-card span {
+  color: var(--civ-blue);
+  border-color: rgba(152, 203, 255, 0.2);
+  background: rgba(152, 203, 255, 0.055);
+}
+
+.impact-card:nth-child(2n) span {
+  color: var(--civ-green);
+  border-color: rgba(140, 255, 0, 0.2);
+  background: rgba(140, 255, 0, 0.055);
+}
+
+.impact-card:nth-child(3n) span {
+  color: var(--civ-gold);
+  border-color: rgba(255, 211, 110, 0.2);
+  background: rgba(255, 211, 110, 0.055);
+}
+
+.impact-card code {
+  display: block;
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid rgba(152, 203, 255, 0.13);
+  border-radius: 6px;
+  color: var(--civ-green);
+  background: rgba(0, 0, 0, 0.22);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+.reputation-stack {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.reputation-card span {
+  color: var(--civ-green);
+  border-color: rgba(140, 255, 0, 0.2);
+  background: rgba(140, 255, 0, 0.055);
+}
+
+.reputation-card:nth-child(2n) span {
+  color: var(--civ-blue);
+  border-color: rgba(152, 203, 255, 0.2);
+  background: rgba(152, 203, 255, 0.055);
+}
+
+.reputation-card:nth-child(3n) span {
+  color: var(--civ-gold);
+  border-color: rgba(255, 211, 110, 0.22);
+  background: rgba(255, 211, 110, 0.06);
+}
+
+.reputation-card code {
+  display: block;
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid rgba(140, 255, 0, 0.13);
+  border-radius: 6px;
+  color: var(--civ-green);
+  background: rgba(0, 0, 0, 0.22);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+.transparency-checks {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.transparency-card span {
+  color: var(--civ-green);
+  border-color: rgba(140, 255, 0, 0.2);
+  background: rgba(140, 255, 0, 0.055);
+}
+
+.transparency-card:nth-child(2n) span {
+  color: var(--civ-blue);
+  border-color: rgba(152, 203, 255, 0.2);
+  background: rgba(152, 203, 255, 0.055);
+}
+
+.transparency-card:nth-child(3n) span {
+  color: var(--civ-gold);
+  border-color: rgba(255, 211, 110, 0.2);
+  background: rgba(255, 211, 110, 0.055);
+}
+
+.transparency-card dl {
+  display: grid;
+  grid-template-columns: minmax(82px, 0.3fr) minmax(0, 1fr);
+  gap: 8px 10px;
+  margin: 14px 0 0;
+}
+
+.transparency-card dt {
+  color: var(--civ-dim);
+  font-size: 10px;
+  font-weight: 920;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.transparency-card dd {
+  min-width: 0;
+  margin: 0;
+  color: var(--civ-green);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+.versioning-stack {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.versioning-card span {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: 6px;
+  color: var(--civ-blue);
+  border-color: rgba(152, 203, 255, 0.2);
+  background: rgba(152, 203, 255, 0.055);
+}
+
+.versioning-card.activeV2 span {
+  color: var(--civ-green);
+  border-color: rgba(140, 255, 0, 0.22);
+  background: rgba(140, 255, 0, 0.055);
+}
+
+.versioning-card.compatibility span {
+  color: var(--civ-gold);
+  border-color: rgba(255, 211, 110, 0.22);
+  background: rgba(255, 211, 110, 0.055);
+}
+
+.versioning-card dl {
+  display: grid;
+  gap: 7px;
+  margin: 14px 0 0;
+}
+
+.versioning-card dt {
+  color: var(--civ-dim);
+  font-size: 10px;
+  font-weight: 920;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.versioning-card dd {
+  min-width: 0;
+  margin: 0;
+  color: var(--civ-green);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+.design-stack {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.design-card:nth-child(2n) span,
+.design-blueprint-card span {
+  border-color: rgba(152, 203, 255, 0.2);
+  color: var(--civ-blue);
+  background: rgba(152, 203, 255, 0.06);
+}
+
+.design-card:nth-child(3n) span {
+  border-color: rgba(255, 214, 102, 0.24);
+  color: var(--civ-gold);
+  background: rgba(255, 214, 102, 0.07);
+}
+
+.design-card dl {
+  display: grid;
+  grid-template-columns: minmax(94px, 0.42fr) minmax(0, 1fr);
+  gap: 7px 10px;
+  margin: 14px 0 0;
+}
+
+.design-card dt {
+  color: var(--civ-dim);
+  font-size: 10px;
+  font-weight: 920;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.design-card dd {
+  min-width: 0;
+  margin: 0;
+  color: var(--civ-green);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+.design-blueprint-panel {
+  margin-top: 16px;
+}
+
+.design-blueprint-panel > div {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.design-blueprint-card code {
+  display: block;
+  margin-top: 12px;
+  color: var(--civ-green);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.civic-stack {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.civic-card span {
+  border-color: rgba(152, 203, 255, 0.2);
+  color: var(--civ-blue);
+  background: rgba(152, 203, 255, 0.06);
+}
+
+.civic-card:nth-child(2n) span {
+  border-color: rgba(140, 255, 0, 0.2);
+  color: var(--civ-green);
+  background: rgba(140, 255, 0, 0.055);
+}
+
+.civic-card:nth-child(3n) span {
+  border-color: rgba(255, 211, 110, 0.22);
+  color: var(--civ-gold);
+  background: rgba(255, 211, 110, 0.06);
+}
+
+.civic-card dl {
+  display: grid;
+  grid-template-columns: minmax(84px, 0.32fr) minmax(0, 1fr);
+  gap: 8px 10px;
+  margin: 14px 0 0;
+}
+
+.civic-card dt {
+  color: var(--civ-dim);
+  font-size: 10px;
+  font-weight: 920;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.civic-card dd {
+  min-width: 0;
+  margin: 0;
+  color: var(--civ-green);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+.review-check-card code {
+  display: block;
+  min-width: 0;
+  margin-top: 12px;
+  overflow: hidden;
+  color: var(--civ-blue);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.45;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.journey-stack {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.journey-card span {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: 6px;
+  color: var(--civ-blue);
+  border-color: rgba(152, 203, 255, 0.2);
+  background: rgba(152, 203, 255, 0.055);
+}
+
+.journey-card:nth-child(2n) span {
+  color: var(--civ-green);
+  border-color: rgba(140, 255, 0, 0.2);
+  background: rgba(140, 255, 0, 0.055);
+}
+
+.journey-card:nth-child(3n) span {
+  color: var(--civ-gold);
+  border-color: rgba(255, 211, 110, 0.22);
+  background: rgba(255, 211, 110, 0.055);
+}
+
+.journey-card code {
+  display: block;
+  margin-top: 12px;
+  padding: 9px;
+  border: 1px solid rgba(152, 203, 255, 0.13);
+  border-radius: 6px;
+  color: var(--civ-green);
+  background: rgba(0, 0, 0, 0.2);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+.defense-stack {
+  align-content: start;
+}
+
+.threat-card span {
+  color: var(--civ-gold);
+  border-color: rgba(255, 211, 110, 0.22);
+  background: rgba(255, 211, 110, 0.055);
+}
+
+.threat-card code {
+  display: block;
+  min-width: 0;
+  margin-top: 12px;
+  padding: 9px 10px;
+  border: 1px solid rgba(255, 211, 110, 0.14);
+  border-radius: 6px;
+  color: var(--civ-gold);
+  background: rgba(0, 0, 0, 0.2);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+.classifier-checks {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.classifier-card span {
+  color: var(--civ-blue);
+  border-color: rgba(152, 203, 255, 0.2);
+  background: rgba(152, 203, 255, 0.055);
+}
+
+.classifier-card.civilization span {
+  color: var(--civ-green);
+  border-color: rgba(140, 255, 0, 0.2);
+  background: rgba(140, 255, 0, 0.055);
+}
+
+.classifier-card.natural span {
+  color: var(--civ-gold);
+  border-color: rgba(255, 211, 110, 0.22);
+  background: rgba(255, 211, 110, 0.055);
+}
+
+.classifier-card.reject span {
+  color: var(--civ-red);
+  border-color: rgba(255, 110, 127, 0.22);
+  background: rgba(255, 110, 127, 0.055);
+}
+
+.classifier-card dl {
+  display: grid;
+  gap: 7px;
+  margin: 14px 0 0;
+}
+
+.classifier-card dt {
+  color: var(--civ-dim);
+  font-size: 10px;
+  font-weight: 920;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.classifier-card dd {
+  min-width: 0;
+  margin: 0;
+  color: var(--civ-green);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+.build-spec-card ul {
+  display: grid;
+  gap: 9px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.build-spec-card li {
+  position: relative;
+  padding-left: 16px;
+  color: var(--civ-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.build-spec-card li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--civ-green);
+}
+
+.build-order-panel {
+  margin-top: 16px;
+}
+
+.build-order-panel > div {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.build-order-step {
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid rgba(152, 203, 255, 0.13);
+  border-radius: 6px;
+  background: rgba(6, 11, 16, 0.54);
+}
+
+.build-order-step span {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(140, 255, 0, 0.22);
+  border-radius: 6px;
+  color: var(--civ-green);
+  font-size: 12px;
+  font-weight: 950;
+}
+
+.instruction-card dl {
+  display: grid;
+  gap: 7px;
+  margin: 12px 0 0;
+}
+
+.instruction-card dt {
+  color: var(--civ-dim);
+  font-size: 10px;
+  font-weight: 920;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.instruction-card dd {
+  margin: 0;
+  color: var(--civ-blue);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.instruction-card ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.instruction-card li,
+.event-card code {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+}
+
+.instruction-card li {
+  display: inline-flex;
+  min-height: 26px;
+  align-items: center;
+  padding: 0 8px;
+  border: 1px solid rgba(152, 203, 255, 0.14);
+  border-radius: 999px;
+  color: var(--civ-green);
+  background: rgba(152, 203, 255, 0.045);
+}
+
+.event-card.warning span {
+  color: var(--civ-gold);
+  border-color: rgba(255, 211, 110, 0.22);
+  background: rgba(255, 211, 110, 0.055);
+}
+
+.event-card code {
+  display: block;
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid rgba(152, 203, 255, 0.1);
+  border-radius: 6px;
+  color: var(--civ-green);
+  background: rgba(0, 0, 0, 0.22);
+  line-height: 1.5;
+}
+
+.invariant-panel {
+  display: grid;
+  gap: 10px;
+}
+
+.account-blueprint-card span {
+  max-width: 100%;
+  color: var(--civ-blue);
+  border-color: rgba(152, 203, 255, 0.18);
+  background: rgba(152, 203, 255, 0.055);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  overflow-wrap: anywhere;
+}
+
+.account-blueprint-card dl {
+  display: grid;
+  gap: 7px;
+  margin: 12px 0 0;
+}
+
+.account-blueprint-card dt {
+  color: var(--civ-dim);
+  font-size: 10px;
+  font-weight: 920;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.account-blueprint-card dd {
+  min-width: 0;
+  margin: 0;
+  color: var(--civ-green);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+.failure-card.high span {
+  color: var(--civ-gold);
+  border-color: rgba(255, 211, 110, 0.22);
+  background: rgba(255, 211, 110, 0.055);
+}
+
+.failure-card.critical span {
+  color: var(--civ-red);
+  border-color: rgba(255, 110, 127, 0.22);
+  background: rgba(255, 110, 127, 0.055);
+}
+
+.risk-matrix-card {
+  min-width: 0;
+  padding: 18px;
+}
+
+.risk-matrix-card span {
+  display: inline-flex;
+  min-height: 26px;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 0 8px;
+  border: 1px solid rgba(152, 203, 255, 0.16);
+  border-radius: 999px;
+  color: var(--civ-blue);
+  background: rgba(152, 203, 255, 0.055);
+  font-size: 10px;
+  font-weight: 940;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.risk-matrix-card.green span {
+  color: var(--civ-green);
+  border-color: rgba(140, 255, 0, 0.2);
+}
+
+.risk-matrix-card.gold span {
+  color: var(--civ-gold);
+  border-color: rgba(255, 211, 110, 0.2);
+}
+
+.risk-matrix-card.red span {
+  color: var(--civ-red);
+  border-color: rgba(255, 110, 127, 0.2);
+}
+
+.risk-matrix-card strong {
+  display: block;
+  margin: 8px 0;
+  color: var(--civ-green);
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.risk-matrix-card p {
+  margin: 0;
+  color: var(--civ-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.module-binding-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.module-binding-card {
+  min-width: 0;
+  padding: 16px;
+}
+
+.module-binding-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.module-binding-head span {
+  display: inline-flex;
+  min-height: 26px;
+  align-items: center;
+  padding: 0 8px;
+  border: 1px solid rgba(140, 255, 0, 0.2);
+  border-radius: 999px;
+  color: var(--civ-green);
+  background: rgba(140, 255, 0, 0.055);
+  font-size: 10px;
+  font-weight: 940;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.module-binding-card.asset .module-binding-head span,
+.module-binding-card.backpack .module-binding-head span {
+  border-color: rgba(152, 203, 255, 0.2);
+  color: var(--civ-blue);
+  background: rgba(152, 203, 255, 0.055);
+}
+
+.module-binding-head strong {
+  color: var(--civ-text);
+  font-size: 15px;
+}
+
+.module-binding-card p {
+  color: var(--civ-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.module-binding-card dl {
+  display: grid;
+  grid-template-columns: minmax(92px, 0.34fr) minmax(0, 1fr);
+  gap: 7px 10px;
+  margin: 12px 0 0;
+}
+
+.module-binding-card dt {
+  color: var(--civ-dim);
+  font-size: 10px;
+  font-weight: 920;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.module-binding-card dd {
+  min-width: 0;
+  margin: 0;
+  color: var(--civ-green);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.concept-card-grid,
+.technical-assurances {
+  display: grid;
+  gap: 12px;
+}
+
+.concept-card,
+.technical-assurance {
+  min-width: 0;
+  padding: 18px;
+}
+
+.concept-card span {
+  display: inline-block;
+  margin-bottom: 9px;
+  color: var(--civ-green);
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.concept-card p,
+.technical-assurance p {
+  margin-bottom: 0;
+  color: var(--civ-muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.technical-assurance strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--civ-blue);
+  font-size: 15px;
+}
+
+.diagram-card {
+  min-width: 0;
+  margin: 0;
+  padding: 18px;
+}
+
+.diagram-card figcaption {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.diagram-card figcaption strong {
+  color: var(--civ-text);
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.diagram-card figcaption span {
+  color: var(--civ-muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.power-diagram-card {
+  margin-top: 16px;
+}
+
+.boundary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.boundary-card {
+  min-width: 0;
+  padding: 20px;
+}
+
+.boundary-card span {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 0 9px;
+  border: 1px solid rgba(152, 203, 255, 0.16);
+  border-radius: 999px;
+  color: var(--civ-blue);
+  background: rgba(152, 203, 255, 0.055);
+  font-size: 10px;
+  font-weight: 940;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.boundary-card.liveNow span {
+  color: var(--civ-green);
+}
+
+.boundary-card.notClaimed span {
+  color: var(--civ-red);
+}
+
+.boundary-card ul {
+  display: grid;
+  gap: 10px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.boundary-card li {
+  position: relative;
+  padding-left: 18px;
+  color: var(--civ-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.boundary-card li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--civ-blue);
+}
+
+.boundary-card.liveNow li::before {
+  background: var(--civ-green);
+}
+
+.boundary-card.notClaimed li::before {
+  background: var(--civ-red);
+}
+
+.civilization-flow-svg {
+  display: block;
+  width: 100%;
+  min-height: 260px;
+  overflow: visible;
+  border: 1px solid rgba(152, 203, 255, 0.11);
+  border-radius: 6px;
+  background:
+    linear-gradient(135deg, rgba(152, 203, 255, 0.07), transparent 44%),
+    rgba(3, 7, 10, 0.42);
+}
+
+.system-diagram-card .civilization-flow-svg {
+  min-height: 330px;
+}
+
+.power-svg {
+  min-height: 230px;
+}
+
+.classifier-svg {
+  min-height: 350px;
+}
+
+.execution-svg {
+  min-height: 300px;
+}
+
+.transaction-svg {
+  min-height: 370px;
+}
+
+.case-walkthrough-svg {
+  min-height: 350px;
+}
+
+.impact-svg {
+  min-height: 350px;
+}
+
+.journey-svg {
+  min-height: 350px;
+}
+
+.transparency-svg {
+  min-height: 370px;
+}
+
+.versioning-svg {
+  min-height: 350px;
+}
+
+.design-svg {
+  min-height: 350px;
+}
+
+.civic-svg {
+  min-height: 360px;
+}
+
+.audit-trail-svg {
+  min-height: 330px;
+}
+
+.binding-svg {
+  min-height: 420px;
+}
+
+.validator-svg {
+  min-height: 300px;
+}
+
+.svg-grid-lines line {
+  stroke: rgba(152, 203, 255, 0.07);
+  stroke-width: 1;
+}
+
+.svg-arrow {
+  stroke: rgba(237, 246, 255, 0.62);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.svg-arrow-head {
+  fill: rgba(237, 246, 255, 0.78);
+}
+
+.svg-node rect {
+  stroke-width: 1.5;
+  filter: drop-shadow(0 16px 22px rgba(0, 0, 0, 0.24));
+}
+
+.svg-node text,
+.svg-badge text {
+  fill: var(--civ-text);
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0;
+  pointer-events: none;
+}
+
+.svg-node.blue rect {
+  fill: rgba(152, 203, 255, 0.12);
+  stroke: rgba(152, 203, 255, 0.42);
+}
+
+.svg-node.green rect {
+  fill: rgba(140, 255, 0, 0.11);
+  stroke: rgba(140, 255, 0, 0.36);
+}
+
+.svg-node.gold rect {
+  fill: rgba(255, 211, 110, 0.12);
+  stroke: rgba(255, 211, 110, 0.38);
+}
+
+.svg-node.red rect {
+  fill: rgba(255, 110, 127, 0.12);
+  stroke: rgba(255, 110, 127, 0.38);
+}
+
+.svg-badge rect {
+  fill: rgba(0, 0, 0, 0.38);
+  stroke: rgba(152, 203, 255, 0.22);
+}
+
+.svg-badge text {
+  fill: var(--civ-blue);
+  font-size: 12px;
+  font-weight: 860;
 }
 
 .law-layer-grid {
@@ -819,9 +2423,30 @@ h3 {
 }
 
 @media (max-width: 980px) {
+  .toc-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .civilization-hero,
   .warning-section,
   .power-layout,
+  .concept-layout,
+  .reader-layout,
+  .journey-layout,
+  .threat-layout,
+  .case-layout,
+  .impact-layout,
+  .reputation-layout,
+  .classifier-layout,
+  .technical-layout,
+  .binding-layout,
+  .validator-layout,
+  .proof-layout,
+  .transparency-layout,
+  .versioning-layout,
+  .design-layout,
+  .civic-layout,
+  .trace-layout,
   .split-section,
   .execution-panel,
   .contract-grid {
@@ -833,6 +2458,27 @@ h3 {
   }
 
   .law-layer-grid,
+  .boundary-grid,
+  .risk-matrix-grid,
+  .account-blueprint-grid,
+  .failure-grid,
+  .review-checklist,
+  .journey-grid,
+  .threat-grid,
+  .classifier-grid,
+  .case-view-grid,
+  .case-evidence-grid,
+  .impact-grid,
+  .reputation-grid,
+  .transparency-grid,
+  .versioning-grid,
+  .design-grid,
+  .civic-grid,
+  .design-blueprint-panel > div,
+  .build-spec-grid,
+  .build-order-panel > div,
+  .instruction-grid,
+  .event-log-grid,
   .twin-examples,
   .rule-book-grid {
     grid-template-columns: 1fr;
@@ -845,6 +2491,16 @@ h3 {
 
   .sticky-heading {
     position: static;
+  }
+}
+
+@media (max-width: 640px) {
+  .toc-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .toc-card {
+    min-height: 0;
   }
 }
 
@@ -865,6 +2521,42 @@ h3 {
   .civilization-hero-panel {
     min-height: 0;
     padding: 14px;
+  }
+
+  .diagram-card {
+    padding: 12px;
+  }
+
+  .civilization-flow-svg {
+    min-height: 220px;
+  }
+
+  .binding-svg {
+    min-height: 320px;
+  }
+
+  .validator-svg {
+    min-height: 270px;
+  }
+
+  .transaction-svg {
+    min-height: 310px;
+  }
+
+  .audit-trail-svg {
+    min-height: 280px;
+  }
+
+  .system-diagram-card .civilization-flow-svg {
+    min-height: 250px;
+  }
+
+  .svg-node text {
+    font-size: 17px;
+  }
+
+  .svg-badge text {
+    font-size: 13px;
   }
 
   .codex-monolith {
@@ -890,11 +2582,21 @@ h3 {
     gap: 6px;
   }
 
+  .patch-schema-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .module-binding-card dl {
+    grid-template-columns: 1fr;
+  }
+
   .hash-row {
     grid-template-columns: 1fr;
   }
 
   .hero-actions,
+  .section-actions,
   .rule-actions {
     align-items: stretch;
     flex-direction: column;

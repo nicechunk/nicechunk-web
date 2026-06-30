@@ -139,7 +139,7 @@ body,
 
 .rpc-config-panel {
   position: fixed;
-  z-index: 140;
+  z-index: 180;
   top: 18px;
   left: 50%;
   display: grid;
@@ -677,6 +677,85 @@ body,
   font-weight: 900;
   line-height: 1;
   text-transform: uppercase;
+}
+
+.profile-rpc-row {
+  position: relative;
+  z-index: 7;
+  display: grid;
+  grid-template-columns: minmax(76px, auto) minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+  padding: 7px 9px;
+  border: 1px solid rgba(139, 216, 255, 0.28);
+  background:
+    linear-gradient(180deg, rgba(139, 216, 255, 0.09), rgba(242, 211, 107, 0.05)),
+    rgba(8, 12, 14, 0.52);
+}
+
+.profile-rpc-row > span {
+  color: #dfe8bc;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.profile-rpc-control {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+}
+
+.profile-rpc-copy {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.profile-rpc-copy strong,
+.profile-rpc-copy small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-rpc-copy strong {
+  color: #fff9dc;
+  font-family: "Courier New", ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.profile-rpc-copy small {
+  color: rgba(139, 216, 255, 0.78);
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.profile-rpc-control button {
+  min-height: 30px;
+  border: 1px solid rgba(140, 255, 0, 0.5);
+  background: rgba(140, 255, 0, 0.13);
+  color: #eaffd0;
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 900;
+  padding: 0 10px;
+  text-transform: uppercase;
+}
+
+.profile-rpc-control button:hover,
+.profile-rpc-control button:focus-visible {
+  border-color: rgba(139, 216, 255, 0.9);
+  box-shadow: 0 0 14px rgba(139, 216, 255, 0.2);
+  outline: none;
 }
 
 .profile-language-row .language-picker {
@@ -4599,12 +4678,17 @@ body,
     height: 32px;
   }
 
-  .profile-language-row {
+  .profile-language-row,
+  .profile-rpc-row {
     grid-template-columns: minmax(0, 1fr);
     gap: 6px;
     min-height: 58px;
     margin-right: 42px;
     padding: 7px;
+  }
+
+  .profile-rpc-control {
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 
   .profile-language-row .language-menu {

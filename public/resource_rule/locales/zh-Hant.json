@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hant",
     "label": "Traditional Chinese",
-    "version": "resource-rule-locale-zh-Hant-595a022a2a4275b4",
-    "contentHash": "595a022a2a4275b4"
+    "version": "resource-rule-locale-zh-Hant-7a2d87ac45a86423",
+    "contentHash": "7a2d87ac45a86423"
   },
   "siteFooter": {
     "tagline": "Solana 上的種子體素世界協議。",
@@ -178,11 +178,11 @@
       "body": "NiceChunk 會把地形方塊映射為有科學依據的資源基礎。每個方塊都會公開生成訊號、可能的元素組成區間，以及它在未來挖礦和鍛造經濟中的定位。",
       "metricsAria": "圖鑑狀態",
       "workspaceAria": "方塊資源圖鑑",
-      "modeAria": "資源數據分類",
+      "modeAria": "資源資料分類",
       "rawMode": "原始資源",
       "materialMode": "材料資料",
-      "rawModeBody": "原始資源來自生成方塊的挖掘。它们必须先熔煉成材料資源，才能進入鍛造。",
-      "materialModeBody": "材料資料定義燃料熱量、熔煉输入、工匠要求，以及由原始資源产出的可鍛造材料。",
+      "rawModeBody": "原始資源來自生成方塊的挖掘。它们必須先熔煉成材料資源，才能進入鍛造。",
+      "materialModeBody": "材料資料定義燃料熱量、熔煉輸入、工匠要求，以及由原始資源產出的可鍛造材料。",
       "filtersAria": "圖鑑篩選",
       "filterTitle": "方塊類別",
       "resultCount": "顯示 {count} 個",
@@ -219,30 +219,30 @@
       "workspaceAria": "材料資源資料",
       "eyebrow": "熔煉資料",
       "title": "原始資源會變成可鍛造材料。",
-      "body": "原始資源不能直接鍛造。熔煉爐會消耗燃料熱量，檢查材料配方，然後产出可用於物品鍛造的材料資源。",
+      "body": "原始資源不能直接鍛造。熔煉爐會消耗燃料熱量，檢查材料配方，然後產出可用於物品鍛造的材料資源。",
       "ruleSetLabel": "規則來源",
-      "contractBody": "这张表來自独立 JSON 規則源，方便遊戲客户端和未來合约引用同一套熔煉要求。",
+      "contractBody": "这张表來自独立 JSON 規則源，方便遊戲客戶端和未來合約引用同一套熔煉要求。",
       "fuelTitle": "燃料熱量等級",
-      "fuelBody": "可燃燃料提供熱量等級。更高阶的配方需要更强燃料或更熱的爐源。",
-      "recipeTitle": "材料图鉴",
-      "recipeBody": "按材料類別浏览可鍛造材料，查看元素構成，并核對每個产物背後的熔煉要求。",
-      "atlasAria": "材料图鉴",
+      "fuelBody": "可燃燃料提供熱量等級。更高阶的配方需要更強燃料或更熱的爐源。",
+      "recipeTitle": "材料圖鉴",
+      "recipeBody": "按材料類別瀏覽可鍛造材料，查看元素構成，並核對每個產物背後的熔煉要求。",
+      "atlasAria": "材料圖鉴",
       "filtersAria": "材料篩選",
       "categoryTitle": "材料類別",
       "allMaterials": "全部材料",
       "resultCount": "显示 {count} 個",
-      "searchLabel": "搜尋材料、類別、元素或输入",
+      "searchLabel": "搜尋材料、類別、元素或輸入",
       "searchPlaceholder": "搜尋 steel、Si、glass...",
       "empty": "目前篩選下沒有匹配的材料配方。",
       "materialAria": "打開 {name} 材料詳情",
       "visualModelLabel": "元素色彩模型",
-      "visualModelBody": "材料缩略图會根據每個配方档案中的主導元素生成。",
+      "visualModelBody": "材料缩略圖會根據每個配方档案中的主導元素生成。",
       "processTitle": "熔煉流程",
       "compositionTitle": "材料元素档案",
-      "forgeUseTitle": "鍛造解锁",
+      "forgeUseTitle": "鍛造解鎖",
       "sourceBlocksTitle": "原始資源來源",
       "heatLabel": "熱量",
-      "burnTimeLabel": "燃烧时間",
+      "burnTimeLabel": "燃燒時間",
       "sourceLabel": "來源",
       "consumableLabel": "消耗",
       "consumable": "會消耗",
@@ -251,9 +251,9 @@
       "requiredHeatLabel": "所需熱量",
       "artisanLevelLabel": "工匠等級",
       "artisanLevel": "{level} 級",
-      "rawInputsLabel": "原始输入",
+      "rawInputsLabel": "原始輸入",
       "catalystLabel": "催化/還原",
-      "yieldLabel": "产出",
+      "yieldLabel": "產出",
       "yieldCount": "{count} 批",
       "forgeUseLabel": "鍛造用途",
       "inputAmount": "{amount}x {resource}",
@@ -280,16 +280,16 @@
       },
       "forgeUse": {
         "fuel": "高密度燃料和還原剂",
-        "soilCatalyst": "土壤改良、生物反应器原料和低阶催化剂",
+        "soilCatalyst": "土壤改良、生物反應器原料和低阶催化剂",
         "mold": "鍛造模具、砖和爐衬",
         "binding": "耐熱粘結剂和陶瓷添加物",
-        "flux": "熔煉助熔剂，用於净化熔體并减少爐渣",
+        "flux": "熔煉助熔剂，用於净化熔體並减少爐渣",
         "masonry": "結構砌塊、窑爐主體和野外建造",
         "lens": "鏡片、窗片、仪表和易碎配件",
-        "circuit": "電路、感測器、逻辑板和信号装置",
-        "cooling": "冷却单元、稳定器和寒冷等級配件",
+        "circuit": "電路、感測器、邏輯板和信号装置",
+        "cooling": "冷卻单元、穩定器和寒冷等級配件",
         "toolHead": "镐头、刀刃、工具和結構件",
-        "conductor": "導電配件、线圈和精密零件",
+        "conductor": "導電配件、線圈和精密零件",
         "armorPlate": "護甲板、盾牌和抗冲击面板",
         "magneticCore": "磁芯、馬達部件和高階机構",
         "reinforcement": "輕量加固板和碳質嵌件",
@@ -304,19 +304,19 @@
         },
         "wood": {
           "name": "木質燃料",
-          "description": "由原木、枯木或巨型树根提供的通用工坊燃料，比草本燃料燃烧更久。"
+          "description": "由原木、枯木或巨型树根提供的通用工坊燃料，比草本燃料燃燒更久。"
         },
         "charcoal": {
           "name": "木炭",
-          "description": "由木質資源加工出的碳燃料，比原木更稳定也更干净。"
+          "description": "由木質資源加工出的碳燃料，比原木更穩定也更干净。"
         },
         "coal": {
           "name": "煤炭",
-          "description": "來自深层石煤层的强力鍛造燃料，不常见，适合金屬海绵坯。"
+          "description": "來自深層石煤層的強力鍛造燃料，不常见，适合金屬海绵坯。"
         },
         "lava_heat": {
           "name": "熔岩熱源",
-          "description": "不直接消耗的高熱爐源，绑定火山資源，用於鼓风級配方。"
+          "description": "不直接消耗的高熱爐源，綁定火山資源，用於鼓风級配方。"
         }
       },
       "item": {
@@ -326,7 +326,7 @@
         },
         "biochar_compost": {
           "name": "生物炭堆肥",
-          "description": "由树叶、苔藓和泥浆低溫制成的碳与养分材料，可用於土壤系统和生物站點。"
+          "description": "由树叶、苔藓和泥浆低溫制成的碳與养分材料，可用於土壤系統和生物站點。"
         },
         "plant_fiber": {
           "name": "植物纤维",
@@ -334,7 +334,7 @@
         },
         "resin_binder": {
           "name": "树脂粘結剂",
-          "description": "由松木和藤蔓提取的树脂浓缩物，可粘合纤维、密封容器，并支持低溫复合材料。"
+          "description": "由松木和藤蔓提取的树脂浓缩物，可粘合纤维、密封容器，並支持低溫复合材料。"
         },
         "ceramic_brick": {
           "name": "陶瓷砖",
@@ -342,7 +342,7 @@
         },
         "lime_ceramic": {
           "name": "石灰陶瓷",
-          "description": "由贝壳层石灰和黏土制成的陶瓷，可作為耐熱粘結剂和耐火添加物。"
+          "description": "由贝壳層石灰和黏土制成的陶瓷，可作為耐熱粘結剂和耐火添加物。"
         },
         "quicklime": {
           "name": "生石灰",
@@ -350,7 +350,7 @@
         },
         "salt_flux": {
           "name": "盐助熔剂",
-          "description": "由盐滩和火山灰制成的助熔材料，可帮助熔煉分离爐渣并稳定更干净的金屬批次。"
+          "description": "由盐滩和火山灰制成的助熔材料，可帮助熔煉分离爐渣並穩定更干净的金屬批次。"
         },
         "ash_cement": {
           "name": "灰質水泥",
@@ -358,7 +358,7 @@
         },
         "glass_ingot": {
           "name": "玻璃锭",
-          "description": "富矽玻璃坯料，可用於鏡片、窗片、仪表和易碎技术部件。"
+          "description": "富矽玻璃坯料，可用於鏡片、窗片、仪表和易碎技術部件。"
         },
         "obsidian_glass": {
           "name": "黑曜玻璃",
@@ -370,31 +370,31 @@
         },
         "ice_crystal": {
           "name": "冰晶",
-          "description": "由冰、雪和盐稳定出的晶體，可用於冷却单元、冰霜工具和熱控组件。"
+          "description": "由冰、雪和盐穩定出的晶體，可用於冷卻单元、冰霜工具和熱控组件。"
         },
         "iron_bloom": {
           "name": "鐵海绵坯",
-          "description": "从深层石和石头中還原出的可鍛鐵質坯料，煤炭负责供碳和還原。"
+          "description": "從深層石和石头中還原出的可鍛鐵質坯料，煤炭负责供碳和還原。"
         },
         "copper_bloom": {
           "name": "銅海绵坯",
-          "description": "从砾石和玄武岩的痕量金屬傾向中富集出的導電金屬坯。"
+          "description": "從砾石和玄武岩的痕量金屬傾向中富集出的導電金屬坯。"
         },
         "alumina_plate": {
           "name": "氧化鋁板",
-          "description": "由黏土和深层石制成的富鋁陶瓷板，可用於抗冲击面板和绝缘配件。"
+          "description": "由黏土和深層石制成的富鋁陶瓷板，可用於抗冲击面板和绝缘配件。"
         },
         "nickel_iron": {
           "name": "鎳鐵合金",
-          "description": "从深层石和玄武岩痕量金屬中精煉出的磁性鐵合金，可用於馬達和高階机構。"
+          "description": "從深層石和玄武岩痕量金屬中精煉出的磁性鐵合金，可用於馬達和高階机構。"
         },
         "carbon_plate": {
           "name": "碳板",
-          "description": "由煤炭和深层石压制出的碳材料，可用於輕量加固和嵌件。"
+          "description": "由煤炭和深層石压制出的碳材料，可用於輕量加固和嵌件。"
         },
         "carbon_steel": {
           "name": "碳钢坯",
-          "description": "高阶鋼材坯料，來自深层石的鐵傾向和煤炭的控碳。"
+          "description": "高阶鋼材坯料，來自深層石的鐵傾向和煤炭的控碳。"
         },
         "basalt_fiber": {
           "name": "玄武岩纤维",
@@ -406,7 +406,7 @@
         },
         "geopolymer_block": {
           "name": "地聚物塊",
-          "description": "由火山灰、玄武岩和盐激發形成的石質复合材料，可用於高强砌體和窑爐主體。"
+          "description": "由火山灰、玄武岩和盐激發形成的石質复合材料，可用於高強砌體和窑爐主體。"
         },
         "coral_lime": {
           "name": "珊瑚石灰",
@@ -694,8 +694,8 @@
       },
       "coal": {
         "name": "煤炭",
-        "source": "深层石煤层",
-        "description": "富碳沉积燃料，會以较低频率在深层石中成片生成，主要用於熔煉熱量，而不是直接鍛造。"
+        "source": "深層石煤層",
+        "description": "富碳沉积燃料，會以较低频率在深層石中成片生成，主要用於熔煉熱量，而不是直接鍛造。"
       }
     },
     "tag": {

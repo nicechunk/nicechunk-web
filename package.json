@@ -11,6 +11,7 @@
     "build:nginx": "vite build",
     "dev": "vite --host 0.0.0.0",
     "preview": "vite preview --host 0.0.0.0",
+    "validate:ncm-fixtures": "node scripts/validate-ncm-fixtures.mjs",
     "validate:release": "npm run audit:deps && npm run audit:licenses && npm run build"
   },
   "dependencies": {

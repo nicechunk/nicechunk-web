@@ -187,9 +187,13 @@ export function encodeNcm(character) {
 }
 
 export function decodeNcm(code) {
-  if (/^NCM2:/i.test(String(code))) return decodeNcmVox(code);
+  const text = String(code ?? "").trim();
+  if (/^NCM2:/i.test(text)) return decodeNcmVox(text);
+  if (/^[A-Z0-9]+:/i.test(text) && !/^NCM1:/i.test(text)) {
+    throw new Error("Unsupported NCM format prefix.");
+  }
 
-  const raw = base64UrlDecode(String(code).replace(/^NCM1:/i, ""));
+  const raw = base64UrlDecode(text.replace(/^NCM1:/i, ""));
   const reader = createByteReader(raw);
   const magic = readAscii(reader, 4);
   if (magic !== "NCM1") throw new Error("Invalid NCM header.");
@@ -437,6 +441,9 @@ function decodeNcmVox(code) {
   const scale = readVar(reader);
   const count = readVar(reader);
   const paletteCount = readVar(reader);
+  if (size.x <= 0 || size.y <= 0 || size.z <= 0) throw new Error("Invalid NCM2 model size.");
+  if (scale <= 0) throw new Error("Invalid NCM2 scale.");
+  if (paletteCount <= 0) throw new Error("Invalid NCM2 palette.");
   const palette = Array.from({ length: paletteCount }, () => rgbToHex(reader.read(), reader.read(), reader.read()));
   const bitReader = createBitReader(raw, reader.offset());
   const colorBits = bitWidth(Math.max(0, palette.length - 1));
@@ -613,7 +620,8 @@ function createBitReader(raw, startOffset = 0) {
     read(bits) {
       let value = 0;
       for (let bit = 0; bit < bits; bit++) {
-        value |= (((raw[byteIndex] ?? 0) >> used) & 1) << bit;
+        if (byteIndex >= raw.length) throw new Error("Unexpected end of NCM bitstream.");
+        value |= ((raw[byteIndex] >> used) & 1) << bit;
         used++;
         if (used !== 8) continue;
         byteIndex++;

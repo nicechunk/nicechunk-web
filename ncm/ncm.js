@@ -32,6 +32,9 @@ const resetViewButton = document.querySelector("#resetView");
 const previewTitle = document.querySelector("#previewTitle");
 const canvas = document.querySelector("#ncmPreview");
 const ncmDnaFrame = document.querySelector("#ncmDnaFrame");
+const maxVoxFileBytes = 8 * 1024 * 1024;
+const minTargetHeight = 80;
+const maxTargetHeight = 900;
 
 let currentNcm = "";
 let currentFilename = "nicechunk-model.ncm";
@@ -181,6 +184,7 @@ async function loadSample(sample) {
 
 async function convertFile(file) {
   try {
+    validateVoxFile(file);
     updateStatus(t("ncm.status.converting"));
     lastVoxBuffer = await file.arrayBuffer();
     currentFilename = file.name.replace(/\.vox$/i, ".ncm") || "nicechunk-model.ncm";
@@ -198,10 +202,23 @@ function reconvertLastVox() {
 function convertBuffer(buffer, name) {
   const result = voxToNcm(buffer, {
     mode: mergeMode.value,
-    targetHeight: Number(targetHeight.value) || 300,
+    targetHeight: getTargetHeight(),
   });
   setNcmResult(result.ncm, { name, source: result.source });
   updateStatus(t("ncm.status.converted"));
+}
+
+function validateVoxFile(file) {
+  if (!/\.vox$/i.test(file.name)) throw new Error("Please select a MagicaVoxel .vox file.");
+  if (file.size > maxVoxFileBytes) throw new Error("The selected VOX file is larger than the 8 MiB browser converter limit.");
+}
+
+function getTargetHeight() {
+  const parsed = Number(targetHeight.value);
+  const safe = Number.isFinite(parsed) ? parsed : 300;
+  const clamped = THREE.MathUtils.clamp(Math.round(safe), minTargetHeight, maxTargetHeight);
+  if (String(clamped) !== targetHeight.value) targetHeight.value = String(clamped);
+  return clamped;
 }
 
 function setNcmResult(ncm, details) {

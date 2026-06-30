@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hant",
     "label": "Traditional Chinese",
-    "version": "locale-zh-Hant-cd65ea48b3a52fb5",
-    "contentHash": "cd65ea48b3a52fb5"
+    "version": "locale-zh-Hant-8fe56e31bc3c45de",
+    "contentHash": "8fe56e31bc3c45de"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -175,7 +175,16 @@
       "backpackPurchaseFailed": "背包購買失敗：{reason}",
       "model": "角色模型",
       "close": "關閉屬性",
-      "logout": "退出"
+      "logout": "退出",
+      "rpc": "RPC",
+      "rpcPublic": "公共 RPC",
+      "rpcKey": "RPCKEY {key}",
+      "rpcRecommend": "推薦設定專用 RPC key，挖掘和鏈上同步會更穩定。",
+      "rpcConfigured": "專用 RPC key 已啟用，鏈上呼叫會使用你的 RPC。",
+      "rpcSet": "設定",
+      "rpcUpdate": "UPDATE",
+      "rpcSetPrompt": "設定 Helius API key，避免公共 RPC 限流。",
+      "rpcUpdatePrompt": "更新 NiceChunk 鏈上呼叫使用的 Helius API key。"
     },
     "debug": "Debug",
     "minimap": "小地圖",
@@ -215,6 +224,7 @@
       "walletUnexpectedError": "錢包返回了未知錯誤",
       "sessionFundingCancelled": "已取消 Session 注資",
       "sessionFundingFailed": "Session 注資失敗",
+      "notTreeTrunk": "不是樹幹",
       "backpackFull": "背包已滿",
       "noBackpack": "尚未裝備背包",
       "noBackpackTitle": "需要背包",
@@ -343,16 +353,16 @@
       }
     },
     "rpcConfig": {
-      "title": "公共 RPC 负载过高",
-      "body": "填寫 Helius 開發網 API key，鏈上读取和交易提交會改用你的专用 RPC。",
-      "link": "申请 Helius API key",
+      "title": "公共 RPC 負載過高",
+      "body": "填寫 Helius 開發網 API key，鏈上讀取和交易提交會改用你的專用 RPC。",
+      "link": "申請 Helius API key",
       "inputLabel": "Helius API key",
-      "placeholder": "粘贴你的 Helius API key",
+      "placeholder": "貼上你的 Helius API key",
       "save": "保存 RPC",
-      "dismiss": "关闭 RPC 提醒",
-      "publicRpcFailed": "公共開發網 RPC 正在限流。添加 Helius API key 後，鏈上读取和挖掘交易會更稳定。",
-      "invalid": "保存前请输入 Helius API key。",
-      "saved": "已保存。NiceChunk 會使用你的 Helius 開發網 RPC 执行鏈上调用。"
+      "dismiss": "關閉 RPC 提醒",
+      "publicRpcFailed": "公共開發網 RPC 正在限流。添加 Helius API key 後，鏈上讀取和挖掘交易會更穩定。",
+      "invalid": "保存前請輸入 Helius API key。",
+      "saved": "已保存。NiceChunk 會使用你的 Helius 開發網 RPC 執行鏈上呼叫。"
     },
     "market": {
       "open": "開啟交易市場",
@@ -730,7 +740,7 @@
     "hero": {
       "eyebrow": "Guardian 接入層",
       "title": "守護者網路控制台",
-      "body": "註冊一個非託管 Guardian，讓守护區域保持可存取，即時同步 Chunk 活動，并為本地遊戲服務提供支撑。只要稳定提供守护服務，Guardian 後续可以从守护區域的資源税收和交易税收中赚取 NCK，同时不託管玩家資產，也不替使用者簽名。",
+      "body": "註冊一個非託管 Guardian，讓守護區域保持可存取，實時同步 Chunk 活動，並為本地遊戲服務提供支撑。只要穩定提供守護服務，Guardian 後續可以從守護區域的資源税收和交易税收中赚取 NCK，同時不託管玩家資產，也不替使用者簽名。",
       "actionsAria": "守護者操作",
       "registerAction": "註冊節點",
       "registryAction": "查看登記表",
@@ -745,15 +755,15 @@
       "networkValue": "Devnet-01",
       "stake": "註冊费用",
       "stakeValue": "100,000 NCK",
-      "region": "覆盖範圍",
+      "region": "覆蓋範圍",
       "regionValue": "100 x 100 Chunks",
-      "contract": "合约",
-      "viewContract": "查看合约"
+      "contract": "合約",
+      "viewContract": "查看合約"
     },
     "register": {
       "eyebrow": "註冊",
       "title": "註冊節點",
-      "body": "為一個 100 x 100 Chunk 服務區域發布連接端點。節點掉线或不穩定會受到惩罚；稳定运行的節點，国库會以守護者奖励的形式逐步返回给註冊錢包。"
+      "body": "為一個 100 x 100 Chunk 服務區域發布連接端點。節點掉線或不穩定會受到懲罰；穩定執行的節點，国库會以守護者獎勵的形式逐步返回給註冊錢包。"
     },
     "wallet": {
       "connect": "連接錢包",
@@ -773,35 +783,35 @@
       "useTls": "使用 WSS / TLS 傳輸",
       "genesis": "創世守護者註冊",
       "regionPreview": "區域",
-      "submit": "註冊并支付 100,000 NCK",
+      "submit": "註冊並支付 100,000 NCK",
       "close": "关闭"
     },
     "status": {
       "ready": "准备就绪。",
       "noWallet": "沒有檢测到 Solana 錢包。请安装 Phantom 或 Solflare。",
       "walletConnected": "錢包已連接。",
-      "connectFailed": "連接失败。",
+      "connectFailed": "連接失敗。",
       "confirmWallet": "请在錢包中確认註冊交易。",
       "registered": "註冊成功。交易：{signature}",
-      "registerFailed": "註冊失败。",
+      "registerFailed": "註冊失敗。",
       "updateConfirm": "请在錢包中確认端點修改交易。",
       "updated": "端點已更新。交易：{signature}",
-      "updateFailed": "端點更新失败。",
-      "invalidInteger": "{field} 必须是整數。"
+      "updateFailed": "端點更新失敗。",
+      "invalidInteger": "{field} 必須是整數。"
     },
     "list": {
       "eyebrow": "登記表",
       "title": "活躍守護者",
-      "body": "開發網活躍 Guardian 區域列表。連接錢包後，你自己的守護者會优先显示并标记。",
+      "body": "開發網活躍 Guardian 區域列表。連接錢包後，你自己的守護者會优先显示並標記。",
       "listView": "列表查看",
-      "mapView": "地图查看",
+      "mapView": "地圖查看",
       "refresh": "重新整理",
       "loading": "正在載入登記表...",
       "registryMissing": "守護者登記表尚未初始化。",
       "registrySummary": "活躍守護者：{active}。累計註冊：{total}。",
       "connectFirst": "请先連接錢包，再載入守護者登記表。",
       "empty": "目前還沒有活躍守護者。",
-      "loadFailed": "載入守護者失败。"
+      "loadFailed": "載入守護者失敗。"
     },
     "card": {
       "title": "區域 {x}, {y}",
@@ -813,7 +823,7 @@
       "chainAddress": "鏈地址",
       "stake": "剩餘質押",
       "proof": "最後證明",
-      "never": "从未提交",
+      "never": "從未提交",
       "viewOnChain": "鏈上查看",
       "mine": "我的",
       "edit": "修改",
@@ -832,11 +842,11 @@
       "aria": "Guardian 职责边界",
       "access": {
         "title": "接入層",
-        "body": "Guardian 讓區域端點保持可存取，方便客户端發現并連接附近的 Chunk 服務。"
+        "body": "Guardian 讓區域端點保持可存取，方便客戶端發現並連接附近的 Chunk 服務。"
       },
       "realtime": {
-        "title": "即時通訊",
-        "body": "它支持區域活動的即時協作，但不會取代錢包簽名或鏈上結算。"
+        "title": "實時通訊",
+        "body": "它支持區域活動的實時協作，但不會取代錢包簽名或鏈上結算。"
       },
       "nonCustodial": {
         "title": "非託管流程",
@@ -846,18 +856,18 @@
     "error": {
       "insufficientSol": "已連接錢包需要少量開發網 SOL 支付交易手续费。",
       "insufficientNck": "已連接錢包沒有足够的開發網 NCK 支付 100,000 NCK 註冊费用。",
-      "noPriorCredit": "这個錢包還沒有開發網 SOL 记录。註冊前请先领取開發網 SOL。",
-      "invalidTokenAccount": "NCK 代币账户不正確。请確认錢包持有開發網 NCK。",
-      "regionAlreadyActive": "这個區域已经有活躍守護者。",
+      "noPriorCredit": "這個錢包還沒有開發網 SOL 記錄。註冊前请先领取開發網 SOL。",
+      "invalidTokenAccount": "NCK 代幣帳戶不正確。请確认錢包持有開發網 NCK。",
+      "regionAlreadyActive": "這個區域已經有活躍守護者。",
       "invalidConnection": "連接端點格式不正確。请使用 ws://主机:端口 或 wss://主机:端口，不要带路徑。",
       "invalidHost": "主机格式不正確。请只填寫域名、IP 或主机名，不要带 http:// 或 wss://。",
-      "invalidPort": "端口必须在 1 到 65535 之間。",
-      "missingAdjacentGuardian": "非創世守護者必须上下左右至少相邻一個活躍守護者。",
+      "invalidPort": "端口必須在 1 到 65535 之間。",
+      "missingAdjacentGuardian": "非創世守護者必須上下左右至少相邻一個活躍守護者。",
       "invalidAdjacentGuardian": "相邻區域 PDA 不正確，请重新整理頁面後重试。",
-      "noGenesisPermission": "創世守護者必须由開發錢包註冊。请切换到開發錢包，或不要勾選創世註冊。",
-      "genesisAlreadyRegistered": "創世守護者已经註冊过。",
-      "guardianNotActive": "这個守護者目前不是活躍狀態。",
-      "unknownProgramError": "Guardian 合约返回错误：{code}"
+      "noGenesisPermission": "創世守護者必須由開發錢包註冊。请切换到開發錢包，或不要勾選創世註冊。",
+      "genesisAlreadyRegistered": "創世守護者已經註冊过。",
+      "guardianNotActive": "這個守護者目前不是活躍狀態。",
+      "unknownProgramError": "Guardian 合約返回錯誤：{code}"
     }
   },
   "ncm": {
@@ -872,104 +882,104 @@
       "fairness": "公平",
       "proofOfFrontier": "證明",
       "guardians": "守護者",
-      "contracts": "合约",
+      "contracts": "合約",
       "docs": "文档",
       "enterWorld": "進入世界"
     },
     "page": {
       "title": "NCM 鏈上 3D 資產格式",
-      "description": "NCM 是 NiceChunk 面向 Solana 遊戲设计的紧凑資產格式，可以把體素 3D 模型存成适合 PDA 记录的鏈上文本，不依赖 IPFS。"
+      "description": "NCM 是 NiceChunk 面向 Solana 遊戲設計的紧凑資產格式，可以把體素 3D 模型存成适合 PDA 記錄的鏈上文本，不依賴 IPFS。"
     },
     "hero": {
       "eyebrow": "鏈上 3D 資產格式",
-      "title": "我们设计 NCM，是為了讓 Solana 遊戲真正拥有鏈上的 3D 資產。",
-      "body": "NCM 是 NiceChunk 面向 Solana 和其他区塊鏈设计的紧凑 3D 資產格式。我们正在围绕这种格式做更深入的研發和探索，因為它能把體素資產压缩成极小的文本记录，讓客户端通过 RPC 直接读取、公開驗证，并且長期可用，不依赖 IPFS。",
+      "title": "我们設計 NCM，是為了讓 Solana 遊戲真正拥有鏈上的 3D 資產。",
+      "body": "NCM 是 NiceChunk 面向 Solana 和其他区塊鏈設計的紧凑 3D 資產格式。我们正在围绕这种格式做更深入的研發和探索，因為它能把體素資產压缩成极小的文本記錄，讓客戶端通過 RPC 直接讀取、公開驗證，並且長期可用，不依賴 IPFS。",
       "convert": "转换 VOX",
       "sample": "載入示例",
       "formatLabel": "格式前缀",
-      "formatBody": "把调色板、模型网格、缩放比例和合并長方體编码成 bit-pack 鏈上文本。",
+      "formatBody": "把调色板、模型网格、缩放比例和合並長方體編碼成 bit-pack 鏈上文本。",
       "dna": "NCM-DNA 實驗室"
     },
     "principles": {
-      "aria": "NCM 设计原則",
+      "aria": "NCM 設計原則",
       "rpc": {
-        "title": "RPC 原生读取",
-        "body": "客户端可以直接从账户數據读取文本，并立即重建 3D 模型。"
+        "title": "RPC 原生讀取",
+        "body": "客戶端可以直接從帳戶資料讀取文本，並立即重建 3D 模型。"
       },
       "public": {
         "title": "永久公開",
-        "body": "資產和程序狀態一起儲存，不隐藏在可變的外部网关後面。"
+        "body": "資產和程式狀態一起儲存，不隱藏在可變的外部网关後面。"
       },
       "compact": {
         "title": "成本敏感",
-        "body": "编码前先把同色體素合并成長方體，减少鏈上儲存體积。"
+        "body": "編碼前先把同色體素合並成長方體，减少鏈上儲存體积。"
       },
       "portable": {
         "title": "多鏈可用",
-        "body": "NCM 是纯文本格式，同一套資產表达可以用於不同鏈和运行时。"
+        "body": "NCM 是纯文本格式，同一套資產表达可以用於不同鏈和執行時。"
       }
     },
     "thesis": {
-      "aria": "NCM 设计意义",
-      "eyebrow": "為什么设计 NCM",
-      "title": "Solana 遊戲資產应该成為狀態的一部分，而不是挂在狀態旁边的一条 URL。",
-      "body": "NiceChunk 選择围绕 NCM 構建，是因為一個體素對象可以小到直接寫入程序拥有的 PDA。資產、規則和所有权能够一起移動，遊戲道具或 NFT 不再依赖某個外部网关持续在线。",
+      "aria": "NCM 設計意义",
+      "eyebrow": "為什麼設計 NCM",
+      "title": "Solana 遊戲資產應該成為狀態的一部分，而不是挂在狀態旁边的一條 URL。",
+      "body": "NiceChunk 選擇围绕 NCM 構建，是因為一個體素對象可以小到直接寫入程式拥有的 PDA。資產、規則和所有權能够一起移動，遊戲道具或 NFT 不再依賴某個外部网关持续在線。",
       "metricsAria": "NCM 压缩示例",
       "metricSource": "VOX 源文件",
-      "metricNcm": "NCM 记录",
+      "metricNcm": "NCM 記錄",
       "metricGirl": "村民女孩源文件",
       "metricGirlNcm": "同一模型變成适合 PDA 的文本",
       "metricGuy": "村民男孩源文件",
-      "metricGuyNcm": "约 400 字节級载荷"
+      "metricGuyNcm": "约 400 位元組級載荷"
     },
     "roadmap": {
       "aria": "NCM 研發方向",
       "pda": {
         "title": "PDA 原生資源",
-        "body": "NCM 可以把小型角色、道具、装备和方塊装饰變成账户數據，Solana 客户端用普通 RPC 调用就能读取。"
+        "body": "NCM 可以把小型角色、道具、装备和方塊装饰變成帳戶資料，Solana 客戶端用普通 RPC 呼叫就能讀取。"
       },
       "trade": {
         "title": "更安全的 NFT 交易",
-        "body": "当視覺資產和資產记录一起儲存时，买家不需要相信 IPFS 网关、元數據服務器或可變 JSON 鏈接未來仍然可解析。"
+        "body": "当視觉資產和資產記錄一起儲存時，买家不需要相信 IPFS 网关、元資料伺服器或可變 JSON 連結未來仍然可解析。"
       },
       "research": {
         "title": "有用的压缩研究",
-        "body": "NCM 也是 NCM-DNA 探索的基礎：搜尋更短的確定性基因來复現同一個模型，并把資產压缩转化為有意义的计算。"
+        "body": "NCM 也是 NCM-DNA 探索的基礎：搜尋更短的確定性基因來复現同一個模型，並把資產压缩轉化為有意义的計算。"
       }
     },
     "dna": {
       "aria": "NCM-DNA 實驗室",
       "eyebrow": "NCM-DNA 實驗室",
-      "title": "把 NCM-DNA 實驗和它所基于的 NCM 格式放在一起查看。",
-      "body": "NCM-DNA 延续同一条研發方向：不只是儲存紧凑長方體，而是搜尋能用更少字节复現同一模型的確定性基因。",
+      "title": "把 NCM-DNA 實驗和它所基於的 NCM 格式放在一起查看。",
+      "body": "NCM-DNA 延续同一條研發方向：不只是儲存紧凑長方體，而是搜尋能用更少位元組复現同一模型的確定性基因。",
       "open": "打開完整實驗室",
       "frameTitle": "NCM-DNA 實驗室"
     },
     "converter": {
       "eyebrow": "VOX 转 NCM",
-      "title": "浏览器本地转换器",
-      "body": "上传 MagicaVoxel .vox 文件。文件會在你的浏览器本地解析并转换成 NCM 文本。",
-      "dropTitle": "拖入或選择 .vox 文件",
-      "dropBody": "支持 MagicaVoxel 的 SIZE、XYZI 和 RGBA 數據塊。",
+      "title": "瀏覽器本地转换器",
+      "body": "上传 MagicaVoxel .vox 文件。文件會在你的瀏覽器本地解析並转换成 NCM 文本。",
+      "dropTitle": "拖入或選擇 .vox 文件",
+      "dropBody": "支持 MagicaVoxel 的 SIZE、XYZI 和 RGBA 資料塊。",
       "mode": "模式",
-      "merge": "合并方塊",
+      "merge": "合並方塊",
       "raw": "原始體素",
-      "height": "目标高度"
+      "height": "目標高度"
     },
     "license": {
       "title": "示例署名",
       "body": "示例 VOX 角色來自 OpenGameArt，作者 JoshMckay，授權為 CC-BY 4.0。"
     },
     "preview": {
-      "eyebrow": "即時预览",
+      "eyebrow": "實時預覽",
       "title": "未載入模型",
       "titleLoaded": "NCM 模型",
-      "reset": "重置视角"
+      "reset": "重置視角"
     },
     "output": {
-      "eyebrow": "NCM 输出",
+      "eyebrow": "NCM 輸出",
       "title": "紧凑鏈上文本",
-      "body": "可以把这段 payload 存入账户數據或程序拥有的資產记录。客户端无需 IPFS 就能解码。",
+      "body": "可以把这段 payload 存入帳戶資料或程式拥有的資產記錄。客戶端无需 IPFS 就能解碼。",
       "placeholder": "NCM2:...",
       "copy": "复制 NCM",
       "download": "下载 .ncm"
@@ -991,9 +1001,9 @@
       "converting": "正在把 VOX 转换為 NCM...",
       "converted": "转换完成。",
       "copied": "NCM 已复制。",
-      "copyFailed": "复制失败。",
+      "copyFailed": "复制失敗。",
       "downloaded": "NCM 已下载。",
-      "failed": "失败：{reason}"
+      "failed": "失敗：{reason}"
     }
   },
   "ncmDna": {
@@ -1008,7 +1018,7 @@
       "elements": "元素",
       "fairness": "公平",
       "proofOfFrontier": "證明",
-      "contracts": "合约",
+      "contracts": "合約",
       "enterWorld": "進入世界"
     },
     "page": {
@@ -1018,14 +1028,14 @@
     "common": {
       "yes": "是",
       "no": "否",
-      "on": "開启",
+      "on": "開啟",
       "off": "关闭"
     },
     "hero": {
       "eyebrow": "NCM 基因搜尋實驗",
       "title": "NCM DNA 實驗室",
-      "body": "NCM DNA Lab 是一個面向鏈上 3D 資產的基因搜尋實驗室。它不尝试儲存每一個方塊，而是搜尋一段更短的確定性基因，讓模型可以从基因中重新生長出來。",
-      "pow": "未來，这种搜尋可以成為一种有用的 PoW：矿工消耗 CPU 算力寻找更短基因，降低 PDA 存储體积，并从节省出來的鏈上存储成本中获得奖励。"
+      "body": "NCM DNA Lab 是一個面向鏈上 3D 資產的基因搜尋實驗室。它不嘗試儲存每一個方塊，而是搜尋一段更短的確定性基因，讓模型可以從基因中重新生長出來。",
+      "pow": "未來，这种搜尋可以成為一种有用的 PoW：矿工消耗 CPU 算力寻找更短基因，降低 PDA 存储體积，並從节省出來的鏈上存储成本中獲得獎勵。"
     },
     "flow": {
       "raw": "原始長方體模型",
@@ -1033,17 +1043,17 @@
       "grow": "Grow(gene) 哈希匹配"
     },
     "target": {
-      "eyebrow": "目标模型",
-      "title": "確定性長方體目标",
-      "seed": "目标種子",
+      "eyebrow": "目標模型",
+      "title": "確定性長方體目標",
+      "seed": "目標種子",
       "source": "來源",
       "ncmCharacter": "NCM 頁面角色",
-      "hiddenGene": "隐藏基因",
+      "hiddenGene": "隱藏基因",
       "rawVariation": "原始變體",
       "ornaments": "装饰",
-      "generate": "生成目标",
-      "random": "随机目标",
-      "reveal": "显示隐藏基因"
+      "generate": "生成目標",
+      "random": "随机目標",
+      "reveal": "显示隱藏基因"
     },
     "search": {
       "eyebrow": "CPU 搜尋",
@@ -1054,58 +1064,58 @@
       "exact": "精確参數恢复",
       "compression": "压缩搜尋",
       "evolution": "進化搜尋",
-      "threads": "线程",
+      "threads": "線程",
       "auto": "自動",
       "maxCandidates": "最大候選數",
       "maxSeedLength": "最大 DNA 種子長度",
       "start": "開始搜尋",
       "continuous": "持续搜尋",
-      "pause": "暂停",
+      "pause": "暫停",
       "resume": "继续",
       "stop": "停止",
       "reset": "重置"
     },
     "result": {
       "eyebrow": "最佳結果",
-      "title": "種子与编译後的基因",
+      "title": "種子與编译後的基因",
       "seed": "最佳 DNA 種子",
       "gene": "编译後的基因",
       "copySeed": "复制種子",
-      "growSeed": "从種子创建",
+      "growSeed": "從種子建立",
       "copy": "复制基因",
       "grow": "生長基因",
-      "seedInput": "種子输入",
+      "seedInput": "種子輸入",
       "seedPlaceholder": "NCS1.AV...",
-      "geneInput": "基因输入",
+      "geneInput": "基因輸入",
       "genePlaceholder": "NCD1.HM..."
     },
     "viewer": {
-      "eyebrow": "3D 预览",
+      "eyebrow": "3D 預覽",
       "title": "規範長方體模型",
       "canvasAria": "NCM DNA 3D 模型查看器",
       "modelAria": "查看器模型",
       "renderAria": "渲染模式",
-      "target": "目标模型",
+      "target": "目標模型",
       "best": "最佳基因模型",
-      "compare": "并排對比",
-      "diff": "差异视图",
+      "compare": "並排對比",
+      "diff": "差异視圖",
       "cuboid": "長方體",
       "voxel": "體素",
-      "wireframe": "线框",
+      "wireframe": "線框",
       "resetCamera": "重置相机"
     },
     "cpu": {
       "eyebrow": "CPU 友好",
-      "title": "為什么优先 CPU？",
-      "body": "NCM-DNA v1 使用規則型方塊生長语言，而不是 GPU 友好的體素坐标函數。搜尋过程中包含模板判断、分支、鏡像、重复、變長基因、cuboid 合并、标准化排序和 hash 校驗。这些任务更适合 CPU，也更符合 NiceChunk 想要的有用 PoW 方向。"
+      "title": "為什麼优先 CPU？",
+      "body": "NCM-DNA v1 使用規則型方塊生長语言，而不是 GPU 友好的體素坐标函數。搜尋过程中包含模板判断、分支、鏡像、重复、變長基因、cuboid 合並、标准化排序和 hash 校驗。这些任务更适合 CPU，也更符合 NiceChunk 想要的有用 PoW 方向。"
     },
     "chain": {
       "eyebrow": "未來鏈上流程",
       "title": "节省存储的提交路徑",
       "step1": "資產 PDA 保存 canonical_model_hash 和 current_encoding。",
       "step2": "矿工提交更短的基因。",
-      "step3": "程序驗证 grow(gene) 哈希等于 canonical_model_hash。",
-      "step4": "如果基因更短，則更新資產编码。",
+      "step3": "程式驗證 grow(gene) 哈希等于 canonical_model_hash。",
+      "step4": "如果基因更短，則更新資產編碼。",
       "step5": "释放的 PDA 租金可在矿工、所有者和協議池之間分配。"
     },
     "metrics": {
@@ -1118,33 +1128,33 @@
       "rawModelSize": "原始模型大小",
       "ratio": "压缩率",
       "score": "得分",
-      "targetHash": "目标哈希",
+      "targetHash": "目標哈希",
       "bestHash": "最佳哈希",
       "bestSeed": "最佳種子",
       "seedLength": "種子長度",
       "exact": "精確匹配",
-      "threads": "线程",
+      "threads": "線程",
       "threadValue": "{value}/{planned}",
-      "elapsed": "用时",
+      "elapsed": "用時",
       "saved": "节省",
-      "bytes": "{value} 字节"
+      "bytes": "{value} 位元組"
     },
     "status": {
       "idle": "空闲",
-      "running": "运行中",
-      "paused": "已暂停",
+      "running": "執行中",
+      "paused": "已暫停",
       "stopped": "已停止",
       "success": "成功"
     },
     "log": {
-      "eyebrow": "搜尋日志",
+      "eyebrow": "搜尋日誌",
       "title": "Worker 事件",
-      "targetGenerated": "目标已生成：{hash}",
-      "ncmTargetLoaded": "已載入 NCM 角色目标，共 {boxes} 個長方體。",
-      "workerError": "Worker 错误：{message}",
+      "targetGenerated": "目標已生成：{hash}",
+      "ncmTargetLoaded": "已載入 NCM 角色目標，共 {boxes} 個長方體。",
+      "workerError": "Worker 錯誤：{message}",
       "searchStarted": "搜尋已開始。",
-      "continuousStarted": "持续搜尋已启動，使用 {threads} 個 Worker 线程。",
-      "searchPaused": "搜尋已暂停。",
+      "continuousStarted": "持续搜尋已启動，使用 {threads} 個 Worker 線程。",
+      "searchPaused": "搜尋已暫停。",
       "searchResumed": "搜尋已继续。",
       "searchReset": "搜尋已重置。",
       "best": "最佳得分 {score}：{gene}",
@@ -1160,15 +1170,15 @@
   "ncmFourier": {
     "common": {
       "yes": "是",
-      "budget": "预算预览"
+      "budget": "预算預覽"
     },
     "page": {
       "title": "NCM 函數模型實驗室",
-      "description": "NiceChunk 實驗頁：載入 VOX 模型，把顏色映射到公共色表，生成紧凑鏈上函數字节，并用 payload 重新绘制模型。"
+      "description": "NiceChunk 實驗頁：載入 VOX 模型，把顏色映射到公共色表，生成紧凑鏈上函數位元組，並用 payload 重新绘制模型。"
     },
     "hero": {
       "eyebrow": "NiceChunk 函數資產實驗室",
-      "title": "載入 VOX 模型，并用函數重新绘制"
+      "title": "載入 VOX 模型，並用函數重新绘制"
     },
     "viewer": {
       "source": "元素模型",
@@ -1179,103 +1189,103 @@
       "powAria": "由 PoW 目前最优表达式生成的模型"
     },
     "controls": {
-      "drop": "拖入或選择 .vox",
-      "compute": "计算函數",
+      "drop": "拖入或選擇 .vox",
+      "compute": "計算函數",
       "optimize": "优化函數",
-      "exprBytes": "表达式字节",
+      "exprBytes": "表达式位元組",
       "maxBasis": "最大 basis",
-      "scale": "视图缩放"
+      "scale": "視圖缩放"
     },
     "metrics": {
       "grid": "模型尺寸",
       "coefficients": "函數 basis",
       "voxels": "重绘體素",
-      "storage": "鏈上字节"
+      "storage": "鏈上位元組"
     },
     "badges": {
       "noVoxels": "0 體素",
       "voxels": "{value} 體素",
-      "waiting": "等待计算",
+      "waiting": "等待計算",
       "basis": "{value} basis"
     },
     "palette": {
       "title": "G0 公共色表已用顏色"
     },
     "tech": {
-      "title": "技术思路",
-      "body": "函數 payload 只存 G0 公共色表索引和 box-basis 字节。後续矿工可以把精確模型 hash 作為目标，继续搜尋更短的 Fourier gene。"
+      "title": "技術思路",
+      "body": "函數 payload 只存 G0 公共色表索引和 box-basis 位元組。後續矿工可以把精確模型 hash 作為目標，继续搜尋更短的 Fourier gene。"
     },
     "static": {
-      "title": "仅文档审查",
-      "body": "目前环境不能證明 GPU 工作负载。这個面板作為静態展示：只說明预期流程、审查边界和後续 GPU 证據，不声称截图或性能數據。",
+      "title": "僅文档審查",
+      "body": "目前环境不能證明 GPU 工作负载。這個面板作為静態展示：只說明預期流程、審查边界和後續 GPU 證據，不声称截圖或性能資料。",
       "surfaceLabel": "界面",
       "surfaceValue": "面向 GPU 的體素函數研究頁",
-      "inputLabel": "输入",
+      "inputLabel": "輸入",
       "inputValue": "本地 MagicaVoxel .vox 文件",
-      "outputLabel": "输出",
+      "outputLabel": "輸出",
       "outputValue": "0:<base64url-bytes> 函數 payload",
-      "evidenceLabel": "静態证據",
+      "evidenceLabel": "静態證據",
       "evidenceValue": "README、展示文档、HTML 控件、codec 路徑、parser 边界",
-      "deferredLabel": "延後证據",
-      "deferredValue": "WebGL 保真度、帧稳定性、證明搜尋速度、截图",
+      "deferredLabel": "延後證據",
+      "deferredValue": "WebGL 保真度、帧穩定性、證明搜尋速度、截圖",
       "securityLabel": "安全边界",
-      "securityValue": "无上传接口、錢包簽名、服務器地址、token 或部署脚本"
+      "securityValue": "无上传接口、錢包簽名、伺服器地址、token 或部署脚本"
     },
     "steps": {
-      "sample": "載入 VOX，并規範化體素/顏色网格。",
-      "fit": "把顏色映射到 G0 公共色表，并把同色體素合并成 box basis 函數。",
-      "rebuild": "执行函數字节，用 G0 色表索引重新绘制模型。",
-      "bake": "把精確結果 hash 作為未來短 gene PoW 的目标。"
+      "sample": "載入 VOX，並規範化體素/顏色网格。",
+      "fit": "把顏色映射到 G0 公共色表，並把同色體素合並成 box basis 函數。",
+      "rebuild": "執行函數位元組，用 G0 色表索引重新绘制模型。",
+      "bake": "把精確結果 hash 作為未來短 gene PoW 的目標。"
     },
     "formula": {
-      "title": "鏈上函數數據",
+      "title": "鏈上函數資料",
       "copy": "复制函數",
       "copied": "已复制",
-      "copyFailed": "复制失败",
+      "copyFailed": "复制失敗",
       "chainPayload": "鏈上 payload",
       "chainBytes": "Payload 大小",
       "modelHash": "模型 hash",
       "exact": "精確重绘",
-      "empty": "拖入 VOX 文件，然後點击计算函數。"
+      "empty": "拖入 VOX 文件，然後點击計算函數。"
     },
     "algorithm": {
       "title": "原始算法",
-      "empty": "先计算函數，然後这里會显示解码执行算法。"
+      "empty": "先計算函數，然後这裡會显示解碼執行算法。"
     },
     "pow": {
       "title": "PoW 表达式搜尋",
       "start": "開始 PoW",
       "stop": "停止",
       "hashrate": "算力",
-      "attempts": "尝试次數",
+      "attempts": "嘗試次數",
       "best": "最佳命中",
-      "bytes": "表达式字节",
+      "bytes": "表达式位元組",
       "empty": "載入 VOX 模型後，可以開始本地 PoW。",
       "started": "target={hash}，體素={voxels}；開始在本地搜尋 seed 表达式",
       "stopped": "已停止",
       "bestLog": "best seed={seed} iou={score} hit={hit}/{union} bytes={bytes} proof={proof} expr={expr}"
     },
     "coefficients": {
-      "title": "Basis 预览",
+      "title": "Basis 預覽",
       "empty": "還沒有 basis 函數。"
     },
     "status": {
       "ready": "拖入 VOX 文件",
       "loading": "正在載入 VOX...",
-      "loaded": "VOX 已載入，點击计算函數。",
-      "computing": "正在计算函數...",
+      "loaded": "VOX 已載入，點击計算函數。",
+      "computing": "正在計算函數...",
       "optimizing": "正在搜尋更短的精確函數...",
       "computedExact": "已生成精確函數重绘。",
-      "computedBudget": "已生成预算内函數预览。",
-      "optimized": "已从 {count} 种策略中优化出精確函數。",
-      "optimizedBudget": "已从 {count} 种策略中优化出预算预览。",
-      "failed": "失败：{reason}"
+      "computedBudget": "已生成预算内函數預覽。",
+      "optimized": "已從 {count} 种策略中优化出精確函數。",
+      "optimizedBudget": "已從 {count} 种策略中优化出预算預覽。",
+      "failed": "失敗：{reason}"
     }
   },
   "civilization": {
     "meta": {
       "title": "NiceChunk 文明法典",
-      "description": "NiceChunk 文明法典：玩家书寫、阅读、签署、校驗并执行世界規則，不依赖项目方特权。"
+      "description": "NiceChunk 文明法典：玩家书寫、阅讀、簽署、校驗並執行世界規則，不依賴專案方特權。"
     },
     "nav": {
       "aria": "主導航",
@@ -1292,23 +1302,587 @@
       "eyebrow": "Civilization Codex",
       "title": "Civilization Codex / 文明法典",
       "subtitle": "玩家不只是進入世界，而是共同书寫世界的法則。",
-      "body": "NiceChunk 的文明規則服務于一個公開鏈上世界：資源、装备、特权和世界参數都不能凭空出現。",
-      "panelAria": "文明共识模型",
+      "body": "NiceChunk 的文明規則服務于一個公開鏈上世界：資源、装备、特權和世界参數都不能凭空出現。",
+      "panelAria": "文明共識模型",
       "metric": {
-        "natural": "自然法則门槛",
-        "civilization": "文明法則门槛",
-        "epoch": "快照纪元",
+        "natural": "自然法則門檻",
+        "civilization": "文明法則門檻",
+        "epoch": "快照紀元",
         "citizens": "活躍公民"
       }
     },
     "actions": {
-      "create": "创建規則书",
-      "reviewMock": "查看模拟規則",
-      "read": "阅读規則",
-      "signAgree": "签署同意",
-      "signReject": "签署反對",
-      "execute": "执行規則",
-      "comingSoon": "鏈上交互将在後续接入。"
+      "create": "建立規則書",
+      "reviewMock": "查看模擬規則",
+      "read": "阅讀規則",
+      "signAgree": "簽署同意",
+      "signReject": "簽署反對",
+      "execute": "執行規則",
+      "comingSoon": "鏈上交互将在後續接入。"
+    },
+    "toc": {
+      "aria": "文明頁面目錄",
+      "eyebrow": "頁面目錄",
+      "title": "進入完整文明法典之前，先選擇閱讀路徑。",
+      "body": "這個頁面故意讲得很深。你可以通過目錄在新手解釋、規則安全、簽署影響、文明權重、執行證明、PDA 透明和未來文明設定之間快速跳轉。",
+      "items": {
+        "plainModel": {
+          "title": "白話模型",
+          "body": "先把文明層理解成公開規則引擎。"
+        },
+        "readerPath": {
+          "title": "閱讀路徑",
+          "body": "看玩家簽署前應該檢查什麼。"
+        },
+        "trustJourney": {
+          "title": "信任旅程",
+          "body": "把遊玩、證明、權重、提案和審計连成一條線。"
+        },
+        "ruleClassifier": {
+          "title": "規則分類器",
+          "body": "理解哪些變更走 50%、90% 或直接拒絕。"
+        },
+        "threatModel": {
+          "title": "威脅模型",
+          "body": "審查危險規則如何在寫入狀態前失敗。"
+        },
+        "caseWalkthrough": {
+          "title": "青銅時代案例",
+          "body": "追蹤一條規則如何從玩家故事變成可執行補丁。"
+        },
+        "impactSimulator": {
+          "title": "影響模擬器",
+          "body": "預覽個人、世界、經濟和技術層影響。"
+        },
+        "civicPower": {
+          "title": "文明權重帳本",
+          "body": "查看可證明遊玩如何變成不可轉讓權重。"
+        },
+        "executionProof": {
+          "title": "執行證明",
+          "body": "檢查簽名、帳戶、失敗路徑和寫入。"
+        },
+        "pdaTransparency": {
+          "title": "PDA 透明",
+          "body": "瀏覽支撑公開真相的帳戶家族。"
+        },
+        "civilizationDesign": {
+          "title": "文明設定",
+          "body": "阅讀未來社會引擎和 PDA 藍圖。"
+        },
+        "buildSpec": {
+          "title": "構建規格",
+          "body": "把本頁当作後續編碼實現說明。"
+        }
+      }
+    },
+    "concept": {
+      "eyebrow": "白話模型",
+      "title": "文明系統是可玩世界之上的規則引擎。",
+      "body": "新玩家可以把它理解成公開規則書；技術審查者可以把它理解成一個有邊界的狀態机：提案哈希、快照簽名、校驗器閘門和配置 PDA 寫入。",
+      "cards": {
+        "publicRulebook": {
+          "kicker": "給玩家",
+          "title": "先讀懂，再簽署。",
+          "body": "文明規則必須說明它改什麼、為什麼重要、舊資產如何保护，以及執行後世界會發生什麼。"
+        },
+        "boundedMachine": {
+          "kicker": "給開發者",
+          "title": "可執行部分是受约束的。",
+          "body": "機器補丁只能指向已知配置模組，不是可以随意改合約、暗中增發資源的自由文本命令。"
+        },
+        "noSilentAdmin": {
+          "kicker": "給信任",
+          "title": "沒有靜默管理員通道。",
+          "body": "門檻、冷卻、簽名、校驗器和 PDA 寫入都應可檢查，而不是藏在專案方自由裁量後面。"
+        }
+      }
+    },
+    "readerGuide": {
+      "eyebrow": "閱讀路徑",
+      "title": "玩家簽署之前，應該知道如何判断一條規則。",
+      "body": "文明頁面不能只是技術宣言，也必須像規則阅讀界面。每個提案都應該回答玩家能懂的問題，同時暴露专家驗證同一個答案所需的精確證據。",
+      "lanes": {
+        "player": {
+          "kicker": "新手玩家",
+          "title": "我能用一句话讲清楚它改了什麼吗？",
+          "body": "非技術玩家不需要讀 Rust、PDA 位元組或治理黑话，也應該能理解規則。",
+          "checks": {
+            "plainChange": "這條規則執行後，世界會發生什麼變化？",
+            "personalImpact": "它會不會影響我的背包、物品、資源或未來收益？",
+            "signChoice": "我是在有明確理由的情況下簽署同意、反對或弃权吗？"
+          }
+        },
+        "builder": {
+          "kicker": "開發者",
+          "title": "我能把規則映射到有邊界的模組吗？",
+          "body": "開發者應該清楚看到哪個玩法表面會變化，哪些表面明確不在影響範圍内。",
+          "checks": {
+            "targetModule": "哪個 target_module 拥有这次變更？",
+            "patchDiff": "提案要修改哪個欄位路徑、old_value_hash 和 new_value_hash？",
+            "executionPath": "哪個 instruction 可以執行它，哪個帳戶家族可以被寫入？"
+          }
+        },
+        "auditor": {
+          "kicker": "審計者",
+          "title": "我能独立拒絕一條壞規則吗？",
+          "body": "審查者應該能用公開哈希、PDA 讀取、簽名和事件日誌重現安全結論。",
+          "checks": {
+            "hashes": "text_hash 和 patch_hash 是否在每一步都指向同一條規則？",
+            "pdaWrites": "所有可寫 PDA 是否在執行前已經聲明？",
+            "rejectionProof": "門檻、哈希、範圍或資產安全失敗時，是否有具名拒絕路徑？"
+          }
+        }
+      },
+      "checklist": {
+        "whatChanges": {
+          "title": "它改什麼？",
+          "body": "規則必須先用白話描述玩法結果，再展示機器資料。",
+          "proof": "human_readable_text"
+        },
+        "affectedSurface": {
+          "title": "影響哪個表面？",
+          "body": "目標模組必須明確：熔煉、鍛造、資源規則、方塊参數、市場策略，或其它已聲明表面。",
+          "proof": "target_module[]"
+        },
+        "oldAssets": {
+          "title": "舊資產會受伤吗？",
+          "body": "如果會奪取、降級或改寫既有玩家資產，提案必須進入更強的自然法則路徑。",
+          "proof": "migration_mode"
+        },
+        "hashProof": {
+          "title": "什麼證明身份？",
+          "body": "可讀規則和可執行補丁必須用穩定哈希綁定，讓簽署者確认自己签的是同一個對象。",
+          "proof": "text_hash + patch_hash"
+        },
+        "thresholdPath": {
+          "title": "适用哪個門檻？",
+          "body": "文明法則和自然法則使用不同共識等級、冷卻期和挑戰要求。",
+          "proof": "law_type + threshold"
+        },
+        "failurePath": {
+          "title": "它如何安全失敗？",
+          "body": "可信規則要說明哈希過期、範圍錯誤、簽名不足或資產不安全時如何拒絕執行。",
+          "proof": "RuleRejected event"
+        }
+      }
+    },
+    "journey": {
+      "eyebrow": "從新手到審計者",
+      "title": "新玩家應該看到一條從玩世界到相信規則的連續路徑。",
+      "body": "文明頁面不應該從抽象治理開始，而應該說明普通行動如何變成公開證據、證據如何變成文明權重，以及这种權重為什麼只能批准有邊界、可檢查的變更。",
+      "stackTitle": "简单玩法如何變成可信治理",
+      "translations": {
+        "plainAction": "先從玩家能理解的普通行動開始：探索、挖矿、鍛造、建造、交易、守護或书寫。",
+        "publicEvidence": "把行動转成公開證據：來源哈希、帳戶狀態、事件和已解碼 PDA 欄位。",
+        "powerSnapshot": "只有成熟且經過過濾的參與，才會變成規則簽名使用的快照權重。",
+        "boundedChange": "簽名不會授予无限權力；它只批准一個有邊界的規則對象和一個已聲明補丁。",
+        "replayableResult": "執行之後，結果必須能從規則文本、補丁哈希、帳戶和事件日誌重放。"
+      },
+      "steps": {
+        "enter": {
+          "title": "進入世界",
+          "body": "新手從錢包、種子 Chunk 和可見資源開始。頁面應說明这已經是公開世界狀態，不是私有遊戲存档。"
+        },
+        "gather": {
+          "title": "收集材料證明",
+          "body": "挖矿或發現資源會产生來源證明：哪個 Chunk、哪条生成規則、哪种資源，以及哪個帳戶記錄了它。"
+        },
+        "craft": {
+          "title": "按規則制作",
+          "body": "熔煉、鍛造和背包變化都應指向配方版本，讓玩家知道物品為什麼存在。"
+        },
+        "settle": {
+          "title": "加入聚落",
+          "body": "玩家可以围绕 Chunk、生產、守護者和公共项目協作，把個人行動變成公共狀態。"
+        },
+        "propose": {
+          "title": "提出或簽署規則",
+          "body": "規則需要玩家可讀理由、凍結權重、目標模組、哈希和門檻路徑，才可能進入執行。"
+        },
+        "verify": {
+          "title": "驗證結果",
+          "body": "最終狀態應通過已解碼 PDA 和事件展示，讓新手能相信結果，也讓審計者能重放。"
+        }
+      }
+    },
+    "boundary": {
+      "eyebrow": "實施边界",
+      "title": "可信度從讲清楚什麼已上線、什麼在設計、什麼沒有声称開始。",
+      "body": "這個頁面是文明系統的技術产品方向。它把目前公開 UI 模型和未來鏈上治理合約分開說明，讓審查者能判断可行性，而不是靠猜。",
+      "cards": {
+        "liveNow": {
+          "label": "目前已上線",
+          "title": "公開文明法典 UI",
+          "items": {
+            "one": "網站已公開展示規則層級、生命週期、示例和技術帳戶模型。",
+            "two": "模擬規則書展示未來資料形態，但不假装它已經是最終鏈上治理。",
+            "three": "頁面把文明設計連接到熔煉、鍛造、資源規則和配置 PDA 等 NiceChunk 現有模組。"
+          }
+        },
+        "designedNext": {
+          "label": "下一步設計",
+          "title": "鏈上文明程式",
+          "items": {
+            "one": "rule_book_pda、rule_signature_pda、citizen_state_pda 和 rule_registry_pda 可以讓模型直接可審計。",
+            "two": "RuleValidator 應在任何配置 PDA 寫入前约束機器補丁。",
+            "three": "門檻、冷卻和挑戰條件滿足後，execute_rule 應允許任何人无許可呼叫。"
+          }
+        },
+        "notClaimed": {
+          "label": "沒有声称",
+          "title": "不做虚假去中心化承諾",
+          "items": {
+            "one": "本頁面不声称今天已經完成主网治理。",
+            "two": "不声称任意程式升級都可以被文本投票安全控制。",
+            "three": "不声称普通文明法則可以追溯修改舊玩家資產。"
+          }
+        }
+      }
+    },
+    "diagrams": {
+      "aria": "文明系統圖解",
+      "system": {
+        "title": "從玩家行動到世界法則",
+        "caption": "每個关键步骤都會留下公開對象或公開哈希。",
+        "nodes": {
+          "player": "玩家撰寫",
+          "proposal": "RuleBook PDA",
+          "read": "公開阅讀",
+          "sign": "快照簽名",
+          "validator": "RuleValidator",
+          "config": "配置 PDA 寫入",
+          "gameplay": "玩法合約",
+          "world": "世界狀態"
+        },
+        "badges": {
+          "hashes": "text_hash + patch_hash",
+          "snapshot": "紀元權重快照",
+          "pdaWrite": "可審計狀態變更"
+        }
+      },
+      "readerGuide": {
+        "title": "從白話問題到可驗證證明",
+        "caption": "同一條規則既應該像玩家故事一样可理解，也應該像確定性狀態一样可審計。",
+        "nodes": {
+          "plain": "白話規則",
+          "impact": "玩家影響",
+          "evidence": "公開證據",
+          "decision": "簽署決定",
+          "patch": "機器補丁",
+          "validator": "校驗結果",
+          "pda": "PDA 寫入 / 拒絕"
+        },
+        "badges": {
+          "beginner": "新手可讀",
+          "builder": "開發者可查",
+          "auditor": "審計者可重放",
+          "sameRule": "文本、補丁和事件共享同一個規則身份"
+        }
+      },
+      "journey": {
+        "title": "新玩家信任旅程",
+        "caption": "简单玩家故事和技術證明鏈應該描述同一個世界狀態。",
+        "nodes": {
+          "enter": "進入世界",
+          "gather": "收集證明",
+          "craft": "制作物品",
+          "settle": "加入聚落",
+          "propose": "簽署規則",
+          "verify": "驗證狀態"
+        },
+        "badges": {
+          "play": "先可玩",
+          "proof": "證據，不是声称",
+          "power": "快照權重",
+          "rule": "有邊界規則對象",
+          "audit": "已解碼 PDA + 事件日誌"
+        }
+      },
+      "classifier": {
+        "title": "規則分類決策樹",
+        "caption": "分類發生在投票前，所以人氣不能繞過資產安全或世界不變量。",
+        "nodes": {
+          "proposal": "新提案",
+          "classifier": "RuleClassifier",
+          "civilization": "僅影響未來配置",
+          "natural": "舊資產 / 不變量",
+          "reject": "特權或通膨",
+          "review": "未知 adapter",
+          "fifty": "50%",
+          "ninety": "90%",
+          "noVote": "拒絕"
+        },
+        "badges": {
+          "beforeSign": "簽名前分類",
+          "ask": "這條規則能觸及什麼？",
+          "noBypass": "人氣不能繞過安全",
+          "publicReason": "公開拒絕原因"
+        }
+      },
+      "power": {
+        "title": "文明權重是經過過濾的參與快照",
+        "caption": "參與貢獻信号，防刷過濾减少噪音，然後把投票權重凍結在快照裡。",
+        "nodes": {
+          "sources": "世界參與",
+          "filters": "防刷過濾",
+          "snapshot": "紀元快照",
+          "vote": "規則簽名"
+        },
+        "badges": {
+          "add": "探索、挖掘、鍛造、交易",
+          "reduce": "上限、成熟期、衰減",
+          "freeze": "防止臨時改權重",
+          "sign": "同意 / 反對 / 弃权"
+        }
+      },
+      "threatModel": {
+        "title": "威脅到防線的映射圖",
+        "caption": "每條危險路徑都應該在變成狀態之前遇到可見防線。",
+        "nodes": {
+          "badRule": "不可信提案",
+          "identity": "公民成熟期",
+          "hash": "哈希身份",
+          "validator": "RuleValidator",
+          "challenge": "挑戰窗口",
+          "safeWrite": "限域 PDA 寫入",
+          "publicReject": "公開拒絕"
+        },
+        "badges": {
+          "untrusted": "預設每條規則都可能有攻擊性",
+          "prove": "證明身份與預期狀態",
+          "window": "留出審查和挑戰時間",
+          "noSilentPath": "沒有靜默管理員路徑"
+        }
+      },
+      "caseWalkthrough": {
+        "title": "青銅時代規則執行圖",
+        "caption": "同一個提案從玩家故事，進入機器補丁，再變成可審計的鏈上狀態。",
+        "nodes": {
+          "story": "玩家故事",
+          "patch": "機器補丁",
+          "signatures": "快照簽名",
+          "validator": "RuleValidator 閘門",
+          "config": "配置 PDA 寫入",
+          "event": "RuleExecuted 事件",
+          "gameplay": "玩法效果"
+        },
+        "badges": {
+          "playerPromise": "銅 + 錫解鎖青銅",
+          "boundPatch": "有邊界的熔煉與鍛造 diff",
+          "snapshot": "紀元 42 權重",
+          "gates": "範圍、守恆、舊資產",
+          "pda": "版本化配置 PDA",
+          "publicEvent": "公開審計記錄"
+        }
+      },
+      "impact": {
+        "title": "規則影響模擬路徑",
+        "caption": "同一次 dry run 應同時解釋玩家影響、PDA 讀取、校驗器閘門，以及最終簽署或拒絕决定。",
+        "nodes": {
+          "proposal": "拟議規則",
+          "accounts": "讀取帳戶",
+          "personal": "個人影響",
+          "validator": "校驗 dry run",
+          "diff": "世界 diff",
+          "decision": "簽署決定"
+        },
+        "badges": {
+          "beforeSign": "簽名計入前",
+          "readOnly": "只讀帳戶預覽",
+          "dryRun": "dry-run 結果",
+          "choice": "同意、拒絕或弃权"
+        }
+      },
+      "reputation": {
+        "title": "行動到文明權重流水線",
+        "caption": "文明權重由收據组装，歸一化進入快照，然後只用於有邊界的規則簽署。",
+        "nodes": {
+          "actions": "可證明行動",
+          "receipts": "收據 PDA",
+          "guards": "上限 + 衰減",
+          "snapshot": "公民快照",
+          "signature": "規則簽名",
+          "replay": "審計重放"
+        },
+        "badges": {
+          "provable": "NCM、背包、鍛造、聚落、審計",
+          "normalized": "先歸一化再计权",
+          "snapshot": "按紀元凍結公民狀態",
+          "bounded": "只簽署有邊界規則",
+          "replay": "任何人都能重新計算"
+        }
+      },
+      "execution": {
+        "title": "哈希綁定的執行路徑",
+        "caption": "簽名前，讀者可以核對 text_hash 和 patch_hash。",
+        "nodes": {
+          "text": "可讀文本",
+          "patch": "機器補丁",
+          "signature": "簽名达标",
+          "validator": "安全校驗器",
+          "registry": "註冊表 + 配置 PDA"
+        },
+        "badges": {
+          "bound": "同一個規則身份",
+          "threshold": "50% 或 90%",
+          "reject": "危險補丁在此停止"
+        }
+      },
+      "validator": {
+        "title": "RuleValidator 閘門序列",
+        "caption": "危險提案會在簽名變成可執行狀態變更之前失敗。",
+        "nodes": {
+          "parse": "解析",
+          "scope": "範圍",
+          "conservation": "守恆",
+          "asset": "資產安全",
+          "threshold": "門檻",
+          "write": "寫入"
+        },
+        "badges": {
+          "deterministic": "確定性檢查",
+          "reject": "寫入前拒絕",
+          "write": "狹窄 PDA 更新"
+        }
+      },
+      "transaction": {
+        "title": "無許可執行交易",
+        "caption": "任何呼叫者都可以執行，但交易必須證明同一條規則、同一個快照、同一组哈希和同一個預期帳戶狀態。",
+        "nodes": {
+          "caller": "任意呼叫者",
+          "rulebook": "RuleBook PDA",
+          "signatures": "簽名 PDA",
+          "citizens": "公民快照",
+          "execute": "execute_rule",
+          "reject": "拒絕原因",
+          "registry": "規則註冊表",
+          "config": "模組配置"
+        },
+        "badges": {
+          "anyone": "无專案方執行者",
+          "snapshot": "snapshot_epoch 凍結",
+          "hashes": "text_hash + patch_hash",
+          "reason": "公開失敗路徑"
+        }
+      },
+      "transparency": {
+        "title": "公開證據瀏覽器地圖",
+        "caption": "文明頁面上的每個結論，都應該指向一個已解碼帳戶、事件或拒絕原因。",
+        "nodes": {
+          "claim": "文明結論",
+          "rule": "規則帳戶",
+          "signatures": "簽名帳戶",
+          "config": "配置註冊表",
+          "challenge": "挑戰證據",
+          "decoder": "PDA 解碼器",
+          "indexer": "事件索引器",
+          "player": "玩家視圖"
+        },
+        "badges": {
+          "noTrust": "不要只信網站",
+          "sameAccounts": "合約讀取的同一批帳戶",
+          "decode": "已解碼欄位、哈希和 owner",
+          "shareable": "可分享證明連結"
+        }
+      },
+      "versioning": {
+        "title": "規則版本鏈",
+        "caption": "模組可以前進到新配置，而不會讓舊資產或審計軌跡消失。",
+        "nodes": {
+          "v1": "生效 v1",
+          "proposal": "提案 v2",
+          "compat": "相容策略",
+          "v2": "生效 v2",
+          "oldAssets": "舊資產",
+          "history": "審計歷史"
+        },
+        "badges": {
+          "current": "目前規則保持可讀",
+          "supersede": "取代，但不擦除",
+          "compat": "舊資產保留解釋方式",
+          "forward": "未來行動使用 v2",
+          "replay": "两個版本都可重放"
+        }
+      },
+      "design": {
+        "title": "從文明玩法到 PDA 的映射圖",
+        "caption": "頁面定義後續編碼模型：玩家行動創造公開狀態，公開狀態解鎖時代，規則只能改變有邊界的配置。",
+        "nodes": {
+          "actions": "玩家行動",
+          "resources": "材料證明",
+          "production": "生產圖谱",
+          "settlement": "聚落",
+          "citizen": "公民角色",
+          "knowledge": "知識記錄",
+          "rule": "文明規則"
+        },
+        "badges": {
+          "play": "普通玩法創造證據",
+          "material": "資源保留來源",
+          "build": "生產解鎖社會",
+          "law": "規則改變有邊界配置",
+          "pda": "每個結論都有已解碼 PDA 锚點"
+        }
+      },
+      "civic": {
+        "title": "聚落公共工程循環",
+        "caption": "聚落獲得收益前，材料、公民、守護者和規則應组成一個可檢查闭环。",
+        "nodes": {
+          "settlement": "聚落章程",
+          "contribute": "材料收據",
+          "guardian": "守護覆蓋",
+          "rule": "授權規則",
+          "project": "公共工程",
+          "benefit": "有邊界收益"
+        },
+        "badges": {
+          "charter": "公開章程",
+          "receipts": "資源收據",
+          "authorized": "規則批准效果",
+          "milestone": "裡程碑帳戶",
+          "visible": "收益保持可檢查"
+        }
+      },
+      "auditTrail": {
+        "title": "從 instruction 到事件的審計軌跡",
+        "caption": "審查者應該能從發布哈希一路重放到最終配置寫入。",
+        "nodes": {
+          "publish": "publish_rule",
+          "sign": "sign_rule",
+          "finalize": "finalize_threshold",
+          "challenge": "challenge_rule",
+          "execute": "execute_rule",
+          "eventLog": "事件日誌",
+          "indexer": "公開索引器",
+          "browser": "PDA 瀏覽器"
+        },
+        "badges": {
+          "hashes": "哈希身份",
+          "replay": "可重放狀態",
+          "public": "公開審計表面"
+        }
+      },
+      "binding": {
+        "title": "文明層到 PDA 的綁定圖",
+        "caption": "未來規則應寫入狹窄的配置 PDA，讓現有程式讀取，或由遷移校驗器安全應用。",
+        "nodes": {
+          "rulebook": "規則書 + 簽名",
+          "validator": "安全校驗器",
+          "registry": "版本化規則註冊表",
+          "core": "GlobalConfig",
+          "chunk": "ResourceDropTable",
+          "backpack": "背包資產",
+          "smelting": "RecipeTable",
+          "guardian": "Guardian 註冊表",
+          "market": "市場狀態"
+        },
+        "badges": {
+          "safety": "保护舊資產",
+          "versioned": "版本化配置表面",
+          "public": "公開 PDA 家族"
+        }
+      }
     },
     "lawType": {
       "natural": "Natural Law / 自然法則",
@@ -1321,255 +1895,1087 @@
     },
     "status": {
       "draft": "草稿",
-      "reading": "阅读期",
-      "cooling": "冷却期",
-      "challenge": "挑战期",
-      "ready": "可执行",
+      "reading": "阅讀期",
+      "cooling": "冷卻期",
+      "challenge": "挑戰期",
+      "ready": "可執行",
       "active": "已生效",
-      "not_enough": "共识不足"
+      "not_enough": "共識不足"
     },
     "layers": {
-      "eyebrow": "两层規則",
-      "title": "世界宪法层与持续演進的文明层。",
-      "body": "自然法則保护世界不被任意权力破坏；文明法則讓玩家持续演進生产、建造、工藝和社會規則，而不是把治理變成資本投票。",
+      "eyebrow": "两層規則",
+      "title": "世界宪法層與持续演進的文明層。",
+      "body": "自然法則保护世界不被任意權力破壞；文明法則讓玩家持续演進生產、建造、工藝和社會規則，而不是把治理變成資本投票。",
       "natural": {
         "title": "Natural Law / 自然法則",
-        "subtitle": "宪法級共识，保护資源守恒、資產归屬、世界生成、NCK 原則和零项目方特权。",
+        "subtitle": "宪法級共識，保护資源守恆、資產归屬、世界生成、NCK 原則和零專案方特權。",
         "meta": {
-          "constitution": "宪法級共识",
-          "longDelay": "更長延迟与挑战期",
-          "strictValidator": "必须通过严格 RuleValidator"
+          "constitution": "宪法級共識",
+          "longDelay": "更長延迟與挑戰期",
+          "strictValidator": "必須通過嚴格 RuleValidator"
         }
       },
       "civilization": {
         "title": "Civilization Law / 文明法則",
-        "subtitle": "面向生产、建造、工藝、資源加工、非宪法級参數和社會規則的開放演化层。",
+        "subtitle": "面向生產、建造、工藝、資源加工、非宪法級参數和社會規則的開放演化層。",
         "meta": {
-          "production": "生产与社會規則",
+          "production": "生產與社會規則",
           "normalDelay": "普通延迟",
           "openEvolution": "開放文明演化"
         }
       }
     },
-    "constitution": {
-      "eyebrow": "世界級共识",
-      "title": "自然法則不是普通投票。",
-      "body": "自然法則變更會触及世界最深层的公平假设，所以必须有更强提示、更严格校驗、更長冷却期和更宽挑战窗口。",
+    "classifier": {
+      "eyebrow": "規則分類器",
+      "title": "第一問題不是誰想要它，而是它能觸碰什麼。",
+      "body": "NiceChunk 應該在簽名計入前分類每個提案。只影響未來的配置可以走文明法則；舊資產、世界不變量、供應規則或特權路徑必須走自然法則，或者直接拒絕。",
+      "checkTitle": "分類器問題",
+      "labels": {
+        "threshold": "門檻",
+        "proof": "證明"
+      },
+      "route": {
+        "civilization": "文明法則",
+        "natural": "自然法則",
+        "reject": "拒絕"
+      },
       "checks": {
-        "higherRisk": "签署前展示更高風險等級",
-        "longerCooldown": "执行前必须经过更長冷却期",
-        "stricterValidation": "校驗器拒绝特权、通胀和資產没收",
-        "strongerPrompt": "玩家必须明確確认理解規則",
-        "widerChallenge": "给审计者和文明成员更長挑战窗口"
+        "touchesOldAssets": "它是否奪取、降級、遷移或改寫既有玩家資產？",
+        "changesSupply": "它是否改變資源守恆、生成供應、NCK 原則或世界創世假設？",
+        "grantsPrivilege": "它是否給某個地址授予繞過、增發或私有生產優勢？",
+        "futureOnly": "它是否僅向前生效，並且只限制在聲明的模組配置裡？",
+        "knownAdapter": "已知模組 adapter 是否能確定性解析並校驗機器補丁裡的每個欄位路徑？"
+      },
+      "routes": {
+        "futureConfig": {
+          "title": "僅影響未來的配置",
+          "body": "新配方、未來方塊参數、知識記錄或模組策略，如果不觸碰舊資產，可以使用普通文明法則。"
+        },
+        "oldAssets": {
+          "title": "既有玩家資產",
+          "body": "任何追溯改變背包、挂单、所有權、耐久或已創造價值的提案，都必須被視為自然法則。"
+        },
+        "coreInvariant": {
+          "title": "世界不變量",
+          "body": "世界生成、資源守恆、NCK 原則和零管理員假設，需要最高共識路徑。"
+        },
+        "privilegeMint": {
+          "title": "特權或通膨嘗試",
+          "body": "如果規則在沒有有界輸入時創造價值，或給某個地址私有繞過路徑，應在投票前拒絕。"
+        },
+        "unknownPatch": {
+          "title": "未知機器補丁",
+          "body": "如果合約不能確定性解析 adapter、operation 或 field_path，提案必須退回草稿。"
+        }
+      }
+    },
+    "constitution": {
+      "eyebrow": "世界級共識",
+      "title": "自然法則不是普通投票。",
+      "body": "自然法則變更會觸及世界最深層的公平假設，所以必須有更強提示、更嚴格校驗、更長冷卻期和更宽挑戰窗口。",
+      "checks": {
+        "higherRisk": "簽署前展示更高風險等級",
+        "longerCooldown": "執行前必須經過更長冷卻期",
+        "stricterValidation": "校驗器拒絕特權、通膨和資產没收",
+        "strongerPrompt": "玩家必須明確確认理解規則",
+        "widerChallenge": "給審計者和文明成员更長挑戰窗口"
       }
     },
     "power": {
-      "eyebrow": "文明权重",
-      "title": "权重來自真實參與，不是錢包數量，也不是单纯 NCK 持仓。",
-      "body": "未來合约应按玩家對世界的真實參與计算文明权重，同时用成熟期、上限、活躍窗口、衰减和异常惩罚限制刷权。",
+      "eyebrow": "文明權重",
+      "title": "權重來自真實參與，不是錢包數量，也不是單純 NCK 持仓。",
+      "body": "未來合約應按玩家對世界的真實參與計算文明權重，同時用成熟期、上限、活躍窗口、衰減和異常懲罰限制刷权。",
       "sourcesTitle": "參與來源",
       "guardsTitle": "防刷约束",
       "sources": {
         "registration": "註冊公民狀態和成熟世界身份",
-        "exploration": "探索和访问 Chunk 的历史",
-        "mining": "挖掘有可驗证生成來源的方塊",
+        "exploration": "探索和访问 Chunk 的歷史",
+        "mining": "挖掘有可驗證生成來源的方塊",
         "forging": "鍛造和材料加工參與",
-        "trading": "市场交易和結算历史",
-        "guardianService": "守護者服務覆盖与證明提交",
-        "ruleReading": "签署前阅读并理解規則书",
-        "longActivity": "跨纪元長期活躍"
+        "trading": "市場交易和結算歷史",
+        "guardianService": "守護者服務覆蓋與證明提交",
+        "ruleReading": "簽署前阅讀並理解規則書",
+        "longActivity": "跨紀元長期活躍"
       },
       "guards": {
         "maturity": "新账号成熟期",
-        "walletCap": "单錢包权重上限",
+        "walletCap": "单錢包權重上限",
         "activeWindow": "近期活躍窗口要求",
-        "decay": "長期不活躍权重衰减",
-        "anomalyPenalty": "异常行為削减"
+        "decay": "長期不活躍權重衰減",
+        "anomalyPenalty": "異常行為削减"
       },
       "snapshot": {
-        "total": "总权重",
+        "total": "总權重",
         "mature": "成熟公民"
+      }
+    },
+    "threatModel": {
+      "eyebrow": "威脅模型",
+      "title": "文明系統只有解釋壞規則如何失敗，才真正可信。",
+      "body": "如果投票可以繞過物理規則、所有權或透明度，治理就會變危險。NiceChunk 文明規則應預設把每個提案當成不可信對象，直到哈希、快照、校驗器、挑戰窗口和 PDA 範圍共同證明它安全。",
+      "defenseTitle": "防線堆疊",
+      "defenses": {
+        "identity": "文明權重基於快照，並經過成熟期、活躍度、上限、衰減和異常懲罰過濾。",
+        "hash": "可讀規則、機器補丁、舊狀態和新狀態在簽名計入前都通過哈希綁定。",
+        "validator": "RuleValidator 對範圍、守恆、舊資產、門檻和可寫 PDA 家族執行確定性檢查。",
+        "challenge": "冷卻和挑戰窗口給審計者時間發現誤導文本、不安全補丁或過期狀態。",
+        "publicFailure": "被拒絕的執行應發出具名原因，讓使用者看到規則為什麼沒有改變狀態。"
+      },
+      "scenarios": {
+        "sybil": {
+          "label": "女巫壓力",
+          "title": "大量新錢包试圖製造共識。",
+          "body": "新身份不應該立刻獲得完整文明權重。成熟期、活躍歷史、上限和異常懲罰會削弱廉價拆錢包。",
+          "proof": "citizen_state_pda + snapshot_epoch"
+        },
+        "whaleCapture": {
+          "label": "權重捕獲",
+          "title": "單一角色试圖用資本支配投票。",
+          "body": "設計上把參與推導出的文明權重，與錢包數量或單純 NCK 餘額分開，再用上限和衰減限制異常集中。",
+          "proof": "power_at_snapshot + cap policy"
+        },
+        "stalePatch": {
+          "label": "過期修補",
+          "title": "規則簽署舊狀態，隨後覆蓋更新配置。",
+          "body": "執行前 old_value_hash 必須匹配目前目標配置。如果配置已經改變，規則失敗，而不是覆蓋更新成果。",
+          "proof": "old_value_hash mismatch"
+        },
+        "assetSeizure": {
+          "label": "資產奪取",
+          "title": "提案试圖降級或拿走既有玩家資產。",
+          "body": "追溯修改所有權或價值，應被視為自然法則範圍，必須有更強提示、更嚴格校驗和更高共識。",
+          "proof": "migration_mode = NaturalLaw"
+        },
+        "resourceInflation": {
+          "label": "資源通膨",
+          "title": "補丁试圖在沒有有界輸入時創造資源。",
+          "body": "守恆檢查要求生成來源、輸入燃燒或已驗證轉化，新產出才可以進入玩法。",
+          "proof": "conservation gate"
+        },
+        "hiddenAdmin": {
+          "label": "隱藏管理員",
+          "title": "執行暗中依賴專案方錢包。",
+          "body": "公開條件滿足後，execute_rule 應允許任何人呼叫。特權執行者會違背文明模型。",
+          "proof": "permissionless execute_rule"
+        }
+      }
+    },
+    "caseWalkthrough": {
+      "eyebrow": "規則案例推演",
+      "title": "青銅時代規則展示文明如何變成可執行代碼。",
+      "body": "這個例子可以作為未來文明程式的編碼目標：一條玩家可讀規則、一個機器補丁、一條簽名路徑、一個校驗結果，以及一次公開 PDA 寫入。",
+      "summaryTitle": "青銅時代規則載荷",
+      "summary": {
+        "lawType": "規則類型",
+        "ruleId": "規則 ID",
+        "targetModules": "目標模組",
+        "threshold": "門檻",
+        "snapshotEpoch": "快照紀元",
+        "execution": "執行路徑"
+      },
+      "views": {
+        "player": {
+          "kicker": "玩家視角",
+          "title": "規則解鎖青銅，但不觸碰舊背包。",
+          "body": "玩家把它讀成一次文明進步：社區批准後，銅和錫可以通過工藝變成青銅。",
+          "items": {
+            "one": "既有銅、錫、工具和背包仍然屬于原玩家。",
+            "two": "新的青銅產物必須消耗聲明輸入，並通過熔煉路徑校驗。",
+            "three": "玩家可以檢查最終 PDA，看到是哪条規則讓青銅生效。"
+          }
+        },
+        "builder": {
+          "kicker": "開發者視角",
+          "title": "補丁是有邊界的模組 diff。",
+          "body": "實現目標不是自由文本命令，而是针對熔煉與鍛造配置表面的結構化 diff。",
+          "items": {
+            "one": "新增熔煉配方：copper_ore + tin_ore + heat_tier_2 -> bronze_ingot。",
+            "two": "新增鍛造配方：bronze_ingot + handle_material -> bronze_tool_head。",
+            "three": "如果 field_path、operation 或模組 adapter 未知，就拒絕補丁。"
+          }
+        },
+        "auditor": {
+          "kicker": "審計視角",
+          "title": "每個主张都能用公開證據重放。",
+          "body": "審計者會在信任結果前，對比 text_hash、patch_hash、old_value_hash、簽名 PDA 和執行事件。",
+          "items": {
+            "one": "在 snapshot_epoch 42 下重算 yes/no/abstain 權重。",
+            "two": "執行前檢查 old_value_hash 是否匹配目前目標配置。",
+            "three": "確认 RuleExecuted 寫明精確 written_pda 和 new_value_hash。"
+          }
+        },
+        "contract": {
+          "kicker": "合約視角",
+          "title": "execute_rule 只寫聲明的配置帳戶。",
+          "body": "合約會在任何寫入前校驗身份、門檻、冷卻、挑戰狀態、範圍、守恆和舊資產安全。",
+          "items": {
+            "one": "可寫帳戶限制在 rule_registry_pda 和聲明的模組配置 PDA。",
+            "two": "背包 PDA 只用於資產安全推理讀取，不能被這條文明法則改寫。",
+            "three": "失敗時發出带穩定 failed_gate 的 RuleRejected，而不是寫入部分狀態。"
+          }
+        }
+      },
+      "evidence": {
+        "textHash": {
+          "title": "可讀規則身份",
+          "body": "玩家簽署的人類說明必須哈希到這個值。"
+        },
+        "patchHash": {
+          "title": "機器補丁身份",
+          "body": "可執行補丁位元組必須在計入簽名前哈希到這個值。"
+        },
+        "oldHash": {
+          "title": "預期目前配置",
+          "body": "如果鏈上熔煉或鍛造配置不再匹配已審查狀態，執行會停止。"
+        },
+        "newHash": {
+          "title": "承諾目標配置",
+          "body": "校驗器閘門通過後，被接受補丁會产生這個新配置哈希。"
+        },
+        "writtenPda": {
+          "title": "狹窄可寫表面",
+          "body": "交易只能寫聲明的配置 PDA，不能寫任意玩家或市場帳戶。"
+        },
+        "event": {
+          "title": "公開執行記錄",
+          "body": "索引器和網站可以展示同一個事件，作為規則生效的證明。"
+        }
+      }
+    },
+    "impact": {
+      "eyebrow": "規則影響模擬器",
+      "title": "簽署之前，玩家應該看到規則對個人、世界和技術層的影響。",
+      "body": "可信文明界面應在提案變成權力之前先模擬：我的背包會變吗、未來生產會變什麼、哪些 PDA 被讀取、哪些哈希必須匹配，以及校驗器為什麼接受或拒絕補丁。",
+      "stackTitle": "簽名計入前的 dry-run 檢查",
+      "checks": {
+        "readAccounts": "只讀聲明帳戶，不改變狀態：規則書、目標配置、背包、聚落效果和公民快照。",
+        "compareHashes": "任何人簽署前，對比 text_hash、patch_hash、old_value_hash 和預期 new_value_hash。",
+        "showDiff": "把人類可讀前後變化，和機器補丁 field_path 並排展示。",
+        "simulateFailure": "如果閘門失敗，展示精確拒絕原因：哈希過期、資產遷移不安全、守恆破壞、範圍錯誤或門檻不足。",
+        "explainChoice": "把 dry-run 結果翻译成非技術玩家也能理解的同意、拒絕或弃权選擇。"
+      },
+      "surfaces": {
+        "personal": {
+          "label": "個人",
+          "title": "它會觸碰我的錢包或背包吗？",
+          "body": "模擬器應該說明規則會讀取我的帳戶、寫入我的帳戶，還是沒有直接個人影響。"
+        },
+        "assets": {
+          "label": "資產",
+          "title": "舊資產會被改變吗？",
+          "body": "既有背包、挂单、已制作物品和所有權記錄必須展示為受保护、只讀、遷移，或被自然法則阻斷。"
+        },
+        "production": {
+          "label": "生產",
+          "title": "未來玩法會發生什麼變化？",
+          "body": "玩家應該看到規則生效後哪些配方、掉落表、機器規則或方塊参數會變化。"
+        },
+        "settlement": {
+          "label": "聚落",
+          "title": "規則會影響公共工程吗？",
+          "body": "聚落變化應展示受影響土地、项目裡程碑、守護覆蓋和只向前生效的收益。"
+        },
+        "economy": {
+          "label": "經濟",
+          "title": "價值會凭空出現吗？",
+          "body": "dry run 應解釋輸入要求、資源守恆、费用影響，以及為什麼沒有私人地址獲得隱藏特權。"
+        },
+        "technical": {
+          "label": "技術",
+          "title": "哪個閘門接受或拒絕補丁？",
+          "body": "专业使用者應該看到已解析 operation、帳戶 owner、可寫 PDA、adapter 名称和確定性校驗輸出。"
+        }
+      }
+    },
+    "reputation": {
+      "eyebrow": "文明權重帳本",
+      "title": "文明權重應來自可證明的遊玩，而不是可轉讓的投票代幣。",
+      "body": "NiceChunk 的文明層可以把發現、背包所有權、鍛造、聚落勞動和審計挑戰變成公開公民快照。玩家能看懂自己的声音為什麼有效；審計者能看到權重背後的收據、上限、衰減和重放路徑。",
+      "stackTitle": "為什麼文明權重難以伪造",
+      "guards": {
+        "receiptOnly": "只有带解碼收據的行動才能進入計分；只存在于網站上的聲明不計入。",
+        "snapshotEpoch": "規則簽名使用紀元快照，臨時帳戶變化不能改寫簽署者權重。",
+        "capAndDecay": "每類來源都有上限和衰減曲線，防止單一活動或舊成就永远支配。",
+        "nonTransferable": "權重跟随錢包背後的公民歷史，不是可以一笔买來的自由轉讓投票代幣。",
+        "replayableMath": "索引器、玩家和審計者都應該能從公開 PDA 資料重新計算同一個分數。"
+      },
+      "sources": {
+        "discovery": {
+          "label": "發現",
+          "title": "NCM 探索产生來源證據。",
+          "body": "發現並證明有價值的 Chunk 可以成為文明信号，因為來源、種子和發現收據都可檢查。"
+        },
+        "backpack": {
+          "label": "背包",
+          "title": "持有資產證明材料參與。",
+          "body": "背包狀態展示一個公民在世界中實际携带过哪些資源、產物和歷史持有記錄。"
+        },
+        "forging": {
+          "label": "鍛造",
+          "title": "制作產出證明生產勞動。",
+          "body": "熔煉和鍛造收據說明玩家是在公開配方規則下轉化輸入，而不僅僅是持有餘額。"
+        },
+        "market": {
+          "label": "市場",
+          "title": "已結算交易證明诚實交换。",
+          "body": "市場歷史可以獎勵完成且非濫用的交换，同時排除刷量循環和失敗結算記錄。"
+        },
+        "settlement": {
+          "label": "聚落",
+          "title": "公共工程證明公共貢獻。",
+          "body": "材料收據、裡程碑帳戶和守護覆蓋讓聚落勞動可見，而不需要相信私人金庫。"
+        },
+        "audit": {
+          "label": "審計",
+          "title": "挑戰證明規則審查勞動。",
+          "body": "有效挑戰、已解決證據和被捕獲的失敗可以成為文明信用，因為它们保护整個文明。"
+        }
       }
     },
     "lifecycle": {
       "eyebrow": "流程",
-      "title": "規則书从撰寫到执行，不需要项目方许可。",
+      "title": "規則書從撰寫到執行，不需要專案方許可。",
       "steps": {
         "draft": {
-          "title": "Draft Rule Book / 撰寫規則书",
-          "body": "玩家為目标模塊寫下可读說明和機器补丁。"
+          "title": "Draft Rule Book / 撰寫規則書",
+          "body": "玩家為目標模組寫下可讀說明和機器補丁。"
         },
         "publish": {
           "title": "Publish On-chain Hash / 發布鏈上哈希",
-          "body": "固定 text_hash、patch_hash、作者、規則類型、風險等級和快照纪元。"
+          "body": "固定 text_hash、patch_hash、作者、規則類型、風險等級和快照紀元。"
         },
         "read": {
-          "title": "Read & Understand / 阅读并理解",
-          "body": "公民查看文本、影响範圍、旧資產策略和校驗警告。"
+          "title": "Read & Understand / 阅讀並理解",
+          "body": "公民查看文本、影響範圍、舊資產策略和校驗警告。"
         },
         "sign": {
-          "title": "Sign Civilization Power / 签署文明权重",
-          "body": "公民按快照权重签署同意、反對或弃权。"
+          "title": "Sign Civilization Power / 簽署文明權重",
+          "body": "公民按快照權重簽署同意、反對或弃权。"
         },
         "threshold": {
-          "title": "Reach Threshold / 达到门槛",
-          "body": "文明法則超过 50%；自然法則超过 90% 活躍文明权重。"
+          "title": "Reach Threshold / 达到門檻",
+          "body": "文明法則超过 50%；自然法則超过 90% 活躍文明權重。"
         },
         "cooling": {
-          "title": "Cooling & Challenge / 冷却与挑战",
-          "body": "規則等待冷却和挑战窗口，给错误与風險留下审查时間。"
+          "title": "Cooling & Challenge / 冷卻與挑戰",
+          "body": "規則等待冷卻和挑戰窗口，給錯誤與風險留下審查時間。"
         },
         "execute": {
-          "title": "Execute Rule / 执行規則",
-          "body": "鏈上条件满足後，任何玩家都可调用 execute_rule。"
+          "title": "Execute Rule / 執行規則",
+          "body": "鏈上條件滿足後，任何玩家都可呼叫 execute_rule。"
         },
         "active": {
           "title": "Rule Becomes Active / 規則生效",
-          "body": "程序把批准配置寫入規則註冊表和目标模塊配置 PDA。"
+          "body": "程式把批准配置寫入規則註冊表和目標模組配置 PDA。"
         }
       }
     },
     "schema": {
-      "eyebrow": "Rule Book Structure",
-      "title": "Human-readable intent and machine-executable patch stay bound by hashes.",
-      "body": "The UI stores mock data locally today. Later these fields can map directly to rule_book_pda, rule_signature_pda, and rule_registry_pda account layouts.",
+      "eyebrow": "規則書結構",
+      "title": "可讀意圖和機器可執行補丁，通過哈希綁定在一起。",
+      "body": "目前頁面先用本地模擬資料展示結構。後續这些欄位可以直接映射到 rule_book_pda、rule_signature_pda 和 rule_registry_pda 帳戶佈局。",
       "fields": {
-        "title": "Readable rule name shown to players and reviewers.",
-        "author": "Wallet that published the rule book hash.",
-        "category": "Natural Law or Civilization Law threshold class.",
-        "target_module": "One or more configuration modules affected by the patch.",
-        "human_readable_text": "Readable explanation that players review before signing.",
-        "machine_patch": "Structured patch bytes consumed by the RuleValidator.",
-        "risk_level": "UI and validator risk classification.",
-        "threshold": "Required active civilization power percentage.",
-        "snapshot_epoch": "Epoch used to freeze signer power.",
-        "status": "Lifecycle state from draft to active.",
-        "yes_power": "Agreeing civilization power.",
-        "no_power": "Rejecting civilization power.",
-        "abstain_power": "Abstaining civilization power.",
-        "cooldown_end": "Earliest execution time after consensus.",
-        "execute_status": "Current execution readiness or result."
+        "title": "展示給玩家和審查者的可讀規則名称。",
+        "author": "發布規則書哈希的錢包。",
+        "category": "自然法則或文明法則的門檻分類。",
+        "target_module": "補丁影響的一個或多個配置模組。",
+        "human_readable_text": "玩家簽署前阅讀的可理解說明。",
+        "machine_patch": "RuleValidator 消费的結構化補丁位元組。",
+        "risk_level": "UI 和校驗器使用的風險等級。",
+        "threshold": "所需活躍文明權重百分比。",
+        "snapshot_epoch": "凍結簽署權重的紀元。",
+        "status": "從草稿到生效的生命週期狀態。",
+        "yes_power": "同意方文明權重。",
+        "no_power": "反對方文明權重。",
+        "abstain_power": "弃权文明權重。",
+        "cooldown_end": "共識达成後的最早執行時間。",
+        "execute_status": "目前執行就绪狀態或結果。"
+      }
+    },
+    "technical": {
+      "eyebrow": "技術流程",
+      "title": "合約執行的是經過驗證的補丁，不是模糊的社會口号。",
+      "body": "可讀規則解釋意圖；機器補丁精確聲明哪些配置 PDA 欄位會改變；校驗器會在註冊表寫入前拒絕危險補丁。",
+      "assurances": {
+        "hashBinding": {
+          "title": "哈希綁定",
+          "body": "可讀文本和機器補丁都用哈希承諾，簽署者可以審計自己讀到的内容是否就是将被執行的内容。"
+        },
+        "validatorBeforeWrite": {
+          "title": "先校驗，再寫入",
+          "body": "危險更新在進入模組註冊表前被拒絕，包括无輸入產出、地址特權邏輯和奪取既有資產。"
+        },
+        "pdaRegistry": {
+          "title": "PDA 註冊表表面",
+          "body": "通過的規則寫入版本化註冊表和配置 PDA，公開工具可以拉取並解碼。"
+        },
+        "permissionlessExecution": {
+          "title": "無許可執行",
+          "body": "所有條件滿足後，執行不依賴專案方錢包；任何玩家都可以提交交易。"
+        }
+      }
+    },
+    "validatorSpec": {
+      "eyebrow": "RuleValidator 規格",
+      "title": "文明規則必須通過確定性閘門，才可以觸碰配置 PDA。",
+      "body": "校驗器是有意义治理和危險投票之間的区別。它把社會提案變成受约束的狀態遷移：解析、分類、證明安全、要求正確門檻，然後寫入狹窄結果。",
+      "patchTitle": "機器補丁信封",
+      "patchFields": {
+        "module": "目標模組家族，例如熔煉、資源規則、守護者策略或市場策略。",
+        "operation": "允許的變更類型。自由代碼執行不屬于補丁语言。",
+        "field_path": "版本化配置表面中被修改的精確欄位或記錄路徑。",
+        "old_value_hash": "預期目前值哈希，防止舊提案覆蓋已變化狀態。",
+        "new_value_hash": "目標值哈希承諾，簽署者知道提案将寫入什麼狀態。",
+        "migration_mode": "舊資產是否不受影響、僅向前生效，或必須走自然法則處理。",
+        "effective_epoch": "執行後補丁最早生效的紀元。",
+        "rollback_hash": "用於審計和恢复設計的可選回滚或取代引用。"
+      },
+      "risk": {
+        "low": {
+          "label": "低",
+          "title": "UI 或知識更新",
+          "body": "公開說明、審計备注或僅向前生效的元資料，不影響資產和經濟。"
+        },
+        "medium": {
+          "label": "中",
+          "title": "普通配置演化",
+          "body": "新配方、方塊参數或資源表，只影響未來玩法。"
+        },
+        "high": {
+          "label": "高",
+          "title": "經濟或服務策略",
+          "body": "费用、守護者参數、市場類別，或有間接經濟影響的規則。"
+        },
+        "critical": {
+          "label": "关键",
+          "title": "自然法則表面",
+          "body": "創世不變量、舊資產處理、資源守恆或特權边界。"
+        }
+      }
+    },
+    "implementationTrace": {
+      "eyebrow": "實現追蹤",
+      "title": "每個 instruction 都應該留下可重放的審計軌跡。",
+      "body": "未來文明程式應該能從公開資料重建：呼叫了哪個 instruction、哪個 PDA 改變、檢查了哪個哈希、發出了哪個事件，以及規則為什麼通過或被拒絕。",
+      "invariantTitle": "審計不變量",
+      "labels": {
+        "input": "輸入",
+        "output": "輸出"
+      },
+      "invariants": {
+        "hashIdentity": "text_hash 和 patch_hash 必須在發布、簽名、結算、執行和事件日誌中指向同一條規則。",
+        "snapshotReplay": "門檻重算必須能從簽名 PDA 和 snapshot_epoch 完成，而不是信任網站快取。",
+        "singleSignature": "一個投票者對一條規則只能有一個有效簽名，除非明確設計後續替换路徑。",
+        "noPrivilegedExecute": "execute_rule 不得要求專案方錢包、管理員簽名或隱藏伺服器 authority。",
+        "boundedWrite": "成功執行只能寫入聲明的註冊表/配置 PDA 家族，不能寫任意帳戶資料。",
+        "rejectionReason": "每條拒絕路徑都應該有穩定、文档化的原因，方便使用者和索引器展示。"
+      },
+      "instructions": {
+        "publishRule": {
+          "phase": "發布",
+          "title": "publish_rule",
+          "body": "建立規則書帳戶，並凍結可讀文本哈希、機器補丁哈希、規則類型、風險等級、目標模組列表和快照紀元。",
+          "input": "rule_id, text_hash, patch_hash, law_type, risk_level, target_modules, snapshot_epoch",
+          "output": "RuleBook PDA 初始化；發出 RulePublished 事件。"
+        },
+        "signRule": {
+          "phase": "簽名",
+          "title": "sign_rule",
+          "body": "為某個投票者和某条規則建立或更新簽名 PDA，權重來自聲明的快照紀元。",
+          "input": "rule_id, voter, side, snapshot_epoch, expected_text_hash, expected_patch_hash",
+          "output": "RuleSignature PDA 寫入；發出 RuleSigned 事件。"
+        },
+        "finalizeThreshold": {
+          "phase": "結算",
+          "title": "finalize_threshold",
+          "body": "重算公開簽名，保存最終 yes/no/abstain 權重，並標記門檻是否达成。",
+          "input": "rule_id, signature_index, threshold_policy, current_slot",
+          "output": "規則 tally 完成；發出 ThresholdFinalized 事件。"
+        },
+        "challengeRule": {
+          "phase": "挑戰",
+          "title": "challenge_rule",
+          "body": "在挑戰窗口内用公開 evidence_hash 記錄挑戰，並在解決前阻止執行。",
+          "input": "rule_id, challenger, evidence_hash, challenge_reason",
+          "output": "Challenge PDA 寫入；發出 RuleChallenged 事件。"
+        },
+        "executeRule": {
+          "phase": "執行",
+          "title": "execute_rule",
+          "body": "執行校驗器，檢查目前目標配置哈希，然後寫入通過的註冊表/配置 PDA，或發出具名拒絕原因。",
+          "input": "rule_id, target_module, old_value_hash, target_config_pda, registry_pda",
+          "output": "發出 RuleExecuted 或 RuleRejected 事件；只有全部閘門通過才寫配置。"
+        }
+      },
+      "events": {
+        "rulePublished": {
+          "level": "公開",
+          "title": "RulePublished",
+          "body": "表示規則已可阅讀，並且已經哈希綁定。",
+          "payload": "rule_id, author, text_hash, patch_hash, law_type, risk_level, snapshot_epoch"
+        },
+        "ruleSigned": {
+          "level": "公開",
+          "title": "RuleSigned",
+          "body": "表示某個公民簽名改變了門檻計算。",
+          "payload": "rule_id, voter, side, power_at_snapshot, snapshot_epoch, signature_pda"
+        },
+        "thresholdFinalized": {
+          "level": "公開",
+          "title": "ThresholdFinalized",
+          "body": "表示簽名已重算，規則可以進入冷卻或阻斷狀態。",
+          "payload": "rule_id, yes_power, no_power, abstain_power, threshold_met, finalized_slot"
+        },
+        "ruleChallenged": {
+          "level": "警告",
+          "title": "RuleChallenged",
+          "body": "表示執行已因公開證據進入暫停審查。",
+          "payload": "rule_id, challenger, evidence_hash, challenge_reason, expires_slot"
+        },
+        "ruleExecuted": {
+          "level": "公開",
+          "title": "RuleExecuted",
+          "body": "表示經過驗證的補丁寫入了狹窄配置或註冊表結果。",
+          "payload": "rule_id, executor, target_module, old_value_hash, new_value_hash, written_pda"
+        },
+        "ruleRejected": {
+          "level": "警告",
+          "title": "RuleRejected",
+          "body": "表示執行失敗且沒有寫入配置狀態。",
+          "payload": "rule_id, caller, rejection_code, checked_hash, failed_gate"
+        }
+      }
+    },
+    "executionProof": {
+      "eyebrow": "執行證明",
+      "title": "規則只有在簽名、帳戶和失敗路徑都可檢查時，才真正可信。",
+      "body": "这是可讀提案和可信狀態變更之間的桥梁：凍結權重快照、簽名 PDA、確定性帳戶讀取、校驗器拒絕原因，以及狹窄註冊表寫入。",
+      "labels": {
+        "seed": "Seed",
+        "writer": "寫入者",
+        "mutability": "可變性"
+      },
+      "severity": {
+        "medium": "中等風險",
+        "high": "高風險",
+        "critical": "关键阻斷"
+      },
+      "items": {
+        "snapshotFrozen": {
+          "kicker": "快照",
+          "title": "簽名計入前，簽署者權重先被凍結。",
+          "body": "簽名會保存 snapshot_epoch 和 power_at_snapshot。後續挖矿、交易或錢包變動不能改寫已發布規則的投票權重。"
+        },
+        "signatureAccount": {
+          "kicker": "簽名 PDA",
+          "title": "每一票都是公開帳戶，不是隱藏資料库行。",
+          "body": "rule_signature_pda 應綁定 voter、rule_id、side、power、timestamp、text_hash 和 patch_hash，讓观察者可以独立重算門檻。"
+        },
+        "executeAccounts": {
+          "kicker": "交易",
+          "title": "execute_rule 先讀取證明，再寫入結果。",
+          "body": "交易會讀取規則書、簽名总量、公民快照元資料、目前目標配置哈希和校驗器範圍，再寫入註冊表或模組配置 PDA。"
+        },
+        "publicRejection": {
+          "kicker": "失敗",
+          "title": "被拒絕的規則應給出具名原因。",
+          "body": "失敗執行應公開為什麼失敗：舊哈希、門檻不足、窗口過期、模組錯誤、守恆破壞或資產安全违規。"
+        }
+      },
+      "accounts": {
+        "ruleBook": {
+          "title": "規則書帳戶",
+          "body": "保存可讀元資料、規則類型、風險等級、目標模組、text_hash、patch_hash、snapshot_epoch 和生命週期時間戳。"
+        },
+        "signature": {
+          "title": "簽名帳戶",
+          "body": "保存某個投票者對某条規則的立场和凍結文明權重，方便独立重算投票。"
+        },
+        "citizen": {
+          "title": "公民狀態帳戶",
+          "body": "保存由參與度推導出的權重輸入，以及規則簽名使用的紀元快照。"
+        },
+        "registry": {
+          "title": "規則註冊表帳戶",
+          "body": "保存已接受規則版本、取代关系、執行 slot 和目前生效模組策略引用。"
+        },
+        "moduleConfig": {
+          "title": "模組配置帳戶",
+          "body": "保存玩法程式讀取的狹窄結果，例如配方表、掉落表、费率策略或方塊参數。"
+        }
+      },
+      "failures": {
+        "staleHash": {
+          "title": "old_value_hash 過期",
+          "body": "提案發布後目標配置已經變化，所以規則必須重新審查，不能覆蓋更新狀態。"
+        },
+        "thresholdMissing": {
+          "title": "門檻未达成",
+          "body": "同意權重在凍結快照下沒有达到文明法則或自然法則要求。"
+        },
+        "snapshotChanged": {
+          "title": "快照窗口无效",
+          "body": "規則使用了過期、缺失或不匹配的快照紀元，所以簽名權重不可信。"
+        },
+        "assetViolation": {
+          "title": "舊資產安全违規",
+          "body": "補丁會奪取、降級或改寫既有玩家資產，却沒有走更強的自然法則路徑。"
+        },
+        "conservationFailure": {
+          "title": "資源守恆失敗",
+          "body": "補丁在沒有有界輸入、生成來源或允許轉化規則的情況下創造輸出。"
+        },
+        "wrongScope": {
+          "title": "模組範圍錯誤",
+          "body": "補丁试圖修改 declared target_module 列表之外的模組或欄位路徑。"
+        }
+      }
+    },
+    "transparency": {
+      "eyebrow": "公開透明控制台",
+      "title": "玩家應該能不信任網站，也能檢查文明真相。",
+      "body": "未來 PDA 瀏覽器應該解碼合約讀取的同一批公開帳戶：規則、簽名、公民快照、模組註冊表、配置 PDA、挑戰和執行事件。",
+      "checkTitle": "瀏覽器必須證明什麼",
+      "labels": {
+        "account": "帳戶",
+        "proof": "證明欄位"
+      },
+      "checks": {
+        "decode": "把原始 PDA 位元組解碼成具名欄位，而不是只展示不透明 base64。",
+        "compare": "並排對比 text_hash、patch_hash、old_value_hash 和 active_config_hash。",
+        "recount": "從簽名帳戶和 snapshot_epoch 重算門檻數學。",
+        "simulate": "在使用者簽署或執行前，執行只讀 RuleValidator 模擬。",
+        "watch": "把 RuleExecuted、RuleRejected、RuleChallenged 事件展示成公開時間線。"
+      },
+      "surfaces": {
+        "ruleLedger": {
+          "label": "規則帳本",
+          "title": "每個提案都有公開身份。",
+          "body": "瀏覽器應展示作者、規則類型、風險等級、目標模組、可讀哈希、補丁哈希、冷卻時間和目前生命週期狀態。"
+        },
+        "signatureLedger": {
+          "label": "簽名帳本",
+          "title": "每一票都可以重算。",
+          "body": "使用者應該看到哪些帳戶簽署了、選擇哪一边，以及每個簽名貢獻了多少凍結文明權重。"
+        },
+        "citizenSnapshot": {
+          "label": "公民快照",
+          "title": "文明權重是可檢查輸入。",
+          "body": "快照面板應該解釋成熟身份、活躍度、上限、衰減，以及某条規則使用的最終權重。"
+        },
+        "configRegistry": {
+          "label": "配置註冊表",
+          "title": "通過的規則指向生效模組狀態。",
+          "body": "註冊表應該暴露哪一個規則版本控制熔煉、鍛造、資源掉落、方塊参數或其它模組配置。"
+        },
+        "assetSafety": {
+          "label": "資產安全",
+          "title": "玩家拥有的資產保持可見且受保护。",
+          "body": "当規則声称不觸碰舊資產時，瀏覽器應該展示相关只讀背包或市場帳戶檢查。"
+        },
+        "challengeCourt": {
+          "label": "挑戰法庭",
+          "title": "反對意见變成公開證據，不是私下争论。",
+          "body": "挑戰應有帳戶狀態、證據哈希、過期時間、解決狀態，以及執行被拒絕時的 failed_gate。"
+        }
+      }
+    },
+    "versioning": {
+      "eyebrow": "版本化演進",
+      "title": "文明通過公開版本鏈前進，而不是擦除舊規則。",
+      "body": "可信世界需要歷史連續性。当新規則取代舊規則時，註冊表應該保留舊哈希、生效紀元、取代連結和資產相容說明。",
+      "stackTitle": "版本化保证",
+      "labels": {
+        "account": "帳戶",
+        "hash": "哈希"
+      },
+      "principles": {
+        "appendOnly": "規則歷史只追加：新的生效規則連結到上一版本，而不是删除它。",
+        "effectiveEpoch": "每個版本都有 effective_epoch，玩家能知道某次行動發生時适用哪条規則。",
+        "compatibility": "相容策略解釋舊背包、配方、挂单和已鍛造物品如何继续有效。",
+        "supersession": "取代連結說明 v2 為什麼取代 v1，以及是哪条規則批准了變更。",
+        "auditReplay": "審查者可以用公開哈希重放 v1 行為、v2 行為，以及它们之間的遷移。"
+      },
+      "stages": {
+        "activeV1": {
+          "title": "目前生效版本",
+          "body": "目前模組配置應保持可讀，包含 rule_id、配置哈希、生效紀元和 owner program。"
+        },
+        "proposalV2": {
+          "title": "提議取代版本",
+          "body": "新規則提出補丁，引用目前生效哈希，並聲明被取代的版本。"
+        },
+        "compatibility": {
+          "title": "相容策略",
+          "body": "校驗器記錄舊資產是否保持 v1 语义、向前遷移，或必須進入自然法則路徑。"
+        },
+        "activeV2": {
+          "title": "新的生效版本",
+          "body": "執行後，新玩法讀取 v2；舊歷史、事件和相容說明仍然可以檢查。"
+        }
+      }
+    },
+    "design": {
+      "eyebrow": "文明系統設定藍圖",
+      "title": "文明系統應該成為可遊玩的社會引擎，而不只是投票頁面。",
+      "body": "後續編碼應把文明視為連接時代、公民、聚落、生產、知識和規則執行的公開層。每個設定對象都需要一個玩家能讀懂的承諾，以及一個已解碼的 PDA 锚點。",
+      "stackTitle": "後續編碼應遵守的設計規則",
+      "blueprintTitle": "第一批帳戶與 instruction 目標",
+      "labels": {
+        "account": "帳戶",
+        "anchor": "證明锚點"
+      },
+      "principles": {
+        "readablePromise": "每個功能先有玩家能讀懂的承諾，再變成帳戶資料。",
+        "pdaAnchor": "每個承諾都必須映射到 PDA、事件、哈希或確定性拒絕原因。",
+        "materialContinuity": "文明進步必須尊重材料來源：資源、配方和已鍛造物品不能凭空出現。",
+        "forwardUnlocks": "新時代和新科技應該解鎖未來行動，而不是静默改寫舊玩家歷史。",
+        "publicDecoder": "網站最終應該在产生该狀態的規則旁边，解碼每個文明帳戶。"
+      },
+      "surfaces": {
+        "era": {
+          "label": "時代",
+          "title": "時代是公開解鎖層。",
+          "body": "石器、青銅、鐵器、能源、自動化或更未來的時代，應由已證明的世界活動和已接受規則版本激活，而不是私有開关。"
+        },
+        "citizen": {
+          "label": "公民",
+          "title": "公民拥有角色、记忆和快照權重。",
+          "body": "玩家可以是矿工、建造者、交易者、守護者、作者或審計者。角色不取代所有權；它解釋參與度和規則權重。"
+        },
+        "settlement": {
+          "label": "聚落",
+          "title": "城市與土地是協作狀態。",
+          "body": "聚落可以把 Chunk、公共工程、保护覆蓋、生產加成和公共项目綁定到透明共享帳戶。"
+        },
+        "production": {
+          "label": "生產",
+          "title": "生產是圖谱，不是魔法產出。",
+          "body": "配方、機器、熔煉、鍛造和未來工业應讀取明確輸入輸出規則，並保护舊的已制作資產。"
+        },
+        "knowledge": {
+          "label": "知識",
+          "title": "發現會成為公開知識記錄。",
+          "body": "当探索、材料、規則文本和校驗證明都指向同一個發現時，文明可以解鎖科技。"
+        },
+        "proof": {
+          "label": "證明",
+          "title": "公開瀏覽器是玩法的一部分。",
+          "body": "玩家應該能瀏覽公民、背包、聚落、项目、規則、簽名和已解碼 PDA 資料，把它作為世界的信任界面。"
+        }
+      },
+      "blueprints": {
+        "epoch": {
+          "title": "紀元與時代註冊表",
+          "body": "保存目前時代、生效紀元、解鎖規則哈希，以及舊時代的相容說明。"
+        },
+        "role": {
+          "title": "公民角色狀態",
+          "body": "保存參與角色、成熟度、活躍分、快照權重輸入，以及最新公開權重哈希。"
+        },
+        "settlement": {
+          "title": "聚落帳戶",
+          "body": "保存土地連結、成员策略、公共工程、生產修正和守護者覆蓋引用。"
+        },
+        "project": {
+          "title": "公共项目帳戶",
+          "body": "保存已貢獻資源、目標狀態、解鎖效果，以及授權该项目的規則或聚落。"
+        },
+        "knowledge": {
+          "title": "知識記錄帳戶",
+          "body": "保存發現聲明、材料證明、作者、文本哈希、关联規則 id，以及它是否解鎖未來配置。"
+        }
+      }
+    },
+    "civic": {
+      "eyebrow": "公共工程循環",
+      "title": "聚落把共同勞動變成公開狀態，讓文明真正可玩。",
+      "body": "文明系統不只需要規則簽名，還需要玩家貢獻材料、守護者證明覆蓋、規則授權效果、每個收益都能追溯到公開帳戶的協作项目。",
+      "stackTitle": "公共工程為什麼可信",
+      "labels": {
+        "account": "帳戶",
+        "proof": "證明"
+      },
+      "guarantees": {
+        "noPrivateTreasury": "沒有隱藏金庫：貢獻材料應記錄成收據，而不是被私人伺服器吞掉。",
+        "materialReceipts": "每次貢獻都應保留資源來源、數量、貢獻者、项目 id 和被接受的配方版本。",
+        "guardianProof": "保护或服務加成需要對應紀元和土地範圍的守護者覆蓋證明。",
+        "ruleAuthorized": "聚落收益必須引用授權它的規則或章程。",
+        "benefitBounded": "收益是有邊界的配置效果，不是任意增發、没收所有權或私人特權。"
+      },
+      "surfaces": {
+        "charter": {
+          "label": "章程",
+          "title": "聚落從公開章程開始。",
+          "body": "章程說明土地範圍、成员策略、公共工程权利、守護者要求，以及哪些規則可以改變聚落。"
+        },
+        "contribution": {
+          "label": "貢獻",
+          "title": "材料先成為收據，再成為力量。",
+          "body": "玩家應能看到誰貢獻了銅、木头、石头、燃料或制作零件，以及哪個裡程碑接受了輸入。"
+        },
+        "guardian": {
+          "label": "守護",
+          "title": "服務覆蓋需要證明，而不是假設。",
+          "body": "守護者記錄應展示覆蓋區域、紀元、校驗結果，以及项目是否能獲得保护相关收益。"
+        },
+        "project": {
+          "label": "工程",
+          "title": "公共工程按裡程碑推進。",
+          "body": "道路、熔爐、档案馆、市場、防御或未來機器，都應該有明確目標、已接受輸入和完成事件。"
+        },
+        "benefit": {
+          "label": "收益",
+          "title": "聚落加成狹窄且只向前生效。",
+          "body": "完成项目可以解鎖未來生產或可見性效果，但不能改寫舊資產，也不能无輸入創造資源。"
+        },
+        "audit": {
+          "label": "審計",
+          "title": "任何人都能檢查聚落為什麼變化。",
+          "body": "瀏覽器應該把章程、收據、守護證明、規則授權、裡程碑和最終效果連結成一條可讀鏈。"
+        }
+      }
+    },
+    "buildSpec": {
+      "eyebrow": "Codex 實現規格",
+      "title": "這個頁面也作為未來文明程式的實現說明书。",
+      "body": "後續編碼應先實現最小可信閉環：發布哈希綁定規則書、用凍結文明權重簽名、校驗有邊界補丁、无專案方特權執行，並在瀏覽器公開每個 PDA。",
+      "orderTitle": "建議實現順序",
+      "groups": {
+        "program": {
+          "kicker": "程式",
+          "title": "文明程式表面",
+          "body": "先做專用程式，拥有規則帳戶，並且只寫入狹窄配置輸出。",
+          "items": {
+            "stateAccounts": "實現 RuleBook、RuleSignature、CitizenState、RuleRegistry 和模組配置帳戶佈局。",
+            "instructions": "把 publish_rule、sign_rule、finalize_threshold、execute_rule、challenge_rule 拆成独立 instruction。",
+            "errors": "為舊哈希、不安全補丁、錯誤快照、範圍錯誤和門檻不足返回明確錯誤码。"
+          }
+        },
+        "validator": {
+          "kicker": "校驗器",
+          "title": "確定性安全引擎",
+          "body": "把校驗器當成合約邏輯，而不是前端建議。",
+          "items": {
+            "patchParser": "解析固定二進位補丁信封；拒絕未知操作和超大 payload。",
+            "safetyGates": "任何寫入前執行範圍、守恆、資產安全、門檻、冷卻和挑戰閘門。",
+            "moduleAdapters": "每個模組一個 adapter，讓熔煉、資源掉落、守護者策略和市場策略都有明確欄位規則。"
+          }
+        },
+        "client": {
+          "kicker": "客戶端",
+          "title": "可讀治理界面",
+          "body": "UI 必須讓簽署變得可理解，同時不隱藏機器補丁。",
+          "items": {
+            "ruleEditor": "並排展示人類文本、機器 diff、目標模組、風險等級、old_value_hash 和 new_value_hash。",
+            "signaturePanel": "展示快照權重、簽署立场、門檻進度、冷卻窗口和挑戰狀態。",
+            "pdaBrowser": "在現有合約瀏覽器裡公開每條規則、簽名、公民快照、註冊表和配置 PDA。"
+          }
+        },
+        "audit": {
+          "kicker": "審計",
+          "title": "公開驗證工具",
+          "body": "每條成功或失敗的規則都應該能事後重建。",
+          "items": {
+            "hashCompare": "提供 text_hash、patch_hash、old_value_hash 和寫入配置哈希的對比面板。",
+            "simulation": "在收集簽名前提供 dry-run 校驗器輸出。",
+            "eventLog": "記錄 published、signed、finalized、challenged、executed、rejected 事件和公開原因。"
+          }
+        }
+      },
+      "order": {
+        "mockFirst": {
+          "title": "先定模擬規格",
+          "body": "先在 UI 中凍結 JSON/帳戶形狀，讓審查者在鏈上代碼出現前挑戰模型。"
+        },
+        "readOnlyPdas": {
+          "title": "只讀 PDA 瀏覽器",
+          "body": "先加解碼器和帳戶面板，再開啟寫入；透明度必須早于權力。"
+        },
+        "signatureFlow": {
+          "title": "簽名流程",
+          "body": "實現 rule_signature_pda，並按凍結快照權重重算門檻。"
+        },
+        "validatorDryRun": {
+          "title": "校驗器 dry run",
+          "body": "在不寫配置的情況下執行確定性補丁檢查，證明拒絕原因。"
+        },
+        "permissionlessExecute": {
+          "title": "無許可執行",
+          "body": "只有哈希、門檻、冷卻、挑戰和目標配置狀態都通過後，才開啟 execute_rule。"
+        }
+      }
+    },
+    "binding": {
+      "eyebrow": "目前合約表面",
+      "title": "文明系統必須綁定到真實 PDA 表面，而不只是概念。",
+      "body": "NiceChunk 已經有世界配置、資源掉落、背包、配方、守護者和市場狀態等具體帳戶家族。文明層應該围绕这些模組治理版本化配置表面，同時保护舊資產安全。",
+      "labels": {
+        "account": "帳戶",
+        "magic": "Magic",
+        "seed": "Seed",
+        "civilizationPath": "文明路徑"
+      },
+      "openContracts": "打開合約 PDA 瀏覽器",
+      "status": {
+        "immutable": "不可變基礎",
+        "config": "配置表面",
+        "asset": "玩家資產",
+        "service": "服務註冊表",
+        "settlement": "結算狀態"
+      },
+      "modules": {
+        "core": {
+          "title": "核心世界配置",
+          "body": "GlobalConfig 從编译常量寫入世界種子、地形/資源/客戶端哈希、經濟参數、守護者参數和建造边界。",
+          "path": "自然法則保护創世不變量；未來演化應使用版本化 override PDA，而不是重寫不可變創世配置。"
+        },
+        "chunk": {
+          "title": "Chunk 與資源掉落",
+          "body": "Chunk 邏輯從 GlobalConfig 校驗生成坐标，並用 ResourceDropTable 規則處理公開掉落概率。",
+          "path": "文明法則可以提議新的資源掉落表；自然法則保护資源守恆和世界生成假設。"
+        },
+        "backpack": {
+          "title": "背包库存",
+          "body": "Backpack 帳戶保存玩家拥有的資源和物品，並包含 owner 校驗、容量限制、物品數量和更新 slot。",
+          "path": "文明規則不能奪取舊背包；可以定義未來容量等級、物品類別或加工產物。"
+        },
+        "smelting": {
+          "title": "熔煉配方",
+          "body": "RecipeTable 保存有邊界的配方記錄、輸入/輸出 slot 記錄、熱量等級和更新 slot。",
+          "path": "文明法則非常适合在校驗器檢查輸入销毁和產出守恆後，新增或停用配方。"
+        },
+        "guardian": {
+          "title": "守護者服務",
+          "body": "Guardian 註冊表和區域 PDA 跟踪活躍覆蓋、質押金额、操作者、端點、證明和懲罰。",
+          "path": "文明可以通過配置 PDA 调整服務策略；自然法則保护 slashing 和質押公平性。"
+        },
+        "market": {
+          "title": "市場結算",
+          "body": "Market listing 和 asset 帳戶編碼卖家、價格、币种、來源库存、狀態、买家和結算 slot。",
+          "path": "文明可以治理费率和類別；既有挂单與資產归屬需要更強保护。"
+        }
       }
     },
     "modules": {
-      "eyebrow": "Target Modules",
-      "title": "Civilization changes the configuration layer, not core code by text command.",
+      "eyebrow": "目標模組",
+      "title": "文明改變的是配置層，不是用文本命令改核心代碼。",
       "short": {
-        "smelting": "Smelting",
-        "forging": "Forging",
-        "block_properties": "Block Properties",
-        "resource_rules": "Resource Rules",
-        "element_rules": "Element Rules",
-        "world_knowledge": "World Knowledge"
+        "smelting": "熔煉",
+        "forging": "鍛造",
+        "block_properties": "方塊屬性",
+        "resource_rules": "資源規則",
+        "element_rules": "元素規則",
+        "world_knowledge": "世界知識"
       },
       "items": {
         "smelting": {
-          "title": "Smelting",
-          "body": "Fuel tiers, raw inputs, conservation checks, material outputs, and processing requirements."
+          "title": "熔煉",
+          "body": "燃料等級、原始輸入、守恆檢查、材料產出和加工要求。"
         },
         "forging": {
-          "title": "Forging",
-          "body": "Tool, equipment, and building recipes that consume validated material resources."
+          "title": "鍛造",
+          "body": "消耗已驗證材料資源的工具、装备和建築配方。"
         },
         "block_properties": {
-          "title": "Block Properties",
-          "body": "Hardness, drops, break requirements, hazard flags, and world interaction parameters."
+          "title": "方塊屬性",
+          "body": "硬度、掉落、破壞要求、危險標記和世界交互参數。"
         },
         "resource_rules": {
-          "title": "Resource Rules",
-          "body": "Generated resource sources, output logic, provenance requirements, and conservation boundaries."
+          "title": "資源規則",
+          "body": "生成資源來源、產出邏輯、來源證明要求和守恆边界。"
         },
         "element_rules": {
-          "title": "Element Rules",
-          "body": "Element profiles, material tendencies, and future chemistry or alloy constraints."
+          "title": "元素規則",
+          "body": "元素画像、材料傾向，以及未來化學或合金约束。"
         },
         "world_knowledge": {
-          "title": "World Knowledge",
-          "body": "Versioned public knowledge, civilization records, rule explanations, and audit notes."
+          "title": "世界知識",
+          "body": "版本化公開知識、文明記錄、規則解釋和審計备注。"
         }
       }
     },
     "examples": {
-      "aria": "Rule examples",
-      "naturalEyebrow": "Natural Law Examples",
-      "naturalTitle": "Rules that protect the world itself.",
-      "civilizationEyebrow": "Civilization Law Examples",
-      "civilizationTitle": "Rules that let civilization advance.",
+      "aria": "規則示例",
+      "naturalEyebrow": "自然法則示例",
+      "naturalTitle": "保护世界本身的規則。",
+      "civilizationEyebrow": "文明法則示例",
+      "civilizationTitle": "讓文明继续進步的規則。",
       "natural": {
-        "resourceConservation": "Resources cannot be created without generated source, input burn, or validated transformation.",
-        "assetProtection": "Player-owned assets cannot be seized or reassigned without valid rule authority.",
-        "publicWorldGeneration": "World seed and generation principles cannot be quietly changed.",
-        "noProjectPrivilege": "No address receives hidden minting, bypass, or privileged production rights.",
-        "transparentAuthority": "Contract authorities and config owners must remain inspectable.",
-        "nckPrinciples": "NCK and core economic principles cannot be casually broken."
+        "resourceConservation": "資源不能在沒有生成來源、輸入销毁或有效轉化的情況下凭空产生。",
+        "assetProtection": "玩家拥有的資產不能在沒有有效規則授權的情況下被夺走或重分配。",
+        "publicWorldGeneration": "世界種子和生成原則不能被悄悄改變。",
+        "noProjectPrivilege": "任何地址都不能獲得隱藏增發、繞過或特權生產权。",
+        "transparentAuthority": "合約权限和配置所有者必須保持可檢查。",
+        "nckPrinciples": "NCK 和核心經濟原則不能被随意破壞。"
       },
       "civilization": {
-        "bronze": "Copper + tin can unlock bronze through smelting and forging configs.",
-        "oreEnergy": "A rule can increase energy requirements for a rare ore smelting path.",
-        "blockHardness": "A new block can receive hardness, drops, and required tool tiers.",
-        "toolRecipe": "A civilization can add a new tool forging recipe with material inputs.",
-        "materialProcessing": "A material can require extra processing before construction use."
+        "bronze": "銅 + 錫可以通過熔煉和鍛造配置解鎖青銅時代。",
+        "oreEnergy": "規則可以提高稀有矿石熔煉路徑的能量要求。",
+        "blockHardness": "新方塊可以獲得硬度、掉落和所需工具等級。",
+        "toolRecipe": "文明可以用材料輸入新增工具鍛造配方。",
+        "materialProcessing": "某种材料可以在建築使用前要求额外加工。"
       }
     },
     "execution": {
-      "eyebrow": "Execution Model",
-      "title": "Automatic execution means permissionless execution, not a server changing code.",
-      "body": "Once threshold, cooling, and challenge conditions are satisfied, any player can call execute_rule. The contract checks only on-chain state and writes the approved configuration into PDA registries.",
+      "eyebrow": "執行模型",
+      "title": "自動執行指的是無許可執行，不是伺服器改代碼。",
+      "body": "当門檻、冷卻和挑戰條件都滿足後，任何玩家都可以呼叫 execute_rule。合約只檢查鏈上狀態，並把已批准配置寫入 PDA 註冊表。",
       "items": {
         "ruleValidator": {
-          "title": "RuleValidator gate",
-          "body": "Rejects patches that create resources from nothing, bypass inputs, grant address privilege, or seize owned assets."
+          "title": "RuleValidator 閘門",
+          "body": "拒絕凭空創造資源、繞過輸入、授予地址特權或奪取既有資產的補丁。"
         },
         "registryWrite": {
-          "title": "Registry write",
-          "body": "Approved patches update rule_registry, smelting_config, forging_config, block_property_config, or resource_config PDAs."
+          "title": "註冊表寫入",
+          "body": "批准後的補丁會更新 rule_registry、smelting_config、forging_config、block_property_config 或 resource_config PDA。"
         },
         "permissionlessCaller": {
-          "title": "No privileged executor",
-          "body": "Execution has no project-side allowlist; any player can submit the transaction when conditions pass."
+          "title": "沒有特權執行者",
+          "body": "執行沒有專案方白名单；條件滿足後，任何玩家都能提交交易。"
         },
         "fixedCoreContracts": {
-          "title": "Fixed core contracts",
-          "body": "Gameplay contracts should read active config PDAs instead of letting text rules upgrade program code."
+          "title": "固定核心合約",
+          "body": "玩法合約應讀取生效配置 PDA，而不是讓文本規則升級程式代碼。"
         }
       }
     },
     "mock": {
-      "eyebrow": "Mock Rule Books",
-      "title": "Local data today, chain accounts tomorrow.",
-      "body": "These examples are intentionally structured like future on-chain data so wallet signing, PDA reads, and execute_rule flows can replace the mock layer later.",
-      "yesPower": "Signed yes",
-      "threshold": "Threshold",
-      "risk": "Risk",
-      "epoch": "Epoch",
+      "eyebrow": "模擬規則書",
+      "title": "今天是本地資料，明天可映射為鏈上帳戶。",
+      "body": "这些示例刻意按未來鏈上資料結構组织，之後可以由錢包簽名、PDA 讀取和 execute_rule 流程替换模擬層。",
+      "yesPower": "同意權重",
+      "threshold": "門檻",
+      "risk": "風險",
+      "epoch": "紀元",
       "rules": {
         "bronze": {
-          "title": "Bronze Age Rule"
+          "title": "青銅時代規則"
         },
         "conservation": {
-          "title": "World Conservation Amendment"
+          "title": "世界守恆修正案"
         },
         "cactus": {
-          "title": "Desert Cactus Block Rule"
+          "title": "沙漠仙人掌方塊規則"
         },
         "noAdminMint": {
-          "title": "No Admin Minting Principle"
+          "title": "无管理員增發原則"
         }
       }
     },
     "contract": {
-      "eyebrow": "Future Contract Direction",
-      "title": "The civilization program should mutate rule configuration PDAs through validators.",
-      "body": "Core gameplay contracts should stay fixed where possible and read active configuration PDAs. Civilization consensus changes configuration, not ownership by fiat.",
-      "accountsTitle": "Program and PDA surfaces",
-      "validatorTitle": "RuleValidator must reject",
-      "assetProtectionTitle": "Old asset protection principle",
-      "assetProtectionBody": "Civilization Law should affect newly generated resources, equipment, and block rules by default. Retroactive effects on existing player assets require Natural Law consensus, stronger prompts, and 90% world-level agreement.",
+      "eyebrow": "未來合約方向",
+      "title": "文明程式應通過校驗器修改規則配置 PDA。",
+      "body": "核心玩法合約應尽量保持固定，並讀取生效配置 PDA。文明共識改變配置，而不是用特權直接改归屬。",
+      "accountsTitle": "程式與 PDA 表面",
+      "validatorTitle": "RuleValidator 必須拒絕",
+      "assetProtectionTitle": "舊資產保护原則",
+      "assetProtectionBody": "文明法則預設只影響新生成資源、装备和方塊規則。對既有玩家資產的追溯影響必須走自然法則共識、更強提示和 90% 世界級同意。",
       "validator": {
-        "noResourceFromNothing": "Creating resources from nothing",
-        "noInputBypass": "Bypassing required input resources",
-        "noAddressPrivilege": "Granting single-address privilege",
-        "noOwnershipSeizure": "Changing ownership of existing player assets"
+        "noResourceFromNothing": "凭空創造資源",
+        "noInputBypass": "繞過所需輸入資源",
+        "noAddressPrivilege": "授予單一地址特權",
+        "noOwnershipSeizure": "改變既有玩家資產所有權"
       }
     }
   },
@@ -1656,11 +3062,11 @@
       "body": "NiceChunk 會把地形方塊映射為有科學依據的資源基礎。每個方塊都會公開生成訊號、可能的元素組成區間，以及它在未來挖礦和鍛造經濟中的定位。",
       "metricsAria": "圖鑑狀態",
       "workspaceAria": "方塊資源圖鑑",
-      "modeAria": "資源數據分類",
+      "modeAria": "資源資料分類",
       "rawMode": "原始資源",
       "materialMode": "材料資料",
-      "rawModeBody": "原始資源來自生成方塊的挖掘。它们必须先熔煉成材料資源，才能進入鍛造。",
-      "materialModeBody": "材料資料定義燃料熱量、熔煉输入、工匠要求，以及由原始資源产出的可鍛造材料。",
+      "rawModeBody": "原始資源來自生成方塊的挖掘。它们必須先熔煉成材料資源，才能進入鍛造。",
+      "materialModeBody": "材料資料定義燃料熱量、熔煉輸入、工匠要求，以及由原始資源產出的可鍛造材料。",
       "filtersAria": "圖鑑篩選",
       "filterTitle": "方塊類別",
       "resultCount": "顯示 {count} 個",
@@ -1697,30 +3103,30 @@
       "workspaceAria": "材料資源資料",
       "eyebrow": "熔煉資料",
       "title": "原始資源會變成可鍛造材料。",
-      "body": "原始資源不能直接鍛造。熔煉爐會消耗燃料熱量，檢查材料配方，然後产出可用於物品鍛造的材料資源。",
+      "body": "原始資源不能直接鍛造。熔煉爐會消耗燃料熱量，檢查材料配方，然後產出可用於物品鍛造的材料資源。",
       "ruleSetLabel": "規則來源",
-      "contractBody": "这张表來自独立 JSON 規則源，方便遊戲客户端和未來合约引用同一套熔煉要求。",
+      "contractBody": "这张表來自独立 JSON 規則源，方便遊戲客戶端和未來合約引用同一套熔煉要求。",
       "fuelTitle": "燃料熱量等級",
-      "fuelBody": "可燃燃料提供熱量等級。更高阶的配方需要更强燃料或更熱的爐源。",
-      "recipeTitle": "材料图鉴",
-      "recipeBody": "按材料類別浏览可鍛造材料，查看元素構成，并核對每個产物背後的熔煉要求。",
-      "atlasAria": "材料图鉴",
+      "fuelBody": "可燃燃料提供熱量等級。更高阶的配方需要更強燃料或更熱的爐源。",
+      "recipeTitle": "材料圖鉴",
+      "recipeBody": "按材料類別瀏覽可鍛造材料，查看元素構成，並核對每個產物背後的熔煉要求。",
+      "atlasAria": "材料圖鉴",
       "filtersAria": "材料篩選",
       "categoryTitle": "材料類別",
       "allMaterials": "全部材料",
       "resultCount": "显示 {count} 個",
-      "searchLabel": "搜尋材料、類別、元素或输入",
+      "searchLabel": "搜尋材料、類別、元素或輸入",
       "searchPlaceholder": "搜尋 steel、Si、glass...",
       "empty": "目前篩選下沒有匹配的材料配方。",
       "materialAria": "打開 {name} 材料詳情",
       "visualModelLabel": "元素色彩模型",
-      "visualModelBody": "材料缩略图會根據每個配方档案中的主導元素生成。",
+      "visualModelBody": "材料缩略圖會根據每個配方档案中的主導元素生成。",
       "processTitle": "熔煉流程",
       "compositionTitle": "材料元素档案",
-      "forgeUseTitle": "鍛造解锁",
+      "forgeUseTitle": "鍛造解鎖",
       "sourceBlocksTitle": "原始資源來源",
       "heatLabel": "熱量",
-      "burnTimeLabel": "燃烧时間",
+      "burnTimeLabel": "燃燒時間",
       "sourceLabel": "來源",
       "consumableLabel": "消耗",
       "consumable": "會消耗",
@@ -1729,9 +3135,9 @@
       "requiredHeatLabel": "所需熱量",
       "artisanLevelLabel": "工匠等級",
       "artisanLevel": "{level} 級",
-      "rawInputsLabel": "原始输入",
+      "rawInputsLabel": "原始輸入",
       "catalystLabel": "催化/還原",
-      "yieldLabel": "产出",
+      "yieldLabel": "產出",
       "yieldCount": "{count} 批",
       "forgeUseLabel": "鍛造用途",
       "inputAmount": "{amount}x {resource}",
@@ -1758,16 +3164,16 @@
       },
       "forgeUse": {
         "fuel": "高密度燃料和還原剂",
-        "soilCatalyst": "土壤改良、生物反应器原料和低阶催化剂",
+        "soilCatalyst": "土壤改良、生物反應器原料和低阶催化剂",
         "mold": "鍛造模具、砖和爐衬",
         "binding": "耐熱粘結剂和陶瓷添加物",
-        "flux": "熔煉助熔剂，用於净化熔體并减少爐渣",
+        "flux": "熔煉助熔剂，用於净化熔體並减少爐渣",
         "masonry": "結構砌塊、窑爐主體和野外建造",
         "lens": "鏡片、窗片、仪表和易碎配件",
-        "circuit": "電路、感測器、逻辑板和信号装置",
-        "cooling": "冷却单元、稳定器和寒冷等級配件",
+        "circuit": "電路、感測器、邏輯板和信号装置",
+        "cooling": "冷卻单元、穩定器和寒冷等級配件",
         "toolHead": "镐头、刀刃、工具和結構件",
-        "conductor": "導電配件、线圈和精密零件",
+        "conductor": "導電配件、線圈和精密零件",
         "armorPlate": "護甲板、盾牌和抗冲击面板",
         "magneticCore": "磁芯、馬達部件和高階机構",
         "reinforcement": "輕量加固板和碳質嵌件",
@@ -1782,19 +3188,19 @@
         },
         "wood": {
           "name": "木質燃料",
-          "description": "由原木、枯木或巨型树根提供的通用工坊燃料，比草本燃料燃烧更久。"
+          "description": "由原木、枯木或巨型树根提供的通用工坊燃料，比草本燃料燃燒更久。"
         },
         "charcoal": {
           "name": "木炭",
-          "description": "由木質資源加工出的碳燃料，比原木更稳定也更干净。"
+          "description": "由木質資源加工出的碳燃料，比原木更穩定也更干净。"
         },
         "coal": {
           "name": "煤炭",
-          "description": "來自深层石煤层的强力鍛造燃料，不常见，适合金屬海绵坯。"
+          "description": "來自深層石煤層的強力鍛造燃料，不常见，适合金屬海绵坯。"
         },
         "lava_heat": {
           "name": "熔岩熱源",
-          "description": "不直接消耗的高熱爐源，绑定火山資源，用於鼓风級配方。"
+          "description": "不直接消耗的高熱爐源，綁定火山資源，用於鼓风級配方。"
         }
       },
       "item": {
@@ -1804,7 +3210,7 @@
         },
         "biochar_compost": {
           "name": "生物炭堆肥",
-          "description": "由树叶、苔藓和泥浆低溫制成的碳与养分材料，可用於土壤系统和生物站點。"
+          "description": "由树叶、苔藓和泥浆低溫制成的碳與养分材料，可用於土壤系統和生物站點。"
         },
         "plant_fiber": {
           "name": "植物纤维",
@@ -1812,7 +3218,7 @@
         },
         "resin_binder": {
           "name": "树脂粘結剂",
-          "description": "由松木和藤蔓提取的树脂浓缩物，可粘合纤维、密封容器，并支持低溫复合材料。"
+          "description": "由松木和藤蔓提取的树脂浓缩物，可粘合纤维、密封容器，並支持低溫复合材料。"
         },
         "ceramic_brick": {
           "name": "陶瓷砖",
@@ -1820,7 +3226,7 @@
         },
         "lime_ceramic": {
           "name": "石灰陶瓷",
-          "description": "由贝壳层石灰和黏土制成的陶瓷，可作為耐熱粘結剂和耐火添加物。"
+          "description": "由贝壳層石灰和黏土制成的陶瓷，可作為耐熱粘結剂和耐火添加物。"
         },
         "quicklime": {
           "name": "生石灰",
@@ -1828,7 +3234,7 @@
         },
         "salt_flux": {
           "name": "盐助熔剂",
-          "description": "由盐滩和火山灰制成的助熔材料，可帮助熔煉分离爐渣并稳定更干净的金屬批次。"
+          "description": "由盐滩和火山灰制成的助熔材料，可帮助熔煉分离爐渣並穩定更干净的金屬批次。"
         },
         "ash_cement": {
           "name": "灰質水泥",
@@ -1836,7 +3242,7 @@
         },
         "glass_ingot": {
           "name": "玻璃锭",
-          "description": "富矽玻璃坯料，可用於鏡片、窗片、仪表和易碎技术部件。"
+          "description": "富矽玻璃坯料，可用於鏡片、窗片、仪表和易碎技術部件。"
         },
         "obsidian_glass": {
           "name": "黑曜玻璃",
@@ -1848,31 +3254,31 @@
         },
         "ice_crystal": {
           "name": "冰晶",
-          "description": "由冰、雪和盐稳定出的晶體，可用於冷却单元、冰霜工具和熱控组件。"
+          "description": "由冰、雪和盐穩定出的晶體，可用於冷卻单元、冰霜工具和熱控组件。"
         },
         "iron_bloom": {
           "name": "鐵海绵坯",
-          "description": "从深层石和石头中還原出的可鍛鐵質坯料，煤炭负责供碳和還原。"
+          "description": "從深層石和石头中還原出的可鍛鐵質坯料，煤炭负责供碳和還原。"
         },
         "copper_bloom": {
           "name": "銅海绵坯",
-          "description": "从砾石和玄武岩的痕量金屬傾向中富集出的導電金屬坯。"
+          "description": "從砾石和玄武岩的痕量金屬傾向中富集出的導電金屬坯。"
         },
         "alumina_plate": {
           "name": "氧化鋁板",
-          "description": "由黏土和深层石制成的富鋁陶瓷板，可用於抗冲击面板和绝缘配件。"
+          "description": "由黏土和深層石制成的富鋁陶瓷板，可用於抗冲击面板和绝缘配件。"
         },
         "nickel_iron": {
           "name": "鎳鐵合金",
-          "description": "从深层石和玄武岩痕量金屬中精煉出的磁性鐵合金，可用於馬達和高階机構。"
+          "description": "從深層石和玄武岩痕量金屬中精煉出的磁性鐵合金，可用於馬達和高階机構。"
         },
         "carbon_plate": {
           "name": "碳板",
-          "description": "由煤炭和深层石压制出的碳材料，可用於輕量加固和嵌件。"
+          "description": "由煤炭和深層石压制出的碳材料，可用於輕量加固和嵌件。"
         },
         "carbon_steel": {
           "name": "碳钢坯",
-          "description": "高阶鋼材坯料，來自深层石的鐵傾向和煤炭的控碳。"
+          "description": "高阶鋼材坯料，來自深層石的鐵傾向和煤炭的控碳。"
         },
         "basalt_fiber": {
           "name": "玄武岩纤维",
@@ -1884,7 +3290,7 @@
         },
         "geopolymer_block": {
           "name": "地聚物塊",
-          "description": "由火山灰、玄武岩和盐激發形成的石質复合材料，可用於高强砌體和窑爐主體。"
+          "description": "由火山灰、玄武岩和盐激發形成的石質复合材料，可用於高強砌體和窑爐主體。"
         },
         "coral_lime": {
           "name": "珊瑚石灰",
@@ -1943,11 +3349,11 @@
       "grass": {
         "name": "草地方塊",
         "source": "地表",
-        "description": "有生命的表层土方塊：矽酸盐土壤上覆盖一层薄薄的生物层，由湿度、坡度和森林密度共同塑造。"
+        "description": "有生命的表層土方塊：矽酸盐土壤上覆蓋一層薄薄的生物層，由湿度、坡度和森林密度共同塑造。"
       },
       "dirt": {
         "name": "泥土",
-        "source": "浅层地下",
+        "source": "浅層地下",
         "description": "草地下方的风化土壤，混合了矽酸盐顆粒、黏土矿物、鐵氧化物、水分和有机残留。"
       },
       "stone": {
@@ -1956,9 +3362,9 @@
         "description": "常见的矽酸盐岩石，是丘陵、峭壁、洞穴墙體和結構性挖掘的基礎地質材料。"
       },
       "deepStone": {
-        "name": "深层石",
-        "source": "深层地下",
-        "description": "更致密的下部地层岩石，鐵和鎂的傾向更高，用於生成浅层地壳以下的岩层。"
+        "name": "深層石",
+        "source": "深層地下",
+        "description": "更致密的下部地層岩石，鐵和鎂的傾向更高，用於生成浅層地壳以下的岩層。"
       },
       "sand": {
         "name": "沙子",
@@ -1973,7 +3379,7 @@
       "clay": {
         "name": "黏土",
         "source": "潮湿地表 / 地下",
-        "description": "细粒含水鋁矽酸盐沉积物，生成于潮湿、低坡度地形和邻水地层。"
+        "description": "细粒含水鋁矽酸盐沉积物，生成于潮湿、低坡度地形和邻水地層。"
       },
       "mud": {
         "name": "泥浆",
@@ -1988,16 +3394,16 @@
       "saltFlat": {
         "name": "盐滩",
         "source": "沙漠斑塊",
-        "description": "干旱盆地蒸發後留下的蒸發岩壳，氯化鈉佔主導，并混有鎂、鈣、硫酸盐和含氧盐。"
+        "description": "干旱盆地蒸發後留下的蒸發岩壳，氯化鈉佔主導，並混有鎂、鈣、硫酸盐和含氧盐。"
       },
       "snow": {
         "name": "雪",
         "source": "寒冷地表",
-        "description": "在雪线以上或寒冷生物群系中生成的冻結降水层，可能含有微量矿物塵埃。"
+        "description": "在雪線以上或寒冷生物群系中生成的凍結降水層，可能含有微量矿物塵埃。"
       },
       "ice": {
         "name": "冰",
-        "source": "冻結流體 / 稀有地表",
+        "source": "凍結流體 / 稀有地表",
         "description": "由寒冷流體和稀有雪原規則選中的固態水，相對简单但在环境規則中很重要。"
       },
       "frozenSoil": {
@@ -2008,7 +3414,7 @@
       "basalt": {
         "name": "玄武岩",
         "source": "火山地表 / 地下",
-        "description": "由快速冷却的熔岩形成的深色鎂鐵質火山岩，相比普通石头更偏向鐵、鎂、鈣和鈦。"
+        "description": "由快速冷卻的熔岩形成的深色鎂鐵質火山岩，相比普通石头更偏向鐵、鎂、鈣和鈦。"
       },
       "ash": {
         "name": "火山灰",
@@ -2018,12 +3424,12 @@
       "bedrock": {
         "name": "基岩",
         "source": "世界基底",
-        "description": "生成柱底部的協議基礎层。它表現為坚硬的基底岩，而不是固定的化學資源矿床。"
+        "description": "生成柱底部的協議基礎層。它表現為坚硬的基底岩，而不是固定的化學資源矿床。"
       },
       "water": {
         "name": "水",
         "source": "流體",
-        "description": "用於海洋、河流、湖泊和低洼水域覆盖的标准流體方塊，會根據生物群系产生少量溶解离子差异。"
+        "description": "用於海洋、河流、湖泊和低洼水域覆蓋的标准流體方塊，會根據生物群系产生少量溶解离子差异。"
       },
       "swampWater": {
         "name": "沼泽水",
@@ -2043,7 +3449,7 @@
       "quicksand": {
         "name": "流沙",
         "source": "沙漠地表",
-        "description": "由沙漠异常規則生成的含水松散沙陷阱，主要為二氧化矽，并含有足够水分降低力学稳定性。"
+        "description": "由沙漠異常規則生成的含水松散沙陷阱，主要為二氧化矽，並含有足够水分降低力学穩定性。"
       },
       "trunk": {
         "name": "树干",
@@ -2053,7 +3459,7 @@
       "leaves": {
         "name": "树叶",
         "source": "树冠",
-        "description": "光合作用树冠方塊，化學上屬于有机组织，并带有含鎂叶绿素和营养痕量金屬。"
+        "description": "光合作用树冠方塊，化學上屬于有机组织，並带有含鎂叶绿素和营养痕量金屬。"
       },
       "pineTrunk": {
         "name": "松树干",
@@ -2063,7 +3469,7 @@
       "pineLeaves": {
         "name": "松针叶",
         "source": "松树冠",
-        "description": "常绿针叶树冠，水分循环较低，并含有矿物营养痕量。"
+        "description": "常绿针叶树冠，水分循環较低，並含有矿物营养痕量。"
       },
       "deadWood": {
         "name": "枯木",
@@ -2088,17 +3494,17 @@
       "bush": {
         "name": "灌木",
         "source": "地表植被",
-        "description": "由森林、平原、山地和雨林植被規則生成的木質灌木层。"
+        "description": "由森林、平原、山地和雨林植被規則生成的木質灌木層。"
       },
       "deadBush": {
         "name": "枯灌木",
         "source": "干燥 / 火山植被",
-        "description": "由沙漠和火山地表条件生成的干枯灌木残留物。"
+        "description": "由沙漠和火山地表條件生成的干枯灌木残留物。"
       },
       "cactus": {
         "name": "仙人掌",
         "source": "沙漠植被",
-        "description": "由沙漠規則生成的储水多肉植物，化學上屬于有机组织，但結合水比例异常高。"
+        "description": "由沙漠規則生成的储水多肉植物，化學上屬于有机组织，但結合水比例異常高。"
       },
       "reed": {
         "name": "芦苇",
@@ -2108,7 +3514,7 @@
       "swampGrass": {
         "name": "沼泽草",
         "source": "沼泽地表",
-        "description": "湿地草层，包含有机组织，并受到滞流水沉积物汙染。"
+        "description": "湿地草層，包含有机组织，並受到滞流水沉积物汙染。"
       },
       "snowBush": {
         "name": "雪地灌木",
@@ -2128,7 +3534,7 @@
       "lichen": {
         "name": "地衣",
         "source": "寒冷 / 岩石表面",
-        "description": "寒冷或岩石表面上的共生壳层，連接生物组织和矿物基質。"
+        "description": "寒冷或岩石表面上的共生壳層，連接生物组织和矿物基質。"
       },
       "vine": {
         "name": "藤蔓",
@@ -2138,7 +3544,7 @@
       "glowMycelium": {
         "name": "發光菌丝",
         "source": "洞穴植被",
-        "description": "來自地下潮湿空間的生物發光真菌垫，化學上屬于生物组织，并强化磷和硫信号。"
+        "description": "來自地下潮湿空間的生物發光真菌垫，化學上屬于生物组织，並強化磷和硫信号。"
       },
       "mushroom": {
         "name": "蘑菇",
@@ -2153,12 +3559,12 @@
       "aquaticPlant": {
         "name": "水生植物",
         "source": "淡水植被",
-        "description": "含水量很高的淡水植被，會从沉积物中吸收养分。"
+        "description": "含水量很高的淡水植被，會從沉积物中吸收养分。"
       },
       "coral": {
         "name": "珊瑚",
         "source": "温暖海洋植被",
-        "description": "在温暖浅海条件中生成的碳酸鈣結構。"
+        "description": "在温暖浅海條件中生成的碳酸鈣結構。"
       },
       "deadCoral": {
         "name": "死亡珊瑚",
@@ -2166,14 +3572,14 @@
         "description": "由寒冷或汙染海洋規則選中的死亡碳酸鈣礁體材料。"
       },
       "shellBed": {
-        "name": "贝壳层",
+        "name": "贝壳層",
         "source": "稀有海滩 / 海底",
         "description": "由贝壳碎片和碳酸盐顆粒堆积形成，作為稀有海岸和海底斑點生成。"
       },
       "coal": {
         "name": "煤炭",
-        "source": "深层石煤层",
-        "description": "富碳沉积燃料，會以较低频率在深层石中成片生成，主要用於熔煉熱量，而不是直接鍛造。"
+        "source": "深層石煤層",
+        "description": "富碳沉积燃料，會以较低频率在深層石中成片生成，主要用於熔煉熱量，而不是直接鍛造。"
       }
     },
     "tag": {
@@ -2183,8 +3589,8 @@
       "general": "通用",
       "mountain": "山地",
       "cave": "洞穴",
-      "foundation": "基礎层",
-      "deepCave": "深层洞穴",
+      "foundation": "基礎層",
+      "deepCave": "深層洞穴",
       "desert": "沙漠",
       "beach": "海滩",
       "river": "河流",
@@ -2197,11 +3603,11 @@
       "evaporite": "蒸發岩",
       "snowfield": "雪原",
       "tundra": "苔原",
-      "frozenWater": "冻結水體",
+      "frozenWater": "凍結水體",
       "volcano": "火山",
-      "deepRock": "深层岩石",
+      "deepRock": "深層岩石",
       "ejecta": "喷出物",
-      "unbreakable": "不可破坏",
+      "unbreakable": "不可破壞",
       "ocean": "海洋",
       "corruption": "汙染",
       "heat": "高熱",
@@ -2345,475 +3751,475 @@
     "description": {
       "H": {
         "short": "氫是 NiceChunk 材料和鍛造詞彙表中的非金屬資源基礎，可用於燃料電池、储氫、生命化學、火箭推進和有機合成。",
-        "gameplayRole": "在 NiceChunk 中，氫會作為非金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，氫會作為非金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "He": {
-        "short": "氦是 NiceChunk 材料和鍛造詞彙表中的稀有氣體資源基礎，可用於低溫冷却、惰性封裝、气球、精密設備和低溫機器。",
-        "gameplayRole": "在 NiceChunk 中，氦會作為稀有氣體材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "氦是 NiceChunk 材料和鍛造詞彙表中的稀有氣體資源基礎，可用於低溫冷卻、惰性封裝、气球、精密設備和低溫機器。",
+        "gameplayRole": "在 NiceChunk 中，氦會作為稀有氣體材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Li": {
-        "short": "鋰是 NiceChunk 材料和鍛造詞彙表中的碱金屬資源基礎，可用於電池、輕量化儲能、活泼化學反应和高階能量單元。",
-        "gameplayRole": "在 NiceChunk 中，鋰會作為碱金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鋰是 NiceChunk 材料和鍛造詞彙表中的碱金屬資源基礎，可用於電池、輕量化儲能、活泼化學反應和高階能量單元。",
+        "gameplayRole": "在 NiceChunk 中，鋰會作為碱金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Be": {
-        "short": "鈹是 NiceChunk 材料和鍛造詞彙表中的碱土金屬資源基礎，可用於矿物、陶瓷、結構化合物、合金和生物矿物循环。",
-        "gameplayRole": "在 NiceChunk 中，鈹會作為碱土金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鈹是 NiceChunk 材料和鍛造詞彙表中的碱土金屬資源基礎，可用於矿物、陶瓷、結構化合物、合金和生物矿物循環。",
+        "gameplayRole": "在 NiceChunk 中，鈹會作為碱土金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "B": {
         "short": "硼是 NiceChunk 材料和鍛造詞彙表中的類金屬資源基礎，可用於半導體、玻璃、陶瓷晶體、光學部件和精密電子。",
-        "gameplayRole": "在 NiceChunk 中，硼會作為類金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，硼會作為類金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "C": {
-        "short": "碳是 NiceChunk 材料和鍛造詞彙表中的非金屬資源基礎，可用於有機鏈、碳纖維、燃料、鋼材强化、石墨導體和高階复合材料。",
-        "gameplayRole": "在 NiceChunk 中，碳會作為非金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "碳是 NiceChunk 材料和鍛造詞彙表中的非金屬資源基礎，可用於有机鏈、碳纖維、燃料、鋼材強化、石墨導體和高階复合材料。",
+        "gameplayRole": "在 NiceChunk 中，碳會作為非金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "N": {
         "short": "氮是 NiceChunk 材料和鍛造詞彙表中的非金屬資源基礎，可用於肥料化學、保護氣氛、含能材料、冷卻系統和生物循環。",
-        "gameplayRole": "在 NiceChunk 中，氮會作為非金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，氮會作為非金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "O": {
         "short": "氧是 NiceChunk 材料和鍛造詞彙表中的非金屬資源基礎，可用於氧化反應、助燃、生命維持、陶瓷、玻璃和氧化矿物。",
-        "gameplayRole": "在 NiceChunk 中，氧會作為非金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，氧會作為非金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "F": {
         "short": "氟是 NiceChunk 材料和鍛造詞彙表中的卤素資源基礎，可用於蝕刻、強腐蝕化工、高風險鹽類和高階含氟材料。",
-        "gameplayRole": "在 NiceChunk 中，氟會作為卤素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，氟會作為卤素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Ne": {
-        "short": "氖是 NiceChunk 材料和鍛造詞彙表中的稀有氣體資源基礎，可用於霓虹光源、電漿显示、光學标识和稳定氣體舱。",
-        "gameplayRole": "在 NiceChunk 中，氖會作為稀有氣體材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "氖是 NiceChunk 材料和鍛造詞彙表中的稀有氣體資源基礎，可用於霓虹光源、電漿显示、光學标识和穩定氣體舱。",
+        "gameplayRole": "在 NiceChunk 中，氖會作為稀有氣體材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Na": {
-        "short": "鈉是 NiceChunk 材料和鍛造詞彙表中的碱金屬資源基礎，可用於電池、高反应化學、能量單元和密封儲存路線。",
-        "gameplayRole": "在 NiceChunk 中，鈉會作為碱金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鈉是 NiceChunk 材料和鍛造詞彙表中的碱金屬資源基礎，可用於電池、高反應化學、能量單元和密封儲存路線。",
+        "gameplayRole": "在 NiceChunk 中，鈉會作為碱金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Mg": {
-        "short": "鎂是 NiceChunk 材料和鍛造詞彙表中的碱土金屬資源基礎，可用於矿物、陶瓷、結構化合物、合金和生物矿物循环。",
-        "gameplayRole": "在 NiceChunk 中，鎂會作為碱土金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鎂是 NiceChunk 材料和鍛造詞彙表中的碱土金屬資源基礎，可用於矿物、陶瓷、結構化合物、合金和生物矿物循環。",
+        "gameplayRole": "在 NiceChunk 中，鎂會作為碱土金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Al": {
         "short": "鋁是 NiceChunk 材料和鍛造詞彙表中的後过渡金屬資源基礎，可用於輕量建築、導電框架、航空部件和耐腐蝕外壳。",
-        "gameplayRole": "在 NiceChunk 中，鋁會作為後过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鋁會作為後过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Si": {
-        "short": "矽是 NiceChunk 材料和鍛造詞彙表中的類金屬資源基礎，可用於半導體、玻璃、太陽能材料、岩石化學和可程式化晶體系统。",
-        "gameplayRole": "在 NiceChunk 中，矽會作為類金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "矽是 NiceChunk 材料和鍛造詞彙表中的類金屬資源基礎，可用於半導體、玻璃、太陽能材料、岩石化學和可程式化晶體系統。",
+        "gameplayRole": "在 NiceChunk 中，矽會作為類金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "P": {
         "short": "磷是 NiceChunk 材料和鍛造詞彙表中的非金屬資源基礎，可用於生命材料、氣體化學、燃料、陶瓷、肥料和反應鏈。",
-        "gameplayRole": "在 NiceChunk 中，磷會作為非金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，磷會作為非金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "S": {
         "short": "硫是 NiceChunk 材料和鍛造詞彙表中的非金屬資源基礎，可用於生命材料、氣體化學、燃料、陶瓷、肥料和反應鏈。",
-        "gameplayRole": "在 NiceChunk 中，硫會作為非金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，硫會作為非金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Cl": {
-        "short": "氯是 NiceChunk 材料和鍛造詞彙表中的卤素資源基礎，可用於腐蝕化學、鹽類、蝕刻、毒性武器和高風險工业反应。",
-        "gameplayRole": "在 NiceChunk 中，氯會作為卤素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "氯是 NiceChunk 材料和鍛造詞彙表中的卤素資源基礎，可用於腐蝕化學、鹽類、蝕刻、毒性武器和高風險工业反應。",
+        "gameplayRole": "在 NiceChunk 中，氯會作為卤素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Ar": {
         "short": "氬是 NiceChunk 材料和鍛造詞彙表中的稀有氣體資源基礎，可用於惰性气氛、焊接保护、密封加工和電漿灯。",
-        "gameplayRole": "在 NiceChunk 中，氬會作為稀有氣體材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，氬會作為稀有氣體材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "K": {
-        "short": "鉀是 NiceChunk 材料和鍛造詞彙表中的碱金屬資源基礎，可用於電池、高反应化學、能量單元和密封儲存路線。",
-        "gameplayRole": "在 NiceChunk 中，鉀會作為碱金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鉀是 NiceChunk 材料和鍛造詞彙表中的碱金屬資源基礎，可用於電池、高反應化學、能量單元和密封儲存路線。",
+        "gameplayRole": "在 NiceChunk 中，鉀會作為碱金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Ca": {
-        "short": "鈣是 NiceChunk 材料和鍛造詞彙表中的碱土金屬資源基礎，可用於矿物、陶瓷、結構化合物、合金和生物矿物循环。",
-        "gameplayRole": "在 NiceChunk 中，鈣會作為碱土金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鈣是 NiceChunk 材料和鍛造詞彙表中的碱土金屬資源基礎，可用於矿物、陶瓷、結構化合物、合金和生物矿物循環。",
+        "gameplayRole": "在 NiceChunk 中，鈣會作為碱土金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Sc": {
-        "short": "鈧是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，鈧會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鈧是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，鈧會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Ti": {
-        "short": "鈦是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於輕量護甲、高强度工具、航空結構和高階機器。",
-        "gameplayRole": "在 NiceChunk 中，鈦會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鈦是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於輕量護甲、高強度工具、航空結構和高階機器。",
+        "gameplayRole": "在 NiceChunk 中，鈦會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "V": {
-        "short": "釩是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，釩會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "釩是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，釩會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Cr": {
-        "short": "鉻是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於不锈合金、耐腐蝕鍍層、硬質塗層和顏料系统。",
-        "gameplayRole": "在 NiceChunk 中，鉻會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鉻是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於不锈合金、耐腐蝕镀層、硬質涂層和顏料系統。",
+        "gameplayRole": "在 NiceChunk 中，鉻會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Mn": {
-        "short": "錳是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，錳會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "錳是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，錳會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Fe": {
         "short": "鐵是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於建築、機械、武器、磁性設備和鋼材合成。",
-        "gameplayRole": "在 NiceChunk 中，鐵會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鐵會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Co": {
-        "short": "鈷是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於電池正极、强合金、顏料、磁體和高階工具。",
-        "gameplayRole": "在 NiceChunk 中，鈷會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鈷是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於電池正极、強合金、顏料、磁體和高階工具。",
+        "gameplayRole": "在 NiceChunk 中，鈷會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Ni": {
         "short": "鎳是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於不鏽鋼、電池、磁體、護甲合金和催化设备。",
-        "gameplayRole": "在 NiceChunk 中，鎳會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鎳會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Cu": {
         "short": "銅是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於導線、電子設備、馬達、導電方塊和銅合金。",
-        "gameplayRole": "在 NiceChunk 中，銅會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，銅會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Zn": {
-        "short": "鋅是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，鋅會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鋅是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，鋅會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Ga": {
-        "short": "鎵是 NiceChunk 材料和鍛造詞彙表中的後过渡金屬資源基礎，可用於低熔點電子材料、化合物半導體、顯示材料和特殊液態金屬逻辑。",
-        "gameplayRole": "在 NiceChunk 中，鎵會作為後过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鎵是 NiceChunk 材料和鍛造詞彙表中的後过渡金屬資源基礎，可用於低熔點電子材料、化合物半導體、顯示材料和特殊液態金屬邏輯。",
+        "gameplayRole": "在 NiceChunk 中，鎵會作為後过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Ge": {
         "short": "鍺是 NiceChunk 材料和鍛造詞彙表中的類金屬資源基礎，可用於半導體晶圓、紅外光學、高階電子和晶體配方。",
-        "gameplayRole": "在 NiceChunk 中，鍺會作為類金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鍺會作為類金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "As": {
         "short": "砷是 NiceChunk 材料和鍛造詞彙表中的類金屬資源基礎，可用於半導體、玻璃、陶瓷晶體、光學部件和精密電子。",
-        "gameplayRole": "在 NiceChunk 中，砷會作為類金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，砷會作為類金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Se": {
         "short": "硒是 NiceChunk 材料和鍛造詞彙表中的非金屬資源基礎，可用於生命材料、氣體化學、燃料、陶瓷、肥料和反應鏈。",
-        "gameplayRole": "在 NiceChunk 中，硒會作為非金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，硒會作為非金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Br": {
-        "short": "溴是 NiceChunk 材料和鍛造詞彙表中的卤素資源基礎，可用於腐蝕化學、鹽類、蝕刻、毒性武器和高風險工业反应。",
-        "gameplayRole": "在 NiceChunk 中，溴會作為卤素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "溴是 NiceChunk 材料和鍛造詞彙表中的卤素資源基礎，可用於腐蝕化學、鹽類、蝕刻、毒性武器和高風險工业反應。",
+        "gameplayRole": "在 NiceChunk 中，溴會作為卤素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Kr": {
-        "short": "氪是 NiceChunk 材料和鍛造詞彙表中的稀有氣體資源基礎，可用於惰性气氛、低溫系统、電漿照明、光學和保護性加工。",
-        "gameplayRole": "在 NiceChunk 中，氪會作為稀有氣體材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "氪是 NiceChunk 材料和鍛造詞彙表中的稀有氣體資源基礎，可用於惰性气氛、低溫系統、電漿照明、光學和保護性加工。",
+        "gameplayRole": "在 NiceChunk 中，氪會作為稀有氣體材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Rb": {
-        "short": "銣是 NiceChunk 材料和鍛造詞彙表中的碱金屬資源基礎，可用於電池、高反应化學、能量單元和密封儲存路線。",
-        "gameplayRole": "在 NiceChunk 中，銣會作為碱金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "銣是 NiceChunk 材料和鍛造詞彙表中的碱金屬資源基礎，可用於電池、高反應化學、能量單元和密封儲存路線。",
+        "gameplayRole": "在 NiceChunk 中，銣會作為碱金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Sr": {
-        "short": "鍶是 NiceChunk 材料和鍛造詞彙表中的碱土金屬資源基礎，可用於矿物、陶瓷、結構化合物、合金和生物矿物循环。",
-        "gameplayRole": "在 NiceChunk 中，鍶會作為碱土金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鍶是 NiceChunk 材料和鍛造詞彙表中的碱土金屬資源基礎，可用於矿物、陶瓷、結構化合物、合金和生物矿物循環。",
+        "gameplayRole": "在 NiceChunk 中，鍶會作為碱土金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Y": {
-        "short": "釔是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，釔會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "釔是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，釔會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Zr": {
-        "short": "鋯是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，鋯會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鋯是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，鋯會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Nb": {
-        "short": "鈮是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，鈮會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鈮是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，鈮會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Mo": {
-        "short": "鉬是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，鉬會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鉬是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，鉬會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Tc": {
-        "short": "鎝是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，鎝會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鎝是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，鎝會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Ru": {
-        "short": "釕是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，釕會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "釕是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，釕會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Rh": {
-        "short": "銠是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，銠會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "銠是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，銠會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Pd": {
-        "short": "鈀是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，鈀會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鈀是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，鈀會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Ag": {
-        "short": "銀是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於頂級導電材料、光學材料、抗菌系统和貴金屬資源路線。",
-        "gameplayRole": "在 NiceChunk 中，銀會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "銀是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於頂級導電材料、光學材料、抗菌系統和貴金屬資源路線。",
+        "gameplayRole": "在 NiceChunk 中，銀會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Cd": {
-        "short": "鎘是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，鎘會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鎘是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，鎘會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "In": {
-        "short": "銦是 NiceChunk 材料和鍛造詞彙表中的後过渡金屬資源基礎，可用於顯示薄膜、觸控介面、焊料系统和专用電子材料。",
-        "gameplayRole": "在 NiceChunk 中，銦會作為後过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "銦是 NiceChunk 材料和鍛造詞彙表中的後过渡金屬資源基礎，可用於顯示薄膜、觸控介面、焊料系統和專用電子材料。",
+        "gameplayRole": "在 NiceChunk 中，銦會作為後过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Sn": {
         "short": "錫是 NiceChunk 材料和鍛造詞彙表中的後过渡金屬資源基礎，可用於特殊合金、軟金屬、屏蔽、低熔點配方和電子材料。",
-        "gameplayRole": "在 NiceChunk 中，錫會作為後过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，錫會作為後过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Sb": {
         "short": "銻是 NiceChunk 材料和鍛造詞彙表中的類金屬資源基礎，可用於半導體、玻璃、陶瓷晶體、光學部件和精密電子。",
-        "gameplayRole": "在 NiceChunk 中，銻會作為類金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，銻會作為類金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Te": {
         "short": "碲是 NiceChunk 材料和鍛造詞彙表中的類金屬資源基礎，可用於半導體、玻璃、陶瓷晶體、光學部件和精密電子。",
-        "gameplayRole": "在 NiceChunk 中，碲會作為類金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，碲會作為類金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "I": {
-        "short": "碘是 NiceChunk 材料和鍛造詞彙表中的卤素資源基礎，可用於腐蝕化學、鹽類、蝕刻、毒性武器和高風險工业反应。",
-        "gameplayRole": "在 NiceChunk 中，碘會作為卤素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "碘是 NiceChunk 材料和鍛造詞彙表中的卤素資源基礎，可用於腐蝕化學、鹽類、蝕刻、毒性武器和高風險工业反應。",
+        "gameplayRole": "在 NiceChunk 中，碘會作為卤素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Xe": {
-        "short": "氙是 NiceChunk 材料和鍛造詞彙表中的稀有氣體資源基礎，可用於離子引擎、閃光燈、麻醉化學和高階光學系统。",
-        "gameplayRole": "在 NiceChunk 中，氙會作為稀有氣體材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "氙是 NiceChunk 材料和鍛造詞彙表中的稀有氣體資源基礎，可用於離子引擎、閃光燈、麻醉化學和高階光學系統。",
+        "gameplayRole": "在 NiceChunk 中，氙會作為稀有氣體材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Cs": {
-        "short": "銫是 NiceChunk 材料和鍛造詞彙表中的碱金屬資源基礎，可用於電池、高反应化學、能量單元和密封儲存路線。",
-        "gameplayRole": "在 NiceChunk 中，銫會作為碱金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "銫是 NiceChunk 材料和鍛造詞彙表中的碱金屬資源基礎，可用於電池、高反應化學、能量單元和密封儲存路線。",
+        "gameplayRole": "在 NiceChunk 中，銫會作為碱金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Ba": {
-        "short": "鋇是 NiceChunk 材料和鍛造詞彙表中的碱土金屬資源基礎，可用於矿物、陶瓷、結構化合物、合金和生物矿物循环。",
-        "gameplayRole": "在 NiceChunk 中，鋇會作為碱土金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鋇是 NiceChunk 材料和鍛造詞彙表中的碱土金屬資源基礎，可用於矿物、陶瓷、結構化合物、合金和生物矿物循環。",
+        "gameplayRole": "在 NiceChunk 中，鋇會作為碱土金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "La": {
         "short": "鑭是 NiceChunk 材料和鍛造詞彙表中的鑭系元素資源基礎，可用於稀土磁體、光學、激光、螢光材料和高階電子。",
-        "gameplayRole": "在 NiceChunk 中，鑭會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鑭會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Ce": {
         "short": "鈰是 NiceChunk 材料和鍛造詞彙表中的鑭系元素資源基礎，可用於稀土磁體、光學、激光、螢光材料和高階電子。",
-        "gameplayRole": "在 NiceChunk 中，鈰會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鈰會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Pr": {
         "short": "鐠是 NiceChunk 材料和鍛造詞彙表中的鑭系元素資源基礎，可用於稀土磁體、光學、激光、螢光材料和高階電子。",
-        "gameplayRole": "在 NiceChunk 中，鐠會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鐠會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Nd": {
         "short": "釹是 NiceChunk 材料和鍛造詞彙表中的鑭系元素資源基礎，可用於永磁體、馬達、發馬達和稀土科技配方。",
-        "gameplayRole": "在 NiceChunk 中，釹會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，釹會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Pm": {
         "short": "鉕是 NiceChunk 材料和鍛造詞彙表中的鑭系元素資源基礎，可用於稀土磁體、光學、激光、螢光材料和高階電子。",
-        "gameplayRole": "在 NiceChunk 中，鉕會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鉕會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Sm": {
         "short": "釤是 NiceChunk 材料和鍛造詞彙表中的鑭系元素資源基礎，可用於稀土磁體、光學、激光、螢光材料和高階電子。",
-        "gameplayRole": "在 NiceChunk 中，釤會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，釤會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Eu": {
         "short": "銪是 NiceChunk 材料和鍛造詞彙表中的鑭系元素資源基礎，可用於稀土磁體、光學、激光、螢光材料和高階電子。",
-        "gameplayRole": "在 NiceChunk 中，銪會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，銪會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Gd": {
         "short": "釓是 NiceChunk 材料和鍛造詞彙表中的鑭系元素資源基礎，可用於稀土磁體、光學、激光、螢光材料和高階電子。",
-        "gameplayRole": "在 NiceChunk 中，釓會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，釓會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Tb": {
         "short": "鋱是 NiceChunk 材料和鍛造詞彙表中的鑭系元素資源基礎，可用於稀土磁體、光學、激光、螢光材料和高階電子。",
-        "gameplayRole": "在 NiceChunk 中，鋱會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鋱會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Dy": {
         "short": "鏑是 NiceChunk 材料和鍛造詞彙表中的鑭系元素資源基礎，可用於高溫磁體、稀土馬達和精密電子材料。",
-        "gameplayRole": "在 NiceChunk 中，鏑會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鏑會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Ho": {
         "short": "鈥是 NiceChunk 材料和鍛造詞彙表中的鑭系元素資源基礎，可用於稀土磁體、光學、激光、螢光材料和高階電子。",
-        "gameplayRole": "在 NiceChunk 中，鈥會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鈥會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Er": {
         "short": "鉺是 NiceChunk 材料和鍛造詞彙表中的鑭系元素資源基礎，可用於稀土磁體、光學、激光、螢光材料和高階電子。",
-        "gameplayRole": "在 NiceChunk 中，鉺會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鉺會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Tm": {
         "short": "銩是 NiceChunk 材料和鍛造詞彙表中的鑭系元素資源基礎，可用於稀土磁體、光學、激光、螢光材料和高階電子。",
-        "gameplayRole": "在 NiceChunk 中，銩會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，銩會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Yb": {
         "short": "鐿是 NiceChunk 材料和鍛造詞彙表中的鑭系元素資源基礎，可用於稀土磁體、光學、激光、螢光材料和高階電子。",
-        "gameplayRole": "在 NiceChunk 中，鐿會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鐿會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Lu": {
         "short": "鎦是 NiceChunk 材料和鍛造詞彙表中的鑭系元素資源基礎，可用於稀土磁體、光學、激光、螢光材料和高階電子。",
-        "gameplayRole": "在 NiceChunk 中，鎦會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鎦會作為鑭系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Hf": {
-        "short": "鉿是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，鉿會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鉿是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，鉿會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Ta": {
-        "short": "鉭是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，鉭會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鉭是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，鉭會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "W": {
         "short": "鎢是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於高溫工具、硬質護甲、重型武器、熔爐和耐熱機器。",
-        "gameplayRole": "在 NiceChunk 中，鎢會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鎢會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Re": {
-        "short": "錸是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，錸會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "錸是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，錸會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Os": {
-        "short": "鋨是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，鋨會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鋨是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，鋨會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Ir": {
-        "short": "銥是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，銥會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "銥是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，銥會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Pt": {
         "short": "鉑是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於催化剂、燃料電池、精密設備、貴金屬合金和高價值科技配方。",
-        "gameplayRole": "在 NiceChunk 中，鉑會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鉑會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Au": {
         "short": "金是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於高價值電子、精密觸點、装饰、金庫資產和協議級收藏品。",
-        "gameplayRole": "在 NiceChunk 中，金會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，金會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Hg": {
         "short": "汞是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於液態金屬设备、感測器、毒性陷阱和密封特殊裝備。",
-        "gameplayRole": "在 NiceChunk 中，汞會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，汞會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Tl": {
         "short": "鉈是 NiceChunk 材料和鍛造詞彙表中的後过渡金屬資源基礎，可用於特殊合金、軟金屬、屏蔽、低熔點配方和電子材料。",
-        "gameplayRole": "在 NiceChunk 中，鉈會作為後过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鉈會作為後过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Pb": {
         "short": "鉛是 NiceChunk 材料和鍛造詞彙表中的後过渡金屬資源基礎，可用於輻射屏蔽、配重、低熔點合金和危險封裝方塊。",
-        "gameplayRole": "在 NiceChunk 中，鉛會作為後过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鉛會作為後过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Bi": {
         "short": "鉍是 NiceChunk 材料和鍛造詞彙表中的後过渡金屬資源基礎，可用於特殊合金、軟金屬、屏蔽、低熔點配方和電子材料。",
-        "gameplayRole": "在 NiceChunk 中，鉍會作為後过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鉍會作為後过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Po": {
         "short": "釙是 NiceChunk 材料和鍛造詞彙表中的類金屬資源基礎，可用於半導體、玻璃、陶瓷晶體、光學部件和精密電子。",
-        "gameplayRole": "在 NiceChunk 中，釙會作為類金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，釙會作為類金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "At": {
-        "short": "砈是 NiceChunk 材料和鍛造詞彙表中的卤素資源基礎，可用於腐蝕化學、鹽類、蝕刻、毒性武器和高風險工业反应。",
-        "gameplayRole": "在 NiceChunk 中，砈會作為卤素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "砈是 NiceChunk 材料和鍛造詞彙表中的卤素資源基礎，可用於腐蝕化學、鹽類、蝕刻、毒性武器和高風險工业反應。",
+        "gameplayRole": "在 NiceChunk 中，砈會作為卤素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Rn": {
         "short": "氡是 NiceChunk 材料和鍛造詞彙表中的稀有氣體資源基礎，可用於放射性氣體陷阱、衰變檢测和密封危險研究。",
-        "gameplayRole": "在 NiceChunk 中，氡會作為稀有氣體材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，氡會作為稀有氣體材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Fr": {
-        "short": "鍅是 NiceChunk 材料和鍛造詞彙表中的碱金屬資源基礎，可用於電池、高反应化學、能量單元和密封儲存路線。",
-        "gameplayRole": "在 NiceChunk 中，鍅會作為碱金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鍅是 NiceChunk 材料和鍛造詞彙表中的碱金屬資源基礎，可用於電池、高反應化學、能量單元和密封儲存路線。",
+        "gameplayRole": "在 NiceChunk 中，鍅會作為碱金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Ra": {
-        "short": "鐳是 NiceChunk 材料和鍛造詞彙表中的碱土金屬資源基礎，可用於矿物、陶瓷、結構化合物、合金和生物矿物循环。",
-        "gameplayRole": "在 NiceChunk 中，鐳會作為碱土金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鐳是 NiceChunk 材料和鍛造詞彙表中的碱土金屬資源基礎，可用於矿物、陶瓷、結構化合物、合金和生物矿物循環。",
+        "gameplayRole": "在 NiceChunk 中，鐳會作為碱土金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Ac": {
-        "short": "錒是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系统、屏蔽研究和終局危險材料。",
-        "gameplayRole": "在 NiceChunk 中，錒會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "錒是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系統、屏蔽研究和終局危險材料。",
+        "gameplayRole": "在 NiceChunk 中，錒會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Th": {
-        "short": "釷是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系统、屏蔽研究和終局危險材料。",
-        "gameplayRole": "在 NiceChunk 中，釷會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "釷是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系統、屏蔽研究和終局危險材料。",
+        "gameplayRole": "在 NiceChunk 中，釷會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Pa": {
-        "short": "鏷是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系统、屏蔽研究和終局危險材料。",
-        "gameplayRole": "在 NiceChunk 中，鏷會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鏷是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系統、屏蔽研究和終局危險材料。",
+        "gameplayRole": "在 NiceChunk 中，鏷會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "U": {
-        "short": "鈾是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核燃料、輻射系统、終局能源和屏蔽工业鏈。",
-        "gameplayRole": "在 NiceChunk 中，鈾會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鈾是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核燃料、輻射系統、終局能源和屏蔽工业鏈。",
+        "gameplayRole": "在 NiceChunk 中，鈾會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Np": {
-        "short": "錼是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系统、屏蔽研究和終局危險材料。",
-        "gameplayRole": "在 NiceChunk 中，錼會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "錼是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系統、屏蔽研究和終局危險材料。",
+        "gameplayRole": "在 NiceChunk 中，錼會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Pu": {
-        "short": "鈽是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於反應爐燃料、禁忌武器研究、高風險能源循环和後期協議材料。",
-        "gameplayRole": "在 NiceChunk 中，鈽會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鈽是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於反應堆燃料、禁忌武器研究、高風險能源循環和後期協議材料。",
+        "gameplayRole": "在 NiceChunk 中，鈽會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Am": {
-        "short": "鋂是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系统、屏蔽研究和終局危險材料。",
-        "gameplayRole": "在 NiceChunk 中，鋂會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鋂是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系統、屏蔽研究和終局危險材料。",
+        "gameplayRole": "在 NiceChunk 中，鋂會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Cm": {
-        "short": "鋦是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系统、屏蔽研究和終局危險材料。",
-        "gameplayRole": "在 NiceChunk 中，鋦會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鋦是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系統、屏蔽研究和終局危險材料。",
+        "gameplayRole": "在 NiceChunk 中，鋦會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Bk": {
-        "short": "鉳是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系统、屏蔽研究和終局危險材料。",
-        "gameplayRole": "在 NiceChunk 中，鉳會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鉳是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系統、屏蔽研究和終局危險材料。",
+        "gameplayRole": "在 NiceChunk 中，鉳會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Cf": {
-        "short": "鉲是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系统、屏蔽研究和終局危險材料。",
-        "gameplayRole": "在 NiceChunk 中，鉲會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鉲是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系統、屏蔽研究和終局危險材料。",
+        "gameplayRole": "在 NiceChunk 中，鉲會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Es": {
-        "short": "鑀是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系统、屏蔽研究和終局危險材料。",
-        "gameplayRole": "在 NiceChunk 中，鑀會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鑀是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系統、屏蔽研究和終局危險材料。",
+        "gameplayRole": "在 NiceChunk 中，鑀會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Fm": {
-        "short": "鐨是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系统、屏蔽研究和終局危險材料。",
-        "gameplayRole": "在 NiceChunk 中，鐨會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鐨是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系統、屏蔽研究和終局危險材料。",
+        "gameplayRole": "在 NiceChunk 中，鐨會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Md": {
-        "short": "鍆是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系统、屏蔽研究和終局危險材料。",
-        "gameplayRole": "在 NiceChunk 中，鍆會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鍆是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系統、屏蔽研究和終局危險材料。",
+        "gameplayRole": "在 NiceChunk 中，鍆會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "No": {
-        "short": "鍩是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系统、屏蔽研究和終局危險材料。",
-        "gameplayRole": "在 NiceChunk 中，鍩會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鍩是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系統、屏蔽研究和終局危險材料。",
+        "gameplayRole": "在 NiceChunk 中，鍩會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Lr": {
-        "short": "鐒是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系统、屏蔽研究和終局危險材料。",
-        "gameplayRole": "在 NiceChunk 中，鐒會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鐒是 NiceChunk 材料和鍛造詞彙表中的錒系元素資源基礎，可用於核能、輻射系統、屏蔽研究和終局危險材料。",
+        "gameplayRole": "在 NiceChunk 中，鐒會作為錒系元素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Rf": {
-        "short": "𬬻是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，𬬻會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "𬬻是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，𬬻會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Db": {
-        "short": "𬭊是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，𬭊會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "𬭊是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，𬭊會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Sg": {
-        "short": "𬭳是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，𬭳會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "𬭳是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，𬭳會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Bh": {
-        "short": "𬭛是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，𬭛會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "𬭛是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，𬭛會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Hs": {
-        "short": "𬭶是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，𬭶會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "𬭶是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，𬭶會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Mt": {
-        "short": "鿏是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，鿏會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鿏是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，鿏會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Ds": {
-        "short": "𫟼是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，𫟼會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "𫟼是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，𫟼會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Rg": {
-        "short": "𬬭是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，𬬭會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "𬬭是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，𬬭會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Cn": {
-        "short": "鎶是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系统。",
-        "gameplayRole": "在 NiceChunk 中，鎶會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鎶是 NiceChunk 材料和鍛造詞彙表中的过渡金屬資源基礎，可用於工业機器、武器、工具、合金、結構部件和導電系統。",
+        "gameplayRole": "在 NiceChunk 中，鎶會作為过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Nh": {
         "short": "鉨是 NiceChunk 材料和鍛造詞彙表中的後过渡金屬資源基礎，可用於特殊合金、軟金屬、屏蔽、低熔點配方和電子材料。",
-        "gameplayRole": "在 NiceChunk 中，鉨會作為後过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鉨會作為後过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Fl": {
         "short": "鈇是 NiceChunk 材料和鍛造詞彙表中的後过渡金屬資源基礎，可用於特殊合金、軟金屬、屏蔽、低熔點配方和電子材料。",
-        "gameplayRole": "在 NiceChunk 中，鈇會作為後过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鈇會作為後过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Mc": {
         "short": "鏌是 NiceChunk 材料和鍛造詞彙表中的後过渡金屬資源基礎，可用於特殊合金、軟金屬、屏蔽、低熔點配方和電子材料。",
-        "gameplayRole": "在 NiceChunk 中，鏌會作為後过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鏌會作為後过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Lv": {
         "short": "鉝是 NiceChunk 材料和鍛造詞彙表中的後过渡金屬資源基礎，可用於特殊合金、軟金屬、屏蔽、低熔點配方和電子材料。",
-        "gameplayRole": "在 NiceChunk 中，鉝會作為後过渡金屬材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "gameplayRole": "在 NiceChunk 中，鉝會作為後过渡金屬材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Ts": {
-        "short": "鿬是 NiceChunk 材料和鍛造詞彙表中的卤素資源基礎，可用於腐蝕化學、鹽類、蝕刻、毒性武器和高風險工业反应。",
-        "gameplayRole": "在 NiceChunk 中，鿬會作為卤素材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鿬是 NiceChunk 材料和鍛造詞彙表中的卤素資源基礎，可用於腐蝕化學、鹽類、蝕刻、毒性武器和高風險工业反應。",
+        "gameplayRole": "在 NiceChunk 中，鿬會作為卤素材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       },
       "Og": {
-        "short": "鿫是 NiceChunk 材料和鍛造詞彙表中的稀有氣體資源基礎，可用於不穩定的終局世界規則碎片、放射性异常和實驗性協議材料。",
-        "gameplayRole": "在 NiceChunk 中，鿫會作為稀有氣體材料參與平衡：它定義加工路線、合成親和、視覺資源基因，以及玩家在種子 Chunk 中發現它时面對的價值与風險。"
+        "short": "鿫是 NiceChunk 材料和鍛造詞彙表中的稀有氣體資源基礎，可用於不穩定的終局世界規則碎片、放射性異常和實驗性協議材料。",
+        "gameplayRole": "在 NiceChunk 中，鿫會作為稀有氣體材料參與平衡：它定義加工路線、合成親和、視觉資源基因，以及玩家在種子 Chunk 中發現它時面對的價值與風險。"
       }
     },
     "process": {
@@ -2908,7 +4314,7 @@
       "roadbook": "路书",
       "world": "世界",
       "worldRules": "世界規則",
-      "economy": "经济",
+      "economy": "經濟",
       "fairness": "公平",
       "resources": "資源",
       "elements": "元素",
@@ -2925,10 +4331,10 @@
       "resourceRules": "資源規則",
       "eyebrow": "元素資源基礎",
       "heading": "元素會成為資源。",
-      "body": "NiceChunk 使用 118 個真實化學元素作為未來資源、鍛造、材質視覺和可驗证遊戲規則的公開詞彙。",
+      "body": "NiceChunk 使用 118 個真實化學元素作為未來資源、鍛造、材質視觉和可驗證遊戲規則的公開詞彙。",
       "statsAria": "元素模型狀態",
       "tableEyebrow": "週期表接口",
-      "tableTitle": "開放元素地图",
+      "tableTitle": "開放元素地圖",
       "filterAria": "元素分類篩選",
       "filterAll": "全部",
       "protocolAria": "元素協議說明",
@@ -2942,19 +4348,19 @@
       "protocol": {
         "resourceGene": {
           "title": "資源基因",
-          "body": "每個元素都可以成為挖掘掉落、方塊配方和未來資產元數據里的確定性材料身份。"
+          "body": "每個元素都可以成為挖掘掉落、方塊配方和未來資產元資料裡的確定性材料身份。"
         },
         "forgingInput": {
-          "title": "鍛造输入",
-          "body": "原子和物理特征會映射到未來的加工等級、温度要求、風險和工站逻辑。"
+          "title": "鍛造輸入",
+          "body": "原子和物理特征會映射到未來的加工等級、温度要求、風險和工站邏輯。"
         },
         "visualGene": {
-          "title": "視覺基因",
+          "title": "視觉基因",
           "body": "顏色、金屬度、粗糙度、發光、矿脈、顆粒和裂紋等特征可以驅動體素材質表現。"
         },
         "verification": {
-          "title": "公開驗证",
-          "body": "这张表會作為公開規則數據，讓玩家在鏈上提交前檢查資源如何被分類。"
+          "title": "公開驗證",
+          "body": "这张表會作為公開規則資料，讓玩家在鏈上提交前檢查資源如何被分類。"
         }
       },
       "tableAria": "化學元素週期表",
@@ -2965,18 +4371,18 @@
       "detailListAria": "元素詳情列表",
       "elementAria": "{name}，符号 {symbol}，原子序數 {atomicNumber}",
       "detailHeading": "{name} ({symbol})",
-      "summary": "{name} 是第 {atomicNumber} 号元素。在 NiceChunk 里，它代表一种{category}資源，未來可以通过破坏方塊發現，并進入方塊構造規則。",
+      "summary": "{name} 是第 {atomicNumber} 号元素。在 NiceChunk 裡，它代表一种{category}資源，未來可以通過破壞方塊發現，並進入方塊構造規則。",
       "blockValue": "{block} 区塊",
       "processingTitle": "加工要求",
-      "constructionHint": "{name} 可以作為基礎{category}组件，在未來配方里參與構造新的可放置方塊。"
+      "constructionHint": "{name} 可以作為基礎{category}组件，在未來配方裡參與構造新的可放置方塊。"
     },
     "detail": {
       "back": "返回元素表",
       "documentTitle": "NiceChunk 元素档案 | {symbol} {name}",
       "missingTitle": "NiceChunk 元素档案 | {symbol}",
       "fileEyebrow": "元素档案",
-      "missingZh": "这個元素档案暂时不存在。",
-      "missingEn": "这個元素档案暂时不存在。",
+      "missingZh": "這個元素档案暂時不存在。",
+      "missingEn": "這個元素档案暂時不存在。",
       "yes": "是",
       "no": "否",
       "notAvailable": "未知",
@@ -2988,7 +4394,7 @@
         "game": "遊戲屬性",
         "processing": "加工屬性",
         "affinity": "合成傾向",
-        "visualGene": "視覺基因",
+        "visualGene": "視觉基因",
         "description": "資源說明"
       },
       "field": {
@@ -3025,8 +4431,8 @@
         "magnetism": "磁性",
         "transparencyTendency": "透明傾向",
         "electronegativity": "電负性",
-        "reactivity": "反应性",
-        "stability": "稳定性",
+        "reactivity": "反應性",
+        "stability": "穩定性",
         "oxidationTendency": "氧化傾向",
         "corrosiveness": "腐蝕性",
         "toxicity": "毒性",
@@ -3093,7 +4499,7 @@
         "metallic": "金屬度",
         "roughness": "粗糙度",
         "transparency": "透明度",
-        "emissionStrength": "發光强度",
+        "emissionStrength": "發光強度",
         "grain": "顆粒感",
         "scratchDensity": "劃痕密度",
         "veinDensity": "矿脈密度",
@@ -3144,14 +4550,14 @@
       "station": {
         "separator": "分离器",
         "cryogenicTrap": "低溫捕集器",
-        "stabilizer": "稳定器",
+        "stabilizer": "穩定器",
         "kiln": "窑爐",
         "refiner": "精煉器",
-        "sealedReactor": "密封反应器",
+        "sealedReactor": "密封反應器",
         "smelter": "熔煉爐",
         "alloyForge": "合金鍛爐",
         "magneticSeparator": "磁選器",
-        "shieldedReactor": "屏蔽反应器"
+        "shieldedReactor": "屏蔽反應器"
       },
       "heat": {
         "low": "低溫",
@@ -3161,7 +4567,7 @@
       },
       "binder": {
         "none": "不需要粘結剂",
-        "pressureCell": "压力舱",
+        "pressureCell": "壓力舱",
         "sealedCapsule": "密封胶囊",
         "flux": "助熔剂",
         "silicateMatrix": "矽酸盐基質",
@@ -3280,6 +4686,7 @@
       "hit": "面已壓縮",
       "gripSet": "握把已設定",
       "gripTooLarge": "截面大於手掌尺寸",
+      "gripBlocked": "握把會與角色碰撞",
       "sawCut": "切口加深",
       "sawComplete": "切口已打開",
       "drillCut": "孔洞加深",

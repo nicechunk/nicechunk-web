@@ -4,24 +4,15 @@ import { basename, dirname, resolve } from "node:path";
 import { decodeNcm, voxToNcm } from "../src/vox/ncm.js";
 
 const args = process.argv.slice(2);
-const input = args.find((arg) => !arg.startsWith("--"));
+const { input, options } = parseArgs(args);
 if (!input) {
   console.error("Usage: node scripts/vox-to-ncm.mjs input.vox --out output.ncm --json output.json --mode merge --height 300");
   process.exit(1);
 }
 
-const options = Object.fromEntries(
-  args
-    .filter((arg) => arg.startsWith("--"))
-    .map((arg) => {
-      const [key, value = "1"] = arg.slice(2).split("=");
-      return [key, value];
-    }),
-);
-
 const inputPath = resolve(input);
 const mode = options.mode === "raw" ? "raw" : "merge";
-const targetHeight = Number(options.height) || 300;
+const targetHeight = normalizeHeight(options.height);
 const outputPath = resolve(options.out || inputPath.replace(/\.vox$/i, ".ncm"));
 const jsonPath = options.json ? resolve(options.json) : "";
 const bytes = await readFile(inputPath);
@@ -53,3 +44,34 @@ console.log(
     2,
   ),
 );
+
+function parseArgs(argv) {
+  const options = {};
+  let input = "";
+  for (let index = 0; index < argv.length; index++) {
+    const arg = argv[index];
+    if (!arg.startsWith("--")) {
+      input ||= arg;
+      continue;
+    }
+    const [rawKey, inlineValue] = arg.slice(2).split("=", 2);
+    const nextValue = argv[index + 1];
+    if (inlineValue !== undefined) {
+      options[rawKey] = inlineValue;
+      continue;
+    }
+    if (nextValue && !nextValue.startsWith("--")) {
+      options[rawKey] = nextValue;
+      index++;
+      continue;
+    }
+    options[rawKey] = "1";
+  }
+  return { input, options };
+}
+
+function normalizeHeight(value) {
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed) || parsed <= 0) return 300;
+  return Math.max(80, Math.min(900, Math.round(parsed)));
+}

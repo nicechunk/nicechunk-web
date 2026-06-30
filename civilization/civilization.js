@@ -948,25 +948,6 @@ function renderChallengeDesk() {
   );
 }
 
-function renderChallengeDesk() {
-  challengeStack?.replaceChildren(
-    sectionMiniTitle("civilization.challenge.stackTitle"),
-    ...challengeChecks.map((key) => checkCard(t(`civilization.challenge.checks.${key}`))),
-  );
-  challengeGrid?.replaceChildren(
-    ...challengeStages.map((stage, index) => {
-      const card = document.createElement("article");
-      card.className = `challenge-card ${stage.id}`;
-      card.innerHTML = "<span></span><strong></strong><p></p><code></code>";
-      card.querySelector("span").textContent = String(index + 1).padStart(2, "0");
-      card.querySelector("strong").textContent = t(`civilization.challenge.stages.${stage.id}.title`);
-      card.querySelector("p").textContent = t(`civilization.challenge.stages.${stage.id}.body`);
-      card.querySelector("code").textContent = stage.proof;
-      return card;
-    }),
-  );
-}
-
 function renderRuleLifecycleTimeline() {
   timelineTarget?.replaceChildren(
     ...lifecycleSteps.map((step, index) => {
@@ -1756,36 +1737,6 @@ function createChallengeDiagram() {
   addSvgBadge(svg, 490, 184, t("civilization.diagrams.challenge.badges.lock"));
   addSvgBadge(svg, 704, 188, t("civilization.diagrams.challenge.badges.verdict"));
   addSvgBadge(svg, 500, 368, t("civilization.diagrams.challenge.badges.replay"));
-  return svg;
-}
-
-function createChallengeDiagram() {
-  const svg = createSvg("0 0 920 430", "civilization-flow-svg challenge-svg");
-  const markerId = addDefs(svg);
-  addGrid(svg, 920, 430);
-  const nodes = [
-    ["detect", 46, 70, 138, 64, "red"],
-    ["evidence", 244, 70, 154, 64, "blue"],
-    ["file", 458, 70, 142, 64, "gold"],
-    ["pause", 660, 70, 160, 64, "red"],
-    ["resolve", 358, 270, 160, 68, "green"],
-    ["learn", 604, 270, 160, 68, "blue"],
-  ];
-  nodes.forEach(([key, x, y, width, height, tone]) => {
-    addSvgNode(svg, x, y, width, height, t(`civilization.diagrams.challenge.nodes.${key}`), tone);
-  });
-  addArrow(svg, markerId, 184, 102, 244, 102);
-  addArrow(svg, markerId, 398, 102, 458, 102);
-  addArrow(svg, markerId, 600, 102, 660, 102);
-  addArrow(svg, markerId, 740, 134, 518, 270);
-  addArrow(svg, markerId, 518, 304, 604, 304);
-  addArrow(svg, markerId, 438, 270, 318, 134);
-  addSvgBadge(svg, 54, 166, t("civilization.diagrams.challenge.badges.suspicion"));
-  addSvgBadge(svg, 242, 166, t("civilization.diagrams.challenge.badges.hash"));
-  addSvgBadge(svg, 454, 166, t("civilization.diagrams.challenge.badges.pda"));
-  addSvgBadge(svg, 642, 166, t("civilization.diagrams.challenge.badges.lock"));
-  addSvgBadge(svg, 352, 362, t("civilization.diagrams.challenge.badges.reason"));
-  addSvgBadge(svg, 590, 362, t("civilization.diagrams.challenge.badges.replay"));
   return svg;
 }
 

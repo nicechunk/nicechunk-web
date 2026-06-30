@@ -596,6 +596,9 @@ const validatorRules = [
 
 const heroLedger = document.querySelector("#heroLedger");
 const civilizationToc = document.querySelector("#civilizationToc");
+const civilizationGlossaryDiagram = document.querySelector("#civilizationGlossaryDiagram");
+const glossaryStack = document.querySelector("#glossaryStack");
+const glossaryGrid = document.querySelector("#glossaryGrid");
 const civilizationConceptCards = document.querySelector("#civilizationConceptCards");
 const civilizationSystemDiagram = document.querySelector("#civilizationSystemDiagram");
 const civilizationReaderDiagram = document.querySelector("#civilizationReaderDiagram");
@@ -683,6 +686,7 @@ function renderCivilizationPage() {
   document.title = t("civilization.meta.title");
   renderHeroLedger();
   renderDirectory();
+  renderGlossary();
   renderConceptCards();
   renderSvgDiagrams();
   renderReaderGuide();
@@ -735,6 +739,25 @@ function renderDirectory() {
       link.querySelector("strong").textContent = t(`civilization.toc.items.${item.id}.title`);
       link.querySelector("p").textContent = t(`civilization.toc.items.${item.id}.body`);
       return link;
+    }),
+  );
+}
+
+function renderGlossary() {
+  glossaryStack?.replaceChildren(
+    sectionMiniTitle("civilization.glossary.stackTitle"),
+    ...glossaryChecks.map((key) => checkCard(t(`civilization.glossary.checks.${key}`))),
+  );
+  glossaryGrid?.replaceChildren(
+    ...glossaryTerms.map((term) => {
+      const card = document.createElement("article");
+      card.className = `glossary-card ${term.id}`;
+      card.innerHTML = "<span></span><strong></strong><p></p><code></code>";
+      card.querySelector("span").textContent = t(`civilization.glossary.terms.${term.id}.label`);
+      card.querySelector("strong").textContent = t(`civilization.glossary.terms.${term.id}.title`);
+      card.querySelector("p").textContent = t(`civilization.glossary.terms.${term.id}.body`);
+      card.querySelector("code").textContent = term.proof;
+      return card;
     }),
   );
 }
@@ -1027,6 +1050,7 @@ function renderRuleModulesGrid() {
 
 function renderSvgDiagrams() {
   civilizationSystemDiagram?.replaceChildren(createSystemDiagram());
+  civilizationGlossaryDiagram?.replaceChildren(createGlossaryDiagram());
   civilizationReaderDiagram?.replaceChildren(createReaderGuideDiagram());
   civilizationJourneyDiagram?.replaceChildren(createJourneyDiagram());
   civilizationClassifierDiagram?.replaceChildren(createClassifierDiagram());
@@ -1480,6 +1504,35 @@ function createSystemDiagram() {
   addSvgBadge(svg, 328, 148, t("civilization.diagrams.system.badges.hashes"));
   addSvgBadge(svg, 70, 208, t("civilization.diagrams.system.badges.snapshot"));
   addSvgBadge(svg, 566, 328, t("civilization.diagrams.system.badges.pdaWrite"));
+  return svg;
+}
+
+function createGlossaryDiagram() {
+  const svg = createSvg("0 0 920 390", "civilization-flow-svg glossary-svg");
+  const markerId = addDefs(svg);
+  addGrid(svg, 920, 390);
+  const nodes = [
+    ["plain", 54, 82, 150, 66, "green"],
+    ["term", 276, 82, 150, 66, "blue"],
+    ["proof", 498, 82, 164, 66, "gold"],
+    ["replay", 734, 82, 132, 66, "green"],
+    ["mistake", 276, 238, 150, 62, "red"],
+    ["reject", 498, 238, 164, 62, "red"],
+  ];
+  nodes.forEach(([key, x, y, width, height, tone]) => {
+    addSvgNode(svg, x, y, width, height, t(`civilization.diagrams.glossary.nodes.${key}`), tone);
+  });
+  addArrow(svg, markerId, 204, 115, 276, 115);
+  addArrow(svg, markerId, 426, 115, 498, 115);
+  addArrow(svg, markerId, 662, 115, 734, 115);
+  addArrow(svg, markerId, 350, 148, 350, 238);
+  addArrow(svg, markerId, 426, 270, 498, 270);
+  addArrow(svg, markerId, 580, 238, 580, 148);
+  addSvgBadge(svg, 58, 180, t("civilization.diagrams.glossary.badges.player"));
+  addSvgBadge(svg, 268, 180, t("civilization.diagrams.glossary.badges.dictionary"));
+  addSvgBadge(svg, 492, 180, t("civilization.diagrams.glossary.badges.account"));
+  addSvgBadge(svg, 700, 180, t("civilization.diagrams.glossary.badges.audit"));
+  addSvgBadge(svg, 290, 324, t("civilization.diagrams.glossary.badges.noVagueWords"));
   return svg;
 }
 

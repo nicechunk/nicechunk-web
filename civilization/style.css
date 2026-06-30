@@ -460,6 +460,13 @@ h3 {
   align-items: start;
 }
 
+.glossary-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.98fr) minmax(320px, 0.5fr);
+  gap: 18px;
+  align-items: start;
+}
+
 .reputation-layout {
   display: grid;
   grid-template-columns: minmax(0, 0.98fr) minmax(320px, 0.5fr);
@@ -643,6 +650,11 @@ h3 {
   margin-top: 16px;
 }
 
+.glossary-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
 .impact-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 16px;
@@ -703,6 +715,8 @@ h3 {
 .case-summary-panel,
 .case-view-card,
 .case-evidence-card,
+.glossary-stack,
+.glossary-card,
 .impact-stack,
 .impact-card,
 .reputation-stack,
@@ -740,6 +754,7 @@ h3 {
 .classifier-card span,
 .case-view-card span,
 .case-evidence-card span,
+.glossary-card span,
 .impact-card span,
 .reputation-card span,
 .transparency-card span,
@@ -772,6 +787,7 @@ h3 {
 .threat-card strong,
 .classifier-card strong,
 .case-evidence-card strong,
+.glossary-card strong,
 .impact-card strong,
 .reputation-card strong,
 .transparency-card strong,
@@ -799,6 +815,7 @@ h3 {
 .classifier-card p,
 .case-view-card p,
 .case-evidence-card p,
+.glossary-card p,
 .impact-card p,
 .reputation-card p,
 .transparency-card p,
@@ -924,6 +941,44 @@ h3 {
   border: 1px solid rgba(140, 255, 0, 0.12);
   border-radius: 6px;
   background: rgba(0, 0, 0, 0.22);
+}
+
+.glossary-stack {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.glossary-card span {
+  color: var(--civ-green);
+  border-color: rgba(140, 255, 0, 0.2);
+  background: rgba(140, 255, 0, 0.055);
+}
+
+.glossary-card:nth-child(2n) span {
+  color: var(--civ-blue);
+  border-color: rgba(152, 203, 255, 0.2);
+  background: rgba(152, 203, 255, 0.055);
+}
+
+.glossary-card:nth-child(3n) span {
+  color: var(--civ-gold);
+  border-color: rgba(255, 211, 110, 0.2);
+  background: rgba(255, 211, 110, 0.055);
+}
+
+.glossary-card code {
+  display: block;
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid rgba(152, 203, 255, 0.13);
+  border-radius: 6px;
+  color: var(--civ-green);
+  background: rgba(0, 0, 0, 0.22);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
 }
 
 .impact-stack {
@@ -2431,6 +2486,7 @@ h3 {
   .warning-section,
   .power-layout,
   .concept-layout,
+  .glossary-layout,
   .reader-layout,
   .journey-layout,
   .threat-layout,
@@ -2468,6 +2524,7 @@ h3 {
   .classifier-grid,
   .case-view-grid,
   .case-evidence-grid,
+  .glossary-grid,
   .impact-grid,
   .reputation-grid,
   .transparency-grid,

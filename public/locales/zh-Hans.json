@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hans",
     "label": "Simplified Chinese",
-    "version": "locale-zh-Hans-f3dc6fef6eacddd9",
-    "contentHash": "f3dc6fef6eacddd9"
+    "version": "locale-zh-Hans-1d6f4e55eee5e540",
+    "contentHash": "1d6f4e55eee5e540"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -1334,6 +1334,10 @@
       "title": "进入完整文明法典之前，先选择阅读路径。",
       "body": "这个页面故意讲得很深。你可以通过目录在新手解释、规则安全、签署影响、文明权重、执行证明、PDA 透明和未来文明设定之间快速跳转。",
       "items": {
+        "termDecoder": {
+          "title": "术语解码器",
+          "body": "把黑话翻译成白话含义和证明对象。"
+        },
         "plainModel": {
           "title": "白话模型",
           "body": "先把文明层理解成公开规则引擎。"
@@ -1381,6 +1385,51 @@
         "buildSpec": {
           "title": "构建规格",
           "body": "把本页当作后续编码实现说明。"
+        }
+      }
+    },
+    "glossary": {
+      "eyebrow": "术语解码器",
+      "title": "同一批词，既要能读成玩家承诺，也要能读成技术证据。",
+      "body": "文明系统更容易被信任，是因为每个重要词在页面上都有两层含义：给玩家看的白话解释，以及给审查者看的具体证明对象。",
+      "stackTitle": "如何不靠猜测阅读技术词",
+      "checks": {
+        "plainFirst": "先看玩家承诺：这个词在玩法里到底是什么意思？",
+        "proofSecond": "再看证明对象：账户、哈希、快照、校验器或事件。",
+        "sameIdentity": "保持白话词和证明对象绑定到同一个规则身份。",
+        "replayable": "让术语可重放，另一个读者也能重新计算同一个答案。",
+        "shareable": "暴露足够细节，让链接、截图或解码账户面板能证明这句声明。"
+      },
+      "terms": {
+        "ruleBook": {
+          "label": "规则书",
+          "title": "公开提案，不是聊天消息。",
+          "body": "对玩家来说，它是要阅读的可懂法则；对审计者来说，它是绑定文本、补丁、作者、风险、门槛和流程状态的账户。"
+        },
+        "pda": {
+          "label": "PDA",
+          "title": "地址可预测的公开账户。",
+          "body": "页面应该把每个 PDA 当成可验证货架：规则、签名、配置、收据和挑战都能从里面解码。"
+        },
+        "hash": {
+          "label": "哈希",
+          "title": "文本或机器补丁字节的指纹。",
+          "body": "如果可读规则或补丁发生变化，哈希也会变化。签署者因此能确认自己正在审查同一个对象。"
+        },
+        "snapshot": {
+          "label": "快照",
+          "title": "某个纪元被冻结的公民权重视图。",
+          "body": "快照防止临时账户移动改写一条已发布规则背后的权重。"
+        },
+        "validator": {
+          "label": "校验器",
+          "title": "写入前的确定性安全闸门。",
+          "body": "校验器解析补丁，检查范围和守恒，并在任何配置 PDA 被写入之前拒绝危险变更。"
+        },
+        "event": {
+          "label": "事件",
+          "title": "执行或拒绝后的公开收据。",
+          "body": "事件让索引器和玩家看到发生了什么、为什么发生，以及哪个规则身份产生了结果。"
         }
       }
     },
@@ -1567,6 +1616,25 @@
           "hashes": "text_hash + patch_hash",
           "snapshot": "纪元权重快照",
           "pdaWrite": "可审计状态变更"
+        }
+      },
+      "glossary": {
+        "title": "白话词到证明对象映射",
+        "caption": "读者可以从简单语言移动到精确账户、哈希、快照、校验器或事件，看到它如何被证明。",
+        "nodes": {
+          "plain": "白话承诺",
+          "term": "共享术语",
+          "proof": "证明对象",
+          "replay": "可重放答案",
+          "mistake": "模糊词语",
+          "reject": "要求证据"
+        },
+        "badges": {
+          "player": "玩家含义",
+          "dictionary": "同一套词典",
+          "account": "账户、哈希、事件",
+          "audit": "审计者可重放",
+          "noVagueWords": "不靠口号建立信任"
         }
       },
       "readerGuide": {

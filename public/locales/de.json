@@ -2,8 +2,8 @@
   "_meta": {
     "language": "de",
     "label": "German",
-    "version": "locale-de-789db8473098531f",
-    "contentHash": "789db8473098531f"
+    "version": "locale-de-9559c593c4528d54",
+    "contentHash": "9559c593c4528d54"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -1289,6 +1289,10 @@
       "title": "Choose a reading path before entering the full civilization codex.",
       "body": "The page is intentionally deep. Use this directory to jump between beginner explanations, rule safety, signing impact, civic power, execution proofs, PDA transparency, and future civilization design.",
       "items": {
+        "termDecoder": {
+          "title": "Term Decoder",
+          "body": "Translate jargon into plain meaning and proof objects."
+        },
         "plainModel": {
           "title": "Plain Model",
           "body": "Understand the civilization layer as a public rule engine."
@@ -1336,6 +1340,51 @@
         "buildSpec": {
           "title": "Build Spec",
           "body": "Use the page as an implementation brief for coding."
+        }
+      }
+    },
+    "glossary": {
+      "eyebrow": "Term Decoder",
+      "title": "The same words should be readable as player promises and technical evidence.",
+      "body": "Civilization becomes easier to trust when every important word has two meanings on the page: a plain explanation for players and a concrete proof object for reviewers.",
+      "stackTitle": "How to read technical words without guessing",
+      "checks": {
+        "plainFirst": "Start with the player promise: what does this word mean in gameplay?",
+        "proofSecond": "Then show the proof object: account, hash, snapshot, validator, or event.",
+        "sameIdentity": "Keep the plain word and the proof object bound to the same rule identity.",
+        "replayable": "Make the term replayable so another reader can recompute the same answer.",
+        "shareable": "Expose enough detail for a link, screenshot, or decoded account panel to prove the claim."
+      },
+      "terms": {
+        "ruleBook": {
+          "label": "Rule Book",
+          "title": "A public proposal, not a chat message.",
+          "body": "For players, it is the readable law they review. For auditors, it is the account that binds text, patch, author, risk, threshold, and lifecycle state."
+        },
+        "pda": {
+          "label": "PDA",
+          "title": "A public account with a predictable address.",
+          "body": "The page should treat each PDA as a verifiable shelf where rules, signatures, configs, receipts, and challenges can be decoded."
+        },
+        "hash": {
+          "label": "Hash",
+          "title": "A fingerprint for text or machine patch bytes.",
+          "body": "If a readable rule or patch changes, its hash changes. That lets signers verify they are reviewing the exact same object."
+        },
+        "snapshot": {
+          "label": "Snapshot",
+          "title": "A frozen view of citizen power at one epoch.",
+          "body": "Snapshots stop last-minute account movement from changing the weight behind an already published rule."
+        },
+        "validator": {
+          "label": "Validator",
+          "title": "The deterministic safety gate before writes.",
+          "body": "The validator parses the patch, checks scope and conservation, and rejects unsafe changes before any config PDA is written."
+        },
+        "event": {
+          "label": "Event",
+          "title": "The public receipt after execution or rejection.",
+          "body": "Events let indexers and players see what happened, why it happened, and which rule identity produced the result."
         }
       }
     },
@@ -1522,6 +1571,25 @@
           "hashes": "text_hash + patch_hash",
           "snapshot": "epoch power snapshot",
           "pdaWrite": "auditable state change"
+        }
+      },
+      "glossary": {
+        "title": "Plain word to proof object map",
+        "caption": "A reader can move from simple language to the exact account, hash, snapshot, validator, or event that proves it.",
+        "nodes": {
+          "plain": "Plain promise",
+          "term": "Shared term",
+          "proof": "Proof object",
+          "replay": "Replayable answer",
+          "mistake": "Vague word",
+          "reject": "Ask for evidence"
+        },
+        "badges": {
+          "player": "player meaning",
+          "dictionary": "same vocabulary",
+          "account": "account, hash, event",
+          "audit": "auditor can replay",
+          "noVagueWords": "no trust based on slogans"
         }
       },
       "readerGuide": {

@@ -432,6 +432,14 @@
       <div class="smelting-overlay" id="smeltingOverlay" aria-hidden="true" hidden></div>
       <section class="smelting-panel" id="smeltingPanel" role="dialog" aria-modal="false" aria-labelledby="smeltingTitle" hidden>
         <div class="smelting-scanline" aria-hidden="true"></div>
+        <aside class="smelting-side-nav" aria-label="Smelting station modules">
+          <button class="active" type="button" aria-label="Player"><span class="smelting-nav-icon profile" aria-hidden="true"></span></button>
+          <button type="button" aria-label="Backpack"><span class="smelting-nav-icon inventory" aria-hidden="true"></span></button>
+          <button type="button" aria-label="Smelting"><span class="smelting-nav-icon furnace" aria-hidden="true"></span></button>
+          <button type="button" aria-label="Recipes"><span class="smelting-nav-icon recipe" aria-hidden="true"></span></button>
+          <button type="button" aria-label="Stats"><span class="smelting-nav-icon stats" aria-hidden="true"></span></button>
+          <button type="button" aria-label="Community"><span class="smelting-nav-icon social" aria-hidden="true"></span></button>
+        </aside>
         <header class="smelting-header">
           <div class="smelting-title-group">
             <span class="smelting-eyebrow" data-i18n="main.smelting.eyebrow">Forge Material Prep</span>
@@ -486,6 +494,8 @@
                 <span data-i18n="main.smelting.inputSlot">Input</span>
               </div>
               <div class="smelting-heat-core" id="smeltingHeatCore" aria-hidden="true">
+                <canvas id="smeltingFlameShader" class="smelting-flame-shader"></canvas>
+                <div id="smeltingThreeCore" class="smelting-three-core"></div>
                 <i></i>
               </div>
               <div class="smelting-slot fuel" id="smeltingFuelSlot">

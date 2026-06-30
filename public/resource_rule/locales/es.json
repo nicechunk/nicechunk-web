@@ -2,8 +2,8 @@
   "_meta": {
     "language": "es",
     "label": "Spanish",
-    "version": "resource-rule-locale-es-f43f9a7cde125902",
-    "contentHash": "f43f9a7cde125902"
+    "version": "resource-rule-locale-es-a62621ba0eb00930",
+    "contentHash": "a62621ba0eb00930"
   },
   "siteFooter": {
     "tagline": "Un protocolo de mundo voxel con semillas en Solana.",
@@ -417,6 +417,24 @@
           "description": "Sealed hazardous glass from toxic water, salt, and silica, intended for containment vessels and risk tools."
         }
       }
+    },
+    "drop": {
+      "eyebrow": "CHAIN DROP TABLE",
+      "title": "Civilization rules can add rare extra drops without growing terrain code.",
+      "body": "The canonical terrain algorithm still defines the mined base block. A compact on-chain drop table can add deterministic extra rewards by source block, altitude, depth, and seeded probability.",
+      "ruleSetLabel": "Rule set",
+      "contractBody": "This PDA is designed for the civilization system: approved proposals append bounded rule bytes instead of redeploying the mining program.",
+      "source": "Source",
+      "extraDrop": "Extra drop",
+      "chance": "Chance",
+      "size": "Drop size",
+      "altitude": "Altitude",
+      "depth": "Depth",
+      "detailTitle": "Extra drop sources",
+      "detailBody": "On chain this is designed as compact {ruleSet} bytes: source resource, probability, sample size window, altitude window, and depth window.",
+      "chanceValue": "{value}%",
+      "sizeValue": "{min} to {max}",
+      "rangeValue": "{min} to {max}"
     },
     "category": {
       "all": "Todos los bloques",

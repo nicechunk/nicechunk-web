@@ -260,7 +260,12 @@ export function equipForgedItemOnAvatar({ avatar, code, currentMesh = null, scal
   if (!itemCode) return null;
 
   const mesh = createForgedItemMesh(code);
-  const grip = mesh.userData.grip ?? new THREE.Vector3();
+  const grip = mesh.userData.grip;
+  if (!grip) {
+    mesh.geometry?.dispose?.();
+    mesh.material?.dispose?.();
+    return null;
+  }
   const handPalmAnchor = new THREE.Vector3(0, -0.8, -0.02);
   mesh.name = "equippedForgedItem";
   mesh.userData.code = itemCode;
@@ -279,9 +284,7 @@ export function equipForgedItemOnAvatar({ avatar, code, currentMesh = null, scal
 export function gripForComponents(components) {
   const explicitGrip = components.find((component) => component.gripOffset);
   if (explicitGrip) return explicitGrip.gripOffset.clone();
-  const grip = components.find((component) => component.role === "grip" || component.resourceId === "handle");
-  if (!grip) return new THREE.Vector3();
-  return grip.offset.clone();
+  return null;
 }
 
 function buildCompoundGeometry(components) {

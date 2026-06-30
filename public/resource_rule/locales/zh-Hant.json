@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hant",
     "label": "Traditional Chinese",
-    "version": "resource-rule-locale-zh-Hant-1bdeb4515dd80f2c",
-    "contentHash": "1bdeb4515dd80f2c"
+    "version": "resource-rule-locale-zh-Hant-595a022a2a4275b4",
+    "contentHash": "595a022a2a4275b4"
   },
   "siteFooter": {
     "tagline": "Solana 上的種子體素世界協議。",
@@ -417,6 +417,24 @@
           "description": "由毒水、盐和矽質沙制成的密封危險玻璃，用於封存容器和風險工具。"
         }
       }
+    },
+    "drop": {
+      "eyebrow": "CHAIN DROP TABLE",
+      "title": "Civilization rules can add rare extra drops without growing terrain code.",
+      "body": "The canonical terrain algorithm still defines the mined base block. A compact on-chain drop table can add deterministic extra rewards by source block, altitude, depth, and seeded probability.",
+      "ruleSetLabel": "Rule set",
+      "contractBody": "This PDA is designed for the civilization system: approved proposals append bounded rule bytes instead of redeploying the mining program.",
+      "source": "Source",
+      "extraDrop": "Extra drop",
+      "chance": "Chance",
+      "size": "Drop size",
+      "altitude": "Altitude",
+      "depth": "Depth",
+      "detailTitle": "Extra drop sources",
+      "detailBody": "On chain this is designed as compact {ruleSet} bytes: source resource, probability, sample size window, altitude window, and depth window.",
+      "chanceValue": "{value}%",
+      "sizeValue": "{min} to {max}",
+      "rangeValue": "{min} to {max}"
     },
     "category": {
       "all": "全部方塊",

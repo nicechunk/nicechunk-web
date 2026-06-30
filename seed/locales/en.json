@@ -1,0 +1,166 @@
+{
+  "meta": {
+    "title": "NiceChunk Seed User Campaign",
+    "description": "NiceChunk Seed User Campaign, public beta whitelist registration, wallet binding, and 100 NCK seed airdrop information."
+  },
+  "nav": {
+    "aria": "Primary navigation",
+    "register": "Register"
+  },
+  "language": {
+    "aria": "Language",
+    "active": "Active"
+  },
+  "hero": {
+    "eyebrow": "Seed User Campaign",
+    "title": "NiceChunk Seed User Campaign",
+    "subtitle": "Public Beta & Whitelist Registration is Live",
+    "body": "NiceChunk is opening its first seed user campaign for players who want to enter a fair, free, fully on-chain voxel world from the beginning.",
+    "register": "Register Whitelist",
+    "connect": "Connect Wallet",
+    "disclaimer": "Treasury pricing is displayed only as the protocol bootstrap purchase price. It is not an investment return, secondary market promise, guaranteed floor, or financial promotion."
+  },
+  "visual": {
+    "aria": "NiceChunk voxel campaign visual",
+    "label": "Whitelist route"
+  },
+  "cards": {
+    "aria": "Campaign highlights",
+    "open": {
+      "title": "Whitelist Registration Open",
+      "body": "Create a NiceChunk account and bind a Solana wallet to join the first public beta whitelist."
+    },
+    "airdrop": {
+      "title": "100 NCK Seed Airdrop",
+      "body": "The first qualified whitelist users receive 100 NCK after campaign settlement as startup capital for gameplay."
+    },
+    "price": {
+      "title": "1 NCK = 0.01 SOL Treasury Price",
+      "body": "Treasury Fixed Purchase Price for bootstrap access and protocol accounting only."
+    },
+    "chain": {
+      "title": "Fully On-Chain World",
+      "body": "Assets, gameplay commitments, and user data are designed for chain-readable ownership and verification."
+    }
+  },
+  "steps": {
+    "eyebrow": "Participation Flow",
+    "title": "Five steps from account to seed capital.",
+    "body": "Whitelist registration uses a real wallet signature and campaign registration record. The signed message proves wallet ownership without authorizing a transaction.",
+    "items": {
+      "account": "Create Account",
+      "wallet": "Bind Solana Wallet",
+      "whitelist": "Join Whitelist",
+      "settlement": "Wait for Campaign Settlement",
+      "receive": "Receive 100 NCK Startup Capital"
+    }
+  },
+  "fairness": {
+    "eyebrow": "Fair By Code",
+    "title": "A public voxel world should not depend on hidden asset servers.",
+    "body": "NiceChunk's core claim is simple: resources originate from the public world map, materials come from resource smelting, items come from material forging, and ownership should be inspectable on-chain.",
+    "items": {
+      "noIpfs": {
+        "title": "No IPFS",
+        "body": "No external gateway is required to define the source of game resources or item identity."
+      },
+      "noStorage": {
+        "title": "No Centralized Asset Storage",
+        "body": "The goal is chain-readable assets and deterministic reconstruction, not private hosted metadata."
+      },
+      "noMint": {
+        "title": "No Team-Minted Resources",
+        "body": "The team cannot create arbitrary resources or items outside the resource, smelting, and forging path."
+      },
+      "onChain": {
+        "title": "Assets / Gameplay / User Data On-Chain",
+        "body": "The important state surface is designed to be public, replayable, and wallet-owned."
+      },
+      "map": {
+        "title": "Public Fair World Map",
+        "body": "Resources originate from deterministic terrain and resource rules, not from a private inventory database."
+      }
+    }
+  },
+  "status": {
+    "eyebrow": "Live Registration",
+    "title": "Whitelist registration console.",
+    "body": "Connect a Solana wallet, sign a one-time proof, and submit your seed user registration.",
+    "walletLabel": "Wallet",
+    "notConnected": "Not connected",
+    "connect": "Connect Wallet",
+    "join": "Join Whitelist",
+    "note": "Connect a Solana wallet, sign a whitelist proof, and submit your registration.",
+    "states": [
+      {
+        "key": "wallet",
+        "label": "Wallet Connected",
+        "idle": "Connect a Solana wallet.",
+        "done": "Wallet address captured."
+      },
+      {
+        "key": "challenge",
+        "label": "Challenge Issued",
+        "idle": "Backend will issue a one-time nonce.",
+        "done": "Nonce received from API."
+      },
+      {
+        "key": "signature",
+        "label": "Signature Verified",
+        "idle": "Sign proof after wallet connection.",
+        "done": "Wallet ownership proof accepted."
+      },
+      {
+        "key": "database",
+        "label": "Registration Submitted",
+        "idle": "Registration has not been submitted yet.",
+        "done": "Registration received. Please follow campaign announcements."
+      }
+    ],
+    "noEntry": "No registration record yet",
+    "entryPrefix": "Registration",
+    "registeredMessage": "Your registration has been received. Please follow campaign announcements.",
+    "walletConnectedMessage": "Wallet connected. Sign the whitelist proof to submit your registration."
+  },
+  "rules": {
+    "eyebrow": "Campaign Rules",
+    "title": "Seed capital for the first qualified whitelist users.",
+    "body": "The first batch of qualified whitelist users will receive 100 NCK after the campaign ends. The reward is intended as initial gameplay startup capital. Final eligibility is subject to published campaign rules and anti-abuse checks.",
+    "rewardLabel": "Seed reward",
+    "priceLabel": "Treasury Bootstrap Purchase Price",
+    "scopeLabel": "Scope",
+    "scopeValue": "Public beta whitelist campaign"
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Clear answers before users connect a wallet.",
+    "items": [
+      {
+        "question": "What is NCK?",
+        "answer": "NCK is the NiceChunk game token used for early game flows, treasury bootstrap accounting, and future in-world actions. This page describes campaign utility, not investment value."
+      },
+      {
+        "question": "Why does NiceChunk say no IPFS?",
+        "answer": "NiceChunk's direction is to keep game assets and deterministic definitions chain-readable instead of depending on IPFS gateways, pinned files, or mutable metadata routes."
+      },
+      {
+        "question": "Why can't the team issue resources directly?",
+        "answer": "The resource path is designed around public world generation: resources come from the world map, materials come from smelting, and items come from forging."
+      },
+      {
+        "question": "What is the 100 NCK used for?",
+        "answer": "The seed airdrop is intended as startup capital for public beta gameplay, helping the first users test account, wallet, marketplace, resource, and crafting flows."
+      },
+      {
+        "question": "When will the airdrop be distributed?",
+        "answer": "Distribution happens after campaign settlement. Final eligibility depends on campaign rules, anti-abuse checks, and chain records."
+      }
+    ]
+  },
+  "bottom": {
+    "eyebrow": "Enter the Fully On-Chain World",
+    "title": "Join the First Seed Users.",
+    "register": "Register Whitelist",
+    "wallet": "Connect Wallet"
+  }
+}

@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ru",
     "label": "Russian",
-    "version": "locale-ru-e7ae4a1c62dd09dd",
-    "contentHash": "e7ae4a1c62dd09dd"
+    "version": "locale-ru-f5ac0d7354d9b991",
+    "contentHash": "f5ac0d7354d9b991"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -485,6 +485,7 @@
       "noFuel": "Нет подходящего топлива.",
       "selectInput": "Выберите ресурс для просмотра выхода.",
       "materialSource": "Mined material",
+      "resourceMassSize": "{mass} · {size}",
       "dropInputHint": "Drag mined materials here",
       "dropFuelHint": "Drag fuel blocks here",
       "emptySyncTitle": "Syncing backpack",
@@ -508,7 +509,10 @@
       "mixedBatch": "Mixed batch",
       "batchBasis": "{inputs} inputs / {fuels} fuels",
       "requiredHeat": "Нужный жар",
+      "servings": "Servings",
+      "outputSize": "Output size",
       "yieldRange": "Диапазон выхода",
+      "inputMass": "Масса входа {mass}",
       "quality": "Основа качества",
       "heatMet": "Tier {tier} met",
       "heatMissing": "Tier {required} required, fuel {fuel}",
@@ -545,6 +549,12 @@
       "recipeFilterAria": "Smelting recipe filters",
       "recipeProgress": "{matched}/{required} input slots matched · heat tier {tier}",
       "recipeRequirement": "{resource} {available}/{amount}",
+      "recipeServings": "Servings",
+      "recipeServingsValue": "{count}x",
+      "recipeOutputSize": "Output {size}",
+      "increaseServings": "Increase servings",
+      "decreaseServings": "Decrease servings",
+      "notReady": "Not ready",
       "selectRecipe": "Select Recipe",
       "findInputs": "Find Inputs",
       "recipeReady": "Ready",
@@ -1849,6 +1859,24 @@
         }
       }
     },
+    "drop": {
+      "eyebrow": "CHAIN DROP TABLE",
+      "title": "Civilization rules can add rare extra drops without growing terrain code.",
+      "body": "The canonical terrain algorithm still defines the mined base block. A compact on-chain drop table can add deterministic extra rewards by source block, altitude, depth, and seeded probability.",
+      "ruleSetLabel": "Rule set",
+      "contractBody": "This PDA is designed for the civilization system: approved proposals append bounded rule bytes instead of redeploying the mining program.",
+      "source": "Source",
+      "extraDrop": "Extra drop",
+      "chance": "Chance",
+      "size": "Drop size",
+      "altitude": "Altitude",
+      "depth": "Depth",
+      "detailTitle": "Extra drop sources",
+      "detailBody": "On chain this is designed as compact {ruleSet} bytes: source resource, probability, sample size window, altitude window, and depth window.",
+      "chanceValue": "{value}%",
+      "sizeValue": "{min} to {max}",
+      "rangeValue": "{min} to {max}"
+    },
     "category": {
       "all": "All Blocks",
       "terrain": "Terrain",
@@ -3122,7 +3150,7 @@
       "hammer": "Молот",
       "saw": "Пила",
       "handDrill": "Ручная дрель",
-      "carvingKnife": "Резец",
+      "grip": "Рукоять",
       "axe": "Топор",
       "sprayGun": "Горелка",
       "empty": "Пусто"
@@ -3160,6 +3188,8 @@
     "rotateX": "Поворот X",
     "rotateY": "Поворот Y",
     "rotateZ": "Поворот Z",
+    "rotateObject": "Повернуть объект",
+    "removeObject": "Удалить объект",
     "cast": "Отлить",
     "clear": "Очистить",
     "chainCodeTitle": "Код отлитого предмета",
@@ -3200,6 +3230,7 @@
       "glovesReady": "Перчатки активны",
       "sawReady": "Пила активна",
       "drillReady": "Ручная дрель активна",
+      "gripReady": "Выбор хвата активен",
       "toolPending": "Инструмент недоступен в этом режиме",
       "orbitReady": "Только вращение вида",
       "dropReady": "Положите на наковальню",
@@ -3208,6 +3239,8 @@
       "empty": "Сначала добавьте руду",
       "miss": "Грань не задета",
       "hit": "Грань сжата",
+      "gripSet": "Хват задан",
+      "gripTooLarge": "Сечение слишком велико для руки",
       "sawCut": "Пропил углублен",
       "sawComplete": "Пропил открыт",
       "drillCut": "Отверстие углублено",
@@ -3226,8 +3259,23 @@
       "invalidChainCode": "Недопустимый код цепи",
       "normalized": "Форма выровнена",
       "rotated": "Заготовка повернута",
-      "cleared": "Заготовка очищена"
-    }
+      "cleared": "Заготовка очищена",
+      "materialsSynced": "Backpack materials synced",
+      "materialLoadFailed": "Could not load backpack materials"
+    },
+    "materials": "Materials",
+    "syncMaterials": "Sync",
+    "materialList": "Material list",
+    "materialSyncing": "Syncing backpack",
+    "materialSyncingDetail": "Reading equipped backpack materials.",
+    "materialNoBackpack": "No backpack equipped",
+    "materialNoBackpackDetail": "Equip a backpack with forged materials to use this bench.",
+    "materialEmpty": "No materials",
+    "materialEmptyDetail": "Smelt mined resources into materials, then return to forging.",
+    "materialLoadFailed": "Material sync failed",
+    "materialLoadFailedDetail": "Could not read backpack materials from the chain.",
+    "materialCardDetail": "{type} · x{count}",
+    "materialFuelDetail": "Fuel · heat tier {tier} · x{count}"
   },
   "mining": {
     "title": "Добыча Nicechunk",

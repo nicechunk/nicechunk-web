@@ -2,8 +2,8 @@
   "_meta": {
     "language": "de",
     "label": "German",
-    "version": "locale-de-c708d062af640c42",
-    "contentHash": "c708d062af640c42"
+    "version": "locale-de-b78a2a28edc4ae87",
+    "contentHash": "b78a2a28edc4ae87"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -485,6 +485,7 @@
       "noFuel": "Kein passender Brennstoff im Rucksack.",
       "selectInput": "Wähle eine Ressource zur Ausgabevorschau.",
       "materialSource": "Mined material",
+      "resourceMassSize": "{mass} · {size}",
       "dropInputHint": "Drag mined materials here",
       "dropFuelHint": "Drag fuel blocks here",
       "emptySyncTitle": "Syncing backpack",
@@ -508,7 +509,10 @@
       "mixedBatch": "Mixed batch",
       "batchBasis": "{inputs} inputs / {fuels} fuels",
       "requiredHeat": "Erforderliche Hitze",
+      "servings": "Servings",
+      "outputSize": "Output size",
       "yieldRange": "Ausbeute",
+      "inputMass": "Eingabemasse {mass}",
       "quality": "Qualitätsbasis",
       "heatMet": "Tier {tier} met",
       "heatMissing": "Tier {required} required, fuel {fuel}",
@@ -545,6 +549,12 @@
       "recipeFilterAria": "Smelting recipe filters",
       "recipeProgress": "{matched}/{required} input slots matched · heat tier {tier}",
       "recipeRequirement": "{resource} {available}/{amount}",
+      "recipeServings": "Servings",
+      "recipeServingsValue": "{count}x",
+      "recipeOutputSize": "Output {size}",
+      "increaseServings": "Increase servings",
+      "decreaseServings": "Decrease servings",
+      "notReady": "Not ready",
       "selectRecipe": "Select Recipe",
       "findInputs": "Find Inputs",
       "recipeReady": "Ready",
@@ -1849,6 +1859,24 @@
         }
       }
     },
+    "drop": {
+      "eyebrow": "CHAIN DROP TABLE",
+      "title": "Civilization rules can add rare extra drops without growing terrain code.",
+      "body": "The canonical terrain algorithm still defines the mined base block. A compact on-chain drop table can add deterministic extra rewards by source block, altitude, depth, and seeded probability.",
+      "ruleSetLabel": "Rule set",
+      "contractBody": "This PDA is designed for the civilization system: approved proposals append bounded rule bytes instead of redeploying the mining program.",
+      "source": "Source",
+      "extraDrop": "Extra drop",
+      "chance": "Chance",
+      "size": "Drop size",
+      "altitude": "Altitude",
+      "depth": "Depth",
+      "detailTitle": "Extra drop sources",
+      "detailBody": "On chain this is designed as compact {ruleSet} bytes: source resource, probability, sample size window, altitude window, and depth window.",
+      "chanceValue": "{value}%",
+      "sizeValue": "{min} to {max}",
+      "rangeValue": "{min} to {max}"
+    },
     "category": {
       "all": "All Blocks",
       "terrain": "Terrain",
@@ -3122,7 +3150,7 @@
       "hammer": "Hammer",
       "saw": "Saege",
       "handDrill": "Handbohrer",
-      "carvingKnife": "Schnitzmesser",
+      "grip": "Griff",
       "axe": "Axt",
       "sprayGun": "Brenner",
       "empty": "Leer"
@@ -3160,6 +3188,8 @@
     "rotateX": "X drehen",
     "rotateY": "Y drehen",
     "rotateZ": "Z drehen",
+    "rotateObject": "Objekt drehen",
+    "removeObject": "Objekt entfernen",
     "cast": "Giessen",
     "clear": "Leeren",
     "chainCodeTitle": "Geschmiedeter Chain-Code",
@@ -3200,6 +3230,7 @@
       "glovesReady": "Handschuhe aktiv",
       "sawReady": "Saege aktiv",
       "drillReady": "Handbohrer aktiv",
+      "gripReady": "Griffauswahl aktiv",
       "toolPending": "Werkzeug in diesem Modus nicht verfuegbar",
       "orbitReady": "Nur Ansicht drehen",
       "dropReady": "Auf den Amboss legen",
@@ -3208,6 +3239,8 @@
       "empty": "Zuerst Erz hinzufuegen",
       "miss": "Keine Flaeche getroffen",
       "hit": "Flaeche komprimiert",
+      "gripSet": "Griff gesetzt",
+      "gripTooLarge": "Querschnitt ist zu gross fuer die Hand",
       "sawCut": "Schnitt vertieft",
       "sawComplete": "Schnitt geoeffnet",
       "drillCut": "Loch vertieft",
@@ -3226,8 +3259,23 @@
       "invalidChainCode": "Ungueltiger Chain-Code",
       "normalized": "Form normalisiert",
       "rotated": "Werkstueck gedreht",
-      "cleared": "Werkstueck geleert"
-    }
+      "cleared": "Werkstueck geleert",
+      "materialsSynced": "Backpack materials synced",
+      "materialLoadFailed": "Could not load backpack materials"
+    },
+    "materials": "Materials",
+    "syncMaterials": "Sync",
+    "materialList": "Material list",
+    "materialSyncing": "Syncing backpack",
+    "materialSyncingDetail": "Reading equipped backpack materials.",
+    "materialNoBackpack": "No backpack equipped",
+    "materialNoBackpackDetail": "Equip a backpack with forged materials to use this bench.",
+    "materialEmpty": "No materials",
+    "materialEmptyDetail": "Smelt mined resources into materials, then return to forging.",
+    "materialLoadFailed": "Material sync failed",
+    "materialLoadFailedDetail": "Could not read backpack materials from the chain.",
+    "materialCardDetail": "{type} · x{count}",
+    "materialFuelDetail": "Fuel · heat tier {tier} · x{count}"
   },
   "mining": {
     "title": "Nicechunk Bergbau",

@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ja",
     "label": "Japanese",
-    "version": "locale-ja-1c7d15c2b6b07f2f",
-    "contentHash": "1c7d15c2b6b07f2f"
+    "version": "locale-ja-023612a678af30bf",
+    "contentHash": "023612a678af30bf"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -485,6 +485,7 @@
       "noFuel": "対応燃料がありません。",
       "selectInput": "出力を見る資源を選択してください。",
       "materialSource": "Mined material",
+      "resourceMassSize": "{mass} · {size}",
       "dropInputHint": "Drag mined materials here",
       "dropFuelHint": "Drag fuel blocks here",
       "emptySyncTitle": "Syncing backpack",
@@ -508,7 +509,10 @@
       "mixedBatch": "Mixed batch",
       "batchBasis": "{inputs} inputs / {fuels} fuels",
       "requiredHeat": "必要熱量",
+      "servings": "Servings",
+      "outputSize": "Output size",
       "yieldRange": "産出範囲",
+      "inputMass": "入力質量 {mass}",
       "quality": "品質基準",
       "heatMet": "Tier {tier} met",
       "heatMissing": "Tier {required} required, fuel {fuel}",
@@ -545,6 +549,12 @@
       "recipeFilterAria": "Smelting recipe filters",
       "recipeProgress": "{matched}/{required} input slots matched · heat tier {tier}",
       "recipeRequirement": "{resource} {available}/{amount}",
+      "recipeServings": "Servings",
+      "recipeServingsValue": "{count}x",
+      "recipeOutputSize": "Output {size}",
+      "increaseServings": "Increase servings",
+      "decreaseServings": "Decrease servings",
+      "notReady": "Not ready",
       "selectRecipe": "Select Recipe",
       "findInputs": "Find Inputs",
       "recipeReady": "Ready",
@@ -1849,6 +1859,24 @@
         }
       }
     },
+    "drop": {
+      "eyebrow": "CHAIN DROP TABLE",
+      "title": "Civilization rules can add rare extra drops without growing terrain code.",
+      "body": "The canonical terrain algorithm still defines the mined base block. A compact on-chain drop table can add deterministic extra rewards by source block, altitude, depth, and seeded probability.",
+      "ruleSetLabel": "Rule set",
+      "contractBody": "This PDA is designed for the civilization system: approved proposals append bounded rule bytes instead of redeploying the mining program.",
+      "source": "Source",
+      "extraDrop": "Extra drop",
+      "chance": "Chance",
+      "size": "Drop size",
+      "altitude": "Altitude",
+      "depth": "Depth",
+      "detailTitle": "Extra drop sources",
+      "detailBody": "On chain this is designed as compact {ruleSet} bytes: source resource, probability, sample size window, altitude window, and depth window.",
+      "chanceValue": "{value}%",
+      "sizeValue": "{min} to {max}",
+      "rangeValue": "{min} to {max}"
+    },
     "category": {
       "all": "All Blocks",
       "terrain": "Terrain",
@@ -3122,7 +3150,7 @@
       "hammer": "ハンマー",
       "saw": "のこぎり",
       "handDrill": "ハンドドリル",
-      "carvingKnife": "彫刻刀",
+      "grip": "グリップ",
       "axe": "斧",
       "sprayGun": "バーナー",
       "empty": "空"
@@ -3160,6 +3188,8 @@
     "rotateX": "X回転",
     "rotateY": "Y回転",
     "rotateZ": "Z回転",
+    "rotateObject": "オブジェクト回転",
+    "removeObject": "オブジェクト削除",
     "cast": "鋳造",
     "clear": "クリア",
     "chainCodeTitle": "鍛造チェーンコード",
@@ -3200,6 +3230,7 @@
       "glovesReady": "手袋有効",
       "sawReady": "のこぎり有効",
       "drillReady": "ハンドドリル有効",
+      "gripReady": "グリップ選択有効",
       "toolPending": "このモードでは使用できません",
       "orbitReady": "視点回転のみ",
       "dropReady": "金床に置く",
@@ -3208,6 +3239,8 @@
       "empty": "先に鉱石を追加",
       "miss": "面に当たっていません",
       "hit": "面を圧縮",
+      "gripSet": "グリップを設定しました",
+      "gripTooLarge": "断面が手には大きすぎます",
       "sawCut": "切り込みを深くしました",
       "sawComplete": "切り込みが開きました",
       "drillCut": "穴を深くしました",
@@ -3226,8 +3259,23 @@
       "invalidChainCode": "無効なチェーンコードです",
       "normalized": "形状を整形",
       "rotated": "加工材を回転しました",
-      "cleared": "加工材をクリア"
-    }
+      "cleared": "加工材をクリア",
+      "materialsSynced": "Backpack materials synced",
+      "materialLoadFailed": "Could not load backpack materials"
+    },
+    "materials": "Materials",
+    "syncMaterials": "Sync",
+    "materialList": "Material list",
+    "materialSyncing": "Syncing backpack",
+    "materialSyncingDetail": "Reading equipped backpack materials.",
+    "materialNoBackpack": "No backpack equipped",
+    "materialNoBackpackDetail": "Equip a backpack with forged materials to use this bench.",
+    "materialEmpty": "No materials",
+    "materialEmptyDetail": "Smelt mined resources into materials, then return to forging.",
+    "materialLoadFailed": "Material sync failed",
+    "materialLoadFailedDetail": "Could not read backpack materials from the chain.",
+    "materialCardDetail": "{type} · x{count}",
+    "materialFuelDetail": "Fuel · heat tier {tier} · x{count}"
   },
   "mining": {
     "title": "Nicechunk 採掘",

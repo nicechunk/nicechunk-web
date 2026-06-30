@@ -14,6 +14,10 @@ import { createAvatar, createAvatarMaterials } from "./render/avatar.js";
 import { updateAvatarMotion, startAvatarHandSwing } from "./player/avatarMotion.js";
 import { createWorldGeometryByType, createWorldMaterials } from "./world/rendering.js";
 import { updateProceduralMaterialTime } from "./render/proceduralMaterials.js";
+import {
+  createResourceBlockPreviewCanvas,
+  createResourceMaterialPreviewCanvas,
+} from "./render/resourcePreview.js";
 import { initI18n, t } from "./i18n.js";
 import {
   createNiceChunkGuardianClient,
@@ -64,9 +68,9 @@ import smeltingRules, {
   deriveSmeltingMaterialProperties,
   createSmeltingInputCounts,
   findBestSmeltingRecipeForKeys,
-  hasRequiredSmeltingInputs,
   missingSmeltingInputs,
   recipeRequirements,
+  smeltingRecipeInputMultiplier,
   smeltingMaterialBaseAttributes,
   smeltingMaterialById,
   smeltingFuelForRawKey,
@@ -172,6 +176,8 @@ const smeltingStart = document.querySelector("#smeltingStart");
 const smeltingProgressValue = document.querySelector("#smeltingProgressValue");
 const smeltingProgressBar = document.querySelector("#smeltingProgressBar");
 const smeltingHeatCore = document.querySelector("#smeltingHeatCore");
+const smeltingFlameShader = document.querySelector("#smeltingFlameShader");
+const smeltingThreeCore = document.querySelector("#smeltingThreeCore");
 const smeltingMobileTabs = document.querySelectorAll("[data-smelting-mobile-tab]");
 const smeltingResourceFilters = document.querySelectorAll("[data-smelting-filter]");
 const smeltingRecipeFilters = document.querySelectorAll("[data-smelting-recipe-filter]");
@@ -315,6 +321,7 @@ window.addEventListener("nicechunk:languagechange", () => {
 function refreshRuntimeI18nText() {
   updateAccountHud();
   renderHotbar();
+  resetBackpackGridRenderState();
   renderBackpackPanel();
   resetSmeltingRenderSignatures();
   scheduleSmeltingPanelUpdate();
@@ -324,6 +331,12 @@ function refreshRuntimeI18nText() {
   updateMapGuardianStatus();
   updateCurrentGameLoadingText();
   updateRpcConfigStatusText();
+}
+
+function resetBackpackGridRenderState() {
+  backpackPreviewHydrationToken += 1;
+  backpackGridRenderState.capacity = 0;
+  backpackGridRenderState.signatures = [];
 }
 
 function setGameLoadingStage(stage, percent) {
@@ -658,6 +671,8 @@ const chunkChainSync = new Map();
 const chunkChainSyncBatchSize = 50;
 const chunkChainSyncRetryMs = 8000;
 const chunkChainViewportRescanMs = 750;
+const movementChainQuietWindowMs = 1200;
+const miningChainQuietWindowMs = 8000;
 const chainSyncStorageKey = "nicechunk.chainSync";
 const chainEventLogMaxRows = 6;
 const chainEventSuccessRemovalMs = 6_000;
@@ -675,6 +690,8 @@ let realtimeChunkAppliedSequence = 0;
 let gameplaySessionStatus = null;
 let gameplaySessionStatusLoading = false;
 let gameplaySessionStatusLastLoadedAt = 0;
+let lastMovementInteractionAt = -Infinity;
+let lastMiningInteractionAt = -Infinity;
 let equippedBackpackStatus = null;
 let equippedBackpackLoading = false;
 let equippedBackpackLastLoadedAt = 0;
@@ -682,7 +699,7 @@ let sessionFundingDialogResolve = null;
 const generatedCloudSectors = new Map();
 const cloudUpdateState = { sectorX: null, sectorZ: null };
 const worldState = createWorldState();
-const { solidBlocks, removedBlocks, placedBlocks, blockDamage } = worldState;
+const { solidBlocks, removedBlocks, pendingMinedBlocks, placedBlocks, blockDamage } = worldState;
 const breakParticles = [];
 const breakParticlePools = new Map();
 const dirtyBreakParticlePools = new Set();
@@ -690,6 +707,7 @@ const surfaceHeightFrameCache = new Map();
 const worldEditIndex = {
   version: -1,
   removedByChunk: new Map(),
+  pendingByChunk: new Map(),
   placedByChunk: new Map(),
   dynamicWaterByChunk: new Map(),
   scopedCache: new Map(),
@@ -913,6 +931,9 @@ let smeltingMobileResourceFilter = "all";
 let smeltingMobileRecipeFilter = "all";
 let smeltingRecipeRenderSignature = "";
 let smeltingMobileDrawerSignature = "";
+let smeltingFlameVisuals = null;
+let smeltingFlameAnimationFrame = 0;
+let smeltingFlameIntensity = 0.08;
 
 const playerPositionStorageKey = "nicechunk.playerPosition.v1";
 const playerPositionStorageVersion = 2;
@@ -1155,8 +1176,17 @@ window.addEventListener("focus", () => {
   const changed = syncLatestForgedItemSlot();
   const reset = resetHotbarForResourceSimulation(hotbarSlots, hotbarItems);
   if (changed || reset) renderHotbar();
-  void refreshGameplaySessionHud({ force: true });
-  void refreshEquippedBackpack({ force: true });
+  if (!isMovementChainQuietActive() && !isMiningInteractionActive()) {
+    if (profileOverlay && !profileOverlay.hidden) void refreshGameplaySessionHud();
+    if (
+      (profileOverlay && !profileOverlay.hidden) ||
+      (backpackPanel && !backpackPanel.hidden) ||
+      (smeltingPanel && !smeltingPanel.hidden) ||
+      (marketPanel && !marketPanel.hidden)
+    ) {
+      void refreshEquippedBackpack();
+    }
+  }
 });
 window.addEventListener("blur", clearActiveMovementInput);
 window.addEventListener("pagehide", clearActiveMovementInput);
@@ -1175,9 +1205,18 @@ window.addEventListener("beforeunload", () => {
   guardianClient.disconnect();
 });
 window.setInterval(() => {
-  void refreshGameplaySessionHud();
-  void refreshEquippedBackpack();
-}, 15000);
+  if (isMovementChainQuietActive()) return;
+  if (isMiningInteractionActive()) return;
+  if (profileOverlay && !profileOverlay.hidden) void refreshGameplaySessionHud();
+  if (
+    (profileOverlay && !profileOverlay.hidden) ||
+    (backpackPanel && !backpackPanel.hidden) ||
+    (smeltingPanel && !smeltingPanel.hidden) ||
+    (marketPanel && !marketPanel.hidden)
+  ) {
+    void refreshEquippedBackpack();
+  }
+}, 30000);
 debugMiningButton?.addEventListener("click", () => {
   setDebugMiningEnabled(!debugMiningEnabled);
 });
@@ -1936,7 +1975,7 @@ async function refreshGameplaySessionHud({ force = false } = {}) {
   gameplaySessionStatusLoading = true;
   try {
     const { getGameplaySessionStatus } = await loadNicechunkChainModule();
-    gameplaySessionStatus = await getGameplaySessionStatus();
+    gameplaySessionStatus = await getGameplaySessionStatus({ force });
     gameplaySessionStatusLastLoadedAt = performance.now();
     updateAccountHud();
     return gameplaySessionStatus;
@@ -1949,7 +1988,8 @@ async function refreshGameplaySessionHud({ force = false } = {}) {
 }
 
 async function ensureGameplaySessionFundingForMining(chainModule) {
-  const status = await refreshGameplaySessionHud({ force: true });
+  const status = gameplaySessionStatus;
+  if (!status?.publicKey || !Number.isFinite(status?.balanceLamports)) return true;
   const minimumLamports = Number.isFinite(status?.minimumFundingLamports)
     ? status.minimumFundingLamports
     : Math.round(chainModule.getMinimumGameplaySessionFundingSol() * 1_000_000_000);
@@ -2309,6 +2349,7 @@ function openSmeltingPanel() {
   smeltingPanel.setAttribute("aria-hidden", "false");
   smeltingOverlay.setAttribute("aria-hidden", "false");
   syncGameChromeState();
+  startSmeltingFlameVisuals();
   if (availableBackpackSlotCache.signature) {
     updateSmeltingPanel();
   } else {
@@ -2333,11 +2374,276 @@ function closeSmeltingPanel() {
     smeltingProgress = 0;
     updateSmeltingProgressUi();
   }
+  stopSmeltingFlameVisuals();
   smeltingPanel.hidden = true;
   smeltingOverlay.hidden = true;
   smeltingPanel.setAttribute("aria-hidden", "true");
   smeltingOverlay.setAttribute("aria-hidden", "true");
   syncGameChromeState();
+}
+
+function startSmeltingFlameVisuals() {
+  if (!smeltingFlameShader && !smeltingThreeCore) return;
+  if (!smeltingFlameVisuals) smeltingFlameVisuals = createSmeltingFlameVisuals();
+  if (!smeltingFlameVisuals || smeltingFlameAnimationFrame) return;
+  const render = (time = 0) => {
+    if (!smeltingPanel || smeltingPanel.hidden || !smeltingFlameVisuals) {
+      smeltingFlameAnimationFrame = 0;
+      return;
+    }
+    smeltingFlameVisuals.render(time);
+    smeltingFlameAnimationFrame = window.requestAnimationFrame(render);
+  };
+  smeltingFlameAnimationFrame = window.requestAnimationFrame(render);
+}
+
+function stopSmeltingFlameVisuals() {
+  if (!smeltingFlameAnimationFrame) return;
+  window.cancelAnimationFrame(smeltingFlameAnimationFrame);
+  smeltingFlameAnimationFrame = 0;
+}
+
+function createSmeltingFlameVisuals() {
+  const shader = createSmeltingFlameShader(smeltingFlameShader);
+  const core = createSmeltingThreeCore(smeltingThreeCore);
+  if (!shader && !core) return null;
+  return {
+    render(time) {
+      shader?.render(time, smeltingFlameIntensity);
+      core?.render(time, smeltingFlameIntensity);
+    },
+  };
+}
+
+function createSmeltingFlameShader(shaderCanvas) {
+  if (!shaderCanvas) return null;
+  const gl = shaderCanvas.getContext("webgl", { alpha: true, antialias: false, preserveDrawingBuffer: false })
+    || shaderCanvas.getContext("experimental-webgl", { alpha: true, antialias: false, preserveDrawingBuffer: false });
+  if (!gl) return null;
+  const vertexSource = `
+    attribute vec2 a_position;
+    varying vec2 v_texCoord;
+    void main() {
+      v_texCoord = a_position * 0.5 + 0.5;
+      gl_Position = vec4(a_position, 0.0, 1.0);
+    }
+  `;
+  const fragmentSource = `
+    precision highp float;
+    varying vec2 v_texCoord;
+    uniform float u_time;
+    uniform float u_intensity;
+    vec3 permute(vec3 x) { return mod(((x * 34.0) + 1.0) * x, 289.0); }
+    float snoise(vec2 v) {
+      const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
+      vec2 i = floor(v + dot(v, C.yy));
+      vec2 x0 = v - i + dot(i, C.xx);
+      vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+      vec4 x12 = x0.xyxy + C.xxzz;
+      x12.xy -= i1;
+      i = mod(i, 289.0);
+      vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));
+      vec3 m = max(0.5 - vec3(dot(x0, x0), dot(x12.xy, x12.xy), dot(x12.zw, x12.zw)), 0.0);
+      m = m * m;
+      m = m * m;
+      vec3 x = 2.0 * fract(p * C.www) - 1.0;
+      vec3 h = abs(x) - 0.5;
+      vec3 ox = floor(x + 0.5);
+      vec3 a0 = x - ox;
+      m *= 1.79284291400159 - 0.85373472095314 * (a0 * a0 + h * h);
+      vec3 g;
+      g.x = a0.x * x0.x + h.x * x0.y;
+      g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+      return 130.0 * dot(m, g);
+    }
+    void main() {
+      vec2 uv = v_texCoord;
+      float dist = distance(uv, vec2(0.5, 0.52));
+      float sphere = smoothstep(0.52, 0.16, dist);
+      float inner = smoothstep(0.36, 0.05, dist);
+      float n1 = snoise(vec2(uv.x * 3.4, uv.y * 4.4 - u_time * (0.12 + u_intensity * 0.3)));
+      float n2 = snoise(vec2(uv.x * 7.2 + u_time * 0.18, uv.y * 8.0 - u_time * (0.2 + u_intensity * 0.6)));
+      float n = clamp((n1 + n2 * 0.46) * 0.5 + 0.5, 0.0, 1.0);
+      vec3 ember = vec3(0.95, 0.12, 0.02);
+      vec3 orange = vec3(1.0, 0.46, 0.04);
+      vec3 white = vec3(1.0, 0.9, 0.36);
+      vec3 cyan = vec3(0.0, 0.85, 1.0);
+      vec3 color = mix(ember, orange, n);
+      color = mix(color, white, pow(n, 3.0) * 0.72 * u_intensity);
+      color += cyan * exp(-dist * 5.4) * (0.08 + u_intensity * 0.16);
+      color *= (0.35 + u_intensity * 0.78) * (0.84 + 0.16 * sin(u_time * 2.2));
+      float spark = step(0.965 - u_intensity * 0.03, n) * smoothstep(0.54, 0.28, dist);
+      float alpha = clamp((sphere * inner * (0.12 + n * 0.72) * u_intensity) + spark * (0.18 + u_intensity * 0.3), 0.0, 0.92);
+      gl_FragColor = vec4(color, alpha);
+    }
+  `;
+  const program = gl.createProgram();
+  const vertexShader = compileSmeltingShader(gl, gl.VERTEX_SHADER, vertexSource);
+  const fragmentShader = compileSmeltingShader(gl, gl.FRAGMENT_SHADER, fragmentSource);
+  if (!program || !vertexShader || !fragmentShader) return null;
+  gl.attachShader(program, vertexShader);
+  gl.attachShader(program, fragmentShader);
+  gl.linkProgram(program);
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return null;
+  gl.useProgram(program);
+  const buffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+  const position = gl.getAttribLocation(program, "a_position");
+  gl.enableVertexAttribArray(position);
+  gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+  const timeUniform = gl.getUniformLocation(program, "u_time");
+  const intensityUniform = gl.getUniformLocation(program, "u_intensity");
+  const syncSize = () => {
+    const ratio = Math.min(window.devicePixelRatio || 1, 1.6);
+    const width = Math.max(1, Math.floor((shaderCanvas.clientWidth || 256) * ratio));
+    const height = Math.max(1, Math.floor((shaderCanvas.clientHeight || 256) * ratio));
+    if (shaderCanvas.width !== width || shaderCanvas.height !== height) {
+      shaderCanvas.width = width;
+      shaderCanvas.height = height;
+    }
+  };
+  return {
+    render(time, intensity = 0.08) {
+      syncSize();
+      gl.viewport(0, 0, shaderCanvas.width, shaderCanvas.height);
+      gl.clearColor(0, 0, 0, 0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.useProgram(program);
+      gl.uniform1f(timeUniform, time * 0.001);
+      gl.uniform1f(intensityUniform, Math.max(0.04, Math.min(1.15, intensity)));
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    },
+  };
+}
+
+function compileSmeltingShader(gl, type, source) {
+  const shader = gl.createShader(type);
+  if (!shader) return null;
+  gl.shaderSource(shader, source);
+  gl.compileShader(shader);
+  return gl.getShaderParameter(shader, gl.COMPILE_STATUS) ? shader : null;
+}
+
+function createSmeltingThreeCore(container) {
+  if (!container) return null;
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(58, 1, 0.1, 100);
+  camera.position.z = 5;
+  const renderer = new THREE.WebGLRenderer({
+    alpha: true,
+    antialias: true,
+    powerPreference: "high-performance",
+    preserveDrawingBuffer: false,
+  });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+  renderer.setClearColor(0x000000, 0);
+  renderer.domElement.className = "smelting-three-canvas";
+  container.replaceChildren(renderer.domElement);
+  const group = new THREE.Group();
+  scene.add(group);
+  const coreGeometry = new THREE.SphereGeometry(1.34, 48, 32);
+  const coreMaterial = new THREE.MeshPhongMaterial({
+    color: 0xffaa22,
+    emissive: 0xff3a00,
+    emissiveIntensity: 0.72,
+    specular: 0xffffff,
+    shininess: 92,
+    transparent: true,
+    opacity: 0.88,
+  });
+  const core = new THREE.Mesh(coreGeometry, coreMaterial);
+  group.add(core);
+  const particleCount = 140;
+  const particlePositions = new Float32Array(particleCount * 3);
+  const particlePhases = [];
+  for (let index = 0; index < particleCount; index += 1) {
+    const radius = 1.05 + Math.random() * 1.34;
+    const angle = Math.random() * Math.PI * 2;
+    const height = (Math.random() - 0.5) * 2.4;
+    particlePositions[index * 3] = Math.cos(angle) * radius * (0.56 + Math.random() * 0.34);
+    particlePositions[index * 3 + 1] = height;
+    particlePositions[index * 3 + 2] = Math.sin(angle) * radius * (0.56 + Math.random() * 0.34);
+    particlePhases.push({
+      angle,
+      radius,
+      height,
+      speed: 0.32 + Math.random() * 0.9,
+      drift: Math.random() * Math.PI * 2,
+    });
+  }
+  const emberGeometry = new THREE.BufferGeometry();
+  emberGeometry.setAttribute("position", new THREE.Float32BufferAttribute(particlePositions, 3));
+  const emberMaterial = new THREE.PointsMaterial({
+    color: 0xffa139,
+    size: 0.08,
+    sizeAttenuation: true,
+    transparent: true,
+    opacity: 0.28,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+  });
+  const embers = new THREE.Points(emberGeometry, emberMaterial);
+  group.add(embers);
+  const halo = new THREE.Mesh(
+    new THREE.SphereGeometry(1.72, 48, 24),
+    new THREE.MeshBasicMaterial({
+      color: 0xff7a18,
+      transparent: true,
+      opacity: 0.1,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    }),
+  );
+  group.add(halo);
+  scene.add(new THREE.AmbientLight(0xffb15a, 1.6));
+  const cyanLight = new THREE.PointLight(0x00f2ff, 6.8, 12);
+  cyanLight.position.set(2.2, 1.8, 2.8);
+  scene.add(cyanLight);
+  const emberLight = new THREE.PointLight(0xff5a12, 5.4, 10);
+  emberLight.position.set(-2.4, -1.8, 2.2);
+  scene.add(emberLight);
+  const syncSize = () => {
+    const width = Math.max(1, container.clientWidth || 256);
+    const height = Math.max(1, container.clientHeight || 256);
+    if (renderer.domElement.width === Math.floor(width * renderer.getPixelRatio())
+      && renderer.domElement.height === Math.floor(height * renderer.getPixelRatio())) return;
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(width, height, false);
+  };
+  return {
+    render(time, intensity = 0.08) {
+      syncSize();
+      const tSeconds = time * 0.001;
+      const safeIntensity = Math.max(0.04, Math.min(1.15, intensity));
+      group.rotation.y = tSeconds * (0.28 + safeIntensity * 0.48);
+      group.rotation.x = Math.sin(tSeconds * 0.42) * 0.18;
+      group.position.y = Math.sin(tSeconds * 1.45) * 0.14;
+      const pulse = 0.72 + safeIntensity * 0.32 + Math.sin(tSeconds * (1.6 + safeIntensity * 2.4)) * (0.018 + safeIntensity * 0.035);
+      core.scale.setScalar(pulse);
+      core.material.opacity = 0.18 + safeIntensity * 0.72;
+      core.material.emissiveIntensity = 0.16 + safeIntensity * 0.9;
+      halo.scale.setScalar(0.92 + safeIntensity * 0.34 + Math.sin(tSeconds * 1.9) * 0.025);
+      halo.material.opacity = 0.035 + safeIntensity * 0.16;
+      const positions = emberGeometry.attributes.position.array;
+      particlePhases.forEach((particle, index) => {
+        const lift = (particle.height + tSeconds * particle.speed * (0.65 + safeIntensity)) % 2.8 - 1.4;
+        const angle = particle.angle + tSeconds * (0.18 + particle.speed * 0.16);
+        const wobble = Math.sin(tSeconds * particle.speed + particle.drift) * 0.11;
+        const radius = particle.radius * (0.48 + safeIntensity * 0.28 + wobble);
+        positions[index * 3] = Math.cos(angle) * radius;
+        positions[index * 3 + 1] = lift;
+        positions[index * 3 + 2] = Math.sin(angle) * radius;
+      });
+      emberGeometry.attributes.position.needsUpdate = true;
+      emberMaterial.opacity = 0.05 + safeIntensity * 0.46;
+      emberMaterial.size = 0.035 + safeIntensity * 0.078;
+      cyanLight.intensity = 1.4 + safeIntensity * 6.4;
+      emberLight.intensity = 1.2 + safeIntensity * 5.3;
+      renderer.render(scene, camera);
+    },
+  };
 }
 
 function scheduleDeferredSmeltingBackpackRefresh({ force = false } = {}) {
@@ -2530,10 +2836,9 @@ function createSmeltingResourceCard(slot) {
   card.append(createSmeltingResourceSwatch(slot));
 
   const copy = document.createElement("span");
-  copy.innerHTML = "<strong></strong><small></small><em></em>";
-  copy.querySelector("strong").textContent = slot.meta?.name ?? gameText("main.backpack.coordinateResource", "Coordinate Resource");
+  copy.innerHTML = "<strong></strong><small></small>";
+  copy.querySelector("strong").textContent = backpackSlotDisplayName(slot);
   copy.querySelector("small").textContent = smeltingResourceCardMeta(slot);
-  copy.querySelector("em").textContent = formatMassKg(slot.massKg);
   card.append(copy);
   if (!isMobileViewport()) card.append(createSmeltingResourceActions(slot));
   syncSmeltingResourceCardState(card);
@@ -2562,10 +2867,13 @@ function createSmeltingResourceActionButton(zone, labelKey, fallback) {
 function smeltingResourceCardMeta(slot) {
   const fuelProfile = smeltingFuelProfile(slot);
   if (fuelProfile.tier > 0) {
-    return gameText("main.smelting.fuelHeat", "Heat tier {tier}", { tier: fuelProfile.tier });
+    return `${gameText("main.smelting.fuelHeat", "Heat tier {tier}", { tier: fuelProfile.tier })} · ${formatMassKg(slot?.massKg)}`;
   }
-  const category = getBlockAtlasEntry(slot?.atlasKey)?.category;
-  return category ? category.replace(/_/g, " ") : gameText("main.smelting.materialSource", "Mined material");
+  const size = slot?.volumeMm3 > 0 ? formatVolumeCubeSize(slot.volumeMm3) : formatDimensionsM(slot?.dimensionsM);
+  return gameText("main.smelting.resourceMassSize", "{mass} · {size}", {
+    mass: formatMassKg(slot?.massKg),
+    size,
+  });
 }
 
 function handleSmeltingResourceGridClick(event) {
@@ -2740,16 +3048,16 @@ function renderSmeltingWorkbenchSlot(container, slots, labelKey, fallback, hintK
     item.className = "smelting-slot-item";
     item.type = "button";
     item.dataset.sourceItemId = slot.sourceItemId ?? "";
-    item.title = slot.meta?.name ?? gameText("main.backpack.coordinateResource", "Coordinate Resource");
+    item.title = backpackSlotDisplayName(slot);
     item.addEventListener("click", () => {
       if (smeltingState === "running") return;
       removeSmeltingId(container === smeltingFuelSlot ? smeltingFuelSourceItemIds : smeltingInputSourceItemIds, slot.sourceItemId);
       resetSmeltingProgressState({ render: false });
       scheduleSmeltingPanelUpdate();
     });
-    item.append(createSmeltingSlotPreview(slot, "smelting-slot-preview"));
+    item.append(createSmeltingSlotPreview(slot, "smelting-slot-preview", { size: 72 }));
     const name = document.createElement("strong");
-    name.textContent = slot.meta?.name ?? gameText("main.backpack.coordinateResource", "Coordinate Resource");
+    name.textContent = backpackSlotDisplayName(slot);
     item.append(name);
     grid.append(item);
   });
@@ -2776,7 +3084,19 @@ function renderSmeltingOutput(inputSlots, fuelSlots) {
 
   const preview = document.createElement("div");
   preview.className = "smelting-output-preview";
-  preview.append(createSmeltingMaterialPreview(recipe));
+  preview.append(createSmeltingMaterialPreview(recipe, {
+    size: chainBlockPreviewSize,
+    previewDimensionsM: recipe.outputDimensionsM,
+  }));
+  const massBadge = document.createElement("span");
+  massBadge.className = "smelting-preview-mass";
+  const inputMassLabel = gameText("main.smelting.inputMass", "Input mass {mass}", {
+    mass: formatMassKg(totalSmeltingInputMassKg(inputSlots)),
+  });
+  massBadge.textContent = formatMassKg(totalSmeltingInputMassKg(inputSlots));
+  massBadge.title = inputMassLabel;
+  massBadge.setAttribute("aria-label", inputMassLabel);
+  preview.append(massBadge);
 
   const copy = document.createElement("div");
   copy.className = "smelting-output-copy";
@@ -2793,6 +3113,8 @@ function renderSmeltingOutput(inputSlots, fuelSlots) {
   const stats = copy.querySelector(".smelting-output-stats");
   const statRows = [
     [gameText("main.smelting.requiredHeat", "Required heat"), recipe.heatLabel],
+    [gameText("main.smelting.servings", "Servings"), recipe.servingsLabel],
+    [gameText("main.smelting.outputSize", "Output size"), recipe.outputSizeLabel],
     [gameText("main.smelting.yieldRange", "Yield range"), recipe.yieldRange],
     [gameText("main.smelting.quality", "Quality basis"), recipe.quality],
   ];
@@ -2833,6 +3155,7 @@ function renderSmeltingRecipeList(slots = [], inputSlots = [], fuelSlots = []) {
     slots.map(smeltingSlotSignature).join("||"),
     inputSlots.map(smeltingSlotSignature).join("||"),
     fuelSlots.map(smeltingSlotSignature).join("||"),
+    smeltingInputSourceItemIds.join(","),
   ].join("::");
   if (signature === smeltingRecipeRenderSignature) return;
   smeltingRecipeRenderSignature = signature;
@@ -2846,11 +3169,13 @@ function renderSmeltingRecipeList(slots = [], inputSlots = [], fuelSlots = []) {
 function smeltingRecipeSummaries(slots = [], inputSlots = [], fuelSlots = []) {
   const counts = createSmeltingInputCounts(slots.map((slot) => slot?.atlasKey).filter(Boolean));
   const selectedCounts = createSmeltingInputCountFromSlots(inputSlots);
-  const fuelCandidates = slots.filter(isSmeltingFuelSlot);
   const selectedRecipeId = smeltingRecipeMatch(inputSlots)?.recipe?.id ?? "";
   return (smeltingRules.materials ?? [])
     .map((recipe) => {
       const requirements = recipeRequirements(recipe);
+      const maxServings = maxSmeltingRecipeServings(recipe, counts);
+      const selectedServings = smeltingRecipeInputMultiplier(recipe, selectedCounts);
+      const displayServings = Math.max(1, selectedServings || Math.min(1, maxServings));
       const missing = requirements
         .map((input) => ({
           ...input,
@@ -2859,24 +3184,29 @@ function smeltingRecipeSummaries(slots = [], inputSlots = [], fuelSlots = []) {
           missing: Math.max(0, input.amount - (counts.get(input.key) ?? 0)),
         }))
         .filter((input) => input.missing > 0);
-      const matchedCount = requirements.reduce((sum, input) => sum + Math.min(input.amount, counts.get(input.key) ?? 0), 0);
       const requiredCount = requirements.reduce((sum, input) => sum + input.amount, 0);
+      const matchedCount = requirements.reduce((sum, input) => sum + Math.min(input.amount * displayServings, counts.get(input.key) ?? 0), 0);
       const selectedMatchedCount = requirements.reduce((sum, input) => sum + Math.min(input.amount, selectedCounts.get(input.key) ?? 0), 0);
       const fuelSlot = bestSmeltingFuelSlot(slots, recipe.requiredHeatTier ?? 1, new Set(inputSlots.map((slot) => slot.sourceItemId)));
       const ready = missing.length === 0 && Boolean(fuelSlot);
       const selected = recipe.id === selectedRecipeId && selectedMatchedCount > 0;
       const fuelMissing = missing.length === 0 && !fuelSlot && !fuelSlots.length;
+      const outputVolumeMm3 = smeltingRecipeOutputVolumeMm3(recipe, displayServings);
       return {
         recipe,
         requirements,
         missing,
         matchedCount,
-        requiredCount,
+        requiredCount: requiredCount * displayServings,
         selectedMatchedCount,
         fuelSlot,
         ready,
         selected,
         fuelMissing,
+        maxServings,
+        selectedServings,
+        displayServings,
+        outputVolumeMm3,
       };
     })
     .filter((summary) => {
@@ -2904,19 +3234,24 @@ function createSmeltingRecipeCard(summary) {
 
   const preview = document.createElement("div");
   preview.className = "smelting-recipe-preview";
-  preview.append(createSmeltingMaterialPreview({ color: smeltingRecipeColor(recipe) ?? "#8bd8ff" }));
+  preview.append(createSmeltingMaterialPreview(recipe, {
+    size: 72,
+    previewDimensionsM: materialCubeDimensionsFromVolume(summary.outputVolumeMm3),
+  }));
 
   const copy = document.createElement("div");
   copy.className = "smelting-recipe-copy";
   const status = smeltingRecipeStatusLabel(summary);
-  copy.innerHTML = "<div><strong></strong><span></span></div><p></p><div class=\"smelting-recipe-attributes\"></div><div class=\"smelting-recipe-requirements\"></div>";
+  copy.innerHTML = "<div><strong></strong><span></span></div><p></p><div class=\"smelting-recipe-batch\"></div><div class=\"smelting-recipe-attributes\"></div><div class=\"smelting-recipe-requirements\"></div>";
   copy.querySelector("strong").textContent = smeltingMaterialName(recipe.id);
   copy.querySelector("span").textContent = status;
   copy.querySelector("p").textContent = gameText("main.smelting.recipeProgress", "{matched}/{required} input slots matched · heat tier {tier}", {
-    matched: summary.matchedCount,
+    matched: Math.min(summary.requiredCount, summary.matchedCount),
     required: summary.requiredCount,
     tier: recipe.requiredHeatTier ?? 1,
   });
+  const batch = copy.querySelector(".smelting-recipe-batch");
+  batch.append(createSmeltingRecipeBatchControl(summary));
   const attrs = copy.querySelector(".smelting-recipe-attributes");
   smeltingTopAttributeEntries(properties.attributes, 4).forEach(([key, value]) => {
     const chip = document.createElement("b");
@@ -2929,10 +3264,10 @@ function createSmeltingRecipeCard(summary) {
     const atlas = getBlockAtlasEntry(input.key);
     chip.textContent = gameText("main.smelting.recipeRequirement", "{resource} {available}/{amount}", {
       resource: localizedBlockResourceName(input.key, atlas),
-      available: Math.min(input.amount, input.available ?? 0),
-      amount: input.amount,
+      available: Math.min(input.amount * summary.displayServings, input.available ?? 0),
+      amount: input.amount * summary.displayServings,
     });
-    chip.classList.toggle("missing", (input.available ?? 0) < input.amount);
+    chip.classList.toggle("missing", (input.available ?? 0) < input.amount * summary.displayServings);
     reqWrap.append(chip);
   });
 
@@ -2940,12 +3275,48 @@ function createSmeltingRecipeCard(summary) {
   action.className = "smelting-recipe-action";
   action.type = "button";
   action.dataset.smeltingRecipeSelect = recipe.id;
+  action.dataset.smeltingRecipeServings = String(summary.displayServings);
   action.textContent = summary.ready
     ? gameText("main.smelting.selectRecipe", "Select Recipe")
     : gameText("main.smelting.findInputs", "Find Inputs");
 
   card.append(preview, copy, action);
   return card;
+}
+
+function createSmeltingRecipeBatchControl(summary) {
+  const wrap = document.createElement("div");
+  wrap.className = "smelting-recipe-batch-control";
+  const label = document.createElement("span");
+  label.textContent = gameText("main.smelting.recipeServings", "Servings");
+  const stepper = document.createElement("span");
+  stepper.className = "smelting-recipe-stepper";
+  const minus = createSmeltingRecipeServingButton(summary, -1);
+  const value = document.createElement("output");
+  value.value = String(summary.displayServings);
+  value.textContent = gameText("main.smelting.recipeServingsValue", "{count}x", { count: summary.displayServings });
+  const plus = createSmeltingRecipeServingButton(summary, 1);
+  stepper.append(minus, value, plus);
+  const size = document.createElement("small");
+  size.textContent = gameText("main.smelting.recipeOutputSize", "Output {size}", {
+    size: formatVolumeCubeSize(summary.outputVolumeMm3),
+  });
+  wrap.append(label, stepper, size);
+  return wrap;
+}
+
+function createSmeltingRecipeServingButton(summary, delta) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.dataset.smeltingRecipeServingsDelta = String(delta);
+  button.dataset.smeltingRecipeSelect = summary.recipe.id;
+  button.dataset.smeltingRecipeServings = String(Math.max(1, Math.min(summary.maxServings || 1, summary.displayServings + delta)));
+  button.textContent = delta > 0 ? "+" : "-";
+  button.disabled = !summary.ready || summary.maxServings <= 1 || summary.displayServings + delta < 1 || summary.displayServings + delta > summary.maxServings;
+  button.setAttribute("aria-label", delta > 0
+    ? gameText("main.smelting.increaseServings", "Increase servings")
+    : gameText("main.smelting.decreaseServings", "Decrease servings"));
+  return button;
 }
 
 function smeltingRecipeStatusLabel(summary) {
@@ -2965,16 +3336,19 @@ function handleSmeltingRecipeListClick(event) {
   const recipeId = button.dataset.smeltingRecipeSelect;
   const recipe = (smeltingRules.materials ?? []).find((candidate) => candidate.id === recipeId);
   if (!recipe) return;
-  fillSmeltingRecipeFromBackpack(recipe);
+  const servings = Math.max(1, Math.floor(Number(button.dataset.smeltingRecipeServings) || 1));
+  fillSmeltingRecipeFromBackpack(recipe, servings);
 }
 
-function fillSmeltingRecipeFromBackpack(recipe) {
+function fillSmeltingRecipeFromBackpack(recipe, servings = 1) {
   const slots = createAvailableBackpackSlotsFromChain(equippedBackpackStatus?.backpack ?? null).filter(Boolean);
+  const maxServings = maxSmeltingRecipeServings(recipe, createSmeltingInputCounts(slots.map((slot) => slot?.atlasKey).filter(Boolean)));
+  const targetServings = Math.max(1, Math.min(Math.max(1, maxServings), Math.floor(Number(servings) || 1)));
   const used = new Set();
   smeltingInputSourceItemIds.length = 0;
   smeltingFuelSourceItemIds.length = 0;
   for (const requirement of recipeRequirements(recipe)) {
-    let remaining = requirement.amount;
+    let remaining = requirement.amount * targetServings;
     for (const slot of slots) {
       if (remaining <= 0) break;
       if (used.has(slot.sourceItemId) || slot.atlasKey !== requirement.key) continue;
@@ -2990,6 +3364,16 @@ function fillSmeltingRecipeFromBackpack(recipe) {
   resetSmeltingProgressState({ render: false });
   resetSmeltingRenderSignatures();
   scheduleSmeltingPanelUpdate();
+}
+
+function maxSmeltingRecipeServings(recipe, counts) {
+  const requirements = recipeRequirements(recipe);
+  if (!requirements.length) return 0;
+  return requirements.reduce((max, input) => {
+    const required = Math.max(1, Number(input.amount) || 1);
+    const available = counts.get(input.key) ?? 0;
+    return Math.min(max, Math.floor(available / required));
+  }, Number.POSITIVE_INFINITY) || 0;
 }
 
 function bestSmeltingFuelSlot(slots = [], requiredTier = 1, excludedIds = new Set()) {
@@ -3036,11 +3420,11 @@ function renderSmeltingMobileActionDrawer(slots = []) {
     <button class="smelting-mobile-drawer-close" type="button" data-mobile-smelting-action="close" aria-label="${gameText("main.smelting.closeDrawer", "Close item actions")}">×</button>
     <div class="smelting-mobile-drawer-actions"></div>
   `;
-  drawer.querySelector(".smelting-mobile-drawer-preview").append(createSmeltingSlotPreview(slot, "smelting-mobile-slot-preview"));
+  drawer.querySelector(".smelting-mobile-drawer-preview").append(createSmeltingSlotPreview(slot, "smelting-mobile-slot-preview", { size: 96 }));
   drawer.querySelector("span").textContent = isFuel
     ? gameText("main.smelting.fuelHeat", "Heat tier {tier}", { tier: smeltingFuelProfile(slot).tier })
     : smeltingResourceCardMeta(slot);
-  drawer.querySelector("strong").textContent = slot.meta?.name ?? gameText("main.backpack.coordinateResource", "Coordinate Resource");
+  drawer.querySelector("strong").textContent = backpackSlotDisplayName(slot);
   drawer.querySelector("small").textContent = gameText("main.smelting.singleItemCoordinate", "Single slot · {coord}", { coord });
   const actions = drawer.querySelector(".smelting-mobile-drawer-actions");
   actions.append(
@@ -3114,6 +3498,10 @@ function smeltingSlotSignature(slot) {
     slot.record?.worldX ?? "",
     slot.record?.worldY ?? "",
     slot.record?.worldZ ?? "",
+    slot.volumeMm3 ?? "",
+    slot.dimensionsM?.width ?? "",
+    slot.dimensionsM?.height ?? "",
+    slot.dimensionsM?.depth ?? "",
     Number.isFinite(slot.massKg) ? slot.massKg : "",
     slot.meta?.name ?? "",
     slot.meta?.source ?? "",
@@ -3142,16 +3530,22 @@ function cleanupSmeltingPreviewTree(root) {
 function updateSmeltingProgressUi(inputSlots = smeltingActiveInputSlots, fuelSlots = smeltingActiveFuelSlots) {
   const recipeMatch = smeltingRecipeMatch(inputSlots);
   const recipeReady = isSmeltingRecipeReady(recipeMatch, inputSlots);
+  const batchMultiplier = smeltingBatchMultiplier(recipeMatch?.recipe, inputSlots);
   const requiredHeatTier = recipeMatch?.recipe?.requiredHeatTier ?? maxSmeltingRequiredHeatTier(inputSlots);
   const availableFuelTier = maxSmeltingFuelTier(fuelSlots);
+  const visualFuelTier = totalSmeltingFuelTier(fuelSlots);
   const heatReady = inputSlots.length && fuelSlots.length ? availableFuelTier >= requiredHeatTier : false;
   const ready = Boolean(inputSlots.length && recipeReady && fuelSlots.length && heatReady && smeltingState !== "running");
   const hasBackpack = Boolean(equippedBackpackStatus?.backpack);
   const waitingForBackpackData = equippedBackpackLoading && !inputSlots.length && !equippedBackpackStatus;
   const uiState = waitingForBackpackData ? "syncing" : !inputSlots.length ? "no-input" : !recipeReady ? "no-recipe" : !fuelSlots.length ? "no-fuel" : !heatReady ? "heat-missing" : smeltingState;
+  smeltingFlameIntensity = smeltingFireIntensityForFuelTier(visualFuelTier, smeltingState);
   if (smeltingPanel) {
     smeltingPanel.dataset.smeltingState = uiState;
     smeltingPanel.dataset.heatReady = heatReady ? "true" : "false";
+    smeltingPanel.dataset.fuelTier = String(availableFuelTier);
+    smeltingPanel.dataset.fuelPower = String(visualFuelTier);
+    smeltingPanel.style.setProperty("--smelt-fire-intensity", smeltingFlameIntensity.toFixed(3));
   }
   if (smeltingHeatCore) smeltingHeatCore.dataset.smeltingState = uiState;
   if (smeltingStart) {
@@ -3202,6 +3596,13 @@ function updateSmeltingProgressUi(inputSlots = smeltingActiveInputSlots, fuelSlo
   }
 }
 
+function smeltingFireIntensityForFuelTier(fuelTier = 0, state = smeltingState) {
+  if (!fuelTier) return state === "running" ? 0.16 : 0.08;
+  const tierIntensity = 0.2 + Math.min(1, fuelTier / 10) * 0.86;
+  const runningBoost = state === "running" ? 0.14 : 0;
+  return Math.max(0.08, Math.min(1.12, tierIntensity + runningBoost));
+}
+
 function stopSmeltingProgressTimer() {
   if (!smeltingProgressTimer) return;
   window.cancelAnimationFrame(smeltingProgressTimer);
@@ -3223,6 +3624,7 @@ async function startSmeltingPreview() {
   const fuelSlots = selectedSmeltingSlots(slots, smeltingFuelSourceItemIds).filter(isSmeltingFuelSlot);
   const recipeMatch = smeltingRecipeMatch(inputSlots);
   const recipeReady = isSmeltingRecipeReady(recipeMatch, inputSlots);
+  const batchMultiplier = smeltingBatchMultiplier(recipeMatch?.recipe, inputSlots);
   const requiredHeatTier = recipeMatch?.recipe?.requiredHeatTier ?? maxSmeltingRequiredHeatTier(inputSlots);
   const heatReady = inputSlots.length && fuelSlots.length ? maxSmeltingFuelTier(fuelSlots) >= requiredHeatTier : false;
   if (!inputSlots.length || !recipeReady || !fuelSlots.length || !heatReady) {
@@ -3250,6 +3652,7 @@ async function startSmeltingPreview() {
       recipeTableId: smeltingRecipeTableIdForMaterialId(recipeMatch.recipe.id),
       inputIndexes: inputSlots.map((slot) => slot.chainIndex),
       fuelIndexes: fuelSlots.map((slot) => slot.chainIndex),
+      batchMultiplier,
       backpackAddress: equippedBackpackStatus?.backpack?.publicKey ?? null,
     });
     if (!result?.submitted) {
@@ -3299,6 +3702,7 @@ function createSmeltingRecipe(inputSlots, fuelSlots) {
   const recipeMatch = smeltingRecipeMatch(inputSlots);
   const recipe = recipeMatch?.recipe ?? null;
   const recipeReady = isSmeltingRecipeReady(recipeMatch, inputSlots);
+  const batchMultiplier = smeltingBatchMultiplier(recipe, inputSlots);
   const massKg = totalSmeltingInputMassKg(inputSlots);
   const [minYield, maxYield] = smeltingYieldRangeKg(massKg, recipe?.class, recipe?.yieldCount);
   const heatTier = recipe?.requiredHeatTier ?? maxSmeltingRequiredHeatTier(inputSlots);
@@ -3315,6 +3719,7 @@ function createSmeltingRecipe(inputSlots, fuelSlots) {
   const localizedName = inputSlots.length > 1
     ? smeltingInputBatchLabel(inputSlots)
     : smeltingInputName(primarySlot);
+  const outputVolumeMm3 = recipe && batchMultiplier >= 1 ? smeltingRecipeOutputVolumeMm3(recipe, batchMultiplier) : 0;
   return {
     name: recipe ? smeltingMaterialName(recipe.id) : gameText("main.smelting.noRecipeName", "Unmatched batch"),
     description: recipe
@@ -3323,6 +3728,14 @@ function createSmeltingRecipe(inputSlots, fuelSlots) {
     heatLabel: fuelTier >= heatTier
       ? gameText("main.smelting.heatMet", "Tier {tier} met", { tier: heatTier, temp: heatTierData?.temperatureC ?? "" })
       : gameText("main.smelting.heatMissing", "Tier {required} required, fuel {fuel}", { required: heatTier, fuel: fuelTier || "-" }),
+    servingsLabel: recipe && batchMultiplier >= 1
+      ? gameText("main.smelting.recipeServingsValue", "{count}x", { count: batchMultiplier })
+      : gameText("main.smelting.notReady", "Not ready"),
+    outputSizeLabel: outputVolumeMm3 > 0
+      ? formatVolumeCubeSize(outputVolumeMm3)
+      : gameText("main.backpack.unknownSize", "Unknown"),
+    outputVolumeMm3,
+    outputDimensionsM: materialCubeDimensionsFromVolume(outputVolumeMm3),
     yieldRange: `${formatMassKg(minYield)} - ${formatMassKg(maxYield)}`,
     quality: recipe
       ? recipeReady
@@ -3341,6 +3754,10 @@ function maxSmeltingRequiredHeatTier(inputSlots) {
 
 function maxSmeltingFuelTier(fuelSlots) {
   return Math.max(0, ...fuelSlots.map((slot) => smeltingFuelProfile(slot).tier));
+}
+
+function totalSmeltingFuelTier(fuelSlots) {
+  return fuelSlots.reduce((total, slot) => total + Math.max(0, smeltingFuelProfile(slot).tier || 0), 0);
 }
 
 function mergedSmeltingComposition(inputSlots) {
@@ -3409,8 +3826,16 @@ function smeltingRecipeMatch(inputSlots = []) {
 
 function isSmeltingRecipeReady(match, inputSlots = []) {
   if (!match?.recipe || !match.score?.exact) return false;
-  if ((match.score?.waste ?? 0) > 0) return false;
-  return hasRequiredSmeltingInputs(match.recipe, createSmeltingInputCountFromSlots(inputSlots));
+  return smeltingBatchMultiplier(match.recipe, inputSlots) >= 1;
+}
+
+function smeltingBatchMultiplier(recipe, inputSlots = []) {
+  return smeltingRecipeInputMultiplier(recipe, createSmeltingInputCountFromSlots(inputSlots));
+}
+
+function smeltingRecipeOutputVolumeMm3(recipe, servings = 1) {
+  const inputCount = recipeRequirements(recipe).reduce((sum, input) => sum + Math.max(1, Number(input.amount) || 1), 0);
+  return Math.max(1, Math.floor(inputCount * 1_000_000 / 60) * Math.max(1, Math.floor(Number(servings) || 1)));
 }
 
 function totalSmeltingInputMassKg(inputSlots = []) {
@@ -3419,6 +3844,23 @@ function totalSmeltingInputMassKg(inputSlots = []) {
     const slotMass = Number.isFinite(slot?.massKg) ? slot.massKg : atlas?.physical?.massKg;
     return sum + (Number.isFinite(slotMass) ? slotMass : 1);
   }, 0);
+}
+
+function materialDensityKgM3(attributes = null) {
+  const densityScore = Number(attributes?.density);
+  return Number.isFinite(densityScore) && densityScore > 0 ? densityScore * 100 : null;
+}
+
+function materialMassKgFromVolume(volumeMm3, densityKgM3) {
+  if (!Number.isFinite(volumeMm3) || volumeMm3 <= 0 || !Number.isFinite(densityKgM3) || densityKgM3 <= 0) return null;
+  return volumeMm3 * 1e-9 * densityKgM3;
+}
+
+function materialCubeDimensionsFromVolume(volumeMm3) {
+  const volume = Number(volumeMm3);
+  if (!Number.isFinite(volume) || volume <= 0) return null;
+  const sideMeters = Math.cbrt(volume * 1e-9);
+  return { width: sideMeters, height: sideMeters, depth: sideMeters };
 }
 
 function smeltingNoRecipeStatusText(match, inputSlots = []) {
@@ -3455,6 +3897,8 @@ function smeltingInputRequirementLabel(input) {
 
 function smeltingExtraInputs(recipe, inputSlots = []) {
   const required = new Map(recipeRequirements(recipe).map((input) => [input.key, input.amount]));
+  const multiplier = smeltingBatchMultiplier(recipe, inputSlots);
+  if (multiplier >= 1) return [];
   const counts = createSmeltingInputCountFromSlots(inputSlots);
   return [...counts.entries()]
     .filter(([key, count]) => count > (required.get(key) ?? 0))
@@ -3465,8 +3909,7 @@ function smeltingExtraInputs(recipe, inputSlots = []) {
 }
 
 function smeltingInputName(slot) {
-  const atlas = getBlockAtlasEntry(slot?.atlasKey);
-  return slot?.meta?.name ?? localizedBlockResourceName(slot?.atlasKey, atlas);
+  return backpackSlotDisplayName(slot);
 }
 
 function smeltingInputBatchLabel(inputSlots = []) {
@@ -3560,7 +4003,7 @@ function elementPreviewColor(symbol) {
   }[symbol] ?? null;
 }
 
-function createSmeltingSlotPreview(slot, className) {
+function createSmeltingSlotPreview(slot, className, { size = chainBlockPreviewSize, previewDimensionsM = previewDimensionsForSlot(slot) } = {}) {
   const wrap = document.createElement("div");
   wrap.className = className;
   wrap.append(
@@ -3570,6 +4013,8 @@ function createSmeltingSlotPreview(slot, className) {
       rotating: false,
       block: null,
       immediate: false,
+      size,
+      previewDimensionsM,
     }),
   );
   return wrap;
@@ -3580,25 +4025,35 @@ function createSmeltingResourceSwatch(slot) {
     const material = slot.material ?? smeltingMaterialById(slot.materialId);
     const wrap = document.createElement("div");
     wrap.className = "smelting-resource-swatch smelting-resource-swatch-material";
-    wrap.append(createSmeltingMaterialPreview(material));
+    wrap.append(createSmeltingMaterialPreview(material ?? fallbackBackpackItemMaterial(slot), {
+      size: 64,
+      previewDimensionsM: previewDimensionsForSlot(slot),
+    }));
     wrap.setAttribute("aria-hidden", "true");
     return wrap;
   }
-  return createSmeltingSlotPreview(slot, "smelting-resource-swatch");
+  if (!slot?.blockType && (slot?.itemCode != null || slot?.itemRefId != null || slot?.itemPda)) {
+    const wrap = document.createElement("div");
+    wrap.className = "smelting-resource-swatch smelting-resource-swatch-material";
+    wrap.append(createSmeltingMaterialPreview(fallbackBackpackItemMaterial(slot), {
+      size: 64,
+      previewDimensionsM: previewDimensionsForSlot(slot),
+    }));
+    wrap.setAttribute("aria-hidden", "true");
+    return wrap;
+  }
+  return createSmeltingSlotPreview(slot, "smelting-resource-swatch", { size: 64 });
 }
 
-function createSmeltingMaterialPreview(recipe) {
+function createSmeltingMaterialPreview(recipe, { size = chainBlockPreviewSize, previewDimensionsM = null } = {}) {
   const box = document.createElement("div");
   box.className = "smelting-material-preview";
-  const canvas = document.createElement("canvas");
-  canvas.className = "smelting-material-preview-canvas";
-  canvas.width = chainBlockPreviewSize;
-  canvas.height = chainBlockPreviewSize;
+  const canvas = createResourceMaterialPreviewCanvas(recipe, {
+    className: "smelting-material-preview-canvas",
+    size,
+    previewDimensionsM,
+  });
   box.append(canvas);
-  const previewItem = queueStaticMaterialPreviewRender({ canvas, recipe });
-  box.__nicechunkCleanup = () => {
-    previewItem.cleanup();
-  };
   return box;
 }
 
@@ -4829,7 +5284,7 @@ function collectMarketSelectableItems() {
       slotIndex: slot.chainIndex,
       source: "backpack",
       backpack: backpack?.publicKey ?? null,
-      name: slot.meta?.name ?? gameText("main.backpack.coordinateResource", "Coordinate Resource"),
+      name: backpackSlotDisplayName(slot),
       meta: slot.meta?.source ?? gameText("main.backpack.unknownSource", "Unknown source"),
       category: marketCategoryForBackpackSlot(slot),
       iconType: marketIconTypeForCategory(marketCategoryForBackpackSlot(slot)),
@@ -5229,6 +5684,11 @@ function backpackPanelSlotSignature(slot, index) {
     slot.record?.worldZ ?? "",
     slot.meta?.name ?? "",
     slot.meta?.source ?? "",
+    slot.volumeMm3 ?? "",
+    slot.dimensionsM?.width ?? "",
+    slot.dimensionsM?.height ?? "",
+    slot.dimensionsM?.depth ?? "",
+    Number.isFinite(slot.massKg) ? slot.massKg : "",
   ].join("|");
 }
 
@@ -5272,12 +5732,19 @@ function createBackpackSlotsFromChain(backpack) {
             sourceSeed: `${sourceRecord.worldX ?? 0}:${sourceRecord.worldY ?? 0}:${sourceRecord.worldZ ?? 0}`,
           })
         : null;
+      const volumeMm3 = Number(chainSlot.volumeMm3) || 0;
+      const densityKgM3 = materialDensityKgM3(materialProperties?.attributes);
+      const massKg = materialMassKgFromVolume(volumeMm3, densityKgM3);
       slots[index] = {
         itemId: "backpack_item_ref",
         itemPda: chainSlot.itemPda,
         itemCode: chainSlot.itemCode,
         itemRefId: chainSlot.itemId,
         count: chainSlot.quantity ?? 1,
+        volumeMm3,
+        densityKgM3,
+        massKg,
+        dimensionsM: materialCubeDimensionsFromVolume(volumeMm3),
         chainIndex: chainSlot.index ?? index,
         sourceItemId: `backpack:${backpack.publicKey ?? ""}:item:${chainSlot.index ?? index}:${chainSlot.itemPda ?? ""}:${chainSlot.itemId ?? ""}`,
         meta: {
@@ -5290,6 +5757,9 @@ function createBackpackSlotsFromChain(backpack) {
             : chainSlot.itemPda ?? gameText("main.backpack.itemDirectory", "Item directory PDA"),
           elements: [
             gameText("main.backpack.quantityLine", "Quantity {count}", { count: chainSlot.quantity ?? 1 }),
+            ...(Number.isFinite(massKg) ? [gameText("main.backpack.massLine", "Mass {mass}", { mass: formatMassKg(massKg) })] : []),
+            ...(volumeMm3 > 0 ? [gameText("main.backpack.sizeLine", "Size {size}", { size: formatVolumeCubeSize(volumeMm3) })] : []),
+            ...(volumeMm3 > 0 ? [gameText("main.backpack.volumeLine", "Volume {volume}", { volume: formatVolumeMm3(volumeMm3) })] : []),
             materialId
               ? gameText("main.backpack.materialIdLine", "Material {id}", { id: materialId })
               : gameText("main.backpack.itemIdLine", "Item ID {id}", { id: chainSlot.itemId ?? "0" }),
@@ -5311,11 +5781,13 @@ function createBackpackSlotsFromChain(backpack) {
     const atlasKey = blockAtlasKeyForRenderType(blockType);
     const atlas = getBlockAtlasEntry(atlasKey);
     const massKg = atlas?.physical?.massKg ?? null;
+    const dimensionsM = atlas?.physical?.dimensionsM ?? null;
     slots[index] = {
       itemId: "backpack_resource",
       blockType,
       atlasKey,
       massKg,
+      dimensionsM,
       chainIndex: record.index ?? index,
       sourceItemId: marketBackpackSourceItemId(record.index ?? index, record, backpack.publicKey),
       legacySourceItemId: marketBackpackSourceItemId(record.index ?? index, record),
@@ -5324,6 +5796,8 @@ function createBackpackSlotsFromChain(backpack) {
         source: `${record.worldX}, ${record.worldY}, ${record.worldZ}`,
         elements: [
           gameText("main.backpack.massLine", "Mass {mass}", { mass: formatMassKg(massKg) }),
+          gameText("main.backpack.sizeLine", "Size {size}", { size: formatDimensionsM(dimensionsM) }),
+          ...(Number.isFinite(atlas?.physical?.volumeM3) ? [gameText("main.backpack.volumeLine", "Volume {volume}", { volume: formatVolumeM3(atlas.physical.volumeM3) })] : []),
           ...(atlas?.composition ?? []).slice(0, 3).map(([symbol, range]) => `${symbol} ${range}`),
         ],
       },
@@ -5422,6 +5896,7 @@ function backpackSlotsSignature(backpack) {
         slot.kind ?? "block",
         slot.quantity ?? 1,
         slot.itemCode ?? 0,
+        slot.volumeMm3 ?? 0,
         record.worldX ?? 0,
         record.worldY ?? 0,
         record.worldZ ?? 0,
@@ -5464,6 +5939,13 @@ function localizedBlockResourceName(atlasKey, atlas = null) {
   return atlas?.name ?? gameText("main.backpack.coordinateResource", "Coordinate Resource");
 }
 
+function backpackSlotDisplayName(slot) {
+  if (slot?.materialId) return smeltingMaterialName(slot.materialId);
+  const atlasKey = slot?.atlasKey ?? (slot?.blockType ? blockAtlasKeyForRenderType(slot.blockType) : "");
+  if (atlasKey) return localizedBlockResourceName(atlasKey, getBlockAtlasEntry(atlasKey));
+  return slot?.meta?.name ?? gameText("main.backpack.coordinateResource", "Coordinate Resource");
+}
+
 function normalizedMinedLogBlock(block) {
   const canonicalType = canonicalRenderTypeAt({ x: block?.x, y: block?.y, z: block?.z });
   const type = canonicalType ?? block?.type ?? generatedBlockTypeAt(block?.x, block?.y, block?.z) ?? "stone";
@@ -5486,6 +5968,55 @@ function formatMassKg(value) {
   if (value >= 10) return `${value.toFixed(1)} kg`;
   if (value >= 1) return `${value.toFixed(2)} kg`;
   return `${Math.round(value * 1000)} g`;
+}
+
+function formatVolumeCubeSize(volumeMm3) {
+  return formatDimensionsM(materialCubeDimensionsFromVolume(volumeMm3));
+}
+
+function formatDimensionsM(dimensions) {
+  const width = Number(dimensions?.width);
+  const height = Number(dimensions?.height);
+  const depth = Number(dimensions?.depth);
+  if (![width, height, depth].every((value) => Number.isFinite(value) && value > 0)) {
+    return gameText("main.backpack.unknownSize", "Unknown");
+  }
+  return `${formatLengthM(width)} x ${formatLengthM(height)} x ${formatLengthM(depth)}`;
+}
+
+function previewDimensionsForSlot(slot) {
+  if (!slot) return null;
+  const explicit = normalizedPreviewDimensions(slot.dimensionsM);
+  if (explicit) return explicit;
+  if (Number(slot.volumeMm3) > 0) return materialCubeDimensionsFromVolume(slot.volumeMm3);
+  return null;
+}
+
+function normalizedPreviewDimensions(dimensions) {
+  const width = Number(dimensions?.width);
+  const height = Number(dimensions?.height);
+  const depth = Number(dimensions?.depth);
+  if (![width, height, depth].every((value) => Number.isFinite(value) && value > 0)) return null;
+  return { width, height, depth };
+}
+
+function formatLengthM(value) {
+  if (!Number.isFinite(value) || value <= 0) return gameText("main.backpack.unknownSize", "Unknown");
+  if (value >= 1) return `${Number(value.toFixed(2))} m`;
+  if (value >= 0.01) return `${Number((value * 100).toFixed(1))} cm`;
+  return `${Number((value * 1000).toFixed(1))} mm`;
+}
+
+function formatVolumeMm3(volumeMm3) {
+  const volumeM3 = Number(volumeMm3) * 1e-9;
+  return formatVolumeM3(volumeM3);
+}
+
+function formatVolumeM3(volumeM3) {
+  if (!Number.isFinite(volumeM3) || volumeM3 <= 0) return gameText("main.backpack.unknownSize", "Unknown");
+  if (volumeM3 >= 1) return `${Number(volumeM3.toFixed(3))} m3`;
+  if (volumeM3 >= 0.001) return `${Number((volumeM3 * 1000).toFixed(2))} L`;
+  return `${Number((volumeM3 * 1_000_000).toFixed(1))} cm3`;
 }
 
 function createBackpackSlotElement(slot, index, { renderPreview = true } = {}) {
@@ -5579,18 +6110,75 @@ function createBackpackItemIcon(item, slot = null) {
       className: "backpack-block-preview",
       canvasClassName: "backpack-block-canvas",
       rotating: false,
+      previewDimensionsM: previewDimensionsForSlot(slot),
     });
   }
   if (slot?.materialId) {
     const material = slot.material ?? smeltingMaterialById(slot.materialId);
     const wrap = document.createElement("span");
     wrap.className = "backpack-material-icon";
-    wrap.append(createSmeltingMaterialPreview({ color: smeltingRecipeColor(material) ?? "#8bd8ff" }));
+    const preview = createSmeltingMaterialPreview(material ?? fallbackBackpackItemMaterial(slot), {
+      previewDimensionsM: previewDimensionsForSlot(slot),
+    });
+    preview.classList.add("backpack-material-preview");
+    wrap.append(preview);
+    return wrap;
+  }
+  if (slot?.itemCode != null || slot?.itemRefId != null || slot?.itemPda) {
+    const wrap = document.createElement("span");
+    wrap.className = "backpack-material-icon";
+    const preview = createSmeltingMaterialPreview(fallbackBackpackItemMaterial(slot), {
+      previewDimensionsM: previewDimensionsForSlot(slot),
+    });
+    preview.classList.add("backpack-material-preview");
+    wrap.append(preview);
     return wrap;
   }
   const icon = document.createElement("span");
   icon.className = `backpack-item-icon ${item.iconClass ?? ""}`.trim();
   return icon;
+}
+
+function fallbackBackpackItemMaterial(slot = null) {
+  const seed = `${slot?.itemCode ?? ""}:${slot?.itemRefId ?? ""}:${slot?.itemPda ?? ""}:${slot?.sourceItemId ?? ""}`;
+  const hue = hashStringToHue(seed || "backpack-item");
+  const color = hslToHex(hue, 62, 58);
+  return {
+    id: `backpack_item_${slot?.itemCode ?? "unknown"}`,
+    class: "composite",
+    color,
+    composition: [],
+  };
+}
+
+function hashStringToHue(value) {
+  let hash = 2166136261;
+  for (const char of String(value)) {
+    hash ^= char.charCodeAt(0);
+    hash = Math.imul(hash, 16777619);
+  }
+  return Math.abs(hash) % 360;
+}
+
+function hslToHex(hue, saturation, lightness) {
+  const s = saturation / 100;
+  const l = lightness / 100;
+  const c = (1 - Math.abs(2 * l - 1)) * s;
+  const x = c * (1 - Math.abs((hue / 60) % 2 - 1));
+  const m = l - c / 2;
+  const [r1, g1, b1] = hue < 60
+    ? [c, x, 0]
+    : hue < 120
+      ? [x, c, 0]
+      : hue < 180
+        ? [0, c, x]
+        : hue < 240
+          ? [0, x, c]
+          : hue < 300
+            ? [x, 0, c]
+            : [c, 0, x];
+  const toHex = (channel) => Math.round((channel + m) * 255).toString(16).padStart(2, "0");
+  return `#${toHex(r1)}${toHex(g1)}${toHex(b1)}`;
 }
 
 function renderBackpackDetail(slot) {
@@ -5632,6 +6220,7 @@ function renderBackpackDetail(slot) {
           canvasClassName: "backpack-detail-block-canvas",
           rotating: false,
           block: previewBlockFromSlot(slot),
+          previewDimensionsM: previewDimensionsForSlot(slot),
         })
       : createBackpackItemIcon(item, slot),
   );
@@ -5643,7 +6232,7 @@ function renderBackpackDetail(slot) {
     <p></p>
     <div class="backpack-elements"></div>
   `;
-  copy.querySelector("strong").textContent = meta.name || t(item.labelKey);
+  copy.querySelector("strong").textContent = backpackSlotDisplayName(slot) || t(item.labelKey);
   copy.querySelector("p").textContent = t("main.backpack.detailLine", {
     source: meta.source || t("main.backpack.unknownSource"),
   });
@@ -5659,7 +6248,7 @@ function renderBackpackDetail(slot) {
 
 function backpackItemLabel(slot) {
   const item = hotbarItems[slot.itemId] ?? { labelKey: "main.item.empty" };
-  return slot?.meta?.name ?? t(item.labelKey);
+  return backpackSlotDisplayName(slot) || t(item.labelKey);
 }
 
 function previewBlockFromSlot(slot) {
@@ -5732,7 +6321,7 @@ function openBackpackContextMenu(slotIndex, x, y) {
   if (title) {
     title.textContent = backpackSelectionMode
       ? gameText("main.backpack.selectedCount", "{count} selected", { count: selectedCount })
-      : item?.meta?.name ?? gameText("main.backpack.coordinateResource", "Coordinate Resource");
+      : backpackSlotDisplayName(item);
   }
   if (select) {
     select.hidden = backpackSelectionMode;
@@ -5854,7 +6443,7 @@ async function discardBackpackSlot(slotIndex) {
     "info",
     gameText("main.backpack.discardPending", "Discard submitted"),
     gameText("main.backpack.discardPendingDetail", "Removing {item} from backpack", {
-      item: slot.meta?.name ?? gameText("main.backpack.coordinateResource", "Coordinate Resource"),
+      item: backpackSlotDisplayName(slot),
     }),
     { block },
   );
@@ -6425,6 +7014,16 @@ function updatePlayer(dt) {
   } else {
     player.grounded = false;
   }
+
+  if (player.moving) markMovementInteraction();
+}
+
+function markMovementInteraction() {
+  lastMovementInteractionAt = performance.now();
+}
+
+function isMovementChainQuietActive() {
+  return player.moving || performance.now() - lastMovementInteractionAt < movementChainQuietWindowMs;
 }
 
 function playerMoveInput() {
@@ -6914,6 +7513,7 @@ function applyGuardianDigEventToWorld(event) {
   const key = blockKey(event.x, event.y, event.z);
   if (removedBlocks.has(key) && !solidBlocks.has(key)) return;
   removedBlocks.add(key);
+  pendingMinedBlocks.delete(key);
   blockDamage.delete(key);
   solidBlocks.delete(key);
   placedBlocks.delete(key);
@@ -8218,6 +8818,7 @@ function placeHeldBlock(hit, type) {
   const key = blockKey(target.x, target.y, target.z);
   worldState.dynamicWater.delete(key);
   removedBlocks.delete(key);
+  pendingMinedBlocks.delete(key);
   blockDamage.delete(key);
   placedBlocks.set(key, type);
   solidBlocks.add(key);
@@ -8409,6 +9010,7 @@ function requestChunkWorkerBuild({ key, chunkX, chunkZ, detailMode, target }) {
   if (current) cancelChunkWorkerBuild(key);
 
   const scopedEdits = chunkScopedWorldEdits(chunkX, chunkZ);
+  if (scopedEdits.pendingKeys.length) return false;
   const worldConfig = serializableWorldConfig();
   const cacheKey = chunkRenderDataCacheKey({ chunkX, chunkZ, detailMode, worldConfig, scopedEdits });
   const cached = getCachedChunkRenderData(cacheKey);
@@ -8447,6 +9049,7 @@ function chunkRenderDataCacheKey({ chunkX, chunkZ, detailMode, worldConfig, scop
     detailMode,
     worldConfigSignature(worldConfig),
     cellKeySignature(scopedEdits.removedKeys),
+    cellKeySignature(scopedEdits.pendingKeys),
     cellEntrySignature(scopedEdits.placedEntries),
     cellKeySignature(scopedEdits.dynamicWaterKeys),
   ].join("|");
@@ -8497,6 +9100,7 @@ function chunkScopedWorldEdits(chunkX, chunkZ) {
   const maxZ = minZ + chunkSize + 1;
   const edits = {
     removedKeys: collectIndexedCellKeysByXZ(worldEditIndex.removedByChunk, minX, maxX, minZ, maxZ),
+    pendingKeys: collectIndexedCellKeysByXZ(worldEditIndex.pendingByChunk, minX, maxX, minZ, maxZ),
     placedEntries: collectIndexedCellEntriesByXZ(worldEditIndex.placedByChunk, minX, maxX, minZ, maxZ),
     dynamicWaterKeys: collectIndexedCellKeysByXZ(worldEditIndex.dynamicWaterByChunk, minX, maxX, minZ, maxZ),
   };
@@ -8508,6 +9112,7 @@ function ensureWorldEditIndex() {
   if (worldEditIndex.version === worldEditVersion) return;
   worldEditIndex.version = worldEditVersion;
   worldEditIndex.removedByChunk = indexCellKeysByChunk(removedBlocks);
+  worldEditIndex.pendingByChunk = indexCellKeysByChunk(pendingMinedBlocks.keys());
   worldEditIndex.placedByChunk = indexCellEntriesByChunk(placedBlocks);
   worldEditIndex.dynamicWaterByChunk = indexCellKeysByChunk(worldState.dynamicWater ?? []);
   worldEditIndex.scopedCache.clear();
@@ -8995,6 +9600,7 @@ function retainGeneratedSolidRefs(keys) {
 function updateChunkChainViewportSync() {
   if (!isNicechunkChainFeatureEnabled()) return;
   if (chunkChainViewportLoading) return;
+  if (isMiningInteractionActive()) return;
   const centerChunkX = Math.floor(player.position.x / chunkSize);
   const centerChunkZ = Math.floor(player.position.z / chunkSize);
   const centerKey = chunkKey(centerChunkX, centerChunkZ);
@@ -9092,6 +9698,7 @@ async function applyChunkChainDeltas(deltas, appliedSequence = 0) {
     const key = blockKey(delta.x, delta.y, delta.z);
     if (delta.action === 1 && delta.newBlockId === 0) {
       if (!removedBlocks.has(key)) changed = true;
+      if (pendingMinedBlocks.delete(key)) changed = true;
       removedBlocks.add(key);
       blockDamage.delete(key);
       solidBlocks.delete(key);
@@ -9102,6 +9709,7 @@ async function applyChunkChainDeltas(deltas, appliedSequence = 0) {
       const renderType = renderTypeForBlockId(delta.newBlockId);
       if (!renderType) continue;
       if (placedBlocks.get(key) !== renderType || removedBlocks.has(key) || !solidBlocks.has(key)) changed = true;
+      if (pendingMinedBlocks.delete(key)) changed = true;
       removedBlocks.delete(key);
       blockDamage.delete(key);
       placedBlocks.set(key, renderType);
@@ -9420,9 +10028,11 @@ function createCloudSector(sectorX, sectorZ) {
 }
 
 function startMiningSwing(targetBlock = null, targetHit = null) {
+  markMiningInteraction();
   if (targetBlock) player.selectedBlock = targetBlock;
   if (!player.selectedBlock || !isBlockInMiningArea(player.selectedBlock)) return false;
   if (isUnbreakableBlock(player.selectedBlock)) return false;
+  if (pendingMinedBlocks.has(player.selectedBlock.key)) return false;
   if (!hasEquippedBackpack()) {
     const row = appendChainEventLog(
       "warn",
@@ -9453,6 +10063,8 @@ function cloneMiningHit(hit) {
 }
 
 function applyMiningDamage(hit) {
+  markMiningInteraction();
+  if (pendingMinedBlocks.has(hit.block.key)) return false;
   const nextDamage = (blockDamage.get(hit.block.key) ?? 0) + 1;
   const requiredDamage = debugMiningEnabled ? 1 : 3;
   blockDamage.set(hit.block.key, nextDamage);
@@ -9460,16 +10072,11 @@ function applyMiningDamage(hit) {
   spawnHitParticles(hit.block, hit.point, hit.normal, nextDamage);
 
   if (nextDamage >= requiredDamage) {
-    blockDamage.delete(hit.block.key);
-    removedBlocks.add(hit.block.key);
-    solidBlocks.delete(hit.block.key);
-    invalidateWorldQueryCache();
+    if (!markMinedBlockPending(hit.block)) return false;
     player.miningContact = null;
     crackMarker.visible = false;
     spawnBreakParticles(hit.block);
     rebuildChunksAroundBlock(hit.block);
-    flowWaterFromBreak(hit.block);
-    sendGuardianDig(hit.block, 3);
     submitMinedBlockToChain(hit.block);
     if (!isNicechunkChainFeatureEnabled()) {
       const discovery = simulateResourceDiscovery({ block: hit.block, debug: debugMiningEnabled });
@@ -9483,6 +10090,15 @@ function applyMiningDamage(hit) {
   return true;
 }
 
+function markMiningInteraction() {
+  lastMiningInteractionAt = performance.now();
+}
+
+function isMiningInteractionActive() {
+  const now = performance.now();
+  return player.miningSwing > now || now - lastMiningInteractionAt < miningChainQuietWindowMs;
+}
+
 function updateMiningToolCollision() {
   const now = performance.now();
   const remaining = Math.max(0, player.miningSwing - now);
@@ -9493,7 +10109,7 @@ function updateMiningToolCollision() {
   }
   if (player.miningHitDone || !player.selectedBlock) return;
   if (!isBlockInMiningArea(player.selectedBlock) || isUnbreakableBlock(player.selectedBlock)) return;
-  if (removedBlocks.has(player.selectedBlock.key) || !solidBlocks.has(player.selectedBlock.key)) return;
+  if (removedBlocks.has(player.selectedBlock.key) || pendingMinedBlocks.has(player.selectedBlock.key) || !solidBlocks.has(player.selectedBlock.key)) return;
 
   avatar.updateMatrixWorld(true);
   const boxes = miningToolCollisionBoxes();
@@ -9562,11 +10178,46 @@ function clampPointToBox(point, box) {
   );
 }
 
+function markMinedBlockPending(block) {
+  if (!block?.key || removedBlocks.has(block.key)) return false;
+  pendingMinedBlocks.set(block.key, {
+    block: { x: block.x, y: block.y, z: block.z, type: block.type, key: block.key },
+    startedAt: performance.now(),
+  });
+  blockDamage.delete(block.key);
+  markWorldEditsChanged();
+  return true;
+}
+
+function finalizePendingMinedBlock(block) {
+  if (!block?.key) return false;
+  pendingMinedBlocks.delete(block.key);
+  blockDamage.delete(block.key);
+  removedBlocks.add(block.key);
+  solidBlocks.delete(block.key);
+  invalidateWorldQueryCache();
+  rebuildChunksAroundBlock(block);
+  flowWaterFromBreak(block);
+  sendGuardianDig(block, 3);
+  return true;
+}
+
+function restorePendingMinedBlock(block) {
+  if (!block?.key || !pendingMinedBlocks.has(block.key)) return false;
+  pendingMinedBlocks.delete(block.key);
+  blockDamage.delete(block.key);
+  solidBlocks.add(block.key);
+  invalidateWorldQueryCache();
+  rebuildChunksAroundBlock(block);
+  return true;
+}
+
 function submitMinedBlockToChain(block) {
   const coords = formatBlockCoords(block);
   const pendingLogBlock = normalizedMinedLogBlock(block);
   const pendingResource = minedResourceNameForBlock(pendingLogBlock);
   if (!isNicechunkChainFeatureEnabled()) {
+    finalizePendingMinedBlock(block);
     const row = appendChainEventLog("warn", gameText("main.chainLog.mineSkipped", "Mining sync skipped"), gameText("main.chainLog.disabled", "On-chain sync is disabled for {resource} at {coords}", { coords, resource: pendingResource }), { block: pendingLogBlock });
     scheduleChainEventLogRemoval(row);
     return;
@@ -9576,13 +10227,18 @@ function submitMinedBlockToChain(block) {
     const ready = await ensureGameplaySessionFundingForMining(chainModule);
     if (!ready) return { submitted: false, reason: "session-funding-cancelled" };
     logEntry = appendChainEventLog("info", gameText("main.chainLog.minePending", "Mining submitted, awaiting confirmation"), gameText("main.chainLog.minePendingDetail", "Submitting {resource} at {coords} to devnet", { coords, resource: pendingResource }), { block: pendingLogBlock });
-    return chainModule.recordBlockBreakOnChain(block, selectedHotbarSlot);
+    return chainModule.recordBlockBreakOnChain(block, selectedHotbarSlot, {
+      backpackAddress: equippedBackpackStatus?.backpack?.publicKey ?? null,
+      backpackItemCount: equippedBackpackStatus?.backpack?.itemCount ?? null,
+      backpackCapacity: equippedBackpackStatus?.backpack?.capacity ?? null,
+    });
   }).then((result) => {
     const resultLogBlock = normalizedMinedLogBlock(result?.block ?? pendingLogBlock);
     const resource = minedResourceNameForBlock(resultLogBlock);
     if (!result?.submitted) {
       const reason = chainSubmitReasonLabel(result?.reason);
       if (result?.reason === "already-mined") {
+        finalizePendingMinedBlock(block);
         logEntry = updateChainEventLog(logEntry, "warn", gameText("main.chainLog.alreadyMined", "Block already recorded"), gameText("main.chainLog.mineSkippedDetail", "{resource} at {coords}: {reason}", { coords, reason, resource }), { block: resultLogBlock });
         scheduleChainEventLogRemoval(logEntry);
         return;
@@ -9592,13 +10248,13 @@ function submitMinedBlockToChain(block) {
       scheduleChainEventLogRemoval(logEntry);
       return;
     }
+    finalizePendingMinedBlock(block);
     updateChainEventLog(logEntry, "success", gameText("main.chainLog.mineSubmitted", "Mining confirmed"), gameText("main.chainLog.signature", "{resource} at {coords}: {signature}", {
       coords,
       resource,
       signature: shortSignature(result.signature),
     }), { block: resultLogBlock });
     animateChainBlockToBackpack(logEntry);
-    void refreshGameplaySessionHud({ force: true });
     void refreshEquippedBackpack({ force: true });
   }).catch((error) => {
     console.warn("Failed to record block break on NiceChunk chunk PDA", error);
@@ -9606,7 +10262,8 @@ function submitMinedBlockToChain(block) {
     const title = isBlockAlreadyMinedError(error)
       ? gameText("main.chainLog.alreadyMined", "Block already recorded")
       : gameText("main.chainLog.mineFailed", "Mining transaction failed");
-    if (!isBlockAlreadyMinedError(error)) restoreMinedBlockAfterSubmitFailure(block);
+    if (isBlockAlreadyMinedError(error)) finalizePendingMinedBlock(block);
+    else restoreMinedBlockAfterSubmitFailure(block);
     if (!logEntry) {
       const failedLogEntry = appendChainEventLog(kind, title, gameText("main.chainLog.mineFailedDetail", "{resource} at {coords}: {reason}", {
         coords,
@@ -9626,8 +10283,11 @@ function submitMinedBlockToChain(block) {
 }
 
 function restoreMinedBlockAfterSubmitFailure(block) {
-  if (!block?.key || !removedBlocks.has(block.key)) return;
+  if (!block?.key) return;
+  if (restorePendingMinedBlock(block)) return;
+  if (!removedBlocks.has(block.key)) return;
   removedBlocks.delete(block.key);
+  pendingMinedBlocks.delete(block.key);
   blockDamage.delete(block.key);
   clearDynamicWaterNearBlock(block);
   solidBlocks.add(block.key);
@@ -9691,20 +10351,24 @@ function createChainEventBlockPreview(blockType, {
   rotating = true,
   block = null,
   immediate = false,
+  size = chainBlockPreviewSize,
+  previewDimensionsM = null,
 } = {}) {
   const preview = document.createElement("div");
   preview.className = className;
   const previewCanvas = document.createElement("canvas");
   previewCanvas.className = canvasClassName;
-  previewCanvas.width = chainBlockPreviewSize;
-  previewCanvas.height = chainBlockPreviewSize;
+  previewCanvas.width = size;
+  previewCanvas.height = size;
   preview.append(previewCanvas);
 
   if (!rotating && !immediate) {
-    const previewItem = queueStaticBlockPreviewRender({ canvas: previewCanvas, blockType, block });
-    preview.__nicechunkCleanup = () => {
-      previewItem.cleanup();
-    };
+    const sharedCanvas = createResourceBlockPreviewCanvas(blockType, {
+      className: canvasClassName,
+      size,
+      previewDimensionsM,
+    });
+    previewCanvas.replaceWith(sharedCanvas);
     return preview;
   }
 
@@ -9871,16 +10535,9 @@ function isBushPreviewType(type) {
 const chainBlockPreviewSize = 144;
 const chainBlockPreviewRenderSize = 144;
 const chainBlockPreviewItems = new Set();
-const staticBlockPreviewQueue = [];
-const staticBlockPreviewCache = new Map();
-const staticBlockPreviewCacheMax = 220;
-const staticBlockPreviewFrameBudgetDesktop = 3;
-const staticBlockPreviewFrameBudgetMobile = 1;
 let chainBlockPreviewFrame = 0;
 let chainBlockPreviewRenderer = null;
 let chainBlockPreviewCanvas = null;
-let staticBlockPreviewFrame = 0;
-let staticBlockPreviewState = null;
 
 function getChainBlockPreviewRenderer() {
   if (chainBlockPreviewRenderer) return chainBlockPreviewRenderer;
@@ -9925,240 +10582,6 @@ function registerChainBlockPreviewRender({ canvas, scene, camera, mesh, rotating
     chainBlockPreviewFrame = requestAnimationFrame(renderChainBlockPreviews);
   }
   return item;
-}
-
-function queueStaticBlockPreviewRender({ canvas, blockType, block = null }) {
-  const item = {
-    canvas,
-    blockType,
-    block,
-    cacheKey: staticBlockPreviewCacheKey(blockType, block),
-    active: true,
-    cleanup() {
-      item.active = false;
-    },
-  };
-
-  const cached = staticBlockPreviewCache.get(item.cacheKey);
-  if (cached) {
-    drawStaticBlockPreviewCache(canvas, cached);
-    return item;
-  }
-
-  staticBlockPreviewQueue.push(item);
-  if (!staticBlockPreviewFrame) {
-    staticBlockPreviewFrame = requestAnimationFrame(renderQueuedStaticBlockPreviews);
-  }
-  return item;
-}
-
-function queueStaticMaterialPreviewRender({ canvas, recipe = null }) {
-  const item = {
-    kind: "material",
-    canvas,
-    recipe,
-    cacheKey: staticMaterialPreviewCacheKey(recipe),
-    active: true,
-    cleanup() {
-      item.active = false;
-    },
-  };
-
-  const cached = staticBlockPreviewCache.get(item.cacheKey);
-  if (cached) {
-    drawStaticBlockPreviewCache(canvas, cached);
-    return item;
-  }
-
-  staticBlockPreviewQueue.push(item);
-  if (!staticBlockPreviewFrame) {
-    staticBlockPreviewFrame = requestAnimationFrame(renderQueuedStaticBlockPreviews);
-  }
-  return item;
-}
-
-function renderQueuedStaticBlockPreviews() {
-  staticBlockPreviewFrame = 0;
-  let rendered = 0;
-  const frameBudget = staticBlockPreviewFrameBudget();
-
-  while (staticBlockPreviewQueue.length && rendered < frameBudget) {
-    const item = staticBlockPreviewQueue.shift();
-    if (!item?.active || !item.canvas?.isConnected) continue;
-
-    const cached = staticBlockPreviewCache.get(item.cacheKey);
-    if (cached) {
-      drawStaticBlockPreviewCache(item.canvas, cached);
-      continue;
-    }
-
-    const snapshot = item.kind === "material"
-      ? renderStaticMaterialPreviewSnapshot(item.recipe)
-      : renderStaticBlockPreviewSnapshot(item.blockType, item.block);
-    if (!snapshot) continue;
-    rememberStaticBlockPreview(item.cacheKey, snapshot);
-    drawStaticBlockPreviewCache(item.canvas, snapshot);
-    rendered++;
-  }
-
-  if (staticBlockPreviewQueue.length) {
-    staticBlockPreviewFrame = requestAnimationFrame(renderQueuedStaticBlockPreviews);
-  }
-}
-
-function staticBlockPreviewFrameBudget() {
-  return isMobileViewport() ? staticBlockPreviewFrameBudgetMobile : staticBlockPreviewFrameBudgetDesktop;
-}
-
-function renderStaticBlockPreviewSnapshot(blockType, block = null) {
-  const state = getStaticBlockPreviewState();
-  const object = createBlockPreviewObject(blockType, block);
-  object.rotation.x = -0.28;
-  object.rotation.y = 0.72;
-  object.rotation.z = 0.04;
-  state.scene.add(object);
-
-  const renderer = getChainBlockPreviewRenderer();
-  renderer.render(state.scene, state.camera);
-  state.scene.remove(object);
-  disposePreviewObject(object);
-
-  const snapshot = document.createElement("canvas");
-  snapshot.width = chainBlockPreviewSize;
-  snapshot.height = chainBlockPreviewSize;
-  const context = snapshot.getContext("2d", { alpha: true });
-  if (!context) return null;
-  context.clearRect(0, 0, snapshot.width, snapshot.height);
-  context.imageSmoothingEnabled = false;
-  context.drawImage(
-    chainBlockPreviewCanvas,
-    0,
-    0,
-    chainBlockPreviewRenderSize,
-    chainBlockPreviewRenderSize,
-    0,
-    0,
-    snapshot.width,
-    snapshot.height,
-  );
-  return snapshot;
-}
-
-function renderStaticMaterialPreviewSnapshot(recipe = null) {
-  const state = getStaticBlockPreviewState();
-  const object = createMaterialPreviewObject(recipe);
-  object.rotation.x = -0.28;
-  object.rotation.y = 0.72;
-  object.rotation.z = 0.04;
-  state.scene.add(object);
-
-  const renderer = getChainBlockPreviewRenderer();
-  renderer.render(state.scene, state.camera);
-  state.scene.remove(object);
-  disposePreviewObject(object);
-
-  const snapshot = document.createElement("canvas");
-  snapshot.width = chainBlockPreviewSize;
-  snapshot.height = chainBlockPreviewSize;
-  const context = snapshot.getContext("2d", { alpha: true });
-  if (!context) return null;
-  context.clearRect(0, 0, snapshot.width, snapshot.height);
-  context.imageSmoothingEnabled = false;
-  context.drawImage(
-    chainBlockPreviewCanvas,
-    0,
-    0,
-    chainBlockPreviewRenderSize,
-    chainBlockPreviewRenderSize,
-    0,
-    0,
-    snapshot.width,
-    snapshot.height,
-  );
-  return snapshot;
-}
-
-function createMaterialPreviewObject(recipe = null) {
-  const color = normalizePreviewColor(recipe?.color ?? smeltingRecipeColor(recipe) ?? "#8bd8ff");
-  const material = new THREE.MeshLambertMaterial({
-    color,
-    emissive: color,
-    emissiveIntensity: 0.08,
-  });
-  material.fog = false;
-  material.name = `smelting-material:${recipe?.id ?? color}`;
-  const group = new THREE.Group();
-  group.name = material.name;
-
-  const body = new THREE.Mesh(cubeGeometry, material);
-  body.castShadow = false;
-  body.receiveShadow = false;
-  group.add(body);
-
-  const edgeMaterial = new THREE.LineBasicMaterial({
-    color: 0xffffff,
-    transparent: true,
-    opacity: 0.16,
-  });
-  edgeMaterial.fog = false;
-  const edges = new THREE.LineSegments(new THREE.EdgesGeometry(cubeGeometry), edgeMaterial);
-  edges.geometry.userData.disposeWithPreview = true;
-  edges.scale.setScalar(1.004);
-  group.add(edges);
-  return group;
-}
-
-function getStaticBlockPreviewState() {
-  if (staticBlockPreviewState) return staticBlockPreviewState;
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 20);
-  camera.position.set(2.45, 1.9, 2.7);
-  camera.lookAt(0, 0, 0);
-  scene.add(new THREE.HemisphereLight(0xf4fbff, 0x526044, 2.8));
-  const keyLight = new THREE.DirectionalLight(0xfff2bf, 2.2);
-  keyLight.position.set(-3.4, 4.2, 3.8);
-  scene.add(keyLight);
-  const fillLight = new THREE.DirectionalLight(0x7be8ff, 0.5);
-  fillLight.position.set(3, 2, -2);
-  scene.add(fillLight);
-
-  staticBlockPreviewState = { scene, camera };
-  return staticBlockPreviewState;
-}
-
-function drawStaticBlockPreviewCache(canvas, snapshot) {
-  const context = canvas.getContext("2d", { alpha: true });
-  if (!context) return;
-  context.clearRect(0, 0, canvas.width, canvas.height);
-  context.imageSmoothingEnabled = false;
-  context.drawImage(snapshot, 0, 0, canvas.width, canvas.height);
-}
-
-function rememberStaticBlockPreview(cacheKey, snapshot) {
-  if (staticBlockPreviewCache.has(cacheKey)) staticBlockPreviewCache.delete(cacheKey);
-  staticBlockPreviewCache.set(cacheKey, snapshot);
-  while (staticBlockPreviewCache.size > staticBlockPreviewCacheMax) {
-    const oldestKey = staticBlockPreviewCache.keys().next().value;
-    staticBlockPreviewCache.delete(oldestKey);
-  }
-}
-
-function staticBlockPreviewCacheKey(blockType, block = null) {
-  if (!block || !Number.isFinite(block.x) || !Number.isFinite(block.y) || !Number.isFinite(block.z)) {
-    return `${blockType}:base`;
-  }
-  return `${blockType}:${block.x}:${block.y}:${block.z}`;
-}
-
-function staticMaterialPreviewCacheKey(recipe = null) {
-  return `material:${recipe?.id ?? "custom"}:${normalizePreviewColor(recipe?.color ?? smeltingRecipeColor(recipe) ?? "#8bd8ff")}`;
-}
-
-function normalizePreviewColor(color) {
-  if (typeof color === "number" && Number.isFinite(color)) return color;
-  const parsed = new THREE.Color(color || "#8bd8ff");
-  return parsed.getHex();
 }
 
 function disposePreviewObject(object) {

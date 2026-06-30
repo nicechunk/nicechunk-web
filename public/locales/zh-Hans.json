@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hans",
     "label": "Simplified Chinese",
-    "version": "locale-zh-Hans-28ccb606efb460bb",
-    "contentHash": "28ccb606efb460bb"
+    "version": "locale-zh-Hans-fbfc3a99eabcc30c",
+    "contentHash": "fbfc3a99eabcc30c"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -291,10 +291,13 @@
       "coordinateResource": "坐标资源",
       "totalWeight": "总重量：{weight}",
       "massLine": "质量 {mass}",
+      "sizeLine": "尺寸 {size}",
+      "volumeLine": "体积 {volume}",
       "quantityLine": "数量 {count}",
       "itemIdLine": "物品 ID {id}",
       "materialIdLine": "材料 {id}",
       "unknownMass": "未知",
+      "unknownSize": "未知",
       "materialPropertyLine": "{grade}品级 · 纯度 {purity}/100"
     },
     "loading": {
@@ -530,6 +533,7 @@
       "noFuel": "背包里没有兼容燃料。",
       "selectInput": "选择一个背包资源以预览输出。",
       "materialSource": "已采集材料",
+      "resourceMassSize": "{mass} · {size}",
       "dropInputHint": "把已采集材料拖到这里",
       "dropFuelHint": "把燃料方块拖到这里",
       "emptySyncTitle": "正在同步背包",
@@ -553,7 +557,10 @@
       "mixedBatch": "混合批次",
       "batchBasis": "{inputs} 个输入 / {fuels} 个燃料",
       "requiredHeat": "所需热量",
+      "servings": "份数",
+      "outputSize": "输出尺寸",
       "yieldRange": "产出区间",
+      "inputMass": "输入质量 {mass}",
       "quality": "品质依据",
       "heatMet": "已满足等级 {tier}",
       "heatMissing": "需要等级 {required}，燃料 {fuel}",
@@ -590,6 +597,12 @@
       "recipeFilterAria": "熔炼配方筛选",
       "recipeProgress": "已匹配 {matched}/{required} 个输入格 · 热量等级 {tier}",
       "recipeRequirement": "{resource} {available}/{amount}",
+      "recipeServings": "份数",
+      "recipeServingsValue": "{count}份",
+      "recipeOutputSize": "输出 {size}",
+      "increaseServings": "增加份数",
+      "decreaseServings": "减少份数",
+      "notReady": "未就绪",
       "selectRecipe": "选择配方",
       "findInputs": "查找输入",
       "recipeReady": "可熔炼",
@@ -1891,6 +1904,24 @@
         }
       }
     },
+    "drop": {
+      "eyebrow": "链上掉落表",
+      "title": "文明规则可以增加稀有额外掉落，而不膨胀地形代码。",
+      "body": "canonical 地形算法仍然负责确认被挖掘的基础方块。紧凑的链上掉落表会根据来源方块、海拔、深度和种子概率，确定是否产生额外奖励。",
+      "ruleSetLabel": "规则集",
+      "contractBody": "这个 PDA 面向文明系统设计：通过的提案只追加有边界的规则字节，不需要重新部署挖掘程序。",
+      "source": "来源",
+      "extraDrop": "额外掉落",
+      "chance": "概率",
+      "size": "掉落尺寸",
+      "altitude": "海拔",
+      "depth": "深度",
+      "detailTitle": "额外掉落来源",
+      "detailBody": "链上会按紧凑的 {ruleSet} 字节设计：来源资源、概率、样本尺寸窗口、海拔窗口和深度窗口。",
+      "chanceValue": "{value}%",
+      "sizeValue": "{min} 到 {max}",
+      "rangeValue": "{min} 到 {max}"
+    },
     "category": {
       "all": "全部方块",
       "terrain": "地形",
@@ -3166,7 +3197,7 @@
       "hammer": "铁锤",
       "saw": "锯子",
       "handDrill": "手钻",
-      "carvingKnife": "刻刀",
+      "grip": "握把",
       "axe": "斧头",
       "sprayGun": "喷枪",
       "empty": "空"
@@ -3204,6 +3235,8 @@
     "rotateX": "旋转 X",
     "rotateY": "旋转 Y",
     "rotateZ": "旋转 Z",
+    "rotateObject": "旋转对象",
+    "removeObject": "移除对象",
     "cast": "铸造",
     "clear": "清空",
     "chainCodeTitle": "铸造链代码",
@@ -3244,6 +3277,7 @@
       "glovesReady": "手套启用",
       "sawReady": "锯子启用",
       "drillReady": "手钻启用",
+      "gripReady": "握把选择启用",
       "toolPending": "此工具在当前模式不可用",
       "orbitReady": "仅旋转视角",
       "dropReady": "放到铁砧上",
@@ -3252,6 +3286,8 @@
       "empty": "请先加入矿石",
       "miss": "未击中面",
       "hit": "面已压缩",
+      "gripSet": "握把已设置",
+      "gripTooLarge": "截面大于手掌尺寸",
       "sawCut": "切口加深",
       "sawComplete": "切口已打开",
       "drillCut": "孔洞加深",
@@ -3270,8 +3306,23 @@
       "invalidChainCode": "链代码无效",
       "normalized": "形状已整形",
       "rotated": "工件已旋转",
-      "cleared": "工件已清空"
-    }
+      "cleared": "工件已清空",
+      "materialsSynced": "背包材料已同步",
+      "materialLoadFailed": "无法加载背包材料"
+    },
+    "materials": "材料",
+    "syncMaterials": "同步",
+    "materialList": "材料列表",
+    "materialSyncing": "正在同步背包",
+    "materialSyncingDetail": "正在读取已装备背包里的材料。",
+    "materialNoBackpack": "未装备背包",
+    "materialNoBackpackDetail": "装备带有锻造材料的背包后才能使用工作台。",
+    "materialEmpty": "没有材料",
+    "materialEmptyDetail": "先把采集资源熔炼成材料，再回来锻造。",
+    "materialLoadFailed": "材料同步失败",
+    "materialLoadFailedDetail": "无法从链上读取背包材料。",
+    "materialCardDetail": "{type} · x{count}",
+    "materialFuelDetail": "燃料 · 热量等级 {tier} · x{count}"
   },
   "mining": {
     "title": "Nicechunk 挖矿",

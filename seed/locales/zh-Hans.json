@@ -1,0 +1,166 @@
+{
+  "meta": {
+    "title": "NiceChunk 种子用户活动",
+    "description": "NiceChunk 种子用户活动、公测白名单注册、钱包绑定以及 100 NCK 种子空投信息。"
+  },
+  "nav": {
+    "aria": "主导航",
+    "register": "注册"
+  },
+  "language": {
+    "aria": "语言",
+    "active": "当前"
+  },
+  "hero": {
+    "eyebrow": "种子用户活动",
+    "title": "NiceChunk 种子用户活动",
+    "subtitle": "公测与白名单注册已开放",
+    "body": "NiceChunk 正式开启第一期种子用户活动，邀请玩家从一开始进入一个公平、自由、完全上链的体素世界。",
+    "register": "注册白名单",
+    "connect": "连接钱包",
+    "disclaimer": "国库价格仅作为协议启动购买价格展示，不代表投资收益、二级市场价格承诺、保底价格或任何金融宣传。"
+  },
+  "visual": {
+    "aria": "NiceChunk 体素活动视觉",
+    "label": "白名单路径"
+  },
+  "cards": {
+    "aria": "活动亮点",
+    "open": {
+      "title": "白名单注册已开放",
+      "body": "创建 NiceChunk 账户并绑定 Solana 钱包，即可加入第一期公测白名单。"
+    },
+    "airdrop": {
+      "title": "100 NCK 种子空投",
+      "body": "第一批符合资格的白名单用户将在活动结算后获得 100 NCK，作为游戏启动资金。"
+    },
+    "price": {
+      "title": "国库价格：1 NCK = 0.01 SOL",
+      "body": "Treasury Fixed Purchase Price 仅用于启动访问和协议记账。"
+    },
+    "chain": {
+      "title": "完全上链世界",
+      "body": "资产、玩法承诺和用户数据都面向链上可读的所有权与验证设计。"
+    }
+  },
+  "steps": {
+    "eyebrow": "参与流程",
+    "title": "从账户到种子资金的五个步骤。",
+    "body": "白名单注册使用真实的钱包签名和活动注册记录。签名消息只证明钱包所有权，不授权交易或转账。",
+    "items": {
+      "account": "创建账户",
+      "wallet": "绑定 Solana 钱包",
+      "whitelist": "加入白名单",
+      "settlement": "等待活动结算",
+      "receive": "领取 100 NCK 启动资金"
+    }
+  },
+  "fairness": {
+    "eyebrow": "代码即公平",
+    "title": "一个公开体素世界不应该依赖隐藏的资产服务器。",
+    "body": "NiceChunk 的核心主张很简单：资源来自公开公平的世界地图，材料来自资源熔炼，物品来自材料锻造，所有权应当可以在链上检查。",
+    "items": {
+      "noIpfs": {
+        "title": "不依赖 IPFS",
+        "body": "定义游戏资源来源或物品身份时，不需要外部网关。"
+      },
+      "noStorage": {
+        "title": "没有中心化资产存储",
+        "body": "目标是链上可读资产和确定性重建，而不是私有托管的元数据。"
+      },
+      "noMint": {
+        "title": "团队不能凭空发行资源",
+        "body": "团队不能在资源、熔炼、锻造路径之外创建任意资源或物品。"
+      },
+      "onChain": {
+        "title": "资产 / 玩法 / 用户数据上链",
+        "body": "关键状态面向公开、可重放、由钱包持有的方式设计。"
+      },
+      "map": {
+        "title": "公开公平的世界地图",
+        "body": "资源来自确定性的地形和资源规则，而不是私有背包数据库。"
+      }
+    }
+  },
+  "status": {
+    "eyebrow": "实时注册",
+    "title": "白名单注册控制台。",
+    "body": "连接 Solana 钱包，签署一次性证明，并提交你的种子用户注册信息。",
+    "walletLabel": "钱包",
+    "notConnected": "未连接",
+    "connect": "连接钱包",
+    "join": "加入白名单",
+    "note": "连接 Solana 钱包，签署白名单证明，并提交你的注册信息。",
+    "states": [
+      {
+        "key": "wallet",
+        "label": "钱包已连接",
+        "idle": "连接 Solana 钱包。",
+        "done": "钱包地址已捕获。"
+      },
+      {
+        "key": "challenge",
+        "label": "挑战已签发",
+        "idle": "后端将签发一次性 nonce。",
+        "done": "已从 API 收到 nonce。"
+      },
+      {
+        "key": "signature",
+        "label": "签名已验证",
+        "idle": "连接钱包后签署证明。",
+        "done": "钱包所有权证明已通过。"
+      },
+      {
+        "key": "database",
+        "label": "注册已提交",
+        "idle": "注册信息尚未提交。",
+        "done": "已收到你的注册信息，请关注活动通知。"
+      }
+    ],
+    "noEntry": "暂无注册记录",
+    "entryPrefix": "注册记录",
+    "registeredMessage": "已收到你的注册信息，请关注活动通知。",
+    "walletConnectedMessage": "钱包已连接，请签署白名单证明完成注册。"
+  },
+  "rules": {
+    "eyebrow": "活动规则",
+    "title": "面向第一批合格白名单用户的种子资金。",
+    "body": "第一批符合资格的白名单用户将在活动结束后获得 100 NCK。该奖励用于初始游戏启动资金。最终资格以已发布的活动规则和反作弊检查为准。",
+    "rewardLabel": "种子奖励",
+    "priceLabel": "Treasury Bootstrap Purchase Price",
+    "scopeLabel": "范围",
+    "scopeValue": "公测白名单活动"
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "用户连接钱包前需要知道的清晰答案。",
+    "items": [
+      {
+        "question": "NCK 是什么？",
+        "answer": "NCK 是 NiceChunk 的游戏代币，用于早期游戏流程、国库启动记账以及未来世界内操作。本页描述的是活动用途，不是投资价值。"
+      },
+      {
+        "question": "为什么 NiceChunk 不依赖 IPFS？",
+        "answer": "NiceChunk 的方向是让游戏资产和确定性定义保持链上可读，而不是依赖 IPFS 网关、固定文件或可变元数据路径。"
+      },
+      {
+        "question": "为什么团队不能直接发行资源？",
+        "answer": "资源路径围绕公开世界生成设计：资源来自世界地图，材料来自熔炼，物品来自锻造。"
+      },
+      {
+        "question": "100 NCK 用来做什么？",
+        "answer": "种子空投用于公测游戏启动资金，帮助第一批用户测试账户、钱包、市场、资源和合成流程。"
+      },
+      {
+        "question": "空投什么时候发放？",
+        "answer": "空投将在活动结算后发放。最终资格取决于活动规则、反作弊检查和链上记录。"
+      }
+    ]
+  },
+  "bottom": {
+    "eyebrow": "进入完全上链世界",
+    "title": "加入第一批种子用户。",
+    "register": "注册白名单",
+    "wallet": "连接钱包"
+  }
+}

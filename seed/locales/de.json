@@ -1,0 +1,166 @@
+{
+  "meta": {
+    "title": "NiceChunk Seed User Campaign",
+    "description": "Informationen zur NiceChunk Seed User Campaign, Public-Beta-Whitelist-Registrierung, Wallet-Bindung und zum 100 NCK Seed Airdrop."
+  },
+  "nav": {
+    "aria": "Hauptnavigation",
+    "register": "Registrieren"
+  },
+  "language": {
+    "aria": "Sprache",
+    "active": "Aktiv"
+  },
+  "hero": {
+    "eyebrow": "Seed User Campaign",
+    "title": "NiceChunk Seed User Campaign",
+    "subtitle": "Public Beta & Whitelist Registration ist live",
+    "body": "NiceChunk startet die erste Seed-User-Kampagne für Spieler, die von Anfang an in eine faire, freie und vollständig on-chain Voxel-Welt einsteigen möchten.",
+    "register": "Whitelist Registrieren",
+    "connect": "Wallet Verbinden",
+    "disclaimer": "Der Treasury-Preis wird nur als Bootstrap-Kaufpreis des Protokolls angezeigt. Er ist keine Anlagerendite, kein Sekundärmarktversprechen, kein garantierter Mindestpreis und keine Finanzwerbung."
+  },
+  "visual": {
+    "aria": "NiceChunk Voxel-Kampagnenvisual",
+    "label": "Whitelist-Route"
+  },
+  "cards": {
+    "aria": "Kampagnen-Highlights",
+    "open": {
+      "title": "Whitelist-Registrierung Offen",
+      "body": "Erstelle ein NiceChunk-Konto und binde eine Solana-Wallet, um der ersten Public-Beta-Whitelist beizutreten."
+    },
+    "airdrop": {
+      "title": "100 NCK Seed Airdrop",
+      "body": "Die ersten qualifizierten Whitelist-Nutzer erhalten nach dem Kampagnenabschluss 100 NCK als Startkapital für das Gameplay."
+    },
+    "price": {
+      "title": "Treasury-Preis: 1 NCK = 0.01 SOL",
+      "body": "Treasury Fixed Purchase Price nur für Bootstrap-Zugang und Protokollbuchhaltung."
+    },
+    "chain": {
+      "title": "Vollständig On-Chain Welt",
+      "body": "Assets, Gameplay-Verpflichtungen und Nutzerdaten sind für chain-lesbare Eigentums- und Prüfprozesse ausgelegt."
+    }
+  },
+  "steps": {
+    "eyebrow": "Teilnahmeablauf",
+    "title": "Fünf Schritte vom Konto zum Seed-Kapital.",
+    "body": "Die Whitelist-Registrierung nutzt eine echte Wallet-Signatur und einen Kampagnen-Registrierungsnachweis. Die signierte Nachricht belegt Wallet-Besitz, ohne eine Transaktion zu autorisieren.",
+    "items": {
+      "account": "Konto Erstellen",
+      "wallet": "Solana-Wallet Binden",
+      "whitelist": "Whitelist Beitreten",
+      "settlement": "Auf Kampagnenabschluss Warten",
+      "receive": "100 NCK Startkapital Erhalten"
+    }
+  },
+  "fairness": {
+    "eyebrow": "Fair by Code",
+    "title": "Eine öffentliche Voxel-Welt sollte nicht von versteckten Asset-Servern abhängen.",
+    "body": "NiceChunks Kernidee ist einfach: Ressourcen entstehen aus der öffentlichen Weltkarte, Materialien aus Resource Smelting, Items aus Material Forging, und Eigentum soll on-chain prüfbar sein.",
+    "items": {
+      "noIpfs": {
+        "title": "Kein IPFS",
+        "body": "Kein externes Gateway ist nötig, um die Quelle von Spielressourcen oder die Identität von Items zu definieren."
+      },
+      "noStorage": {
+        "title": "Keine Zentralisierte Asset-Speicherung",
+        "body": "Das Ziel sind chain-lesbare Assets und deterministische Rekonstruktion, nicht privat gehostete Metadaten."
+      },
+      "noMint": {
+        "title": "Keine Team-Geminteten Ressourcen",
+        "body": "Das Team kann keine beliebigen Ressourcen oder Items außerhalb des Ressourcen-, Smelting- und Forging-Pfads erzeugen."
+      },
+      "onChain": {
+        "title": "Assets / Gameplay / Nutzerdaten On-Chain",
+        "body": "Die wichtige Zustandsfläche ist öffentlich, replay-fähig und wallet-besessen konzipiert."
+      },
+      "map": {
+        "title": "Öffentliche Faire Weltkarte",
+        "body": "Ressourcen entstehen aus deterministischen Terrain- und Ressourcenregeln, nicht aus einer privaten Inventardatenbank."
+      }
+    }
+  },
+  "status": {
+    "eyebrow": "Live-Registrierung",
+    "title": "Whitelist-Registrierungskonsole.",
+    "body": "Verbinde eine Solana-Wallet, signiere einen einmaligen Nachweis und sende deine Seed-User-Registrierung ab.",
+    "walletLabel": "Wallet",
+    "notConnected": "Nicht verbunden",
+    "connect": "Wallet verbinden",
+    "join": "Whitelist beitreten",
+    "note": "Verbinde eine Solana-Wallet, signiere den Whitelist-Nachweis und sende deine Registrierung ab.",
+    "states": [
+      {
+        "key": "wallet",
+        "label": "Wallet verbunden",
+        "idle": "Solana-Wallet verbinden.",
+        "done": "Wallet-Adresse erfasst."
+      },
+      {
+        "key": "challenge",
+        "label": "Challenge erstellt",
+        "idle": "Backend erstellt eine einmalige Nonce.",
+        "done": "Nonce von der API erhalten."
+      },
+      {
+        "key": "signature",
+        "label": "Signatur verifiziert",
+        "idle": "Nach Wallet-Verbindung Nachweis signieren.",
+        "done": "Wallet-Eigentumsnachweis akzeptiert."
+      },
+      {
+        "key": "database",
+        "label": "Registrierung gesendet",
+        "idle": "Die Registrierung wurde noch nicht gesendet.",
+        "done": "Registrierung empfangen. Bitte beachte die Kampagnenhinweise."
+      }
+    ],
+    "noEntry": "Noch kein Registrierungsnachweis",
+    "entryPrefix": "Registrierung",
+    "registeredMessage": "Deine Registrierung wurde empfangen. Bitte beachte die Kampagnenhinweise.",
+    "walletConnectedMessage": "Wallet verbunden. Signiere den Whitelist-Nachweis, um die Registrierung einzureichen."
+  },
+  "rules": {
+    "eyebrow": "Kampagnenregeln",
+    "title": "Seed-Kapital für die ersten qualifizierten Whitelist-Nutzer.",
+    "body": "Die erste Gruppe qualifizierter Whitelist-Nutzer erhält nach Kampagnenende 100 NCK. Die Belohnung dient als Startkapital im Spiel. Die finale Berechtigung folgt veröffentlichten Regeln und Anti-Abuse-Prüfungen.",
+    "rewardLabel": "Seed-Belohnung",
+    "priceLabel": "Treasury Bootstrap Purchase Price",
+    "scopeLabel": "Umfang",
+    "scopeValue": "Public-Beta-Whitelist-Kampagne"
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Klare Antworten, bevor Nutzer eine Wallet verbinden.",
+    "items": [
+      {
+        "question": "Was ist NCK?",
+        "answer": "NCK ist der NiceChunk-Spieltoken für frühe Spielflüsse, Treasury-Bootstrap-Buchhaltung und künftige Aktionen in der Welt. Diese Seite beschreibt Kampagnen-Nutzen, keinen Anlagewert."
+      },
+      {
+        "question": "Warum sagt NiceChunk kein IPFS?",
+        "answer": "NiceChunk möchte Spielassets und deterministische Definitionen chain-lesbar halten, statt von IPFS-Gateways, gepinnten Dateien oder veränderlichen Metadatenrouten abzuhängen."
+      },
+      {
+        "question": "Warum kann das Team Ressourcen nicht direkt ausgeben?",
+        "answer": "Der Ressourcenpfad basiert auf öffentlicher Weltgenerierung: Ressourcen kommen aus der Weltkarte, Materialien aus Smelting und Items aus Forging."
+      },
+      {
+        "question": "Wofür werden die 100 NCK verwendet?",
+        "answer": "Der Seed Airdrop ist als Startkapital für Public-Beta-Gameplay gedacht und hilft den ersten Nutzern, Konto-, Wallet-, Marketplace-, Ressourcen- und Crafting-Flows zu testen."
+      },
+      {
+        "question": "Wann wird der Airdrop verteilt?",
+        "answer": "Die Verteilung erfolgt nach dem Kampagnenabschluss. Die finale Berechtigung hängt von Kampagnenregeln, Anti-Abuse-Prüfungen und On-Chain-Datensätzen ab."
+      }
+    ]
+  },
+  "bottom": {
+    "eyebrow": "Betritt die Vollständig On-Chain Welt",
+    "title": "Werde Teil der Ersten Seed-Nutzer.",
+    "register": "Whitelist Registrieren",
+    "wallet": "Wallet Verbinden"
+  }
+}

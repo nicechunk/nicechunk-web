@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#071019" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=0.1.63" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=0.1.63" />
+    <link rel="shortcut icon" href="/favicon.ico?v=0.1.63" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=0.1.63" />
+    <link rel="manifest" href="/site.webmanifest?v=0.1.63" />
+    <meta name="description" content="NCFM explains how NiceChunk stores 3D game items as compact Fourier/function code directly on-chain instead of relying on external 3D asset files or IPFS metadata." data-ncfm-i18n-content="meta.description" />
+    <title data-ncfm-i18n="meta.title">NCFM | Fourier Chain 3D Assets</title>
+  </head>
+  <body>
+    <div class="ncfm-bg" aria-hidden="true">
+      <span class="ncfm-bg-grid"></span>
+      <span class="ncfm-bg-noise"></span>
+      <span class="ncfm-bg-orbit one"></span>
+      <span class="ncfm-bg-orbit two"></span>
+    </div>
+
+    <header class="site-header">
+      <a class="brand-mark" href="/" aria-label="NiceChunk">
+        <img src="/media/nck.png" alt="" />
+        <span>NICECHUNK</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation" data-ncfm-i18n-aria-label="nav.aria">
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/roadmap/">Roadbook</a>
+          <a href="/world_rule/">World Rules</a>
+          <a href="/resource_rule/">Resources</a>
+          <a href="/ncm/">NCM</a>
+          <a class="active" href="/ncfm/">NCFM</a>
+          <a href="/elements/">Elements</a>
+          <a href="/fairness/">Fairness</a>
+          <a href="/proof-of-frontier/">Proof</a>
+          <a href="/guardian/">Guardians</a>
+          <a href="/contracts/">Contracts</a>
+          <a href="/docs/">Docs</a>
+        </div>
+        <div class="nav-actions">
+          <a class="header-action" href="/play/">Enter World</a>
+          <div data-i18n-language-menu></div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="ncfm-shell">
+      <section class="ncfm-hero" aria-labelledby="ncfmTitle">
+        <div class="ncfm-hero-copy">
+          <p class="ncfm-eyebrow" data-ncfm-i18n="hero.eyebrow">NICECHUNK FOURIER MODEL</p>
+          <h1 id="ncfmTitle" data-ncfm-i18n="hero.title">3D game items as chain-readable functions, not asset files.</h1>
+          <p data-ncfm-i18n="hero.body">
+            NCFM is the research direction behind NiceChunk's next asset layer: store a tiny Fourier/function description on-chain, then let the client deterministically reconstruct the voxel item through RPC. No GLB file, no mutable JSON, no IPFS gateway dependency.
+          </p>
+          <div class="ncfm-actions">
+            <a href="#lab" data-ncfm-i18n="hero.ctaLab">Open function lab</a>
+            <a href="#storage" data-ncfm-i18n="hero.ctaCompare">Compare storage</a>
+            <a href="/ncm/" data-ncfm-i18n="hero.ctaNcm">Back to NCM</a>
+          </div>
+          <div class="ncfm-proof-points" aria-label="NCFM guarantees" data-ncfm-i18n-aria-label="hero.proofAria">
+            <span data-ncfm-i18n="hero.proof1">Deterministic reconstruction</span>
+            <span data-ncfm-i18n="hero.proof2">Short chain payload</span>
+            <span data-ncfm-i18n="hero.proof3">No external asset host</span>
+          </div>
+        </div>
+
+        <aside class="ncfm-payload-card" aria-label="NCFM compact payload" data-ncfm-i18n-aria-label="payload.aria">
+          <div class="ncfm-payload-top">
+            <span data-ncfm-i18n="payload.label">Example chain payload</span>
+            <strong>214 bytes</strong>
+          </div>
+          <code id="payloadCode">NCFM1.PKX.S37x39x9.FXY:dseg+harm12.FZ:thick7.PAL:g0.6.H:9bd2a6</code>
+          <div class="ncfm-payload-stats">
+            <span><b>0</b><em data-ncfm-i18n="payload.meshFiles">mesh files</em></span>
+            <span><b>0</b><em data-ncfm-i18n="payload.ipfsLinks">IPFS links</em></span>
+            <span><b>1</b><em data-ncfm-i18n="payload.rpcRead">RPC read</em></span>
+          </div>
+        </aside>
+      </section>
+
+      <section class="ncfm-thesis" id="storage" aria-label="Storage thesis" data-ncfm-i18n-aria-label="thesis.aria">
+        <article>
+          <span>01</span>
+          <h2 data-ncfm-i18n="thesis.asset.title">Traditional game asset</h2>
+          <p data-ncfm-i18n="thesis.asset.body">A wallet or NFT points to metadata, the metadata points to a file, and the file must remain available somewhere outside the chain.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h2 data-ncfm-i18n="thesis.ipfs.title">IPFS-style permanence</h2>
+          <p data-ncfm-i18n="thesis.ipfs.body">Better than a normal server, but the game still depends on external content routing, pinning, gateways, and metadata conventions.</p>
+        </article>
+        <article class="highlight">
+          <span>03</span>
+          <h2 data-ncfm-i18n="thesis.ncfm.title">NCFM function asset</h2>
+          <p data-ncfm-i18n="thesis.ncfm.body">The item is a deterministic function payload. Ownership, rendering rules, verification hash, and visual identity can live together in account data.</p>
+        </article>
+      </section>
+
+      <section class="ncfm-principle" aria-labelledby="principleTitle">
+        <div class="ncfm-section-copy">
+          <p class="ncfm-eyebrow" data-ncfm-i18n="principle.eyebrow">PRINCIPLE DIAGRAM</p>
+          <h2 id="principleTitle" data-ncfm-i18n="principle.title">Store the equation. Rebuild the object.</h2>
+          <p data-ncfm-i18n="principle.body">NCFM treats a 3D item as a deterministic field instead of a static file. The chain stores the smallest canonical record: seed, quantized coefficients, palette rules, grid limits, and a verifier hash. The browser expands that record into the visible item.</p>
+        </div>
+        <div class="ncfm-principle-grid">
+          <div class="ncfm-principle-diagram" aria-label="NCFM equation to voxel pipeline" data-ncfm-i18n-aria-label="principle.diagramAria">
+            <div class="ncfm-diagram-node source">
+              <span>01</span>
+              <strong data-ncfm-i18n="principle.source.title">Chain payload</strong>
+              <em>NCFM1.PKX.FXY.FZ.PAL.H</em>
+            </div>
+            <div class="ncfm-diagram-arrow"></div>
+            <div class="ncfm-diagram-node function">
+              <span>02</span>
+              <strong data-ncfm-i18n="principle.function.title">Canonical functions</strong>
+              <em>FXY(x,y) ∩ FZ(x,y,z)</em>
+            </div>
+            <div class="ncfm-diagram-arrow"></div>
+            <div class="ncfm-diagram-node sampler">
+              <span>03</span>
+              <strong data-ncfm-i18n="principle.sampler.title">Deterministic sampler</strong>
+              <em>grid → material voxels</em>
+            </div>
+            <div class="ncfm-diagram-arrow"></div>
+            <div class="ncfm-diagram-node output">
+              <span>04</span>
+              <strong data-ncfm-i18n="principle.output.title">Renderable object</strong>
+              <em>voxel buffer + model hash</em>
+            </div>
+          </div>
+          <div class="ncfm-principle-cards">
+            <article>
+              <span data-ncfm-i18n="principle.cards.formula.kicker">Formula</span>
+              <h3 data-ncfm-i18n="principle.cards.formula.title">A shape is a field acceptance rule.</h3>
+              <p data-ncfm-i18n="principle.cards.formula.body">For every coordinate, the client asks the same question: does this point satisfy the agreed functions? Accepted coordinates become material voxels.</p>
+            </article>
+            <article>
+              <span data-ncfm-i18n="principle.cards.hash.kicker">Hash</span>
+              <h3 data-ncfm-i18n="principle.cards.hash.title">The visible model can be verified.</h3>
+              <p data-ncfm-i18n="principle.cards.hash.body">Because sampling order, grid bounds, quantization, and palette are canonical, the generated voxel set can produce a stable model hash.</p>
+            </article>
+            <article>
+              <span data-ncfm-i18n="principle.cards.chain.kicker">Chain</span>
+              <h3 data-ncfm-i18n="principle.cards.chain.title">The chain stores identity, not bulk geometry.</h3>
+              <p data-ncfm-i18n="principle.cards.chain.body">The account does not need to carry a heavy mesh. It only needs the record required to regenerate and verify the object forever.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="ncfm-lab" id="lab" aria-labelledby="labTitle">
+        <div class="ncfm-lab-head">
+          <div>
+            <p class="ncfm-eyebrow" data-ncfm-i18n="lab.eyebrow">FUNCTION INTERSECTION LAB</p>
+            <h2 id="labTitle" data-ncfm-i18n="lab.title">A 3D item generated by two compact functions.</h2>
+            <p data-ncfm-i18n="lab.body">This demo uses a pickaxe because the shape is easy to read: an XY function defines the outline, material bands, and color; a Z function defines thickness. Only coordinates accepted by both functions become voxels.</p>
+          </div>
+          <div class="ncfm-lab-meter" aria-live="polite">
+            <span data-ncfm-i18n="lab.voxelCount">Voxels</span>
+            <strong id="voxelCount">0</strong>
+          </div>
+        </div>
+
+        <div class="ncfm-demo-controls" aria-label="NCFM algorithm controls">
+          <label>
+            <span data-ncfm-i18n="lab.terms">Fourier terms</span>
+            <output id="termsOut">12</output>
+            <input id="termsRange" type="range" min="4" max="22" step="1" value="12" />
+          </label>
+          <label>
+            <span data-ncfm-i18n="lab.depth">Z thickness</span>
+            <output id="depthOut">7</output>
+            <input id="depthRange" type="range" min="3" max="11" step="1" value="7" />
+          </label>
+          <button id="toggleMotion" type="button" data-ncfm-i18n="lab.pause">Pause</button>
+          <button id="copyPayload" type="button" data-ncfm-i18n="lab.copy">Copy payload</button>
+          <label class="ncfm-file-control">
+            <span data-ncfm-i18n="lab.importVox">Import VOX</span>
+            <input id="voxImport" type="file" accept=".vox" />
+          </label>
+          <p class="ncfm-import-status" id="importStatus" data-ncfm-i18n="lab.defaultModel">Using function-generated pickaxe.</p>
+        </div>
+
+        <article class="ncfm-stage" aria-labelledby="stageOneTitle">
+          <div class="ncfm-stage-head">
+            <div>
+              <h3 id="stageOneTitle"><span>01</span><b data-ncfm-i18n="stage.xy.title">FXY: Fourier line drawing on the XY plane</b></h3>
+              <p data-ncfm-i18n="stage.xy.body">First, the item is only a 2D function. Fourier descriptors reconstruct the pickaxe outline as a curve over time, proving that the shape can be represented by coefficients instead of an image file.</p>
+            </div>
+            <div class="ncfm-stage-badge" id="termBadge">terms: 12</div>
+          </div>
+          <div class="ncfm-stage-grid">
+            <div class="ncfm-code-card">
+              <div class="ncfm-code-top"><strong>XY line function</strong><em>Fourier descriptor</em></div>
+<pre><code>// Function 1: draw only on XY
+const Cxy = (t) => Σ c[k] · e^(i · k · 2πt)
+
+// c[k] comes from the pickaxe outline
+c[k] = 1/N · Σ P[n] · e^(-i · k · 2πn/N)
+
+for t from 0 to drawProgress:
+  p = Cxy(t)
+  drawLineOnXY(p)
+
+output = 2D function curve</code></pre>
+            </div>
+            <div class="ncfm-canvas-card">
+              <div class="ncfm-canvas-label"><span>XY axes</span><span>Fourier path</span><span id="drawBadge">draw: 0%</span></div>
+              <canvas id="canvas2d" aria-label="Fourier XY curve drawing"></canvas>
+            </div>
+          </div>
+        </article>
+
+        <article class="ncfm-stage" aria-labelledby="stageTwoTitle">
+          <div class="ncfm-stage-head">
+            <div>
+              <h3 id="stageTwoTitle"><span>02</span><b data-ncfm-i18n="stage.intersection.title">FXY × FZ: intersect the XY field with a Z thickness field</b></h3>
+              <p data-ncfm-i18n="stage.intersection.body">The second function turns the 2D outline into a volume. Blue marks the XY projection, gold marks the Z thickness rule, and green marks coordinates accepted by both functions.</p>
+            </div>
+            <div class="ncfm-stage-badge" id="fieldBadge">intersection: 0 voxels</div>
+          </div>
+          <div class="ncfm-stage-grid">
+            <div class="ncfm-code-card">
+              <div class="ncfm-code-top"><strong>Two intersecting functions</strong><em>XY field ∩ Z field</em></div>
+<pre><code>function FXY(x, y) {
+  structure = FourierPickaxeXY(x, y)
+  material  = structure.material
+  color     = structure.color
+  return { inside: structure.score > 0, material, color }
+}
+
+function FZ(x, y, z) {
+  thickness = 1.8 + 0.42·cos(0.27x + 0.31y)
+            + 0.18·sin(0.61x - 0.23y)
+  return cos(πz / thickness) > 0
+}
+
+voxel(x,y,z) = FXY(x,y).inside && FZ(x,y,z).inside</code></pre>
+            </div>
+            <div class="ncfm-canvas-card">
+              <div class="ncfm-canvas-label"><span>Fxy(x,y)</span><span>Fz(x,y,z)</span><span>Fxy ∩ Fz</span></div>
+              <canvas id="canvasIntersect" aria-label="XY and Z function intersection"></canvas>
+              <div class="ncfm-legend">
+                <span><i class="xy"></i>XY projection</span>
+                <span><i class="z"></i>Z thickness</span>
+                <span><i class="hit"></i>Intersection</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ncfm-stage" aria-labelledby="stageThreeTitle">
+          <div class="ncfm-stage-head">
+            <div>
+              <h3 id="stageThreeTitle"><span>03</span><b data-ncfm-i18n="stage.voxel.title">Intersection result: final 3D voxel pickaxe</b></h3>
+              <p data-ncfm-i18n="stage.voxel.body">The final item is not loaded from a mesh. The client scans deterministic coordinates, keeps only the points accepted by both functions, applies material color, and renders the resulting voxel model.</p>
+            </div>
+            <div class="ncfm-stage-badge" id="voxelBadge">visible: 0 / 0</div>
+          </div>
+          <div class="ncfm-stage-grid">
+            <div class="ncfm-code-card">
+              <div class="ncfm-code-top"><strong>Final voxel generator</strong><em>no mesh / no image file</em></div>
+<pre><code>voxels = []
+
+for x in X:
+  for y in Y:
+    xy = FXY(x, y)
+    if !xy.inside: continue
+
+    for z in Z:
+      if FZ(x, y, z).inside:
+        voxels.push({ x, y, z, color: xy.color, material: xy.material })
+
+output = FXY(x,y) ∩ FZ(x,y,z)</code></pre>
+            </div>
+            <div class="ncfm-canvas-card">
+              <div class="ncfm-canvas-label"><span>final voxels</span><span>auto rotate</span><span id="cycleBadge">cycle: 0%</span></div>
+              <canvas id="canvas3d" aria-label="Final voxel pickaxe generated by NCFM functions"></canvas>
+              <div class="ncfm-legend">
+                <span><i class="metal"></i>material: metal</span>
+                <span><i class="wood"></i>material: wood</span>
+              </div>
+            </div>
+          </div>
+          <p class="ncfm-stage-note" data-ncfm-i18n="stage.note">Key point: the chain stores the function seed, coefficients, parameters, palette, and verifier hash. The visible 3D model is recreated from code, not downloaded as a 3D file.</p>
+        </article>
+
+      </section>
+
+      <section class="ncfm-pipeline" aria-label="NCFM verification pipeline" data-ncfm-i18n-aria-label="pipeline.aria">
+        <div class="ncfm-section-copy">
+          <p class="ncfm-eyebrow" data-ncfm-i18n="pipeline.eyebrow">CHAIN VERIFICATION PIPELINE</p>
+          <h2 data-ncfm-i18n="pipeline.title">What the client and contract can agree on.</h2>
+          <p data-ncfm-i18n="pipeline.body">NCFM keeps the chain payload small by making the heavy visual reconstruction a deterministic client operation. The important part is that all clients derive the same model hash from the same code.</p>
+        </div>
+        <div class="ncfm-pipeline-grid">
+          <article><span>1</span><h3 data-ncfm-i18n="pipeline.read.title">Read</h3><p data-ncfm-i18n="pipeline.read.body">Fetch the payload from a PDA or asset account through RPC.</p></article>
+          <article><span>2</span><h3 data-ncfm-i18n="pipeline.decode.title">Decode</h3><p data-ncfm-i18n="pipeline.decode.body">Parse seed, palette, Fourier coefficients, field parameters, and verifier hash.</p></article>
+          <article><span>3</span><h3 data-ncfm-i18n="pipeline.sample.title">Sample</h3><p data-ncfm-i18n="pipeline.sample.body">Run the canonical sampler over the agreed voxel grid.</p></article>
+          <article><span>4</span><h3 data-ncfm-i18n="pipeline.render.title">Render</h3><p data-ncfm-i18n="pipeline.render.body">Build a mesh or voxel instance buffer locally and compare the deterministic model hash.</p></article>
+        </div>
+      </section>
+
+      <section class="ncfm-meaning" aria-labelledby="meaningTitle">
+        <div class="ncfm-section-copy">
+          <p class="ncfm-eyebrow" data-ncfm-i18n="meaning.eyebrow">TECHNICAL MEANING</p>
+          <h2 id="meaningTitle" data-ncfm-i18n="meaning.title">Why this matters for an open on-chain game.</h2>
+          <p data-ncfm-i18n="meaning.body">The goal is not only compression. The goal is to make game assets transparent, permanent, cheaply readable, and reproducible by any client or explorer without trusting a private asset server.</p>
+        </div>
+        <div class="ncfm-meaning-grid">
+          <article>
+            <strong data-ncfm-i18n="meaning.permanent.title">Permanent</strong>
+            <p data-ncfm-i18n="meaning.permanent.body">If the payload remains on-chain, the asset definition remains available with the account history.</p>
+          </article>
+          <article>
+            <strong data-ncfm-i18n="meaning.open.title">Open</strong>
+            <p data-ncfm-i18n="meaning.open.body">Players can inspect the exact function code and parameters used to reconstruct the item.</p>
+          </article>
+          <article>
+            <strong data-ncfm-i18n="meaning.fast.title">Fast</strong>
+            <p data-ncfm-i18n="meaning.fast.body">A short RPC read replaces multiple metadata, gateway, and file fetches.</p>
+          </article>
+          <article>
+            <strong data-ncfm-i18n="meaning.portable.title">Portable</strong>
+            <p data-ncfm-i18n="meaning.portable.body">The same compact record can be interpreted by games, explorers, crafting tools, and future clients.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="ncfm-spec" aria-label="NCFM technical sketch" data-ncfm-i18n-aria-label="spec.aria">
+        <article>
+          <p class="ncfm-eyebrow" data-ncfm-i18n="spec.model.eyebrow">DATA MODEL</p>
+          <h2 data-ncfm-i18n="spec.model.title">A tiny text record with deterministic meaning.</h2>
+          <ul>
+            <li data-ncfm-i18n="spec.model.item1">Header: version, item class, grid size, quantization.</li>
+            <li data-ncfm-i18n="spec.model.item2">Functions: Fourier descriptors, signed distance segments, harmonic thickness fields.</li>
+            <li data-ncfm-i18n="spec.model.item3">Palette: compact material IDs and derived color rules.</li>
+            <li data-ncfm-i18n="spec.model.item4">Verifier: model hash generated by canonical sampling.</li>
+          </ul>
+        </article>
+        <article>
+          <p class="ncfm-eyebrow" data-ncfm-i18n="spec.cost.eyebrow">WHY IT MATTERS</p>
+          <h2 data-ncfm-i18n="spec.cost.title">On-chain 3D becomes a code problem, not a file-hosting problem.</h2>
+          <p data-ncfm-i18n="spec.cost.body">If the item can be described as a short function, the chain only stores the minimum seed and parameters. The world can still render rich 3D assets while keeping storage cost predictable and publicly auditable.</p>
+          <a href="/fourier-voxel/" data-ncfm-i18n="spec.cost.link">View older Fourier voxel demo</a>
+        </article>
+      </section>
+    </main>
+
+    <script type="module" src="./ncfm.js"></script>
+  </body>
+</html>

@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#071019" />
+    <meta name="color-scheme" content="dark" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=0.1.63" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=0.1.63" />
+    <link rel="shortcut icon" href="/favicon.ico?v=0.1.63" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=0.1.63" />
+    <link rel="manifest" href="/site.webmanifest?v=0.1.63" />
+    <meta name="description" content="NiceChunk Seed User Campaign, public beta whitelist registration, wallet binding, and 100 NCK seed airdrop information." data-seed-i18n-content="meta.description" />
+    <title data-seed-i18n="meta.title">NiceChunk Seed User Campaign</title>
+  </head>
+  <body>
+    <div class="seed-bg" aria-hidden="true">
+      <canvas id="seedShaderCanvas" class="seed-shader-canvas"></canvas>
+      <div class="seed-voxel-backdrop">
+        <canvas id="seedVoxelCanvas" class="seed-voxel-bg-canvas"></canvas>
+        <span class="seed-data-beam beam-a"></span>
+        <span class="seed-data-beam beam-b"></span>
+        <span class="seed-data-beam beam-c"></span>
+        <span class="seed-orbit-ring ring-a"></span>
+        <span class="seed-orbit-ring ring-b"></span>
+        <span class="seed-orbit-ring ring-c"></span>
+        <span class="seed-shard shard-a"></span>
+        <span class="seed-shard shard-b"></span>
+        <span class="seed-shard shard-c"></span>
+      </div>
+      <span class="seed-bg-grid"></span>
+      <span class="seed-bg-scan"></span>
+    </div>
+
+    <header class="site-header">
+      <a class="brand-mark" href="/" aria-label="NiceChunk">
+        <img src="/media/nck.png" alt="" />
+        <span>NICECHUNK</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation" data-seed-i18n-aria-label="nav.aria">
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/roadmap/">Roadbook</a>
+          <a href="/world_rule/">World Rules</a>
+          <a href="/resource_rule/">Resources</a>
+          <a href="/ncm/">NCM</a>
+          <a href="/ncfm/">NCFM</a>
+          <a href="/elements/">Elements</a>
+          <a href="/fairness/">Fairness</a>
+          <a href="/proof-of-frontier/">Proof</a>
+          <a class="active" href="/seed/">Seed</a>
+          <a href="/guardian/">Guardians</a>
+          <a href="/contracts/">Contracts</a>
+          <a href="/docs/">Docs</a>
+        </div>
+        <div class="nav-actions">
+          <a class="header-action" href="/login/" data-seed-i18n="nav.register">Register</a>
+          <div class="seed-language language-picker" aria-label="Language" data-seed-i18n-aria-label="language.aria">
+            <button class="seed-language-trigger language-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+              <span class="seed-language-current language-current">English (English)</span>
+              <span class="seed-language-caret language-caret" aria-hidden="true"></span>
+            </button>
+            <div class="seed-language-menu language-menu" role="listbox"></div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="seed-shell seed-campaign-shell">
+      <section class="seed-hero seed-campaign-hero" id="overview">
+        <div class="seed-hero-copy seed-campaign-copy">
+          <p class="seed-eyebrow" data-seed-i18n="hero.eyebrow">Seed User Campaign</p>
+          <h1 data-seed-i18n="hero.title">NiceChunk Seed User Campaign</h1>
+          <p class="seed-hero-subtitle" data-seed-i18n="hero.subtitle">Public Beta & Whitelist Registration is Live</p>
+          <p class="seed-hero-body" data-seed-i18n="hero.body">NiceChunk is opening its first seed user campaign for players who want to enter a fair, free, fully on-chain voxel world from the beginning.</p>
+          <div class="seed-hero-actions seed-command-actions">
+            <button class="seed-primary-action" type="button" data-seed-action="connect-wallet" data-seed-i18n="hero.connect">Connect Wallet</button>
+            <button class="seed-secondary-action" type="button" data-seed-action="join-whitelist" data-seed-i18n="status.join">Join Whitelist</button>
+            <a class="seed-secondary-action" href="#rules">Read Rules</a>
+          </div>
+          <div class="seed-disclaimer" data-seed-i18n="hero.disclaimer">Treasury pricing is displayed only as the protocol bootstrap purchase price. It is not an investment return, secondary market promise, guaranteed floor, or financial promotion.</div>
+        </div>
+
+        <aside class="seed-registration-console" aria-label="Whitelist registration console" data-seed-i18n-aria-label="status.aria">
+          <div class="seed-console-glow" aria-hidden="true"></div>
+          <div class="seed-console-head">
+            <span class="seed-console-kicker">LIVE REGISTRATION</span>
+            <strong id="seedConsoleState">WAITING FOR WALLET</strong>
+          </div>
+          <div class="seed-wallet-card">
+            <span data-seed-i18n="status.walletLabel">Wallet</span>
+            <strong id="seedWalletValue">Not connected</strong>
+            <small id="seedEntryId">No registration record yet</small>
+          </div>
+          <div class="seed-status-list" id="seedStatusList"></div>
+          <div class="seed-status-actions seed-console-actions">
+            <button type="button" data-seed-action="connect-wallet" data-seed-i18n="status.connect">Connect Wallet</button>
+            <button type="button" data-seed-action="join-whitelist" data-seed-i18n="status.join">Join Whitelist</button>
+          </div>
+          <p class="seed-status-note" id="seedStatusMessage">Connect a Solana wallet, sign a whitelist proof, and submit your registration.</p>
+        </aside>
+      </section>
+
+      <section class="seed-metric-strip" aria-label="Campaign metrics">
+        <article><span>Reward</span><strong>100 NCK</strong><p>Seed capital for qualified whitelist users.</p></article>
+        <article><span>Treasury price</span><strong>0.01 SOL</strong><p>Protocol bootstrap accounting only.</p></article>
+        <article><span>Proof</span><strong>Wallet Signature</strong><p>No transfer permission, no transaction authorization.</p></article>
+        <article><span>Registration</span><strong>Proof Received</strong><p>Submit once, then follow campaign announcements.</p></article>
+      </section>
+
+      <section class="seed-section seed-split seed-protocol-flow" id="steps">
+        <div class="seed-section-copy">
+          <p class="seed-eyebrow blue" data-seed-i18n="steps.eyebrow">Participation Flow</p>
+          <h2 data-seed-i18n="steps.title">Five steps from account to seed capital.</h2>
+          <p data-seed-i18n="steps.body">Whitelist registration uses a real wallet signature and campaign registration record. The signed message proves wallet ownership without authorizing a transaction.</p>
+        </div>
+        <ol class="seed-step-list seed-verified-flow">
+          <li><span>01</span><strong data-seed-i18n="steps.items.wallet">Bind Solana Wallet</strong><small>Connect Phantom, Solflare, Backpack, or compatible Solana wallet.</small></li>
+          <li><span>02</span><strong>Sign Seed Proof</strong><small>Sign a one-time campaign proof. This is not a transaction.</small></li>
+          <li><span>03</span><strong data-seed-i18n="steps.items.whitelist">Join Whitelist</strong><small>Submit wallet ownership proof to complete registration.</small></li>
+          <li><span>04</span><strong data-seed-i18n="steps.items.settlement">Wait for Campaign Settlement</strong><small>Follow official campaign announcements for settlement details.</small></li>
+          <li><span>05</span><strong data-seed-i18n="steps.items.receive">Receive 100 NCK Startup Capital</strong><small>Final eligibility follows campaign rules and anti-abuse checks.</small></li>
+        </ol>
+      </section>
+
+      <section class="seed-section" id="fairness">
+        <div class="seed-section-copy">
+          <p class="seed-eyebrow blue" data-seed-i18n="fairness.eyebrow">Fair By Code</p>
+          <h2 data-seed-i18n="fairness.title">A public voxel world should not depend on hidden asset servers.</h2>
+          <p data-seed-i18n="fairness.body">NiceChunk's core claim is simple: resources originate from the public world map, materials come from resource smelting, items come from material forging, and ownership should be inspectable on-chain.</p>
+        </div>
+        <div class="seed-fairness-grid seed-proof-grid">
+          <article><h3 data-seed-i18n="fairness.items.noIpfs.title">No IPFS</h3><p data-seed-i18n="fairness.items.noIpfs.body">No external gateway is required to define the source of game resources or item identity.</p></article>
+          <article><h3 data-seed-i18n="fairness.items.noStorage.title">No Centralized Asset Storage</h3><p data-seed-i18n="fairness.items.noStorage.body">The goal is chain-readable assets and deterministic reconstruction, not private hosted metadata.</p></article>
+          <article><h3 data-seed-i18n="fairness.items.noMint.title">No Team-Minted Resources</h3><p data-seed-i18n="fairness.items.noMint.body">The team cannot create arbitrary resources or items outside the resource, smelting, and forging path.</p></article>
+          <article><h3 data-seed-i18n="fairness.items.onChain.title">Assets / Gameplay / User Data On-Chain</h3><p data-seed-i18n="fairness.items.onChain.body">The important state surface is designed to be public, replayable, and wallet-owned.</p></article>
+        </div>
+      </section>
+
+      <section class="seed-section seed-rules" id="rules">
+        <div class="seed-section-copy">
+          <p class="seed-eyebrow blue" data-seed-i18n="rules.eyebrow">Campaign Rules</p>
+          <h2 data-seed-i18n="rules.title">Seed capital for the first qualified whitelist users.</h2>
+        </div>
+        <div class="seed-rule-panel seed-real-rules">
+          <p data-seed-i18n="rules.body">The first batch of qualified whitelist users will receive 100 NCK after the campaign ends. The reward is intended as initial gameplay startup capital. Final eligibility is subject to published campaign rules and anti-abuse checks.</p>
+          <dl>
+            <div><dt data-seed-i18n="rules.rewardLabel">Seed reward</dt><dd>100 NCK</dd></div>
+            <div><dt data-seed-i18n="rules.priceLabel">Treasury Bootstrap Purchase Price</dt><dd>1 NCK = 0.01 SOL</dd></div>
+            <div><dt>Registration proof</dt><dd>Ed25519 wallet signature</dd></div>
+            <div><dt>Next step</dt><dd>Follow campaign announcements</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="seed-section" id="faq">
+        <div class="seed-section-copy">
+          <p class="seed-eyebrow blue" data-seed-i18n="faq.eyebrow">FAQ</p>
+          <h2 data-seed-i18n="faq.title">Clear answers before users connect a wallet.</h2>
+        </div>
+        <div class="seed-faq-list" id="seedFaqList"></div>
+      </section>
+
+      <section class="seed-bottom-cta" id="join">
+        <p class="seed-eyebrow" data-seed-i18n="bottom.eyebrow">Enter the Fully On-Chain World</p>
+        <h2 data-seed-i18n="bottom.title">Join the First Seed Users.</h2>
+        <div class="seed-hero-actions">
+          <button class="seed-primary-action" type="button" data-seed-action="join-whitelist" data-seed-i18n="status.join">Join Whitelist</button>
+          <button class="seed-secondary-action" type="button" data-seed-action="connect-wallet" data-seed-i18n="bottom.wallet">Connect Wallet</button>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./seed.js"></script>
+  </body>
+</html>

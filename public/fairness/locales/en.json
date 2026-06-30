@@ -183,7 +183,7 @@
       },
       "watchers": {
         "system": "Guardian network",
-        "status": "Manual release gate",
+        "status": "Coming soon",
         "verification": "No custody, no player transaction signing, region availability role only."
       },
       "governance": {

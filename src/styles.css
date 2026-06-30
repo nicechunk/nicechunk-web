@@ -11695,6 +11695,60 @@ body,
   min-width: 0;
 }
 
+.smelting-recipe-batch-control {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.smelting-recipe-batch-control > span:first-child,
+.smelting-recipe-batch-control small {
+  overflow: hidden;
+  color: rgba(190, 224, 229, 0.68);
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.smelting-recipe-batch-control small {
+  color: rgba(255, 220, 150, 0.82);
+}
+
+.smelting-recipe-stepper {
+  display: inline-grid;
+  grid-template-columns: 22px minmax(30px, auto) 22px;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(var(--smelt-cyan-rgb), 0.24);
+}
+
+.smelting-recipe-stepper button {
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: 0;
+  background: rgba(var(--smelt-cyan-rgb), 0.1);
+  color: rgba(230, 255, 255, 0.92);
+  font: 900 13px/1 "JetBrains Mono", monospace;
+}
+
+.smelting-recipe-stepper button:disabled {
+  opacity: 0.34;
+}
+
+.smelting-recipe-stepper output {
+  min-width: 30px;
+  padding: 0 5px;
+  color: rgba(255, 225, 160, 0.95);
+  font: 900 10px/22px "JetBrains Mono", monospace;
+  text-align: center;
+}
+
 .smelting-recipe-attributes b {
   display: inline-flex;
   align-items: center;
@@ -11724,9 +11778,17 @@ body,
 }
 
 .backpack-material-icon .smelting-material-preview {
-  width: min(42px, 74%) !important;
-  height: min(42px, 74%) !important;
-  transform: rotateX(58deg) rotateZ(45deg) scale(0.92) !important;
+  width: 100% !important;
+  height: 100% !important;
+  transform: none !important;
+}
+
+.backpack-material-icon .smelting-material-preview-canvas {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  image-rendering: pixelated !important;
 }
 
 .backpack-detail-preview .backpack-material-icon {
@@ -11734,8 +11796,8 @@ body,
 }
 
 .backpack-detail-preview .backpack-material-icon .smelting-material-preview {
-  width: min(112px, 72%) !important;
-  height: min(112px, 72%) !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /* Material and smelting inventory icons use the same real cube renderer as mined blocks. */
@@ -12882,6 +12944,12 @@ body,
   max-width: 54px !important;
   max-height: 54px !important;
   margin: auto !important;
+  transform: none !important;
+}
+
+.backpack-slot .backpack-material-icon .smelting-material-preview-canvas {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .backpack-detail-preview .backpack-material-icon {
@@ -12893,6 +12961,12 @@ body,
   width: min(156px, 90%) !important;
   height: min(156px, 90%) !important;
   margin: auto !important;
+  transform: none !important;
+}
+
+.backpack-detail-preview .backpack-material-icon .smelting-material-preview-canvas {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .smelting-resource-card .smelting-resource-swatch {
@@ -13006,6 +13080,7 @@ body,
   height: 100% !important;
   max-width: none !important;
   max-height: none !important;
+  transform: none !important;
 }
 
 .backpack-detail-preview {
@@ -13027,10 +13102,12 @@ body,
   height: 100% !important;
   max-width: none !important;
   max-height: none !important;
+  transform: none !important;
 }
 
 .smelting-output-preview,
 .smelting-recipe-preview {
+  position: relative !important;
   display: grid !important;
   place-items: center !important;
 }
@@ -13117,5 +13194,1001 @@ body,
   .smelting-output-preview > .smelting-material-preview {
     width: min(76px, 92%) !important;
     height: min(76px, 92%) !important;
+  }
+}
+
+/* Desktop smelting usability pass: drag is the primary input, so cards should read clearly without action buttons. */
+@media (min-width: 761px) {
+  .smelting-resource-actions {
+    display: none !important;
+  }
+
+  .smelting-resource-card {
+    grid-template-rows: 48px minmax(44px, 1fr) !important;
+    min-height: 112px !important;
+    padding: 10px 8px 9px !important;
+  }
+
+  .smelting-resource-card .smelting-resource-swatch {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .smelting-resource-card > span:not(.smelting-resource-actions) {
+    gap: 4px !important;
+  }
+
+  .smelting-resource-card strong {
+    font-size: 13px !important;
+    line-height: 1.14 !important;
+    letter-spacing: 0.01em !important;
+  }
+
+  .smelting-resource-card small,
+  .smelting-resource-card em {
+    font-size: 10px !important;
+    line-height: 1.18 !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  .smelting-resource-card em {
+    display: none !important;
+    color: rgba(255, 220, 150, 0.82) !important;
+  }
+
+  .smelting-panel-head span,
+  .smelting-eyebrow,
+  .smelting-title-group p {
+    font-size: 11px !important;
+    line-height: 1.16 !important;
+  }
+
+  .smelting-panel-head strong {
+    font-size: 15px !important;
+    line-height: 1.18 !important;
+  }
+
+  .smelting-slot > span {
+    font-size: 12px !important;
+  }
+
+  .smelting-slot > em,
+  .smelting-slot-item strong,
+  .smelting-progress-meta,
+  .smelting-footer,
+  .smelting-footer kbd {
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+  }
+
+  .smelting-slot-item {
+    min-height: 82px !important;
+  }
+
+  .smelting-slot-item .smelting-slot-preview,
+  .smelting-slot-item .smelting-slot-preview-block {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  .smelting-output-copy strong {
+    font-size: 18px !important;
+    line-height: 1.15 !important;
+  }
+
+  .smelting-output-copy p,
+  .smelting-output-copy small {
+    font-size: 12px !important;
+    line-height: 1.42 !important;
+  }
+
+  .smelting-output-stats em,
+  .smelting-output-stats b,
+  .smelting-recipe-attributes b,
+  .smelting-recipe-requirements b,
+  .smelting-element-chips b {
+    font-size: 10px !important;
+    line-height: 1.16 !important;
+  }
+
+  .smelting-recipe-copy strong {
+    font-size: 15px !important;
+    line-height: 1.18 !important;
+  }
+
+  .smelting-recipe-copy span,
+  .smelting-recipe-action {
+    font-size: 10px !important;
+  }
+
+  .smelting-recipe-copy p {
+    font-size: 12px !important;
+    line-height: 1.38 !important;
+  }
+
+  .smelting-submit {
+    font-size: 13px !important;
+  }
+}
+
+.smelting-preview-mass {
+  position: absolute !important;
+  left: 50% !important;
+  bottom: 9px !important;
+  max-width: calc(100% - 18px) !important;
+  padding: 4px 7px !important;
+  transform: translateX(-50%) !important;
+  border: 1px solid rgba(var(--smelt-amber-rgb), 0.38) !important;
+  background: rgba(2, 8, 10, 0.76) !important;
+  color: rgba(255, 226, 170, 0.95) !important;
+  font-family: "JetBrains Mono", "Courier New", ui-monospace, monospace !important;
+  font-size: 10px !important;
+  font-weight: 900 !important;
+  line-height: 1.1 !important;
+  letter-spacing: 0.04em !important;
+  text-align: center !important;
+  text-overflow: ellipsis !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
+
+@media (max-width: 760px) {
+  .smelting-preview-mass {
+    bottom: 5px !important;
+    font-size: 8px !important;
+    padding: 3px 5px !important;
+  }
+}
+
+/* Medium desktop fit pass: keep inventory, furnace, and recipe panels visible at common laptop widths. */
+@media (min-width: 761px) and (max-width: 1280px) {
+  .smelting-panel {
+    inset: 10px 10px calc(max(10px, env(safe-area-inset-bottom)) + 72px) 10px !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+  }
+
+  .smelting-body,
+  .smelting-panel[data-mobile-tab] .smelting-body,
+  .smelting-panel[data-smelting-state] .smelting-body {
+    grid-template-columns: minmax(280px, 0.92fr) minmax(360px, 1.16fr) minmax(250px, 0.82fr) !important;
+    grid-template-rows: minmax(360px, 1fr) minmax(210px, 0.54fr) !important;
+  }
+
+  .smelting-resource-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-auto-rows: minmax(98px, auto) !important;
+    gap: 7px !important;
+    padding: 10px !important;
+  }
+
+  .smelting-resource-card {
+    min-height: 98px !important;
+    grid-template-rows: 44px minmax(38px, 1fr) !important;
+    padding: 8px 6px 7px !important;
+  }
+
+  .smelting-resource-card .smelting-resource-swatch {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  .smelting-resource-card strong {
+    font-size: 12px !important;
+  }
+
+  .smelting-resource-card small {
+    font-size: 9px !important;
+  }
+
+  .smelting-core {
+    grid-template-columns: minmax(102px, 0.82fr) minmax(150px, 0.98fr) minmax(102px, 0.82fr) !important;
+    gap: 10px !important;
+    padding: 16px 14px 10px !important;
+  }
+
+  .smelting-slot,
+  .smelting-slot.fuel {
+    min-height: 136px !important;
+    padding: 10px !important;
+  }
+
+  .smelting-slot-items {
+    grid-template-columns: repeat(auto-fill, minmax(48px, 1fr)) !important;
+    gap: 5px !important;
+    max-height: 126px !important;
+  }
+
+  .smelting-slot-item {
+    min-height: 70px !important;
+    padding: 4px !important;
+  }
+
+  .smelting-slot-item .smelting-slot-preview,
+  .smelting-slot-item .smelting-slot-preview-block {
+    width: 38px !important;
+    height: 38px !important;
+  }
+
+  .smelting-heat-core {
+    width: clamp(150px, 15vw, 184px) !important;
+    height: clamp(150px, 15vw, 184px) !important;
+  }
+
+  .smelting-output-card {
+    grid-template-columns: minmax(118px, 136px) minmax(0, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .smelting-output-preview {
+    min-height: 128px !important;
+  }
+
+  .smelting-output-preview .smelting-material-preview,
+  .smelting-output-preview .backpack-material-icon .smelting-material-preview {
+    width: 90px !important;
+    height: 90px !important;
+  }
+
+  .smelting-preview-mass {
+    bottom: 8px !important;
+    max-width: calc(100% - 14px) !important;
+    font-size: 10px !important;
+    padding: 4px 8px !important;
+  }
+
+  .smelting-output-copy strong {
+    font-size: 16px !important;
+  }
+
+  .smelting-output-copy p,
+  .smelting-output-copy small {
+    font-size: 11px !important;
+  }
+
+  .smelting-output-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .smelting-recipe-card {
+    grid-template-columns: 56px minmax(0, 1fr) !important;
+    gap: 8px !important;
+    padding: 8px !important;
+  }
+
+  .smelting-recipe-preview {
+    min-height: 76px !important;
+  }
+
+  .smelting-recipe-preview > .smelting-material-preview {
+    width: 46px !important;
+    height: 46px !important;
+  }
+
+  .smelting-recipe-copy strong {
+    font-size: 13px !important;
+  }
+
+  .smelting-recipe-copy p {
+    font-size: 10px !important;
+  }
+}
+
+/* Resource card icon final pass: the card is already the frame, so the cube preview must not draw another box. */
+.smelting-resource-card {
+  justify-items: center !important;
+  align-items: start !important;
+}
+
+.smelting-resource-card .smelting-resource-swatch,
+.smelting-resource-card .smelting-resource-swatch-material,
+.smelting-resource-card .smelting-resource-swatch-block,
+.smelting-resource-card .smelting-material-preview {
+  position: relative !important;
+  inset: auto !important;
+  display: grid !important;
+  place-items: center !important;
+  width: 56px !important;
+  height: 56px !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  filter: none !important;
+  overflow: visible !important;
+  transform: none !important;
+  transform-style: flat !important;
+}
+
+.smelting-resource-card .smelting-resource-swatch::before,
+.smelting-resource-card .smelting-resource-swatch::after,
+.smelting-resource-card .smelting-resource-swatch-block::before,
+.smelting-resource-card .smelting-resource-swatch-block::after,
+.smelting-resource-card .smelting-material-preview::before,
+.smelting-resource-card .smelting-material-preview::after {
+  display: none !important;
+  content: none !important;
+}
+
+.smelting-resource-card .smelting-resource-swatch-canvas,
+.smelting-resource-card .smelting-material-preview-canvas {
+  display: block !important;
+  width: 56px !important;
+  height: 56px !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  object-fit: contain !important;
+}
+
+.smelting-resource-card > span:not(.smelting-resource-actions) {
+  display: grid !important;
+  justify-items: center !important;
+  align-content: start !important;
+  gap: 2px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  text-align: center !important;
+}
+
+.smelting-resource-card strong,
+.smelting-resource-card small {
+  max-width: 100% !important;
+  overflow: hidden !important;
+  text-align: center !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+@media (min-width: 761px) {
+  .smelting-resource-card {
+    grid-template-rows: 58px minmax(34px, auto) !important;
+    min-height: 108px !important;
+  }
+}
+
+@media (min-width: 761px) and (max-width: 1280px) {
+  .smelting-resource-card {
+    grid-template-rows: 54px minmax(32px, auto) !important;
+    min-height: 100px !important;
+  }
+
+  .smelting-resource-card .smelting-resource-swatch,
+  .smelting-resource-card .smelting-resource-swatch-material,
+  .smelting-resource-card .smelting-resource-swatch-block,
+  .smelting-resource-card .smelting-material-preview,
+  .smelting-resource-card .smelting-resource-swatch-canvas,
+  .smelting-resource-card .smelting-material-preview-canvas {
+    width: 52px !important;
+    height: 52px !important;
+  }
+}
+
+/* Stitch Smelting Station pass: desktop command layout with side icon rail and 3D flame core. */
+@media (min-width: 761px) {
+  .smelting-overlay {
+    background:
+      radial-gradient(circle at 48% 44%, rgba(255, 108, 24, 0.18), transparent 28%),
+      radial-gradient(circle at 12% 16%, rgba(0, 242, 255, 0.13), transparent 30%),
+      linear-gradient(135deg, rgba(0, 3, 6, 0.82), rgba(3, 7, 10, 0.76)) !important;
+    backdrop-filter: blur(18px) saturate(1.28) !important;
+  }
+
+  .smelting-panel {
+    --smelt-rail-width: 74px;
+    --smelt-cyan-rgb: 0, 242, 255;
+    --smelt-amber-rgb: 255, 174, 53;
+    inset: 16px 20px 72px !important;
+    width: min(1540px, calc(100vw - 40px)) !important;
+    height: min(900px, calc(100vh - 88px)) !important;
+    display: grid !important;
+    grid-template-columns: var(--smelt-rail-width) minmax(0, 1fr) !important;
+    grid-template-rows: 70px minmax(0, 1fr) 58px !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: auto !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(var(--smelt-cyan-rgb), 0.34) !important;
+    border-radius: 0 !important;
+    background:
+      linear-gradient(rgba(var(--smelt-cyan-rgb), 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(var(--smelt-cyan-rgb), 0.026) 1px, transparent 1px),
+      radial-gradient(circle at 48% 39%, rgba(var(--smelt-amber-rgb), 0.16), transparent 28%),
+      linear-gradient(135deg, rgba(9, 15, 20, 0.99), rgba(3, 7, 10, 0.98) 54%, rgba(11, 12, 14, 0.99)) !important;
+    background-size: 30px 30px, 30px 30px, auto, auto !important;
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.045),
+      0 0 52px rgba(var(--smelt-cyan-rgb), 0.14),
+      0 34px 96px rgba(0, 0, 0, 0.72) !important;
+    transform: none !important;
+  }
+
+  .smelting-side-nav {
+    grid-column: 1 !important;
+    grid-row: 2 / 4 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 10px !important;
+    min-width: 0 !important;
+    padding: 16px 10px !important;
+    border-right: 1px solid rgba(var(--smelt-cyan-rgb), 0.18) !important;
+    background: rgba(4, 10, 13, 0.82) !important;
+    backdrop-filter: blur(20px) !important;
+  }
+
+  .smelting-side-nav button {
+    position: relative !important;
+    display: grid !important;
+    place-items: center !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-height: 48px !important;
+    padding: 0 !important;
+    border: 1px solid rgba(var(--smelt-cyan-rgb), 0.18) !important;
+    border-radius: 0 !important;
+    background: rgba(7, 18, 22, 0.64) !important;
+    color: rgba(219, 246, 248, 0.72) !important;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.025) !important;
+  }
+
+  .smelting-side-nav button.active,
+  .smelting-side-nav button:hover {
+    border-color: rgba(var(--smelt-cyan-rgb), 0.72) !important;
+    background: rgba(var(--smelt-cyan-rgb), 0.12) !important;
+    color: rgba(236, 255, 255, 0.98) !important;
+    box-shadow: 0 0 18px rgba(var(--smelt-cyan-rgb), 0.16), inset 0 0 16px rgba(var(--smelt-cyan-rgb), 0.1) !important;
+  }
+
+  .smelting-nav-icon {
+    position: relative !important;
+    display: block !important;
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  .smelting-nav-icon::before,
+  .smelting-nav-icon::after {
+    position: absolute !important;
+    content: "" !important;
+    border-color: currentColor !important;
+  }
+
+  .smelting-nav-icon.profile::before {
+    inset: 2px 6px 10px !important;
+    border: 2px solid currentColor !important;
+    border-radius: 50% !important;
+  }
+
+  .smelting-nav-icon.profile::after {
+    left: 3px !important;
+    right: 3px !important;
+    bottom: 2px !important;
+    height: 8px !important;
+    border: 2px solid currentColor !important;
+    border-radius: 10px 10px 2px 2px !important;
+  }
+
+  .smelting-nav-icon.inventory::before,
+  .smelting-nav-icon.recipe::before {
+    inset: 3px !important;
+    border: 2px solid currentColor !important;
+  }
+
+  .smelting-nav-icon.inventory::after {
+    left: 6px !important;
+    right: 6px !important;
+    top: 7px !important;
+    height: 0 !important;
+    border-top: 2px solid currentColor !important;
+    box-shadow: 0 5px 0 currentColor !important;
+  }
+
+  .smelting-nav-icon.furnace::before {
+    left: 7px !important;
+    top: 2px !important;
+    width: 8px !important;
+    height: 16px !important;
+    border-radius: 50% 50% 48% 48% !important;
+    background: currentColor !important;
+    clip-path: polygon(50% 0, 78% 26%, 100% 54%, 82% 100%, 18% 100%, 0 55%, 24% 30%) !important;
+  }
+
+  .smelting-nav-icon.furnace::after {
+    left: 8px !important;
+    bottom: 3px !important;
+    width: 6px !important;
+    height: 8px !important;
+    border-radius: 50% !important;
+    background: rgba(var(--smelt-amber-rgb), 0.9) !important;
+  }
+
+  .smelting-nav-icon.recipe::after {
+    left: 7px !important;
+    right: 5px !important;
+    top: 7px !important;
+    height: 0 !important;
+    border-top: 2px solid currentColor !important;
+    box-shadow: 0 5px 0 currentColor, 0 10px 0 currentColor !important;
+  }
+
+  .smelting-nav-icon.stats::before {
+    left: 3px !important;
+    right: 3px !important;
+    bottom: 4px !important;
+    height: 2px !important;
+    background: currentColor !important;
+    box-shadow: 0 -6px 0 currentColor, 0 -12px 0 currentColor !important;
+  }
+
+  .smelting-nav-icon.social::before,
+  .smelting-nav-icon.social::after {
+    border: 2px solid currentColor !important;
+    border-radius: 50% !important;
+  }
+
+  .smelting-nav-icon.social::before {
+    left: 2px !important;
+    top: 7px !important;
+    width: 8px !important;
+    height: 8px !important;
+    box-shadow: 10px 0 0 -2px currentColor !important;
+  }
+
+  .smelting-nav-icon.social::after {
+    left: 7px !important;
+    top: 2px !important;
+    width: 8px !important;
+    height: 8px !important;
+  }
+
+  .smelting-header {
+    grid-column: 1 / 3 !important;
+    grid-row: 1 !important;
+    min-height: 70px !important;
+    padding: 12px 18px 12px 24px !important;
+    border-bottom: 1px solid rgba(var(--smelt-cyan-rgb), 0.22) !important;
+    background:
+      linear-gradient(90deg, rgba(var(--smelt-cyan-rgb), 0.12), transparent 38%, rgba(var(--smelt-amber-rgb), 0.08)),
+      rgba(3, 10, 13, 0.78) !important;
+  }
+
+  .smelting-mobile-tabs,
+  .smelting-mobile-drawer,
+  .smelting-mobile-drawer:not([hidden]) {
+    display: none !important;
+  }
+
+  .smelting-body,
+  .smelting-panel[data-mobile-tab] .smelting-body,
+  .smelting-panel[data-smelting-state] .smelting-body {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    display: grid !important;
+    grid-template-columns: minmax(300px, 0.86fr) minmax(470px, 1.18fr) minmax(330px, 0.96fr) !important;
+    grid-template-rows: minmax(420px, 1fr) minmax(210px, 0.5fr) !important;
+    gap: 0 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+  }
+
+  .smelting-footer {
+    grid-column: 2 !important;
+    grid-row: 3 !important;
+    min-height: 58px !important;
+    padding: 0 0 0 18px !important;
+    border-top: 1px solid rgba(var(--smelt-cyan-rgb), 0.16) !important;
+    background: rgba(3, 8, 10, 0.86) !important;
+  }
+
+  .smelting-inventory-panel,
+  .smelting-recipes-panel,
+  .smelting-core-panel,
+  .smelting-output-panel,
+  .smelting-panel[data-mobile-tab="backpack"] .smelting-inventory-panel,
+  .smelting-panel[data-mobile-tab="recipes"] .smelting-recipes-panel,
+  .smelting-panel[data-mobile-tab="furnace"] .smelting-core-panel,
+  .smelting-panel[data-mobile-tab="furnace"] .smelting-output-panel {
+    display: grid !important;
+    overflow: hidden !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: rgba(2, 8, 11, 0.36) !important;
+    box-shadow: none !important;
+  }
+
+  .smelting-inventory-panel {
+    grid-column: 1 !important;
+    grid-row: 1 / 3 !important;
+    grid-template-rows: 60px 42px minmax(0, 1fr) !important;
+    border-right: 1px solid rgba(var(--smelt-cyan-rgb), 0.16) !important;
+  }
+
+  .smelting-core-panel {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    grid-template-rows: 60px minmax(0, 1fr) 64px !important;
+    border-right: 1px solid rgba(var(--smelt-cyan-rgb), 0.16) !important;
+    background: radial-gradient(circle at 50% 48%, rgba(var(--smelt-amber-rgb), 0.12), transparent 39%), rgba(3, 9, 12, 0.5) !important;
+  }
+
+  .smelting-output-panel {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    grid-template-rows: 48px minmax(0, 1fr) !important;
+    border-top: 1px solid rgba(var(--smelt-cyan-rgb), 0.16) !important;
+    border-right: 1px solid rgba(var(--smelt-cyan-rgb), 0.16) !important;
+  }
+
+  .smelting-recipes-panel {
+    grid-column: 3 !important;
+    grid-row: 1 / 3 !important;
+    grid-template-rows: 60px 42px minmax(0, 1fr) !important;
+  }
+
+  .smelting-panel-head {
+    display: grid !important;
+    align-content: center !important;
+    min-height: 0 !important;
+    padding: 12px 16px !important;
+    border-bottom: 1px solid rgba(var(--smelt-cyan-rgb), 0.13) !important;
+    background: rgba(var(--smelt-cyan-rgb), 0.035) !important;
+  }
+
+  .smelting-panel-head span {
+    color: rgba(var(--smelt-cyan-rgb), 0.7) !important;
+    font-family: "JetBrains Mono", "Courier New", ui-monospace, monospace !important;
+    font-size: 9px !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.16em !important;
+    text-transform: uppercase !important;
+  }
+
+  .smelting-panel-head strong {
+    color: rgba(237, 255, 255, 0.96) !important;
+    font-size: 13px !important;
+    font-weight: 950 !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+  }
+
+  .smelting-core {
+    display: grid !important;
+    grid-template-columns: minmax(116px, 0.62fr) minmax(260px, 1fr) minmax(116px, 0.62fr) !important;
+    align-items: center !important;
+    justify-items: center !important;
+    gap: clamp(16px, 2vw, 34px) !important;
+    padding: clamp(20px, 2vw, 30px) clamp(18px, 2.4vw, 34px) 14px !important;
+    overflow: hidden !important;
+  }
+
+  .smelting-core::before {
+    display: none !important;
+  }
+
+  .smelting-slot,
+  .smelting-slot.fuel {
+    width: 100% !important;
+    min-height: clamp(180px, 28vh, 260px) !important;
+    max-height: none !important;
+    padding: 14px !important;
+    border: 1px dashed rgba(var(--smelt-cyan-rgb), 0.42) !important;
+    background: rgba(2, 10, 13, 0.42) !important;
+    box-shadow: inset 0 0 18px rgba(var(--smelt-cyan-rgb), 0.045), 0 0 22px rgba(var(--smelt-cyan-rgb), 0.06) !important;
+  }
+
+  .smelting-slot.fuel {
+    border-color: rgba(var(--smelt-amber-rgb), 0.54) !important;
+    box-shadow: inset 0 0 18px rgba(var(--smelt-amber-rgb), 0.055), 0 0 24px rgba(var(--smelt-amber-rgb), 0.08) !important;
+  }
+
+  .smelting-slot > span {
+    justify-self: center !important;
+    padding: 5px 10px !important;
+    background: var(--smelt-cyan, #00f2ff) !important;
+    color: #001012 !important;
+    font-size: 10px !important;
+    font-weight: 950 !important;
+    letter-spacing: 0.12em !important;
+  }
+
+  .smelting-slot.fuel > span {
+    background: var(--smelt-amber, #ffae35) !important;
+    color: #170b00 !important;
+  }
+
+  .smelting-heat-core {
+    position: relative !important;
+    width: clamp(250px, 22vw, 340px) !important;
+    height: clamp(250px, 22vw, 340px) !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(var(--smelt-cyan-rgb), 0.2) !important;
+    border-radius: 18px !important;
+    background:
+      radial-gradient(circle at 50% 54%, rgba(255, 196, 73, 0.14), transparent 42%),
+      radial-gradient(circle at 50% 50%, rgba(0, 242, 255, 0.08), transparent 58%),
+      rgba(0, 0, 0, 0.34) !important;
+    box-shadow:
+      inset 0 0 34px rgba(var(--smelt-amber-rgb), 0.13),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.035),
+      0 0 42px rgba(var(--smelt-amber-rgb), 0.12) !important;
+  }
+
+  .smelting-heat-core::before,
+  .smelting-heat-core::after {
+    display: none !important;
+  }
+
+  .smelting-flame-shader,
+  .smelting-three-core,
+  .smelting-three-canvas {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    pointer-events: none !important;
+  }
+
+  .smelting-flame-shader {
+    z-index: 1 !important;
+    display: block !important;
+    opacity: 0.96 !important;
+  }
+
+  .smelting-three-core {
+    z-index: 2 !important;
+  }
+
+  .smelting-heat-core i {
+    position: absolute !important;
+    inset: auto 50% 20px auto !important;
+    z-index: 3 !important;
+    width: auto !important;
+    height: auto !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: rgba(var(--smelt-cyan-rgb), 0.85) !important;
+    font-family: "JetBrains Mono", "Courier New", ui-monospace, monospace !important;
+    font-size: 10px !important;
+    font-style: normal !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.12em !important;
+    line-height: 1 !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    transform: translateX(50%) !important;
+  }
+
+  .smelting-heat-core i::before {
+    content: "CORE_TEMP: 14,200K" !important;
+    position: static !important;
+    display: block !important;
+    color: rgba(var(--smelt-cyan-rgb), 0.86) !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .smelting-heat-core i::after {
+    content: "STABILITY: 99.8%" !important;
+    position: static !important;
+    display: block !important;
+    margin-top: 7px !important;
+    color: rgba(var(--smelt-amber-rgb), 0.82) !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .smelting-resource-actions {
+    display: none !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .smelting-side-nav,
+  .smelting-flame-shader,
+  .smelting-three-core {
+    display: none !important;
+  }
+}
+
+/* Smelting refinement: full-height input/fuel bays and fuel-tier driven spherical flame. */
+@media (min-width: 761px) {
+  .smelting-core {
+    grid-template-columns: minmax(128px, 0.72fr) minmax(268px, 1fr) minmax(128px, 0.72fr) !important;
+  }
+
+  .smelting-slot,
+  .smelting-slot.fuel {
+    display: grid !important;
+    grid-template-rows: auto minmax(0, 1fr) !important;
+    align-self: stretch !important;
+    min-height: clamp(250px, 38vh, 390px) !important;
+    height: 100% !important;
+    max-height: none !important;
+  }
+
+  .smelting-slot > em {
+    min-height: 0 !important;
+    height: 100% !important;
+  }
+
+  .smelting-slot-items {
+    grid-template-columns: repeat(auto-fill, minmax(58px, 1fr)) !important;
+    align-content: start !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+  }
+
+  .smelting-heat-core {
+    --smelt-fire-intensity: 0.08;
+    width: clamp(250px, 22vw, 342px) !important;
+    height: clamp(250px, 22vw, 342px) !important;
+    border-radius: 50% !important;
+    border-color: rgba(var(--smelt-cyan-rgb), calc(0.14 + var(--smelt-fire-intensity) * 0.26)) !important;
+    background:
+      radial-gradient(circle at 38% 28%, rgba(255, 255, 220, calc(0.04 + var(--smelt-fire-intensity) * 0.18)), transparent 13%),
+      radial-gradient(circle at 50% 54%, rgba(var(--smelt-amber-rgb), calc(0.07 + var(--smelt-fire-intensity) * 0.2)), transparent 42%),
+      radial-gradient(circle at 50% 50%, rgba(0, 242, 255, calc(0.035 + var(--smelt-fire-intensity) * 0.07)), transparent 58%),
+      rgba(0, 0, 0, 0.38) !important;
+    box-shadow:
+      inset -34px -42px 62px rgba(0, 0, 0, 0.46),
+      inset 22px 28px 42px rgba(255, 244, 190, calc(0.02 + var(--smelt-fire-intensity) * 0.08)),
+      inset 0 0 48px rgba(var(--smelt-amber-rgb), calc(0.06 + var(--smelt-fire-intensity) * 0.18)),
+      0 0 calc(18px + var(--smelt-fire-intensity) * 54px) rgba(var(--smelt-amber-rgb), calc(0.05 + var(--smelt-fire-intensity) * 0.16)),
+      0 0 calc(10px + var(--smelt-fire-intensity) * 34px) rgba(var(--smelt-cyan-rgb), calc(0.03 + var(--smelt-fire-intensity) * 0.08)) !important;
+  }
+
+  .smelting-flame-shader,
+  .smelting-three-core,
+  .smelting-three-canvas {
+    border-radius: 50% !important;
+  }
+
+  .smelting-flame-shader {
+    opacity: calc(0.48 + var(--smelt-fire-intensity) * 0.5) !important;
+  }
+
+  .smelting-panel[data-fuel-tier="0"] .smelting-heat-core {
+    filter: saturate(0.82) brightness(0.68) !important;
+  }
+
+  .smelting-panel:not([data-fuel-tier="0"]) .smelting-heat-core {
+    filter: saturate(calc(1 + var(--smelt-fire-intensity) * 0.6)) brightness(calc(0.84 + var(--smelt-fire-intensity) * 0.28)) !important;
+  }
+}
+
+/* Smelting final polish: top-aligned selected slots and frameless particle flame. */
+@media (min-width: 761px) {
+  .smelting-slot,
+  .smelting-slot.fuel {
+    place-items: stretch !important;
+    align-items: start !important;
+    justify-items: stretch !important;
+    align-content: start !important;
+    gap: 8px !important;
+    padding-block: 10px !important;
+  }
+
+  .smelting-slot > span {
+    align-self: start !important;
+    justify-self: start !important;
+    margin: 0 !important;
+  }
+
+  .smelting-slot > em {
+    align-self: stretch !important;
+    margin: 0 !important;
+    min-height: 0 !important;
+  }
+
+  .smelting-slot-items {
+    align-self: start !important;
+    justify-self: stretch !important;
+    align-content: start !important;
+    margin: 0 !important;
+    padding: 0 2px 0 0 !important;
+    width: 100% !important;
+  }
+
+  .smelting-heat-core {
+    border: 0 !important;
+    outline: 0 !important;
+    background:
+      radial-gradient(circle at 38% 28%, rgba(255, 245, 196, calc(0.03 + var(--smelt-fire-intensity) * 0.16)), transparent 18%),
+      radial-gradient(circle at 50% 54%, rgba(var(--smelt-amber-rgb), calc(0.08 + var(--smelt-fire-intensity) * 0.24)), transparent 46%),
+      radial-gradient(circle at 50% 50%, rgba(0, 242, 255, calc(0.02 + var(--smelt-fire-intensity) * 0.05)), transparent 62%),
+      transparent !important;
+    box-shadow:
+      0 0 calc(34px + var(--smelt-fire-intensity) * 88px) rgba(var(--smelt-amber-rgb), calc(0.06 + var(--smelt-fire-intensity) * 0.24)),
+      0 0 calc(18px + var(--smelt-fire-intensity) * 42px) rgba(0, 242, 255, calc(0.025 + var(--smelt-fire-intensity) * 0.08)) !important;
+  }
+
+  .smelting-heat-core::before,
+  .smelting-heat-core::after {
+    content: "" !important;
+    position: absolute !important;
+    display: block !important;
+    pointer-events: none !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    transform: none !important;
+  }
+
+  .smelting-heat-core::before {
+    z-index: 0 !important;
+    inset: -14% !important;
+    background:
+      radial-gradient(circle, rgba(var(--smelt-amber-rgb), calc(0.06 + var(--smelt-fire-intensity) * 0.28)), transparent 58%),
+      radial-gradient(circle, rgba(255, 74, 24, calc(0.04 + var(--smelt-fire-intensity) * 0.16)), transparent 68%) !important;
+    filter: blur(calc(8px + var(--smelt-fire-intensity) * 18px)) !important;
+    opacity: calc(0.36 + var(--smelt-fire-intensity) * 0.44) !important;
+    animation: smelting-orb-breathe 2.8s ease-in-out infinite !important;
+  }
+
+  .smelting-heat-core::after {
+    z-index: 1 !important;
+    inset: 6% !important;
+    background:
+      radial-gradient(circle at 45% 34%, rgba(255, 245, 192, calc(0.05 + var(--smelt-fire-intensity) * 0.18)), transparent 13%),
+      radial-gradient(circle at 50% 58%, rgba(255, 138, 29, calc(0.07 + var(--smelt-fire-intensity) * 0.22)), transparent 47%),
+      radial-gradient(circle at 54% 45%, rgba(0, 242, 255, calc(0.025 + var(--smelt-fire-intensity) * 0.08)), transparent 62%) !important;
+    filter: blur(calc(3px + var(--smelt-fire-intensity) * 7px)) saturate(calc(1.05 + var(--smelt-fire-intensity) * 0.9)) !important;
+    opacity: calc(0.24 + var(--smelt-fire-intensity) * 0.56) !important;
+    animation: smelting-orb-drift 3.6s ease-in-out infinite !important;
+  }
+
+  .smelting-flame-shader {
+    filter: blur(calc(1.5px + var(--smelt-fire-intensity) * 4px)) saturate(calc(1.1 + var(--smelt-fire-intensity) * 1.2)) !important;
+    mix-blend-mode: screen !important;
+  }
+
+  .smelting-three-core,
+  .smelting-three-canvas {
+    filter: blur(0.35px) saturate(calc(1.05 + var(--smelt-fire-intensity) * 0.75)) !important;
+    mix-blend-mode: screen !important;
+  }
+
+  .smelting-heat-core i {
+    display: none !important;
+  }
+}
+
+@keyframes smelting-orb-breathe {
+  0%,
+  100% {
+    transform: scale(0.96);
+    opacity: calc(0.32 + var(--smelt-fire-intensity) * 0.38);
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: calc(0.42 + var(--smelt-fire-intensity) * 0.5);
+  }
+}
+
+@keyframes smelting-orb-drift {
+  0%,
+  100% {
+    transform: translate3d(-1%, 1%, 0) scale(0.98);
+  }
+  50% {
+    transform: translate3d(1%, -2%, 0) scale(1.04);
   }
 }

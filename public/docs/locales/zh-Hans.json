@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hans",
     "label": "Simplified Chinese",
-    "version": "docs-locale-zh-Hans-98084956ef5cfdb3",
-    "contentHash": "98084956ef5cfdb3"
+    "version": "docs-locale-zh-Hans-e3a571fb002e45d8",
+    "contentHash": "e3a571fb002e45d8"
   },
   "siteFooter": {
     "tagline": "Solana 上的种子体素世界协议。",
@@ -33,7 +33,10 @@
     "fairness": "公平性",
     "proofOfFrontier": "证明",
     "docs": "文档",
-    "guardians": "守护者"
+    "guardians": "守护者",
+    "civilization": "文明",
+    "ncm": "NCM",
+    "ncfm": "NCFM"
   },
   "language": {
     "aria": "语言"
@@ -49,6 +52,10 @@
         {
           "id": "overview",
           "label": "概览"
+        },
+        {
+          "id": "nicechunk-thesis",
+          "label": "NiceChunk 理念"
         },
         {
           "id": "protocol-map",
@@ -110,6 +117,18 @@
         {
           "id": "assets-market",
           "label": "资产与市场"
+        },
+        {
+          "id": "ncm-chain-assets",
+          "label": "NCM 链上资产"
+        },
+        {
+          "id": "ncfm-upow",
+          "label": "NCFM / UPOW"
+        },
+        {
+          "id": "civilization-rules",
+          "label": "文明规则"
         }
       ]
     },
@@ -179,11 +198,19 @@
       },
       "verification": {
         "title": "状态与 PDA 模型",
-        "body": "GlobalConfig、Chunk 覆盖账户、Guardian 登记 PDA、版本哈希，以及哪些内容不应该上链存储。"
+        "body": "GlobalConfig、玩家会话、ChunkBroken 挖掘记录、ResourceDropTable 掉落表、Guardian 登记 PDA、版本哈希，以及哪些内容不应上链存储。"
       },
       "network": {
         "title": "Guardian 网络",
         "body": "区域接入节点、实时消息、非托管边界、NCK 质押和未来可用性证明。"
+      },
+      "assets": {
+        "title": "链上资产研究",
+        "body": "NCM 把紧凑体素资产存成链上文本；NCFM 探索 Fourier/函数载荷，用极小记录重建 3D 物品。"
+      },
+      "civilization": {
+        "title": "文明层",
+        "body": "自然法、文明法、参与权力、规则书、验证器检查、冷却期，以及有边界的配置执行。"
       }
     }
   },
@@ -205,7 +232,7 @@
       "planned": {
         "label": "计划中的协议",
         "title": "未来验证层",
-        "body": "Chunk 覆盖压缩、资源结算、资产所有权、市场结算、Guardian 证明和治理控制。"
+        "body": "放置方块覆盖、更完整的资源结算、文明规则执行、Guardian 挑战机制和长期治理控制。"
       },
       "boundary": {
         "label": "信任边界",
@@ -234,7 +261,7 @@
       },
       "player": {
         "title": "玩家和背包 PDA",
-        "body": "PlayerProfile 存储公开玩家状态和已装备背包地址。背包内容存在 Backpack 账户中；挖矿会在有效玩家会话后追加资源记录。"
+        "body": "PlayerProfile 存储公开玩家状态和已装备背包地址。背包内容存在 v2 Backpack 账户中；带奖励的挖矿会在有效玩家会话后，通过 Backpack 程序追加方块资源记录。"
       },
       "guardian": {
         "title": "Guardian 接入层",
@@ -339,7 +366,11 @@
         "chunkBroken": "被挖生成格子的紧凑记录，用来避免把完整生成地形写入链上存储。",
         "registry": "活跃 Guardian 区域的登记表，包含 NCK 质押数量、国库代币账户和注册计数。",
         "region": "已注册的区域端点，包含 owner、operator、host、TLS 标记、质押、证明计数和更新 slot。",
-        "chunk": "未来生产版本的当前方块覆盖账户，只存玩家改变过的状态；未改变的生成地形不应存储。"
+        "chunk": "未来生产账户，只存放置方块 delta 和当前方块覆盖。未改变的生成地形不应存储。",
+        "resourceDropTable": "带奖励挖矿使用的有界额外掉落规则表。每条规则包含源方块、掉落方块、概率、高度、深度和 salt。",
+        "recipeTable": "熔炼配方表，包含 authority、recipe id、热力等级、输入槽记录、输出槽记录和更新 slot。",
+        "asset": "紧凑的玩家拥有物品或模型记录，包含分类、数量、item hash、item code、耐久和有界 payload 字节。",
+        "listing": "市场挂单状态，支持背包资源或 Asset PDA，包含卖家、价格、货币、托管来源、买家，以及已售出/已取消状态。"
       }
     }
   },
@@ -354,7 +385,8 @@
         "player": "如果 PlayerProfile 不存在，先创建玩家档案。",
         "create": "使用 [\"backpack\", owner, backpack_id] 种子创建 Backpack PDA。",
         "bind": "调用 Player 程序指令 5，把 Backpack 公钥写入 PlayerProfile。",
-        "verify": "重新加载 PlayerProfile，再加载引用的 Backpack，并验证两个账户 owner 一致。"
+        "verify": "重新加载 PlayerProfile，再加载引用的 Backpack，并验证两个账户 owner 一致。",
+        "session": "在通过 session authority 提交 break/place 行为前，创建或刷新 PlayerSession。"
       }
     }
   },
@@ -409,7 +441,7 @@
   "mining": {
     "eyebrow": "挖矿与资源",
     "title": "资源结果应该能从公开输入复现。",
-    "body": "基础地形可以确定性生成，但高价值资源不能只由公开世界种子完全预测。资源发现应该把公开承诺和行为输入结合起来，让玩家能验证结果，又不能提前离线扫描所有高价值坐标。",
+    "body": "当前挖矿会根据 GlobalConfig 和 Chunk 坐标验证生成方块身份，拒绝空气、水、基岩和已挖过的格子，记录 broken cell，然后可把被挖方块和一个有界额外掉落追加到已装备背包。",
     "demo": {
       "eyebrow": "证明演示",
       "title": "挖矿 Roll",
@@ -421,7 +453,7 @@
   "forging": {
     "eyebrow": "锻造、资产与背包",
     "title": "物品在成为可交易资产前，必须先有可读状态。",
-    "body": "工具栏格子、耐久、堆叠限制、配方、材料输入和未来资产元数据，都应该作为状态模型公开，而不是隐藏在 UI 行为里。",
+    "body": "工具栏槽位、耐久、堆叠上限、熔炼配方表、材料输入、输出记录和未来资产元数据，都应作为状态模型公开，而不是隐藏 UI 行为。",
     "cards": {
       "hotbar": {
         "title": "工具栏",
@@ -432,8 +464,8 @@
         "body": "工具使用耐久而不是堆叠数量。当前默认工具耐久是 999。"
       },
       "recipes": {
-        "title": "配方",
-        "body": "锻造输出应该声明输入材料、输出物品、质量字段和未来验证路径。"
+        "title": "熔炼配方",
+        "body": "RecipeTable 账户存储启用的配方，包含最低热力等级、最多 8 个输入槽记录、最多 4 个输出槽记录，以及可转移的 authority。"
       }
     }
   },
@@ -457,7 +489,11 @@
       },
       "market": {
         "title": "市场挂单",
-        "body": "Market 程序会创建卖家拥有的 Listing PDA，包含分类、货币、来源类型、来源索引、数量、价格和物品哈希。当前范围是创建挂单和取消挂单。"
+        "body": "Market 程序会创建卖家拥有的 Listing PDA，可以取消活跃挂单，也可以用 SOL 或 NCK 购买挂单并收取 1% 市场费用。"
+      },
+      "ncfm": {
+        "title": "NCFM / UPOW 研究",
+        "body": "NCFM 探索函数定义资产，以及有用计算路径：搜索工作可以寻找更短载荷，同时仍复现可验证模型。"
       }
     }
   },
@@ -494,6 +530,10 @@
         "governance": {
           "utility": "治理",
           "notes": "协议参数修改应该被版本化并可审查。"
+        },
+        "smelting": {
+          "utility": "熔炼配置",
+          "notes": "RecipeTable 是链上状态；在未来文明配置路径存在前，配方 authority 仍是显式权限。"
         }
       }
     }
@@ -521,7 +561,7 @@
       },
       "registry": {
         "title": "Guardian 登记表",
-        "body": "GuardianRegion 账户会存储区域坐标、端点、owner、operator、质押、证明计数和更新 slot。"
+        "body": "GuardianRegion 账户存储 100 x 100 Chunk 区域、端点、owner、operator、stake、proof 计数、处罚和更新 slot。"
       }
     }
   },
@@ -586,7 +626,7 @@
   "fairness": {
     "eyebrow": "公平、安全与治理",
     "title": "只有玩家能检查规则书，规则才真正公平。",
-    "body": "NiceChunk 应该公开确定性规则、版本化重大规则变更、发布测试向量、披露信任边界，并区分已上线功能和计划中的协议机制。",
+    "body": "NiceChunk 应公开确定性规则，版本化重大规则变更，发布测试向量，披露信任边界，区分已上线功能和计划中的协议机制，并让未来文明变更通过显式配置账户执行。",
     "cards": {
       "deterministic": {
         "title": "确定性生成",
@@ -599,6 +639,10 @@
       "limits": {
         "title": "信任边界",
         "body": "文档必须说明哪些是客户端行为，哪些由守护者辅助，哪些计划进入链上验证。"
+      },
+      "civilization": {
+        "title": "文明边界",
+        "body": "文明只能在显式验证和阈值通过后演化配置；它不是项目方用文本命令改写所有权或核心代码。"
       }
     }
   },
@@ -617,6 +661,10 @@
       "v0148": {
         "title": "首页主 logo 尺寸更新",
         "body": "仅 UI 改动。不涉及玩法、世界生成、经济或链上状态规则变更。"
+      },
+      "v0164": {
+        "title": "文档已对齐当前程序",
+        "body": "补充 ResourceDropTable、带奖励挖矿、v2 背包存储、熔炼配方执行、市场购买流程，以及文明治理边界。"
       }
     }
   },
@@ -626,5 +674,133 @@
     "desert": "沙漠",
     "snow": "雪地",
     "water": "水域"
+  },
+  "civilizationDocs": {
+    "eyebrow": "文明规则",
+    "title": "文明系统让玩家书写世界法律，而不是让项目方保留隐藏权限。",
+    "body": "Civilization Codex 是 NiceChunk 的治理设计面。它把世界级自然法和可演化文明法分开，用参与权力而不是钱包数量或原始余额来衡量治理权，并把通过的修改写入有边界的配置 PDA，而不是暗中管理员覆盖。",
+    "status": {
+      "natural": "90%",
+      "civilization": "50%",
+      "power": "权力",
+      "execution": "执行",
+      "modules": "模块",
+      "boundary": "边界"
+    },
+    "cards": {
+      "natural": {
+        "title": "自然法",
+        "body": "自然法保护世界最底层的公平假设。它需要更强提示、更严格验证器、更长冷却期、更宽挑战窗口，以及 90% 世界级共识。"
+      },
+      "civilization": {
+        "title": "文明法",
+        "body": "文明法允许玩家演化生产、建造、工艺、资源规则和社会配置，门槛更低，但仍必须处在验证器检查过的 patch 边界内。"
+      },
+      "power": {
+        "title": "按参与加权的公民权力",
+        "body": "权力应该来自真实世界参与，并通过成熟期、上限、活跃窗口、衰减和异常惩罚限制滥用，而不是简化成钱包数量或原始 NCK 余额。"
+      },
+      "execution": {
+        "title": "无许可执行",
+        "body": "当阈值、冷却期和挑战条件满足后，任何玩家都应该可以调用 execute_rule。合约只检查链上状态，并只写入已批准配置。"
+      },
+      "modules": {
+        "title": "目标配置模块",
+        "body": "公开 Codex 已命名 smelting、forging、block_properties、resource_rules、element_rules、world_knowledge 作为未来模块目标。"
+      },
+      "boundary": {
+        "title": "今天是 mock UI，明天是合约路径",
+        "body": "当前 Civilization 页面公开的是 mock 规则书和未来账户结构；目前还没有已部署文明程序会修改玩法 PDA。"
+      }
+    }
+  },
+  "ncmDocs": {
+    "eyebrow": "NCM 链上资产",
+    "title": "NCM 让 3D 资产本身成为可读的协议状态。",
+    "body": "NCM 页面记录的是 NiceChunk 的紧凑体素资产格式。MagicaVoxel .vox 文件在浏览器本地解析，同色体素先合并为 cuboid，再输出为 NCM2 文本。这个文本可以放进账户数据或程序拥有的资产记录里，客户端通过普通 RPC 读取后即可重建模型，不依赖 IPFS、可变 JSON 或私有资产服务器。",
+    "status": {
+      "format": "格式",
+      "tool": "工具",
+      "storage": "存储",
+      "research": "研究"
+    },
+    "cards": {
+      "format": {
+        "title": "适合 PDA 的文本",
+        "body": "NCM2 记录会把调色板、box 数量、有符号位置、尺寸和模型哈希编码成紧凑文本，浏览器和游戏客户端都能直接检查资产。"
+      },
+      "converter": {
+        "title": "浏览器本地 VOX 转换器",
+        "body": "公开转换器支持 MagicaVoxel 的 SIZE、XYZI 和 RGBA chunk，可以预览模型，并导出适合账户存储实验的 NCM 载荷。"
+      },
+      "compression": {
+        "title": "几百字节，而不是资产托管",
+        "body": "当前示例把 23 KB 级别的 VOX 角色压缩到约 354-452 字节的 NCM 记录，这正是链上状态和外部文件依赖之间的差别。"
+      },
+      "dna": {
+        "title": "NCM-DNA 延伸",
+        "body": "NCM-DNA 沿着同一方向继续探索：搜索能复现同一模型哈希的确定性短基因，把资产压缩变成有用计算问题。"
+      }
+    }
+  },
+  "ncfmDocs": {
+    "eyebrow": "NCFM / UPOW",
+    "title": "NCFM 把 3D 物品变成确定性的函数载荷。",
+    "body": "NCFM 是 NiceChunk Fourier Model。它不存 mesh 文件，也不存完整体素列表，而是存一个极小的规范记录：种子、量化系数、调色规则、网格边界和验证哈希。客户端按约定函数采样并重建体素物品。这也是 UPOW 方向：有用工作应该改进资产表达，而不是把算力浪费在无意义哈希上。",
+    "status": {
+      "payload": "载荷",
+      "sampler": "采样",
+      "verifiable": "可验证",
+      "boundary": "边界"
+    },
+    "cards": {
+      "payload": {
+        "title": "函数就是资产身份",
+        "body": "公开 NCFM 实验室展示了类似 NCFM1.PKX.S37x39x9.FXY:dseg+harm12.FZ:thick7.PAL:g0.6.H:9bd2a6 的紧凑载荷，示例物品约 214 字节。"
+      },
+      "sampler": {
+        "title": "FXY x FZ 重建",
+        "body": "实验室展示的是 XY 平面的 Fourier 轮廓与 Z 厚度函数相交，同时被两个函数接受的坐标才会成为材质体素。"
+      },
+      "hash": {
+        "title": "同一载荷，同一模型哈希",
+        "body": "规范边界、系数量化、调色板、采样顺序和哈希规则，让任何客户端或浏览器都能验证可见物体是否匹配链上载荷。"
+      },
+      "boundary": {
+        "title": "研究方向，不是已上线结算",
+        "body": "NCFM 和 UPOW 在文档中被定位为下一层资产计算方向；当前主网产品不会把它们描述为已经部署的结算合约。"
+      }
+    }
+  },
+  "thesis": {
+    "eyebrow": "NiceChunk 理念",
+    "title": "NiceChunk 是公开世界协议，不只是体素客户端。",
+    "body": "项目围绕一个原则构建：重要的世界规则、资产身份、玩家行为和未来治理路径，都应该可检查、可复现，并最终通过明确协议状态执行。",
+    "cards": {
+      "world": {
+        "title": "确定性世界",
+        "body": "地形、资源、水、树木、雪线和 Chunk 边界来自公开规则，所以世界可以被重新生成和审计，而不是只能相信服务器输出。"
+      },
+      "state": {
+        "title": "状态必须显式",
+        "body": "文档会区分生成默认值、玩家增量、PDA 账户、本地缓存、开发网合约和未来主网承诺。"
+      },
+      "assets": {
+        "title": "资产属于协议",
+        "body": "NCM 和 NCFM 把 3D 物品身份推向链上可读数据和确定性重建，而不是依赖可能消失或变化的外部文件。"
+      },
+      "upow": {
+        "title": "计算应该有用",
+        "body": "NCM-DNA 和 NCFM/UPOW 把搜索工作导向更短资产基因或更好的函数载荷，并复现可验证模型哈希。"
+      },
+      "civilization": {
+        "title": "文明书写法律",
+        "body": "长期治理模型不是隐藏管理员控制，而是可读规则书、参与权力、冷却期、挑战窗口和有边界的配置执行。"
+      },
+      "guardian": {
+        "title": "接入不等于托管",
+        "body": "Guardians 应该让区域保持可达和实时，但钱包保留授权，合约保留清晰结算边界。"
+      }
+    }
   }
 }

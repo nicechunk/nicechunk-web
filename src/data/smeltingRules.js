@@ -1228,6 +1228,13 @@ function compositionMidpointForElement(composition = [], symbol) {
   return smeltingCompositionMidpoint(entry[1]);
 }
 
+function smeltingCompositionMidpoint(range) {
+  const numbers = String(range).match(/\d+(?:\.\d+)?/g)?.map(Number) ?? [];
+  if (!numbers.length) return 0;
+  if (numbers.length === 1) return numbers[0];
+  return (numbers[0] + numbers[1]) / 2;
+}
+
 function numericSmeltingSeed(value) {
   const text = String(value ?? "");
   let hash = 2166136261;
@@ -1370,20 +1377,45 @@ export function hasRequiredSmeltingInputs(recipe, counts) {
   return recipeRequirements(recipe).every((input) => (counts.get(input.key) ?? 0) >= input.amount);
 }
 
+export function smeltingRecipeInputMultiplier(recipe, counts) {
+  const requirements = recipeRequirements(recipe);
+  if (!requirements.length || !counts?.size) return 0;
+  const requiredKeys = new Set(requirements.map((input) => input.key));
+  for (const key of counts.keys()) {
+    if (!requiredKeys.has(key)) return 0;
+  }
+  let multiplier = null;
+  for (const input of requirements) {
+    const required = Math.max(1, Number(input.amount) || 1);
+    const actual = counts.get(input.key) ?? 0;
+    if (actual < required || actual % required !== 0) return 0;
+    const nextMultiplier = actual / required;
+    if (multiplier === null) multiplier = nextMultiplier;
+    if (multiplier !== nextMultiplier) return 0;
+  }
+  return multiplier ?? 0;
+}
+
+export function hasExactSmeltingInputRatio(recipe, counts) {
+  return smeltingRecipeInputMultiplier(recipe, counts) >= 1;
+}
+
 export function smeltingRecipeMatchScore(recipe, counts) {
   const requirements = recipeRequirements(recipe);
   const requiredTotal = requirements.reduce((sum, input) => sum + input.amount, 0);
-  const matchedTotal = requirements.reduce((sum, input) => sum + Math.min(counts.get(input.key) ?? 0, input.amount), 0);
-  const exact = hasRequiredSmeltingInputs(recipe, counts);
+  const multiplier = smeltingRecipeInputMultiplier(recipe, counts);
+  const matchedTotal = requirements.reduce((sum, input) => sum + Math.min(counts.get(input.key) ?? 0, input.amount * Math.max(1, multiplier)), 0);
+  const exact = multiplier >= 1;
   const waste = [...counts.entries()].reduce((sum, [key, count]) => {
-    const required = requirements.find((input) => input.key === key)?.amount ?? 0;
+    const required = requirements.find((input) => input.key === key)?.amount * Math.max(1, multiplier) || 0;
     return sum + Math.max(0, count - required);
   }, 0);
   return {
     exact,
+    multiplier,
     matchedTotal,
-    requiredTotal,
-    ratio: requiredTotal > 0 ? matchedTotal / requiredTotal : 0,
+    requiredTotal: requiredTotal * Math.max(1, multiplier),
+    ratio: requiredTotal > 0 ? matchedTotal / (requiredTotal * Math.max(1, multiplier)) : 0,
     waste,
   };
 }

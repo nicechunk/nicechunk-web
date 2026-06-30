@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ko",
     "label": "Korean",
-    "version": "locale-ko-7626669432638a65",
-    "contentHash": "7626669432638a65"
+    "version": "locale-ko-7a815c2f0d6f608f",
+    "contentHash": "7a815c2f0d6f608f"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -485,6 +485,7 @@
       "noFuel": "호환되는 연료가 없습니다.",
       "selectInput": "출력을 볼 자원을 선택하세요.",
       "materialSource": "Mined material",
+      "resourceMassSize": "{mass} · {size}",
       "dropInputHint": "Drag mined materials here",
       "dropFuelHint": "Drag fuel blocks here",
       "emptySyncTitle": "Syncing backpack",
@@ -508,7 +509,10 @@
       "mixedBatch": "Mixed batch",
       "batchBasis": "{inputs} inputs / {fuels} fuels",
       "requiredHeat": "필요 열",
+      "servings": "Servings",
+      "outputSize": "Output size",
       "yieldRange": "산출 범위",
+      "inputMass": "입력 질량 {mass}",
       "quality": "품질 기준",
       "heatMet": "Tier {tier} met",
       "heatMissing": "Tier {required} required, fuel {fuel}",
@@ -545,6 +549,12 @@
       "recipeFilterAria": "Smelting recipe filters",
       "recipeProgress": "{matched}/{required} input slots matched · heat tier {tier}",
       "recipeRequirement": "{resource} {available}/{amount}",
+      "recipeServings": "Servings",
+      "recipeServingsValue": "{count}x",
+      "recipeOutputSize": "Output {size}",
+      "increaseServings": "Increase servings",
+      "decreaseServings": "Decrease servings",
+      "notReady": "Not ready",
       "selectRecipe": "Select Recipe",
       "findInputs": "Find Inputs",
       "recipeReady": "Ready",
@@ -1849,6 +1859,24 @@
         }
       }
     },
+    "drop": {
+      "eyebrow": "CHAIN DROP TABLE",
+      "title": "Civilization rules can add rare extra drops without growing terrain code.",
+      "body": "The canonical terrain algorithm still defines the mined base block. A compact on-chain drop table can add deterministic extra rewards by source block, altitude, depth, and seeded probability.",
+      "ruleSetLabel": "Rule set",
+      "contractBody": "This PDA is designed for the civilization system: approved proposals append bounded rule bytes instead of redeploying the mining program.",
+      "source": "Source",
+      "extraDrop": "Extra drop",
+      "chance": "Chance",
+      "size": "Drop size",
+      "altitude": "Altitude",
+      "depth": "Depth",
+      "detailTitle": "Extra drop sources",
+      "detailBody": "On chain this is designed as compact {ruleSet} bytes: source resource, probability, sample size window, altitude window, and depth window.",
+      "chanceValue": "{value}%",
+      "sizeValue": "{min} to {max}",
+      "rangeValue": "{min} to {max}"
+    },
     "category": {
       "all": "All Blocks",
       "terrain": "Terrain",
@@ -3122,7 +3150,7 @@
       "hammer": "망치",
       "saw": "톱",
       "handDrill": "핸드 드릴",
-      "carvingKnife": "조각칼",
+      "grip": "그립",
       "axe": "도끼",
       "sprayGun": "토치",
       "empty": "비어 있음"
@@ -3160,6 +3188,8 @@
     "rotateX": "X 회전",
     "rotateY": "Y 회전",
     "rotateZ": "Z 회전",
+    "rotateObject": "오브젝트 회전",
+    "removeObject": "오브젝트 제거",
     "cast": "주조",
     "clear": "비우기",
     "chainCodeTitle": "단조 체인 코드",
@@ -3200,6 +3230,7 @@
       "glovesReady": "장갑 활성",
       "sawReady": "톱 활성",
       "drillReady": "핸드 드릴 활성",
+      "gripReady": "그립 선택 활성",
       "toolPending": "이 모드에서는 사용할 수 없는 도구",
       "orbitReady": "보기 회전만",
       "dropReady": "모루에 놓기",
@@ -3208,6 +3239,8 @@
       "empty": "먼저 광석 추가",
       "miss": "맞은 면 없음",
       "hit": "면 압축됨",
+      "gripSet": "그립 설정됨",
+      "gripTooLarge": "단면이 손보다 큽니다",
       "sawCut": "절단이 깊어짐",
       "sawComplete": "절단이 열림",
       "drillCut": "구멍이 깊어짐",
@@ -3226,8 +3259,23 @@
       "invalidChainCode": "잘못된 체인 코드",
       "normalized": "형태 정규화됨",
       "rotated": "가공물 회전됨",
-      "cleared": "가공물 비움"
-    }
+      "cleared": "가공물 비움",
+      "materialsSynced": "Backpack materials synced",
+      "materialLoadFailed": "Could not load backpack materials"
+    },
+    "materials": "Materials",
+    "syncMaterials": "Sync",
+    "materialList": "Material list",
+    "materialSyncing": "Syncing backpack",
+    "materialSyncingDetail": "Reading equipped backpack materials.",
+    "materialNoBackpack": "No backpack equipped",
+    "materialNoBackpackDetail": "Equip a backpack with forged materials to use this bench.",
+    "materialEmpty": "No materials",
+    "materialEmptyDetail": "Smelt mined resources into materials, then return to forging.",
+    "materialLoadFailed": "Material sync failed",
+    "materialLoadFailedDetail": "Could not read backpack materials from the chain.",
+    "materialCardDetail": "{type} · x{count}",
+    "materialFuelDetail": "Fuel · heat tier {tier} · x{count}"
   },
   "mining": {
     "title": "Nicechunk 채굴",

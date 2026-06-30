@@ -2,8 +2,8 @@
   "_meta": {
     "language": "en",
     "label": "English",
-    "version": "locale-en-7d0a17a55b6609cb",
-    "contentHash": "7d0a17a55b6609cb"
+    "version": "locale-en-43621f5399fc5bc4",
+    "contentHash": "43621f5399fc5bc4"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -291,10 +291,13 @@
       "coordinateResource": "Coordinate Resource",
       "totalWeight": "Weight: {weight}",
       "massLine": "Mass {mass}",
+      "sizeLine": "Size {size}",
+      "volumeLine": "Volume {volume}",
       "quantityLine": "Quantity {count}",
       "itemIdLine": "Item ID {id}",
       "materialIdLine": "Material {id}",
       "unknownMass": "Unknown",
+      "unknownSize": "Unknown",
       "materialPropertyLine": "{grade} grade · Purity {purity}/100"
     },
     "loading": {
@@ -530,6 +533,7 @@
       "noFuel": "No compatible fuel in backpack.",
       "selectInput": "Select a backpack resource to preview output.",
       "materialSource": "Mined material",
+      "resourceMassSize": "{mass} · {size}",
       "dropInputHint": "Drag mined materials here",
       "dropFuelHint": "Drag fuel blocks here",
       "emptySyncTitle": "Syncing backpack",
@@ -553,7 +557,10 @@
       "mixedBatch": "Mixed batch",
       "batchBasis": "{inputs} inputs / {fuels} fuels",
       "requiredHeat": "Required heat",
+      "servings": "Servings",
+      "outputSize": "Output size",
       "yieldRange": "Yield range",
+      "inputMass": "Input mass {mass}",
       "quality": "Quality basis",
       "heatMet": "Tier {tier} met",
       "heatMissing": "Tier {required} required, fuel {fuel}",
@@ -590,6 +597,12 @@
       "recipeFilterAria": "Smelting recipe filters",
       "recipeProgress": "{matched}/{required} input slots matched · heat tier {tier}",
       "recipeRequirement": "{resource} {available}/{amount}",
+      "recipeServings": "Servings",
+      "recipeServingsValue": "{count}x",
+      "recipeOutputSize": "Output {size}",
+      "increaseServings": "Increase servings",
+      "decreaseServings": "Decrease servings",
+      "notReady": "Not ready",
       "selectRecipe": "Select Recipe",
       "findInputs": "Find Inputs",
       "recipeReady": "Ready",
@@ -1891,6 +1904,24 @@
         }
       }
     },
+    "drop": {
+      "eyebrow": "CHAIN DROP TABLE",
+      "title": "Civilization rules can add rare extra drops without growing terrain code.",
+      "body": "The canonical terrain algorithm still defines the mined base block. A compact on-chain drop table can add deterministic extra rewards by source block, altitude, depth, and seeded probability.",
+      "ruleSetLabel": "Rule set",
+      "contractBody": "This PDA is designed for the civilization system: approved proposals append bounded rule bytes instead of redeploying the mining program.",
+      "source": "Source",
+      "extraDrop": "Extra drop",
+      "chance": "Chance",
+      "size": "Drop size",
+      "altitude": "Altitude",
+      "depth": "Depth",
+      "detailTitle": "Extra drop sources",
+      "detailBody": "On chain this is designed as compact {ruleSet} bytes: source resource, probability, sample size window, altitude window, and depth window.",
+      "chanceValue": "{value}%",
+      "sizeValue": "{min} to {max}",
+      "rangeValue": "{min} to {max}"
+    },
     "category": {
       "all": "All Blocks",
       "terrain": "Terrain",
@@ -3122,7 +3153,7 @@
       "hammer": "Hammer",
       "saw": "Saw",
       "handDrill": "Hand Drill",
-      "carvingKnife": "Carving Knife",
+      "grip": "Grip",
       "axe": "Axe",
       "sprayGun": "Spray Gun",
       "empty": "Empty"
@@ -3160,6 +3191,8 @@
     "rotateX": "Rotate X",
     "rotateY": "Rotate Y",
     "rotateZ": "Rotate Z",
+    "rotateObject": "Rotate Object",
+    "removeObject": "Remove Object",
     "cast": "Cast",
     "clear": "Clear",
     "chainCodeTitle": "Forged Chain Code",
@@ -3200,6 +3233,7 @@
       "glovesReady": "Gloves active",
       "sawReady": "Saw active",
       "drillReady": "Hand drill active",
+      "gripReady": "Grip selector active",
       "toolPending": "Tool unavailable in this mode",
       "orbitReady": "View rotation only",
       "dropReady": "Drop on the anvil",
@@ -3208,6 +3242,8 @@
       "empty": "Add ore first",
       "miss": "No face hit",
       "hit": "Face compressed",
+      "gripSet": "Grip set",
+      "gripTooLarge": "Section is too large for the hand",
       "sawCut": "Cut deepened",
       "sawComplete": "Cut opened",
       "drillCut": "Hole deepened",
@@ -3226,8 +3262,23 @@
       "invalidChainCode": "Invalid chain code",
       "normalized": "Shape normalized",
       "rotated": "Workpiece rotated",
-      "cleared": "Workpiece cleared"
-    }
+      "cleared": "Workpiece cleared",
+      "materialsSynced": "Backpack materials synced",
+      "materialLoadFailed": "Could not load backpack materials"
+    },
+    "materials": "Materials",
+    "syncMaterials": "Sync",
+    "materialList": "Material list",
+    "materialSyncing": "Syncing backpack",
+    "materialSyncingDetail": "Reading equipped backpack materials.",
+    "materialNoBackpack": "No backpack equipped",
+    "materialNoBackpackDetail": "Equip a backpack with forged materials to use this bench.",
+    "materialEmpty": "No materials",
+    "materialEmptyDetail": "Smelt mined resources into materials, then return to forging.",
+    "materialLoadFailed": "Material sync failed",
+    "materialLoadFailedDetail": "Could not read backpack materials from the chain.",
+    "materialCardDetail": "{type} · x{count}",
+    "materialFuelDetail": "Fuel · heat tier {tier} · x{count}"
   },
   "mining": {
     "title": "Nicechunk Mining",

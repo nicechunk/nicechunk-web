@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hant",
     "label": "Traditional Chinese",
-    "version": "locale-zh-Hant-fcdb300e3714db3e",
-    "contentHash": "fcdb300e3714db3e"
+    "version": "locale-zh-Hant-d13c262f54824b5d",
+    "contentHash": "d13c262f54824b5d"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -1328,7 +1328,7 @@
       "items": {
         "termDecoder": {
           "title": "術語解碼器",
-          "body": "把黑话翻译成白話含義和證明物件。"
+          "body": "把黑話翻譯成白話含義和證明物件。"
         },
         "plainModel": {
           "title": "白話模型",
@@ -1455,7 +1455,7 @@
         "player": {
           "kicker": "新手玩家",
           "title": "我能用一句话讲清楚它改了什麼吗？",
-          "body": "非技術玩家不需要讀 Rust、PDA 位元組或治理黑话，也應該能理解規則。",
+          "body": "非技術玩家不需要讀 Rust、PDA 位元組或治理黑話，也應該能理解規則。",
           "checks": {
             "plainChange": "這條規則執行後，世界會發生什麼變化？",
             "personalImpact": "它會不會影響我的背包、物品、資源或未來收益？",
@@ -2220,7 +2220,7 @@
         "compareHashes": "任何人簽署前，對比 text_hash、patch_hash、old_value_hash 和預期 new_value_hash。",
         "showDiff": "把人類可讀前後變化，和機器補丁 field_path 並排展示。",
         "simulateFailure": "如果閘門失敗，展示精確拒絕原因：哈希過期、資產遷移不安全、守恆破壞、範圍錯誤或門檻不足。",
-        "explainChoice": "把 dry-run 結果翻译成非技術玩家也能理解的同意、拒絕或弃权選擇。"
+        "explainChoice": "把 dry-run 結果翻譯成非技術玩家也能理解的同意、拒絕或弃权選擇。"
       },
       "surfaces": {
         "personal": {

@@ -65,6 +65,7 @@ const tocItems = [
   { id: "trustJourney", href: "#trust-journey", tone: "green" },
   { id: "ruleClassifier", href: "#rule-classifier", tone: "gold" },
   { id: "threatModel", href: "#threat-model", tone: "red" },
+  { id: "challengeDesk", href: "#challenge-desk", tone: "red" },
   { id: "caseWalkthrough", href: "#case-walkthrough", tone: "green" },
   { id: "impactSimulator", href: "#impact-simulator", tone: "blue" },
   { id: "civicPower", href: "#civic-power-ledger", tone: "green" },
@@ -196,6 +197,23 @@ const defenseStackItems = [
   "validator",
   "challenge",
   "publicFailure",
+];
+
+const challengeStages = [
+  { id: "detect", proof: "rule_diff_view" },
+  { id: "evidence", proof: "evidence_hash" },
+  { id: "file", proof: "challenge_pda" },
+  { id: "pause", proof: "execution_lock" },
+  { id: "resolve", proof: "resolution_event" },
+  { id: "learn", proof: "public_failure_index" },
+];
+
+const challengeChecks = [
+  "clearWindow",
+  "evidenceHash",
+  "executionPause",
+  "namedReason",
+  "publicOutcome",
 ];
 
 const caseSummaryFacts = [
@@ -619,6 +637,9 @@ const civilizationPowerDiagram = document.querySelector("#civilizationPowerDiagr
 const civilizationThreatDiagram = document.querySelector("#civilizationThreatDiagram");
 const defenseStackTarget = document.querySelector("#defenseStack");
 const threatModelGrid = document.querySelector("#threatModelGrid");
+const civilizationChallengeDiagram = document.querySelector("#civilizationChallengeDiagram");
+const challengeStack = document.querySelector("#challengeStack");
+const challengeGrid = document.querySelector("#challengeGrid");
 const civilizationCaseDiagram = document.querySelector("#civilizationCaseDiagram");
 const caseSummaryPanel = document.querySelector("#caseSummaryPanel");
 const caseViewGrid = document.querySelector("#caseViewGrid");
@@ -697,6 +718,7 @@ function renderCivilizationPage() {
   renderConstitutionChecks();
   renderPowerExplainer();
   renderThreatModel();
+  renderChallengeDesk();
   renderCaseWalkthrough();
   renderImpactSimulator();
   renderReputationLedger();
@@ -907,6 +929,44 @@ function renderThreatModel() {
   );
 }
 
+function renderChallengeDesk() {
+  challengeStack?.replaceChildren(
+    sectionMiniTitle("civilization.challenge.stackTitle"),
+    ...challengeChecks.map((key) => checkCard(t(`civilization.challenge.checks.${key}`))),
+  );
+  challengeGrid?.replaceChildren(
+    ...challengeStages.map((stage, index) => {
+      const card = document.createElement("article");
+      card.className = `challenge-card ${stage.id}`;
+      card.innerHTML = "<span></span><strong></strong><p></p><code></code>";
+      card.querySelector("span").textContent = String(index + 1).padStart(2, "0");
+      card.querySelector("strong").textContent = t(`civilization.challenge.stages.${stage.id}.title`);
+      card.querySelector("p").textContent = t(`civilization.challenge.stages.${stage.id}.body`);
+      card.querySelector("code").textContent = stage.proof;
+      return card;
+    }),
+  );
+}
+
+function renderChallengeDesk() {
+  challengeStack?.replaceChildren(
+    sectionMiniTitle("civilization.challenge.stackTitle"),
+    ...challengeChecks.map((key) => checkCard(t(`civilization.challenge.checks.${key}`))),
+  );
+  challengeGrid?.replaceChildren(
+    ...challengeStages.map((stage, index) => {
+      const card = document.createElement("article");
+      card.className = `challenge-card ${stage.id}`;
+      card.innerHTML = "<span></span><strong></strong><p></p><code></code>";
+      card.querySelector("span").textContent = String(index + 1).padStart(2, "0");
+      card.querySelector("strong").textContent = t(`civilization.challenge.stages.${stage.id}.title`);
+      card.querySelector("p").textContent = t(`civilization.challenge.stages.${stage.id}.body`);
+      card.querySelector("code").textContent = stage.proof;
+      return card;
+    }),
+  );
+}
+
 function renderRuleLifecycleTimeline() {
   timelineTarget?.replaceChildren(
     ...lifecycleSteps.map((step, index) => {
@@ -1056,6 +1116,7 @@ function renderSvgDiagrams() {
   civilizationClassifierDiagram?.replaceChildren(createClassifierDiagram());
   civilizationPowerDiagram?.replaceChildren(createPowerDiagram());
   civilizationThreatDiagram?.replaceChildren(createThreatModelDiagram());
+  civilizationChallengeDiagram?.replaceChildren(createChallengeDiagram());
   civilizationCaseDiagram?.replaceChildren(createCaseWalkthroughDiagram());
   civilizationImpactDiagram?.replaceChildren(createImpactDiagram());
   civilizationReputationDiagram?.replaceChildren(createReputationDiagram());
@@ -1665,6 +1726,66 @@ function createThreatModelDiagram() {
   addSvgBadge(svg, 274, 216, t("civilization.diagrams.threatModel.badges.prove"));
   addSvgBadge(svg, 496, 304, t("civilization.diagrams.threatModel.badges.window"));
   addSvgBadge(svg, 662, 160, t("civilization.diagrams.threatModel.badges.noSilentPath"));
+  return svg;
+}
+
+function createChallengeDiagram() {
+  const svg = createSvg("0 0 920 430", "civilization-flow-svg challenge-svg");
+  const markerId = addDefs(svg);
+  addGrid(svg, 920, 430);
+  const nodes = [
+    ["suspicion", 52, 74, 150, 66, "red"],
+    ["evidence", 264, 48, 160, 64, "gold"],
+    ["challenge", 264, 164, 160, 64, "blue"],
+    ["pause", 506, 92, 162, 66, "red"],
+    ["resolve", 724, 92, 142, 66, "green"],
+    ["record", 506, 278, 162, 66, "blue"],
+  ];
+  nodes.forEach(([key, x, y, width, height, tone]) => {
+    addSvgNode(svg, x, y, width, height, t(`civilization.diagrams.challenge.nodes.${key}`), tone);
+  });
+  addArrow(svg, markerId, 202, 107, 264, 80);
+  addArrow(svg, markerId, 202, 107, 264, 196);
+  addArrow(svg, markerId, 424, 80, 506, 116);
+  addArrow(svg, markerId, 424, 196, 506, 122);
+  addArrow(svg, markerId, 668, 125, 724, 125);
+  addArrow(svg, markerId, 795, 158, 668, 294);
+  addArrow(svg, markerId, 506, 312, 344, 228);
+  addSvgBadge(svg, 54, 174, t("civilization.diagrams.challenge.badges.review"));
+  addSvgBadge(svg, 246, 282, t("civilization.diagrams.challenge.badges.hash"));
+  addSvgBadge(svg, 490, 184, t("civilization.diagrams.challenge.badges.lock"));
+  addSvgBadge(svg, 704, 188, t("civilization.diagrams.challenge.badges.verdict"));
+  addSvgBadge(svg, 500, 368, t("civilization.diagrams.challenge.badges.replay"));
+  return svg;
+}
+
+function createChallengeDiagram() {
+  const svg = createSvg("0 0 920 430", "civilization-flow-svg challenge-svg");
+  const markerId = addDefs(svg);
+  addGrid(svg, 920, 430);
+  const nodes = [
+    ["detect", 46, 70, 138, 64, "red"],
+    ["evidence", 244, 70, 154, 64, "blue"],
+    ["file", 458, 70, 142, 64, "gold"],
+    ["pause", 660, 70, 160, 64, "red"],
+    ["resolve", 358, 270, 160, 68, "green"],
+    ["learn", 604, 270, 160, 68, "blue"],
+  ];
+  nodes.forEach(([key, x, y, width, height, tone]) => {
+    addSvgNode(svg, x, y, width, height, t(`civilization.diagrams.challenge.nodes.${key}`), tone);
+  });
+  addArrow(svg, markerId, 184, 102, 244, 102);
+  addArrow(svg, markerId, 398, 102, 458, 102);
+  addArrow(svg, markerId, 600, 102, 660, 102);
+  addArrow(svg, markerId, 740, 134, 518, 270);
+  addArrow(svg, markerId, 518, 304, 604, 304);
+  addArrow(svg, markerId, 438, 270, 318, 134);
+  addSvgBadge(svg, 54, 166, t("civilization.diagrams.challenge.badges.suspicion"));
+  addSvgBadge(svg, 242, 166, t("civilization.diagrams.challenge.badges.hash"));
+  addSvgBadge(svg, 454, 166, t("civilization.diagrams.challenge.badges.pda"));
+  addSvgBadge(svg, 642, 166, t("civilization.diagrams.challenge.badges.lock"));
+  addSvgBadge(svg, 352, 362, t("civilization.diagrams.challenge.badges.reason"));
+  addSvgBadge(svg, 590, 362, t("civilization.diagrams.challenge.badges.replay"));
   return svg;
 }
 

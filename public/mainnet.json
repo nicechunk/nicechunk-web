@@ -34,52 +34,52 @@
     "locales": {
       "en": {
         "label": "English",
-        "version": "locale-en-b06831ecddabbac7",
-        "contentHash": "b06831ecddabbac7",
+        "version": "locale-en-2b986a396272d9c5",
+        "contentHash": "2b986a396272d9c5",
         "url": "/locales/en.json",
-        "bytes": 256840
+        "bytes": 260024
       },
       "es": {
         "label": "Spanish",
-        "version": "locale-es-30cb8e8b91aed5ff",
-        "contentHash": "30cb8e8b91aed5ff",
+        "version": "locale-es-3eae787910afddcf",
+        "contentHash": "3eae787910afddcf",
         "url": "/locales/es.json",
-        "bytes": 258111
+        "bytes": 261295
       },
       "fr": {
         "label": "French",
-        "version": "locale-fr-3085dc92f4684605",
-        "contentHash": "3085dc92f4684605",
+        "version": "locale-fr-068d69415e94db3c",
+        "contentHash": "068d69415e94db3c",
         "url": "/locales/fr.json",
-        "bytes": 258675
+        "bytes": 261859
       },
       "de": {
         "label": "German",
-        "version": "locale-de-9559c593c4528d54",
-        "contentHash": "9559c593c4528d54",
+        "version": "locale-de-8649028847fe1941",
+        "contentHash": "8649028847fe1941",
         "url": "/locales/de.json",
-        "bytes": 257639
+        "bytes": 260823
       },
       "ja": {
         "label": "Japanese",
-        "version": "locale-ja-e1eb791276d78b94",
-        "contentHash": "e1eb791276d78b94",
+        "version": "locale-ja-f3b3aeae73af65fd",
+        "contentHash": "f3b3aeae73af65fd",
         "url": "/locales/ja.json",
-        "bytes": 260899
+        "bytes": 264083
       },
       "ru": {
         "label": "Russian",
-        "version": "locale-ru-952a4b07931d5f5c",
-        "contentHash": "952a4b07931d5f5c",
+        "version": "locale-ru-cacc6cc9aa34da93",
+        "contentHash": "cacc6cc9aa34da93",
         "url": "/locales/ru.json",
-        "bytes": 272180
+        "bytes": 275364
       },
       "ko": {
         "label": "Korean",
-        "version": "locale-ko-5dc4810ca6eb0c4f",
-        "contentHash": "5dc4810ca6eb0c4f",
+        "version": "locale-ko-b26d6ce60b5145e8",
+        "contentHash": "b26d6ce60b5145e8",
         "url": "/locales/ko.json",
-        "bytes": 258756
+        "bytes": 261940
       },
       "zh-Hant": {
         "label": "Traditional Chinese",

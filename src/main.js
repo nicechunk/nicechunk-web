@@ -997,6 +997,9 @@ const stepBlockEpsilon = 0.08;
 const autoStepHeight = 1.08;
 const autoJumpHeight = 1.65;
 const playerGroundProbeDepth = 8;
+const playerCollisionRecoveryLift = 3.25;
+const playerCollisionRecoverySearchRadius = 3;
+const playerFallRecoveryDepth = 18;
 const autoJumpRetryMs = 420;
 const autoJumpCommitMs = 760;
 const autoDirectPathSampleSpacing = 0.35;
@@ -7032,7 +7035,7 @@ function animate() {
 
 function updatePlayer(dt) {
   player.moving = false;
-  resolvePlayerOverlap();
+  if (resolvePlayerOverlap()) player.moving = false;
   const groundAtStart = playerGroundHeightAt(player.position.x, player.position.z, player.position.y, { allowStepUp: true });
   const canUseGroundControl =
     player.grounded ||
@@ -7112,6 +7115,9 @@ function updatePlayer(dt) {
     clearHorizontalVelocity();
   } else {
     player.grounded = false;
+  }
+  if (!player.grounded && player.position.y < minBuildY - playerFallRecoveryDepth) {
+    recoverPlayerToSafeStand("post-fall-depth");
   }
 
   if (player.moving) markMovementInteraction();
@@ -7337,12 +7343,191 @@ function playerBodyCollides(x, z, y) {
 }
 
 function resolvePlayerOverlap() {
-  for (let i = 0; i < 3; i++) {
+  return recoverPlayerCollisionState({ reason: "frame" });
+}
+
+function recoverPlayerAfterSolidMutation(blocks) {
+  const normalized = Array.isArray(blocks) ? blocks.filter(Boolean) : [];
+  if (!normalized.length) return false;
+  if (!restoredBlocksTouchPlayerRecoveryArea(normalized)) return false;
+  return recoverPlayerCollisionState({ reason: "solid-mutation", forceGroundSnap: true, allowNearbySearch: true });
+}
+
+function restoredBlocksTouchPlayerRecoveryArea(blocks) {
+  const minX = player.position.x - playerRadius - 0.08;
+  const maxX = player.position.x + playerRadius + 0.08;
+  const minZ = player.position.z - playerRadius - 0.08;
+  const maxZ = player.position.z + playerRadius + 0.08;
+  const minY = Math.floor(player.position.y - 1.35);
+  const maxY = Math.floor(player.position.y + playerBodyTopOffset + 0.35);
+  return blocks.some((block) => {
+    if (!block) return false;
+    return (
+      block.x + 0.5 >= minX &&
+      block.x - 0.5 <= maxX &&
+      block.z + 0.5 >= minZ &&
+      block.z - 0.5 <= maxZ &&
+      block.y >= minY &&
+      block.y <= maxY
+    );
+  });
+}
+
+function recoverPlayerCollisionState({ forceGroundSnap = false, allowNearbySearch = false } = {}) {
+  if (recoverInvalidPlayerState()) return true;
+  if (player.position.y < minBuildY - playerFallRecoveryDepth) {
+    return recoverPlayerToSafeStand("fall-depth");
+  }
+
+  let changed = false;
+  if (playerBodyCollides(player.position.x, player.position.z, player.position.y)) {
+    changed = resolvePlayerVerticalOverlap() || changed;
+    if (playerBodyCollides(player.position.x, player.position.z, player.position.y)) {
+      changed = resolvePlayerHorizontalOverlap() || changed;
+    }
+    if (allowNearbySearch && playerBodyCollides(player.position.x, player.position.z, player.position.y)) {
+      changed = recoverPlayerToSafeStand("overlap-search") || changed;
+    }
+  }
+
+  if (forceGroundSnap) {
+    changed = snapPlayerToRestoredGround() || changed;
+  }
+
+  if (changed) stabilizePlayerAfterCollisionRecovery();
+  return changed;
+}
+
+function recoverInvalidPlayerState() {
+  const positionOk = [player.position.x, player.position.y, player.position.z].every(Number.isFinite);
+  const velocityOk = [player.velocity.x, player.velocity.y, player.velocity.z].every(Number.isFinite);
+  const yawOk = Number.isFinite(player.yaw);
+  const pitchOk = Number.isFinite(player.cameraPitch);
+  if (positionOk && velocityOk && yawOk && pitchOk) return false;
+
+  const safeX = Number.isFinite(player.position.x) ? player.position.x : 0;
+  const safeZ = Number.isFinite(player.position.z) ? player.position.z : 0;
+  player.yaw = yawOk ? player.yaw : Math.PI * 0.25;
+  player.cameraPitch = pitchOk ? THREE.MathUtils.clamp(player.cameraPitch, cameraPitchMin, cameraPitchMax) : -0.42;
+  player.position.set(safeX, surfaceHeight(safeX, safeZ) + 1.01, safeZ);
+  stabilizePlayerAfterCollisionRecovery();
+  return true;
+}
+
+function resolvePlayerVerticalOverlap() {
+  const escapeY = playerVerticalEscapeHeightAt(player.position.x, player.position.z, player.position.y);
+  if (!Number.isFinite(escapeY)) return false;
+  if (escapeY <= player.position.y + 0.001) return false;
+  if (escapeY - player.position.y > playerCollisionRecoveryLift) return false;
+  if (playerBodyCollides(player.position.x, player.position.z, escapeY)) return false;
+  player.position.y = escapeY;
+  return true;
+}
+
+function playerVerticalEscapeHeightAt(x, z, y) {
+  const minX = x - playerRadius;
+  const maxX = x + playerRadius;
+  const minZ = z - playerRadius;
+  const maxZ = z + playerRadius;
+  const firstBlockX = Math.floor(minX + 0.5);
+  const lastBlockX = Math.floor(maxX + 0.5);
+  const firstBlockZ = Math.floor(minZ + 0.5);
+  const lastBlockZ = Math.floor(maxZ + 0.5);
+  const firstBodyY = Math.floor(y) - 1;
+  const lastBodyY = Math.floor(y) + playerBodyTopOffset;
+  let highestSolidY = -Infinity;
+
+  for (let bx = firstBlockX; bx <= lastBlockX; bx++) {
+    for (let bz = firstBlockZ; bz <= lastBlockZ; bz++) {
+      for (let by = firstBodyY; by <= lastBodyY; by++) {
+        if (!isSolidCell(bx, by, bz)) continue;
+        const overlapX = Math.min(maxX - (bx - 0.5), bx + 0.5 - minX);
+        const overlapZ = Math.min(maxZ - (bz - 0.5), bz + 0.5 - minZ);
+        if (overlapX <= 0 || overlapZ <= 0) continue;
+        highestSolidY = Math.max(highestSolidY, by);
+      }
+    }
+  }
+
+  return Number.isFinite(highestSolidY) ? highestSolidY + 1.01 : -Infinity;
+}
+
+function resolvePlayerHorizontalOverlap() {
+  let changed = false;
+  for (let i = 0; i < 8; i++) {
     const push = playerBodyCollisionPush(player.position.x, player.position.z, player.position.y);
-    if (push.lengthSq() === 0) return;
+    if (push.lengthSq() === 0) return changed;
+    if (![push.x, push.z].every(Number.isFinite)) return changed;
+    const length = Math.hypot(push.x, push.z);
+    if (length > 0.72) push.multiplyScalar(0.72 / length);
     player.position.x += push.x;
     player.position.z += push.z;
+    changed = true;
   }
+  return changed;
+}
+
+function snapPlayerToRestoredGround() {
+  const ground = playerGroundHeightAt(player.position.x, player.position.z, player.position.y + autoStepHeight, { allowStepUp: true });
+  if (!Number.isFinite(ground)) return false;
+  if (ground <= player.position.y + 0.001) return false;
+  if (ground - player.position.y > playerCollisionRecoveryLift) return false;
+  if (playerBodyCollides(player.position.x, player.position.z, ground)) return false;
+  player.position.y = ground;
+  return true;
+}
+
+function recoverPlayerToSafeStand(reason = "unknown") {
+  const safe = findNearestSafePlayerStand(player.position.x, player.position.z, player.position.y);
+  if (safe) {
+    player.position.set(safe.x, safe.y, safe.z);
+    stabilizePlayerAfterCollisionRecovery();
+    return true;
+  }
+
+  const fallbackX = Number.isFinite(player.position.x) ? player.position.x : 0;
+  const fallbackZ = Number.isFinite(player.position.z) ? player.position.z : 0;
+  player.position.set(fallbackX, surfaceHeight(fallbackX, fallbackZ) + 1.01, fallbackZ);
+  stabilizePlayerAfterCollisionRecovery();
+  console.warn(`Recovered player collision state with fallback ground placement: ${reason}`);
+  return true;
+}
+
+function findNearestSafePlayerStand(originX, originZ, referenceY) {
+  const baseX = Number.isFinite(originX) ? originX : 0;
+  const baseZ = Number.isFinite(originZ) ? originZ : 0;
+  const baseY = Number.isFinite(referenceY) ? referenceY : surfaceHeight(baseX, baseZ) + 1.01;
+  const minBlockY = Math.max(minBuildY, Math.floor(baseY - playerGroundProbeDepth - 1.01));
+  const maxBlockY = Math.min(maxBuildY, Math.floor(baseY + playerCollisionRecoveryLift - 1.01));
+  let best = null;
+  let bestScore = Infinity;
+
+  for (let dz = -playerCollisionRecoverySearchRadius; dz <= playerCollisionRecoverySearchRadius; dz += 1) {
+    for (let dx = -playerCollisionRecoverySearchRadius; dx <= playerCollisionRecoverySearchRadius; dx += 1) {
+      const candidateX = baseX + dx;
+      const candidateZ = baseZ + dz;
+      const ground = playerGroundHeightInBlockRangeAt(candidateX, candidateZ, minBlockY, maxBlockY);
+      if (!Number.isFinite(ground)) continue;
+      if (playerBodyCollides(candidateX, candidateZ, ground)) continue;
+      const horizontalScore = dx * dx + dz * dz;
+      const verticalScore = Math.abs(ground - baseY) * 0.35;
+      const score = horizontalScore + verticalScore;
+      if (score >= bestScore) continue;
+      best = { x: candidateX, y: ground, z: candidateZ };
+      bestScore = score;
+    }
+  }
+
+  return best;
+}
+
+function stabilizePlayerAfterCollisionRecovery() {
+  clearAutoMove();
+  clearHorizontalVelocity();
+  player.velocity.y = 0;
+  player.grounded = true;
+  player.moving = false;
+  cameraFocusReady = false;
 }
 
 function playerBodyCollisionPush(x, z, y) {
@@ -10624,6 +10809,7 @@ function markMinedBlocksPending(blocks) {
   for (const block of normalized) {
     if (!markMinedBlockPending(block)) {
       marked.forEach((markedBlock) => restorePendingMinedBlock(markedBlock));
+      recoverPlayerAfterSolidMutation(marked);
       return false;
     }
     marked.push(block);
@@ -10669,6 +10855,7 @@ function restorePendingMinedBlocks(blocks) {
   for (const block of normalized) {
     if (restorePendingMinedBlock(block)) changed = true;
   }
+  if (changed) recoverPlayerAfterSolidMutation(normalized);
   return changed;
 }
 
@@ -10789,6 +10976,7 @@ function restoreMinedBlockAfterSubmitFailure(block) {
   solidBlocks.add(block.key);
   invalidateWorldQueryCache();
   rebuildChunksAroundBlock(block);
+  recoverPlayerAfterSolidMutation([block]);
 }
 
 function clearDynamicWaterNearBlock(block, radius = 4) {

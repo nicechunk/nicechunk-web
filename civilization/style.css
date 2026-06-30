@@ -422,6 +422,7 @@ h3 {
 .reader-layout,
 .journey-layout,
 .threat-layout,
+.challenge-layout,
 .case-layout {
   display: grid;
   grid-template-columns: minmax(300px, 0.42fr) minmax(0, 1fr);
@@ -448,8 +449,20 @@ h3 {
   align-items: start;
 }
 
+.challenge-layout {
+  grid-template-columns: minmax(0, 0.98fr) minmax(320px, 0.58fr);
+  align-items: start;
+}
+
 .case-layout {
   grid-template-columns: minmax(0, 0.96fr) minmax(320px, 0.5fr);
+  align-items: start;
+}
+
+.challenge-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.98fr) minmax(320px, 0.5fr);
+  gap: 18px;
   align-items: start;
 }
 
@@ -590,7 +603,9 @@ h3 {
 .review-checklist,
 .journey-grid,
 .defense-stack,
+.challenge-stack,
 .threat-grid,
+.challenge-grid,
 .classifier-grid,
 .case-view-grid,
 .case-evidence-grid,
@@ -635,6 +650,11 @@ h3 {
   margin-top: 16px;
 }
 
+.challenge-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
 .classifier-grid {
   grid-template-columns: repeat(5, minmax(0, 1fr));
   margin-top: 16px;
@@ -646,6 +666,11 @@ h3 {
 }
 
 .case-evidence-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.challenge-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 16px;
 }
@@ -709,12 +734,16 @@ h3 {
 .journey-stack,
 .journey-card,
 .defense-stack,
+.challenge-stack,
+.challenge-card,
 .threat-card,
 .classifier-checks,
 .classifier-card,
 .case-summary-panel,
 .case-view-card,
 .case-evidence-card,
+.challenge-stack,
+.challenge-card,
 .glossary-stack,
 .glossary-card,
 .impact-stack,
@@ -750,10 +779,12 @@ h3 {
 .reader-lane-card span,
 .review-check-card span,
 .journey-card span,
+.challenge-card span,
 .threat-card span,
 .classifier-card span,
 .case-view-card span,
 .case-evidence-card span,
+.challenge-card span,
 .glossary-card span,
 .impact-card span,
 .reputation-card span,
@@ -784,9 +815,11 @@ h3 {
 .account-blueprint-card strong,
 .review-check-card strong,
 .journey-card strong,
+.challenge-card strong,
 .threat-card strong,
 .classifier-card strong,
 .case-evidence-card strong,
+.challenge-card strong,
 .glossary-card strong,
 .impact-card strong,
 .reputation-card strong,
@@ -811,10 +844,12 @@ h3 {
 .reader-lane-card p,
 .review-check-card p,
 .journey-card p,
+.challenge-card p,
 .threat-card p,
 .classifier-card p,
 .case-view-card p,
 .case-evidence-card p,
+.challenge-card p,
 .glossary-card p,
 .impact-card p,
 .reputation-card p,
@@ -941,6 +976,44 @@ h3 {
   border: 1px solid rgba(140, 255, 0, 0.12);
   border-radius: 6px;
   background: rgba(0, 0, 0, 0.22);
+}
+
+.challenge-stack {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.challenge-card span {
+  color: var(--civ-red);
+  border-color: rgba(255, 110, 127, 0.22);
+  background: rgba(255, 110, 127, 0.055);
+}
+
+.challenge-card:nth-child(2n) span {
+  color: var(--civ-gold);
+  border-color: rgba(255, 211, 110, 0.22);
+  background: rgba(255, 211, 110, 0.055);
+}
+
+.challenge-card:nth-child(3n) span {
+  color: var(--civ-blue);
+  border-color: rgba(152, 203, 255, 0.2);
+  background: rgba(152, 203, 255, 0.055);
+}
+
+.challenge-card code {
+  display: block;
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid rgba(255, 110, 127, 0.13);
+  border-radius: 6px;
+  color: var(--civ-gold);
+  background: rgba(0, 0, 0, 0.22);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
 }
 
 .glossary-stack {
@@ -1889,6 +1962,10 @@ h3 {
   min-height: 350px;
 }
 
+.challenge-svg {
+  min-height: 350px;
+}
+
 .transparency-svg {
   min-height: 370px;
 }
@@ -2490,6 +2567,7 @@ h3 {
   .reader-layout,
   .journey-layout,
   .threat-layout,
+  .challenge-layout,
   .case-layout,
   .impact-layout,
   .reputation-layout,
@@ -2521,6 +2599,7 @@ h3 {
   .review-checklist,
   .journey-grid,
   .threat-grid,
+  .challenge-grid,
   .classifier-grid,
   .case-view-grid,
   .case-evidence-grid,

@@ -2,8 +2,8 @@
   "_meta": {
     "language": "en",
     "label": "English",
-    "version": "locale-en-b06831ecddabbac7",
-    "contentHash": "b06831ecddabbac7"
+    "version": "locale-en-2b986a396272d9c5",
+    "contentHash": "2b986a396272d9c5"
   },
   "common": {
     "brand": "NICECHUNK",
@@ -1358,6 +1358,10 @@
           "title": "Threat Model",
           "body": "Review how hostile rules fail before state writes."
         },
+        "challengeDesk": {
+          "title": "Challenge Desk",
+          "body": "Follow how suspicious rules become evidence, pauses, resolutions, and lessons."
+        },
         "caseWalkthrough": {
           "title": "Bronze Age Case",
           "body": "Trace one rule from player story to executable patch."
@@ -1729,6 +1733,26 @@
           "prove": "prove identity and expected state",
           "window": "time for review and challenge",
           "noSilentPath": "no silent admin path"
+        }
+      },
+      "challenge": {
+        "title": "Challenge-to-resolution path",
+        "caption": "A bad rule should move from suspicion to evidence, paused execution, public resolution, and a replayable lesson.",
+        "nodes": {
+          "detect": "Suspicious rule",
+          "evidence": "Evidence hash",
+          "file": "Challenge PDA",
+          "pause": "Execution paused",
+          "resolve": "Public resolution",
+          "learn": "Replayable lesson"
+        },
+        "badges": {
+          "suspicion": "visible concern",
+          "hash": "evidence, not rumor",
+          "pda": "filed on public state",
+          "lock": "no silent execution",
+          "reason": "named outcome",
+          "replay": "future reviewers can learn"
         }
       },
       "caseWalkthrough": {
@@ -2586,6 +2610,45 @@
           "title": "Execution secretly depends on a project-side wallet.",
           "body": "execute_rule should be callable by anyone after public conditions pass. A privileged executor would contradict the civilization model.",
           "proof": "permissionless execute_rule"
+        }
+      }
+    },
+    "challenge": {
+      "eyebrow": "Challenge Desk",
+      "title": "A player needs a public way to stop a suspicious rule before it executes.",
+      "body": "Trust is stronger when disagreement has a procedure. A challenge path should show the review window, evidence hash, execution pause, named rejection reason, and final public outcome.",
+      "stackTitle": "Challenge requirements",
+      "checks": {
+        "clearWindow": "The rule must expose a clear review and challenge window before execution becomes possible.",
+        "evidenceHash": "A challenge should cite a stable evidence hash, decoded PDA, or reproducible validator result.",
+        "executionPause": "Execution must pause while an unresolved challenge is attached to the rule identity.",
+        "namedReason": "Resolution should publish a named reason instead of a private moderation decision.",
+        "publicOutcome": "The final accepted or rejected state should remain replayable from public events and accounts."
+      },
+      "stages": {
+        "detect": {
+          "title": "Detect a suspicious rule",
+          "body": "A player, builder, or auditor sees misleading text, unsafe scope, stale hashes, or missing asset protection."
+        },
+        "evidence": {
+          "title": "Attach evidence",
+          "body": "The challenge references a hash, decoded account, validator output, or state diff that another reviewer can recompute."
+        },
+        "file": {
+          "title": "File the challenge",
+          "body": "The dispute becomes a public object bound to the same rule id, patch hash, challenger, and review window."
+        },
+        "pause": {
+          "title": "Pause execution",
+          "body": "The rule cannot write config PDAs until the challenge is resolved or expires under published conditions."
+        },
+        "resolve": {
+          "title": "Resolve with a reason",
+          "body": "A valid resolution names the accepted evidence, rejected evidence, or validator gate that decides the outcome."
+        },
+        "learn": {
+          "title": "Keep the lesson public",
+          "body": "Events and decoded accounts make the failure pattern visible so future proposals can avoid the same issue."
         }
       }
     },

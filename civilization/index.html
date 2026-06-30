@@ -263,6 +263,27 @@
         <div class="threat-grid" id="threatModelGrid"></div>
       </section>
 
+      <section class="civilization-section challenge-section" id="challenge-desk" aria-labelledby="challengeTitle">
+        <div class="section-heading">
+          <p class="eyebrow danger" data-i18n="civilization.challenge.eyebrow">Challenge Desk</p>
+          <h2 id="challengeTitle" data-i18n="civilization.challenge.title">A player needs a public way to stop a suspicious rule before it executes.</h2>
+          <p data-i18n="civilization.challenge.body">
+            Trust is stronger when disagreement has a procedure. A challenge path should show the review window, evidence hash, execution pause, named rejection reason, and final public outcome.
+          </p>
+        </div>
+        <div class="challenge-layout">
+          <figure class="diagram-card challenge-diagram-card">
+            <figcaption>
+              <strong data-i18n="civilization.diagrams.challenge.title">Challenge-to-resolution path</strong>
+              <span data-i18n="civilization.diagrams.challenge.caption">A bad rule should move from suspicion to evidence, paused execution, public resolution, and a replayable lesson.</span>
+            </figcaption>
+            <div id="civilizationChallengeDiagram"></div>
+          </figure>
+          <div class="challenge-stack" id="challengeStack"></div>
+        </div>
+        <div class="challenge-grid" id="challengeGrid"></div>
+      </section>
+
       <section class="civilization-section case-section" id="case-walkthrough" aria-labelledby="caseWalkthroughTitle">
         <div class="section-heading">
           <p class="eyebrow green" data-i18n="civilization.caseWalkthrough.eyebrow">Rule Case Walkthrough</p>

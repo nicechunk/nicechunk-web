@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ja",
     "label": "Japanese",
-    "version": "contracts-locale-ja-8bce901f0cab012b",
-    "contentHash": "8bce901f0cab012b"
+    "version": "contracts-locale-ja-bc7299f4471346f8",
+    "contentHash": "bc7299f4471346f8"
   },
   "meta": {
     "title": "NiceChunk コントラクト"
@@ -342,14 +342,14 @@
         },
         {
           "name": "ResourceDropTable",
-          "seeds": "[\"resource-drops\", tableId:u64_le]",
-          "magic": "NCKDRP01",
-          "size": "16 + ruleCount * 15 bytes",
+          "seeds": "[\"resource-drops-v2\", globalConfig]",
+          "magic": "NCKDRP02",
+          "size": "16 + ruleCount * 23 bytes",
           "purpose": "Bounded extra-drop rules for rewarded mining.",
           "fields": [
-            "sourceBlockId, dropBlockId, chanceBps",
+            "sourceBlockId, dropBlockId, baseChanceBps",
             "altitude and depth bounds",
-            "salt for deterministic outcome separation"
+            "salt plus min/max drop volume in mm³"
           ]
         }
       ]
@@ -730,8 +730,8 @@
       },
       "resource-drop-table": {
         "title": "ResourceDropTable",
-        "body": "Bounded resource drop rule table used by mining rewards.",
-        "visible": "Source block, drop block, chance basis points, altitude/depth bounds, and salt.",
+        "body": "Bounded v2 resource drop rule table used by mining rewards.",
+        "visible": "Source block, drop block, base chance basis points, altitude/depth bounds, salt, and drop volume range.",
         "trust": "Lets players inspect drop rules instead of trusting opaque reward logic."
       },
       "guardian-registry": {

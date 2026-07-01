@@ -135,7 +135,7 @@ The following checks are intentionally deferred to GPU hardware:
 | Runtime logic | `fourier-voxel/main.js` | VOX loading, palette mapping, basis generation, payload encoding, proof-search preview, and Three.js rendering. |
 | Styling | `fourier-voxel/styles.css` | Dense tool layout, responsive behavior, canvas framing, metrics, logs, and panels. |
 | Parser | `src/vox/ncm.js` | Shared MagicaVoxel parsing and NCM encoding primitives. |
-| I18n | `src/i18n.js`, `public/locales/*.json` | Public text and localized labels. |
+| I18n | `src/i18n.js`, `public/fourier-pickaxe/locales/*.json` | Page text and localized labels. |
 
 ## Function Payload
 

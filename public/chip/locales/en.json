@@ -1,0 +1,162 @@
+{
+  "_meta": {
+    "language": "en",
+    "label": "English",
+    "version": "chip-locale-en-19b8961f33ece1fb",
+    "contentHash": "19b8961f33ece1fb"
+  },
+  "siteFooter": {
+    "tagline": "A seeded voxel world protocol on Solana.",
+    "navigationAria": "Footer navigation",
+    "socialAria": "NiceChunk social links",
+    "home": "Home",
+    "play": "Enter World",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Guardians",
+    "contracts": "Contracts",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. All rights reserved."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "Language",
+    "comingSoon": "Planned",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "chip": {
+    "meta": {
+      "title": "NiceChunk Chip Simulator"
+    },
+    "hero": {
+      "title": "Program a forged chip, then watch its pins drive devices.",
+      "body": "Write Arduino sketch code. The browser compiles it with AVR GCC to Intel HEX, then avr8js executes it on an ATmega328P simulation."
+    },
+    "editor": {
+      "kicker": "Forged MCU Program",
+      "label": "Arduino sketch editor",
+      "aria": "Arduino sketch source code editor"
+    },
+    "controls": {
+      "aria": "Simulator controls",
+      "compile": "Compile",
+      "run": "Run",
+      "stop": "Stop",
+      "reset": "Reset",
+      "sample": "Load sample",
+      "uploadHex": "Upload HEX"
+    },
+    "status": {
+      "title": "Compiler status",
+      "idle": "Ready",
+      "compiling": "Compiling AVR firmware",
+      "compiled": "Compiled",
+      "running": "Running",
+      "stopped": "Stopped",
+      "reset": "Reset complete",
+      "error": "Compile or runtime error"
+    },
+    "viewport": {
+      "aria": "3D chip preview",
+      "kicker": "NC-AVR32 Prototype",
+      "title": "Every forged pin can become a game-world device port.",
+      "drag": "Drag to rotate",
+      "activeLeds": "{count} active LEDs",
+      "activeDevices": "{count} active devices"
+    },
+    "components": {
+      "aria": "Component palette",
+      "led": "LED lamp",
+      "button": "Button",
+      "switch": "Switch",
+      "motor": "Motor",
+      "buzzer": "Buzzer",
+      "wire": "Wire",
+      "ready": "Drag a device into the board. Select Wire to route insulated wires.",
+      "dragLed": "Drag the LED tool into the board, then drag placed LEDs to reposition them.",
+      "dragButton": "Drag the button into the board. Hold the cap to conduct, release to open the circuit.",
+      "dragSwitch": "Drag the switch into the board. Click the lever to latch ON or OFF.",
+      "dragMotor": "Drag the motor into the board. It spins when one terminal is powered and the other reaches GND.",
+      "dragBuzzer": "Drag the buzzer into the board. It vibrates when powered through a GND return path.",
+      "pickFirst": "Wire mode: click a chip pin or component pin.",
+      "pickSecond": "Wire mode: click the board to add bends, click the second endpoint to connect, or right-click to end.",
+      "waypointAdded": "Wire bend added. Click another board point, click an endpoint, or right-click to end.",
+      "routingEnded": "Wire routing ended.",
+      "rotatedLed": "LED rotated 90 degrees.",
+      "rotatedComponent": "Component rotated 90 degrees.",
+      "switchOn": "Switch latched ON. Its two terminals are now conducting.",
+      "switchOff": "Switch latched OFF. Its two terminals are now open.",
+      "terminalLabels": {
+        "led": {
+          "signal": "LED signal",
+          "ground": "LED GND"
+        },
+        "button": {
+          "a": "Button A",
+          "b": "Button B"
+        },
+        "switch": {
+          "a": "Switch A",
+          "b": "Switch B"
+        },
+        "motor": {
+          "plus": "Motor +",
+          "minus": "Motor -"
+        },
+        "buzzer": {
+          "plus": "Buzzer +",
+          "minus": "Buzzer -"
+        }
+      },
+      "signalTerminal": "LED signal",
+      "groundTerminal": "LED GND",
+      "connected": "Connected {from} to {to}.",
+      "invalidConnection": "Choose two different endpoints."
+    },
+    "telemetry": {
+      "kicker": "Runtime",
+      "title": "AVR state",
+      "pc": "PC",
+      "cycles": "Cycles",
+      "size": "Program",
+      "bytes": "{bytes} B",
+      "programDetail": "{format} {bytes} B / {limit} B · {ms} ms",
+      "highPins": "High pins",
+      "ports": "GPIO ports",
+      "pins": "Package pins"
+    },
+    "format": {
+      "arduino": "Arduino",
+      "hex": "HEX",
+      "asm": "ASM"
+    },
+    "concept": {
+      "title": "Game integration path",
+      "body": "Forge the chip body, store compact code, attach devices to pins, then let the simulator drive lights, doors, traps, relays, or factories."
+    },
+    "sample": {
+      "code": "// NiceChunk switch controls LED + motor demo\n// Wire it like this:\n// VCC -> Switch A\n// Switch B -> D2\n// D13 -> LED signal\n// LED GND -> GND\n// D9 -> Motor +\n// Motor - -> GND\nconst int switchPin = 2;\nconst int ledPin = 13;\nconst int motorPin = 9;\n\nvoid setup() {\n  pinMode(switchPin, INPUT);\n  pinMode(ledPin, OUTPUT);\n  pinMode(motorPin, OUTPUT);\n}\n\nvoid loop() {\n  const bool enabled = digitalRead(switchPin) == HIGH;\n  digitalWrite(ledPin, enabled ? HIGH : LOW);\n  digitalWrite(motorPin, enabled ? HIGH : LOW);\n  delay(10);\n}\n"
+    },
+    "errors": {
+      "emptyProgram": "Enter Arduino code, Intel HEX, or AVR assembly first.",
+      "noHex": "The compiler did not return Intel HEX output.",
+      "flashOverflow": "Compiled firmware uses {bytes} B, above the Uno limit of {limit} B.",
+      "assembly": "AVR assembly failed: {error}",
+      "hexLine": "Invalid Intel HEX line {line}.",
+      "hexChecksum": "Intel HEX checksum failed on line {line}.",
+      "hexRecord": "Unsupported Intel HEX record type {type}.",
+      "hexEof": "Intel HEX is missing the EOF record."
+    }
+  }
+}

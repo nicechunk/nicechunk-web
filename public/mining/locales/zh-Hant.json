@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hant",
     "label": "Traditional Chinese",
-    "version": "mining-locale-zh-Hant-9e527e23dc7aa924",
-    "contentHash": "9e527e23dc7aa924"
+    "version": "mining-locale-zh-Hant-753e1057b6a14025",
+    "contentHash": "753e1057b6a14025"
   },
   "siteFooter": {
     "tagline": "Solana 上的種子體素世界協議。",
@@ -95,6 +95,14 @@
       "scanner": "礦石掃描器",
       "lantern": "礦洞提燈",
       "hammer": "岩石錘"
+    },
+    "account": {
+      "guest": "訪客",
+      "level": "Lv. {level}",
+      "notConnected": "未連接"
+    },
+    "hotbarSlot": {
+      "empty": "第 {slot} 格：空"
     }
   }
 }

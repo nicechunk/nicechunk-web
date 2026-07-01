@@ -2,8 +2,8 @@
   "_meta": {
     "language": "en",
     "label": "English",
-    "version": "mining-locale-en-a00da5655330de61",
-    "contentHash": "a00da5655330de61"
+    "version": "mining-locale-en-2bdd55d9eb745927",
+    "contentHash": "2bdd55d9eb745927"
   },
   "siteFooter": {
     "tagline": "A seeded voxel world protocol on Solana.",
@@ -96,6 +96,14 @@
       "scanner": "Ore Scanner",
       "lantern": "Cave Lantern",
       "hammer": "Rock Hammer"
+    },
+    "account": {
+      "guest": "Guest",
+      "level": "Lv. {level}",
+      "notConnected": "Not connected"
+    },
+    "hotbarSlot": {
+      "empty": "Slot {slot}: empty"
     }
   }
 }

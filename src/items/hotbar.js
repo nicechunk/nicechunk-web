@@ -1,10 +1,14 @@
 import { createBackpackPreviewCanvas } from "../render/backpack.js";
+import { createForgedItemPreviewElement } from "../forgedItems.js";
 
 export const hotbarSlotCount = 9;
 export const maxStackSize = 99;
 export const defaultToolDurability = 999;
 export const backpackSlotIndex = hotbarSlotCount - 1;
 export const forgedItemSlotIndex = hotbarSlotCount - 2;
+export const hotbarSlotsStorageKey = "nicechunk.hotbar.slots.v1";
+export const forgedHotbarQueueStorageKey = "nicechunk.forged.hotbar.queue.v1";
+const forgedHotbarReservationTtlMs = 10 * 60 * 1000;
 
 export const emptyHotbarItem = {
   kind: "empty",
@@ -60,6 +64,14 @@ export function createInitialHotbarSlots() {
   return slots;
 }
 
+export function createDefaultStoredHotbarSlots() {
+  return createInitialHotbarSlots().map((slot) => {
+    if (!slot) return null;
+    if (slot.itemId === "iron_pickaxe" || slot.itemId === "backpack" || slot.itemId === "forged_item") return slot;
+    return null;
+  });
+}
+
 export function createStackSlot(itemId, count = maxStackSize) {
   return {
     itemId,
@@ -96,6 +108,142 @@ export function createForgedItemSlot(item) {
   };
 }
 
+export function loadStoredHotbarSlots() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(hotbarSlotsStorageKey) || "null");
+    return normalizeHotbarSlots(parsed);
+  } catch {
+    return null;
+  }
+}
+
+export function saveHotbarSlots(slots) {
+  try {
+    localStorage.setItem(hotbarSlotsStorageKey, JSON.stringify(normalizeHotbarSlots(slots) ?? createDefaultStoredHotbarSlots()));
+  } catch {
+    // Storage can be unavailable in private browsing or embedded contexts.
+  }
+}
+
+export function reserveForgedHotbarSlot() {
+  const queue = loadForgedHotbarQueue();
+  if (!hasForgedHotbarCapacity(queue)) return null;
+  const reservation = {
+    id: `forge-reserve-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`,
+    state: "reserved",
+    reservedAt: Date.now(),
+  };
+  return writeForgedHotbarQueue([...queue, reservation]) ? reservation : null;
+}
+
+export function commitForgedHotbarReservation(reservationId, item) {
+  const queue = loadForgedHotbarQueue();
+  const index = queue.findIndex((entry) => entry?.id === reservationId && entry.state === "reserved");
+  if (index < 0) return false;
+  queue[index] = normalizeForgedHotbarQueueItem(item, reservationId);
+  return writeForgedHotbarQueue(queue);
+}
+
+export function releaseForgedHotbarReservation(reservationId) {
+  if (!reservationId) return;
+  writeForgedHotbarQueue(loadForgedHotbarQueue().filter((entry) => entry?.id !== reservationId));
+}
+
+export function consumePendingForgedHotbarItems(hotbarSlots, { avoidSlotIndex = null } = {}) {
+  const queue = loadForgedHotbarQueue();
+  if (!queue.length) return { changed: false, remaining: 0, added: 0, addedSlots: [] };
+  const remaining = [];
+  let changed = false;
+  let added = 0;
+  const addedSlots = [];
+  for (const entry of queue) {
+    if (entry?.state === "reserved") {
+      remaining.push(entry);
+      continue;
+    }
+    const slotIndex = findAvailableHotbarSlot(hotbarSlots, { avoidSlotIndex });
+    if (slotIndex < 0) {
+      remaining.push(entry);
+      continue;
+    }
+    hotbarSlots[slotIndex] = createForgedItemSlot(entry);
+    changed = true;
+    added += 1;
+    addedSlots.push(slotIndex);
+  }
+  if (remaining.length !== queue.length || changed) writeForgedHotbarQueue(remaining);
+  return { changed, remaining: remaining.length, added, addedSlots };
+}
+
+export function hasPendingForgedHotbarItems() {
+  return loadForgedHotbarQueue().some((entry) => entry?.state !== "reserved");
+}
+
+function hasForgedHotbarCapacity(queue = loadForgedHotbarQueue()) {
+  const slots = loadStoredHotbarSlots() ?? createDefaultStoredHotbarSlots();
+  const freeSlots = slots.filter((slot) => !slot).length;
+  return queue.length < freeSlots;
+}
+
+function loadForgedHotbarQueue() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(forgedHotbarQueueStorageKey) || "[]");
+    const now = Date.now();
+    return Array.isArray(parsed)
+      ? parsed
+        .filter((entry) => entry && typeof entry === "object")
+        .filter((entry) => entry.state !== "reserved" || now - Number(entry.reservedAt || 0) < forgedHotbarReservationTtlMs)
+      : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeForgedHotbarQueue(queue) {
+  try {
+    localStorage.setItem(forgedHotbarQueueStorageKey, JSON.stringify(queue));
+    return true;
+  } catch {
+    // Storage can be unavailable in private browsing or embedded contexts.
+    return false;
+  }
+}
+
+function normalizeForgedHotbarQueueItem(item, fallbackId = "") {
+  return {
+    id: item?.id || fallbackId || `forged-${Date.now().toString(36)}`,
+    state: "ready",
+    itemId: "forged_item",
+    count: 1,
+    bytes: Array.isArray(item?.bytes) ? [...item.bytes] : null,
+    byteLength: Number(item?.byteLength) || (Array.isArray(item?.bytes) ? item.bytes.length : 0),
+    code: item?.code ?? "",
+    savedAt: Number(item?.savedAt) || Date.now(),
+  };
+}
+
+function normalizeHotbarSlots(value) {
+  if (!Array.isArray(value)) return null;
+  const slots = value.slice(0, hotbarSlotCount).map(normalizeHotbarSlot);
+  while (slots.length < hotbarSlotCount) slots.push(null);
+  return slots;
+}
+
+function normalizeHotbarSlot(slot) {
+  if (!slot || typeof slot !== "object" || !slot.itemId) return null;
+  const normalized = { ...slot };
+  if (Array.isArray(slot.bytes)) normalized.bytes = [...slot.bytes];
+  return normalized;
+}
+
+function findAvailableHotbarSlot(slots, { avoidSlotIndex = null } = {}) {
+  if (Number.isInteger(avoidSlotIndex) && !slots[avoidSlotIndex]) {
+    const alternate = slots.findIndex((slot, index) => index !== avoidSlotIndex && !slot);
+    if (alternate >= 0) return alternate;
+  }
+  return slots.findIndex((slot) => !slot);
+}
+
 export function hotbarSlotAt(hotbarSlots, slotIndex) {
   return hotbarSlots[slotIndex] ?? null;
 }
@@ -121,7 +269,14 @@ export function renderHotbarSlots({ hotbar, hotbarSlots, hotbarItems, selectedHo
       slot.classList.toggle("selected", index === selectedHotbarSlot);
       slot.setAttribute("aria-label", hotbarSlotLabel({ slotIndex: index, slot: slotData, item, t, formatResourceAmount }));
 
-      if (item.renderIcon === "backpack") {
+      if (item.kind === "forged" && (slotData?.code || slotData?.bytes)) {
+        const preview = createForgedItemPreviewElement(slotData.code ?? slotData.bytes, {
+          className: "item-forged-render",
+          size: 96,
+          title: t(item.labelKey),
+        });
+        if (preview) slot.append(preview);
+      } else if (item.renderIcon === "backpack") {
         slot.append(createBackpackPreviewCanvas());
       } else if (item.iconClass) {
         const icon = document.createElement("span");

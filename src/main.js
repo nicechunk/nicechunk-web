@@ -33,20 +33,32 @@ import {
   shouldUseGuardianSpawnForSession,
 } from "./guardianClient.js";
 import { createGuardianRegistryResolver, guardianCoversChunk } from "./guardianRegistry.js";
-import { equipForgedItemOnAvatar, forgedItemsStorageKey, forgeBytesToCode, latestForgedItemStorageKey, loadLatestForgedItem } from "./forgedItems.js";
+import {
+  createForgedItemPreviewElement,
+  equipForgedItemOnAvatar,
+  forgedItemsStorageKey,
+  forgedLoadoutRefreshStorageKey,
+  forgeBytesToCode,
+  forgeCodeToBytes,
+  latestForgedItemStorageKey,
+  loadLatestForgedItem,
+} from "./forgedItems.js";
 import {
   backpackSlotIndex,
+  consumePendingForgedHotbarItems,
   createBackpackSlot,
-  createForgedItemSlot,
   createHotbarItems,
   createInitialHotbarSlots,
-  forgedItemSlotIndex,
+  forgedHotbarQueueStorageKey,
   hotbarItemAt as itemAtHotbarSlot,
+  hotbarSlotsStorageKey,
   hotbarSlotAt as slotAtHotbarIndex,
   hotbarSlotCount,
   isReservedHotbarSlot,
+  loadStoredHotbarSlots,
   maxStackSize,
   renderHotbarSlots,
+  saveHotbarSlots,
 } from "./items/hotbar.js";
 import {
   currentGameRedirectPath,
@@ -85,8 +97,14 @@ import smeltingRules, {
   smeltingFuelForMaterialId,
   smeltingHeatTierByTier,
   smeltingMaterialIdForItemCode,
+  smeltingMaterialIdForInputKey,
+  smeltingMaterialInputKey,
+  smeltingMergeRecipeIdForMaterialId,
+  smeltingMergeRecipeTableIdForMaterialId,
   smeltingRecipeIdForMaterialId,
   smeltingRecipeTableIdForMaterialId,
+  smeltingRecipeYieldBps,
+  smeltingSkillOutputBpsForLevel,
   smeltingTopAttributeEntries,
 } from "./data/smeltingRules.js";
 
@@ -386,8 +404,13 @@ function interpolateLoadingText(template, params = {}) {
 }
 
 const profileSkillMaxLevel = 10;
+const profileSkillXpRequirementMultiplier = 10;
 const profileSkillStoragePrefix = "nicechunk.playerSkills.";
 const profileSkillXpStoragePrefix = "nicechunk.playerSkillXp.";
+let profileChainSkillXpOwner = "";
+let profileChainSkillXp = null;
+let profileChainSkillXpPromise = null;
+let profileChainSkillXpRequestId = 0;
 
 function formatSkillNumber(value, decimals = 0) {
   if (!Number.isFinite(value)) return "0";
@@ -453,6 +476,18 @@ function profileEquipmentSvg(slotId) {
 function createProfileEquipmentIcon(entry) {
   const icon = document.createElement("span");
   icon.className = "profile-equipment-icon";
+  if (entry.previewCode) {
+    const preview = createForgedItemPreviewElement(entry.previewCode, {
+      className: "profile-equipment-render",
+      size: 128,
+      title: entry.value,
+    });
+    if (preview) {
+      icon.classList.add("rendered");
+      icon.append(preview);
+      return icon;
+    }
+  }
   icon.innerHTML = profileEquipmentSvg(entry.id);
   return icon;
 }
@@ -507,7 +542,7 @@ const playerSkillDefinitions = [
       const nextYield = Math.min(100, 70 + Math.min(profileSkillMaxLevel, level + 1) * 3);
       const nextLoss = Math.max(0, 30 - Math.min(profileSkillMaxLevel, level + 1) * 3);
       return {
-        current: createProfileSkillMetric("main.profile.skills.smelting.current", "{yieldPercent}% yield · {lossPercent}% shrink loss", {
+        current: createProfileSkillMetric("main.profile.skills.smelting.current", "{yieldPercent}% yield · {lossPercent}% loss", {
           yieldPercent,
           lossPercent,
         }),
@@ -515,7 +550,7 @@ const playerSkillDefinitions = [
           yieldPercent: nextYield,
           lossPercent: nextLoss,
         }),
-        max: createProfileSkillMetric("main.profile.skills.smelting.max", "Max: 100% yield · 0% shrink loss", {}),
+        max: createProfileSkillMetric("main.profile.skills.smelting.max", "Max: 100% yield · 0% loss", {}),
         formula: createProfileSkillMetric("main.profile.skills.smelting.formula", "Yield = 70% + Lv x 3%; loss = 30% - Lv x 3%", {}),
       };
     },
@@ -574,13 +609,13 @@ const playerSkillDefinitions = [
     xpBase: 125,
     xpGrowth: 1.57,
     metrics(level) {
-      const chance = level * 2;
-      const nextChance = Math.min(profileSkillMaxLevel, level + 1) * 2;
+      const chance = level * 10;
+      const nextChance = Math.min(profileSkillMaxLevel, level + 1) * 10;
       return {
         current: createProfileSkillMetric("main.profile.skills.exploration.current", "+{chance}% rare extra-drop roll weight", { chance }),
         next: createProfileSkillMetric("main.profile.skills.exploration.next", "Next level: +{chance}% rare roll weight", { chance: nextChance }),
-        max: createProfileSkillMetric("main.profile.skills.exploration.max", "Max: +20% rare extra-drop roll weight", {}),
-        formula: createProfileSkillMetric("main.profile.skills.exploration.formula", "Rare roll weight bonus = Lv x 2%; works with altitude/depth drop tables", {}),
+        max: createProfileSkillMetric("main.profile.skills.exploration.max", "Max: +100% rare extra-drop roll weight", {}),
+        formula: createProfileSkillMetric("main.profile.skills.exploration.formula", "Rare roll weight bonus = Lv x 10%; extra drops gain 1 XP when triggered", {}),
       };
     },
   },
@@ -677,7 +712,7 @@ function profileSkillLevel(levels, skillId) {
 function profileSkillExperienceRequirement(skill, level) {
   if (level >= profileSkillMaxLevel) return 0;
   const nextLevel = Math.max(1, Math.min(profileSkillMaxLevel, level + 1));
-  return Math.round((skill.xpBase ?? 100) * Math.pow(nextLevel, skill.xpGrowth ?? 1.55));
+  return Math.round((skill.xpBase ?? 100) * profileSkillXpRequirementMultiplier * Math.pow(nextLevel, skill.xpGrowth ?? 1.55));
 }
 
 function profileSkillTotalExperienceForLevel(skill, level) {
@@ -712,6 +747,23 @@ function profileSkillExperienceProgress(skill, level, xpBySkill) {
       required: formatProfileSkillXp(required),
     }),
   };
+}
+
+function profileSkillLevelFromXp(skill, xp) {
+  const total = Math.max(0, Math.round(Number(xp) || 0));
+  let level = 0;
+  for (let nextLevel = 1; nextLevel <= profileSkillMaxLevel; nextLevel += 1) {
+    if (total < profileSkillTotalExperienceForLevel(skill, nextLevel)) break;
+    level = nextLevel;
+  }
+  return level;
+}
+
+function profileSkillEffectiveLevel(levels, skill, xpBySkill) {
+  if (Number.isFinite(Number(xpBySkill?.[skill.id]))) {
+    return profileSkillLevelFromXp(skill, xpBySkill[skill.id]);
+  }
+  return profileSkillLevel(levels, skill.id);
 }
 
 function profileSkillTierLabel(skill, targetLevel) {
@@ -807,13 +859,16 @@ function renderProfileSkillDetail(skill, level, metrics, xpProgress) {
 function renderProfileSkills() {
   if (!profileSkillsGrid) return;
   const levels = loadProfileSkillLevels();
-  const xpBySkill = loadProfileSkillXp();
+  const xpBySkill = {
+    ...loadProfileSkillXp(),
+    ...(profileChainSkillXp ?? {}),
+  };
   if (!playerSkillDefinitions.some((skill) => skill.id === selectedProfileSkillId)) {
     selectedProfileSkillId = playerSkillDefinitions[0]?.id ?? "";
   }
   profileSkillsGrid.replaceChildren();
   for (const skill of playerSkillDefinitions) {
-    const level = profileSkillLevel(levels, skill.id);
+    const level = profileSkillEffectiveLevel(levels, skill, xpBySkill);
     const progress = (level / profileSkillMaxLevel) * 100;
     const metrics = skill.metrics(level);
     const xpProgress = profileSkillExperienceProgress(skill, level, xpBySkill);
@@ -850,6 +905,46 @@ function renderProfileSkills() {
     profileSkillsGrid.append(card);
     if (selected) renderProfileSkillDetail(skill, level, metrics, xpProgress);
   }
+}
+
+function invalidateProfileChainSkillXp() {
+  profileChainSkillXpOwner = "";
+  profileChainSkillXp = null;
+  profileChainSkillXpPromise = null;
+  profileChainSkillXpRequestId += 1;
+}
+
+function refreshProfileChainSkillXp({ force = false } = {}) {
+  if (!profilePanel || profilePanel.hidden) return;
+  if (!isNicechunkChainFeatureEnabled()) return;
+  const session = getGameSession();
+  const owner = session.walletAddress;
+  if (!owner) {
+    invalidateProfileChainSkillXp();
+    return;
+  }
+  if (!force && profileChainSkillXpOwner === owner && profileChainSkillXp) return;
+  if (profileChainSkillXpPromise && profileChainSkillXpOwner === owner) return;
+  profileChainSkillXpOwner = owner;
+  const requestId = profileChainSkillXpRequestId + 1;
+  profileChainSkillXpRequestId = requestId;
+  profileChainSkillXpPromise = loadNicechunkChainModule()
+    .then((chainModule) => chainModule.fetchPlayerProgress?.(owner))
+    .then((progress) => {
+      if (profileChainSkillXpRequestId !== requestId || profileChainSkillXpOwner !== owner) return;
+      profileChainSkillXp = {
+        precisionGathering: Math.max(0, Math.round(Number(progress?.precisionGatheringXp) || 0)),
+        smelting: Math.max(0, Math.round(Number(progress?.smeltingXp) || 0)),
+        exploration: Math.max(0, Math.round(Number(progress?.explorationXp) || 0)),
+      };
+      if (profilePanel && !profilePanel.hidden) renderProfileSkills();
+    })
+    .catch((error) => {
+      console.warn("Failed to load NiceChunk player progress", error);
+    })
+    .finally(() => {
+      if (profileChainSkillXpRequestId === requestId) profileChainSkillXpPromise = null;
+    });
 }
 
 function withStartupTimeout(promise, timeoutMs, label) {
@@ -1262,7 +1357,7 @@ const materials = {
   crack: new THREE.MeshBasicMaterial({ color: 0x1d1712, transparent: true, opacity: 0.55 }),
 };
 const hotbarItems = createHotbarItems(simulatedResourceItems);
-const hotbarSlots = createInitialHotbarSlots();
+const hotbarSlots = loadStoredHotbarSlots() ?? createInitialHotbarSlots();
 const backpackSlotTotal = 50;
 const backpackDemoSlots = createInitialBackpackSlots();
 const backpackSlotCache = {
@@ -1293,6 +1388,9 @@ const marketListedSourceIdCache = {
   ids: new Set(),
 };
 let latestForgedItem = null;
+let onChainForgedLoadoutItem = null;
+let onChainForgedLoadoutLoading = false;
+let onChainForgedLoadoutLastLoadedAt = 0;
 let equippedForgedMesh = null;
 const resourceDebugEvents = [];
 const hotbarActions = {
@@ -1303,7 +1401,7 @@ const hotbarActions = {
       startHandSwing();
       return;
     }
-    if (handlePickaxeClick(hit, event.pointerType)) consumeSelectedToolDurability();
+    handlePickaxeClick(hit, event.pointerType);
   },
   placeBlock: ({ item, hit }) => {
     if (!hit) {
@@ -1456,6 +1554,8 @@ const player = {
   miningHitDone: false,
   miningContact: null,
   miningPreviousToolBoxes: null,
+  miningPreviousToolBoxCount: 0,
+  miningToolSlot: null,
 };
 
 const avatarGroundOffset = 0.5;
@@ -1477,11 +1577,24 @@ const autoPathSearchRadius = 72;
 const autoPathMaxNodes = 1800;
 const miningSwingDuration = 260;
 const miningStandDistance = 1.28;
-const miningReachDown = 3;
-const miningReachUp = 4;
-const miningHorizontalRadius = 3;
 const miningCollisionStartProgress = 0.22;
 const miningBlockCollisionPadding = 0.06;
+const miningReachBlockHalfDiagonal = Math.sqrt(3) * 0.5;
+const miningReachDefaultToolRadius = 1.15;
+const miningReachMinimumRadius = 0.18;
+const miningToolGripAnchor = new THREE.Vector3(0, -0.99, 0);
+const miningReachScratchBox = new THREE.Box3();
+const miningReachScratchCenter = new THREE.Vector3();
+const miningReachScratchGrip = new THREE.Vector3();
+const miningReachScratchCorner = new THREE.Vector3();
+const miningReachScratchSphere = new THREE.Sphere();
+const miningToolCurrentBoxPool = Array.from({ length: 4 }, () => new THREE.Box3());
+const miningToolCurrentBoxes = [];
+const miningToolPreviousBoxPool = Array.from({ length: 4 }, () => new THREE.Box3());
+const miningToolBlockBox = new THREE.Box3();
+const miningToolSweptBox = new THREE.Box3();
+const miningToolWorldScale = new THREE.Vector3();
+const miningToolHitCenter = new THREE.Vector3();
 const placementReach = 3;
 const lowPowerChunkLoading = isMobileViewport();
 const visualCloudRenderRadius = lowPowerChunkLoading ? 160 : 256;
@@ -1608,6 +1721,12 @@ const chatBubbleCanvasMaxWidth = 512;
 const chatBubbleCanvasMinWidth = 176;
 const chatBubbleCanvasHeight = 160;
 const chatBubbleAvatarOffsetY = 3.95;
+const avatarNameTagMaxChars = 13;
+const avatarNameTagCanvasMaxWidth = 512;
+const avatarNameTagCanvasMinWidth = 176;
+const avatarNameTagCanvasHeight = 112;
+const avatarNameTagOffsetY = 3.48;
+const avatarNameTagWorldPosition = new THREE.Vector3();
 let localChatBubble = null;
 const profilePreview = createProfilePreview();
 const cameraFocus = new THREE.Vector3();
@@ -1702,9 +1821,14 @@ if (coarsePointerMedia?.addEventListener) {
   coarsePointerMedia?.addListener?.(refreshMobileViewport);
 }
 window.addEventListener("focus", () => {
-  const changed = syncLatestForgedItemSlot();
+  const changed = syncLatestForgedItemState({ preferLocal: true });
+  const queued = syncPendingForgedHotbarItems();
   const reset = resetHotbarForResourceSimulation(hotbarSlots, hotbarItems);
-  if (changed || reset) renderHotbar();
+  if (queued || reset) {
+    renderHotbar();
+    updateEquippedItem();
+  }
+  if (changed) updateProfilePanelDetails();
   if (!isMovementChainQuietActive() && !isMiningInteractionActive()) {
     if (profileOverlay && !profileOverlay.hidden) void refreshGameplaySessionHud();
     if (
@@ -1723,10 +1847,28 @@ document.addEventListener("visibilitychange", () => {
   if (document.hidden) clearActiveMovementInput();
 });
 window.addEventListener("storage", (event) => {
+  if (event.key === hotbarSlotsStorageKey) {
+    const stored = loadStoredHotbarSlots();
+    if (stored) {
+      hotbarSlots.splice(0, hotbarSlots.length, ...stored);
+      renderHotbar();
+      updateEquippedItem();
+    }
+    return;
+  }
+  if (event.key === forgedHotbarQueueStorageKey) {
+    if (syncPendingForgedHotbarItems()) {
+      renderHotbar();
+      updateEquippedItem();
+    }
+    return;
+  }
+  if (event.key === forgedLoadoutRefreshStorageKey) {
+    refreshForgedHotbarFromLocal();
+    return;
+  }
   if (event.key !== latestForgedItemStorageKey && event.key !== forgedItemsStorageKey) return;
-  const changed = syncLatestForgedItemSlot();
-  const reset = resetHotbarForResourceSimulation(hotbarSlots, hotbarItems);
-  if (changed || reset) renderHotbar();
+  refreshForgedHotbarFromLocal();
 });
 window.addEventListener("beforeunload", () => {
   savePlayerPosition(true);
@@ -2099,7 +2241,8 @@ async function startInitialWorld() {
   generateAround(player.position, { force: true });
   generateCloudsAround(player.position);
   startGuardianConnection();
-  syncLatestForgedItemSlot();
+  syncLatestForgedItemState();
+  syncPendingForgedHotbarItems();
   resetHotbarForResourceSimulation(hotbarSlots, hotbarItems);
   renderHotbar();
   selectHotbarSlot(selectedHotbarSlot);
@@ -2270,15 +2413,79 @@ function clampNumber(value, min, max) {
   return Math.max(min, Math.min(max, value));
 }
 
-function syncLatestForgedItemSlot() {
-  const item = loadLatestForgedItem();
+function syncLatestForgedItemState({ preferLocal = false } = {}) {
+  const localItem = loadLatestForgedItem();
+  const item = preferLocal
+    ? localItem ?? onChainForgedLoadoutItem
+    : onChainForgedLoadoutItem ?? localItem;
   const previousCode = latestForgedItem?.code ?? null;
   const nextCode = item?.code ?? null;
   if (previousCode === nextCode) return false;
   latestForgedItem = item;
-  hotbarSlots[forgedItemSlotIndex] = item ? createForgedItemSlot(item) : null;
-  if (selectedHotbarSlot === forgedItemSlotIndex) updateEquippedItem();
   return true;
+}
+
+function syncPendingForgedHotbarItems() {
+  const selectedWasEmpty = !hotbarSlots[selectedHotbarSlot];
+  const result = consumePendingForgedHotbarItems(hotbarSlots, { avoidSlotIndex: selectedHotbarSlot });
+  if (selectedWasEmpty && result.addedSlots.includes(selectedHotbarSlot)) {
+    const fallback = hotbarSlots.findIndex((slot, index) => index !== selectedHotbarSlot && slot && !isBackpackHotbarSlot(index));
+    if (fallback >= 0) selectedHotbarSlot = fallback;
+  }
+  return result.changed;
+}
+
+function refreshForgedHotbarFromLocal() {
+  const changed = syncLatestForgedItemState({ preferLocal: true });
+  const queued = syncPendingForgedHotbarItems();
+  const reset = resetHotbarForResourceSimulation(hotbarSlots, hotbarItems);
+  if (queued || reset) {
+    renderHotbar();
+    updateEquippedItem();
+  }
+  if (changed) updateProfilePanelDetails();
+}
+
+async function refreshPlayerLoadoutForgedItem({ force = false } = {}) {
+  if (!isNicechunkChainFeatureEnabled() || !currentSession.walletAddress) return null;
+  const now = performance.now();
+  if (onChainForgedLoadoutLoading && !force) return onChainForgedLoadoutItem;
+  if (!force && now - onChainForgedLoadoutLastLoadedAt < 14000) return onChainForgedLoadoutItem;
+  onChainForgedLoadoutLoading = true;
+  try {
+    const chainModule = await loadNicechunkChainModule();
+    const loadout = await chainModule.fetchPlayerLoadout?.(currentSession.walletAddress);
+    const rightHandSlot = Number.isInteger(chainModule.playerLoadoutSlotRightHand)
+      ? chainModule.playerLoadoutSlotRightHand
+      : 7;
+    const equippedSlot = loadout?.slots?.find((slot) => slot.slot === rightHandSlot && slot.equipped && slot.code);
+    const previousCode = onChainForgedLoadoutItem?.code ?? null;
+    let nextItem = null;
+    if (equippedSlot?.code) {
+      const bytes = Array.from(forgeCodeToBytes(equippedSlot.code));
+      nextItem = {
+        id: `onchain-forged-${rightHandSlot}`,
+        source: "chain-loadout",
+        slot: rightHandSlot,
+        code: equippedSlot.code,
+        bytes,
+        byteLength: bytes.length,
+        savedAt: Number(loadout?.updatedAt || 0) * 1000 || Date.now(),
+        loadout: loadout?.publicKey ?? null,
+      };
+    }
+    onChainForgedLoadoutItem = nextItem;
+    onChainForgedLoadoutLastLoadedAt = performance.now();
+    if ((nextItem?.code ?? null) !== previousCode) {
+      syncLatestForgedItemState();
+    }
+    return onChainForgedLoadoutItem;
+  } catch (error) {
+    console.warn("Failed to refresh on-chain forged loadout", error);
+    return onChainForgedLoadoutItem;
+  } finally {
+    onChainForgedLoadoutLoading = false;
+  }
 }
 
 function syncEquippedBackpackSlot() {
@@ -2299,6 +2506,7 @@ function syncEquippedBackpackSlot() {
 }
 
 function renderHotbar() {
+  saveHotbarSlots(hotbarSlots);
   renderHotbarSlots({ hotbar, hotbarSlots, hotbarItems, selectedHotbarSlot, t, formatResourceAmount });
 }
 
@@ -2376,6 +2584,9 @@ function profileEquipmentEntries() {
     value: emptyValue,
     detail: emptyDetail,
   });
+  const rightHandForgedCode = currentItem?.hand === "forged"
+    ? (currentSlot?.code ?? currentSlot?.bytes ?? null)
+    : null;
   const handValue = currentItem?.id === "empty" ? emptyValue : gameText(currentItem?.labelKey, currentItem?.id ?? "Empty");
   return [
     emptySlot("head", "head", "Head"),
@@ -2388,8 +2599,11 @@ function profileEquipmentEntries() {
     {
       id: "rightHand",
       name: gameText("main.profile.equipment.rightHand", "Right Hand"),
-      value: handValue,
-      detail: currentSlot
+      value: rightHandForgedCode ? gameText("main.item.forged_item", "Forged Item") : handValue,
+      previewCode: rightHandForgedCode,
+      detail: rightHandForgedCode
+        ? gameText("main.profile.equipment.rightHandForgedDetail", "Equipped forged item. Appearance is rendered from its forged code.")
+        : currentSlot
         ? gameText("main.profile.equipment.rightHandDetail", "Hotbar slot {slot}. Current action: {action}.", {
             slot: selectedHotbarSlot + 1,
             action: currentItem?.action ?? "none",
@@ -2425,6 +2639,7 @@ function renderProfileEquipment() {
     const item = document.createElement("article");
     item.className = "profile-equipment-item";
     item.dataset.equipment = entry.id;
+    item.classList.toggle("has-rendered-preview", Boolean(entry.previewCode));
     const icon = createProfileEquipmentIcon(entry);
     const copy = document.createElement("div");
     const title = document.createElement("strong");
@@ -2447,7 +2662,7 @@ function openProfilePanel() {
   profilePanel.setAttribute("aria-hidden", "false");
   syncGameChromeState();
   setProfileTab(profilePanel.dataset.activeProfileTab || "attributes");
-  updateProfilePanelDetails();
+  updateProfilePanelDetails({ forceChainSkillXp: true });
   if (profilePreview) {
     profilePreview.active = true;
     profilePreview.dirty = true;
@@ -2471,7 +2686,7 @@ function closeProfilePanel() {
   profileModelContainer?.classList.remove("dragging");
 }
 
-function updateProfilePanelDetails() {
+function updateProfilePanelDetails({ forceChainSkillXp = false } = {}) {
   if (!profilePanel || profilePanel.hidden) return;
   const session = getGameSession();
   const level = 1;
@@ -2485,6 +2700,7 @@ function updateProfilePanelDetails() {
   updateProfileBackpackDetails();
   renderProfileSkills();
   renderProfileEquipment();
+  refreshProfileChainSkillXp({ force: forceChainSkillXp });
 }
 
 function handleProfileRpcAction(event) {
@@ -3495,7 +3711,7 @@ function filterSmeltingMobileResourceSlots(slots = []) {
     if (smeltingMobileResourceFilter === "fuel") return isSmeltingFuelSlot(slot);
     if (smeltingMobileResourceFilter === "raw") return !slot.materialId;
     if (smeltingMobileResourceFilter === "ready") {
-      return isSmeltingFuelSlot(slot) || selectedRecipeKeys.has(slot.atlasKey) || Boolean(smeltingRecipeMatch([slot])?.recipe);
+      return isSmeltingFuelSlot(slot) || selectedRecipeKeys.has(smeltingSlotInputKey(slot)) || Boolean(smeltingRecipeMatch([slot])?.recipe);
     }
     return true;
   });
@@ -3737,7 +3953,13 @@ function renderSmeltingWorkbenchSlot(container, slots, labelKey, fallback, hintK
   cleanupSmeltingPreviewTree(container);
   container.replaceChildren();
   const label = document.createElement("span");
-  label.textContent = gameText(labelKey, fallback);
+  const labelText = gameText(labelKey, fallback);
+  label.textContent = container === smeltingInputSlot && slots.length
+    ? gameText("main.smelting.inputSlotMass", "{label} · {mass}", {
+        label: labelText,
+        mass: formatMassKg(totalSmeltingInputMassKg(slots)),
+      })
+    : labelText;
   container.append(label);
   if (!slots.length) {
     const hint = document.createElement("em");
@@ -3819,7 +4041,7 @@ function renderSmeltingOutput(inputSlots, fuelSlots) {
     [gameText("main.smelting.requiredHeat", "Required heat"), recipe.heatLabel],
     [gameText("main.smelting.servings", "Servings"), recipe.servingsLabel],
     [gameText("main.smelting.outputSize", "Output size"), recipe.outputSizeLabel],
-    [gameText("main.smelting.yieldRange", "Yield range"), recipe.yieldRange],
+    [gameText("main.smelting.outputRate", "Output rate"), recipe.yieldRange],
     [gameText("main.smelting.quality", "Quality basis"), recipe.quality],
   ];
   if (recipe.properties) {
@@ -3871,7 +4093,7 @@ function renderSmeltingRecipeList(slots = [], inputSlots = [], fuelSlots = []) {
 }
 
 function smeltingRecipeSummaries(slots = [], inputSlots = [], fuelSlots = []) {
-  const counts = createSmeltingInputCounts(slots.map((slot) => slot?.atlasKey).filter(Boolean));
+  const counts = createSmeltingInputCounts(slots.map(smeltingSlotInputKey).filter(Boolean));
   const selectedCounts = createSmeltingInputCountFromSlots(inputSlots);
   const selectedRecipeId = smeltingRecipeMatch(inputSlots)?.recipe?.id ?? "";
   return (smeltingRules.materials ?? [])
@@ -3880,28 +4102,21 @@ function smeltingRecipeSummaries(slots = [], inputSlots = [], fuelSlots = []) {
       const maxServings = maxSmeltingRecipeServings(recipe, counts);
       const selectedServings = smeltingRecipeInputMultiplier(recipe, selectedCounts);
       const displayServings = Math.max(1, selectedServings || Math.min(1, maxServings));
-      const missing = requirements
-        .map((input) => ({
-          ...input,
-          available: counts.get(input.key) ?? 0,
-          selected: selectedCounts.get(input.key) ?? 0,
-          missing: Math.max(0, input.amount - (counts.get(input.key) ?? 0)),
-        }))
-        .filter((input) => input.missing > 0);
-      const requiredCount = requirements.reduce((sum, input) => sum + input.amount, 0);
-      const matchedCount = requirements.reduce((sum, input) => sum + Math.min(input.amount * displayServings, counts.get(input.key) ?? 0), 0);
-      const selectedMatchedCount = requirements.reduce((sum, input) => sum + Math.min(input.amount, selectedCounts.get(input.key) ?? 0), 0);
-      const fuelSlot = bestSmeltingFuelSlot(slots, recipe.requiredHeatTier ?? 1, new Set(inputSlots.map((slot) => slot.sourceItemId)));
-      const ready = missing.length === 0 && Boolean(fuelSlot);
+      const plan = smeltingRecipeInputPlan(recipe, slots, displayServings);
+      const missing = plan.requirements.filter((input) => input.missing > 0);
+      const requiredCount = plan.requiredCount;
+      const matchedCount = plan.matchedCount;
+      const selectedMatchedCount = requirements.reduce((sum, input) => Math.min(input.amount, selectedCounts.get(input.key) ?? 0) + sum, 0);
+      const fuelSlot = bestSmeltingFuelSlot(slots, recipe.requiredHeatTier ?? 1, new Set(plan.slots.map((slot) => slot.sourceItemId)));
+      const ready = plan.complete && Boolean(fuelSlot);
       const selected = recipe.id === selectedRecipeId && selectedMatchedCount > 0;
       const fuelMissing = missing.length === 0 && !fuelSlot && !fuelSlots.length;
-      const outputVolumeMm3 = smeltingRecipeOutputVolumeMm3(recipe, displayServings);
       return {
         recipe,
-        requirements,
+        requirements: plan.requirements,
         missing,
         matchedCount,
-        requiredCount: requiredCount * displayServings,
+        requiredCount,
         selectedMatchedCount,
         fuelSlot,
         ready,
@@ -3910,7 +4125,9 @@ function smeltingRecipeSummaries(slots = [], inputSlots = [], fuelSlots = []) {
         maxServings,
         selectedServings,
         displayServings,
-        outputVolumeMm3,
+        plannedInputSlots: plan.slots,
+        inputVolumeMm3: plan.inputVolumeMm3,
+        outputVolumeMm3: plan.outputVolumeMm3,
       };
     })
     .filter((summary) => {
@@ -3925,6 +4142,57 @@ function smeltingRecipeSummaries(slots = [], inputSlots = [], fuelSlots = []) {
       return (b.matchedCount / Math.max(1, b.requiredCount)) - (a.matchedCount / Math.max(1, a.requiredCount));
     })
     .slice(0, 36);
+}
+
+function smeltingRecipeInputPlan(recipe, slots = [], servings = 1) {
+  const normalizedServings = Math.max(1, Math.floor(Number(servings) || 1));
+  const used = new Set();
+  const selectedSlots = [];
+  const requirements = recipeRequirements(recipe).map((input) => {
+    const requiredCount = Math.max(1, Number(input.amount) || 1) * normalizedServings;
+    const candidates = slots
+      .filter((slot) => {
+        const sourceItemId = slot?.sourceItemId;
+        return sourceItemId && !used.has(sourceItemId) && smeltingSlotInputKey(slot) === input.key;
+      })
+      .sort(compareSmeltingSlotsByVolume);
+    const selected = candidates.slice(0, requiredCount);
+    selected.forEach((slot) => {
+      used.add(slot.sourceItemId);
+      selectedSlots.push(slot);
+    });
+    const selectedVolumeMm3 = totalSmeltingInputVolumeMm3(selected);
+    const availableVolumeMm3 = candidates.reduce((sum, slot) => sum + smeltingSlotVolumeMm3(slot), 0);
+    return {
+      ...input,
+      baseAmount: input.amount,
+      amount: requiredCount,
+      available: candidates.length,
+      selected: selected.length,
+      missing: Math.max(0, requiredCount - selected.length),
+      selectedVolumeMm3,
+      availableVolumeMm3,
+    };
+  });
+  const requiredCount = requirements.reduce((sum, input) => sum + input.amount, 0);
+  const matchedCount = requirements.reduce((sum, input) => sum + input.selected, 0);
+  const complete = requirements.length > 0 && requirements.every((input) => input.missing <= 0);
+  const inputVolumeMm3 = totalSmeltingInputVolumeMm3(selectedSlots);
+  return {
+    complete,
+    requirements,
+    requiredCount,
+    matchedCount,
+    slots: selectedSlots,
+    inputVolumeMm3,
+    outputVolumeMm3: complete ? smeltingRecipeOutputVolumeMm3(recipe, normalizedServings, selectedSlots) : 0,
+  };
+}
+
+function compareSmeltingSlotsByVolume(a, b) {
+  const volumeDelta = smeltingSlotVolumeMm3(a) - smeltingSlotVolumeMm3(b);
+  if (volumeDelta) return volumeDelta;
+  return String(a?.sourceItemId ?? "").localeCompare(String(b?.sourceItemId ?? ""));
 }
 
 function createSmeltingRecipeCard(summary) {
@@ -3949,9 +4217,10 @@ function createSmeltingRecipeCard(summary) {
   copy.innerHTML = "<div><strong></strong><span></span></div><p></p><div class=\"smelting-recipe-batch\"></div><div class=\"smelting-recipe-attributes\"></div><div class=\"smelting-recipe-requirements\"></div>";
   copy.querySelector("strong").textContent = smeltingMaterialName(recipe.id);
   copy.querySelector("span").textContent = status;
-  copy.querySelector("p").textContent = gameText("main.smelting.recipeProgress", "{matched}/{required} input slots matched · heat tier {tier}", {
+  copy.querySelector("p").textContent = gameText("main.smelting.recipeProgress", "{matched}/{required} inputs · input {volume} · heat tier {tier}", {
     matched: Math.min(summary.requiredCount, summary.matchedCount),
     required: summary.requiredCount,
+    volume: formatSmeltingVolumeMm3(summary.inputVolumeMm3),
     tier: recipe.requiredHeatTier ?? 1,
   });
   const batch = copy.querySelector(".smelting-recipe-batch");
@@ -3965,13 +4234,17 @@ function createSmeltingRecipeCard(summary) {
   const reqWrap = copy.querySelector(".smelting-recipe-requirements");
   summary.requirements.slice(0, 5).forEach((input) => {
     const chip = document.createElement("b");
-    const atlas = getBlockAtlasEntry(input.key);
-    chip.textContent = gameText("main.smelting.recipeRequirement", "{resource} {available}/{amount}", {
-      resource: localizedBlockResourceName(input.key, atlas),
-      available: Math.min(input.amount * summary.displayServings, input.available ?? 0),
-      amount: input.amount * summary.displayServings,
+    chip.textContent = gameText("main.smelting.recipeRequirementVolume", "{resource} use {used} / have {available}", {
+        resource: smeltingInputKeyLabel(input.key),
+        used: formatSmeltingVolumeMm3(input.selectedVolumeMm3),
+        available: formatSmeltingVolumeMm3(input.availableVolumeMm3),
+      });
+    chip.title = gameText("main.smelting.recipeRequirement", "{resource} {available}/{amount}", {
+      resource: smeltingInputKeyLabel(input.key),
+      available: input.selected ?? 0,
+      amount: input.amount,
     });
-    chip.classList.toggle("missing", (input.available ?? 0) < input.amount * summary.displayServings);
+    chip.classList.toggle("missing", (input.selected ?? 0) < input.amount);
     reqWrap.append(chip);
   });
 
@@ -4002,8 +4275,8 @@ function createSmeltingRecipeBatchControl(summary) {
   const plus = createSmeltingRecipeServingButton(summary, 1);
   stepper.append(minus, value, plus);
   const size = document.createElement("small");
-  size.textContent = gameText("main.smelting.recipeOutputSize", "Output {size}", {
-    size: formatVolumeCubeSize(summary.outputVolumeMm3),
+  size.textContent = gameText("main.smelting.recipeOutputVolume", "Output volume {volume}", {
+    volume: formatSmeltingVolumeMm3(summary.outputVolumeMm3),
   });
   wrap.append(label, stepper, size);
   return wrap;
@@ -4046,21 +4319,17 @@ function handleSmeltingRecipeListClick(event) {
 
 function fillSmeltingRecipeFromBackpack(recipe, servings = 1) {
   const slots = createAvailableBackpackSlotsFromChain(equippedBackpackStatus?.backpack ?? null).filter(Boolean);
-  const maxServings = maxSmeltingRecipeServings(recipe, createSmeltingInputCounts(slots.map((slot) => slot?.atlasKey).filter(Boolean)));
+  const maxServings = maxSmeltingRecipeServings(recipe, createSmeltingInputCounts(slots.map(smeltingSlotInputKey).filter(Boolean)));
   const targetServings = Math.max(1, Math.min(Math.max(1, maxServings), Math.floor(Number(servings) || 1)));
+  const plan = smeltingRecipeInputPlan(recipe, slots, targetServings);
   const used = new Set();
   smeltingInputSourceItemIds.length = 0;
   smeltingFuelSourceItemIds.length = 0;
-  for (const requirement of recipeRequirements(recipe)) {
-    let remaining = requirement.amount * targetServings;
-    for (const slot of slots) {
-      if (remaining <= 0) break;
-      if (used.has(slot.sourceItemId) || slot.atlasKey !== requirement.key) continue;
-      smeltingInputSourceItemIds.push(slot.sourceItemId);
-      used.add(slot.sourceItemId);
-      remaining -= 1;
-    }
-  }
+  plan.slots.forEach((slot) => {
+    if (!slot?.sourceItemId || used.has(slot.sourceItemId)) return;
+    smeltingInputSourceItemIds.push(slot.sourceItemId);
+    used.add(slot.sourceItemId);
+  });
   const fuelSlot = bestSmeltingFuelSlot(slots, recipe.requiredHeatTier ?? 1, used);
   if (fuelSlot?.sourceItemId) smeltingFuelSourceItemIds.push(fuelSlot.sourceItemId);
   smeltingMobileSelectedSourceItemId = "";
@@ -4352,8 +4621,8 @@ async function startSmeltingPreview() {
   try {
     const chainModule = await loadNicechunkChainModule();
     const result = await chainModule.executeSmeltingOnChain({
-      recipeId: smeltingRecipeIdForMaterialId(recipeMatch.recipe.id),
-      recipeTableId: smeltingRecipeTableIdForMaterialId(recipeMatch.recipe.id),
+      recipeId: smeltingOnChainRecipeId(recipeMatch.recipe),
+      recipeTableId: smeltingOnChainRecipeTableId(recipeMatch.recipe),
       inputIndexes: inputSlots.map((slot) => slot.chainIndex),
       fuelIndexes: fuelSlots.map((slot) => slot.chainIndex),
       batchMultiplier,
@@ -4377,6 +4646,7 @@ async function startSmeltingPreview() {
     smeltingState = "complete";
     smeltingInputSourceItemIds.length = 0;
     smeltingFuelSourceItemIds.length = 0;
+    invalidateProfileChainSkillXp();
     await refreshEquippedBackpack({ force: true });
     if (smeltingStatus) {
       smeltingStatus.textContent = gameText("main.smelting.submitComplete", "Smelting confirmed on-chain: {signature}", {
@@ -4408,7 +4678,6 @@ function createSmeltingRecipe(inputSlots, fuelSlots) {
   const recipeReady = isSmeltingRecipeReady(recipeMatch, inputSlots);
   const batchMultiplier = smeltingBatchMultiplier(recipe, inputSlots);
   const massKg = totalSmeltingInputMassKg(inputSlots);
-  const [minYield, maxYield] = smeltingYieldRangeKg(massKg, recipe?.class, recipe?.yieldCount);
   const heatTier = recipe?.requiredHeatTier ?? maxSmeltingRequiredHeatTier(inputSlots);
   const fuelTier = maxSmeltingFuelTier(fuelSlots);
   const heatTierData = smeltingHeatTierByTier(heatTier);
@@ -4423,7 +4692,7 @@ function createSmeltingRecipe(inputSlots, fuelSlots) {
   const localizedName = inputSlots.length > 1
     ? smeltingInputBatchLabel(inputSlots)
     : smeltingInputName(primarySlot);
-  const outputVolumeMm3 = recipe && batchMultiplier >= 1 ? smeltingRecipeOutputVolumeMm3(recipe, batchMultiplier) : 0;
+  const outputVolumeMm3 = recipe && batchMultiplier >= 1 ? smeltingRecipeOutputVolumeMm3(recipe, batchMultiplier, inputSlots) : 0;
   return {
     name: recipe ? smeltingMaterialName(recipe.id) : gameText("main.smelting.noRecipeName", "Unmatched batch"),
     description: recipe
@@ -4440,7 +4709,7 @@ function createSmeltingRecipe(inputSlots, fuelSlots) {
       : gameText("main.backpack.unknownSize", "Unknown"),
     outputVolumeMm3,
     outputDimensionsM: materialCubeDimensionsFromVolume(outputVolumeMm3),
-    yieldRange: `${formatMassKg(minYield)} - ${formatMassKg(maxYield)}`,
+    yieldRange: recipe ? smeltingOutputRateLabel(recipe) : formatMassKg(massKg),
     quality: recipe
       ? recipeReady
         ? gameText("main.smelting.recipeMatched", "Recipe matched: {recipe}", { recipe: smeltingMaterialName(recipe.id) })
@@ -4517,7 +4786,12 @@ function smeltingFuelProfile(slot) {
 }
 
 function smeltingInputKeys(inputSlots = []) {
-  return inputSlots.map((slot) => slot?.atlasKey).filter(Boolean);
+  return inputSlots.map(smeltingSlotInputKey).filter(Boolean);
+}
+
+function smeltingSlotInputKey(slot) {
+  if (slot?.materialId) return smeltingMaterialInputKey(slot.materialId);
+  return slot?.atlasKey ?? "";
 }
 
 function createSmeltingInputCountFromSlots(inputSlots = []) {
@@ -4537,17 +4811,75 @@ function smeltingBatchMultiplier(recipe, inputSlots = []) {
   return smeltingRecipeInputMultiplier(recipe, createSmeltingInputCountFromSlots(inputSlots));
 }
 
-function smeltingRecipeOutputVolumeMm3(recipe, servings = 1) {
-  const inputCount = recipeRequirements(recipe).reduce((sum, input) => sum + Math.max(1, Number(input.amount) || 1), 0);
-  return Math.max(1, Math.floor(inputCount * 1_000_000 / 60) * Math.max(1, Math.floor(Number(servings) || 1)));
+function smeltingOnChainRecipeId(recipe) {
+  return recipe?.recipeKind === "merge"
+    ? smeltingMergeRecipeIdForMaterialId(recipe.id)
+    : smeltingRecipeIdForMaterialId(recipe?.id);
+}
+
+function smeltingOnChainRecipeTableId(recipe) {
+  return recipe?.recipeKind === "merge"
+    ? smeltingMergeRecipeTableIdForMaterialId(recipe.id)
+    : smeltingRecipeTableIdForMaterialId(recipe?.id);
+}
+
+function smeltingRecipeOutputVolumeMm3(recipe, servings = 1, inputSlots = []) {
+  if (!recipe) return 0;
+  const inputVolume = inputSlots.length
+    ? totalSmeltingInputVolumeMm3(inputSlots)
+    : recipeRequirements(recipe).reduce((sum, input) => sum + Math.max(1, Number(input.amount) || 1) * 1_000_000, 0)
+      * Math.max(1, Math.floor(Number(servings) || 1));
+  const recipeYieldBps = smeltingRecipeYieldBps(recipe);
+  const skillOutputBps = smeltingSkillOutputBpsForLevel(currentSmeltingSkillLevelForPreview());
+  return Math.max(1, Math.floor(inputVolume * recipeYieldBps / 10_000 * skillOutputBps / 10_000));
+}
+
+function totalSmeltingInputVolumeMm3(inputSlots = []) {
+  return inputSlots.reduce((sum, slot) => sum + smeltingSlotVolumeMm3(slot), 0);
+}
+
+function smeltingSlotVolumeMm3(slot) {
+  const explicit = Number(slot?.volumeMm3);
+  if (Number.isFinite(explicit) && explicit > 0) return explicit;
+  const dimensions = normalizedPreviewDimensions(slot?.dimensionsM);
+  if (dimensions) return Math.max(1, Math.floor(dimensions.width * dimensions.height * dimensions.depth * 1_000_000_000));
+  const atlas = getBlockAtlasEntry(slot?.atlasKey);
+  const atlasVolume = Number(atlas?.physical?.volumeM3);
+  if (Number.isFinite(atlasVolume) && atlasVolume > 0) return Math.max(1, Math.floor(atlasVolume * 1_000_000_000));
+  return 1_000_000;
+}
+
+function currentSmeltingSkillLevelForPreview() {
+  const skill = playerSkillDefinitions.find((entry) => entry.id === "smelting");
+  if (!skill) return 0;
+  return profileSkillEffectiveLevel(loadProfileSkillLevels(), skill, {
+    ...loadProfileSkillXp(),
+    ...(profileChainSkillXp ?? {}),
+  });
+}
+
+function smeltingOutputRateLabel(recipe) {
+  const recipeYieldPercent = Math.round(smeltingRecipeYieldBps(recipe) / 100);
+  const skillOutputBps = smeltingSkillOutputBpsForLevel(currentSmeltingSkillLevelForPreview());
+  const skillLossPercent = Math.max(0, Math.round((10_000 - skillOutputBps) / 100));
+  return gameText("main.smelting.outputRateValue", "Recipe {recipePercent}% · skill loss {lossPercent}%", {
+    recipePercent: recipeYieldPercent,
+    lossPercent: skillLossPercent,
+  });
 }
 
 function totalSmeltingInputMassKg(inputSlots = []) {
-  return inputSlots.reduce((sum, slot) => {
-    const atlas = getBlockAtlasEntry(slot?.atlasKey);
-    const slotMass = Number.isFinite(slot?.massKg) ? slot.massKg : atlas?.physical?.massKg;
-    return sum + (Number.isFinite(slotMass) ? slotMass : 1);
-  }, 0);
+  return inputSlots.reduce((sum, slot) => sum + smeltingSlotMassKg(slot), 0);
+}
+
+function smeltingSlotMassKg(slot) {
+  if (Number.isFinite(slot?.massKg) && slot.massKg > 0) return slot.massKg;
+  const density = Number(slot?.densityKgM3) || Number(getBlockAtlasEntry(slot?.atlasKey)?.physical?.densityKgM3);
+  const volumeMm3 = smeltingSlotVolumeMm3(slot);
+  const volumeMass = materialMassKgFromVolume(volumeMm3, density);
+  if (Number.isFinite(volumeMass) && volumeMass > 0) return volumeMass;
+  const atlasMass = Number(getBlockAtlasEntry(slot?.atlasKey)?.physical?.massKg);
+  return Number.isFinite(atlasMass) && atlasMass > 0 ? atlasMass : 1;
 }
 
 function materialDensityKgM3(attributes = null) {
@@ -4592,11 +4924,17 @@ function smeltingNoRecipeStatusText(match, inputSlots = []) {
 }
 
 function smeltingInputRequirementLabel(input) {
-  const atlas = getBlockAtlasEntry(input?.key);
   return gameText("main.smelting.missingInputLabel", "{amount}x {resource}", {
     amount: input?.missing ?? input?.amount ?? 1,
-    resource: localizedBlockResourceName(input?.key, atlas),
+    resource: smeltingInputKeyLabel(input?.key),
   });
+}
+
+function smeltingInputKeyLabel(key) {
+  const materialId = smeltingMaterialIdForInputKey(key);
+  if (materialId) return smeltingMaterialName(materialId);
+  const atlas = getBlockAtlasEntry(key);
+  return localizedBlockResourceName(key, atlas);
 }
 
 function smeltingExtraInputs(recipe, inputSlots = []) {
@@ -4619,8 +4957,7 @@ function smeltingInputName(slot) {
 function smeltingInputBatchLabel(inputSlots = []) {
   const counts = createSmeltingInputCountFromSlots(inputSlots);
   const names = [...counts.entries()].slice(0, 3).map(([key, count]) => {
-    const atlas = getBlockAtlasEntry(key);
-    return `${localizedBlockResourceName(key, atlas)} x${count}`;
+    return `${smeltingInputKeyLabel(key)} x${count}`;
   });
   const suffix = counts.size > 3 ? ` +${counts.size - 3}` : "";
   return names.length
@@ -6484,14 +6821,22 @@ function createBackpackSlotsFromChain(backpack) {
     const blockType = blockTypeFromBackpackRecord(record);
     const atlasKey = blockAtlasKeyForRenderType(blockType);
     const atlas = getBlockAtlasEntry(atlasKey);
-    const massKg = atlas?.physical?.massKg ?? null;
-    const dimensionsM = atlas?.physical?.dimensionsM ?? null;
+    const volumeMm3 = Number(chainSlot.volumeMm3) || 0;
+    const densityKgM3 = atlas?.physical?.densityKgM3 ?? null;
+    const massKg = volumeMm3 > 0
+      ? materialMassKgFromVolume(volumeMm3, densityKgM3)
+      : atlas?.physical?.massKg ?? null;
+    const dimensionsM = volumeMm3 > 0
+      ? materialCubeDimensionsFromVolume(volumeMm3)
+      : atlas?.physical?.dimensionsM ?? null;
+    const volumeM3 = volumeMm3 > 0 ? volumeMm3 * 1e-9 : atlas?.physical?.volumeM3;
     slots[index] = {
       itemId: "backpack_resource",
       blockType,
       atlasKey,
       massKg,
       dimensionsM,
+      volumeMm3,
       chainIndex: record.index ?? index,
       sourceItemId: marketBackpackSourceItemId(record.index ?? index, record, backpack.publicKey),
       legacySourceItemId: marketBackpackSourceItemId(record.index ?? index, record),
@@ -6501,7 +6846,7 @@ function createBackpackSlotsFromChain(backpack) {
         elements: [
           gameText("main.backpack.massLine", "Mass {mass}", { mass: formatMassKg(massKg) }),
           gameText("main.backpack.sizeLine", "Size {size}", { size: formatDimensionsM(dimensionsM) }),
-          ...(Number.isFinite(atlas?.physical?.volumeM3) ? [gameText("main.backpack.volumeLine", "Volume {volume}", { volume: formatVolumeM3(atlas.physical.volumeM3) })] : []),
+          ...(Number.isFinite(volumeM3) ? [gameText("main.backpack.volumeLine", "Volume {volume}", { volume: formatVolumeM3(volumeM3) })] : []),
           ...(atlas?.composition ?? []).slice(0, 3).map(([symbol, range]) => `${symbol} ${range}`),
         ],
       },
@@ -6716,11 +7061,18 @@ function formatVolumeMm3(volumeMm3) {
   return formatVolumeM3(volumeM3);
 }
 
+function formatSmeltingVolumeMm3(volumeMm3) {
+  const volume = Number(volumeMm3);
+  if (!Number.isFinite(volume)) return gameText("main.backpack.unknownSize", "Unknown");
+  if (volume <= 0) return "0 cm3";
+  return formatVolumeMm3(volume);
+}
+
 function formatVolumeM3(volumeM3) {
   if (!Number.isFinite(volumeM3) || volumeM3 <= 0) return gameText("main.backpack.unknownSize", "Unknown");
-  if (volumeM3 >= 1) return `${Number(volumeM3.toFixed(3))} m3`;
-  if (volumeM3 >= 0.001) return `${Number((volumeM3 * 1000).toFixed(2))} L`;
-  return `${Number((volumeM3 * 1_000_000).toFixed(1))} cm3`;
+  if (volumeM3 >= 1) return `${Math.round(volumeM3)} m3`;
+  if (volumeM3 >= 0.001) return `${Math.round(volumeM3 * 1000)} L`;
+  return `${Math.round(volumeM3 * 1_000_000)} cm3`;
 }
 
 function createBackpackSlotElement(slot, index, { renderPreview = true } = {}) {
@@ -7592,10 +7944,15 @@ function consumeSelectedStack(amount = 1) {
 }
 
 function consumeSelectedToolDurability(amount = 1) {
-  const slot = heldSlot();
+  consumeToolDurabilityAtSlot(selectedHotbarSlot, amount);
+}
+
+function consumeToolDurabilityAtSlot(slotIndex, amount = 1) {
+  if (!Number.isInteger(slotIndex) || slotIndex < 0 || slotIndex >= hotbarSlots.length) return;
+  const slot = hotbarSlots[slotIndex];
   if (!slot || !Number.isFinite(slot.durability)) return;
   slot.durability = Math.max(0, slot.durability - amount);
-  if (slot.durability <= 0) hotbarSlots[selectedHotbarSlot] = null;
+  if (slot.durability <= 0) hotbarSlots[slotIndex] = null;
   renderHotbar();
   updateEquippedItem();
   placementPreview.visible = false;
@@ -7666,6 +8023,7 @@ function animate() {
   updateAvatar(dt);
   updateGuardianNetworking();
   updateGuardianRemotePlayers(dt);
+  updateAvatarNameTags();
   updateChatBubbles();
   updateMiningToolCollision();
   updateBreakParticles(dt);
@@ -8356,6 +8714,7 @@ function upsertGuardianRemotePlayer(remotePlayer, { fromMove = false } = {}) {
       lastSeenAt: performance.now(),
       ready: fromMove || hasGuardianPose(remotePlayer),
     };
+    setAvatarNameTag(remoteAvatar, resolveGuardianAvatarName(remotePlayer, entry));
     remoteAvatar.visible = entry.ready;
     guardianRemotePlayers.set(remotePlayer.localPlayerId, entry);
   }
@@ -8369,6 +8728,7 @@ function upsertGuardianRemotePlayer(remotePlayer, { fromMove = false } = {}) {
     if (ownerKey) entry.ownerKey = ownerKey;
     entry.ownerHash = ownerHash;
   }
+  setAvatarNameTag(entry.avatar, resolveGuardianAvatarName(remotePlayer, entry));
   entry.target.set(remotePlayer.x, remotePlayer.y, remotePlayer.z);
   pushGuardianRemoteSample(entry, remotePlayer, now);
   entry.yaw = remotePlayer.yaw;
@@ -8429,6 +8789,7 @@ function removeGuardianRemotePlayer(remotePlayer) {
   const entry = guardianRemotePlayers.get(remotePlayer.localPlayerId);
   if (!entry) return;
   disposeChatBubble(entry.chatBubble);
+  disposeAvatarNameTag(entry.avatar);
   scene.remove(entry.avatar);
   disposeGroup(entry.avatar);
   guardianRemotePlayers.delete(remotePlayer.localPlayerId);
@@ -8654,6 +9015,139 @@ function normalizeChatMessage(value) {
   return String(value ?? "").replace(/\s+/g, " ").trim().slice(0, 80);
 }
 
+function resolveLocalAvatarName() {
+  const session = getGameSession();
+  return session.username || session.walletAddress || gameText("main.account.guest", "Guest");
+}
+
+function resolveGuardianAvatarName(remotePlayer = {}, entry = null) {
+  const explicitName = String(
+    remotePlayer.username ||
+    remotePlayer.name ||
+    remotePlayer.displayName ||
+    remotePlayer.ownerName ||
+    "",
+  ).trim();
+  if (explicitName) return explicitName;
+  const ownerKey = normalizeGuardianOwnerKey(remotePlayer) || entry?.ownerKey || "";
+  if (ownerKey) return ownerKey;
+  const ownerHash = normalizeGuardianOwnerHash(remotePlayer.ownerHash) || entry?.ownerHash || 0;
+  if (ownerHash) return `P-${ownerHash.toString(16)}`;
+  return `P-${remotePlayer.localPlayerId || "0"}`;
+}
+
+function formatAvatarNameLabel(value) {
+  const raw = String(value ?? "").replace(/\s+/g, " ").trim();
+  const fallback = gameText("main.account.guest", "Guest");
+  const chars = Array.from(raw || fallback);
+  if (chars.length <= avatarNameTagMaxChars) return chars.join("");
+  return `${chars.slice(0, 6).join("")}...${chars.slice(-4).join("")}`;
+}
+
+function setAvatarNameTag(targetAvatar, name) {
+  if (!targetAvatar) return null;
+  if (targetAvatar === avatar) {
+    disposeAvatarNameTag(targetAvatar);
+    return null;
+  }
+  const label = formatAvatarNameLabel(name);
+  if (targetAvatar.userData.nameTag && targetAvatar.userData.nameTagText === label) {
+    syncAvatarNameTagPosition(targetAvatar.userData.nameTag);
+    return targetAvatar.userData.nameTag;
+  }
+  disposeAvatarNameTag(targetAvatar);
+  const sprite = createAvatarNameTagSprite(label);
+  sprite.name = "avatarNameTag";
+  sprite.userData.targetAvatar = targetAvatar;
+  scene.add(sprite);
+  targetAvatar.userData.nameTag = sprite;
+  targetAvatar.userData.nameTagText = label;
+  targetAvatar.userData.nameTagEnabled = true;
+  syncAvatarNameTagPosition(sprite);
+  return sprite;
+}
+
+function createAvatarNameTagSprite(label) {
+  const canvas = document.createElement("canvas");
+  canvas.width = avatarNameTagCanvasMaxWidth;
+  canvas.height = avatarNameTagCanvasHeight;
+  let context = canvas.getContext("2d");
+  context.font = "800 44px Inter, system-ui, sans-serif";
+  const textWidth = context.measureText(label).width;
+  const width = Math.ceil(THREE.MathUtils.clamp(textWidth + 44, avatarNameTagCanvasMinWidth, avatarNameTagCanvasMaxWidth));
+  canvas.width = width;
+  canvas.height = avatarNameTagCanvasHeight;
+  context = canvas.getContext("2d");
+  context.clearRect(0, 0, width, avatarNameTagCanvasHeight);
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  context.font = "800 44px Inter, system-ui, sans-serif";
+  context.shadowColor = "rgba(0, 0, 0, 0.55)";
+  context.shadowBlur = 12;
+  context.shadowOffsetY = 3;
+  context.fillStyle = "rgba(255, 255, 255, 0.86)";
+  context.fillText(label, width / 2, avatarNameTagCanvasHeight / 2);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  const material = new THREE.SpriteMaterial({
+    map: texture,
+    transparent: true,
+    opacity: 0.9,
+    depthWrite: false,
+    depthTest: false,
+  });
+  const sprite = new THREE.Sprite(material);
+  const widthScale = 3.2 * (width / avatarNameTagCanvasMaxWidth);
+  sprite.scale.set(widthScale, 0.72, 1);
+  sprite.renderOrder = 20;
+  return sprite;
+}
+
+function setAvatarNameTagVisible(targetAvatar, visible) {
+  if (targetAvatar === avatar) {
+    disposeAvatarNameTag(targetAvatar);
+    return;
+  }
+  const sprite = targetAvatar?.userData?.nameTag;
+  if (!sprite) return;
+  targetAvatar.userData.nameTagEnabled = Boolean(visible);
+  syncAvatarNameTagPosition(sprite);
+}
+
+function updateAvatarNameTags() {
+  disposeAvatarNameTag(avatar);
+  for (const entry of guardianRemotePlayers.values()) {
+    syncAvatarNameTagPosition(entry.avatar?.userData?.nameTag);
+  }
+}
+
+function syncAvatarNameTagPosition(sprite) {
+  const targetAvatar = sprite?.userData?.targetAvatar;
+  if (!sprite || !targetAvatar) return;
+  targetAvatar.getWorldPosition(avatarNameTagWorldPosition);
+  sprite.position.set(
+    avatarNameTagWorldPosition.x,
+    avatarNameTagWorldPosition.y + avatarNameTagOffsetY,
+    avatarNameTagWorldPosition.z,
+  );
+  const enabled = targetAvatar.userData.nameTagEnabled !== false;
+  const firstPersonLocal = targetAvatar === avatar && firstPersonCamera;
+  sprite.visible = enabled && !firstPersonLocal && targetAvatar.visible !== false;
+}
+
+function disposeAvatarNameTag(targetAvatar) {
+  const sprite = targetAvatar?.userData?.nameTag;
+  if (!sprite) return;
+  sprite.parent?.remove(sprite);
+  sprite.material?.map?.dispose?.();
+  sprite.material?.dispose?.();
+  targetAvatar.userData.nameTag = null;
+  targetAvatar.userData.nameTagText = "";
+  targetAvatar.userData.nameTagEnabled = true;
+}
+
 function setAvatarChatBubble(targetAvatar, currentBubble, message) {
   disposeChatBubble(currentBubble);
   const sprite = createChatBubbleSprite(message);
@@ -8854,6 +9348,7 @@ function resetFirstPersonViewmodelPose() {
 
 function syncFirstPersonAvatarParts() {
   avatar.visible = true;
+  disposeAvatarNameTag(avatar);
   const { head, leftArm, rightArm, leftLeg, rightLeg } = avatar.userData.limbs ?? {};
   const torso = avatar.getObjectByName("torso");
   if (head) head.visible = !firstPersonCamera;
@@ -9583,7 +10078,7 @@ function handleWorldClick(event) {
 }
 
 function handlePickaxeClick(hit, pointerType) {
-  if (isBlockInMiningArea(hit.block)) {
+  if (isBlockReachableByHeldEquipment(hit.block)) {
     clearAutoMove();
     player.selectedBlock = hit.block;
     player.miningContact = createMiningContact(hit);
@@ -10074,15 +10569,93 @@ function isWaterVisualBlock(block) {
 
 function isBlockInMiningArea(block) {
   if (isMiningBlockedByWater(block)) return false;
-  const playerCellX = Math.round(player.position.x);
-  const playerCellZ = Math.round(player.position.z);
-  const feetY = playerFeetBlockY();
-  return (
-    Math.abs(block.x - playerCellX) <= miningHorizontalRadius &&
-    Math.abs(block.z - playerCellZ) <= miningHorizontalRadius &&
-    block.y >= feetY - miningReachDown &&
-    block.y <= feetY + miningReachUp
-  );
+  return isBlockReachableByHeldEquipment(block);
+}
+
+function isBlockReachableByHeldEquipment(block) {
+  if (isMiningBlockedByWater(block)) return false;
+  const reach = miningEquipmentReachSphere();
+  if (!reach) return false;
+  const blockCenter = miningReachScratchCenter.set(block.x, block.y, block.z);
+  return reach.center.distanceToSquared(blockCenter) <= reach.radius * reach.radius;
+}
+
+function miningEquipmentReachSphere() {
+  avatar.updateMatrixWorld(true);
+  const item = heldItem();
+  if (item.hand === "forged" && equippedForgedMesh?.visible) {
+    return miningReachSphereForObject(equippedForgedMesh, equippedForgedMesh.userData.grip);
+  }
+
+  const { rightArm, rightTool } = avatar.userData.limbs ?? {};
+  if (item.hand !== "pickaxe" || !rightArm || !rightTool?.visible) return null;
+  rightArm.localToWorld(miningReachScratchGrip.copy(miningToolGripAnchor));
+  const boxes = miningToolCollisionBoxes();
+  if (!boxes.length) {
+    return miningReachScratchSphere.set(miningReachScratchGrip.clone(), miningReachDefaultToolRadius);
+  }
+  miningReachScratchBox.makeEmpty();
+  for (const box of boxes) miningReachScratchBox.union(box);
+  const radius = Math.max(miningReachMinimumRadius, miningReachRadiusFromBox(miningReachScratchBox, miningReachScratchGrip));
+  return miningReachScratchSphere.set(miningReachScratchGrip.clone(), radius);
+}
+
+function miningReachSphereForObject(object, gripLocal = null) {
+  const gripWorld = miningReachScratchGrip;
+  if (gripLocal?.isVector3) {
+    object.localToWorld(gripWorld.copy(gripLocal));
+    const localRadius = miningReachLocalRadiusForObject(object, gripLocal);
+    if (Number.isFinite(localRadius)) {
+      object.getWorldScale(miningToolWorldScale);
+      const scale = Math.max(Math.abs(miningToolWorldScale.x), Math.abs(miningToolWorldScale.y), Math.abs(miningToolWorldScale.z), 0.001);
+      const radius = Math.max(miningReachMinimumRadius, localRadius * scale + miningReachBlockHalfDiagonal + miningBlockCollisionPadding);
+      return miningReachScratchSphere.set(gripWorld.clone(), radius);
+    }
+  } else {
+    const box = objectWorldBox(object, miningReachScratchBox);
+    if (!box) return null;
+    box.getCenter(gripWorld);
+  }
+  const box = objectWorldBox(object, miningReachScratchBox);
+  if (!box) return null;
+  const radius = Math.max(miningReachMinimumRadius, miningReachRadiusFromBox(box, gripWorld));
+  return miningReachScratchSphere.set(gripWorld.clone(), radius);
+}
+
+function miningReachLocalRadiusForObject(object, originLocal) {
+  const geometry = object?.isMesh ? object.geometry : null;
+  if (!geometry || !originLocal?.isVector3) return NaN;
+  if (!geometry.boundingBox) geometry.computeBoundingBox();
+  const box = geometry.boundingBox;
+  if (!box || box.isEmpty()) return NaN;
+  const cached = object.userData.miningReachLocalRadius;
+  if (Number.isFinite(cached) && object.userData.miningReachOrigin === originLocal) return cached;
+  const radius = miningReachCornerRadiusFromBox(box, originLocal);
+  object.userData.miningReachLocalRadius = radius;
+  object.userData.miningReachOrigin = originLocal;
+  return radius;
+}
+
+function miningReachRadiusFromBox(box, origin) {
+  return miningReachCornerRadiusFromBox(box, origin) + miningReachBlockHalfDiagonal + miningBlockCollisionPadding;
+}
+
+function miningReachCornerRadiusFromBox(box, origin) {
+  if (!box || box.isEmpty()) return 0;
+  let radiusSq = 0;
+  for (let ix = 0; ix < 2; ix++) {
+    for (let iy = 0; iy < 2; iy++) {
+      for (let iz = 0; iz < 2; iz++) {
+        miningReachScratchCorner.set(
+          ix ? box.max.x : box.min.x,
+          iy ? box.max.y : box.min.y,
+          iz ? box.max.z : box.min.z,
+        );
+        radiusSq = Math.max(radiusSq, origin.distanceToSquared(miningReachScratchCorner));
+      }
+    }
+  }
+  return Math.sqrt(radiusSq);
 }
 
 function isMiningBlockedByWater(block) {
@@ -11209,7 +11782,8 @@ function startMiningSwing(targetBlock = null, targetHit = null) {
   player.miningTargetHit = targetHit ? cloneMiningHit(targetHit) : null;
   player.miningContact = null;
   player.miningPreviousToolBoxes = null;
-  sendGuardianDig(player.selectedBlock, 1);
+  player.miningPreviousToolBoxCount = 0;
+  player.miningToolSlot = selectedHotbarSlot;
   return true;
 }
 
@@ -11224,6 +11798,8 @@ function cloneMiningHit(hit) {
 function applyMiningDamage(hit) {
   markMiningInteraction();
   if (pendingMinedBlocks.has(hit.block.key)) return false;
+  sendGuardianDig(hit.block, 1);
+  consumeToolDurabilityAtSlot(player.miningToolSlot);
   const miningPlan = createMiningPlanForBlock(hit.block);
   const nextDamage = (blockDamage.get(hit.block.key) ?? 0) + 1;
   const requiredDamage = debugMiningEnabled ? 1 : miningPlan.requiredDamage;
@@ -11265,70 +11841,96 @@ function updateMiningToolCollision() {
   const remaining = Math.max(0, player.miningSwing - now);
   if (remaining <= 0) {
     player.miningPreviousToolBoxes = null;
+    player.miningPreviousToolBoxCount = 0;
     player.miningTargetHit = null;
+    player.miningToolSlot = null;
     return;
   }
   if (player.miningHitDone || !player.selectedBlock) return;
-  if (!isBlockInMiningArea(player.selectedBlock) || isUnbreakableBlock(player.selectedBlock)) return;
+  if (isMiningBlockedByWater(player.selectedBlock) || isUnbreakableBlock(player.selectedBlock)) return;
   if (removedBlocks.has(player.selectedBlock.key) || pendingMinedBlocks.has(player.selectedBlock.key) || !isSolidCell(player.selectedBlock.x, player.selectedBlock.y, player.selectedBlock.z)) return;
+
+  const progress = 1 - remaining / miningSwingDuration;
+  if (progress < miningCollisionStartProgress) {
+    player.miningPreviousToolBoxes = null;
+    player.miningPreviousToolBoxCount = 0;
+    return;
+  }
 
   avatar.updateMatrixWorld(true);
   const boxes = miningToolCollisionBoxes();
-  if (!boxes.length) return;
+  if (!boxes.length) {
+    player.miningPreviousToolBoxes = null;
+    player.miningPreviousToolBoxCount = 0;
+    return;
+  }
 
-  const progress = 1 - remaining / miningSwingDuration;
   const previousBoxes = player.miningPreviousToolBoxes;
-  player.miningPreviousToolBoxes = boxes.map((box) => box.clone());
-  if (progress < miningCollisionStartProgress) return;
-
-  const blockBox = blockCollisionBox(player.selectedBlock, miningBlockCollisionPadding);
+  const previousBoxCount = player.miningPreviousToolBoxCount;
+  const blockBox = blockCollisionBox(player.selectedBlock, miningBlockCollisionPadding, miningToolBlockBox);
   for (let index = 0; index < boxes.length; index++) {
-    const sweptBox = boxes[index].clone();
-    if (previousBoxes?.[index]) sweptBox.union(previousBoxes[index]);
+    const sweptBox = miningToolSweptBox.copy(boxes[index]);
+    if (previousBoxes?.[index] && index < previousBoxCount) sweptBox.union(previousBoxes[index]);
     if (!sweptBox.intersectsBox(blockBox)) continue;
     player.miningHitDone = true;
     player.miningPreviousToolBoxes = null;
+    player.miningPreviousToolBoxCount = 0;
     applyMiningDamage(createToolCollisionMiningHit(player.selectedBlock, sweptBox));
+    player.miningToolSlot = null;
     return;
   }
-  if (player.miningTargetHit?.block?.key === player.selectedBlock.key) {
-    player.miningHitDone = true;
-    player.miningPreviousToolBoxes = null;
-    applyMiningDamage(cloneMiningHit(player.miningTargetHit));
-  }
+  storeMiningPreviousToolBoxes(boxes);
 }
 
 function miningToolCollisionBoxes() {
+  miningToolCurrentBoxes.length = 0;
   const item = heldItem();
   if (item.hand === "forged" && equippedForgedMesh?.visible) {
-    const box = objectWorldBox(equippedForgedMesh);
-    return box ? [box] : [];
+    const box = objectWorldBox(equippedForgedMesh, miningToolCurrentBoxPool[0]);
+    if (box) miningToolCurrentBoxes.push(box);
+    return miningToolCurrentBoxes;
   }
 
   const { rightTool } = avatar.userData.limbs;
   if (item.hand !== "pickaxe" || !rightTool?.visible) return [];
-  return ["toolHead", "toolTipTop", "toolTipBottom"]
-    .map((name) => objectWorldBox(rightTool.getObjectByName(name)))
-    .filter(Boolean);
+  const toolParts = ["toolHead", "toolTipTop", "toolTipBottom"];
+  for (let index = 0; index < toolParts.length; index++) {
+    const box = objectWorldBox(rightTool.getObjectByName(toolParts[index]), miningToolCurrentBoxPool[index]);
+    if (box) miningToolCurrentBoxes.push(box);
+  }
+  return miningToolCurrentBoxes;
 }
 
-function objectWorldBox(object) {
+function storeMiningPreviousToolBoxes(boxes) {
+  const previous = player.miningPreviousToolBoxes ?? miningToolPreviousBoxPool;
+  for (let index = 0; index < boxes.length; index++) previous[index].copy(boxes[index]);
+  player.miningPreviousToolBoxes = previous;
+  player.miningPreviousToolBoxCount = boxes.length;
+}
+
+function objectWorldBox(object, target = new THREE.Box3()) {
   if (!object) return null;
-  const box = new THREE.Box3().setFromObject(object);
-  if (box.isEmpty()) return null;
-  return box;
+  if (object.isMesh && object.geometry) {
+    if (!object.geometry.boundingBox) object.geometry.computeBoundingBox();
+    const localBox = object.geometry.boundingBox;
+    if (!localBox || localBox.isEmpty()) return null;
+    target.copy(localBox).applyMatrix4(object.matrixWorld);
+  } else {
+    target.setFromObject(object);
+  }
+  return target.isEmpty() ? null : target;
 }
 
-function blockCollisionBox(block, padding = 0) {
-  return new THREE.Box3(
-    new THREE.Vector3(block.x - 0.5 - padding, block.y - 0.5 - padding, block.z - 0.5 - padding),
-    new THREE.Vector3(block.x + 0.5 + padding, block.y + 0.5 + padding, block.z + 0.5 + padding),
+function blockCollisionBox(block, padding = 0, target = new THREE.Box3()) {
+  return target.set(
+    miningReachScratchCenter.set(block.x - 0.5 - padding, block.y - 0.5 - padding, block.z - 0.5 - padding),
+    miningReachScratchCorner.set(block.x + 0.5 + padding, block.y + 0.5 + padding, block.z + 0.5 + padding),
   );
 }
 
 function createToolCollisionMiningHit(block, toolBox) {
   const targetHit = player.miningTargetHit?.block?.key === block.key ? player.miningTargetHit : createMiningHitFromSelectedBlock(block);
-  const point = clampPointToBox(toolBox.getCenter(new THREE.Vector3()), blockCollisionBox(block));
+  const point = clampPointToBox(toolBox.getCenter(miningToolHitCenter), blockCollisionBox(block, 0, miningToolBlockBox));
   return {
     block,
     point,
@@ -11750,6 +12352,7 @@ function submitMinedBlockToChain(block, miningPlanOrBlocks = [block]) {
       signature: shortSignature(result.signature),
     }), { block: resultLogBlock });
     animateChainBlockToBackpack(logEntry);
+    invalidateProfileChainSkillXp();
     void refreshEquippedBackpack({ force: true });
   }).catch((error) => {
     console.warn("Failed to record block break on NiceChunk chunk PDA", error);
@@ -12267,48 +12870,31 @@ function createMiningContact(hit) {
 }
 
 function createMiningDebug() {
+  const geometry = new THREE.SphereGeometry(1, 32, 16);
   const material = new THREE.MeshBasicMaterial({
     color: 0x9fe8ff,
     transparent: true,
-    opacity: 0.16,
+    opacity: 0.14,
     depthWrite: false,
   });
-  const mesh = new THREE.InstancedMesh(cubeGeometry, material, miningDebugCellCount());
-  mesh.name = "miningDebugArea";
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.name = "miningEquipmentReachDebug";
   mesh.visible = false;
   return mesh;
 }
 
-function miningDebugCellCount() {
-  const width = miningHorizontalRadius * 2 + 1;
-  const height = miningReachDown + miningReachUp + 1;
-  return width * width * height;
-}
-
 function updateMiningDebug() {
-  miningDebug.visible = debugMiningEnabled;
-  if (!debugMiningEnabled) return;
-
-  const playerCellX = Math.round(player.position.x);
-  const playerCellZ = Math.round(player.position.z);
-  const feetY = playerFeetBlockY();
-  const transform = new THREE.Matrix4();
-  const rotation = new THREE.Quaternion();
-  const scale = new THREE.Vector3(0.96, 0.96, 0.96);
-  let index = 0;
-
-  for (let y = feetY - miningReachDown; y <= feetY + miningReachUp; y++) {
-    for (let z = playerCellZ - miningHorizontalRadius; z <= playerCellZ + miningHorizontalRadius; z++) {
-      for (let x = playerCellX - miningHorizontalRadius; x <= playerCellX + miningHorizontalRadius; x++) {
-        transform.compose(new THREE.Vector3(x, y, z), rotation, scale);
-        miningDebug.setMatrixAt(index, transform);
-        index++;
-      }
-    }
+  if (!debugMiningEnabled) {
+    miningDebug.visible = false;
+    return;
   }
 
-  miningDebug.count = index;
-  miningDebug.instanceMatrix.needsUpdate = true;
+  const reach = miningEquipmentReachSphere();
+  miningDebug.visible = Boolean(reach);
+  if (!reach) return;
+
+  miningDebug.position.copy(reach.center);
+  miningDebug.scale.setScalar(reach.radius);
 }
 
 function rebuildChunkForBlock(block) {
@@ -13341,6 +13927,7 @@ function updateAccountHud() {
   if (now - hudLastAccountRefreshAt < hudAccountRefreshMs) return;
   hudLastAccountRefreshAt = now;
   const session = getGameSession();
+  disposeAvatarNameTag(avatar);
   setTextIfChanged(accountName, session.username || gameText("main.account.guest", "Guest"));
   setTextIfChanged(accountLevel, gameText("main.account.level", "Lv. {level}", { level: normalizedLevel() }));
   setTextIfChanged(accountTitle, localStorage.getItem("nicechunk.title") || gameText("main.account.defaultTitle", "Novice"));

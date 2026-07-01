@@ -1,0 +1,161 @@
+{
+  "_meta": {
+    "language": "ru",
+    "label": "Russian",
+    "version": "chip-locale-ru-e40cb62a2b65c25e",
+    "contentHash": "e40cb62a2b65c25e"
+  },
+  "siteFooter": {
+    "tagline": "Seeded voxel world protocol on Solana.",
+    "navigationAria": "Навигация в футере",
+    "socialAria": "Социальные ссылки NiceChunk",
+    "home": "Главная",
+    "play": "Войти в мир",
+    "roadmap": "План",
+    "docs": "Документы",
+    "guardian": "Стражи",
+    "contracts": "Контракты",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Все права защищены."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "Язык",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "chip": {
+    "meta": {
+      "title": "Симулятор чипа NiceChunk"
+    },
+    "hero": {
+      "title": "Запрограммируйте выкованный чип и посмотрите, как его пины управляют устройствами.",
+      "body": "Пишите Arduino sketch. Браузер компилирует его через AVR GCC в Intel HEX, затем avr8js выполняет его в симуляции ATmega328P."
+    },
+    "editor": {
+      "kicker": "Выкованная MCU-программа",
+      "label": "Редактор Arduino sketch",
+      "aria": "Редактор исходного кода Arduino sketch"
+    },
+    "controls": {
+      "aria": "Управление симулятором",
+      "compile": "Компилировать",
+      "run": "Запустить",
+      "stop": "Остановить",
+      "reset": "Сброс",
+      "sample": "Загрузить пример",
+      "uploadHex": "Загрузить HEX"
+    },
+    "status": {
+      "title": "Статус компилятора",
+      "idle": "Готово",
+      "compiling": "Компиляция AVR-прошивки",
+      "compiled": "Скомпилировано",
+      "running": "Выполняется",
+      "stopped": "Остановлено",
+      "reset": "Сброс завершен",
+      "error": "Ошибка компиляции или выполнения"
+    },
+    "viewport": {
+      "aria": "3D-предпросмотр чипа",
+      "kicker": "Прототип NC-AVR32",
+      "title": "Каждый выкованный пин может стать портом устройства в игровом мире.",
+      "drag": "Перетащите для вращения",
+      "activeLeds": "Активных LED: {count}",
+      "activeDevices": "Активных устройств: {count}"
+    },
+    "components": {
+      "aria": "Палитра компонентов",
+      "led": "LED-лампа",
+      "button": "Кнопка",
+      "switch": "Переключатель",
+      "motor": "Мотор",
+      "buzzer": "Зуммер",
+      "wire": "Провод",
+      "ready": "Перетащите устройство на плату. Выберите Провод, чтобы прокладывать изолированные линии.",
+      "dragLed": "Перетащите LED на плату, затем перемещайте установленные LED для настройки позиции.",
+      "dragButton": "Перетащите кнопку на плату. Удерживайте колпачок для проводимости, отпустите для разрыва цепи.",
+      "dragSwitch": "Перетащите переключатель на плату. Щелкните рычаг, чтобы зафиксировать ON или OFF.",
+      "dragMotor": "Перетащите мотор на плату. Он вращается, когда один вывод питается, а другой соединен с GND.",
+      "dragBuzzer": "Перетащите зуммер на плату. Он вибрирует при питании с обратным путем к GND.",
+      "pickFirst": "Режим провода: щелкните пин чипа или пин компонента.",
+      "pickSecond": "Режим провода: щелкайте по плате для изгибов, по второму концу для соединения или правой кнопкой для завершения.",
+      "waypointAdded": "Изгиб провода добавлен. Щелкните другую точку, конец или правой кнопкой завершите.",
+      "routingEnded": "Прокладка провода завершена.",
+      "rotatedLed": "LED повернут на 90 градусов.",
+      "rotatedComponent": "Компонент повернут на 90 градусов.",
+      "switchOn": "Переключатель зафиксирован в ON. Два вывода проводят ток.",
+      "switchOff": "Переключатель зафиксирован в OFF. Два вывода разомкнуты.",
+      "terminalLabels": {
+        "led": {
+          "signal": "Сигнал LED",
+          "ground": "LED GND"
+        },
+        "button": {
+          "a": "Кнопка A",
+          "b": "Кнопка B"
+        },
+        "switch": {
+          "a": "Переключатель A",
+          "b": "Переключатель B"
+        },
+        "motor": {
+          "plus": "Мотор +",
+          "minus": "Мотор -"
+        },
+        "buzzer": {
+          "plus": "Зуммер +",
+          "minus": "Зуммер -"
+        }
+      },
+      "signalTerminal": "Сигнал LED",
+      "groundTerminal": "LED GND",
+      "connected": "Соединено {from} с {to}.",
+      "invalidConnection": "Выберите две разные конечные точки."
+    },
+    "telemetry": {
+      "kicker": "Выполнение",
+      "title": "Состояние AVR",
+      "pc": "PC",
+      "cycles": "Циклы",
+      "size": "Программа",
+      "bytes": "{bytes} B",
+      "programDetail": "{format} {bytes} B / {limit} B · {ms} ms",
+      "highPins": "Пины HIGH",
+      "ports": "GPIO-порты",
+      "pins": "Пины корпуса"
+    },
+    "format": {
+      "arduino": "Arduino",
+      "hex": "HEX",
+      "asm": "ASM"
+    },
+    "concept": {
+      "title": "Путь интеграции в игру",
+      "body": "Выкуйте корпус чипа, сохраните компактный код, подключите устройства к пинам и позвольте симулятору управлять светом, дверями, ловушками, реле или фабриками."
+    },
+    "sample": {
+      "code": "// Демо NiceChunk: переключатель управляет LED и мотором\n// Подключение:\n// VCC -> Переключатель A\n// Переключатель B -> D2\n// D13 -> сигнал LED\n// LED GND -> GND\n// D9 -> Мотор +\n// Мотор - -> GND\nconst int switchPin = 2;\nconst int ledPin = 13;\nconst int motorPin = 9;\n\nvoid setup() {\n  pinMode(switchPin, INPUT);\n  pinMode(ledPin, OUTPUT);\n  pinMode(motorPin, OUTPUT);\n}\n\nvoid loop() {\n  const bool enabled = digitalRead(switchPin) == HIGH;\n  digitalWrite(ledPin, enabled ? HIGH : LOW);\n  digitalWrite(motorPin, enabled ? HIGH : LOW);\n  delay(10);\n}\n"
+    },
+    "errors": {
+      "emptyProgram": "Сначала введите код Arduino, Intel HEX или AVR assembly.",
+      "noHex": "Компилятор не вернул вывод Intel HEX.",
+      "flashOverflow": "Скомпилированная прошивка использует {bytes} B, что выше лимита Uno {limit} B.",
+      "assembly": "Ошибка AVR assembly: {error}",
+      "hexLine": "Недопустимая строка Intel HEX {line}.",
+      "hexChecksum": "Ошибка контрольной суммы Intel HEX в строке {line}.",
+      "hexRecord": "Неподдерживаемый тип записи Intel HEX: {type}.",
+      "hexEof": "В Intel HEX отсутствует запись EOF."
+    }
+  }
+}

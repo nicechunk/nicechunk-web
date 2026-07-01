@@ -2,8 +2,8 @@
   "_meta": {
     "language": "es",
     "label": "Spanish",
-    "version": "login-locale-es-0e8eb38ae7fb3d8b",
-    "contentHash": "0e8eb38ae7fb3d8b"
+    "version": "login-locale-es-74d68763940d09a9",
+    "contentHash": "74d68763940d09a9"
   },
   "siteFooter": {
     "tagline": "Un protocolo de mundo voxel con semillas en Solana.",
@@ -60,6 +60,7 @@
     "wallet": "Cartera",
     "startGame": "Iniciar juego",
     "resetLogin": "Iniciar sesión otra vez",
+    "disconnectWallet": "Desconectar cartera",
     "returnToBrowser": "Volver al navegador",
     "continueInWalletBrowser": "Continuar en el navegador de la cartera",
     "signLoginMessage": "Firmar mensaje de inicio",
@@ -84,6 +85,7 @@
       "profile": "Cartera conectada. Configura tu nombre de jugador.",
       "invalidUsername": "El nombre debe tener 3-18 caracteres y puede usar letras, números, guiones bajos o caracteres chinos.",
       "ready": "Los datos de inicio están listos.",
+      "walletDisconnected": "Cartera desconectada. Elige otra cartera para vincular.",
       "returningToBrowser": "Volviendo a tu navegador original...",
       "continuingInWalletBrowser": "Continuando en el navegador de la cartera...",
       "signingChallenge": "Confirma el mensaje de inicio en tu cartera.",

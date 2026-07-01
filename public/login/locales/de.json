@@ -2,8 +2,8 @@
   "_meta": {
     "language": "de",
     "label": "German",
-    "version": "login-locale-de-515e7a97e7529734",
-    "contentHash": "515e7a97e7529734"
+    "version": "login-locale-de-4db4445d12b33898",
+    "contentHash": "4db4445d12b33898"
   },
   "siteFooter": {
     "tagline": "Ein Seed-Voxelwelt-Protokoll auf Solana.",
@@ -60,6 +60,7 @@
     "wallet": "Wallet",
     "startGame": "Spiel starten",
     "resetLogin": "Erneut anmelden",
+    "disconnectWallet": "Wallet trennen",
     "returnToBrowser": "Zurueck zum Browser",
     "continueInWalletBrowser": "Im Wallet-Browser fortfahren",
     "signLoginMessage": "Login-Nachricht signieren",
@@ -84,6 +85,7 @@
       "profile": "Wallet verbunden. Lege deinen Spielernamen fest.",
       "invalidUsername": "Der Name muss 3-18 Zeichen lang sein und darf Buchstaben, Zahlen, Unterstriche oder chinesische Zeichen enthalten.",
       "ready": "Anmeldedaten sind bereit.",
+      "walletDisconnected": "Wallet getrennt. Wähle eine andere Wallet zum Verknüpfen.",
       "returningToBrowser": "Rueckkehr zum urspruenglichen Browser...",
       "continuingInWalletBrowser": "Weiter im Wallet-Browser...",
       "signingChallenge": "Bestaetige die Login-Nachricht in deiner Wallet.",

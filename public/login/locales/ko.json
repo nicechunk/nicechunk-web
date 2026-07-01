@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ko",
     "label": "Korean",
-    "version": "login-locale-ko-414aac548ef420c5",
-    "contentHash": "414aac548ef420c5"
+    "version": "login-locale-ko-dcc0e867022c0505",
+    "contentHash": "dcc0e867022c0505"
   },
   "siteFooter": {
     "tagline": "Solana 기반 시드형 복셀 월드 프로토콜.",
@@ -60,6 +60,7 @@
     "wallet": "지갑",
     "startGame": "게임 시작",
     "resetLogin": "다시 로그인",
+    "disconnectWallet": "지갑 연결 해제",
     "returnToBrowser": "브라우저로 돌아가기",
     "continueInWalletBrowser": "지갑 브라우저에서 계속",
     "signLoginMessage": "로그인 메시지 서명",
@@ -84,6 +85,7 @@
       "profile": "지갑이 연결되었습니다. 플레이어 이름을 설정하세요.",
       "invalidUsername": "플레이어 이름은 3-18자이며 문자, 숫자, 밑줄 또는 중국어 문자를 사용할 수 있습니다.",
       "ready": "로그인 정보가 준비되었습니다.",
+      "walletDisconnected": "지갑 연결이 해제되었습니다. 연결할 다른 지갑을 선택하세요.",
       "returningToBrowser": "원래 브라우저로 돌아가는 중...",
       "continuingInWalletBrowser": "지갑 브라우저에서 계속 진행 중...",
       "signingChallenge": "지갑에서 로그인 메시지를 확인하세요.",

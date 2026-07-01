@@ -2,8 +2,8 @@
   "_meta": {
     "language": "de",
     "label": "German",
-    "version": "resource-rule-locale-de-b66f02db88320f7a",
-    "contentHash": "b66f02db88320f7a"
+    "version": "resource-rule-locale-de-7fc3dc2ba6e048b1",
+    "contentHash": "7fc3dc2ba6e048b1"
   },
   "siteFooter": {
     "tagline": "Ein Seed-Voxelwelt-Protokoll auf Solana.",
@@ -421,17 +421,17 @@
     "drop": {
       "eyebrow": "CHAIN DROP TABLE",
       "title": "Civilization rules can add rare extra drops without growing terrain code.",
-      "body": "The canonical terrain algorithm still defines the mined base block. A compact on-chain drop table can add deterministic extra rewards by source block, altitude, depth, and seeded probability.",
+      "body": "The canonical terrain algorithm still defines the mined base block. A compact on-chain drop table can add deterministic extra rewards by source block, altitude, depth, seeded probability, and the player's Exploration level.",
       "ruleSetLabel": "Rule set",
       "contractBody": "This PDA is designed for the civilization system: approved proposals append bounded rule bytes instead of redeploying the mining program.",
       "source": "Source",
       "extraDrop": "Extra drop",
-      "chance": "Chance",
+      "chance": "Base chance",
       "size": "Drop size",
       "altitude": "Altitude",
       "depth": "Depth",
       "detailTitle": "Extra drop sources",
-      "detailBody": "On chain this is designed as compact {ruleSet} bytes: source resource, probability, sample size window, altitude window, and depth window.",
+      "detailBody": "On chain this is designed as compact {ruleSet} bytes: source resource, base probability, sample size window, altitude window, and depth window. Final roll weight gains +10% per Exploration level.",
       "chanceValue": "{value}%",
       "sizeValue": "{min} to {max}",
       "rangeValue": "{min} to {max}"

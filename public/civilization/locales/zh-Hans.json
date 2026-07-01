@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hans",
     "label": "Simplified Chinese",
-    "version": "civilization-locale-zh-Hans-42f6566ce6887a00",
-    "contentHash": "42f6566ce6887a00"
+    "version": "civilization-locale-zh-Hans-afe520e3fce64b55",
+    "contentHash": "afe520e3fce64b55"
   },
   "siteFooter": {
     "tagline": "Solana 上的种子体素世界协议。",
@@ -218,6 +218,10 @@
           "title": "权重快照",
           "body": "查看收据如何变成封顶、冻结、可重算的规则权重。"
         },
+        "citizenIntegrity": {
+          "title": "公民完整性",
+          "body": "查看如何用公开参与防止虚假权重，而不收集私人身份资料。"
+        },
         "threatModel": {
           "title": "威胁模型",
           "body": "审查危险规则如何在写入状态前失败。"
@@ -253,6 +257,10 @@
         "ruleStructure": {
           "title": "规则结构",
           "body": "检查可读意图如何与可执行补丁字段绑定。"
+        },
+        "rulePacket": {
+          "title": "规则包剖面",
+          "body": "查看文本、补丁、账户、快照、校验器和收据如何组成同一个证据包。"
         },
         "technicalFlow": {
           "title": "技术流程",
@@ -297,6 +305,14 @@
         "buildSpec": {
           "title": "构建规格",
           "body": "把本页当作后续编码实现说明。"
+        },
+        "mvpSlice": {
+          "title": "MVP 合约切片",
+          "body": "查看最小可部署闭环如何在链上证明文明规则。"
+        },
+        "feasibilityBudget": {
+          "title": "可行性预算",
+          "body": "看清什么小规模上链、什么留在可读层，以及两者如何互相验证。"
         },
         "auditTrail": {
           "title": "审计轨迹",
@@ -823,6 +839,26 @@
           "recount": "公开门槛数学"
         }
       },
+      "integrity": {
+        "title": "从原始活动到可挑战公民权重",
+        "caption": "公开收据先经过过滤、上限、衰减和冻结，再开放挑战，然后才可以决定一条规则。",
+        "nodes": {
+          "receipts": "公开收据",
+          "maturity": "成熟窗口",
+          "caps": "类别上限",
+          "decay": "衰减 / 标记",
+          "snapshot": "冻结权重",
+          "challenge": "挑战",
+          "recount": "重算"
+        },
+        "badges": {
+          "publicOnly": "只使用公开游戏证据",
+          "notBiometric": "不是生物身份",
+          "reduceNoise": "降低虚假信号",
+          "frozen": "快照哈希",
+          "replay": "可挑战、可重放"
+        }
+      },
       "threatModel": {
         "title": "威胁到防线的映射图",
         "caption": "每条危险路径都应该在变成状态之前遇到可见防线。",
@@ -961,6 +997,28 @@
           "snapshot": "按纪元冻结公民状态",
           "bounded": "只签署有边界规则",
           "replay": "任何人都能重新计算"
+        }
+      },
+      "packet": {
+        "title": "规则包证据信封",
+        "caption": "每个字段都回答一个信任问题，之后签名、校验器 dry-run 和 PDA 写入才有资格计入。",
+        "nodes": {
+          "text": "可读法则",
+          "patch": "机器补丁",
+          "accounts": "声明账户",
+          "packet": "规则包身份",
+          "signatures": "冻结签名",
+          "validator": "校验器 dry-run",
+          "receipt": "收据计划",
+          "pdaWrite": "配置 PDA 写入"
+        },
+        "badges": {
+          "readable": "普通玩家可读",
+          "hashes": "text_hash + patch_hash",
+          "oneIdentity": "一个 rule_id",
+          "frozenPower": "只用快照权重",
+          "failClosed": "写入前失败关闭",
+          "replayable": "事件证明结果"
         }
       },
       "execution": {
@@ -1152,6 +1210,51 @@
           "authorized": "规则批准效果",
           "milestone": "里程碑账户",
           "visible": "收益保持可检查"
+        }
+      },
+      "mvp": {
+        "title": "第一版可部署文明闭环",
+        "caption": "一个小型合约切片可以证明公开作者、冻结签名、确定性拒绝、无许可执行和解码 PDA 透明度。",
+        "nodes": {
+          "publish": "发布规则",
+          "sign": "签署权重",
+          "finalize": "定案计票",
+          "challenge": "挑战窗口",
+          "execute": "执行配置",
+          "browser": "PDA 浏览器",
+          "reject": "具名拒绝",
+          "event": "公开事件"
+        },
+        "badges": {
+          "small": "小到能审计",
+          "snapshot": "快照权重",
+          "recount": "公开计票",
+          "noAdmin": "没有管理员执行者",
+          "failClosed": "失败关闭",
+          "browser": "解码证明"
+        }
+      },
+      "feasibility": {
+        "title": "文明状态预算图",
+        "caption": "合约只保留证明关键字节，客户端和索引器把同一份公开状态变得可读。",
+        "nodes": {
+          "readable": "可读规则",
+          "hashes": "哈希信封",
+          "pdas": "小型 PDA",
+          "validator": "有上限校验器",
+          "mirror": "文本镜像",
+          "indexer": "公开索引器",
+          "browser": "解码浏览器",
+          "reject": "失败关闭"
+        },
+        "badges": {
+          "plainText": "长文本可在链下",
+          "shortBytes": "短字节上链",
+          "accountCaps": "声明账户集合",
+          "computeCaps": "固定闸门顺序",
+          "hashMatch": "必须匹配哈希",
+          "rebuildable": "可从 RPC 重建",
+          "userReadable": "快速可读界面"
         }
       },
       "auditTrail": {
@@ -1398,6 +1501,45 @@
         "recount": {
           "title": "从签名重算",
           "body": "任何人都可以把 rule_signature_pda 账户按冻结快照求和，验证门槛，而不必相信网站。"
+        }
+      }
+    },
+    "citizenIntegrity": {
+      "eyebrow": "公民完整性",
+      "title": "反女巫权重来自公开证据，不靠私人身份。",
+      "body": "NiceChunk 不应该通过收集证件、真人资料或私人画像来证明“是真人”。它应该用公开游戏收据、成熟期、类别上限、衰减、异常标记和可挑战快照来限制虚假权重，让任何审计者都能检查。",
+      "stackTitle": "完整性原则",
+      "checks": {
+        "noPrivateDoxxing": "合约不应需要护照、生物识别、社交账号或私人资料来决定文明权重。",
+        "notWalletCount": "一个钱包、很多钱包、或单纯 NCK 余额都不够。权重必须来自公开参与证据。",
+        "activityDiversity": "只挖矿、只交易、或重复一种动作，不应支配所有规则。类别上限保护文明参与的多样性。",
+        "challengeablePower": "可疑权重不应静默消失。它应该进入公开挑战、证据哈希、暂停或重算路径。",
+        "publicRecount": "第三方应该能从 citizen_state_pda、收据索引、权重快照和规则计票中重建同一个结果。"
+      },
+      "signals": {
+        "identity": {
+          "title": "成熟公民状态",
+          "body": "公民账户记录年龄、活跃窗口和公开状态，让新拆出来的钱包不能立刻获得完整规则权重。"
+        },
+        "activity": {
+          "title": "收据支撑的活动",
+          "body": "系统计算游戏收据，而不是私人分析。探索、挖矿、锻造、交易、公共工程和审计都会留下公开引用。"
+        },
+        "diversity": {
+          "title": "类别上限表",
+          "body": "参与会拆分成多个类别，避免单一行为变成支配所有未来法则的通用权威。"
+        },
+        "decay": {
+          "title": "衰减与异常标记",
+          "body": "长期不活跃、集中爆发、重复机械行为或可疑集群，会在快照冻结前降低权重。"
+        },
+        "challenge": {
+          "title": "权重挑战路径",
+          "body": "任何人都应能给可疑权重结果附加证据，并在公开规则下触发审查、暂停或重算。"
+        },
+        "recount": {
+          "title": "公开计票重放",
+          "body": "最终规则数学从冻结权重和签名账户重建，所以网站只是读取器，不是真相来源。"
         }
       }
     },
@@ -1847,6 +1989,48 @@
         "abstain_power": "弃权文明权重。",
         "cooldown_end": "共识达成后的最早执行时间。",
         "execute_status": "当前执行就绪状态或结果。"
+      }
+    },
+    "packet": {
+      "eyebrow": "规则包剖面",
+      "title": "可信规则包不是一段口号，而是一包可验证证据。",
+      "body": "未来合约应该把每个提案当成密封证据包：玩家能读懂的文本、校验器能解析的机器补丁、审计者能检查的账户范围、门槛数学使用的冻结权重，以及可重放的收据路径。",
+      "stackTitle": "为什么规则包比直接投票更安全",
+      "labels": {
+        "field": "字段",
+        "proof": "证明"
+      },
+      "guarantees": {
+        "sameIdentity": "所有签名、挑战、dry-run 和执行尝试，都引用同一个规则身份。",
+        "boundedAccounts": "可写账户家族在投票前声明，后续不能偷偷加入隐藏 PDA。",
+        "replayableDecision": "第三方可以用文本哈希、补丁哈希、快照、签名和事件重建同一个判断。",
+        "failClosed": "字段缺失、哈希过期、未知 adapter 或未解决挑战，都会在配置写入前拒绝规则包。"
+      },
+      "fields": {
+        "text": {
+          "title": "可读文本",
+          "body": "面向玩家的法则说明承诺、影响、旧资产策略和风险，再请求任何钱包签名。"
+        },
+        "patch": {
+          "title": "机器补丁",
+          "body": "可执行 diff 声明模块、操作、字段路径、旧值哈希、新值哈希和生效纪元。"
+        },
+        "accounts": {
+          "title": "账户范围",
+          "body": "提案声明可能读取或写入的每个 PDA 家族，未预期账户变更会成为校验失败。"
+        },
+        "snapshot": {
+          "title": "权重快照",
+          "body": "签署权重冻结在一个纪元，避免临时刷权、转移技巧和重算争议移动目标。"
+        },
+        "validator": {
+          "title": "校验报告",
+          "body": "dry-run 记录解析字段、安全闸门、风险分类、拒绝码和已验证结果哈希。"
+        },
+        "receipt": {
+          "title": "收据计划",
+          "body": "成功和失败都声明事件结构、前后哈希、已变更 PDA，以及后续挑战或替代版本链接。"
+        }
       }
     },
     "technical": {
@@ -2487,6 +2671,93 @@
         "permissionlessExecute": {
           "title": "无许可执行",
           "body": "只有哈希、门槛、冷却、挑战和目标配置状态都通过后，才开启 execute_rule。"
+        }
+      }
+    },
+    "mvp": {
+      "eyebrow": "MVP 合约切片",
+      "title": "第一版文明合约应该小到能审计，又足够证明模型可行。",
+      "body": "最安全的第一版不是完整社会引擎，而是一条狭窄闭环：发布冻结规则、用快照权重签署、定案公开计票、可选挑战、执行有边界配置写入，然后浏览每个账户和事件。",
+      "stackTitle": "第一版切片明确不做什么",
+      "labels": {
+        "instruction": "指令",
+        "account": "账户",
+        "event": "事件"
+      },
+      "boundaries": {
+        "noTreasury": "第一版不做金库支出、奖励铸造或私人资金移动。",
+        "noTokenVote": "不做可转让治理代币投票；签名只使用冻结公民权重快照。",
+        "noArbitraryWrites": "不做任意账户写入；execute_rule 只能写声明的模块配置 PDA 家族。",
+        "noRetroAssets": "不追溯编辑既有背包、挂单、所有权或已锻造物品历史。",
+        "noServerExecutor": "不设置服务器执行者或项目钱包闸门；通过的规则可以无许可执行。"
+      },
+      "stages": {
+        "publish": {
+          "title": "发布冻结规则身份",
+          "body": "创建规则书，包含作者、可读文本哈希、机器补丁哈希、目标模块、风险分类和快照纪元。"
+        },
+        "sign": {
+          "title": "签署快照权重",
+          "body": "每个公民为精确规则身份签署一个立场，权重来自引用纪元的冻结快照。"
+        },
+        "finalize": {
+          "title": "定案公开计票",
+          "body": "程序从公开签名账户重算同意、反对、弃权和门槛状态。"
+        },
+        "challenge": {
+          "title": "附加证据挑战",
+          "body": "挑战者可在窗口期附加证据哈希，并暂停执行直到解决或过期。"
+        },
+        "execute": {
+          "title": "执行有边界写入",
+          "body": "任何调用者提交 execute_rule；校验器要么写入声明配置 PDA，要么发出具名拒绝。"
+        },
+        "browse": {
+          "title": "浏览解码证明",
+          "body": "官网和合约浏览器解码规则、签名、计票、挑战、配置写入和最终收据。"
+        }
+      }
+    },
+    "feasibility": {
+      "eyebrow": "可行性预算",
+      "title": "文明合约要可信，必须讲清楚哪些东西保持小规模上链。",
+      "body": "页面不能让读者相信一个巨大社交系统会全部塞进链上。可行设计是在链上保存短哈希、账户指针、快照、计票和事件；大段可读解释与浏览器视图留在链下，但必须始终能用公开哈希校验。",
+      "stackTitle": "可行性规则",
+      "labels": {
+        "budget": "预算",
+        "proof": "证明"
+      },
+      "checks": {
+        "smallState": "链上账户只保存证明关键字节，不保存长文章、图片、私有排名或只存在于网站的状态。",
+        "hashAnchoredText": "可读文本可以放在镜像或档案里，但精确字节必须能哈希回规则账户。",
+        "boundedAccounts": "每条指令执行前声明小规模可写账户集合，让计算量和审查范围都可预测。",
+        "deterministicCompute": "校验器闸门固定、有序且有上限；提案不能把无边界脚本偷偷塞进执行路径。",
+        "cacheIsNotTruth": "索引器和浏览器缓存提高阅读速度，但公开 RPC 账户与事件仍然是真相来源。"
+      },
+      "items": {
+        "hashes": {
+          "title": "存指纹，不存长段落。",
+          "body": "合约只需要保存文本、补丁、旧状态、新状态和收据的紧凑哈希。完整解释可以单独获取，再用这些哈希校验。"
+        },
+        "pointers": {
+          "title": "指向已知 PDA 家族。",
+          "body": "规则账户引用声明过的 PDA 家族，而不是扫描整个世界，从而限制读取、写入和审查范围。"
+        },
+        "snapshots": {
+          "title": "按纪元冻结投票权重。",
+          "body": "快照纪元防止玩家开始签署后，临时余额或角色移动改变这条规则的权重。"
+        },
+        "compute": {
+          "title": "让校验器工作量可预测。",
+          "body": "校验器只对有上限的补丁和账户列表运行固定检查，拒绝结果确定，执行也能放进真实交易。"
+        },
+        "mirror": {
+          "title": "让可读层承载大内容。",
+          "body": "人类解释、评论、图示和翻译可以放在合约外，只要被签署的规则身份由哈希锚定。"
+        },
+        "index": {
+          "title": "浏览器视图必须可重建。",
+          "body": "网站可以缓存解码视图提升速度，但怀疑者必须能从 RPC 账户字节和公开事件重建同一个视图。"
         }
       }
     },

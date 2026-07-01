@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hans",
     "label": "Simplified Chinese",
-    "version": "docs-locale-zh-Hans-e3a571fb002e45d8",
-    "contentHash": "e3a571fb002e45d8"
+    "version": "docs-locale-zh-Hans-1bf35d8c0a2130ca",
+    "contentHash": "1bf35d8c0a2130ca"
   },
   "siteFooter": {
     "tagline": "Solana 上的种子体素世界协议。",
@@ -367,7 +367,7 @@
         "registry": "活跃 Guardian 区域的登记表，包含 NCK 质押数量、国库代币账户和注册计数。",
         "region": "已注册的区域端点，包含 owner、operator、host、TLS 标记、质押、证明计数和更新 slot。",
         "chunk": "未来生产账户，只存放置方块 delta 和当前方块覆盖。未改变的生成地形不应存储。",
-        "resourceDropTable": "带奖励挖矿使用的有界额外掉落规则表。每条规则包含源方块、掉落方块、概率、高度、深度和 salt。",
+        "resourceDropTable": "带奖励挖矿使用的有界额外掉落规则表。每条规则包含源方块、掉落方块、基础概率、高度、深度、salt 和掉落体积范围。",
         "recipeTable": "熔炼配方表，包含 authority、recipe id、热力等级、输入槽记录、输出槽记录和更新 slot。",
         "asset": "紧凑的玩家拥有物品或模型记录，包含分类、数量、item hash、item code、耐久和有界 payload 字节。",
         "listing": "市场挂单状态，支持背包资源或 Asset PDA，包含卖家、价格、货币、托管来源、买家，以及已售出/已取消状态。"

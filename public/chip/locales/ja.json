@@ -1,0 +1,161 @@
+{
+  "_meta": {
+    "language": "ja",
+    "label": "Japanese",
+    "version": "chip-locale-ja-96cc8117dfb94090",
+    "contentHash": "96cc8117dfb94090"
+  },
+  "siteFooter": {
+    "tagline": "Solana 上のシード型ボクセルワールドプロトコル。",
+    "navigationAria": "フッターナビゲーション",
+    "socialAria": "NiceChunk ソーシャルリンク",
+    "home": "ホーム",
+    "play": "ワールドへ",
+    "roadmap": "ロードブック",
+    "docs": "ドキュメント",
+    "guardian": "ガーディアン",
+    "contracts": "コントラクト",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. All rights reserved."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "言語",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "chip": {
+    "meta": {
+      "title": "NiceChunk チップシミュレーター"
+    },
+    "hero": {
+      "title": "鍛造したチップをプログラムし、ピンがデバイスを駆動する様子を確認します。",
+      "body": "Arduino sketch コードを入力します。ブラウザーが AVR GCC で Intel HEX にコンパイルし、avr8js が ATmega328P シミュレーション上で実行します。"
+    },
+    "editor": {
+      "kicker": "鍛造 MCU プログラム",
+      "label": "Arduino sketch エディター",
+      "aria": "Arduino sketch ソースコードエディター"
+    },
+    "controls": {
+      "aria": "シミュレーター操作",
+      "compile": "コンパイル",
+      "run": "実行",
+      "stop": "停止",
+      "reset": "リセット",
+      "sample": "サンプル読込",
+      "uploadHex": "HEX 読込"
+    },
+    "status": {
+      "title": "コンパイラー状態",
+      "idle": "待機中",
+      "compiling": "AVR ファームウェアをコンパイル中",
+      "compiled": "コンパイル済み",
+      "running": "実行中",
+      "stopped": "停止中",
+      "reset": "リセット完了",
+      "error": "コンパイルまたは実行時エラー"
+    },
+    "viewport": {
+      "aria": "3D チッププレビュー",
+      "kicker": "NC-AVR32 プロトタイプ",
+      "title": "鍛造された各ピンは、ゲーム世界のデバイスポートになります。",
+      "drag": "ドラッグで回転",
+      "activeLeds": "{count} 個の LED が点灯",
+      "activeDevices": "{count} 個のデバイスが動作中"
+    },
+    "components": {
+      "aria": "部品パレット",
+      "led": "LED ランプ",
+      "button": "ボタン",
+      "switch": "スイッチ",
+      "motor": "モーター",
+      "buzzer": "ブザー",
+      "wire": "ワイヤ",
+      "ready": "デバイスをボードへドラッグします。ワイヤを選ぶと絶縁配線を引けます。",
+      "dragLed": "LED ツールをボードへドラッグし、配置した LED はさらにドラッグして位置を調整できます。",
+      "dragButton": "ボタンをボードへドラッグします。キャップを押すと導通し、離すと回路が開きます。",
+      "dragSwitch": "スイッチをボードへドラッグします。レバーをクリックして ON/OFF を固定します。",
+      "dragMotor": "モーターをボードへドラッグします。一方の端子が給電され、もう一方が GND に戻ると回転します。",
+      "dragBuzzer": "ブザーをボードへドラッグします。GND への戻り経路を持つ給電で振動します。",
+      "pickFirst": "ワイヤモード: チップピンまたは部品ピンをクリックします。",
+      "pickSecond": "ワイヤモード: ボードをクリックして曲げ点を追加し、2 つ目の端点をクリックして接続、右クリックで終了します。",
+      "waypointAdded": "ワイヤの曲げ点を追加しました。別の点、端点、または右クリックで終了します。",
+      "routingEnded": "配線を終了しました。",
+      "rotatedLed": "LED を 90 度回転しました。",
+      "rotatedComponent": "部品を 90 度回転しました。",
+      "switchOn": "スイッチを ON に固定しました。2 つの端子が導通しています。",
+      "switchOff": "スイッチを OFF に固定しました。2 つの端子は開放されています。",
+      "terminalLabels": {
+        "led": {
+          "signal": "LED 信号",
+          "ground": "LED GND"
+        },
+        "button": {
+          "a": "ボタン A",
+          "b": "ボタン B"
+        },
+        "switch": {
+          "a": "スイッチ A",
+          "b": "スイッチ B"
+        },
+        "motor": {
+          "plus": "モーター +",
+          "minus": "モーター -"
+        },
+        "buzzer": {
+          "plus": "ブザー +",
+          "minus": "ブザー -"
+        }
+      },
+      "signalTerminal": "LED 信号",
+      "groundTerminal": "LED GND",
+      "connected": "{from} と {to} を接続しました。",
+      "invalidConnection": "異なる 2 つの端点を選択してください。"
+    },
+    "telemetry": {
+      "kicker": "ランタイム",
+      "title": "AVR 状態",
+      "pc": "PC",
+      "cycles": "サイクル",
+      "size": "プログラム",
+      "bytes": "{bytes} B",
+      "programDetail": "{format} {bytes} B / {limit} B · {ms} ms",
+      "highPins": "HIGH ピン",
+      "ports": "GPIO ポート",
+      "pins": "パッケージピン"
+    },
+    "format": {
+      "arduino": "Arduino",
+      "hex": "HEX",
+      "asm": "ASM"
+    },
+    "concept": {
+      "title": "ゲーム統合パス",
+      "body": "チップ本体を鍛造し、コンパクトなコードを保存し、デバイスをピンへ接続して、ライト、ドア、トラップ、リレー、工場をシミュレーターで駆動します。"
+    },
+    "sample": {
+      "code": "// NiceChunk デモ: スイッチで LED とモーターを制御\n// 配線:\n// VCC -> スイッチ A\n// スイッチ B -> D2\n// D13 -> LED 信号\n// LED GND -> GND\n// D9 -> モーター +\n// モーター - -> GND\nconst int switchPin = 2;\nconst int ledPin = 13;\nconst int motorPin = 9;\n\nvoid setup() {\n  pinMode(switchPin, INPUT);\n  pinMode(ledPin, OUTPUT);\n  pinMode(motorPin, OUTPUT);\n}\n\nvoid loop() {\n  const bool enabled = digitalRead(switchPin) == HIGH;\n  digitalWrite(ledPin, enabled ? HIGH : LOW);\n  digitalWrite(motorPin, enabled ? HIGH : LOW);\n  delay(10);\n}\n"
+    },
+    "errors": {
+      "emptyProgram": "先に Arduino コード、Intel HEX、または AVR アセンブリを入力してください。",
+      "noHex": "コンパイラーが Intel HEX 出力を返しませんでした。",
+      "flashOverflow": "コンパイル後のファームウェアは {bytes} B で、Uno の上限 {limit} B を超えています。",
+      "assembly": "AVR アセンブリに失敗しました: {error}",
+      "hexLine": "Intel HEX の {line} 行目が無効です。",
+      "hexChecksum": "Intel HEX の {line} 行目でチェックサムに失敗しました。",
+      "hexRecord": "未対応の Intel HEX レコードタイプです: {type}。",
+      "hexEof": "Intel HEX に EOF レコードがありません。"
+    }
+  }
+}

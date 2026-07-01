@@ -74,6 +74,7 @@ const tocItems = [
   { id: "naturalLaw", href: "#natural-law-warning", tone: "red", group: "govern" },
   { id: "civilizationPower", href: "#civilization-power", tone: "green", group: "govern" },
   { id: "powerSnapshot", href: "#power-snapshot-integrity", tone: "blue", group: "govern" },
+  { id: "citizenIntegrity", href: "#citizen-integrity", tone: "green", group: "govern" },
   { id: "threatModel", href: "#threat-model", tone: "red", group: "govern" },
   { id: "challengeDesk", href: "#challenge-desk", tone: "red", group: "govern" },
   { id: "caseWalkthrough", href: "#case-walkthrough", tone: "green", group: "govern" },
@@ -83,6 +84,7 @@ const tocItems = [
   { id: "civicPower", href: "#civic-power-ledger", tone: "green", group: "govern" },
   { id: "ruleLifecycle", href: "#rule-lifecycle", tone: "blue", group: "govern" },
   { id: "ruleStructure", href: "#rule-structure", tone: "green", group: "verify" },
+  { id: "rulePacket", href: "#rule-packet-anatomy", tone: "green", group: "verify" },
   { id: "technicalFlow", href: "#technical-flow", tone: "blue", group: "verify" },
   { id: "ruleValidator", href: "#rule-validator", tone: "red", group: "verify" },
   { id: "executionProof", href: "#execution-proof", tone: "blue", group: "verify" },
@@ -94,6 +96,8 @@ const tocItems = [
   { id: "civilizationDesign", href: "#civilization-blueprint", tone: "green", group: "build" },
   { id: "civicWorks", href: "#civic-works", tone: "blue", group: "build" },
   { id: "buildSpec", href: "#build-spec", tone: "blue", group: "build" },
+  { id: "mvpSlice", href: "#mvp-contract-slice", tone: "green", group: "build" },
+  { id: "feasibilityBudget", href: "#feasibility-budget", tone: "blue", group: "build" },
   { id: "auditTrail", href: "#audit-trail", tone: "blue", group: "build" },
   { id: "pdaBinding", href: "#pda-binding", tone: "green", group: "build" },
   { id: "targetModules", href: "#target-modules", tone: "blue", group: "build" },
@@ -264,6 +268,23 @@ const snapshotChecks = [
   "capClusters",
   "epochFreeze",
   "publicRecount",
+];
+
+const integrityChecks = [
+  "noPrivateDoxxing",
+  "notWalletCount",
+  "activityDiversity",
+  "challengeablePower",
+  "publicRecount",
+];
+
+const integritySignals = [
+  { id: "identity", account: "citizen_state_pda", proof: "maturity_epoch" },
+  { id: "activity", account: "receipt_index_pda", proof: "activity_window_hash" },
+  { id: "diversity", account: "power_breakdown_pda", proof: "category_cap_table" },
+  { id: "decay", account: "citizen_snapshot_pda", proof: "decay_epoch" },
+  { id: "challenge", account: "power_challenge_pda", proof: "evidence_hash" },
+  { id: "recount", account: "rule_tally_pda", proof: "recount_hash" },
 ];
 
 const threatScenarios = [
@@ -442,6 +463,22 @@ const reviewChecklist = [
   "hashProof",
   "thresholdPath",
   "failurePath",
+];
+
+const rulePacketFields = [
+  { id: "text", field: "human_readable_text", proof: "text_hash" },
+  { id: "patch", field: "machine_patch", proof: "patch_hash" },
+  { id: "accounts", field: "declared_account_scope", proof: "writable_pda_list_hash" },
+  { id: "snapshot", field: "snapshot_epoch", proof: "power_snapshot_pda" },
+  { id: "validator", field: "validator_report", proof: "dry_run_hash" },
+  { id: "receipt", field: "receipt_plan", proof: "event_schema_hash" },
+];
+
+const rulePacketGuarantees = [
+  "sameIdentity",
+  "boundedAccounts",
+  "replayableDecision",
+  "failClosed",
 ];
 
 const authoringChecks = [
@@ -683,6 +720,40 @@ const buildOrderSteps = [
   "permissionlessExecute",
 ];
 
+const mvpStages = [
+  { id: "publish", instruction: "publish_rule", account: "rule_book_pda", event: "RulePublished" },
+  { id: "sign", instruction: "sign_rule", account: "rule_signature_pda", event: "RuleSigned" },
+  { id: "finalize", instruction: "finalize_threshold", account: "rule_tally_pda", event: "ThresholdFinalized" },
+  { id: "challenge", instruction: "challenge_rule", account: "challenge_pda", event: "RuleChallenged" },
+  { id: "execute", instruction: "execute_rule", account: "module_config_pda", event: "RuleExecuted | RuleRejected" },
+  { id: "browse", instruction: "read_accounts", account: "civilization_index_pda", event: "DecodedForBrowser" },
+];
+
+const mvpBoundaries = [
+  "noTreasury",
+  "noTokenVote",
+  "noArbitraryWrites",
+  "noRetroAssets",
+  "noServerExecutor",
+];
+
+const feasibilityItems = [
+  { id: "hashes", budget: "32-byte hashes", proof: "text_hash | patch_hash | state_hash" },
+  { id: "pointers", budget: "PDA pointers", proof: "rule_book_pda | config_pda" },
+  { id: "snapshots", budget: "epoch snapshots", proof: "snapshot_epoch + tally_pda" },
+  { id: "compute", budget: "bounded compute", proof: "fixed gates + max accounts" },
+  { id: "mirror", budget: "off-chain readable mirror", proof: "content hash must match" },
+  { id: "index", budget: "derived browser cache", proof: "rebuild from RPC + events" },
+];
+
+const feasibilityChecks = [
+  "smallState",
+  "hashAnchoredText",
+  "boundedAccounts",
+  "deterministicCompute",
+  "cacheIsNotTruth",
+];
+
 const instructionSpecs = [
   { id: "publishRule", accounts: ["author", "rule_book_pda", "system_program"] },
   { id: "signRule", accounts: ["voter", "rule_book_pda", "rule_signature_pda", "citizen_state_pda"] },
@@ -711,7 +782,7 @@ const invariants = [
 
 const moduleBindings = [
   { id: "core", magic: "NCKCFG01", seed: "global-config", account: "GlobalConfig", status: "immutable" },
-  { id: "chunk", magic: "NCKDRP01", seed: "resource-drops", account: "ResourceDropTable", status: "config" },
+  { id: "chunk", magic: "NCKDRP02", seed: "resource-drops-v2", account: "ResourceDropTable", status: "config" },
   { id: "backpack", magic: "NCKBPK01", seed: "backpack", account: "BackpackAccount", status: "asset" },
   { id: "smelting", magic: "NCKSMR01", seed: "smelting-recipes", account: "RecipeTable", status: "config" },
   { id: "guardian", magic: "NCKGDR01", seed: "guardian-registry", account: "GuardianRegistry", status: "service" },
@@ -859,6 +930,9 @@ const civilizationPowerDiagram = document.querySelector("#civilizationPowerDiagr
 const civilizationSnapshotDiagram = document.querySelector("#civilizationSnapshotDiagram");
 const snapshotStack = document.querySelector("#snapshotStack");
 const snapshotGrid = document.querySelector("#snapshotGrid");
+const civilizationIntegrityDiagram = document.querySelector("#civilizationIntegrityDiagram");
+const integrityStack = document.querySelector("#integrityStack");
+const integrityGrid = document.querySelector("#integrityGrid");
 const civilizationThreatDiagram = document.querySelector("#civilizationThreatDiagram");
 const defenseStackTarget = document.querySelector("#defenseStack");
 const threatModelGrid = document.querySelector("#threatModelGrid");
@@ -885,6 +959,9 @@ const reputationStack = document.querySelector("#reputationStack");
 const reputationGrid = document.querySelector("#reputationGrid");
 const timelineTarget = document.querySelector("#ruleLifecycleTimeline");
 const schemaTarget = document.querySelector("#ruleBookSchema");
+const civilizationPacketDiagram = document.querySelector("#civilizationPacketDiagram");
+const rulePacketStack = document.querySelector("#rulePacketStack");
+const rulePacketGrid = document.querySelector("#rulePacketGrid");
 const civilizationExecutionDiagram = document.querySelector("#civilizationExecutionDiagram");
 const technicalAssurancesTarget = document.querySelector("#technicalAssurances");
 const civilizationValidatorDiagram = document.querySelector("#civilizationValidatorDiagram");
@@ -918,6 +995,12 @@ const civicStack = document.querySelector("#civicStack");
 const civicGrid = document.querySelector("#civicGrid");
 const buildSpecGrid = document.querySelector("#buildSpecGrid");
 const buildOrderPanel = document.querySelector("#buildOrderPanel");
+const civilizationMvpDiagram = document.querySelector("#civilizationMvpDiagram");
+const mvpBoundaryStack = document.querySelector("#mvpBoundaryStack");
+const mvpStageGrid = document.querySelector("#mvpStageGrid");
+const civilizationFeasibilityDiagram = document.querySelector("#civilizationFeasibilityDiagram");
+const feasibilityStack = document.querySelector("#feasibilityStack");
+const feasibilityGrid = document.querySelector("#feasibilityGrid");
 const civilizationAuditTrailDiagram = document.querySelector("#civilizationAuditTrailDiagram");
 const invariantPanel = document.querySelector("#invariantPanel");
 const instructionSpecGrid = document.querySelector("#instructionSpecGrid");
@@ -968,6 +1051,7 @@ function renderCivilizationPage() {
   renderConstitutionChecks();
   renderPowerExplainer();
   renderSnapshotIntegrity();
+  renderCitizenIntegrity();
   renderThreatModel();
   renderChallengeDesk();
   renderCaseWalkthrough();
@@ -977,6 +1061,7 @@ function renderCivilizationPage() {
   renderReputationLedger();
   renderRuleLifecycleTimeline();
   renderRuleBookSchema();
+  renderRulePacketAnatomy();
   renderTechnicalAssurances();
   renderValidatorSpec();
   renderExecutionProof();
@@ -988,6 +1073,8 @@ function renderCivilizationPage() {
   renderCivilizationDesign();
   renderCivicWorks();
   renderBuildSpec();
+  renderMvpContractSlice();
+  renderFeasibilityBudget();
   renderImplementationTrace();
   renderModuleBindings();
   renderRuleModulesGrid();
@@ -1343,6 +1430,25 @@ function renderSnapshotIntegrity() {
   );
 }
 
+function renderCitizenIntegrity() {
+  integrityStack?.replaceChildren(
+    sectionMiniTitle("civilization.citizenIntegrity.stackTitle"),
+    ...integrityChecks.map((key) => checkCard(t(`civilization.citizenIntegrity.checks.${key}`))),
+  );
+  integrityGrid?.replaceChildren(
+    ...integritySignals.map((signal, index) => {
+      const card = document.createElement("article");
+      card.className = `integrity-card ${signal.id}`;
+      card.innerHTML = "<span></span><strong></strong><p></p><code></code>";
+      card.querySelector("span").textContent = String(index + 1).padStart(2, "0");
+      card.querySelector("strong").textContent = t(`civilization.citizenIntegrity.signals.${signal.id}.title`);
+      card.querySelector("p").textContent = t(`civilization.citizenIntegrity.signals.${signal.id}.body`);
+      card.querySelector("code").textContent = `${signal.account} -> ${signal.proof}`;
+      return card;
+    }),
+  );
+}
+
 function renderThreatModel() {
   defenseStackTarget?.replaceChildren(
     sectionMiniTitle("civilization.threatModel.defenseTitle"),
@@ -1414,6 +1520,28 @@ function renderRuleBookSchema() {
       description.textContent = t(`civilization.schema.fields.${field}`);
       row.append(fieldNode, typeNode, description);
       return row;
+    }),
+  );
+}
+
+function renderRulePacketAnatomy() {
+  rulePacketStack?.replaceChildren(
+    sectionMiniTitle("civilization.packet.stackTitle"),
+    ...rulePacketGuarantees.map((key) => checkCard(t(`civilization.packet.guarantees.${key}`))),
+  );
+  rulePacketGrid?.replaceChildren(
+    ...rulePacketFields.map((item, index) => {
+      const card = document.createElement("article");
+      card.className = `packet-card ${item.id}`;
+      card.innerHTML = "<span></span><strong></strong><p></p><dl></dl>";
+      card.querySelector("span").textContent = String(index + 1).padStart(2, "0");
+      card.querySelector("strong").textContent = t(`civilization.packet.fields.${item.id}.title`);
+      card.querySelector("p").textContent = t(`civilization.packet.fields.${item.id}.body`);
+      card.querySelector("dl").replaceChildren(
+        definitionRow(t("civilization.packet.labels.field"), item.field),
+        definitionRow(t("civilization.packet.labels.proof"), item.proof),
+      );
+      return card;
     }),
   );
 }
@@ -1534,6 +1662,7 @@ function renderSvgDiagrams() {
   civilizationConservationDiagram?.replaceChildren(createConservationDiagram());
   civilizationPowerDiagram?.replaceChildren(createPowerDiagram());
   civilizationSnapshotDiagram?.replaceChildren(createSnapshotDiagram());
+  civilizationIntegrityDiagram?.replaceChildren(createIntegrityDiagram());
   civilizationThreatDiagram?.replaceChildren(createThreatModelDiagram());
   civilizationChallengeDiagram?.replaceChildren(createChallengeDiagram());
   civilizationCaseDiagram?.replaceChildren(createCaseWalkthroughDiagram());
@@ -1541,6 +1670,7 @@ function renderSvgDiagrams() {
   civilizationSigningDiagram?.replaceChildren(createSigningDiagram());
   civilizationDecisionDiagram?.replaceChildren(createDecisionDiagram());
   civilizationReputationDiagram?.replaceChildren(createReputationDiagram());
+  civilizationPacketDiagram?.replaceChildren(createRulePacketDiagram());
   civilizationExecutionDiagram?.replaceChildren(createExecutionDiagram());
   civilizationValidatorDiagram?.replaceChildren(createValidatorDiagram());
   civilizationTransactionDiagram?.replaceChildren(createTransactionDiagram());
@@ -1551,6 +1681,8 @@ function renderSvgDiagrams() {
   civilizationRolesDiagram?.replaceChildren(createRolesDiagram());
   civilizationDesignDiagram?.replaceChildren(createDesignDiagram());
   civilizationCivicDiagram?.replaceChildren(createCivicDiagram());
+  civilizationMvpDiagram?.replaceChildren(createMvpDiagram());
+  civilizationFeasibilityDiagram?.replaceChildren(createFeasibilityDiagram());
   civilizationAuditTrailDiagram?.replaceChildren(createAuditTrailDiagram());
   civilizationBindingDiagram?.replaceChildren(createBindingDiagram());
 }
@@ -2058,6 +2190,51 @@ function renderBuildSpec() {
   }
 }
 
+function renderMvpContractSlice() {
+  mvpBoundaryStack?.replaceChildren(
+    sectionMiniTitle("civilization.mvp.stackTitle"),
+    ...mvpBoundaries.map((key) => checkCard(t(`civilization.mvp.boundaries.${key}`))),
+  );
+  mvpStageGrid?.replaceChildren(
+    ...mvpStages.map((stage, index) => {
+      const card = document.createElement("article");
+      card.className = `mvp-card ${stage.id}`;
+      card.innerHTML = "<span></span><strong></strong><p></p><dl></dl>";
+      card.querySelector("span").textContent = String(index + 1).padStart(2, "0");
+      card.querySelector("strong").textContent = t(`civilization.mvp.stages.${stage.id}.title`);
+      card.querySelector("p").textContent = t(`civilization.mvp.stages.${stage.id}.body`);
+      card.querySelector("dl").replaceChildren(
+        definitionRow(t("civilization.mvp.labels.instruction"), stage.instruction),
+        definitionRow(t("civilization.mvp.labels.account"), stage.account),
+        definitionRow(t("civilization.mvp.labels.event"), stage.event),
+      );
+      return card;
+    }),
+  );
+}
+
+function renderFeasibilityBudget() {
+  feasibilityStack?.replaceChildren(
+    sectionMiniTitle("civilization.feasibility.stackTitle"),
+    ...feasibilityChecks.map((key) => checkCard(t(`civilization.feasibility.checks.${key}`))),
+  );
+  feasibilityGrid?.replaceChildren(
+    ...feasibilityItems.map((item, index) => {
+      const card = document.createElement("article");
+      card.className = `feasibility-card ${item.id}`;
+      card.innerHTML = "<span></span><strong></strong><p></p><dl></dl>";
+      card.querySelector("span").textContent = String(index + 1).padStart(2, "0");
+      card.querySelector("strong").textContent = t(`civilization.feasibility.items.${item.id}.title`);
+      card.querySelector("p").textContent = t(`civilization.feasibility.items.${item.id}.body`);
+      card.querySelector("dl").replaceChildren(
+        definitionRow(t("civilization.feasibility.labels.budget"), item.budget),
+        definitionRow(t("civilization.feasibility.labels.proof"), item.proof),
+      );
+      return card;
+    }),
+  );
+}
+
 function renderImplementationTrace() {
   invariantPanel?.replaceChildren(
     sectionMiniTitle("civilization.implementationTrace.invariantTitle"),
@@ -2465,6 +2642,38 @@ function createSnapshotDiagram() {
   return svg;
 }
 
+function createIntegrityDiagram() {
+  const svg = createSvg("0 0 920 440", "civilization-flow-svg integrity-svg");
+  const markerId = addDefs(svg);
+  addGrid(svg, 920, 440);
+  const nodes = [
+    ["receipts", 48, 72, 150, 66, "green"],
+    ["maturity", 260, 44, 156, 62, "blue"],
+    ["caps", 260, 154, 156, 62, "gold"],
+    ["decay", 492, 82, 150, 64, "red"],
+    ["snapshot", 720, 72, 150, 66, "blue"],
+    ["challenge", 492, 260, 150, 64, "red"],
+    ["recount", 720, 260, 150, 64, "green"],
+  ];
+  nodes.forEach(([key, x, y, width, height, tone]) => {
+    addSvgNode(svg, x, y, width, height, t(`civilization.diagrams.integrity.nodes.${key}`), tone);
+  });
+  addArrow(svg, markerId, 198, 105, 260, 75);
+  addArrow(svg, markerId, 198, 105, 260, 185);
+  addArrow(svg, markerId, 416, 75, 492, 112);
+  addArrow(svg, markerId, 416, 185, 492, 115);
+  addArrow(svg, markerId, 642, 114, 720, 105);
+  addArrow(svg, markerId, 795, 138, 795, 260);
+  addArrow(svg, markerId, 720, 294, 642, 294);
+  addArrow(svg, markerId, 567, 260, 567, 146);
+  addSvgBadge(svg, 58, 170, t("civilization.diagrams.integrity.badges.publicOnly"));
+  addSvgBadge(svg, 246, 250, t("civilization.diagrams.integrity.badges.notBiometric"));
+  addSvgBadge(svg, 466, 176, t("civilization.diagrams.integrity.badges.reduceNoise"));
+  addSvgBadge(svg, 696, 156, t("civilization.diagrams.integrity.badges.frozen"));
+  addSvgBadge(svg, 682, 350, t("civilization.diagrams.integrity.badges.replay"));
+  return svg;
+}
+
 function createThreatModelDiagram() {
   const svg = createSvg("0 0 920 420", "civilization-flow-svg threat-model-svg");
   const markerId = addDefs(svg);
@@ -2675,6 +2884,42 @@ function createReputationDiagram() {
   addSvgBadge(svg, 500, 172, t("civilization.diagrams.reputation.badges.snapshot"));
   addSvgBadge(svg, 700, 170, t("civilization.diagrams.reputation.badges.bounded"));
   addSvgBadge(svg, 512, 342, t("civilization.diagrams.reputation.badges.replay"));
+  return svg;
+}
+
+function createRulePacketDiagram() {
+  const svg = createSvg("0 0 920 430", "civilization-flow-svg packet-svg");
+  const markerId = addDefs(svg);
+  addGrid(svg, 920, 430);
+  const nodes = [
+    ["text", 52, 60, 150, 66, "blue"],
+    ["patch", 52, 174, 150, 66, "green"],
+    ["accounts", 52, 288, 150, 66, "gold"],
+    ["packet", 300, 142, 186, 92, "green"],
+    ["signatures", 584, 54, 150, 66, "gold"],
+    ["validator", 584, 174, 150, 66, "red"],
+    ["receipt", 584, 294, 150, 66, "blue"],
+    ["pdaWrite", 782, 174, 104, 66, "green"],
+  ];
+  nodes.forEach(([key, x, y, width, height, tone]) => {
+    addSvgNode(svg, x, y, width, height, t(`civilization.diagrams.packet.nodes.${key}`), tone);
+  });
+  [
+    [202, 94, 300, 168],
+    [202, 208, 300, 188],
+    [202, 322, 300, 208],
+    [486, 168, 584, 88],
+    [486, 188, 584, 208],
+    [486, 208, 584, 328],
+    [734, 208, 782, 208],
+    [734, 328, 824, 240],
+  ].forEach(([x1, y1, x2, y2]) => addArrow(svg, markerId, x1, y1, x2, y2));
+  addSvgBadge(svg, 50, 138, t("civilization.diagrams.packet.badges.readable"));
+  addSvgBadge(svg, 48, 252, t("civilization.diagrams.packet.badges.hashes"));
+  addSvgBadge(svg, 286, 252, t("civilization.diagrams.packet.badges.oneIdentity"));
+  addSvgBadge(svg, 548, 124, t("civilization.diagrams.packet.badges.frozenPower"));
+  addSvgBadge(svg, 548, 254, t("civilization.diagrams.packet.badges.failClosed"));
+  addSvgBadge(svg, 728, 376, t("civilization.diagrams.packet.badges.replayable"));
   return svg;
 }
 
@@ -2961,6 +3206,81 @@ function createCivicDiagram() {
   return svg;
 }
 
+function createMvpDiagram() {
+  const svg = createSvg("0 0 920 430", "civilization-flow-svg mvp-svg");
+  const markerId = addDefs(svg);
+  addGrid(svg, 920, 430);
+  const nodes = [
+    ["publish", 42, 66, 132, 64, "blue"],
+    ["sign", 214, 66, 132, 64, "gold"],
+    ["finalize", 386, 66, 132, 64, "green"],
+    ["challenge", 558, 42, 142, 64, "red"],
+    ["execute", 558, 154, 142, 64, "green"],
+    ["browser", 746, 98, 130, 72, "blue"],
+    ["reject", 386, 276, 132, 64, "red"],
+    ["event", 636, 276, 150, 64, "gold"],
+  ];
+  nodes.forEach(([key, x, y, width, height, tone]) => {
+    addSvgNode(svg, x, y, width, height, t(`civilization.diagrams.mvp.nodes.${key}`), tone);
+  });
+  [
+    [174, 98, 214, 98],
+    [346, 98, 386, 98],
+    [518, 98, 558, 74],
+    [518, 98, 558, 186],
+    [700, 74, 746, 118],
+    [700, 186, 746, 138],
+    [558, 186, 518, 308],
+    [518, 308, 636, 308],
+    [700, 186, 636, 308],
+    [786, 276, 812, 170],
+  ].forEach(([x1, y1, x2, y2]) => addArrow(svg, markerId, x1, y1, x2, y2));
+  addSvgBadge(svg, 42, 158, t("civilization.diagrams.mvp.badges.small"));
+  addSvgBadge(svg, 214, 158, t("civilization.diagrams.mvp.badges.snapshot"));
+  addSvgBadge(svg, 374, 158, t("civilization.diagrams.mvp.badges.recount"));
+  addSvgBadge(svg, 540, 236, t("civilization.diagrams.mvp.badges.noAdmin"));
+  addSvgBadge(svg, 366, 360, t("civilization.diagrams.mvp.badges.failClosed"));
+  addSvgBadge(svg, 660, 360, t("civilization.diagrams.mvp.badges.browser"));
+  return svg;
+}
+
+function createFeasibilityDiagram() {
+  const svg = createSvg("0 0 920 430", "civilization-flow-svg feasibility-svg");
+  const markerId = addDefs(svg);
+  addGrid(svg, 920, 430);
+  const nodes = [
+    ["readable", 42, 64, 150, 66, "blue"],
+    ["hashes", 250, 64, 150, 66, "green"],
+    ["pdas", 458, 64, 150, 66, "gold"],
+    ["validator", 666, 64, 150, 66, "red"],
+    ["mirror", 146, 250, 160, 68, "blue"],
+    ["indexer", 380, 250, 160, 68, "gold"],
+    ["browser", 614, 250, 160, 68, "green"],
+    ["reject", 666, 350, 150, 54, "red"],
+  ];
+  nodes.forEach(([key, x, y, width, height, tone]) => {
+    addSvgNode(svg, x, y, width, height, t(`civilization.diagrams.feasibility.nodes.${key}`), tone);
+  });
+  [
+    [192, 98, 250, 98],
+    [400, 98, 458, 98],
+    [608, 98, 666, 98],
+    [325, 130, 222, 250],
+    [533, 130, 460, 250],
+    [540, 284, 614, 284],
+    [741, 130, 741, 250],
+    [741, 318, 741, 350],
+  ].forEach(([x1, y1, x2, y2]) => addArrow(svg, markerId, x1, y1, x2, y2));
+  addSvgBadge(svg, 44, 154, t("civilization.diagrams.feasibility.badges.plainText"));
+  addSvgBadge(svg, 236, 154, t("civilization.diagrams.feasibility.badges.shortBytes"));
+  addSvgBadge(svg, 440, 154, t("civilization.diagrams.feasibility.badges.accountCaps"));
+  addSvgBadge(svg, 642, 154, t("civilization.diagrams.feasibility.badges.computeCaps"));
+  addSvgBadge(svg, 132, 338, t("civilization.diagrams.feasibility.badges.hashMatch"));
+  addSvgBadge(svg, 356, 338, t("civilization.diagrams.feasibility.badges.rebuildable"));
+  addSvgBadge(svg, 588, 338, t("civilization.diagrams.feasibility.badges.userReadable"));
+  return svg;
+}
+
 function createAuditTrailDiagram() {
   const svg = createSvg("0 0 920 390", "civilization-flow-svg audit-trail-svg");
   const markerId = addDefs(svg);
@@ -3218,6 +3538,16 @@ function sectionMiniTitle(key) {
   title.className = "mini-title";
   title.textContent = t(key);
   return title;
+}
+
+function definitionRow(label, value) {
+  const fragment = document.createDocumentFragment();
+  const dt = document.createElement("dt");
+  const dd = document.createElement("dd");
+  dt.textContent = label;
+  dd.textContent = value;
+  fragment.append(dt, dd);
+  return fragment;
 }
 
 function powerItem(text, type) {

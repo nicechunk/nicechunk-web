@@ -2,8 +2,8 @@
   "_meta": {
     "language": "de",
     "label": "German",
-    "version": "mining-locale-de-2bf1329d3b0d8f7f",
-    "contentHash": "2bf1329d3b0d8f7f"
+    "version": "mining-locale-de-b4b89213e19f4096",
+    "contentHash": "b4b89213e19f4096"
   },
   "siteFooter": {
     "tagline": "Ein Seed-Voxelwelt-Protokoll auf Solana.",
@@ -95,6 +95,14 @@
       "scanner": "Erzscanner",
       "lantern": "Hoehlenlaterne",
       "hammer": "Felshammer"
+    },
+    "account": {
+      "guest": "Gast",
+      "level": "St. {level}",
+      "notConnected": "Nicht verbunden"
+    },
+    "hotbarSlot": {
+      "empty": "Slot {slot}: leer"
     }
   }
 }

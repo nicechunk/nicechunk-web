@@ -2,8 +2,8 @@
   "_meta": {
     "language": "es",
     "label": "Spanish",
-    "version": "mining-locale-es-c63b03bd5a3be2bc",
-    "contentHash": "c63b03bd5a3be2bc"
+    "version": "mining-locale-es-de7eec7bd9a48788",
+    "contentHash": "de7eec7bd9a48788"
   },
   "siteFooter": {
     "tagline": "Un protocolo de mundo voxel con semillas en Solana.",
@@ -95,6 +95,14 @@
       "scanner": "Escaner de mineral",
       "lantern": "Linterna de cueva",
       "hammer": "Martillo de roca"
+    },
+    "account": {
+      "guest": "Invitado",
+      "level": "Nv. {level}",
+      "notConnected": "Sin conectar"
+    },
+    "hotbarSlot": {
+      "empty": "Ranura {slot}: vacia"
     }
   }
 }

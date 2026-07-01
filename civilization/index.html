@@ -343,6 +343,27 @@
         <div class="snapshot-grid" id="snapshotGrid"></div>
       </section>
 
+      <section class="civilization-section integrity-section" id="citizen-integrity" aria-labelledby="citizenIntegrityTitle">
+        <div class="section-heading">
+          <p class="eyebrow green" data-i18n="civilization.citizenIntegrity.eyebrow">Citizen Integrity</p>
+          <h2 id="citizenIntegrityTitle" data-i18n="civilization.citizenIntegrity.title">Anti-Sybil power comes from public evidence, not private identity.</h2>
+          <p data-i18n="civilization.citizenIntegrity.body">
+            NiceChunk should not prove humanity by collecting passports or private profiles. It should limit fake power by using public game receipts, maturity windows, category caps, decay, anomaly flags, and challengeable snapshots that any auditor can inspect.
+          </p>
+        </div>
+        <div class="integrity-layout">
+          <figure class="diagram-card integrity-diagram-card">
+            <figcaption>
+              <strong data-i18n="civilization.diagrams.integrity.title">From raw activity to challengeable citizen power</strong>
+              <span data-i18n="civilization.diagrams.integrity.caption">Public receipts are filtered, capped, decayed, frozen, and then opened to challenge before they can decide a rule.</span>
+            </figcaption>
+            <div id="civilizationIntegrityDiagram"></div>
+          </figure>
+          <div class="integrity-stack" id="integrityStack"></div>
+        </div>
+        <div class="integrity-grid" id="integrityGrid"></div>
+      </section>
+
       <section class="civilization-section threat-section" id="threat-model" aria-labelledby="threatModelTitle">
         <div class="section-heading">
           <p class="eyebrow danger" data-i18n="civilization.threatModel.eyebrow">Threat Model</p>
@@ -510,6 +531,27 @@
           </p>
         </div>
         <div class="schema-panel" id="ruleBookSchema"></div>
+      </section>
+
+      <section class="civilization-section packet-section" id="rule-packet-anatomy" aria-labelledby="packetTitle">
+        <div class="section-heading">
+          <p class="eyebrow green" data-i18n="civilization.packet.eyebrow">Rule Packet Anatomy</p>
+          <h2 id="packetTitle" data-i18n="civilization.packet.title">A trustworthy rule is a packet of evidence, not a paragraph of intent.</h2>
+          <p data-i18n="civilization.packet.body">
+            The future contract should treat every proposal as a sealed evidence packet: readable text for players, machine patch for validators, declared accounts for auditors, frozen power for threshold math, and a receipt path for replay.
+          </p>
+        </div>
+        <div class="packet-layout">
+          <figure class="diagram-card packet-diagram-card">
+            <figcaption>
+              <strong data-i18n="civilization.diagrams.packet.title">Rule packet evidence envelope</strong>
+              <span data-i18n="civilization.diagrams.packet.caption">Each field answers one trust question before signatures, validator dry-runs, and PDA writes can count.</span>
+            </figcaption>
+            <div id="civilizationPacketDiagram"></div>
+          </figure>
+          <div class="packet-stack" id="rulePacketStack"></div>
+        </div>
+        <div class="packet-grid" id="rulePacketGrid"></div>
       </section>
 
       <section class="civilization-section execution-flow-section" id="technical-flow" aria-labelledby="technicalFlowTitle">
@@ -733,6 +775,48 @@
         </div>
         <div class="build-spec-grid" id="buildSpecGrid"></div>
         <div class="build-order-panel" id="buildOrderPanel"></div>
+      </section>
+
+      <section class="civilization-section mvp-section" id="mvp-contract-slice" aria-labelledby="mvpTitle">
+        <div class="section-heading">
+          <p class="eyebrow green" data-i18n="civilization.mvp.eyebrow">MVP Contract Slice</p>
+          <h2 id="mvpTitle" data-i18n="civilization.mvp.title">The first civilization contract should be small enough to audit and useful enough to prove the model.</h2>
+          <p data-i18n="civilization.mvp.body">
+            The safest first release is not the whole society engine. It is one narrow loop: publish a frozen rule, sign with snapshot power, finalize a public tally, optionally challenge, execute a bounded config write, then browse every account and event.
+          </p>
+        </div>
+        <div class="mvp-layout">
+          <figure class="diagram-card mvp-diagram-card">
+            <figcaption>
+              <strong data-i18n="civilization.diagrams.mvp.title">First deployable civilization loop</strong>
+              <span data-i18n="civilization.diagrams.mvp.caption">A small contract slice proves public authorship, frozen signatures, deterministic rejection, permissionless execution, and decoded PDA transparency.</span>
+            </figcaption>
+            <div id="civilizationMvpDiagram"></div>
+          </figure>
+          <div class="mvp-stack" id="mvpBoundaryStack"></div>
+        </div>
+        <div class="mvp-grid" id="mvpStageGrid"></div>
+      </section>
+
+      <section class="civilization-section feasibility-section" id="feasibility-budget" aria-labelledby="feasibilityTitle">
+        <div class="section-heading">
+          <p class="eyebrow blue" data-i18n="civilization.feasibility.eyebrow">Feasibility Budget</p>
+          <h2 id="feasibilityTitle" data-i18n="civilization.feasibility.title">A civilization contract is believable only if it says what stays small on-chain.</h2>
+          <p data-i18n="civilization.feasibility.body">
+            The page should not ask readers to trust a giant on-chain social system. The feasible design stores short hashes, account pointers, snapshots, tallies, and events on-chain; large readable explanations and browser views stay off-chain but are always checked against public hashes.
+          </p>
+        </div>
+        <div class="feasibility-layout">
+          <figure class="diagram-card feasibility-diagram-card">
+            <figcaption>
+              <strong data-i18n="civilization.diagrams.feasibility.title">Civilization state budget map</strong>
+              <span data-i18n="civilization.diagrams.feasibility.caption">The contract keeps the proof-critical bytes small, while clients and indexers make the same public state readable.</span>
+            </figcaption>
+            <div id="civilizationFeasibilityDiagram"></div>
+          </figure>
+          <div class="feasibility-stack" id="feasibilityStack"></div>
+        </div>
+        <div class="feasibility-grid" id="feasibilityGrid"></div>
       </section>
 
       <section class="civilization-section trace-section" id="audit-trail" aria-labelledby="implementationTraceTitle">

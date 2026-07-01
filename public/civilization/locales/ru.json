@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ru",
     "label": "Russian",
-    "version": "civilization-locale-ru-113cd6855d5315e9",
-    "contentHash": "113cd6855d5315e9"
+    "version": "civilization-locale-ru-bc152202534df6b1",
+    "contentHash": "bc152202534df6b1"
   },
   "siteFooter": {
     "tagline": "Seeded voxel world protocol on Solana.",
@@ -217,6 +217,10 @@
           "title": "Power Snapshot",
           "body": "See how receipts become capped, frozen, recountable rule power."
         },
+        "citizenIntegrity": {
+          "title": "Citizen Integrity",
+          "body": "See how public participation blocks fake power without private identity data."
+        },
         "threatModel": {
           "title": "Threat Model",
           "body": "Review how hostile rules fail before state writes."
@@ -252,6 +256,10 @@
         "ruleStructure": {
           "title": "Rule Structure",
           "body": "Inspect the fields that bind readable intent to executable patch data."
+        },
+        "rulePacket": {
+          "title": "Rule Packet Anatomy",
+          "body": "See how text, patch, accounts, snapshots, validators, and receipts form one evidence packet."
         },
         "technicalFlow": {
           "title": "Technical Flow",
@@ -296,6 +304,14 @@
         "buildSpec": {
           "title": "Build Spec",
           "body": "Use the page as an implementation brief for coding."
+        },
+        "mvpSlice": {
+          "title": "MVP Contract Slice",
+          "body": "See the smallest deployable loop that can prove civilization rules on-chain."
+        },
+        "feasibilityBudget": {
+          "title": "Feasibility Budget",
+          "body": "See what stays small on-chain, what remains readable off-chain, and how both are verified."
         },
         "auditTrail": {
           "title": "Audit Trail",
@@ -822,6 +838,26 @@
           "recount": "public threshold math"
         }
       },
+      "integrity": {
+        "title": "From raw activity to challengeable citizen power",
+        "caption": "Public receipts are filtered, capped, decayed, frozen, and then opened to challenge before they can decide a rule.",
+        "nodes": {
+          "receipts": "Public receipts",
+          "maturity": "Maturity window",
+          "caps": "Category caps",
+          "decay": "Decay / flags",
+          "snapshot": "Frozen power",
+          "challenge": "Challenge",
+          "recount": "Recount"
+        },
+        "badges": {
+          "publicOnly": "public game evidence only",
+          "notBiometric": "not biometric identity",
+          "reduceNoise": "reduce fake signal",
+          "frozen": "snapshot hash",
+          "replay": "challengeable and replayable"
+        }
+      },
       "threatModel": {
         "title": "Threat-to-defense map",
         "caption": "Every dangerous path should meet a visible defense before it can become state.",
@@ -960,6 +996,28 @@
           "snapshot": "epoch-frozen citizen state",
           "bounded": "sign only bounded rules",
           "replay": "anyone can recalculate"
+        }
+      },
+      "packet": {
+        "title": "Rule packet evidence envelope",
+        "caption": "Each field answers one trust question before signatures, validator dry-runs, and PDA writes can count.",
+        "nodes": {
+          "text": "Readable law",
+          "patch": "Machine patch",
+          "accounts": "Declared accounts",
+          "packet": "Rule packet identity",
+          "signatures": "Frozen signatures",
+          "validator": "Validator dry-run",
+          "receipt": "Receipt plan",
+          "pdaWrite": "Config PDA write"
+        },
+        "badges": {
+          "readable": "ordinary player can read",
+          "hashes": "text_hash + patch_hash",
+          "oneIdentity": "one rule_id",
+          "frozenPower": "snapshot power only",
+          "failClosed": "reject before write",
+          "replayable": "events prove outcome"
         }
       },
       "execution": {
@@ -1151,6 +1209,51 @@
           "authorized": "rule-approved effect",
           "milestone": "milestone account",
           "visible": "benefit stays inspectable"
+        }
+      },
+      "mvp": {
+        "title": "First deployable civilization loop",
+        "caption": "A small contract slice proves public authorship, frozen signatures, deterministic rejection, permissionless execution, and decoded PDA transparency.",
+        "nodes": {
+          "publish": "Publish rule",
+          "sign": "Sign power",
+          "finalize": "Finalize tally",
+          "challenge": "Challenge window",
+          "execute": "Execute config",
+          "browser": "PDA browser",
+          "reject": "Named reject",
+          "event": "Public events"
+        },
+        "badges": {
+          "small": "small enough to audit",
+          "snapshot": "snapshot power",
+          "recount": "public tally",
+          "noAdmin": "no admin executor",
+          "failClosed": "fail closed",
+          "browser": "decoded proof"
+        }
+      },
+      "feasibility": {
+        "title": "Civilization state budget map",
+        "caption": "The contract keeps the proof-critical bytes small, while clients and indexers make the same public state readable.",
+        "nodes": {
+          "readable": "Readable rule",
+          "hashes": "Hash envelope",
+          "pdas": "Small PDAs",
+          "validator": "Capped validator",
+          "mirror": "Text mirror",
+          "indexer": "Public indexer",
+          "browser": "Decoded browser",
+          "reject": "Fail closed"
+        },
+        "badges": {
+          "plainText": "large text is allowed off-chain",
+          "shortBytes": "short bytes on-chain",
+          "accountCaps": "declared account set",
+          "computeCaps": "fixed gate order",
+          "hashMatch": "must match hashes",
+          "rebuildable": "rebuild from RPC",
+          "userReadable": "fast, readable UI"
         }
       },
       "auditTrail": {
@@ -1773,6 +1876,93 @@
         }
       }
     },
+    "mvp": {
+      "eyebrow": "MVP Contract Slice",
+      "title": "The first civilization contract should be small enough to audit and useful enough to prove the model.",
+      "body": "The safest first release is not the whole society engine. It is one narrow loop: publish a frozen rule, sign with snapshot power, finalize a public tally, optionally challenge, execute a bounded config write, then browse every account and event.",
+      "stackTitle": "What the first slice deliberately does not do",
+      "labels": {
+        "instruction": "Instruction",
+        "account": "Account",
+        "event": "Event"
+      },
+      "boundaries": {
+        "noTreasury": "No treasury spending, reward minting, or private fund movement in the first slice.",
+        "noTokenVote": "No transferable governance token vote; signatures use frozen citizen power snapshots only.",
+        "noArbitraryWrites": "No arbitrary account writes; execute_rule can write only a declared module config PDA family.",
+        "noRetroAssets": "No retroactive edits to existing backpacks, listings, ownership, or crafted item history.",
+        "noServerExecutor": "No server executor or project wallet gate; passed rules are executed permissionlessly."
+      },
+      "stages": {
+        "publish": {
+          "title": "Publish frozen rule identity",
+          "body": "Create a rule book with author, readable text hash, machine patch hash, target module, risk class, and snapshot epoch."
+        },
+        "sign": {
+          "title": "Sign snapshot power",
+          "body": "Each citizen signs one side for the exact rule identity using power frozen at the referenced epoch."
+        },
+        "finalize": {
+          "title": "Finalize public tally",
+          "body": "The program recounts yes, no, abstain, and threshold status from public signature accounts."
+        },
+        "challenge": {
+          "title": "Attach evidence challenge",
+          "body": "A challenger can attach an evidence hash during the window and pause execution until resolved or expired."
+        },
+        "execute": {
+          "title": "Execute bounded write",
+          "body": "Any caller submits execute_rule; the validator either writes the declared config PDA or emits a named rejection."
+        },
+        "browse": {
+          "title": "Browse decoded proof",
+          "body": "The website and contract browser decode rule, signatures, tally, challenge, config write, and final receipt."
+        }
+      }
+    },
+    "feasibility": {
+      "eyebrow": "Feasibility Budget",
+      "title": "A civilization contract is believable only if it says what stays small on-chain.",
+      "body": "The page should not ask readers to trust a giant on-chain social system. The feasible design stores short hashes, account pointers, snapshots, tallies, and events on-chain; large readable explanations and browser views stay off-chain but are always checked against public hashes.",
+      "stackTitle": "Feasibility rules",
+      "labels": {
+        "budget": "Budget",
+        "proof": "Proof"
+      },
+      "checks": {
+        "smallState": "On-chain accounts store proof-critical bytes, not full essays, images, private rankings, or website-only state.",
+        "hashAnchoredText": "Readable text can live in a mirror or archive only when the exact bytes hash back to the rule account.",
+        "boundedAccounts": "Every instruction declares a small writable account set before execution, so compute and review scope stay predictable.",
+        "deterministicCompute": "Validator gates are fixed, ordered, and capped; a proposal cannot smuggle an unbounded script into execution.",
+        "cacheIsNotTruth": "Indexers and browser caches improve reading speed, but public RPC accounts and events remain the source of truth."
+      },
+      "items": {
+        "hashes": {
+          "title": "Store fingerprints, not paragraphs.",
+          "body": "The contract only needs compact hashes for text, patches, old state, new state, and receipts. The full explanation can be fetched separately and verified against those hashes."
+        },
+        "pointers": {
+          "title": "Point to known PDA families.",
+          "body": "Rule accounts reference declared PDA families instead of scanning the whole world, which keeps reads, writes, and reviewer attention bounded."
+        },
+        "snapshots": {
+          "title": "Freeze voting power by epoch.",
+          "body": "A snapshot epoch prevents last-minute balance or role movement from changing a rule after players have started signing it."
+        },
+        "compute": {
+          "title": "Keep validator work predictable.",
+          "body": "The validator runs a fixed list of checks over a capped patch and capped account list, so rejection is deterministic and execution can fit a real transaction."
+        },
+        "mirror": {
+          "title": "Let the readable layer be large.",
+          "body": "Human explanations, comments, diagrams, and translations can live outside the contract as long as the signed rule identity is anchored by hash."
+        },
+        "index": {
+          "title": "Make the browser rebuildable.",
+          "body": "The website can cache decoded views for speed, but a skeptical reader must be able to rebuild the same view from RPC account bytes and public events."
+        }
+      }
+    },
     "lawType": {
       "natural": "Natural Law",
       "civilization": "Civilization Law"
@@ -1977,6 +2167,45 @@
         "recount": {
           "title": "Recount from signatures",
           "body": "Anyone can sum rule_signature_pda accounts against the frozen snapshot and verify the threshold without trusting the website."
+        }
+      }
+    },
+    "citizenIntegrity": {
+      "eyebrow": "Citizen Integrity",
+      "title": "Anti-Sybil power comes from public evidence, not private identity.",
+      "body": "NiceChunk should not prove humanity by collecting passports or private profiles. It should limit fake power by using public game receipts, maturity windows, category caps, decay, anomaly flags, and challengeable snapshots that any auditor can inspect.",
+      "stackTitle": "Integrity principles",
+      "checks": {
+        "noPrivateDoxxing": "The contract should not need passports, biometrics, social handles, or private personal data to decide civilization power.",
+        "notWalletCount": "One wallet, many wallets, and raw NCK balance are not enough. Power must come from public participation evidence.",
+        "activityDiversity": "Mining alone, trading alone, or one repeated action should not dominate every rule. Category caps preserve civic diversity.",
+        "challengeablePower": "Suspicious power should not disappear silently. It should become a public challenge, evidence hash, pause, or recount path.",
+        "publicRecount": "A third party should be able to rebuild the same result from citizen_state_pda, receipt indexes, power snapshots, and rule tallies."
+      },
+      "signals": {
+        "identity": {
+          "title": "Mature citizen state",
+          "body": "A citizen account records age, activity window, and public status so newly split wallets cannot instantly carry full rule power."
+        },
+        "activity": {
+          "title": "Receipt-backed activity",
+          "body": "The system counts game receipts, not private analytics. Exploration, mining, forging, trading, settlement work, and audits leave public references."
+        },
+        "diversity": {
+          "title": "Category cap table",
+          "body": "Participation is split into categories so a single behavior cannot become universal authority over every future law."
+        },
+        "decay": {
+          "title": "Decay and anomaly flags",
+          "body": "Long inactivity, concentrated bursts, repeated mechanical behavior, or suspicious clusters can reduce weight before a snapshot freezes."
+        },
+        "challenge": {
+          "title": "Power challenge path",
+          "body": "Anyone should be able to attach evidence to a suspicious power result and force review, pause, or recount under published rules."
+        },
+        "recount": {
+          "title": "Public tally replay",
+          "body": "Final rule math is reconstructed from frozen power and signature accounts, so the website is a reader, not the source of truth."
         }
       }
     },
@@ -2426,6 +2655,48 @@
         "abstain_power": "Abstaining civilization power.",
         "cooldown_end": "Earliest execution time after consensus.",
         "execute_status": "Current execution readiness or result."
+      }
+    },
+    "packet": {
+      "eyebrow": "Rule Packet Anatomy",
+      "title": "A trustworthy rule is a packet of evidence, not a paragraph of intent.",
+      "body": "The future contract should treat every proposal as a sealed evidence packet: readable text for players, machine patch for validators, declared accounts for auditors, frozen power for threshold math, and a receipt path for replay.",
+      "stackTitle": "Why the packet is safer than raw voting",
+      "labels": {
+        "field": "Field",
+        "proof": "Proof"
+      },
+      "guarantees": {
+        "sameIdentity": "All signatures, challenges, dry-runs, and execution attempts refer to the same rule identity.",
+        "boundedAccounts": "The writable account family is declared before voting, so no hidden PDA can be added later.",
+        "replayableDecision": "A third party can rebuild the same decision from text hash, patch hash, snapshot, signatures, and events.",
+        "failClosed": "Missing fields, stale hashes, unknown adapters, or unresolved challenges reject the packet before any config write."
+      },
+      "fields": {
+        "text": {
+          "title": "Readable text",
+          "body": "The player-facing law states the promise, impact, old asset policy, and risk before any wallet signature is requested."
+        },
+        "patch": {
+          "title": "Machine patch",
+          "body": "The executable diff names the module, operation, field path, old value hash, new value hash, and activation epoch."
+        },
+        "accounts": {
+          "title": "Account scope",
+          "body": "The proposal declares every PDA family it may read or write, making unexpected account mutation a validator failure."
+        },
+        "snapshot": {
+          "title": "Power snapshot",
+          "body": "Signer weight is frozen at one epoch, so late farming, transfer tricks, and recount disputes cannot move the target."
+        },
+        "validator": {
+          "title": "Validator report",
+          "body": "The dry-run records parsed fields, safety gates, risk class, rejection codes, and the hash of the validated result."
+        },
+        "receipt": {
+          "title": "Receipt plan",
+          "body": "Success and failure both name the event schema, before/after hashes, changed PDAs, and later challenge or supersession links."
+        }
       }
     },
     "technical": {

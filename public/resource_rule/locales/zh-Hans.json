@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hans",
     "label": "Simplified Chinese",
-    "version": "resource-rule-locale-zh-Hans-d654eda7dfa7b3e6",
-    "contentHash": "d654eda7dfa7b3e6"
+    "version": "resource-rule-locale-zh-Hans-8939b6bbfa101a67",
+    "contentHash": "8939b6bbfa101a67"
   },
   "siteFooter": {
     "tagline": "Solana 上的种子体素世界协议。",
@@ -421,17 +421,17 @@
     "drop": {
       "eyebrow": "链上掉落表",
       "title": "文明规则可以增加稀有额外掉落，而不膨胀地形代码。",
-      "body": "canonical 地形算法仍然负责确认被挖掘的基础方块。紧凑的链上掉落表会根据来源方块、海拔、深度和种子概率，确定是否产生额外奖励。",
+      "body": "canonical 地形算法仍然负责确认被挖掘的基础方块。紧凑的链上掉落表会根据来源方块、海拔、深度、种子概率和玩家探险等级，确定是否产生额外奖励。",
       "ruleSetLabel": "规则集",
       "contractBody": "这个 PDA 面向文明系统设计：通过的提案只追加有边界的规则字节，不需要重新部署挖掘程序。",
       "source": "来源",
       "extraDrop": "额外掉落",
-      "chance": "概率",
+      "chance": "基础概率",
       "size": "掉落尺寸",
       "altitude": "海拔",
       "depth": "深度",
       "detailTitle": "额外掉落来源",
-      "detailBody": "链上会按紧凑的 {ruleSet} 字节设计：来源资源、概率、样本尺寸窗口、海拔窗口和深度窗口。",
+      "detailBody": "链上会按紧凑的 {ruleSet} 字节设计：来源资源、基础概率、样本尺寸窗口、海拔窗口和深度窗口。最终掉落权重每级探险 +10%。",
       "chanceValue": "{value}%",
       "sizeValue": "{min} 到 {max}",
       "rangeValue": "{min} 到 {max}"

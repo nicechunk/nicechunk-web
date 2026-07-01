@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ru",
     "label": "Russian",
-    "version": "docs-locale-ru-b8d87d323d857465",
-    "contentHash": "b8d87d323d857465"
+    "version": "docs-locale-ru-ea4294da6cd2c832",
+    "contentHash": "ea4294da6cd2c832"
   },
   "siteFooter": {
     "tagline": "Seeded voxel world protocol on Solana.",
@@ -367,7 +367,7 @@
         "registry": "Registry for active Guardian regions, NCK stake amount, treasury token account, and registration counters.",
         "region": "A registered region endpoint with owner, operator, host, TLS flag, stake, proof counters, and update slot.",
         "chunk": "Future production account for placed block deltas and current block overrides only. Unchanged generated terrain should not be stored.",
-        "resourceDropTable": "Bounded extra-drop rule table used by rewarded mining. Each rule names source block, drop block, chance, altitude, depth, and salt.",
+        "resourceDropTable": "Bounded extra-drop rule table used by rewarded mining. Each rule names source block, drop block, base chance, altitude, depth, salt, and drop volume range.",
         "recipeTable": "Smelting recipe table with authority, recipe ids, heat tiers, input slot records, output slot records, and updated slot.",
         "asset": "Compact owned item or model record with category, quantity, item hash, item code, durability, and bounded payload bytes.",
         "listing": "Marketplace listing state for backpack resources or asset PDAs, including seller, price, currency, escrow source, buyer, and sold/canceled state."
@@ -656,7 +656,7 @@
       },
       "v0150": {
         "title": "Docs alpha introduced",
-        "body": "Adds protocol docs page, public architecture, demos, independent docs language resources, and mainnet docs locale indexing."
+        "body": "Adds protocol docs page, public architecture, demos, and independent page-scoped docs locale files."
       },
       "v0148": {
         "title": "Homepage hero logo size update",

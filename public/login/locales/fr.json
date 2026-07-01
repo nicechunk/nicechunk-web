@@ -2,8 +2,8 @@
   "_meta": {
     "language": "fr",
     "label": "French",
-    "version": "login-locale-fr-8527bcc473ab71ba",
-    "contentHash": "8527bcc473ab71ba"
+    "version": "login-locale-fr-ab07ede0ba3ec9b0",
+    "contentHash": "ab07ede0ba3ec9b0"
   },
   "siteFooter": {
     "tagline": "Un protocole de monde voxel seedé sur Solana.",
@@ -60,6 +60,7 @@
     "wallet": "Portefeuille",
     "startGame": "Démarrer",
     "resetLogin": "Se reconnecter",
+    "disconnectWallet": "Déconnecter le portefeuille",
     "returnToBrowser": "Retourner au navigateur",
     "continueInWalletBrowser": "Continuer dans le navigateur du portefeuille",
     "signLoginMessage": "Signer le message de connexion",
@@ -84,6 +85,7 @@
       "profile": "Portefeuille connecté. Définissez votre nom de joueur.",
       "invalidUsername": "Le nom doit contenir 3 à 18 caractères et peut utiliser lettres, chiffres, tirets bas ou caractères chinois.",
       "ready": "Les informations de connexion sont prêtes.",
+      "walletDisconnected": "Portefeuille déconnecté. Choisissez-en un autre à lier.",
       "returningToBrowser": "Retour au navigateur d'origine...",
       "continuingInWalletBrowser": "Continuation dans le navigateur du portefeuille...",
       "signingChallenge": "Confirmez le message de connexion dans votre portefeuille.",

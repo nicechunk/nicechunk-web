@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ja",
     "label": "Japanese",
-    "version": "login-locale-ja-69057e40129e9013",
-    "contentHash": "69057e40129e9013"
+    "version": "login-locale-ja-8f628e1831527d38",
+    "contentHash": "8f628e1831527d38"
   },
   "siteFooter": {
     "tagline": "Solana 上のシード型ボクセルワールドプロトコル。",
@@ -60,6 +60,7 @@
     "wallet": "ウォレット",
     "startGame": "ゲーム開始",
     "resetLogin": "再ログイン",
+    "disconnectWallet": "ウォレットを切断",
     "returnToBrowser": "ブラウザに戻る",
     "continueInWalletBrowser": "ウォレットブラウザで続行",
     "signLoginMessage": "ログインメッセージに署名",
@@ -84,6 +85,7 @@
       "profile": "ウォレット接続済み。プレイヤー名を設定してください。",
       "invalidUsername": "プレイヤー名は3〜18文字で、英数字、アンダースコア、中国語文字を使用できます。",
       "ready": "ログイン情報の準備ができました。",
+      "walletDisconnected": "ウォレットを切断しました。別のウォレットを選んで紐付けてください。",
       "returningToBrowser": "元のブラウザに戻っています...",
       "continuingInWalletBrowser": "ウォレットブラウザで続行しています...",
       "signingChallenge": "ウォレットでログインメッセージを確認してください。",

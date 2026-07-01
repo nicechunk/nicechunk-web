@@ -689,6 +689,27 @@ h3 {
   align-items: start;
 }
 
+.packet-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(320px, 0.52fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.mvp-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(320px, 0.52fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.feasibility-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(320px, 0.52fr);
+  gap: 18px;
+  align-items: start;
+}
+
 .journey-layout {
   grid-template-columns: minmax(0, 1.04fr) minmax(320px, 0.52fr);
   align-items: start;
@@ -738,6 +759,13 @@ h3 {
 }
 
 .snapshot-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.98fr) minmax(320px, 0.5fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.integrity-layout {
   display: grid;
   grid-template-columns: minmax(0, 0.98fr) minmax(320px, 0.5fr);
   gap: 18px;
@@ -907,14 +935,19 @@ h3 {
 .review-checklist,
 .author-template-grid,
 .author-proof-grid,
+.packet-grid,
+.mvp-grid,
+.feasibility-grid,
 .journey-grid,
 .defense-stack,
 .challenge-stack,
+.integrity-stack,
 .threat-grid,
 .challenge-grid,
 .classifier-grid,
 .conservation-grid,
 .snapshot-grid,
+.integrity-grid,
 .case-view-grid,
 .case-evidence-grid,
 .impact-grid,
@@ -965,6 +998,21 @@ h3 {
   margin-top: 16px;
 }
 
+.packet-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.mvp-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.feasibility-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
 .journey-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 16px;
@@ -991,6 +1039,11 @@ h3 {
 }
 
 .snapshot-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.integrity-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 16px;
 }
@@ -1100,10 +1153,18 @@ h3 {
 .authoring-stack,
 .author-template-card,
 .author-proof-card,
+.packet-stack,
+.packet-card,
+.mvp-stack,
+.mvp-card,
+.feasibility-stack,
+.feasibility-card,
 .journey-stack,
 .journey-card,
 .defense-stack,
 .challenge-stack,
+.integrity-stack,
+.integrity-card,
 .challenge-card,
 .threat-card,
 .classifier-checks,
@@ -1165,8 +1226,12 @@ h3 {
 .review-check-card span,
 .author-template-card span,
 .author-proof-card span,
+.packet-card span,
+.mvp-card span,
+.feasibility-card span,
 .journey-card span,
 .challenge-card span,
+.integrity-card span,
 .threat-card span,
 .classifier-card span,
 .conservation-card span,
@@ -1210,8 +1275,12 @@ h3 {
 .failure-card strong,
 .account-blueprint-card strong,
 .review-check-card strong,
+.packet-card strong,
+.mvp-card strong,
+.feasibility-card strong,
 .journey-card strong,
 .challenge-card strong,
+.integrity-card strong,
 .threat-card strong,
 .classifier-card strong,
 .conservation-card strong,
@@ -1244,8 +1313,12 @@ h3 {
 .build-spec-card p,
 .reader-lane-card p,
 .review-check-card p,
+.packet-card p,
+.mvp-card p,
+.feasibility-card p,
 .journey-card p,
 .challenge-card p,
+.integrity-card p,
 .threat-card p,
 .classifier-card p,
 .conservation-card p,
@@ -1778,6 +1851,81 @@ h3 {
   overflow-wrap: anywhere;
 }
 
+.packet-card dl {
+  display: grid;
+  grid-template-columns: minmax(76px, 0.34fr) minmax(0, 1fr);
+  gap: 7px 10px;
+  margin: 14px 0 0;
+}
+
+.mvp-card dl {
+  display: grid;
+  grid-template-columns: minmax(82px, 0.36fr) minmax(0, 1fr);
+  gap: 7px 10px;
+  margin: 14px 0 0;
+}
+
+.feasibility-card dl {
+  display: grid;
+  grid-template-columns: minmax(82px, 0.36fr) minmax(0, 1fr);
+  gap: 7px 10px;
+  margin: 14px 0 0;
+}
+
+.packet-card dt {
+  color: var(--civ-dim);
+  font-size: 10px;
+  font-weight: 920;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mvp-card dt {
+  color: var(--civ-dim);
+  font-size: 10px;
+  font-weight: 920;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.feasibility-card dt {
+  color: var(--civ-dim);
+  font-size: 10px;
+  font-weight: 920;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.packet-card dd {
+  min-width: 0;
+  margin: 0;
+  color: var(--civ-green);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+.mvp-card dd {
+  min-width: 0;
+  margin: 0;
+  color: var(--civ-green);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+.feasibility-card dd {
+  min-width: 0;
+  margin: 0;
+  color: var(--civ-green);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
 .design-blueprint-panel {
   margin-top: 16px;
 }
@@ -2065,6 +2213,52 @@ h3 {
 }
 
 .snapshot-card code {
+  display: block;
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid rgba(152, 203, 255, 0.13);
+  border-radius: 6px;
+  color: var(--civ-green);
+  background: rgba(0, 0, 0, 0.22);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  line-height: 1.42;
+  overflow-wrap: anywhere;
+}
+
+.integrity-stack {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.integrity-card span {
+  color: var(--civ-green);
+  border-color: rgba(140, 255, 0, 0.2);
+  background: rgba(140, 255, 0, 0.055);
+}
+
+.integrity-card.activity span,
+.integrity-card.diversity span {
+  color: var(--civ-blue);
+  border-color: rgba(152, 203, 255, 0.2);
+  background: rgba(152, 203, 255, 0.055);
+}
+
+.integrity-card.decay span,
+.integrity-card.challenge span {
+  color: var(--civ-red);
+  border-color: rgba(255, 110, 127, 0.22);
+  background: rgba(255, 110, 127, 0.055);
+}
+
+.integrity-card.recount span {
+  color: var(--civ-gold);
+  border-color: rgba(255, 211, 110, 0.22);
+  background: rgba(255, 211, 110, 0.055);
+}
+
+.integrity-card code {
   display: block;
   margin-top: 12px;
   padding: 10px;
@@ -2653,6 +2847,18 @@ h3 {
 
 .trust-ladder-svg {
   min-height: 360px;
+}
+
+.packet-svg {
+  min-height: 350px;
+}
+
+.mvp-svg {
+  min-height: 350px;
+}
+
+.feasibility-svg {
+  min-height: 350px;
 }
 
 .power-svg {
@@ -3355,6 +3561,7 @@ h3 {
   .glossary-layout,
   .reader-layout,
   .authoring-layout,
+  .packet-layout,
   .journey-layout,
   .threat-layout,
   .challenge-layout,
@@ -3366,6 +3573,7 @@ h3 {
   .classifier-layout,
   .conservation-layout,
   .snapshot-layout,
+  .integrity-layout,
   .technical-layout,
   .binding-layout,
   .validator-layout,
@@ -3377,6 +3585,8 @@ h3 {
   .roles-layout,
   .design-layout,
   .civic-layout,
+  .mvp-layout,
+  .feasibility-layout,
   .trace-layout,
   .split-section,
   .execution-panel,
@@ -3396,12 +3606,14 @@ h3 {
   .review-checklist,
   .author-template-grid,
   .author-proof-grid,
+  .packet-grid,
   .journey-grid,
   .threat-grid,
   .challenge-grid,
   .classifier-grid,
   .conservation-grid,
   .snapshot-grid,
+  .integrity-grid,
   .case-view-grid,
   .case-evidence-grid,
   .glossary-grid,
@@ -3418,6 +3630,8 @@ h3 {
   .role-grid,
   .design-grid,
   .civic-grid,
+  .mvp-grid,
+  .feasibility-grid,
   .design-blueprint-panel > div,
   .build-spec-grid,
   .build-order-panel > div,
@@ -3482,6 +3696,18 @@ h3 {
 
   .civilization-flow-svg {
     min-height: 220px;
+  }
+
+  .packet-svg {
+    min-height: 300px;
+  }
+
+  .mvp-svg {
+    min-height: 300px;
+  }
+
+  .feasibility-svg {
+    min-height: 300px;
   }
 
   .binding-svg {

@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hans",
     "label": "Simplified Chinese",
-    "version": "login-locale-zh-Hans-59894175c0d9f535",
-    "contentHash": "59894175c0d9f535"
+    "version": "login-locale-zh-Hans-e0806958e7655a9b",
+    "contentHash": "e0806958e7655a9b"
   },
   "siteFooter": {
     "tagline": "Solana 上的种子体素世界协议。",
@@ -61,6 +61,7 @@
     "wallet": "钱包",
     "startGame": "开始游戏",
     "resetLogin": "重新登录",
+    "disconnectWallet": "断开钱包",
     "returnToBrowser": "返回浏览器",
     "continueInWalletBrowser": "在钱包浏览器中继续",
     "signLoginMessage": "签署登录消息",
@@ -92,6 +93,7 @@
       "profile": "钱包已连接，设置玩家名。",
       "invalidUsername": "玩家名需要 3-18 位，只能包含字母、数字、下划线和中文。",
       "ready": "登录信息已准备好。",
+      "walletDisconnected": "钱包已断开，请选择其他钱包绑定。",
       "returningToBrowser": "正在返回原来的浏览器...",
       "continuingInWalletBrowser": "正在钱包浏览器中继续...",
       "signingChallenge": "请在钱包中确认登录消息。",

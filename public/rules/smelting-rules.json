@@ -128,7 +128,9 @@
         "thermalConductivity": 18,
         "magnetism": 0,
         "workability": 58
-      }
+      },
+      "yieldBps": 5500,
+      "mergeYieldBps": 10000
     },
     {
       "id": "biochar_compost",
@@ -186,7 +188,9 @@
         "thermalConductivity": 14,
         "magnetism": 0,
         "workability": 72
-      }
+      },
+      "yieldBps": 5500,
+      "mergeYieldBps": 10000
     },
     {
       "id": "plant_fiber",
@@ -236,7 +240,9 @@
         "thermalConductivity": 8,
         "magnetism": 0,
         "workability": 86
-      }
+      },
+      "yieldBps": 6500,
+      "mergeYieldBps": 10000
     },
     {
       "id": "resin_binder",
@@ -286,7 +292,9 @@
         "thermalConductivity": 7,
         "magnetism": 0,
         "workability": 82
-      }
+      },
+      "yieldBps": 6000,
+      "mergeYieldBps": 10000
     },
     {
       "id": "ceramic_brick",
@@ -336,7 +344,9 @@
         "thermalConductivity": 24,
         "magnetism": 0,
         "workability": 34
-      }
+      },
+      "yieldBps": 7200,
+      "mergeYieldBps": 10000
     },
     {
       "id": "lime_ceramic",
@@ -386,7 +396,9 @@
         "thermalConductivity": 20,
         "magnetism": 0,
         "workability": 42
-      }
+      },
+      "yieldBps": 7200,
+      "mergeYieldBps": 10000
     },
     {
       "id": "quicklime",
@@ -436,7 +448,9 @@
         "thermalConductivity": 18,
         "magnetism": 0,
         "workability": 46
-      }
+      },
+      "yieldBps": 7200,
+      "mergeYieldBps": 10000
     },
     {
       "id": "salt_flux",
@@ -486,7 +500,9 @@
         "thermalConductivity": 26,
         "magnetism": 0,
         "workability": 74
-      }
+      },
+      "yieldBps": 6000,
+      "mergeYieldBps": 10000
     },
     {
       "id": "ash_cement",
@@ -544,7 +560,9 @@
         "thermalConductivity": 22,
         "magnetism": 2,
         "workability": 54
-      }
+      },
+      "yieldBps": 5800,
+      "mergeYieldBps": 10000
     },
     {
       "id": "glass_ingot",
@@ -594,7 +612,9 @@
         "thermalConductivity": 16,
         "magnetism": 0,
         "workability": 32
-      }
+      },
+      "yieldBps": 8000,
+      "mergeYieldBps": 10000
     },
     {
       "id": "obsidian_glass",
@@ -654,7 +674,9 @@
         "thermalConductivity": 18,
         "magnetism": 4,
         "workability": 24
-      }
+      },
+      "yieldBps": 8000,
+      "mergeYieldBps": 10000
     },
     {
       "id": "silicon_wafer",
@@ -704,7 +726,9 @@
         "thermalConductivity": 70,
         "magnetism": 0,
         "workability": 28
-      }
+      },
+      "yieldBps": 6000,
+      "mergeYieldBps": 10000
     },
     {
       "id": "ice_crystal",
@@ -758,7 +782,9 @@
         "thermalConductivity": 38,
         "magnetism": 0,
         "workability": 20
-      }
+      },
+      "yieldBps": 6000,
+      "mergeYieldBps": 10000
     },
     {
       "id": "iron_bloom",
@@ -818,7 +844,9 @@
         "thermalConductivity": 48,
         "magnetism": 70,
         "workability": 62
-      }
+      },
+      "yieldBps": 6200,
+      "mergeYieldBps": 10000
     },
     {
       "id": "copper_bloom",
@@ -868,7 +896,9 @@
         "thermalConductivity": 88,
         "magnetism": 2,
         "workability": 84
-      }
+      },
+      "yieldBps": 6200,
+      "mergeYieldBps": 10000
     },
     {
       "id": "alumina_plate",
@@ -918,7 +948,9 @@
         "thermalConductivity": 32,
         "magnetism": 0,
         "workability": 30
-      }
+      },
+      "yieldBps": 7200,
+      "mergeYieldBps": 10000
     },
     {
       "id": "nickel_iron",
@@ -978,7 +1010,9 @@
         "thermalConductivity": 44,
         "magnetism": 92,
         "workability": 56
-      }
+      },
+      "yieldBps": 6000,
+      "mergeYieldBps": 10000
     },
     {
       "id": "carbon_plate",
@@ -1028,7 +1062,9 @@
         "thermalConductivity": 58,
         "magnetism": 0,
         "workability": 44
-      }
+      },
+      "yieldBps": 5500,
+      "mergeYieldBps": 10000
     },
     {
       "id": "carbon_steel",
@@ -1078,7 +1114,9 @@
         "thermalConductivity": 42,
         "magnetism": 78,
         "workability": 52
-      }
+      },
+      "yieldBps": 6000,
+      "mergeYieldBps": 10000
     },
     {
       "id": "basalt_fiber",
@@ -1132,7 +1170,9 @@
         "thermalConductivity": 24,
         "magnetism": 6,
         "workability": 48
-      }
+      },
+      "yieldBps": 6500,
+      "mergeYieldBps": 10000
     },
     {
       "id": "basalt_composite",
@@ -1190,7 +1230,9 @@
         "thermalConductivity": 28,
         "magnetism": 8,
         "workability": 42
-      }
+      },
+      "yieldBps": 5800,
+      "mergeYieldBps": 10000
     },
     {
       "id": "geopolymer_block",
@@ -1248,7 +1290,9 @@
         "thermalConductivity": 22,
         "magnetism": 4,
         "workability": 46
-      }
+      },
+      "yieldBps": 5800,
+      "mergeYieldBps": 10000
     },
     {
       "id": "coral_lime",
@@ -1302,7 +1346,9 @@
         "thermalConductivity": 18,
         "magnetism": 0,
         "workability": 50
-      }
+      },
+      "yieldBps": 7200,
+      "mergeYieldBps": 10000
     },
     {
       "id": "toxic_glass",
@@ -1360,7 +1406,9 @@
         "thermalConductivity": 18,
         "magnetism": 0,
         "workability": 22
-      }
+      },
+      "yieldBps": 8000,
+      "mergeYieldBps": 10000
     }
   ]
 }

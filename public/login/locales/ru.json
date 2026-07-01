@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ru",
     "label": "Russian",
-    "version": "login-locale-ru-aff98f0429d340a3",
-    "contentHash": "aff98f0429d340a3"
+    "version": "login-locale-ru-f3251fad2b2958ab",
+    "contentHash": "f3251fad2b2958ab"
   },
   "siteFooter": {
     "tagline": "Seeded voxel world protocol on Solana.",
@@ -60,6 +60,7 @@
     "wallet": "Кошелек",
     "startGame": "Начать игру",
     "resetLogin": "Войти заново",
+    "disconnectWallet": "Отключить кошелек",
     "returnToBrowser": "Вернуться в браузер",
     "continueInWalletBrowser": "Продолжить в браузере кошелька",
     "signLoginMessage": "Подписать сообщение входа",
@@ -84,6 +85,7 @@
       "profile": "Кошелек подключен. Задайте имя игрока.",
       "invalidUsername": "Имя должно быть 3-18 символов и может содержать буквы, цифры, подчеркивание или китайские символы.",
       "ready": "Данные входа готовы.",
+      "walletDisconnected": "Кошелек отключен. Выберите другой кошелек для привязки.",
       "returningToBrowser": "Возвращаемся в исходный браузер...",
       "continuingInWalletBrowser": "Продолжаем в браузере кошелька...",
       "signingChallenge": "Подтвердите сообщение входа в кошельке.",

@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ko",
     "label": "Korean",
-    "version": "mining-locale-ko-b851c6dd4941650c",
-    "contentHash": "b851c6dd4941650c"
+    "version": "mining-locale-ko-c3cfa4ece5505735",
+    "contentHash": "c3cfa4ece5505735"
   },
   "siteFooter": {
     "tagline": "Solana 기반 시드형 복셀 월드 프로토콜.",
@@ -95,6 +95,14 @@
       "scanner": "광석 스캐너",
       "lantern": "동굴 랜턴",
       "hammer": "암석 망치"
+    },
+    "account": {
+      "guest": "게스트",
+      "level": "Lv. {level}",
+      "notConnected": "연결 안 됨"
+    },
+    "hotbarSlot": {
+      "empty": "슬롯 {slot}: 비어 있음"
     }
   }
 }

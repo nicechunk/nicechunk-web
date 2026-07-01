@@ -2,8 +2,8 @@
   "_meta": {
     "language": "en",
     "label": "English",
-    "version": "login-locale-en-3295296c8a10d98b",
-    "contentHash": "3295296c8a10d98b"
+    "version": "login-locale-en-6e64c7a60259731f",
+    "contentHash": "6e64c7a60259731f"
   },
   "siteFooter": {
     "tagline": "A seeded voxel world protocol on Solana.",
@@ -61,6 +61,7 @@
     "wallet": "Wallet",
     "startGame": "Start Game",
     "resetLogin": "Log In Again",
+    "disconnectWallet": "Disconnect Wallet",
     "returnToBrowser": "Return to browser",
     "continueInWalletBrowser": "Continue in wallet browser",
     "signLoginMessage": "Sign login message",
@@ -92,6 +93,7 @@
       "profile": "Wallet connected. Set your player name.",
       "invalidUsername": "Player name must be 3-18 characters and can use letters, numbers, underscores, or Chinese characters.",
       "ready": "Login details are ready.",
+      "walletDisconnected": "Wallet disconnected. Choose another wallet to bind.",
       "returningToBrowser": "Returning to your original browser...",
       "continuingInWalletBrowser": "Continuing in the wallet browser...",
       "signingChallenge": "Confirm the login message in your wallet.",

@@ -1,0 +1,162 @@
+{
+  "_meta": {
+    "language": "zh-Hans",
+    "label": "Simplified Chinese",
+    "version": "chip-locale-zh-Hans-92513e76600f7fcb",
+    "contentHash": "92513e76600f7fcb"
+  },
+  "siteFooter": {
+    "tagline": "Solana 上的种子体素世界协议。",
+    "navigationAria": "页脚导航",
+    "socialAria": "NiceChunk 社交链接",
+    "home": "首页",
+    "play": "进入世界",
+    "roadmap": "路书",
+    "docs": "文档",
+    "guardian": "守护者",
+    "contracts": "合约",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk。保留所有权利。"
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "语言",
+    "comingSoon": "即将开放",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "chip": {
+    "meta": {
+      "title": "NiceChunk 芯片模拟器"
+    },
+    "hero": {
+      "title": "给锻造芯片写入程序，再观察引脚驱动设备。",
+      "body": "直接输入 Arduino sketch 代码。浏览器会用 AVR GCC 编译成 Intel HEX，再交给 avr8js 执行 ATmega328P 模拟。"
+    },
+    "editor": {
+      "kicker": "锻造 MCU 程序",
+      "label": "Arduino sketch 编辑器",
+      "aria": "Arduino sketch 源码编辑器"
+    },
+    "controls": {
+      "aria": "模拟器控制",
+      "compile": "编译",
+      "run": "运行",
+      "stop": "停止",
+      "reset": "复位",
+      "sample": "加载示例",
+      "uploadHex": "导入 HEX"
+    },
+    "status": {
+      "title": "编译状态",
+      "idle": "就绪",
+      "compiling": "正在编译 AVR 固件",
+      "compiled": "已编译",
+      "running": "运行中",
+      "stopped": "已停止",
+      "reset": "已复位",
+      "error": "编译或运行错误"
+    },
+    "viewport": {
+      "aria": "3D 芯片预览",
+      "kicker": "NC-AVR32 原型",
+      "title": "每个锻造引脚都可以成为游戏世界里的设备端口。",
+      "drag": "拖动旋转",
+      "activeLeds": "{count} 个 LED 亮起",
+      "activeDevices": "{count} 个设备工作中"
+    },
+    "components": {
+      "aria": "元器件列表",
+      "led": "LED 灯",
+      "button": "按钮",
+      "switch": "状态开关",
+      "motor": "电机",
+      "buzzer": "蜂鸣器",
+      "wire": "电线",
+      "ready": "把设备拖到板子里。选择电线后可以走绝缘线。",
+      "dragLed": "把 LED 工具拖进板子，已放置的 LED 也可以继续拖动调整位置。",
+      "dragButton": "把按钮拖进板子。按住按钮帽两端导通，松开后断路。",
+      "dragSwitch": "把状态开关拖进板子。点击拨杆可锁定开或关。",
+      "dragMotor": "把电机拖进板子。一端得电、另一端回到 GND 时会转动。",
+      "dragBuzzer": "把蜂鸣器拖进板子。形成到 GND 的供电回路时会振动。",
+      "pickFirst": "电线模式：点击芯片引脚或元器件引脚。",
+      "pickSecond": "电线模式：点击板面添加折点，点击第二个端点完成连接，右键结束走线。",
+      "waypointAdded": "已添加电线折点。继续点板面、点端点连接，或右键结束。",
+      "routingEnded": "已结束走线。",
+      "rotatedLed": "LED 已旋转 90 度。",
+      "rotatedComponent": "元器件已旋转 90 度。",
+      "switchOn": "状态开关已锁定为 ON，两端子导通。",
+      "switchOff": "状态开关已锁定为 OFF，两端子断开。",
+      "terminalLabels": {
+        "led": {
+          "signal": "LED 信号脚",
+          "ground": "LED GND 脚"
+        },
+        "button": {
+          "a": "按钮 A 脚",
+          "b": "按钮 B 脚"
+        },
+        "switch": {
+          "a": "开关 A 脚",
+          "b": "开关 B 脚"
+        },
+        "motor": {
+          "plus": "电机 +",
+          "minus": "电机 -"
+        },
+        "buzzer": {
+          "plus": "蜂鸣器 +",
+          "minus": "蜂鸣器 -"
+        }
+      },
+      "signalTerminal": "LED 信号脚",
+      "groundTerminal": "LED GND 脚",
+      "connected": "已连接 {from} 到 {to}。",
+      "invalidConnection": "请选择两个不同端点。"
+    },
+    "telemetry": {
+      "kicker": "运行时",
+      "title": "AVR 状态",
+      "pc": "PC",
+      "cycles": "周期",
+      "size": "程序",
+      "bytes": "{bytes} B",
+      "programDetail": "{format} {bytes} B / {limit} B · {ms} ms",
+      "highPins": "高电平引脚",
+      "ports": "GPIO 端口",
+      "pins": "封装引脚"
+    },
+    "format": {
+      "arduino": "Arduino",
+      "hex": "HEX",
+      "asm": "ASM"
+    },
+    "concept": {
+      "title": "游戏接入路径",
+      "body": "玩家锻造芯片外形，存入紧凑代码，把电器设备接到引脚，再由模拟器驱动灯、门、陷阱、继电器或工厂。"
+    },
+    "sample": {
+      "code": "// NiceChunk 状态开关控制 LED + 电机示例\n// 接线方式：\n// VCC -> 开关 A 脚\n// 开关 B 脚 -> D2\n// D13 -> LED 信号脚\n// LED GND 脚 -> GND\n// D9 -> 电机 +\n// 电机 - -> GND\nconst int switchPin = 2;\nconst int ledPin = 13;\nconst int motorPin = 9;\n\nvoid setup() {\n  pinMode(switchPin, INPUT);\n  pinMode(ledPin, OUTPUT);\n  pinMode(motorPin, OUTPUT);\n}\n\nvoid loop() {\n  const bool enabled = digitalRead(switchPin) == HIGH;\n  digitalWrite(ledPin, enabled ? HIGH : LOW);\n  digitalWrite(motorPin, enabled ? HIGH : LOW);\n  delay(10);\n}\n"
+    },
+    "errors": {
+      "emptyProgram": "请先输入 Arduino 代码、Intel HEX 或 AVR 汇编。",
+      "noHex": "编译器没有返回 Intel HEX 输出。",
+      "flashOverflow": "编译后的固件为 {bytes} B，超过 Uno 限制 {limit} B。",
+      "assembly": "AVR 汇编失败：{error}",
+      "hexLine": "Intel HEX 第 {line} 行格式错误。",
+      "hexChecksum": "Intel HEX 第 {line} 行校验失败。",
+      "hexRecord": "不支持的 Intel HEX 记录类型：{type}。",
+      "hexEof": "Intel HEX 缺少 EOF 结束记录。"
+    }
+  }
+}

@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hans",
     "label": "Simplified Chinese",
-    "version": "mining-locale-zh-Hans-c369740ef982c922",
-    "contentHash": "c369740ef982c922"
+    "version": "mining-locale-zh-Hans-ed5da037461d113f",
+    "contentHash": "ed5da037461d113f"
   },
   "siteFooter": {
     "tagline": "Solana 上的种子体素世界协议。",
@@ -96,6 +96,14 @@
       "scanner": "矿石扫描器",
       "lantern": "矿洞提灯",
       "hammer": "岩石锤"
+    },
+    "account": {
+      "guest": "访客",
+      "level": "Lv. {level}",
+      "notConnected": "未连接"
+    },
+    "hotbarSlot": {
+      "empty": "第 {slot} 格：空"
     }
   }
 }

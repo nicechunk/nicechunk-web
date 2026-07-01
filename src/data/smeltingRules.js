@@ -1085,13 +1085,19 @@ const smeltingClassFallbackAttributes = {
   composite: { hardness: 66, durability: 76, toughness: 68, ductility: 16, brittleness: 38, density: 50, heatResistance: 82, corrosionResistance: 78, conductivity: 12, thermalConductivity: 26, magnetism: 4, workability: 46 },
 };
 
-for (const material of smeltingRules.materials) {
-  material.attributes = smeltingMaterialBaseAttributes(material);
-}
-
 export default smeltingRules;
 
 export const SMELTING_RECIPES_PER_TABLE = 12;
+export const SMELTING_RECIPE_TABLE_ID_BASE = 20;
+export const SMELTING_MERGE_RECIPE_TABLE_ID_BASE = 120;
+export const SMELTING_MATERIAL_INPUT_PREFIX = "material:";
+export const SMELTING_RECIPE_YIELD_BPS_DENOMINATOR = 10_000;
+
+for (const material of smeltingRules.materials) {
+  material.attributes = smeltingMaterialBaseAttributes(material);
+  material.yieldBps = smeltingRecipeYieldBps(material);
+  material.mergeYieldBps = SMELTING_RECIPE_YIELD_BPS_DENOMINATOR;
+}
 
 
 export function smeltingMaterialBaseAttributes(materialOrId, rules = smeltingRules) {
@@ -1167,6 +1173,7 @@ export function deriveSmeltingSourceAttributes(inputSlots = [], material = null)
 }
 
 export function smeltingSourceAttributeProfile(slot = {}) {
+  if (slot?.materialProperties?.attributes) return normalizeSmeltingAttributes(slot.materialProperties.attributes);
   const category = slot?.category ?? slot?.atlas?.category ?? "";
   const densityKgM3 = Number(slot?.densityKgM3 ?? slot?.atlas?.physical?.densityKgM3 ?? 0);
   const density = densityKgM3 > 0 ? clampSmeltingScore(Math.round(densityKgM3 / 100)) : 35;
@@ -1290,6 +1297,9 @@ export function validateSmeltingRules(rules = smeltingRules) {
     if (!Array.isArray(material.rawInputs) || !material.rawInputs.length) throw new Error(`Material ${material.id} requires rawInputs`);
     if (!heatTierIds.has(material.requiredHeatTier)) throw new Error(`Material ${material.id} uses unknown heat tier ${material.requiredHeatTier}`);
     if (!Number.isInteger(material.yieldCount) || material.yieldCount < 1) throw new Error(`Material ${material.id} has invalid yieldCount`);
+    if (!Number.isInteger(material.yieldBps) || material.yieldBps < 1 || material.yieldBps > SMELTING_RECIPE_YIELD_BPS_DENOMINATOR) {
+      throw new Error(`Material ${material.id} has invalid yieldBps`);
+    }
     const attributes = smeltingMaterialBaseAttributes(material);
     for (const key of SMELTING_MATERIAL_ATTRIBUTE_KEYS) {
       if (!Number.isInteger(attributes[key]) || attributes[key] < 0 || attributes[key] > 100) {
@@ -1324,21 +1334,37 @@ export function smeltingRecipeIdForMaterialId(id, rules = smeltingRules) {
   return index >= 0 ? 1001 + index : 0;
 }
 
+export function smeltingMergeRecipeIdForMaterialId(id, rules = smeltingRules) {
+  const index = (rules.materials ?? []).findIndex((material) => material.id === id);
+  return index >= 0 ? 2001 + index : 0;
+}
+
 export function smeltingRecipeTableIdForMaterialId(id, rules = smeltingRules) {
   const index = (rules.materials ?? []).findIndex((material) => material.id === id);
-  return index >= 0 ? Math.floor(index / SMELTING_RECIPES_PER_TABLE) + 1 : 0;
+  return index >= 0 ? Math.floor(index / SMELTING_RECIPES_PER_TABLE) + SMELTING_RECIPE_TABLE_ID_BASE : 0;
+}
+
+export function smeltingMergeRecipeTableIdForMaterialId(id, rules = smeltingRules) {
+  const index = (rules.materials ?? []).findIndex((material) => material.id === id);
+  return index >= 0 ? Math.floor(index / SMELTING_RECIPES_PER_TABLE) + SMELTING_MERGE_RECIPE_TABLE_ID_BASE : 0;
 }
 
 export function smeltingRecipeTableIdForRecipeId(recipeId, rules = smeltingRules) {
   const index = Number(recipeId) - 1001;
-  return Number.isInteger(index) && index >= 0 && index < (rules.materials ?? []).length
-    ? Math.floor(index / SMELTING_RECIPES_PER_TABLE) + 1
+  if (Number.isInteger(index) && index >= 0 && index < (rules.materials ?? []).length) {
+    return Math.floor(index / SMELTING_RECIPES_PER_TABLE) + SMELTING_RECIPE_TABLE_ID_BASE;
+  }
+  const mergeIndex = Number(recipeId) - 2001;
+  return Number.isInteger(mergeIndex) && mergeIndex >= 0 && mergeIndex < (rules.materials ?? []).length
+    ? Math.floor(mergeIndex / SMELTING_RECIPES_PER_TABLE) + SMELTING_MERGE_RECIPE_TABLE_ID_BASE
     : 0;
 }
 
 export function smeltingMaterialIdForRecipeId(recipeId, rules = smeltingRules) {
   const index = Number(recipeId) - 1001;
-  return Number.isInteger(index) && index >= 0 ? rules.materials?.[index]?.id ?? null : null;
+  if (Number.isInteger(index) && index >= 0) return rules.materials?.[index]?.id ?? null;
+  const mergeIndex = Number(recipeId) - 2001;
+  return Number.isInteger(mergeIndex) && mergeIndex >= 0 ? rules.materials?.[mergeIndex]?.id ?? null : null;
 }
 
 export function smeltingMaterialItemCode(id, rules = smeltingRules) {
@@ -1349,6 +1375,53 @@ export function smeltingMaterialItemCode(id, rules = smeltingRules) {
 export function smeltingMaterialIdForItemCode(itemCode, rules = smeltingRules) {
   const index = Number(itemCode) - 1001;
   return Number.isInteger(index) && index >= 0 ? rules.materials?.[index]?.id ?? null : null;
+}
+
+export function smeltingMaterialInputKey(materialId) {
+  return `${SMELTING_MATERIAL_INPUT_PREFIX}${materialId}`;
+}
+
+export function smeltingMaterialIdForInputKey(key) {
+  const text = String(key ?? "");
+  return text.startsWith(SMELTING_MATERIAL_INPUT_PREFIX)
+    ? text.slice(SMELTING_MATERIAL_INPUT_PREFIX.length)
+    : null;
+}
+
+export function createSmeltingMergeRecipe(materialOrId, rules = smeltingRules) {
+  const material = typeof materialOrId === "string" ? smeltingMaterialById(materialOrId, rules) : materialOrId;
+  if (!material?.id) return null;
+  return {
+    ...material,
+    recipeKind: "merge",
+    materialInputs: [{ key: smeltingMaterialInputKey(material.id), amount: 1 }],
+    rawInputs: [],
+    catalysts: [],
+    yieldBps: material.mergeYieldBps ?? SMELTING_RECIPE_YIELD_BPS_DENOMINATOR,
+    yieldCount: 1,
+  };
+}
+
+export function smeltingRecipeYieldBps(recipe) {
+  const explicit = Number(recipe?.yieldBps);
+  if (Number.isInteger(explicit) && explicit > 0) {
+    return Math.min(SMELTING_RECIPE_YIELD_BPS_DENOMINATOR, explicit);
+  }
+  return ({
+    carbon: 5500,
+    fiber: 6500,
+    polymer: 6000,
+    ceramic: 7200,
+    glass: 8000,
+    flux: 7000,
+    stone: 8500,
+    metal: 6200,
+    composite: 5800,
+  }[recipe?.class] ?? 6000);
+}
+
+export function smeltingSkillOutputBpsForLevel(level) {
+  return Math.min(SMELTING_RECIPE_YIELD_BPS_DENOMINATOR, 7000 + Math.max(0, Math.min(10, Math.floor(Number(level) || 0))) * 300);
 }
 
 export function smeltingFuelForRawKey(key, rules = smeltingRules) {
@@ -1370,7 +1443,7 @@ export function createSmeltingInputCounts(keys = []) {
 }
 
 export function recipeRequirements(recipe) {
-  return [...(recipe?.rawInputs ?? []), ...(recipe?.catalysts ?? [])];
+  return [...(recipe?.rawInputs ?? []), ...(recipe?.materialInputs ?? []), ...(recipe?.catalysts ?? [])];
 }
 
 export function hasRequiredSmeltingInputs(recipe, counts) {
@@ -1422,7 +1495,11 @@ export function smeltingRecipeMatchScore(recipe, counts) {
 
 export function findBestSmeltingRecipeForKeys(keys = [], rules = smeltingRules) {
   const counts = createSmeltingInputCounts(keys);
-  const candidates = (rules.materials ?? [])
+  const materialMergeRecipe = createMergeCandidateFromCounts(counts, rules);
+  const candidates = [
+    ...(rules.materials ?? []),
+    ...(materialMergeRecipe ? [materialMergeRecipe] : []),
+  ]
     .map((recipe) => ({ recipe, score: smeltingRecipeMatchScore(recipe, counts) }))
     .filter(({ score }) => score.matchedTotal > 0)
     .sort((a, b) => {
@@ -1432,6 +1509,15 @@ export function findBestSmeltingRecipeForKeys(keys = [], rules = smeltingRules) 
       return (a.recipe.requiredHeatTier ?? 0) - (b.recipe.requiredHeatTier ?? 0);
     });
   return candidates[0] ?? null;
+}
+
+function createMergeCandidateFromCounts(counts, rules) {
+  if (!counts?.size || counts.size !== 1) return null;
+  const [[key, count]] = counts.entries();
+  if (count < 2) return null;
+  const materialId = smeltingMaterialIdForInputKey(key);
+  if (!materialId) return null;
+  return createSmeltingMergeRecipe(materialId, rules);
 }
 
 export function missingSmeltingInputs(recipe, keys = []) {

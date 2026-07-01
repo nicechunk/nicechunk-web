@@ -1,0 +1,161 @@
+{
+  "_meta": {
+    "language": "de",
+    "label": "German",
+    "version": "chip-locale-de-471cea3b5a445c8a",
+    "contentHash": "471cea3b5a445c8a"
+  },
+  "siteFooter": {
+    "tagline": "Ein Seed-Voxelwelt-Protokoll auf Solana.",
+    "navigationAria": "Footer-Navigation",
+    "socialAria": "NiceChunk Social Links",
+    "home": "Home",
+    "play": "Welt betreten",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Guardians",
+    "contracts": "Contracts",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Alle Rechte vorbehalten."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "Sprache",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "chip": {
+    "meta": {
+      "title": "NiceChunk Chip-Simulator"
+    },
+    "hero": {
+      "title": "Programmiere einen geschmiedeten Chip und sieh, wie seine Pins Geraete steuern.",
+      "body": "Schreibe Arduino-Sketch-Code. Der Browser kompiliert ihn mit AVR GCC zu Intel HEX, danach fuehrt avr8js ihn in einer ATmega328P-Simulation aus."
+    },
+    "editor": {
+      "kicker": "Geschmiedetes MCU-Programm",
+      "label": "Arduino-Sketch-Editor",
+      "aria": "Quellcode-Editor fuer Arduino-Sketches"
+    },
+    "controls": {
+      "aria": "Simulatorsteuerung",
+      "compile": "Kompilieren",
+      "run": "Starten",
+      "stop": "Stoppen",
+      "reset": "Zuruecksetzen",
+      "sample": "Beispiel laden",
+      "uploadHex": "HEX hochladen"
+    },
+    "status": {
+      "title": "Compilerstatus",
+      "idle": "Bereit",
+      "compiling": "AVR-Firmware wird kompiliert",
+      "compiled": "Kompiliert",
+      "running": "Laeuft",
+      "stopped": "Gestoppt",
+      "reset": "Zuruecksetzen abgeschlossen",
+      "error": "Kompilier- oder Laufzeitfehler"
+    },
+    "viewport": {
+      "aria": "3D-Chip-Vorschau",
+      "kicker": "NC-AVR32 Prototyp",
+      "title": "Jeder geschmiedete Pin kann ein Geraeteport in der Spielwelt werden.",
+      "drag": "Ziehen zum Drehen",
+      "activeLeds": "{count} aktive LEDs",
+      "activeDevices": "{count} aktive Geraete"
+    },
+    "components": {
+      "aria": "Komponentenpalette",
+      "led": "LED-Lampe",
+      "button": "Taster",
+      "switch": "Schalter",
+      "motor": "Motor",
+      "buzzer": "Summer",
+      "wire": "Kabel",
+      "ready": "Ziehe ein Geraet auf die Platine. Waehle Kabel, um isolierte Leitungen zu verlegen.",
+      "dragLed": "Ziehe das LED-Werkzeug auf die Platine und verschiebe platzierte LEDs danach frei.",
+      "dragButton": "Ziehe den Taster auf die Platine. Halte die Kappe gedrueckt zum Leiten, lasse los zum Oeffnen.",
+      "dragSwitch": "Ziehe den Schalter auf die Platine. Klicke den Hebel, um ON oder OFF einzurasten.",
+      "dragMotor": "Ziehe den Motor auf die Platine. Er dreht, wenn ein Anschluss Strom hat und der andere GND erreicht.",
+      "dragBuzzer": "Ziehe den Summer auf die Platine. Er vibriert bei Versorgung mit GND-Rueckweg.",
+      "pickFirst": "Kabelmodus: Klicke einen Chip-Pin oder Komponenten-Pin.",
+      "pickSecond": "Kabelmodus: Klicke die Platine fuer Knicke, den zweiten Endpunkt zum Verbinden oder rechts zum Beenden.",
+      "waypointAdded": "Kabelknick hinzugefuegt. Klicke einen weiteren Punkt, einen Endpunkt oder rechts zum Beenden.",
+      "routingEnded": "Kabelverlegung beendet.",
+      "rotatedLed": "LED um 90 Grad gedreht.",
+      "rotatedComponent": "Komponente um 90 Grad gedreht.",
+      "switchOn": "Schalter auf ON eingerastet. Beide Anschluesse leiten jetzt.",
+      "switchOff": "Schalter auf OFF eingerastet. Beide Anschluesse sind offen.",
+      "terminalLabels": {
+        "led": {
+          "signal": "LED-Signal",
+          "ground": "LED GND"
+        },
+        "button": {
+          "a": "Taster A",
+          "b": "Taster B"
+        },
+        "switch": {
+          "a": "Schalter A",
+          "b": "Schalter B"
+        },
+        "motor": {
+          "plus": "Motor +",
+          "minus": "Motor -"
+        },
+        "buzzer": {
+          "plus": "Summer +",
+          "minus": "Summer -"
+        }
+      },
+      "signalTerminal": "LED-Signal",
+      "groundTerminal": "LED GND",
+      "connected": "{from} mit {to} verbunden.",
+      "invalidConnection": "Waehle zwei verschiedene Endpunkte."
+    },
+    "telemetry": {
+      "kicker": "Laufzeit",
+      "title": "AVR-Status",
+      "pc": "PC",
+      "cycles": "Zyklen",
+      "size": "Programm",
+      "bytes": "{bytes} B",
+      "programDetail": "{format} {bytes} B / {limit} B · {ms} ms",
+      "highPins": "High-Pins",
+      "ports": "GPIO-Ports",
+      "pins": "Gehaeusepins"
+    },
+    "format": {
+      "arduino": "Arduino",
+      "hex": "HEX",
+      "asm": "ASM"
+    },
+    "concept": {
+      "title": "Integrationspfad ins Spiel",
+      "body": "Schmiede den Chipkoerper, speichere kompakten Code, verbinde Geraete mit Pins und lasse den Simulator Lichter, Tueren, Fallen, Relais oder Fabriken steuern."
+    },
+    "sample": {
+      "code": "// NiceChunk-Demo: Schalter steuert LED und Motor\n// Verdrahtung:\n// VCC -> Schalter A\n// Schalter B -> D2\n// D13 -> LED-Signal\n// LED GND -> GND\n// D9 -> Motor +\n// Motor - -> GND\nconst int switchPin = 2;\nconst int ledPin = 13;\nconst int motorPin = 9;\n\nvoid setup() {\n  pinMode(switchPin, INPUT);\n  pinMode(ledPin, OUTPUT);\n  pinMode(motorPin, OUTPUT);\n}\n\nvoid loop() {\n  const bool enabled = digitalRead(switchPin) == HIGH;\n  digitalWrite(ledPin, enabled ? HIGH : LOW);\n  digitalWrite(motorPin, enabled ? HIGH : LOW);\n  delay(10);\n}\n"
+    },
+    "errors": {
+      "emptyProgram": "Gib zuerst Arduino-Code, Intel HEX oder AVR-Assembly ein.",
+      "noHex": "Der Compiler hat keine Intel-HEX-Ausgabe geliefert.",
+      "flashOverflow": "Die kompilierte Firmware nutzt {bytes} B und ueberschreitet das Uno-Limit von {limit} B.",
+      "assembly": "AVR-Assembly fehlgeschlagen: {error}",
+      "hexLine": "Ungueltige Intel-HEX-Zeile {line}.",
+      "hexChecksum": "Intel-HEX-Pruefsumme in Zeile {line} fehlgeschlagen.",
+      "hexRecord": "Nicht unterstuetzter Intel-HEX-Datensatztyp {type}.",
+      "hexEof": "Intel HEX enthaelt keinen EOF-Datensatz."
+    }
+  }
+}

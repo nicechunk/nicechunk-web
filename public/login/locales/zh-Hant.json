@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hant",
     "label": "Traditional Chinese",
-    "version": "login-locale-zh-Hant-4a4a9af259918cb6",
-    "contentHash": "4a4a9af259918cb6"
+    "version": "login-locale-zh-Hant-3762a880abec788a",
+    "contentHash": "3762a880abec788a"
   },
   "siteFooter": {
     "tagline": "Solana 上的種子體素世界協議。",
@@ -60,6 +60,7 @@
     "wallet": "錢包",
     "startGame": "開始遊戲",
     "resetLogin": "重新登入",
+    "disconnectWallet": "斷開錢包",
     "returnToBrowser": "返回瀏覽器",
     "continueInWalletBrowser": "在錢包瀏覽器中繼續",
     "signLoginMessage": "簽署登入訊息",
@@ -84,6 +85,7 @@
       "profile": "錢包已連接，設定玩家名。",
       "invalidUsername": "玩家名需要 3-18 位，只能包含字母、數字、底線和中文。",
       "ready": "登入資訊已準備好。",
+      "walletDisconnected": "錢包已斷開，請選擇其他錢包綁定。",
       "returningToBrowser": "正在返回原本的瀏覽器...",
       "continuingInWalletBrowser": "正在錢包瀏覽器中繼續...",
       "signingChallenge": "請在錢包中確認登入訊息。",

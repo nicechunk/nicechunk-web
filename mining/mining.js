@@ -430,13 +430,13 @@ function createPlayer() {
 }
 
 function updateProfileHud() {
-  const username = localStorage.getItem(storageKeys.username) || t("main.account.guest");
+  const username = localStorage.getItem(storageKeys.username) || t("mining.account.guest");
   const walletAddress = localStorage.getItem(storageKeys.walletAddress) || "";
   const walletName = localStorage.getItem(storageKeys.walletName) || "";
   playerName.textContent = username;
-  playerLevel.textContent = t("main.account.level", { level: 1 });
+  playerLevel.textContent = t("mining.account.level", { level: 1 });
   playerTitle.textContent = t("mining.player.title");
-  playerWallet.textContent = walletAddress ? `${walletName || t("mining.player.wallet")} ${formatAddress(walletAddress)}` : t("main.account.notConnected");
+  playerWallet.textContent = walletAddress ? `${walletName || t("mining.player.wallet")} ${formatAddress(walletAddress)}` : t("mining.account.notConnected");
 }
 
 function updateSystemHud() {
@@ -455,7 +455,7 @@ function renderToolHotbar() {
       button.dataset.slot = String(index);
       if (!tool) {
         button.disabled = true;
-        button.setAttribute("aria-label", t("main.hotbarSlot.empty", { slot: index + 1 }));
+        button.setAttribute("aria-label", t("mining.hotbarSlot.empty", { slot: index + 1 }));
         return button;
       }
 
@@ -477,7 +477,7 @@ function selectTool(index) {
 }
 
 function renderMinerList() {
-  const username = localStorage.getItem(storageKeys.username) || t("main.account.guest");
+  const username = localStorage.getItem(storageKeys.username) || t("mining.account.guest");
   const miners = [{ name: username, statusKey: "mining.userStatus.mining", hashrate: localHashrate(), blocks: state.minedBlocks }, ...virtualMiners];
   activeCount.textContent = String(miners.length);
   minerList.replaceChildren(

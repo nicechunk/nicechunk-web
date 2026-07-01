@@ -2,8 +2,8 @@
   "_meta": {
     "language": "fr",
     "label": "French",
-    "version": "mining-locale-fr-9ec57fa9e31dfc2b",
-    "contentHash": "9ec57fa9e31dfc2b"
+    "version": "mining-locale-fr-70463ece789b4ef7",
+    "contentHash": "70463ece789b4ef7"
   },
   "siteFooter": {
     "tagline": "Un protocole de monde voxel seedé sur Solana.",
@@ -95,6 +95,14 @@
       "scanner": "Scanner de minerai",
       "lantern": "Lanterne de grotte",
       "hammer": "Marteau de roche"
+    },
+    "account": {
+      "guest": "Invité",
+      "level": "Niv. {level}",
+      "notConnected": "Non connecté"
+    },
+    "hotbarSlot": {
+      "empty": "Emplacement {slot} : vide"
     }
   }
 }

@@ -1,0 +1,161 @@
+{
+  "_meta": {
+    "language": "fr",
+    "label": "French",
+    "version": "chip-locale-fr-20b32527e652e68c",
+    "contentHash": "20b32527e652e68c"
+  },
+  "siteFooter": {
+    "tagline": "Un protocole de monde voxel seedé sur Solana.",
+    "navigationAria": "Navigation du pied de page",
+    "socialAria": "Liens sociaux de NiceChunk",
+    "home": "Accueil",
+    "play": "Entrer dans le monde",
+    "roadmap": "Roadbook",
+    "docs": "Docs",
+    "guardian": "Gardiens",
+    "contracts": "Contrats",
+    "x": "X / Twitter",
+    "github": "GitHub",
+    "copyright": "2026 NiceChunk. Tous droits réservés."
+  },
+  "common": {
+    "brand": "NICECHUNK",
+    "language": "Langue",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "chip": {
+    "meta": {
+      "title": "Simulateur de puce NiceChunk"
+    },
+    "hero": {
+      "title": "Programmez une puce forgee, puis regardez ses broches piloter des appareils.",
+      "body": "Ecrivez un sketch Arduino. Le navigateur le compile avec AVR GCC en Intel HEX, puis avr8js l'execute dans une simulation ATmega328P."
+    },
+    "editor": {
+      "kicker": "Programme MCU forge",
+      "label": "Editeur de sketch Arduino",
+      "aria": "Editeur de code source Arduino sketch"
+    },
+    "controls": {
+      "aria": "Commandes du simulateur",
+      "compile": "Compiler",
+      "run": "Executer",
+      "stop": "Arreter",
+      "reset": "Reinitialiser",
+      "sample": "Charger l'exemple",
+      "uploadHex": "Importer HEX"
+    },
+    "status": {
+      "title": "Etat du compilateur",
+      "idle": "Pret",
+      "compiling": "Compilation du firmware AVR",
+      "compiled": "Compile",
+      "running": "En cours",
+      "stopped": "Arrete",
+      "reset": "Reinitialisation terminee",
+      "error": "Erreur de compilation ou d'execution"
+    },
+    "viewport": {
+      "aria": "Apercu 3D de la puce",
+      "kicker": "Prototype NC-AVR32",
+      "title": "Chaque broche forgee peut devenir un port d'appareil dans le monde du jeu.",
+      "drag": "Faites glisser pour tourner",
+      "activeLeds": "{count} LED actives",
+      "activeDevices": "{count} appareils actifs"
+    },
+    "components": {
+      "aria": "Palette de composants",
+      "led": "Lampe LED",
+      "button": "Bouton",
+      "switch": "Interrupteur",
+      "motor": "Moteur",
+      "buzzer": "Buzzer",
+      "wire": "Fil",
+      "ready": "Glissez un appareil sur la carte. Selectionnez Fil pour tracer des fils isoles.",
+      "dragLed": "Glissez l'outil LED sur la carte, puis deplacez les LED placees pour les repositionner.",
+      "dragButton": "Glissez le bouton sur la carte. Maintenez le capuchon pour conduire, relachez pour ouvrir le circuit.",
+      "dragSwitch": "Glissez l'interrupteur sur la carte. Cliquez sur le levier pour verrouiller ON ou OFF.",
+      "dragMotor": "Glissez le moteur sur la carte. Il tourne quand une borne est alimentee et l'autre rejoint GND.",
+      "dragBuzzer": "Glissez le buzzer sur la carte. Il vibre quand il est alimente avec un retour GND.",
+      "pickFirst": "Mode fil : cliquez une broche de puce ou de composant.",
+      "pickSecond": "Mode fil : cliquez la carte pour ajouter des coudes, cliquez le second point pour connecter, ou clic droit pour terminer.",
+      "waypointAdded": "Coude de fil ajoute. Cliquez un autre point, un terminal, ou clic droit pour terminer.",
+      "routingEnded": "Trace du fil termine.",
+      "rotatedLed": "LED tournee de 90 degres.",
+      "rotatedComponent": "Composant tourne de 90 degres.",
+      "switchOn": "Interrupteur verrouille sur ON. Ses deux bornes conduisent.",
+      "switchOff": "Interrupteur verrouille sur OFF. Ses deux bornes sont ouvertes.",
+      "terminalLabels": {
+        "led": {
+          "signal": "Signal LED",
+          "ground": "GND LED"
+        },
+        "button": {
+          "a": "Bouton A",
+          "b": "Bouton B"
+        },
+        "switch": {
+          "a": "Interrupteur A",
+          "b": "Interrupteur B"
+        },
+        "motor": {
+          "plus": "Moteur +",
+          "minus": "Moteur -"
+        },
+        "buzzer": {
+          "plus": "Buzzer +",
+          "minus": "Buzzer -"
+        }
+      },
+      "signalTerminal": "Signal LED",
+      "groundTerminal": "GND LED",
+      "connected": "Connecte {from} a {to}.",
+      "invalidConnection": "Choisissez deux terminaux differents."
+    },
+    "telemetry": {
+      "kicker": "Execution",
+      "title": "Etat AVR",
+      "pc": "PC",
+      "cycles": "Cycles",
+      "size": "Programme",
+      "bytes": "{bytes} B",
+      "programDetail": "{format} {bytes} B / {limit} B · {ms} ms",
+      "highPins": "Broches hautes",
+      "ports": "Ports GPIO",
+      "pins": "Broches du boitier"
+    },
+    "format": {
+      "arduino": "Arduino",
+      "hex": "HEX",
+      "asm": "ASM"
+    },
+    "concept": {
+      "title": "Chemin d'integration au jeu",
+      "body": "Forgez le corps de la puce, stockez un code compact, reliez des appareils aux broches, puis laissez le simulateur piloter lumieres, portes, pieges, relais ou usines."
+    },
+    "sample": {
+      "code": "// Demo NiceChunk : l'interrupteur controle une LED et un moteur\n// Cablage :\n// VCC -> Interrupteur A\n// Interrupteur B -> D2\n// D13 -> signal LED\n// GND LED -> GND\n// D9 -> Moteur +\n// Moteur - -> GND\nconst int switchPin = 2;\nconst int ledPin = 13;\nconst int motorPin = 9;\n\nvoid setup() {\n  pinMode(switchPin, INPUT);\n  pinMode(ledPin, OUTPUT);\n  pinMode(motorPin, OUTPUT);\n}\n\nvoid loop() {\n  const bool enabled = digitalRead(switchPin) == HIGH;\n  digitalWrite(ledPin, enabled ? HIGH : LOW);\n  digitalWrite(motorPin, enabled ? HIGH : LOW);\n  delay(10);\n}\n"
+    },
+    "errors": {
+      "emptyProgram": "Entrez d'abord du code Arduino, de l'Intel HEX ou de l'assembleur AVR.",
+      "noHex": "Le compilateur n'a pas renvoye de sortie Intel HEX.",
+      "flashOverflow": "Le firmware compile utilise {bytes} B, au-dessus de la limite Uno de {limit} B.",
+      "assembly": "Echec de l'assembleur AVR : {error}",
+      "hexLine": "Ligne Intel HEX invalide {line}.",
+      "hexChecksum": "Somme de controle Intel HEX echouee ligne {line}.",
+      "hexRecord": "Type d'enregistrement Intel HEX non pris en charge : {type}.",
+      "hexEof": "Intel HEX n'a pas d'enregistrement EOF."
+    }
+  }
+}

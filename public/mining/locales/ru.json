@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ru",
     "label": "Russian",
-    "version": "mining-locale-ru-e4a262ede5a1db0a",
-    "contentHash": "e4a262ede5a1db0a"
+    "version": "mining-locale-ru-3dddd7914f1b9993",
+    "contentHash": "3dddd7914f1b9993"
   },
   "siteFooter": {
     "tagline": "Seeded voxel world protocol on Solana.",
@@ -95,6 +95,14 @@
       "scanner": "Сканер руды",
       "lantern": "Шахтный фонарь",
       "hammer": "Каменный молот"
+    },
+    "account": {
+      "guest": "Гость",
+      "level": "Ур. {level}",
+      "notConnected": "Не подключено"
+    },
+    "hotbarSlot": {
+      "empty": "Слот {slot}: пусто"
     }
   }
 }

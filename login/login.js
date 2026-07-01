@@ -32,6 +32,8 @@ const addressChip = document.querySelector("#addressChip");
 const saveNameButton = document.querySelector("#saveNameButton");
 const startButton = document.querySelector("#startButton");
 const resetButton = document.querySelector("#resetButton");
+const profileDisconnectWalletButton = document.querySelector("#profileDisconnectWalletButton");
+const readyDisconnectWalletButton = document.querySelector("#readyDisconnectWalletButton");
 const summaryName = document.querySelector("#summaryName");
 const summaryAddress = document.querySelector("#summaryAddress");
 const steps = Array.from(document.querySelectorAll(".step"));
@@ -112,6 +114,8 @@ startButton.addEventListener("click", () => {
   startGameWithLoading();
 });
 resetButton.addEventListener("click", resetLogin);
+profileDisconnectWalletButton?.addEventListener("click", () => disconnectWalletBinding());
+readyDisconnectWalletButton?.addEventListener("click", () => disconnectWalletBinding());
 
 bootLogin();
 
@@ -265,6 +269,38 @@ async function connectWallet(wallet) {
   } catch (error) {
     statusLine.textContent = loginNetworkErrorMessage(error) || error?.message || t("login.status.connectFailed");
   }
+}
+
+async function disconnectWalletBinding() {
+  await disconnectConnectedWalletProvider();
+  selectedWallet = null;
+  walletAddress = "";
+  clearWalletConnection();
+  initialize();
+  statusLine.textContent = t("login.status.walletDisconnected");
+}
+
+async function disconnectConnectedWalletProvider() {
+  const providers = connectedWalletDisconnectCandidates();
+  for (const provider of providers) {
+    if (typeof provider?.disconnect !== "function") continue;
+    try {
+      await provider.disconnect();
+    } catch (error) {
+      console.warn("Failed to disconnect wallet provider", error);
+    }
+  }
+}
+
+function connectedWalletDisconnectCandidates() {
+  const providers = [];
+  if (selectedWallet?.provider) providers.push(selectedWallet.provider);
+  detectWallets().forEach((wallet) => {
+    const provider = wallet.provider;
+    const providerAddress = publicKeyToString(provider?.publicKey);
+    if (providerAddress === walletAddress || provider?.isConnected === true) providers.push(provider);
+  });
+  return Array.from(new Set(providers.filter(Boolean)));
 }
 
 async function ensureLoginWalletNetwork(provider) {

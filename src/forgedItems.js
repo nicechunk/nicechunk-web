@@ -3,6 +3,7 @@ import {
   appendGreedyVoxelGeometry,
   appendSolidCuboidGeometry,
 } from "./render/voxelGreedyMesh.js";
+import { decodeForgeEquipmentVolumeMm3 } from "./forgeVolumeCodec.js";
 
 export const forgedItemsStorageKey = "nicechunk.forged.items";
 export const latestForgedItemStorageKey = "nicechunk.forged.latest";
@@ -192,17 +193,20 @@ function readComponentBlueprint(reader, version) {
 function readEquipmentStats(reader, version = forgeEquipmentVersion) {
   if (version >= forgeCompactStatsVersion) {
     const massGrams = reader.read(16) * 5;
-    const volumeCm3 = reader.read(16);
+    const encodedVolume = reader.read(16);
+    const volumeMm3 = decodeForgeEquipmentVolumeMm3(version, encodedVolume);
+    const volumeCm3 = volumeMm3 / 1_000;
     const attributes = {};
     for (const key of equipmentAttributeKeys) attributes[key] = compactAttributeToScore(reader.read(6));
     const densityKgM3 = deriveDensityKgM3FromMassVolume(massGrams, volumeCm3);
     return {
       massGrams,
+      volumeMm3,
       volumeCm3,
       densityKgM3,
       attributes,
       massKg: roundPhysicalValue(massGrams / 1000, 4),
-      volumeM3: roundPhysicalValue(volumeCm3 / 1_000_000, 8),
+      volumeM3: roundPhysicalValue(volumeMm3 / 1_000_000_000, 12),
     };
   }
   const massGrams = reader.read(22);
@@ -212,6 +216,7 @@ function readEquipmentStats(reader, version = forgeEquipmentVersion) {
   for (const key of equipmentAttributeKeys) attributes[key] = clampScore(reader.read(7));
   return {
     massGrams,
+    volumeMm3: volumeCm3 * 1_000,
     volumeCm3,
     densityKgM3,
     attributes,

@@ -200,6 +200,7 @@
       "chainSubmitted": "已鍛造並加入工具列佇列",
       "chainSubmitFailed": "鍛造上鏈失敗",
       "chainCodeTooLarge": "鏈代碼超過鍛造物品儲存容量",
+      "chainMaterialTooSmall": "鑄造或儲存前，請保留非零質量且至少 1 立方公分的材料",
       "chainMaterialRequired": "Select backpack materials before forging on-chain",
       "chainMaterialMismatch": "Backpack materials changed. Sync materials and forge again",
       "chainHotbarFull": "工具列已滿，請先空出一格再鍛造",

@@ -201,6 +201,7 @@
       "chainSubmitted": "已锻造并加入工具栏队列",
       "chainSubmitFailed": "锻造上链失败",
       "chainCodeTooLarge": "链代码超过锻造物品存储容量",
+      "chainMaterialTooSmall": "铸造或保存前，请保留非零质量且至少 1 立方厘米的材料",
       "chainMaterialRequired": "请先从背包选择材料再锻造上链",
       "chainMaterialMismatch": "背包材料已经变化，请同步材料后重新锻造",
       "chainHotbarFull": "工具栏已满，请先空出一格再锻造",

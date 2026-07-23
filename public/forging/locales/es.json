@@ -200,6 +200,7 @@
       "chainSubmitted": "Equipment forged and queued for the hotbar",
       "chainSubmitFailed": "La forja on-chain fallo",
       "chainCodeTooLarge": "Chain code is too large for forged item storage",
+      "chainMaterialTooSmall": "Conserva una masa distinta de cero y al menos 1 cm³ de material antes de fundir o guardar",
       "chainMaterialRequired": "Select backpack materials before forging on-chain",
       "chainMaterialMismatch": "Backpack materials changed. Sync materials and forge again",
       "chainHotbarFull": "Hotbar is full. Free one slot before forging",

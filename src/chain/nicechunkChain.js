@@ -38,6 +38,7 @@ const chunkBrokenSeed = "chunk-broken";
 const resourceDropTableSeed = "resource-drops-v2";
 const playerProgressSeed = "player-progress";
 const backpackSeed = "backpack";
+const materialPhysicsSeed = "material-physics-v1";
 const marketListingSeed = "listing";
 const marketAuthoritySeed = "market-authority";
 const smeltingRecipeTableSeed = "smelting-recipes";
@@ -263,6 +264,13 @@ export function deriveGlobalConfigPda() {
     [globalConfigPda] = PublicKey.findProgramAddressSync([Buffer.from(globalConfigSeed)], coreProgramId);
   }
   return globalConfigPda;
+}
+
+export function deriveMaterialPhysicsPda(programId = gameProgramId) {
+  return PublicKey.findProgramAddressSync(
+    [Buffer.from(materialPhysicsSeed), deriveGlobalConfigPda().toBuffer()],
+    programId,
+  );
 }
 
 export async function loadGlobalConfig({ useCache = true } = {}) {
@@ -2649,7 +2657,7 @@ function createRemoveBackpackResourcesInstruction({ owner, sessionAuthority = nu
   });
 }
 
-function createExecuteSmeltingInstruction({
+export function createExecuteSmeltingInstruction({
   owner,
   recipeTable,
   backpack,
@@ -2662,6 +2670,7 @@ function createExecuteSmeltingInstruction({
   const [smeltingAuthority] = deriveSmeltingAuthorityPdaForContext(context);
   const [playerProgress] = derivePlayerProgressPdaForContext(owner, context);
   const globalConfig = deriveGlobalConfigPda();
+  const [materialPhysics] = deriveMaterialPhysicsPda(context.backpackProgramId);
   const inputs = normalizeBackpackIndexes(inputIndexes);
   const fuels = normalizeBackpackIndexes(fuelIndexes);
   const multiplier = Math.max(1, Math.min(0xffff, Math.floor(Number(batchMultiplier) || 1)));
@@ -2681,6 +2690,7 @@ function createExecuteSmeltingInstruction({
       { pubkey: backpack, isSigner: false, isWritable: true },
       { pubkey: playerProgress, isSigner: false, isWritable: true },
       { pubkey: globalConfig, isSigner: false, isWritable: false },
+      { pubkey: materialPhysics, isSigner: false, isWritable: false },
       { pubkey: smeltingAuthority, isSigner: false, isWritable: false },
       { pubkey: context.backpackProgramId, isSigner: false, isWritable: false },
       { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },

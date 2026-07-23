@@ -200,6 +200,7 @@
       "chainSubmitted": "Equipment forged and queued for the hotbar",
       "chainSubmitFailed": "オンチェーン鍛造に失敗しました",
       "chainCodeTooLarge": "Chain code is too large for forged item storage",
+      "chainMaterialTooSmall": "鋳造または保存する前に、質量がゼロでない材料を少なくとも 1 cm³ 残してください",
       "chainMaterialRequired": "Select backpack materials before forging on-chain",
       "chainMaterialMismatch": "Backpack materials changed. Sync materials and forge again",
       "chainHotbarFull": "Hotbar is full. Free one slot before forging",

@@ -1,0 +1,501 @@
+import assert from "node:assert/strict";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { spawn } from "node:child_process";
+
+const url = process.env.BUILD_NCM_TEST_URL ?? "http://127.0.0.1:9876/build_ncm/";
+const port = Number(process.env.BUILD_NCM_DEBUG_PORT ?? 9324);
+const screenshotPath = process.env.BUILD_NCM_SCREENSHOT_PATH ?? "";
+const profile = mkdtempSync(join(tmpdir(), "build-ncm-chrome-"));
+const chrome = spawn(process.env.CHROME_BIN ?? "google-chrome", [
+  "--headless=new",
+  "--no-sandbox",
+  "--disable-dev-shm-usage",
+  `--remote-debugging-port=${port}`,
+  `--user-data-dir=${profile}`,
+  "about:blank",
+], { stdio: "ignore" });
+
+try {
+  await pollJson(`http://127.0.0.1:${port}/json/version`);
+  const pageResponse = await fetch(`http://127.0.0.1:${port}/json/new?about%3Ablank`, { method: "PUT" });
+  if (!pageResponse.ok) throw new Error(`Unable to create Chrome page: ${pageResponse.status}`);
+  const page = await pageResponse.json();
+  const client = await cdp(page.webSocketDebuggerUrl);
+  const errors = [];
+  const failedResponses = [];
+  client.on("Runtime.exceptionThrown", (event) => errors.push(event.exceptionDetails?.text ?? "Runtime exception"));
+  client.on("Log.entryAdded", (event) => {
+    if (event.entry?.level === "error") errors.push(event.entry.text);
+  });
+  client.on("Network.responseReceived", (event) => {
+    if (event.response.status >= 400) failedResponses.push(`${event.response.status} ${event.response.url}`);
+  });
+  await client.send("Runtime.enable");
+  await client.send("Log.enable");
+  await client.send("Network.enable");
+  await client.send("Page.enable");
+  await client.send("Emulation.setDeviceMetricsOverride", { width: 1600, height: 1200, deviceScaleFactor: 1, mobile: false });
+  await client.send("Page.navigate", { url });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building]').length === 5 && document.querySelectorAll('[data-building-thumbnail=ready]').length === 5"));
+
+  const initial = await evaluate(client, `({
+    buildingCount: document.querySelectorAll('[data-building]').length,
+    activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
+    buildingThumbnailCount: document.querySelectorAll('.building-library-preview').length,
+    renderedBuildingThumbnails: document.querySelectorAll('[data-building-thumbnail=ready]').length,
+    distinctBuildingThumbnails: new Set([...document.querySelectorAll('.building-library-preview')].map((canvas) => canvas.toDataURL())).size,
+    libraryIsLeft: document.querySelector('.building-library-panel').getBoundingClientRect().right <= document.querySelector('.viewport-card').getBoundingClientRect().left,
+    libraryOverflowY: getComputedStyle(document.querySelector('#buildingLibraryList')).overflowY,
+    libraryScrollable: document.querySelector('#buildingLibraryList').scrollHeight > document.querySelector('#buildingLibraryList').clientHeight,
+    styleCount: document.querySelectorAll('[data-style]').length,
+    locale: document.documentElement.lang,
+    documentTitle: document.title,
+    introTitle: document.querySelector('.intro h1').textContent,
+    bomTitle: document.querySelector('.bom-panel h2').textContent,
+    pdaTitle: document.querySelector('.pda-panel h2').textContent,
+    roleCount: document.querySelectorAll('.style-material').length,
+    roleModelCount: document.querySelectorAll('.style-material canvas[data-material-model]').length,
+    usedModelCount: document.querySelectorAll('#materialStrip canvas[data-material-model]').length,
+    catalogCount: document.querySelectorAll('#buildingMaterialCatalog .model-material-card').length,
+    catalogModelCount: document.querySelectorAll('#buildingMaterialCatalog canvas[data-material-model]').length,
+    modelErrors: document.querySelectorAll('canvas[data-model-error]').length,
+    activeStyle: document.querySelector('[data-style].active')?.dataset.style,
+    ncm: document.querySelector('#codeOutput').value,
+    editorReadOnly: document.querySelector('#codeOutput').readOnly,
+    loadButton: document.querySelector('#loadCode')?.textContent,
+    codeStatusRole: document.querySelector('#codeLoadStatus')?.getAttribute('role'),
+    hasHorizontalOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth,
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(initial.buildingCount, 5);
+  assert.equal(initial.activeBuilding, "hollow-cottage");
+  assert.equal(initial.buildingThumbnailCount, 5);
+  assert.equal(initial.renderedBuildingThumbnails, 5);
+  assert.equal(initial.distinctBuildingThumbnails, 5);
+  assert.equal(initial.libraryIsLeft, true);
+  assert.equal(initial.libraryOverflowY, "auto");
+  assert.equal(initial.libraryScrollable, true);
+  assert.equal(initial.styleCount, 6);
+  assert.equal(initial.locale, "en");
+  assert.equal(initial.documentTitle, "BUILD_NCM — NiceChunk Building Compiler");
+  assert.equal(initial.introTitle, "Turn a building into compact on-chain code.");
+  assert.equal(initial.bomTitle, "Construction Bill of Materials");
+  assert.equal(initial.pdaTitle, "Fetch a Building from a PDA");
+  assert.equal(initial.roleCount, 7);
+  assert.equal(initial.roleModelCount, 7);
+  assert.ok(initial.usedModelCount >= 6);
+  assert.equal(initial.catalogCount, 7);
+  assert.equal(initial.catalogModelCount, 7);
+  assert.equal(initial.modelErrors, 0);
+  assert.equal(initial.activeStyle, "cottage");
+  assert.match(initial.ncm, /^NCM3:/);
+  assert.equal(initial.editorReadOnly, false);
+  assert.equal(initial.loadButton, "Load");
+  assert.equal(initial.codeStatusRole, "status");
+  assert.equal(initial.hasHorizontalOverflow, false);
+  assert.ok(initial.resources.includes("/chunk.js/construction/building-style-catalog.js"));
+  assert.ok(initial.resources.includes("/chunk.js/renderer/material-model-preview.js"));
+  assert.ok(initial.resources.includes("/chunk.js/renderer/texture-array-manager.js"));
+  assert.ok(initial.resources.includes("/build_ncm/i18n.js"));
+  assert.ok(initial.resources.includes("/build_ncm/building-library.js"));
+  assert.ok(initial.resources.includes("/build_ncm/civic-town-hall-blueprint.js"));
+  assert.ok(initial.resources.includes("/build_ncm/seaside-cottage-blueprint.js"));
+  assert.ok(initial.resources.includes("/build_ncm/warehouse-blueprint.js"));
+  assert.ok(initial.resources.includes("/build_ncm/grand-castle-blueprint.js"));
+  assert.ok(!initial.resources.includes("/chunk.js/index.js"), "build_ncm must not load the full chunk.js barrel");
+
+  const payloadBeforeLocaleSwitch = initial.ncm;
+  await evaluate(client, "document.querySelector('[data-locale=zh-Hans]').click()");
+  await waitFor(() => evaluate(client, "document.documentElement.lang === 'zh-Hans'"));
+  const chinese = await evaluate(client, `({
+    title: document.title,
+    intro: document.querySelector('.intro h1').textContent,
+    bom: document.querySelector('.bom-panel h2').textContent,
+    openings: document.querySelector('#toggleGlazing').textContent,
+    metric: document.querySelector('#metrics .metric span').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    models: document.querySelectorAll('canvas[data-material-model]').length,
+    errors: document.querySelectorAll('canvas[data-model-error]').length,
+  })`);
+  assert.equal(chinese.title, "BUILD_NCM — NiceChunk 建筑编译器");
+  assert.equal(chinese.intro, "把建筑变成一段可以上链的代码。");
+  assert.equal(chinese.bom, "建筑材料清单");
+  assert.equal(chinese.openings, "洞口：挖空");
+  assert.equal(chinese.metric, "NCM3 原始载荷");
+  assert.equal(chinese.payload, payloadBeforeLocaleSwitch, "locale changes must never alter the NCM payload");
+  assert.ok(chinese.models >= 20);
+  assert.equal(chinese.errors, 0);
+  await evaluate(client, "document.querySelector('[data-locale=en]').click()");
+  await waitFor(() => evaluate(client, "document.documentElement.lang === 'en' && document.querySelector('.intro h1').textContent.startsWith('Turn a building')"));
+
+  const cottagePayload = initial.ncm;
+  const cottageVoxels = Number((await evaluate(client, "document.querySelectorAll('#metrics .metric strong')[2].textContent")).replaceAll(",", ""));
+  await evaluate(client, "document.querySelector('[data-building=seaside-cottage]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'seaside-cottage' && document.querySelector('#modelSize').textContent === '38 × 29 × 32'"));
+  const seaside = await evaluate(client, `({
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    activeStyle: document.querySelector('[data-style].active')?.dataset.style,
+    activeRoof: document.querySelector('[data-roof].active')?.dataset.roof,
+    glazed: document.querySelector('#toggleGlazing').getAttribute('aria-pressed'),
+    roleCount: document.querySelectorAll('.style-material').length,
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+  })`);
+  assert.match(seaside.title, /Sea Breeze Cottage/);
+  assert.equal(seaside.modelSize, "38 × 29 × 32");
+  assert.notEqual(seaside.payload, cottagePayload);
+  assert.equal(seaside.activeStyle, "coastal");
+  assert.equal(seaside.activeRoof, "iceBlue");
+  assert.equal(seaside.glazed, "true");
+  assert.equal(seaside.roleCount, 10);
+  assert.match(seaside.usedMaterials, /MAT_055/);
+  assert.match(seaside.usedMaterials, /MAT_060/);
+  assert.match(seaside.usedMaterials, /MAT_075/);
+  assert.ok(seaside.voxelCount > cottageVoxels);
+  assert.equal(seaside.uncovered, false);
+  assert.equal(seaside.selectedInUrl, "seaside-cottage");
+
+  await evaluate(client, "document.querySelector('[data-building=freight-warehouse]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'freight-warehouse' && document.querySelector('#modelSize').textContent === '48 × 36 × 38'"));
+  const warehouse = await evaluate(client, `({
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    activeStyle: document.querySelector('[data-style].active')?.dataset.style,
+    activeRoof: document.querySelector('[data-roof].active')?.dataset.roof,
+    glazed: document.querySelector('#toggleGlazing').getAttribute('aria-pressed'),
+    roleCount: document.querySelectorAll('.style-material').length,
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+  })`);
+  assert.match(warehouse.title, /Freight Warehouse/);
+  assert.equal(warehouse.modelSize, "48 × 36 × 38");
+  assert.notEqual(warehouse.payload, seaside.payload);
+  assert.equal(warehouse.activeStyle, "castle");
+  assert.equal(warehouse.activeRoof, "charcoal");
+  assert.equal(warehouse.glazed, "true");
+  assert.equal(warehouse.roleCount, 8);
+  assert.match(warehouse.usedMaterials, /MAT_060/);
+  assert.ok(warehouse.voxelCount > seaside.voxelCount);
+  assert.equal(warehouse.uncovered, false);
+  assert.equal(warehouse.selectedInUrl, "freight-warehouse");
+
+  await evaluate(client, "document.querySelector('[data-building=grand-castle]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'grand-castle' && document.querySelector('#modelSize').textContent === '152 × 86 × 136'"));
+  const castle = await evaluate(client, `({
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    activeStyle: document.querySelector('[data-style].active')?.dataset.style,
+    activeRoof: document.querySelector('[data-roof].active')?.dataset.roof,
+    glazed: document.querySelector('#toggleGlazing').getAttribute('aria-pressed'),
+    roleCount: document.querySelectorAll('.style-material').length,
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+  })`);
+  assert.match(castle.title, /Royal Blue Citadel/);
+  assert.equal(castle.modelSize, "152 × 86 × 136");
+  assert.notEqual(castle.payload, warehouse.payload);
+  assert.equal(castle.activeStyle, "castle");
+  assert.equal(castle.activeRoof, "iceBlue");
+  assert.equal(castle.glazed, "false");
+  assert.equal(castle.roleCount, 9);
+  assert.match(castle.usedMaterials, /MAT_060/);
+  assert.match(castle.usedMaterials, /MAT_075/);
+  assert.doesNotMatch(castle.usedMaterials, /MAT_061/);
+  assert.ok(castle.voxelCount > warehouse.voxelCount);
+  assert.equal(castle.uncovered, false);
+  assert.equal(castle.selectedInUrl, "grand-castle");
+
+  if (screenshotPath) {
+    await evaluate(client, "document.querySelector('.building-library-panel').scrollIntoView({block:'start'}); window.scrollBy(0, -76); new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))");
+    const screenshot = await client.send("Page.captureScreenshot", { format: "png", fromSurface: true, captureBeyondViewport: false });
+    writeFileSync(screenshotPath, Buffer.from(screenshot.data, "base64"));
+  }
+
+  await evaluate(client, "document.querySelector('[data-building=civic-town-hall]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'civic-town-hall' && document.querySelector('#modelSize').textContent === '44 × 42 × 40'"));
+  const townHall = await evaluate(client, `({
+    activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    activeStyle: document.querySelector('[data-style].active')?.dataset.style,
+    activeRoof: document.querySelector('[data-roof].active')?.dataset.roof,
+    glazed: document.querySelector('#toggleGlazing').getAttribute('aria-pressed'),
+    roleCount: document.querySelectorAll('.style-material').length,
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    modelErrors: document.querySelectorAll('canvas[data-model-error]').length,
+  })`);
+  assert.equal(townHall.activeBuilding, "civic-town-hall");
+  assert.match(townHall.title, /Civic Town Hall/);
+  assert.equal(townHall.modelSize, "44 × 42 × 40");
+  assert.notEqual(townHall.payload, cottagePayload);
+  assert.match(townHall.payload, /^NCM3:/);
+  assert.equal(townHall.activeStyle, "coastal");
+  assert.equal(townHall.activeRoof, "iceBlue");
+  assert.equal(townHall.glazed, "true");
+  assert.equal(townHall.roleCount, 9);
+  assert.doesNotMatch(townHall.usedMaterials, /MAT_055/);
+  assert.match(townHall.usedMaterials, /MAT_060/);
+  assert.match(townHall.usedMaterials, /MAT_075/);
+  assert.ok(townHall.voxelCount > cottageVoxels);
+  assert.equal(townHall.uncovered, false);
+  assert.equal(townHall.modelErrors, 0);
+
+  await evaluate(client, "document.querySelector('[data-locale=zh-Hans]').click()");
+  await waitFor(() => evaluate(client, "document.documentElement.lang === 'zh-Hans' && document.querySelector('[data-building].active')?.dataset.building === 'civic-town-hall'"));
+  const localizedTownHall = await evaluate(client, `({
+    activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
+    title: document.querySelector('#buildingTitle').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    thumbnails: document.querySelectorAll('.building-library-preview').length,
+  })`);
+  assert.equal(localizedTownHall.activeBuilding, "civic-town-hall");
+  assert.match(localizedTownHall.title, /市政厅/);
+  assert.equal(localizedTownHall.payload, townHall.payload, "locale changes must preserve the selected building payload");
+  assert.equal(localizedTownHall.thumbnails, 5);
+  await evaluate(client, "document.querySelector('[data-locale=en]').click()");
+  await waitFor(() => evaluate(client, "document.documentElement.lang === 'en'"));
+
+  await evaluate(client, "document.querySelector('[data-building=hollow-cottage]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'hollow-cottage'"));
+  const restoredCottage = await evaluate(client, `({
+    payload: document.querySelector('#codeOutput').value,
+    modelSize: document.querySelector('#modelSize').textContent,
+    activeStyle: document.querySelector('[data-style].active')?.dataset.style,
+    glazed: document.querySelector('#toggleGlazing').getAttribute('aria-pressed'),
+  })`);
+  assert.equal(restoredCottage.payload, cottagePayload, "switching back must restore the canonical cottage payload");
+  assert.equal(restoredCottage.modelSize, "24 × 22 × 18");
+  assert.equal(restoredCottage.activeStyle, "cottage");
+  assert.equal(restoredCottage.glazed, "false");
+
+  const cottagePreview = await evaluate(client, "document.querySelector('#preview').toDataURL()");
+  await evaluate(client, `(() => {
+    const editor = document.querySelector('#codeOutput');
+    editor.value = ${JSON.stringify(seaside.payload)};
+    editor.dispatchEvent(new Event('input', { bubbles: true }));
+    document.querySelector('#loadCode').click();
+  })()`);
+  await waitFor(() => evaluate(client, "document.querySelector('#modelSize').textContent === '38 × 29 × 32' && document.querySelector('#codeLoadStatus').classList.contains('ok') && !document.querySelector('#loadCode').disabled"));
+  const pastedSeaside = await evaluate(client, `({
+    payload: document.querySelector('#codeOutput').value,
+    modelSize: document.querySelector('#modelSize').textContent,
+    status: document.querySelector('#codeLoadStatus').textContent,
+    preview: document.querySelector('#preview').toDataURL(),
+    selectedFormat: document.querySelector('[data-format].active')?.dataset.format,
+    ncm3Selected: document.querySelector('[data-format=ncm3]').getAttribute('aria-selected'),
+  })`);
+  assert.equal(pastedSeaside.payload, seaside.payload);
+  assert.equal(pastedSeaside.modelSize, "38 × 29 × 32");
+  assert.match(pastedSeaside.status, /Loaded [\d,]+ voxels/);
+  assert.notEqual(pastedSeaside.preview, cottagePreview, "loading pasted code must replace the spatial preview");
+  assert.equal(pastedSeaside.selectedFormat, "ncm3");
+  assert.equal(pastedSeaside.ncm3Selected, "true");
+
+  await evaluate(client, `(() => {
+    const editor = document.querySelector('#codeOutput');
+    editor.value = 'NCM3:not-valid';
+    editor.dispatchEvent(new Event('input', { bubbles: true }));
+    document.querySelector('#loadCode').click();
+  })()`);
+  await waitFor(() => evaluate(client, "document.querySelector('#codeLoadStatus').classList.contains('error') && !document.querySelector('#loadCode').disabled"));
+  const rejectedPaste = await evaluate(client, `({
+    payload: document.querySelector('#codeOutput').value,
+    modelSize: document.querySelector('#modelSize').textContent,
+    status: document.querySelector('#codeLoadStatus').textContent,
+    preview: document.querySelector('#preview').toDataURL(),
+  })`);
+  assert.equal(rejectedPaste.payload, "NCM3:not-valid", "invalid pasted code should remain editable for correction");
+  assert.equal(rejectedPaste.modelSize, "38 × 29 × 32", "invalid pasted code must preserve the current building");
+  assert.match(rejectedPaste.status, /Could not load code/);
+  assert.equal(rejectedPaste.preview, pastedSeaside.preview, "invalid pasted code must not replace the spatial preview");
+
+  await evaluate(client, `(() => {
+    const editor = document.querySelector('#codeOutput');
+    editor.value = ${JSON.stringify(cottagePayload)};
+    editor.dispatchEvent(new Event('input', { bubbles: true }));
+    editor.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', ctrlKey: true, bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, "document.querySelector('#modelSize').textContent === '24 × 22 × 18' && document.querySelector('#codeLoadStatus').classList.contains('ok')"));
+  assert.equal(await evaluate(client, "document.querySelector('#codeOutput').value"), cottagePayload, "Ctrl+Enter should load pasted NCM3 code");
+
+  const payloads = new Set();
+  for (const style of ["cottage", "castle", "desert", "coastal", "volcanic", "modern"]) {
+    await evaluate(client, `document.querySelector('[data-style="${style}"]').click()`);
+    await waitFor(() => evaluate(client, `document.querySelector('[data-style].active')?.dataset.style === "${style}"`));
+    const state = await evaluate(client, `({
+      payload: document.querySelector('#codeOutput').value,
+      title: document.querySelector('#buildingTitle').textContent,
+      roles: document.querySelectorAll('.style-material').length,
+      uncovered: document.querySelector('#bomSummary').textContent.includes('未覆盖'),
+    })`);
+    assert.match(state.payload, /^NCM3:/);
+    assert.ok(state.title.toLowerCase().includes(style));
+    assert.equal(state.roles, 7);
+    assert.equal(state.uncovered, false);
+    payloads.add(state.payload);
+  }
+  assert.equal(payloads.size, 6);
+
+  await evaluate(client, "document.querySelector('[data-material-filter=all]').click()");
+  await waitFor(() => evaluate(client, "document.querySelectorAll('#buildingMaterialCatalog .model-material-card').length === 33"));
+  const catalog = await evaluate(client, `({
+    cards: document.querySelectorAll('#buildingMaterialCatalog .model-material-card').length,
+    models: document.querySelectorAll('#buildingMaterialCatalog canvas[data-material-model]').length,
+    errors: document.querySelectorAll('#buildingMaterialCatalog canvas[data-model-error]').length,
+    shapes: [...new Set([...document.querySelectorAll('#buildingMaterialCatalog .model-material-card')].map((card) => card.dataset.shape))],
+    distinctImages: new Set([...document.querySelectorAll('#buildingMaterialCatalog canvas')].map((canvas) => canvas.toDataURL())).size,
+  })`);
+  assert.equal(catalog.cards, 33);
+  assert.equal(catalog.models, 33);
+  assert.equal(catalog.errors, 0);
+  assert.ok(catalog.shapes.includes("plank"));
+  assert.ok(catalog.shapes.includes("rod"));
+  assert.ok(catalog.shapes.includes("beam"));
+  assert.ok(catalog.shapes.includes("glassPanel"));
+  assert.ok(catalog.shapes.includes("brick"));
+  assert.ok(catalog.shapes.includes("roofTile"));
+  assert.ok(catalog.distinctImages >= 28, "baked material models should produce distinct images, not one shared color swatch");
+
+  const beforeGlazing = await evaluate(client, "document.querySelector('#codeOutput').value");
+  await evaluate(client, "document.querySelector('#toggleGlazing').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('#toggleGlazing').getAttribute('aria-pressed') === 'true'"));
+  const afterGlazing = await evaluate(client, "document.querySelector('#codeOutput').value");
+  assert.notEqual(afterGlazing, beforeGlazing);
+
+  await client.send("Emulation.setDeviceMetricsOverride", { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
+  await client.send("Page.reload", { ignoreCache: true });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building]').length === 5 && document.querySelectorAll('[data-building-thumbnail=ready]').length === 5"));
+  await evaluate(client, "document.querySelector('[data-material-filter=all]').click()");
+  await waitFor(() => evaluate(client, "document.querySelectorAll('#buildingMaterialCatalog .model-material-card').length === 33"));
+  const mobile = await evaluate(client, `({
+    clientWidth: document.documentElement.clientWidth,
+    scrollWidth: document.documentElement.scrollWidth,
+    modelCards: document.querySelectorAll('#buildingMaterialCatalog .model-material-card').length,
+    modelErrors: document.querySelectorAll('canvas[data-model-error]').length,
+    buildingCards: document.querySelectorAll('[data-building]').length,
+    buildingThumbnails: document.querySelectorAll('.building-library-preview').length,
+    editorReadOnly: document.querySelector('#codeOutput').readOnly,
+    codeActionTopDelta: Math.abs(document.querySelector('#loadCode').getBoundingClientRect().top - document.querySelector('#copyCode').getBoundingClientRect().top),
+    loadButtonHeight: document.querySelector('#loadCode').getBoundingClientRect().height,
+    copyButtonHeight: document.querySelector('#copyCode').getBoundingClientRect().height,
+  })`);
+  assert.equal(mobile.scrollWidth, mobile.clientWidth, "mobile page must not create document-level horizontal overflow");
+  assert.equal(mobile.modelCards, 33);
+  assert.equal(mobile.modelErrors, 0);
+  assert.equal(mobile.buildingCards, 5);
+  assert.equal(mobile.buildingThumbnails, 5);
+  assert.equal(mobile.editorReadOnly, false);
+  assert.ok(mobile.codeActionTopDelta < 1, "mobile Load and Copy actions should remain on the same row");
+  assert.ok(mobile.loadButtonHeight >= 40);
+  assert.ok(mobile.copyButtonHeight >= 40);
+
+  const seasideDirectUrl = new URL(url);
+  seasideDirectUrl.searchParams.set("building", "grand-castle");
+  await client.send("Page.navigate", { url: seasideDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building].active')?.dataset.building === 'grand-castle'"));
+  const directSelection = await evaluate(client, `({
+    activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+  })`);
+  assert.equal(directSelection.activeBuilding, "grand-castle");
+  assert.match(directSelection.title, /Royal Blue Citadel/);
+  assert.equal(directSelection.modelSize, "152 × 86 × 136");
+  assert.match(directSelection.payload, /^NCM3:/);
+
+  assert.deepEqual(failedResponses, []);
+  assert.deepEqual(errors, []);
+  await client.close();
+  console.log(JSON.stringify({ ok: true, styles: payloads.size, failedResponses, errors, resources: initial.resources }, null, 2));
+} finally {
+  chrome.kill("SIGTERM");
+  await Promise.race([
+    new Promise((resolve) => chrome.once("close", resolve)),
+    new Promise((resolve) => setTimeout(resolve, 1000)),
+  ]);
+  for (let attempt = 0; attempt < 4; attempt += 1) {
+    try {
+      rmSync(profile, { recursive: true, force: true, maxRetries: 2, retryDelay: 50 });
+      break;
+    } catch (error) {
+      if (attempt === 3) throw error;
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+  }
+}
+
+async function pollJson(endpoint) {
+  for (let attempt = 0; attempt < 80; attempt += 1) {
+    try {
+      const response = await fetch(endpoint);
+      if (response.ok) return response.json();
+    } catch {}
+    await new Promise((resolve) => setTimeout(resolve, 50));
+  }
+  throw new Error(`Chrome DevTools did not start at ${endpoint}`);
+}
+
+async function waitFor(check) {
+  for (let attempt = 0; attempt < 240; attempt += 1) {
+    if (await check()) return;
+    await new Promise((resolve) => setTimeout(resolve, 50));
+  }
+  throw new Error("Timed out waiting for browser state.");
+}
+
+async function evaluate(client, expression) {
+  const result = await client.send("Runtime.evaluate", { expression, awaitPromise: true, returnByValue: true });
+  if (result.exceptionDetails) throw new Error(result.exceptionDetails.text);
+  return result.result.value;
+}
+
+async function cdp(webSocketUrl) {
+  const socket = new WebSocket(webSocketUrl);
+  await new Promise((resolve, reject) => {
+    socket.addEventListener("open", resolve, { once: true });
+    socket.addEventListener("error", reject, { once: true });
+  });
+  let nextId = 0;
+  const pending = new Map();
+  const listeners = new Map();
+  socket.addEventListener("message", (message) => {
+    const payload = JSON.parse(message.data);
+    if (payload.id) {
+      const waiter = pending.get(payload.id);
+      pending.delete(payload.id);
+      if (payload.error) waiter.reject(new Error(payload.error.message));
+      else waiter.resolve(payload.result);
+      return;
+    }
+    for (const listener of listeners.get(payload.method) ?? []) listener(payload.params);
+  });
+  return {
+    send(method, params = {}) {
+      const id = ++nextId;
+      socket.send(JSON.stringify({ id, method, params }));
+      return new Promise((resolve, reject) => pending.set(id, { resolve, reject }));
+    },
+    on(method, listener) {
+      listeners.set(method, [...(listeners.get(method) ?? []), listener]);
+    },
+    close() {
+      socket.close();
+    },
+  };
+}

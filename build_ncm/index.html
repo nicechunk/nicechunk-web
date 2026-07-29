@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#080b10" />
+    <meta name="description" content="NiceChunk static building compiler powered by chunk.js: build, compress and preview NCM blueprints for PDA storage." />
+    <title>BUILD_NCM — NiceChunk Building Compiler</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%23a8ee45' d='m32 3 26 15v29L32 62 6 47V18z'/%3E%3Cpath fill='%2310151c' d='m32 10 19 11v22L32 54 13 43V21z'/%3E%3Cpath fill='%234a96ff' d='m32 10 19 11-19 11-19-11z'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="./style.css?v=0.9.2-royal-blue-citadel" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Build NCM home">
+        <span class="brand-cube" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span><b>BUILD_NCM</b><small>NICECHUNK / ON-CHAIN BLUEPRINT LAB</small></span>
+      </a>
+      <div class="topbar-tools">
+        <div class="runtime-badges" aria-label="Runtime properties">
+          <span>CHUNK.JS RENDERER</span>
+          <span>MATERIAL BOM</span>
+          <span>NGINX READY</span>
+          <span>NO THREE.JS</span>
+        </div>
+        <div class="language-switch" role="group" aria-label="Interface language" data-i18n-aria-label="language.label">
+          <button type="button" class="active" data-locale="en" aria-pressed="true">EN</button>
+          <button type="button" data-locale="zh-Hans" aria-pressed="false">中文</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="intro">
+        <div>
+          <p class="eyebrow">CHUNK.JS / DETERMINISTIC BUILD PIPELINE</p>
+          <h1 data-i18n="intro.title">Turn a building into compact on-chain code.</h1>
+          <p class="lede" data-i18n-html="intro.lede">The reference building is reconstructed from canonical NiceChunk resources and production roof tiles. NCM3 stores bounded building commands and stable material IDs; after a player fetches it from a PDA, the same <code>chunk.js</code> expands it deterministically and compiles its bill of materials.</p>
+        </div>
+        <div class="flow" aria-label="Build flow">
+          <span>BUILD</span><i></i><span>COMPRESS</span><i></i><span>PDA</span><i></i><span>RENDER</span>
+        </div>
+      </section>
+
+      <section class="builder-shell">
+      <aside class="panel building-library-panel" aria-labelledby="buildingLibraryTitle">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">EXPANDABLE NCM BLUEPRINT COLLECTION</p>
+            <h2 id="buildingLibraryTitle" data-i18n="library.title">Building Library</h2>
+          </div>
+          <span id="buildingLibraryCount" class="library-count">5 BUILDINGS</span>
+        </div>
+        <div class="building-library-intro">
+          <p data-i18n="library.intro">Select a building to replace the spatial preview, NCM payload, material counts and BOM. Each library entry owns deterministic geometry and defaults while continuing to use the shared material-style system.</p>
+          <span data-i18n="library.future">Designed for gradual expansion</span>
+        </div>
+        <div id="buildingLibraryList" class="building-library-list" role="radiogroup" aria-label="Available NCM buildings" data-i18n-aria-label="library.aria"></div>
+      </aside>
+
+      <section class="workspace">
+        <article class="viewport-card panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">SPATIAL PREVIEW</p>
+              <h2 id="buildingTitle">Cottage Style · Hollow Cottage</h2>
+            </div>
+            <div class="view-actions">
+              <button id="toggleGrid" type="button" class="quiet active" data-i18n="view.grid">Grid</button>
+              <button id="toggleGlazing" type="button" class="quiet" aria-pressed="false">Openings: Open</button>
+              <button id="toggleSpin" type="button" class="quiet" data-i18n="view.spin">Auto Rotate</button>
+              <button id="resetView" type="button" class="quiet" data-i18n="view.reset">Reset View</button>
+            </div>
+          </div>
+          <div class="canvas-shell">
+            <canvas id="preview" aria-label="Three-dimensional building preview" data-i18n-aria-label="view.canvasAria"></canvas>
+            <div class="canvas-hud top-left">
+              <span>MODEL SPACE</span>
+              <strong id="modelSize">32 × 27 × 26</strong>
+            </div>
+            <div class="canvas-hud bottom-left">
+              <span data-i18n="view.hint">chunk.js software voxel renderer · drag to rotate · wheel to zoom</span>
+            </div>
+            <div class="axis" aria-hidden="true"><span class="x">X</span><span class="y">Y</span><span class="z">Z</span></div>
+          </div>
+          <div class="style-lab">
+            <div class="style-lab-head">
+              <div>
+                <p class="eyebrow">ARCHITECTURAL STYLE</p>
+                <strong id="styleName">Cottage</strong>
+                <span id="styleDescription">Warm lime render, rustic stone, timber framing and terracotta tile.</span>
+              </div>
+              <span class="style-policy" data-i18n="style.policy">SAME GEOMETRY · CANONICAL MATERIAL IDS</span>
+            </div>
+            <div class="style-presets" id="stylePresets" role="radiogroup" aria-label="Select an architectural material style" data-i18n-aria-label="style.selectorAria"></div>
+            <div class="style-material-grid" id="styleMaterialGrid" aria-label="Current style material roles" data-i18n-aria-label="style.rolesAria"></div>
+          </div>
+          <div class="roof-lab">
+            <div class="roof-lab-copy">
+              <p class="eyebrow">ROOF TILE PALETTE</p>
+              <strong id="roofName">Terracotta Roof Tile</strong>
+              <span id="roofSource">Clay + Sand</span>
+            </div>
+            <div class="roof-variants" id="roofVariants" role="radiogroup" aria-label="Select a roof-tile material" data-i18n-aria-label="roof.selectorAria"></div>
+          </div>
+          <div class="material-strip" id="materialStrip" aria-label="Materials used by the current building" data-i18n-aria-label="materials.usedAria"></div>
+        </article>
+
+        <aside class="code-card panel">
+          <div class="panel-head compact">
+            <div>
+              <p class="eyebrow">CHAIN PAYLOAD</p>
+              <h2 data-i18n="code.title">NCM Code</h2>
+            </div>
+            <span class="status-dot"><i></i> deterministic</span>
+          </div>
+
+          <div class="format-tabs" role="tablist" aria-label="Code format">
+            <button type="button" role="tab" class="active" aria-selected="true" data-format="ncm3" data-i18n="code.ncm3">NCM3 Shortest</button>
+            <button type="button" role="tab" aria-selected="false" data-format="ncm2" data-i18n="code.ncm2">NCM2 Compatible</button>
+            <button type="button" role="tab" aria-selected="false" data-format="recipe" data-i18n="code.recipe">Command View</button>
+          </div>
+
+          <div class="code-wrap">
+            <textarea id="codeOutput" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Editable NCM code" data-i18n-aria-label="code.editorAria"></textarea>
+            <div class="code-actions">
+              <button id="loadCode" class="code-action-button load-button" type="button" data-i18n="code.load">Load</button>
+              <button id="copyCode" class="code-action-button copy-button" type="button" data-i18n="code.copy">Copy</button>
+            </div>
+          </div>
+          <p class="code-load-status" id="codeLoadStatus" role="status" aria-live="polite" data-i18n="code.loadHint">Paste NCM3 code, then load it into the preview.</p>
+          <p class="format-note" id="formatNote">NCM3 uses stable material IDs and bounded building macros. Style changes are re-encoded deterministically for PDA storage.</p>
+
+          <div class="metrics" id="metrics"></div>
+
+          <div class="primary-actions">
+            <button id="downloadNcm" type="button" class="primary" data-i18n="code.downloadNcm">Download .ncm</button>
+            <button id="downloadJson" type="button" class="secondary" data-i18n="code.downloadJson">Export Expanded JSON</button>
+          </div>
+
+          <div class="integrity">
+            <span>SHA-256</span>
+            <code id="payloadHash" data-i18n="code.calculating">Calculating…</code>
+          </div>
+        </aside>
+      </section>
+      </section>
+
+      <section class="materials-workspace">
+        <article class="panel bom-panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">NCM → CONSTRUCTION BOM</p>
+              <h2 data-i18n="bom.title">Construction Bill of Materials</h2>
+            </div>
+            <div class="bom-head-actions">
+          <span class="catalog-version">CATALOG V2</span>
+              <button id="downloadBom" type="button" class="secondary small" data-i18n="bom.export">Export BOM</button>
+            </div>
+          </div>
+          <div class="bom-summary" id="bomSummary"></div>
+          <div class="bom-toolbar" id="bomFilters" role="tablist" aria-label="Filter bill of materials by construction phase" data-i18n-aria-label="bom.filterAria">
+            <button type="button" class="active" data-phase="all" data-i18n="phase.all">All</button>
+            <button type="button" data-phase="foundation" data-i18n="phase.foundation">Foundation</button>
+            <button type="button" data-phase="structure" data-i18n="phase.structure">Structure</button>
+            <button type="button" data-phase="envelope" data-i18n="phase.envelope">Envelope</button>
+            <button type="button" data-phase="roof" data-i18n="phase.roof">Roof</button>
+            <button type="button" data-phase="openings" data-i18n="phase.openings">Openings</button>
+            <button type="button" data-phase="finish" data-i18n="phase.finish">Finish</button>
+            <button type="button" data-phase="landscape" data-i18n="phase.landscape">Landscape</button>
+          </div>
+          <div class="bom-table" role="table" aria-label="Estimated construction bill of materials" data-i18n-aria-label="bom.tableAria">
+            <div class="bom-table-head" role="row">
+              <span data-i18n="bom.column.material">Material / Phase</span><span data-i18n="bom.column.amount">Amount</span><span data-i18n="bom.column.status">Status</span>
+            </div>
+            <div id="bomRows"></div>
+          </div>
+          <p class="bom-footnote" data-i18n="bom.footnote">The shared chunk.js BOM compiler derives this estimate deterministically from NCM material voxels. MU is one litre of material equivalent, CU is a standard component, and RU is a raw resource. Landscape items do not affect the structural availability rate.</p>
+        </article>
+
+        <aside class="panel tile-recipe-panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">MATERIAL COLOR RECIPE</p>
+              <h2 data-i18n="recipe.title">Roof-tile Color Recipe</h2>
+            </div>
+            <span class="tile-id" id="roofMaterialId">MAT 096</span>
+          </div>
+          <div class="tile-preview" id="tilePreview" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="recipe-detail">
+            <div><span data-i18n="recipe.current">Current tile</span><strong id="recipeName">Terracotta Roof Tile</strong></div>
+            <div><span data-i18n="recipe.source">Color source</span><strong id="recipeSources">Clay · Sand</strong></div>
+            <div><span data-i18n="recipe.formula">Crafting formula</span><strong id="recipeFormula">Clay 4 + Sand 1 → Terracotta Roof Tile 4</strong></div>
+          </div>
+          <div class="heat-track">
+            <span>T1<br><small>350℃</small></span>
+            <span>T2<br><small>700℃</small></span>
+            <span>T3<br><small>1050℃</small></span>
+            <span>T4<br><small>1300℃</small></span>
+            <i id="heatMarker"></i>
+          </div>
+          <div class="recipe-stats">
+            <div><strong id="recipeTime">58s</strong><span data-i18n="recipe.time">Firing time</span></div>
+            <div><strong id="recipeYield">78%</strong><span data-i18n="recipe.yield">Base yield</span></div>
+            <div><strong id="roofVoxelCount">0</strong><span data-i18n="recipe.voxels">Roof voxels</span></div>
+          </div>
+          <p data-i18n="recipe.footnote">Changing the tile selects a different formal material ID and immediately re-encodes NCM3. Its color comes from existing world resources, not a rendering filter.</p>
+        </aside>
+      </section>
+
+      <section class="panel building-model-catalog-panel" aria-labelledby="buildingModelCatalogTitle">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">CHUNK.JS / RUNTIME-BAKED COMPONENT MODELS</p>
+            <h2 id="buildingModelCatalogTitle" data-i18n="catalog.title">Building Material Model Catalog</h2>
+          </div>
+          <div class="model-catalog-head-meta">
+            <span id="buildingMaterialCatalogCount">7 / 33</span>
+            <a href="/chunk.js/debug/materials/" data-i18n="catalog.openBakeLab">OPEN BAKE LAB</a>
+          </div>
+        </div>
+        <div class="model-catalog-intro">
+          <p data-i18n="catalog.intro">Every preview uses the runtime material registry and the same procedural texture bake as the game. Geometry follows each component’s canonical shape and L × H × W dimensions; thin panels, rods, beams, slabs, bricks, logs and curved roof tiles are not normalized into cubes.</p>
+          <div id="buildingMaterialCatalogFilters" class="model-catalog-filters" role="tablist" aria-label="Building material model filters" data-i18n-aria-label="catalog.filterAria">
+            <button type="button" class="active" data-material-filter="current" data-i18n="catalog.filter.current">Current Style</button>
+            <button type="button" data-material-filter="used" data-i18n="catalog.filter.used">Used in Model</button>
+            <button type="button" data-material-filter="wood" data-i18n="catalog.filter.wood">Wood</button>
+            <button type="button" data-material-filter="glazing" data-i18n="catalog.filter.glazing">Glass</button>
+            <button type="button" data-material-filter="masonry" data-i18n="catalog.filter.masonry">Masonry</button>
+            <button type="button" data-material-filter="finish" data-i18n="catalog.filter.finish">Finish</button>
+            <button type="button" data-material-filter="roof" data-i18n="catalog.filter.roof">Roof</button>
+            <button type="button" data-material-filter="all" data-i18n="catalog.filter.all">All 33</button>
+          </div>
+        </div>
+        <div id="buildingMaterialCatalog" class="building-model-catalog" aria-live="polite"></div>
+        <p class="model-catalog-footnote" data-i18n="catalog.footnote">Canvas previews are static and event-driven. They create no WebGL context, no animation loop, and no Three.js dependency.</p>
+      </section>
+
+      <section class="lower-grid">
+        <article class="panel pda-panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">SOLANA ACCOUNT READER</p>
+              <h2 data-i18n="pda.title">Fetch a Building from a PDA</h2>
+            </div>
+            <span class="devnet">DEVNET / CUSTOM RPC</span>
+          </div>
+          <p data-i18n="pda.description">Supports the standard NCBP account header and experimental accounts that store NCM text directly. The reader verifies SHA-256 before replacing the current spatial preview.</p>
+          <div class="rpc-grid">
+            <label><span>RPC URL</span><input id="rpcUrl" value="https://api.devnet.solana.com" inputmode="url" /></label>
+            <label><span>BLUEPRINT PDA</span><input id="pdaAddress" placeholder="Enter a building PDA address" data-i18n-placeholder="pda.placeholder" autocomplete="off" /></label>
+            <button id="loadPda" type="button" class="primary" data-i18n="pda.load">Fetch and Display</button>
+          </div>
+          <output id="pdaStatus" data-i18n="pda.waiting">Waiting for a PDA address.</output>
+        </article>
+
+        <article class="panel boundary-panel">
+          <p class="eyebrow">AUTHORITY BOUNDARY</p>
+          <h2 data-i18n="authority.title">Store the Blueprint, Never Execute Scripts</h2>
+          <ul>
+            <li data-i18n-html="authority.deterministic"><b>Deterministic:</b> fixed version, coordinates, material IDs and bounded commands.</li>
+            <li data-i18n-html="authority.auditable"><b>Auditable:</b> no <code>eval</code>; a blueprint cannot access the network, wallet or DOM.</li>
+            <li data-i18n-html="authority.portable"><b>Portable:</b> the NCM2 compatibility export can be decoded by existing NiceChunk clients.</li>
+            <li data-i18n-html="authority.verifiable"><b>Verifiable:</b> the PDA stores a code hash that clients must compare after fetching.</li>
+          </ul>
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      <span>BUILD_NCM / NCM3 EXPERIMENTAL CODEC</span>
+      <span>Canonical materials · bounded expansion · content-addressed blueprints</span>
+    </footer>
+
+    <script type="module" src="./app.js?v=0.9.2-royal-blue-citadel"></script>
+  </body>
+</html>

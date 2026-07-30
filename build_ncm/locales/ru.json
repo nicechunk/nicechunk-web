@@ -45,6 +45,7 @@
   "library.category.wayfinding": "НАВИГАЦИЯ",
   "library.category.commerce": "ТОРГОВЛЯ",
   "library.category.transport": "ТРАНСПОРТ",
+  "library.category.mining": "ДОБЫЧА",
   "library.footprint": "СЛЕД",
   "library.height": "ВЫСОТА",
   "library.voxels": "ВОКСЕЛЫ",

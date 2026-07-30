@@ -38,7 +38,7 @@ try {
   await client.send("Page.enable");
   await client.send("Emulation.setDeviceMetricsOverride", { width: 1600, height: 1200, deviceScaleFactor: 1, mobile: false });
   await client.send("Page.navigate", { url });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 9 && document.querySelectorAll('[data-building]').length === 1 && document.querySelector('[data-building=hollow-cottage]') && document.querySelector('[data-language-select]').options.length === 9"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 10 && document.querySelectorAll('[data-building]').length === 1 && document.querySelector('[data-building=hollow-cottage]') && document.querySelector('[data-language-select]').options.length === 9"));
 
   const initial = await evaluate(client, `({
     visibleBuildingCount: document.querySelectorAll('[data-building]').length,
@@ -76,8 +76,8 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 1);
-  assert.match(initial.totalBuildingCount, /10 BUILDINGS/);
-  assert.equal(initial.categoryCount, 9);
+  assert.match(initial.totalBuildingCount, /11 BUILDINGS/);
+  assert.equal(initial.categoryCount, 10);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
   assert.equal(initial.buildingLabel, "Hollow Cottage");
@@ -580,6 +580,56 @@ try {
   assert.ok(footbridge.resources.includes("/build_ncm/concepts/transport/stone-timber-footbridge.webp"));
   assert.ok(!footbridge.resources.some((path) => path.endsWith("stone-timber-footbridge-blueprint.js")));
 
+  await evaluate(client, "document.querySelector('[data-building-category=mining]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=timber-mine-headframe]')"));
+  const miningBrowse = await evaluate(client, `({
+    activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
+    cardCount: document.querySelectorAll('[data-building]').length,
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(miningBrowse.activeBuilding, null);
+  assert.equal(miningBrowse.cardCount, 1);
+  assert.ok(!miningBrowse.resources.includes("/build_ncm/buildings/mining/timber-mine-headframe.json"), "category browsing must not load the headframe JSON");
+  assert.ok(!miningBrowse.resources.includes("/build_ncm/concepts/mining/timber-mine-headframe.webp"), "category browsing must not load the headframe concept art");
+  await evaluate(client, "document.querySelector('[data-building=timber-mine-headframe]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'timber-mine-headframe' && document.querySelector('#modelSize').textContent === '23 × 27 × 17' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const headframe = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(headframe.activeCategory, "mining");
+  assert.match(headframe.title, /Timber Mine Headframe/);
+  assert.equal(headframe.modelSize, "23 × 27 × 17");
+  assert.match(headframe.payload, /^NCM3:/);
+  assert.equal(headframe.voxelCount, 1773);
+  for (const id of [55, 56, 57, 60, 64, 65, 68, 69]) assert.match(headframe.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(headframe.uncovered, false);
+  assert.equal(headframe.glazingDisabled, true);
+  assert.equal(headframe.glazingLabel, "Openings: Not applicable");
+  assert.equal(headframe.disabledStyles, 6);
+  assert.equal(headframe.disabledRoofs, 6);
+  assert.equal(headframe.conceptHidden, false);
+  assert.match(headframe.conceptAlt, /Timber Mine Headframe concept reference/);
+  assert.equal(headframe.conceptFit, "contain");
+  assert.equal(headframe.selectedInUrl, "timber-mine-headframe");
+  assert.ok(headframe.resources.includes("/build_ncm/buildings/mining/timber-mine-headframe.json"));
+  assert.ok(headframe.resources.includes("/build_ncm/concepts/mining/timber-mine-headframe.webp"));
+  assert.ok(!headframe.resources.some((path) => path.endsWith("timber-mine-headframe-blueprint.js")));
+
   await evaluate(client, "document.querySelector('[data-building-category=residential]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=hollow-cottage]')"));
   await evaluate(client, "document.querySelector('[data-building=hollow-cottage]').click()");
@@ -692,7 +742,7 @@ try {
 
   await client.send("Emulation.setDeviceMetricsOverride", { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
   await client.send("Page.reload", { ignoreCache: true });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 9 && document.querySelectorAll('[data-building]').length === 1"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 10 && document.querySelectorAll('[data-building]').length === 1"));
   await evaluate(client, "document.querySelector('[data-material-filter=all]').click()");
   await waitFor(() => evaluate(client, "document.querySelectorAll('#buildingMaterialCatalog .model-material-card').length === 33"));
   const mobile = await evaluate(client, `({
@@ -712,7 +762,7 @@ try {
   assert.equal(mobile.scrollWidth, mobile.clientWidth, "mobile page must not create document-level horizontal overflow");
   assert.equal(mobile.modelCards, 33);
   assert.equal(mobile.modelErrors, 0);
-  assert.equal(mobile.categories, 9);
+  assert.equal(mobile.categories, 10);
   assert.equal(mobile.buildingCards, 1);
   assert.equal(mobile.buildingThumbnails, 0);
   assert.equal(mobile.categoryFlow, "row");

@@ -45,6 +45,7 @@
   "library.category.wayfinding": "WEGWEISER",
   "library.category.commerce": "HANDEL",
   "library.category.transport": "VERKEHR",
+  "library.category.mining": "BERGBAU",
   "library.footprint": "FUSSABDRUCK",
   "library.height": "HÖHE",
   "library.voxels": "VOXEL",

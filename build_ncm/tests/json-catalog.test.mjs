@@ -163,6 +163,13 @@ function validateBuildingEvidence(building, voxels) {
   assert.ok(payloadBytes <= validation.maxPayloadBytes, `${building.key} exceeds its NCM payload budget`);
   const materialIds = [...new Set([...voxels.values()].map((voxel) => voxel.material))].sort((a, b) => a - b);
   assert.deepEqual(materialIds, validation.expectedDefaultMaterialIds, `${building.key} default materials changed`);
+  if (validation.expectedMaterialVoxelCounts) {
+    const materialCounts = Object.fromEntries(materialIds.map((materialId) => [
+      materialId,
+      [...voxels.values()].filter((voxel) => voxel.material === materialId).length,
+    ]));
+    assert.deepEqual(materialCounts, validation.expectedMaterialVoxelCounts, `${building.key} material voxel counts changed`);
+  }
   if (validation.requireConnected) validateConnectedGeometry(building, voxels);
   if (validation.mirrorAxisX != null) validateMirrorAxisX(building, voxels, validation.mirrorAxisX);
   if (validation.mirrorAxisZ != null) validateMirrorAxisZ(building, voxels, validation.mirrorAxisZ);
@@ -172,8 +179,10 @@ function validateBuildingEvidence(building, voxels) {
       assert.ok(voxels.has(`${support.x},${y},${support.z}`), `${building.key} has a load-path gap in ${support.label} at ${support.x},${y},${support.z}`);
     }
   }
+  for (const support of validation.steppedSupports ?? []) validateSteppedSupport(building, voxels, support);
   for (const span of validation.horizontalSpans ?? []) validateHorizontalSpan(building, voxels, span);
   for (const deck of validation.walkableDecks ?? []) validateWalkableDeck(building, voxels, deck);
+  for (const loop of validation.closedVoxelLoops ?? []) validateClosedVoxelLoop(building, voxels, loop);
   for (const volume of validation.openVolumes ?? []) {
     for (let x = volume.x; x < volume.x + volume.width; x += 1) {
       for (let y = volume.y; y < volume.y + volume.height; y += 1) {
@@ -239,6 +248,56 @@ function validateHorizontalSpan(building, voxels, span) {
     const z = span.axis === "x" ? span.fixed : position;
     assert.ok(voxels.has(`${x},${span.y},${z}`), `${building.key} has a structural gap in ${span.label} at ${x},${span.y},${z}`);
   }
+}
+
+function validateSteppedSupport(building, voxels, support) {
+  assert.ok(Number.isInteger(support.materialId) && support.materialId > 0, `${building.key} has an invalid ${support.label} support material`);
+  assert.ok(Array.isArray(support.segments) && support.segments.length > 0, `${building.key} has no segments for ${support.label}`);
+  let previous = null;
+  for (const segment of support.segments) {
+    for (const key of ["x", "y", "z"]) assert.ok(Number.isInteger(segment[key]) && segment[key] >= 0, `${building.key} has an invalid ${support.label} ${key}`);
+    for (const key of ["width", "height", "depth"]) assert.ok(Number.isInteger(segment[key]) && segment[key] > 0, `${building.key} has an invalid ${support.label} ${key}`);
+    for (let x = segment.x; x < segment.x + segment.width; x += 1) {
+      for (let y = segment.y; y < segment.y + segment.height; y += 1) {
+        for (let z = segment.z; z < segment.z + segment.depth; z += 1) {
+          assert.equal(voxels.get(`${x},${y},${z}`)?.material, support.materialId, `${building.key} has a material or load-path gap in ${support.label} at ${x},${y},${z}`);
+        }
+      }
+    }
+    if (!previous) {
+      assert.ok(segment.y > 0, `${building.key} ${support.label} cannot prove ground support below y=0`);
+      for (let x = segment.x; x < segment.x + segment.width; x += 1) {
+        for (let z = segment.z; z < segment.z + segment.depth; z += 1) {
+          assert.ok(voxels.has(`${x},${segment.y - 1},${z}`), `${building.key} ${support.label} lacks grounded support below ${x},${segment.y},${z}`);
+        }
+      }
+    } else {
+      assert.equal(segment.y, previous.y + previous.height, `${building.key} has a vertical gap between ${support.label} segments`);
+      assert.ok(rangesOverlap(previous.x, previous.width, segment.x, segment.width), `${building.key} loses X face contact in ${support.label}`);
+      assert.ok(rangesOverlap(previous.z, previous.depth, segment.z, segment.depth), `${building.key} loses Z face contact in ${support.label}`);
+    }
+    previous = segment;
+  }
+}
+
+function validateClosedVoxelLoop(building, voxels, loop) {
+  assert.ok(Array.isArray(loop.points) && loop.points.length >= 4, `${building.key} has an incomplete ${loop.label} loop`);
+  const points = loop.points.map((point) => {
+    assert.ok(Array.isArray(point) && point.length === 3 && point.every((value) => Number.isInteger(value) && value >= 0), `${building.key} has an invalid point in ${loop.label}`);
+    const [x, y, z] = point;
+    assert.equal(voxels.get(`${x},${y},${z}`)?.material, loop.materialId, `${building.key} breaks ${loop.label} at ${x},${y},${z}`);
+    return { x, y, z };
+  });
+  for (let index = 0; index < points.length; index += 1) {
+    const current = points[index];
+    const next = points[(index + 1) % points.length];
+    const distance = Math.abs(current.x - next.x) + Math.abs(current.y - next.y) + Math.abs(current.z - next.z);
+    assert.equal(distance, 1, `${building.key} ${loop.label} is not face-connected between points ${index} and ${(index + 1) % points.length}`);
+  }
+}
+
+function rangesOverlap(startA, lengthA, startB, lengthB) {
+  return Math.max(startA, startB) < Math.min(startA + lengthA, startB + lengthB);
 }
 
 function validateWalkableDeck(building, voxels, deck) {

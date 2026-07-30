@@ -45,6 +45,7 @@
   "library.category.wayfinding": "WAYFINDING",
   "library.category.commerce": "COMMERCE",
   "library.category.transport": "TRANSPORT",
+  "library.category.mining": "MINING",
   "library.footprint": "FOOTPRINT",
   "library.height": "HEIGHT",
   "library.voxels": "VOXELS",

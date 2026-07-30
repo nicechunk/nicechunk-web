@@ -1,0 +1,209 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "timber-mine-headframe",
+  "category": "mining",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Timber Mine Headframe",
+    "es": "Castillete Minero de Madera",
+    "fr": "Chevalement Minier en Bois",
+    "de": "Hölzernes Fördergerüst",
+    "ja": "木造鉱山巻上げ櫓",
+    "ru": "Деревянный шахтный копёр",
+    "ko": "목재 광산 권양탑",
+    "zh-Hant": "木製礦井井架",
+    "zh-Hans": "木制矿井井架"
+  },
+  "descriptions": {
+    "en": "A timber headframe above an open five-by-five-voxel mine shaft, with mirrored one-voxel-rise approaches, four grounded stone pads, stepped squared-timber legs, three crossbeam tiers, wooden-stick bracing, a nine-voxel hoist wheel, two-level guard rails, a deep-stone counterweight and four amber safety lights.",
+    "es": "Castillete de madera sobre un pozo minero abierto de cinco por cinco vóxeles, con accesos simétricos de peldaños de un vóxel, cuatro apoyos de piedra anclados al suelo, patas escalonadas de madera escuadrada, tres niveles de vigas, arriostramientos de varilla de madera, rueda de izado de nueve vóxeles, barandillas de dos niveles, contrapeso de piedra profunda y cuatro luces ámbar de seguridad.",
+    "fr": "Chevalement en bois au-dessus d'un puits de mine ouvert de cinq voxels sur cinq, avec accès symétriques par marches d'un voxel, quatre appuis en pierre ancrés au sol, jambes étagées en bois équarri, trois niveaux de traverses, contreventements en baguettes de bois, roue de levage de neuf voxels, garde-corps à deux niveaux, contrepoids en pierre profonde et quatre feux de sécurité ambrés.",
+    "de": "Hölzernes Fördergerüst über einem offenen fünf mal fünf Voxel großen Schacht, mit spiegelgleichen Ein-Voxel-Stufenzugängen, vier geerdeten Steinlagern, abgestuften Kantholzbeinen, drei Querträgerebenen, Holzstab-Aussteifungen, einem neun Voxel großen Förderrad, zweistufigen Schutzgeländern, Tiefstein-Gegengewicht und vier Bernstein-Sicherheitsleuchten.",
+    "ja": "5×5ボクセルの開放坑口をまたぐ木造巻上げ櫓。左右対称の1ボクセル段差進入路、接地した4基の石製基礎、段階的に内側へ寄る角材脚、3層の横梁、木製棒の筋交い、9ボクセル幅の巻上げ輪、二段手すり、深層石の釣合い重り、琥珀色の安全灯4基を備えます。",
+    "ru": "Деревянный шахтный копёр над открытым стволом размером пять на пять вокселей: зеркальные подходы со ступенями высотой один воксель, четыре опирающиеся на землю каменные тумбы, ступенчато сходящиеся стойки из бруса, три яруса ригелей, раскосы из деревянных реек, подъёмное колесо шириной девять вокселей, двухъярусные ограждения, противовес из глубинного камня и четыре янтарных сигнальных фонаря.",
+    "ko": "5×5복셀의 열린 수직 갱도 위에 세운 목재 권양탑으로, 한 복셀씩 오르는 대칭 진입로, 지면에 닿은 석재 받침 네 개, 안쪽으로 단계적으로 좁아지는 각재 다리, 세 단의 가로보, 목재 막대 가새, 폭 9복셀의 권양 바퀴, 2단 안전 난간, 심층석 평형추와 호박색 안전등 네 개를 갖췄습니다.",
+    "zh-Hant": "架設於五乘五體素開放礦井上方的木製井架，配有對稱的一體素級差入口、四座落地石基、逐級內收的方木支腿、三層橫樑、木桿斜撐、九體素寬提升輪、雙層護欄、深層石配重，以及四盞琥珀安全燈。",
+    "zh-Hans": "架设于五乘五体素开放矿井上方的木制井架，配有对称的一体素级差入口、四座落地石基、逐级内收的方木支腿、三层横梁、木杆斜撑、九体素宽提升轮、双层护栏、深层石配重，以及四盏琥珀安全灯。"
+  },
+  "referenceImage": "concepts/mining/timber-mine-headframe.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": false,
+    "maxStepRise": 1
+  },
+  "doorOpening": "not-applicable",
+  "footprint": "21 × 17 vu",
+  "height": "26 vu",
+  "referenceScale": "One concept voxel equals one NCM voxel",
+  "preview": {
+    "fitScale": 0.98,
+    "minScale": 4,
+    "yaw": 2.36
+  },
+  "extraMaterials": [
+    {
+      "materialId": 56,
+      "phase": "structure",
+      "label": "Wooden-stick Bracing, Spokes and Safety Rails"
+    },
+    {
+      "materialId": 60,
+      "phase": "openings",
+      "label": "Amber Safety-light Panels"
+    },
+    {
+      "materialId": 64,
+      "phase": "foundation",
+      "label": "Dressed-stone Shaft Collar and Working Plinth"
+    },
+    {
+      "materialId": 65,
+      "phase": "structure",
+      "label": "Deep-stone Counterweight"
+    },
+    {
+      "materialId": 69,
+      "phase": "foundation",
+      "label": "Polished Stone Pad Caps and Approach Lips"
+    }
+  ],
+  "validation": {
+    "expectedVoxelCount": 1773,
+    "expectedPayloadBytes": 757,
+    "maxPayloadBytes": 768,
+    "expectedDefaultMaterialIds": [55, 56, 57, 60, 64, 65, 68, 69],
+    "expectedMaterialVoxelCounts": {
+      "55": 164,
+      "56": 178,
+      "57": 757,
+      "60": 8,
+      "64": 428,
+      "65": 36,
+      "68": 132,
+      "69": 70
+    },
+    "requireConnected": true,
+    "mirrorAxisZ": 8,
+    "steppedSupports": [
+      {
+        "label": "South-west A-frame leg",
+        "materialId": 57,
+        "segments": [
+          { "x": 4, "y": 3, "z": 4, "width": 2, "height": 4, "depth": 2 },
+          { "x": 5, "y": 7, "z": 4, "width": 2, "height": 4, "depth": 2 },
+          { "x": 6, "y": 11, "z": 4, "width": 2, "height": 4, "depth": 2 },
+          { "x": 7, "y": 15, "z": 4, "width": 2, "height": 4, "depth": 2 }
+        ]
+      },
+      {
+        "label": "South-east A-frame leg",
+        "materialId": 57,
+        "segments": [
+          { "x": 17, "y": 3, "z": 4, "width": 2, "height": 4, "depth": 2 },
+          { "x": 16, "y": 7, "z": 4, "width": 2, "height": 4, "depth": 2 },
+          { "x": 15, "y": 11, "z": 4, "width": 2, "height": 4, "depth": 2 },
+          { "x": 14, "y": 15, "z": 4, "width": 2, "height": 4, "depth": 2 }
+        ]
+      },
+      {
+        "label": "North-west A-frame leg",
+        "materialId": 57,
+        "segments": [
+          { "x": 4, "y": 3, "z": 11, "width": 2, "height": 4, "depth": 2 },
+          { "x": 5, "y": 7, "z": 11, "width": 2, "height": 4, "depth": 2 },
+          { "x": 6, "y": 11, "z": 11, "width": 2, "height": 4, "depth": 2 },
+          { "x": 7, "y": 15, "z": 11, "width": 2, "height": 4, "depth": 2 }
+        ]
+      },
+      {
+        "label": "North-east A-frame leg",
+        "materialId": 57,
+        "segments": [
+          { "x": 17, "y": 3, "z": 11, "width": 2, "height": 4, "depth": 2 },
+          { "x": 16, "y": 7, "z": 11, "width": 2, "height": 4, "depth": 2 },
+          { "x": 15, "y": 11, "z": 11, "width": 2, "height": 4, "depth": 2 },
+          { "x": 14, "y": 15, "z": 11, "width": 2, "height": 4, "depth": 2 }
+        ]
+      }
+    ],
+    "horizontalSpans": [
+      { "label": "South lower crossbeam", "axis": "x", "start": 5, "end": 17, "y": 9, "fixed": 4 },
+      { "label": "North lower crossbeam", "axis": "x", "start": 5, "end": 17, "y": 9, "fixed": 12 },
+      { "label": "South middle crossbeam", "axis": "x", "start": 7, "end": 15, "y": 15, "fixed": 4 },
+      { "label": "North middle crossbeam", "axis": "x", "start": 7, "end": 15, "y": 15, "fixed": 12 },
+      { "label": "South wheel-support beam", "axis": "x", "start": 8, "end": 14, "y": 19, "fixed": 4 },
+      { "label": "North wheel-support beam", "axis": "x", "start": 8, "end": 14, "y": 19, "fixed": 12 }
+    ],
+    "closedVoxelLoops": [
+      {
+        "label": "Nine-voxel timber hoist wheel",
+        "materialId": 57,
+        "points": [
+          [9, 17, 8], [10, 17, 8], [11, 17, 8], [12, 17, 8], [13, 17, 8],
+          [13, 18, 8], [14, 18, 8], [14, 19, 8], [15, 19, 8], [15, 20, 8],
+          [15, 21, 8], [15, 22, 8], [15, 23, 8], [14, 23, 8], [14, 24, 8],
+          [13, 24, 8], [13, 25, 8], [12, 25, 8], [11, 25, 8], [10, 25, 8],
+          [9, 25, 8], [9, 24, 8], [8, 24, 8], [8, 23, 8], [7, 23, 8],
+          [7, 22, 8], [7, 21, 8], [7, 20, 8], [7, 19, 8], [8, 19, 8],
+          [8, 18, 8], [9, 18, 8]
+        ]
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "Unobstructed central mine shaft",
+        "x": 9,
+        "y": 0,
+        "z": 6,
+        "width": 5,
+        "height": 17,
+        "depth": 5
+      }
+    ],
+    "approach": [
+      { "x": 11, "topY": 2, "z": 0 },
+      { "x": 11, "topY": 3, "z": 1 },
+      { "x": 11, "topY": 3, "z": 2 },
+      { "x": 11, "topY": 3, "z": 3 }
+    ],
+    "solidPoints": [
+      { "x": 1, "y": 0, "z": 1, "materialId": 68 },
+      { "x": 5, "y": 2, "z": 8, "materialId": 55 },
+      { "x": 4, "y": 2, "z": 4, "materialId": 69 },
+      { "x": 4, "y": 3, "z": 4, "materialId": 57 },
+      { "x": 5, "y": 7, "z": 4, "materialId": 57 },
+      { "x": 11, "y": 9, "z": 4, "materialId": 57 },
+      { "x": 8, "y": 11, "z": 4, "materialId": 56 },
+      { "x": 8, "y": 3, "z": 8, "materialId": 64 },
+      { "x": 11, "y": 17, "z": 8, "materialId": 57 },
+      { "x": 7, "y": 21, "z": 8, "materialId": 57 },
+      { "x": 11, "y": 18, "z": 8, "materialId": 56 },
+      { "x": 11, "y": 21, "z": 8, "materialId": 57 },
+      { "x": 11, "y": 21, "z": 5, "materialId": 56 },
+      { "x": 19, "y": 8, "z": 8, "materialId": 65 },
+      { "x": 3, "y": 3, "z": 3, "materialId": 60 }
+    ]
+  },
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARcbEUMCAQEAARQAAQEAABoCAQEAAwEACgEmAAACQAIAAhIBAwEAABICQAIABgYBBAEYAAACBgICAhIAAwEAABICBgICBgYABAEYAAACRQkAAAQAAAEAACACBgkBAAQAAQEAAB4CBgkCAQQAAQEAABoCAQMAAwMAAwEaAAACQAMBAwMAAwEaAAACRQMCAwMAAwEaAAACAQMACgMAAwEaAAACQAMBCgMAAwEaAAACRQMCCgMAAwEaAAACQAgCBQYBAAEAAAwCQAgCBgABBAEMAAAFOAgEBQYAAwU4CAQLBgADBTgIBAUGAQMFOA4EBQYBAwI4BgoEAQAABAICAAI4DwoEAQAABAECAAI4CBAEAQAAAgICAAI4DRAEAQAAAgECAAI4BgoMAQAABAICAAI4DwoMAQAABAECAAI4CBAMAQAAAgICAAI4DRAMAQAAAgECAAI4BwoFAAABBgACAgI4BwoKAAABBgACAQI4DwoFAAABBgACAgI4DwoKAAABBgACAQIDBAMEAQMBAwIIAAIDEQMEAQMBAwEIAAIDBAMLAQMBAwIIAAIDEQMLAQMBAwEIAAIDBQkEDAEBAQAADgIDBw8ECAEBAQAADgIDCBMEBgEBAQAADgIDBQkEAQEIARYAAAIDBw8EAQEIAQ4AAAIDCBMEAQEIAQoAAAIDChMEAgMBAQAADgE4CxUEAAAIATgHFQgIAAABOAsRCAAIAAI4CBIIAQAABgICAAI4DRIIAQAABgECAAIDCREHBAACAQAQAAIDCBIHAQACAQECAAIDBxQHAAICARAAAAIDBxcHAQACAQICAAIDDRIHAQACAQICAAIDDhcHAQACAQECAAEDChQHAgICAQMSBQcACQIBAxUFBwAJAgEDEg4HAwECAUETBwcBBQIBOBMNCAEAAAI4AwIDAAAAASAAAAI8AwMDAAEAASAAAAI4AwUDAAAAASAAAAI4AwINAAAAASAAAAI8AwMNAAEAASAAAAI4AwUNAAAAASAAAA"
+  }
+}

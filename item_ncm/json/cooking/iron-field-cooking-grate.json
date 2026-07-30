@@ -1,0 +1,249 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "iron-field-cooking-grate",
+  "category": "cooking",
+  "interaction": "placeable",
+  "names": {
+    "en": "Iron Field Cooking Grate",
+    "es": "Parrilla de campaña de hierro",
+    "fr": "Grille de cuisine de campagne en fer",
+    "de": "Eiserner Feldkochrost",
+    "ja": "鉄製の野外調理台",
+    "ru": "Железная походная решётка",
+    "ko": "철제 야외 조리대",
+    "zh-Hant": "鐵製野外烹飪架",
+    "zh-Hans": "铁制野外烹饪架"
+  },
+  "descriptions": {
+    "en": "Iron Field Cooking Grate is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Parrilla de campaña de hierro es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Grille de cuisine de campagne en fer est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Eiserner Feldkochrost ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "鉄製の野外調理台は、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Железная походная решётка — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "철제 야외 조리대은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "鐵製野外烹飪架是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "铁制野外烹饪架是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 0.8438,
+    "height": 0.5625,
+    "depth": 0.7188,
+    "sizeQ": [
+      54,
+      36,
+      46
+    ]
+  },
+  "preview": {
+    "yaw": -0.72,
+    "pitch": 0.4
+  },
+  "concept": {
+    "image": "concepts/cooking/iron-field-cooking-grate-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "e659ddb78a3a1a201c2cfde2f6a3c5978c2438321d32b90c2075bb83041fe4d7"
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1._mgYJ1qvwgRxrXcetmRCakwBAQAAQfcQABNSYAgIAAIASIAAmpBAQgfUEAAEAATUggIQAWCAACAAImQQDIH5BAABAAETIIBkD-QgAAgACJkEAyAAAQAAQABEyCAZAAcIAAIAAiZBAMgAcEAAEAATUgw4DPrBD7yAAJqQYcBn1ggCJAAE1IMOAwFQQ-8gACakGHAYCoIAiQABNSGAgY-sAPvIAAmpDAQMfWAAIkAATUhgIGAVAD7yAAJqQwEDAKgACJAA",
+    "rawBytes": 195,
+    "sha256": "bdadbbf94b7506c69671a427db0ca4456788b4217d0173cce12b89400cefef3e",
+    "designHash": 1979480156,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 195,
+    "savedBytes": 0,
+    "sourceComponentCount": 17,
+    "decodedComponentCount": 17,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 2929688,
+        "usedVolumeMm3": 2929688,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 2929688,
+        "usedVolumeMm3": 2929688,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 1953125,
+        "usedVolumeMm3": 1953125,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 1953125,
+        "usedVolumeMm3": 1953125,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "carbon_steel",
+        "itemCode": 1019,
+        "inputVolumeMm3": 1464844,
+        "usedVolumeMm3": 1464844,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "carbon_steel",
+        "itemCode": 1019,
+        "inputVolumeMm3": 1464844,
+        "usedVolumeMm3": 1464844,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "carbon_steel",
+        "itemCode": 1019,
+        "inputVolumeMm3": 1464844,
+        "usedVolumeMm3": 1464844,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 7,
+        "materialId": "carbon_steel",
+        "itemCode": 1019,
+        "inputVolumeMm3": 1464844,
+        "usedVolumeMm3": 1464844,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 8,
+        "materialId": "carbon_steel",
+        "itemCode": 1019,
+        "inputVolumeMm3": 1464844,
+        "usedVolumeMm3": 1464844,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 9,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 3845215,
+        "usedVolumeMm3": 3845215,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 10,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 3845215,
+        "usedVolumeMm3": 3845215,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 11,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 3845215,
+        "usedVolumeMm3": 3845215,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 12,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 3845215,
+        "usedVolumeMm3": 3845215,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 13,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 2197266,
+        "usedVolumeMm3": 2197266,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 14,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 2197266,
+        "usedVolumeMm3": 2197266,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 15,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 2197266,
+        "usedVolumeMm3": 2197266,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 16,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 2197266,
+        "usedVolumeMm3": 2197266,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 41222144,
+      "requiredEffectiveDurability": 48259,
+      "outputMassGrams": 295045,
+      "materialScore": 69
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 408,
+      "triangleCount": 204,
+      "meshByteLength": 7752
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 12,
+      "inputVolumeMm3": 33935550,
+      "usedVolumeMm3": 33935550,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 136
+    },
+    {
+      "materialId": "carbon_steel",
+      "itemCode": 1019,
+      "componentCount": 5,
+      "inputVolumeMm3": 7324220,
+      "usedVolumeMm3": 7324220,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 30
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "chainMinted": false
+  }
+}

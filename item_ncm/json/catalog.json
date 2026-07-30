@@ -28,6 +28,7 @@
     "json/containers/banded-wooden-chest.json",
     "json/containers/iron-ore-bucket.json",
     "json/containers/reinforced-travel-crate.json",
-    "json/cooking/iron-hearth-cauldron.json"
+    "json/cooking/iron-hearth-cauldron.json",
+    "json/cooking/iron-field-cooking-grate.json"
   ]
 }

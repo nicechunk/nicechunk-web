@@ -81,7 +81,7 @@ try {
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 9);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /27 ITEMS/);
+  assert.match(initial.total, /28 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -158,7 +158,7 @@ try {
   assert.ok(workbench.resources.includes("/item_ncm/json/furniture/timber-workbench.json"));
 
   await evaluate(client, `document.querySelector('[data-category="cooking"]').click()`);
-  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 1 && document.querySelector('[data-item="iron-hearth-cauldron"]')`));
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 2 && document.querySelector('[data-item="iron-hearth-cauldron"]')`));
   assert.equal(await evaluate(client, `performance.getEntriesByType("resource").some((entry) => new URL(entry.name).pathname.includes("/item_ncm/json/cooking/"))`), false,
     "category browsing must not load cooking item JSON files");
   await evaluate(client, `document.querySelector('[data-item="iron-hearth-cauldron"]').click()`);
@@ -179,6 +179,23 @@ try {
   assert.equal(cauldron.materialRows, 2);
   assert.equal(cauldron.selectedInUrl, "iron-hearth-cauldron");
   assert.ok(cauldron.resources.includes("/item_ncm/json/cooking/iron-hearth-cauldron.json"));
+
+  await evaluate(client, `document.querySelector('[data-item="iron-field-cooking-grate"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="iron-field-cooking-grate"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const cookingGrate = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(cookingGrate.title, "Iron Field Cooking Grate");
+  assert.equal(cookingGrate.type, "PLACEABLE");
+  assert.equal(cookingGrate.payloadBytes, "195 / 640 B");
+  assert.equal(cookingGrate.componentCount, "17");
+  assert.equal(cookingGrate.selectedInUrl, "iron-field-cooking-grate");
+  assert.ok(cookingGrate.resources.includes("/item_ncm/json/cooking/iron-field-cooking-grate.json"));
 
   await evaluate(client, `document.querySelector('[data-category="mining-tools"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 4 && document.querySelector('[data-item="iron-earthwork-shovel"]')`));

@@ -181,6 +181,11 @@ const ITEM_NAMES = Object.freeze({
     "Iron Hearth Cauldron", "Caldero de hogar de hierro", "Chaudron de foyer en fer", "Eiserner Herdkessel",
     "鉄製炉端大釜", "Железный очажный котёл", "철제 화덕 가마솥", "鐵製爐灶大鍋", "铁制炉灶大锅",
   ),
+  "iron-field-cooking-grate": names(
+    "Iron Field Cooking Grate", "Parrilla de campaña de hierro", "Grille de cuisine de campagne en fer",
+    "Eiserner Feldkochrost", "鉄製の野外調理台", "Железная походная решётка",
+    "철제 야외 조리대", "鐵製野外烹飪架", "铁制野外烹饪架",
+  ),
 });
 
 const ITEM_SPECS = Object.freeze([
@@ -371,6 +376,19 @@ const ITEM_SPECS = Object.freeze([
     part("copper_bloom", [3, 12, 16], [16, 23, 0], { mask: sideHandleMask }),
   ], { yaw: -0.76, pitch: 0.48 }, {
     image: "concepts/cooking/iron-hearth-cauldron-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
+  placeable("cooking", "iron-field-cooking-grate", [
+    part("iron_bloom", [48, 4, 4], [0, 32, -18]),
+    part("iron_bloom", [48, 4, 4], [0, 32, 18]),
+    part("iron_bloom", [4, 4, 32], [-22, 32, 0]),
+    part("iron_bloom", [4, 4, 32], [22, 32, 0]),
+    ...[-14, -7, 0, 7, 14].map((x) => part("carbon_steel", [4, 3, 32], [x, 32, 0])),
+    ...[-21, 21].flatMap((x) => [-17, 17].map((z) => part("iron_bloom", [6, 28, 6], [x, 16, z]))),
+    ...[-21, 21].flatMap((x) => [-17, 17].map((z) => part("iron_bloom", [12, 4, 12], [x, 0, z]))),
+  ], { yaw: -0.72, pitch: 0.4 }, {
+    image: "concepts/cooking/iron-field-cooking-grate-v1.webp",
     source: "imagegen",
     version: 1,
   }),

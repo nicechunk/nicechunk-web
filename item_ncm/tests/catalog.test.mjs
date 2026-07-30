@@ -31,7 +31,7 @@ const runtimeCache = new ForgeRuntimeCache({ maxEntries: 32, maxBytes: 64 * 1024
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
-assert.equal(catalog.items.length, 27);
+assert.equal(catalog.items.length, 28);
 assert.equal(new Set(catalog.items).size, catalog.items.length);
 
 const listedFiles = new Set(catalog.items);
@@ -178,14 +178,14 @@ assert.deepEqual([...categories], [
   ["lighting", 3],
   ["furniture", 3],
   ["containers", 3],
-  ["cooking", 1],
+  ["cooking", 2],
 ]);
 assert.equal(tools, 15);
-assert.equal(placeables, 12);
-assert.equal(conceptReferences, 3);
+assert.equal(placeables, 13);
+assert.equal(conceptReferences, 4);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
-console.log("item_ncm catalog tests passed: 27 canonical NCF1 items across 9 categories");
+console.log("item_ncm catalog tests passed: 28 canonical NCF1 items across 9 categories");
 
 function json(file) {
   return JSON.parse(readFileSync(file, "utf8"));

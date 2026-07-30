@@ -186,6 +186,11 @@ const ITEM_NAMES = Object.freeze({
     "Eiserner Feldkochrost", "鉄製の野外調理台", "Железная походная решётка",
     "철제 야외 조리대", "鐵製野外烹飪架", "铁制野外烹饪架",
   ),
+  "timber-bound-village-ledger": names(
+    "Timber-bound Village Ledger", "Libro mayor de aldea encuadernado en madera", "Registre de village relié en bois",
+    "Holzgebundenes Dorfregister", "木装丁の村落台帳", "Деревенская учётная книга в деревянном переплёте",
+    "목재 장정 마을 장부", "木封村莊帳簿", "木封村庄账簿",
+  ),
 });
 
 const ITEM_SPECS = Object.freeze([
@@ -389,6 +394,18 @@ const ITEM_SPECS = Object.freeze([
     ...[-21, 21].flatMap((x) => [-17, 17].map((z) => part("iron_bloom", [12, 4, 12], [x, 0, z]))),
   ], { yaw: -0.72, pitch: 0.4 }, {
     image: "concepts/cooking/iron-field-cooking-grate-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
+
+  placeable("books-writing", "timber-bound-village-ledger", [
+    part("wooden_plank", [22, 1, 16], [0, 0, 0]),
+    part("cotton_cloth", [19, 3, 13], [0, 2, 0]),
+    part("wooden_plank", [22, 1, 16], [0, 4, 0]),
+    part("resin_binder", [3, 3, 16], [-11, 2, 0]),
+    ...[-7, 0, 7].map((x) => part("resin_binder", [2, 1, 16], [x, 5, 0])),
+  ], { yaw: -0.78, pitch: 0.5 }, {
+    image: "concepts/books-writing/timber-bound-village-ledger-v1.webp",
     source: "imagegen",
     version: 1,
   }),

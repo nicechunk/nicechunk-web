@@ -35,6 +35,7 @@
   "library.category.furniture": "FURNITURE",
   "library.category.containers": "CONTAINERS",
   "library.category.cooking": "COOKING",
+  "library.category.books-writing": "BOOKS & WRITING",
   "preview.emptyTitle": "Select an item blueprint.",
   "preview.waiting": "WAITING",
   "preview.reset": "Reset view",

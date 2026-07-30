@@ -1,0 +1,179 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "timber-bound-village-ledger",
+  "category": "books-writing",
+  "interaction": "placeable",
+  "names": {
+    "en": "Timber-bound Village Ledger",
+    "es": "Libro mayor de aldea encuadernado en madera",
+    "fr": "Registre de village relié en bois",
+    "de": "Holzgebundenes Dorfregister",
+    "ja": "木装丁の村落台帳",
+    "ru": "Деревенская учётная книга в деревянном переплёте",
+    "ko": "목재 장정 마을 장부",
+    "zh-Hant": "木封村莊帳簿",
+    "zh-Hans": "木封村庄账簿"
+  },
+  "descriptions": {
+    "en": "Timber-bound Village Ledger is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Libro mayor de aldea encuadernado en madera es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Registre de village relié en bois est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Holzgebundenes Dorfregister ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "木装丁の村落台帳は、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Деревенская учётная книга в деревянном переплёте — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "목재 장정 마을 장부은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "木封村莊帳簿是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "木封村庄账簿是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 0.375,
+    "height": 0.0938,
+    "depth": 0.25,
+    "sizeQ": [
+      24,
+      6,
+      16
+    ]
+  },
+  "preview": {
+    "yaw": -0.78,
+    "pitch": 0.5
+  },
+  "concept": {
+    "image": "concepts/books-writing/timber-bound-village-ledger-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "06f3c461632cf8c532c2d221c1b55d31acae658f0eb2e6d2f640ec0b085b2e04"
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.8CRmYhOjjfNUUhDEA5HinUWARCQAWJgYaAAAgAIAIp1FgEQAAAgAEAEgYGIP1AIACACQIBEH8gKABABIEAiAAAFAAgAkCARAA4CgAQAA",
+    "rawBytes": 78,
+    "sha256": "1d6065cf7cbeb7a711a4ac655288aaa71d428226a502f46e2b9ea5ebc95eba87",
+    "designHash": 1645931630,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 78,
+    "savedBytes": 0,
+    "sourceComponentCount": 7,
+    "decodedComponentCount": 7,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 1342773,
+        "usedVolumeMm3": 1342773,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "cotton_cloth",
+        "itemCode": 1025,
+        "inputVolumeMm3": 2826691,
+        "usedVolumeMm3": 2826691,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 1342773,
+        "usedVolumeMm3": 1342773,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "resin_binder",
+        "itemCode": 1004,
+        "inputVolumeMm3": 549316,
+        "usedVolumeMm3": 549316,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "resin_binder",
+        "itemCode": 1004,
+        "inputVolumeMm3": 122070,
+        "usedVolumeMm3": 122070,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "resin_binder",
+        "itemCode": 1004,
+        "inputVolumeMm3": 122070,
+        "usedVolumeMm3": 122070,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "resin_binder",
+        "itemCode": 1004,
+        "inputVolumeMm3": 122070,
+        "usedVolumeMm3": 122070,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 6426624,
+      "requiredEffectiveDurability": 2150,
+      "outputMassGrams": 2910,
+      "materialScore": 54
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 1096,
+      "triangleCount": 548,
+      "meshByteLength": 20824
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "wooden_plank",
+      "itemCode": 1031,
+      "componentCount": 2,
+      "inputVolumeMm3": 2685546,
+      "usedVolumeMm3": 2685546,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 135
+    },
+    {
+      "materialId": "cotton_cloth",
+      "itemCode": 1025,
+      "componentCount": 1,
+      "inputVolumeMm3": 2826691,
+      "usedVolumeMm3": 2826691,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 1000000,
+      "equivalentInputUnits": 3
+    },
+    {
+      "materialId": "resin_binder",
+      "itemCode": 1004,
+      "componentCount": 4,
+      "inputVolumeMm3": 915526,
+      "usedVolumeMm3": 915526,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 4
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "chainMinted": false
+  }
+}

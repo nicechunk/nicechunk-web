@@ -51,7 +51,7 @@ try {
   await client.send("Emulation.setDeviceMetricsOverride", { width: 1600, height: 1200, deviceScaleFactor: 1, mobile: false });
   await client.send("Page.navigate", { url });
   await waitFor(() => evaluate(client, `document.readyState === "complete"
-    && document.querySelectorAll("[data-category]").length === 9
+    && document.querySelectorAll("[data-category]").length === 10
     && document.querySelectorAll("[data-item]").length === 4
     && document.querySelector("#runtimeState").dataset.state === "verified"`));
 
@@ -79,9 +79,9 @@ try {
   assert.equal(initial.locale, "en");
   assert.equal(initial.title, "ITEM_NCM — NiceChunk Forge Item Registry");
   assert.equal(initial.languageCount, 9);
-  assert.equal(initial.categoryCount, 9);
+  assert.equal(initial.categoryCount, 10);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /28 ITEMS/);
+  assert.match(initial.total, /29 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -197,6 +197,27 @@ try {
   assert.equal(cookingGrate.selectedInUrl, "iron-field-cooking-grate");
   assert.ok(cookingGrate.resources.includes("/item_ncm/json/cooking/iron-field-cooking-grate.json"));
 
+  await evaluate(client, `document.querySelector('[data-category="books-writing"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 1 && document.querySelector('[data-item="timber-bound-village-ledger"]')`));
+  assert.equal(await evaluate(client, `performance.getEntriesByType("resource").some((entry) => new URL(entry.name).pathname.includes("/item_ncm/json/books-writing/"))`), false,
+    "category browsing must not load book item JSON files");
+  await evaluate(client, `document.querySelector('[data-item="timber-bound-village-ledger"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="timber-bound-village-ledger"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const villageLedger = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(villageLedger.title, "Timber-bound Village Ledger");
+  assert.equal(villageLedger.type, "PLACEABLE");
+  assert.equal(villageLedger.payloadBytes, "78 / 640 B");
+  assert.equal(villageLedger.componentCount, "7");
+  assert.equal(villageLedger.selectedInUrl, "timber-bound-village-ledger");
+  assert.ok(villageLedger.resources.includes("/item_ncm/json/books-writing/timber-bound-village-ledger.json"));
+
   await evaluate(client, `document.querySelector('[data-category="mining-tools"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 4 && document.querySelector('[data-item="iron-earthwork-shovel"]')`));
   await evaluate(client, `document.querySelector('[data-item="iron-earthwork-shovel"]').click()`);
@@ -265,7 +286,7 @@ try {
   })()`);
   assert.equal(mobile.clientWidth, 390);
   assert.equal(mobile.scrollWidth, mobile.clientWidth, "mobile page must not create document-level horizontal overflow");
-  assert.equal(mobile.categoryCount, 9);
+  assert.equal(mobile.categoryCount, 10);
   assert.equal(mobile.itemCount, 4);
   assert.equal(mobile.libraryBeforePreview, true);
   assert.equal(mobile.previewBeforeDetails, true);

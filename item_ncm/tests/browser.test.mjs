@@ -51,7 +51,7 @@ try {
   await client.send("Emulation.setDeviceMetricsOverride", { width: 1600, height: 1200, deviceScaleFactor: 1, mobile: false });
   await client.send("Page.navigate", { url });
   await waitFor(() => evaluate(client, `document.readyState === "complete"
-    && document.querySelectorAll("[data-category]").length === 10
+    && document.querySelectorAll("[data-category]").length === 11
     && document.querySelectorAll("[data-item]").length === 4
     && document.querySelector("#runtimeState").dataset.state === "verified"`));
 
@@ -79,9 +79,9 @@ try {
   assert.equal(initial.locale, "en");
   assert.equal(initial.title, "ITEM_NCM — NiceChunk Forge Item Registry");
   assert.equal(initial.languageCount, 9);
-  assert.equal(initial.categoryCount, 10);
+  assert.equal(initial.categoryCount, 11);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /35 ITEMS/);
+  assert.match(initial.total, /36 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -217,7 +217,7 @@ try {
   assert.equal(villageLedger.componentCount, "7");
   assert.equal(villageLedger.selectedInUrl, "timber-bound-village-ledger");
   assert.ok(villageLedger.resources.includes("/item_ncm/json/books-writing/timber-bound-village-ledger.json"));
-  await assertRigidBookPreview(client, { verifyFrames: true });
+  await assertRigidClothPreview(client, { verifyFrames: true });
 
   await evaluate(client, `document.querySelector('[data-item="open-civic-record-book"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelector('[data-item="open-civic-record-book"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
@@ -235,7 +235,7 @@ try {
   assert.equal(openRecordBook.componentCount, "6");
   assert.equal(openRecordBook.selectedInUrl, "open-civic-record-book");
   assert.ok(openRecordBook.resources.includes("/item_ncm/json/books-writing/open-civic-record-book.json"));
-  await assertRigidBookPreview(client);
+  await assertRigidClothPreview(client);
 
   await evaluate(client, `document.querySelector('[data-item="stacked-archive-volumes"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelector('[data-item="stacked-archive-volumes"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
@@ -253,7 +253,7 @@ try {
   assert.equal(archiveVolumes.componentCount, "12");
   assert.equal(archiveVolumes.selectedInUrl, "stacked-archive-volumes");
   assert.ok(archiveVolumes.resources.includes("/item_ncm/json/books-writing/stacked-archive-volumes.json"));
-  await assertRigidBookPreview(client);
+  await assertRigidClothPreview(client);
 
   await evaluate(client, `document.querySelector('[data-item="civilization-code-codex"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelector('[data-item="civilization-code-codex"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
@@ -271,7 +271,7 @@ try {
   assert.equal(civilizationCodex.componentCount, "24");
   assert.equal(civilizationCodex.selectedInUrl, "civilization-code-codex");
   assert.ok(civilizationCodex.resources.includes("/item_ncm/json/books-writing/civilization-code-codex.json"));
-  await assertRigidBookPreview(client);
+  await assertRigidClothPreview(client);
 
   await evaluate(client, `document.querySelector('[data-item="mining-skill-manual"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelector('[data-item="mining-skill-manual"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
@@ -289,7 +289,7 @@ try {
   assert.equal(miningManual.componentCount, "14");
   assert.equal(miningManual.selectedInUrl, "mining-skill-manual");
   assert.ok(miningManual.resources.includes("/item_ncm/json/books-writing/mining-skill-manual.json"));
-  await assertRigidBookPreview(client);
+  await assertRigidClothPreview(client);
 
   await evaluate(client, `document.querySelector('[data-item="forging-skill-treatise"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelector('[data-item="forging-skill-treatise"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
@@ -307,7 +307,7 @@ try {
   assert.equal(forgingTreatise.componentCount, "20");
   assert.equal(forgingTreatise.selectedInUrl, "forging-skill-treatise");
   assert.ok(forgingTreatise.resources.includes("/item_ncm/json/books-writing/forging-skill-treatise.json"));
-  await assertRigidBookPreview(client);
+  await assertRigidClothPreview(client);
 
   await evaluate(client, `document.querySelector('[data-item="farming-skill-handbook"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelector('[data-item="farming-skill-handbook"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
@@ -325,7 +325,46 @@ try {
   assert.equal(farmingHandbook.componentCount, "21");
   assert.equal(farmingHandbook.selectedInUrl, "farming-skill-handbook");
   assert.ok(farmingHandbook.resources.includes("/item_ncm/json/books-writing/farming-skill-handbook.json"));
-  await assertRigidBookPreview(client);
+  await assertRigidClothPreview(client);
+
+  await evaluate(client, `document.querySelector('[data-category="interior-decor"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 1 && document.querySelector('[data-item="timber-framed-woven-tapestry"]')`));
+  assert.equal(await evaluate(client, `performance.getEntriesByType("resource").some((entry) => new URL(entry.name).pathname.includes("/item_ncm/json/interior-decor/"))`), false,
+    "category browsing must not load interior decor item JSON files");
+  await evaluate(client, `document.querySelector('[data-item="timber-framed-woven-tapestry"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="timber-framed-woven-tapestry"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const tapestry = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payload: document.querySelector("#codeOutput").value,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(tapestry.title, "Timber-framed Woven Tapestry");
+  assert.equal(tapestry.type, "PLACEABLE");
+  assert.match(tapestry.payload, /^NCF1\./);
+  assert.equal(tapestry.payloadBytes, "299 / 640 B");
+  assert.equal(tapestry.componentCount, "22");
+  assert.equal(tapestry.selectedInUrl, "timber-framed-woven-tapestry");
+  assert.ok(tapestry.resources.includes("/item_ncm/json/interior-decor/timber-framed-woven-tapestry.json"));
+  await assertRigidClothPreview(client, { verifyFrames: true });
+
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "zh-Hans";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.querySelector("#itemTitle").textContent === "木框编织壁毯"`));
+  assert.equal(await evaluate(client, `document.querySelector('[data-category="interior-decor"] span').textContent`), "室内装饰");
+  assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), tapestry.payload);
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "en";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
 
   await evaluate(client, `document.querySelector('[data-category="mining-tools"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 4 && document.querySelector('[data-item="iron-earthwork-shovel"]')`));
@@ -395,7 +434,7 @@ try {
   })()`);
   assert.equal(mobile.clientWidth, 390);
   assert.equal(mobile.scrollWidth, mobile.clientWidth, "mobile page must not create document-level horizontal overflow");
-  assert.equal(mobile.categoryCount, 10);
+  assert.equal(mobile.categoryCount, 11);
   assert.equal(mobile.itemCount, 4);
   assert.equal(mobile.libraryBeforePreview, true);
   assert.equal(mobile.previewBeforeDetails, true);
@@ -511,7 +550,7 @@ async function waitFor(check) {
   throw new Error("Timed out waiting for browser state.");
 }
 
-async function assertRigidBookPreview(client, { verifyFrames = false } = {}) {
+async function assertRigidClothPreview(client, { verifyFrames = false } = {}) {
   const state = await evaluate(client, `({
     motion: document.querySelector("#forgePreview").dataset.clothMotion,
     components: document.querySelector("#forgePreview").dataset.clothComponentCount,
@@ -526,7 +565,7 @@ async function assertRigidBookPreview(client, { verifyFrames = false } = {}) {
   const before = await client.send("Page.captureScreenshot", { format: "png", clip });
   await new Promise((resolve) => setTimeout(resolve, 180));
   const after = await client.send("Page.captureScreenshot", { format: "png", clip });
-  assert.equal(after.data, before.data, "rigid book preview must remain pixel-stable across animation frames");
+  assert.equal(after.data, before.data, "rigid cloth preview must remain pixel-stable across animation frames");
 }
 
 async function evaluate(client, expression) {

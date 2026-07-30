@@ -44,10 +44,17 @@ const bookLayouts = new Map([
   ["forging-skill-treatise", { portrait: true, pageSets: [{ page: 1, lower: 0, upper: 2 }] }],
   ["farming-skill-handbook", { portrait: true, pageSets: [{ page: 1, lower: 0, upper: 2 }] }],
 ]);
+const framedTextileLayouts = new Map([
+  ["timber-framed-woven-tapestry", {
+    cloth: 8,
+    frame: [0, 1, 2, 3, 4, 5, 6, 7],
+    decorations: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21],
+  }],
+]);
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
-assert.equal(catalog.items.length, 35);
+assert.equal(catalog.items.length, 36);
 assert.equal(new Set(catalog.items).size, catalog.items.length);
 
 const listedFiles = new Set(catalog.items);
@@ -61,6 +68,7 @@ let tools = 0;
 let placeables = 0;
 let conceptReferences = 0;
 let bookGeometryCount = 0;
+let framedTextileGeometryCount = 0;
 for (const file of catalog.items) {
   assert.match(file, /^json\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/);
   const item = json(join(root, file));
@@ -122,6 +130,14 @@ for (const file of catalog.items) {
     assertBookGeometry(item, runtime, bookLayout);
   } else if (item.category === "books-writing") {
     assert.fail(`${item.key} is missing its book geometry regression policy`);
+  }
+  const framedTextileLayout = framedTextileLayouts.get(item.key);
+  if (framedTextileLayout) {
+    framedTextileGeometryCount += 1;
+    assert.equal(item.category, "interior-decor");
+    assert.equal(item.preview.clothMotion, "rigid");
+    assert.equal(item.verification.framedTextileGeometryValidated, true);
+    assertFramedTextileGeometry(item, runtime, framedTextileLayout);
   }
   assert.equal(forgeWorkbenchComponentsConnected(runtime.components), true, `${item.key} must be a connected assembly`);
   const grip = validateForgeGripBindings(runtime.components);
@@ -207,14 +223,16 @@ assert.deepEqual([...categories], [
   ["containers", 3],
   ["cooking", 2],
   ["books-writing", 7],
+  ["interior-decor", 1],
 ]);
 assert.equal(tools, 15);
-assert.equal(placeables, 20);
-assert.equal(conceptReferences, 11);
+assert.equal(placeables, 21);
+assert.equal(conceptReferences, 12);
 assert.equal(bookGeometryCount, 7);
+assert.equal(framedTextileGeometryCount, 1);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
-console.log("item_ncm catalog tests passed: 35 canonical NCF1 items across 10 categories");
+console.log("item_ncm catalog tests passed: 36 canonical NCF1 items across 11 categories");
 
 function json(file) {
   return JSON.parse(readFileSync(file, "utf8"));
@@ -274,4 +292,45 @@ function positiveVolumeOverlap(left, right) {
   return [0, 1, 2].every((axis) => (
     Math.min(left.max[axis], right.max[axis]) - Math.max(left.min[axis], right.min[axis]) > 0
   ));
+}
+
+function assertFramedTextileGeometry(item, runtime, layout) {
+  assert.equal(runtime.componentCount, 22);
+  assert.ok(item.dimensions.sizeQ[1] > item.dimensions.sizeQ[0]);
+  assert.ok(item.dimensions.sizeQ[2] < item.dimensions.sizeQ[0] * 0.2);
+  assert.deepEqual(
+    [...new Set(item.forge.materialComponents.map(({ materialId }) => materialId))].sort(),
+    ["blue_dye", "cotton_cloth", "red_dye", "squared_timber", "wooden_plank", "yellow_dye"],
+  );
+  const bounds = runtime.components.map((component) => componentBoundsQ(component));
+  const cloth = bounds[layout.cloth];
+  const [left, right, bottom, top] = layout.frame.map((index) => bounds[index]);
+  assert.equal(item.forge.materialComponents[layout.cloth].materialId, "cotton_cloth");
+  assert.equal(runtime.components[layout.cloth].resourceId, "cloth");
+  assert.equal(cloth.min[0], left.max[0]);
+  assert.equal(cloth.max[0], right.min[0]);
+  assert.equal(cloth.min[1], bottom.max[1]);
+  assert.equal(cloth.max[1], top.min[1]);
+  for (let index = 0; index < bounds.length; index += 1) {
+    if (index === layout.cloth) continue;
+    assert.equal(positiveVolumeOverlap(cloth, bounds[index]), false, `${item.key} cloth intersects component ${index}`);
+  }
+  for (const decorationIndex of layout.decorations) {
+    const decoration = bounds[decorationIndex];
+    assert.match(item.forge.materialComponents[decorationIndex].materialId, /_dye$/);
+    assert.ok(decoration.min[0] >= cloth.min[0] && decoration.max[0] <= cloth.max[0]);
+    assert.ok(decoration.min[1] >= cloth.min[1] && decoration.max[1] <= cloth.max[1]);
+    assert.equal(decoration.min[2], cloth.max[2]);
+  }
+  for (let leftIndex = 0; leftIndex < layout.decorations.length; leftIndex += 1) {
+    for (let rightIndex = leftIndex + 1; rightIndex < layout.decorations.length; rightIndex += 1) {
+      const leftDecoration = layout.decorations[leftIndex];
+      const rightDecoration = layout.decorations[rightIndex];
+      assert.equal(
+        positiveVolumeOverlap(bounds[leftDecoration], bounds[rightDecoration]),
+        false,
+        `${item.key} decorations ${leftDecoration} and ${rightDecoration} intersect`,
+      );
+    }
+  }
 }

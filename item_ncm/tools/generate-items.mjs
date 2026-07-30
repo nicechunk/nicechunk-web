@@ -64,6 +64,13 @@ const BOOK_LAYOUTS = Object.freeze({
   "forging-skill-treatise": { portrait: true, pageSets: [{ page: 1, lower: 0, upper: 2 }] },
   "farming-skill-handbook": { portrait: true, pageSets: [{ page: 1, lower: 0, upper: 2 }] },
 });
+const FRAMED_TEXTILE_LAYOUTS = Object.freeze({
+  "timber-framed-woven-tapestry": {
+    cloth: 8,
+    frame: [0, 1, 2, 3, 4, 5, 6, 7],
+    decorations: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21],
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -82,6 +89,18 @@ const COLORS = Object.freeze({
   wooden_stick: 0x753,
   yellow_dye: 0xdb3,
 });
+const TAPESTRY_KNOT_PATTERN = Object.freeze([
+  ".....####.....",
+  "...###..###...",
+  "..##..##..##..",
+  ".##..####..##.",
+  "##..######..##",
+  "##..######..##",
+  ".##..####..##.",
+  "..##..##..##..",
+  "...###..###...",
+  ".....####.....",
+]);
 
 const ITEM_NAMES = Object.freeze({
   "carbon-steel-prospector-pick": names(
@@ -239,6 +258,11 @@ const ITEM_NAMES = Object.freeze({
     "Farming Skill Handbook", "Manual de habilidad agrícola", "Manuel de compétence agricole",
     "Handbuch der Landwirtschaft", "農耕技能書", "Справочник по земледелию",
     "농경 기술서", "農耕技能書", "农耕技能书",
+  ),
+  "timber-framed-woven-tapestry": names(
+    "Timber-framed Woven Tapestry", "Tapiz tejido con marco de madera", "Tapisserie tissée à cadre en bois",
+    "Gewebter Wandteppich im Holzrahmen", "木枠の織りタペストリー", "Тканый гобелен в деревянной раме",
+    "목재 틀 직조 태피스트리", "木框編織壁毯", "木框编织壁毯",
   ),
 });
 
@@ -573,6 +597,32 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+
+  placeable("interior-decor", "timber-framed-woven-tapestry", [
+    part("squared_timber", [6, 84, 6], [-38, 42, 0]),
+    part("squared_timber", [6, 84, 6], [38, 42, 0]),
+    part("squared_timber", [70, 6, 6], [0, 3, 0]),
+    part("squared_timber", [70, 6, 6], [0, 81, 0]),
+    part("wooden_plank", [10, 10, 8], [-40, 1, 0]),
+    part("wooden_plank", [10, 10, 8], [40, 1, 0]),
+    part("wooden_plank", [10, 10, 8], [-40, 83, 0]),
+    part("wooden_plank", [10, 10, 8], [40, 83, 0]),
+    part("cotton_cloth", [70, 72, 1], [0, 42, 0]),
+    part("squared_timber", [5, 10, 5], [0, 89, 0]),
+    part("wooden_plank", [14, 14, 5], [0, 101, 0], { mask: tapestryHangerMask }),
+    part("red_dye", [60, 4, 1], [0, 70, 1]),
+    part("red_dye", [60, 4, 1], [0, 14, 1]),
+    ...[-29, 29].flatMap((x) => [22, 62].map((y) => part("red_dye", [5, 5, 1], [x, y, 1]))),
+    part("yellow_dye", [38, 4, 1], [0, 61, 1]),
+    part("yellow_dye", [38, 4, 1], [0, 23, 1]),
+    part("yellow_dye", [4, 34, 1], [-23, 42, 1]),
+    part("yellow_dye", [4, 34, 1], [23, 42, 1]),
+    part("blue_dye", [30, 30, 1], [0, 42, 1], { mask: tapestryKnotMask }),
+  ], { yaw: -0.5, pitch: 0.2, clothMotion: "rigid" }, {
+    image: "concepts/interior-decor/timber-framed-woven-tapestry-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
 ]);
 
 generate();
@@ -644,6 +694,8 @@ function buildItem(spec) {
   const bookLayout = BOOK_LAYOUTS[spec.key] ?? null;
   if (spec.category === "books-writing" && !bookLayout) throw new Error(`${spec.key} is missing its bound-page geometry policy.`);
   if (bookLayout) validateBookGeometry(spec, runtime, bookLayout);
+  const framedTextileLayout = FRAMED_TEXTILE_LAYOUTS[spec.key] ?? null;
+  if (framedTextileLayout) validateFramedTextileGeometry(spec, runtime, framedTextileLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -737,6 +789,7 @@ function buildItem(spec) {
       gripDirectionValidated: true,
       currentMaterialsOnly: true,
       ...(bookLayout ? { bookGeometryValidated: true } : {}),
+      ...(framedTextileLayout ? { framedTextileGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -776,6 +829,56 @@ function validateBookGeometry(spec, runtime, layout) {
       if (index === page) continue;
       if (boundsOverlap(pageBounds, componentBounds[index], 0)) {
         throw new Error(`${spec.key} page ${page} intersects component ${index}.`);
+      }
+    }
+  }
+}
+
+function validateFramedTextileGeometry(spec, runtime, layout) {
+  if (spec.preview?.clothMotion !== "rigid") {
+    throw new Error(`${spec.key} must keep its frame-bound textile rigid.`);
+  }
+  if (runtime.boundsQ.sizeQ[1] <= runtime.boundsQ.sizeQ[0] || runtime.boundsQ.sizeQ[2] >= runtime.boundsQ.sizeQ[0] * 0.2) {
+    throw new Error(`${spec.key} must remain a thin, portrait-oriented wall decoration.`);
+  }
+  const components = runtime.components ?? [];
+  const componentBounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const cloth = components[layout.cloth];
+  const clothBounds = componentBounds[layout.cloth];
+  const [left, right, bottom, top] = layout.frame.map((index) => componentBounds[index]);
+  if (!cloth || cloth.resourceId !== "cloth" || !clothBounds || !left || !right || !bottom || !top) {
+    throw new Error(`${spec.key} has an invalid cloth or primary frame component index.`);
+  }
+  if (clothBounds.min[0] !== left.max[0] || clothBounds.max[0] !== right.min[0]
+    || clothBounds.min[1] !== bottom.max[1] || clothBounds.max[1] !== top.min[1]
+    || clothBounds.min[2] < left.min[2] || clothBounds.max[2] > left.max[2]) {
+    throw new Error(`${spec.key} cloth is not taut within all four frame faces.`);
+  }
+  for (let index = 0; index < componentBounds.length; index += 1) {
+    if (index !== layout.cloth && boundsOverlap(clothBounds, componentBounds[index], 0)) {
+      throw new Error(`${spec.key} cloth intersects component ${index}.`);
+    }
+  }
+  for (const decorationIndex of layout.decorations) {
+    const decoration = componentBounds[decorationIndex];
+    if (!decoration || !spec.parts[decorationIndex]?.materialId.endsWith("_dye")) {
+      throw new Error(`${spec.key} has an invalid woven decoration component ${decorationIndex}.`);
+    }
+    if (decoration.min[0] < clothBounds.min[0] || decoration.max[0] > clothBounds.max[0]
+      || decoration.min[1] < clothBounds.min[1] || decoration.max[1] > clothBounds.max[1]
+      || decoration.min[2] !== clothBounds.max[2]) {
+      throw new Error(`${spec.key} decoration ${decorationIndex} leaves the textile face.`);
+    }
+  }
+  for (let leftIndex = 0; leftIndex < layout.decorations.length; leftIndex += 1) {
+    for (let rightIndex = leftIndex + 1; rightIndex < layout.decorations.length; rightIndex += 1) {
+      const leftDecoration = layout.decorations[leftIndex];
+      const rightDecoration = layout.decorations[rightIndex];
+      if (boundsOverlap(componentBounds[leftDecoration], componentBounds[rightDecoration], 0)) {
+        throw new Error(`${spec.key} decorations ${leftDecoration} and ${rightDecoration} intersect.`);
       }
     }
   }
@@ -1137,6 +1240,14 @@ function sickleBlade({ nx, ny, nz }) {
   const dy = ny + 0.42;
   const radius = Math.sqrt(dx * dx + dy * dy);
   return Math.abs(nz) <= 0.82 && radius >= 0.52 && radius <= 1.08 && nx > -0.7 && ny > -0.82;
+}
+
+function tapestryKnotMask({ x, y }) {
+  return TAPESTRY_KNOT_PATTERN[FORGE_COMPONENT_GRID.y - 1 - y][x] === "#";
+}
+
+function tapestryHangerMask({ x, y }) {
+  return x < 2 || x >= FORGE_COMPONENT_GRID.x - 2 || y < 2 || y >= FORGE_COMPONENT_GRID.y - 2;
 }
 
 function chiselTip({ nx, ny, nz }) {

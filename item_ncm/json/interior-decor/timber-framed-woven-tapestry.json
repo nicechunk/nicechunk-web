@@ -1,0 +1,331 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "timber-framed-woven-tapestry",
+  "category": "interior-decor",
+  "interaction": "placeable",
+  "names": {
+    "en": "Timber-framed Woven Tapestry",
+    "es": "Tapiz tejido con marco de madera",
+    "fr": "Tapisserie tissée à cadre en bois",
+    "de": "Gewebter Wandteppich im Holzrahmen",
+    "ja": "木枠の織りタペストリー",
+    "ru": "Тканый гобелен в деревянной раме",
+    "ko": "목재 틀 직조 태피스트리",
+    "zh-Hant": "木框編織壁毯",
+    "zh-Hans": "木框编织壁毯"
+  },
+  "descriptions": {
+    "en": "Timber-framed Woven Tapestry is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Tapiz tejido con marco de madera es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Tapisserie tissée à cadre en bois est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Gewebter Wandteppich im Holzrahmen ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "木枠の織りタペストリーは、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Тканый гобелен в деревянной раме — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "목재 틀 직조 태피스트리은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "木框編織壁毯是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "木框编织壁毯是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 1.4063,
+    "height": 1.75,
+    "depth": 0.125,
+    "sizeQ": [
+      90,
+      112,
+      8
+    ]
+  },
+  "preview": {
+    "yaw": -0.5,
+    "pitch": 0.2,
+    "clothMotion": "rigid"
+  },
+  "concept": {
+    "image": "concepts/interior-decor/timber-framed-woven-tapestry-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "bd5e55d7e96867ac56128132f1c116e51d98a0ac450754134ba46ad747979330"
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.8ffoTwSooWOZUfCEA3WiGUGVAZ7QVAAQARDKDKgMCYKgAIAIhlRgYGAAAYAEAEQyowMDAAFEACACKdQoKCHsACABABFOoUFBAKABAAgAinUKCgh7ApgAQARTqFBQQCgUwAIALRkgBAAFQAEAEQygoUCgAFkACACKdQ4OBQADKACCRBTcABLQzwEAQACMAJAAloZ4CAIAAOAEgAS0MFBQF8YLACQAJaGCgoC-MPgBIAEtDBQUBA6CwAkACWhgoKAgdD4ASABNsyYEAQAB6AJAAm2ZMCAIAAXAEgATbMEIgF9IVACQAJtmCEQCBcKgBIAEJYHh4BAAFQAuF4KCBAGBAYKBAQEBAQGBAQIBAQCBAQMBAgEDAQEAgQECAQEBgQEBAQECgYEBhAICgAA",
+    "rawBytes": 299,
+    "sha256": "a8718c688bb5c2a33d4877b762102bf1c2a5fdf0af6ac34b1b3ee424aacd40bc",
+    "designHash": 2389040042,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 299,
+    "savedBytes": 0,
+    "sourceComponentCount": 22,
+    "decodedComponentCount": 22,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 11535645,
+        "usedVolumeMm3": 11535645,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 11535645,
+        "usedVolumeMm3": 11535645,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 9613037,
+        "usedVolumeMm3": 9613037,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 9613037,
+        "usedVolumeMm3": 9613037,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 3051758,
+        "usedVolumeMm3": 3051758,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 3051758,
+        "usedVolumeMm3": 3051758,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 3051758,
+        "usedVolumeMm3": 3051758,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 7,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 3051758,
+        "usedVolumeMm3": 3051758,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 8,
+        "materialId": "cotton_cloth",
+        "itemCode": 1025,
+        "inputVolumeMm3": 19226074,
+        "usedVolumeMm3": 19226074,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 9,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 953674,
+        "usedVolumeMm3": 953674,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 10,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 3738403,
+        "usedVolumeMm3": 2136230,
+        "unusedVolumeMm3": 1602173
+      },
+      {
+        "index": 11,
+        "materialId": "red_dye",
+        "itemCode": 1028,
+        "inputVolumeMm3": 915527,
+        "usedVolumeMm3": 915527,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 12,
+        "materialId": "red_dye",
+        "itemCode": 1028,
+        "inputVolumeMm3": 915527,
+        "usedVolumeMm3": 915527,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 13,
+        "materialId": "red_dye",
+        "itemCode": 1028,
+        "inputVolumeMm3": 95367,
+        "usedVolumeMm3": 95367,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 14,
+        "materialId": "red_dye",
+        "itemCode": 1028,
+        "inputVolumeMm3": 95367,
+        "usedVolumeMm3": 95367,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 15,
+        "materialId": "red_dye",
+        "itemCode": 1028,
+        "inputVolumeMm3": 95367,
+        "usedVolumeMm3": 95367,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 16,
+        "materialId": "red_dye",
+        "itemCode": 1028,
+        "inputVolumeMm3": 95367,
+        "usedVolumeMm3": 95367,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 17,
+        "materialId": "yellow_dye",
+        "itemCode": 1027,
+        "inputVolumeMm3": 579834,
+        "usedVolumeMm3": 579834,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 18,
+        "materialId": "yellow_dye",
+        "itemCode": 1027,
+        "inputVolumeMm3": 579834,
+        "usedVolumeMm3": 579834,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 19,
+        "materialId": "yellow_dye",
+        "itemCode": 1027,
+        "inputVolumeMm3": 518799,
+        "usedVolumeMm3": 518799,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 20,
+        "materialId": "yellow_dye",
+        "itemCode": 1027,
+        "inputVolumeMm3": 518799,
+        "usedVolumeMm3": 518799,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 21,
+        "materialId": "blue_dye",
+        "itemCode": 1029,
+        "inputVolumeMm3": 3433228,
+        "usedVolumeMm3": 1667567,
+        "unusedVolumeMm3": 1765661
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 82837504,
+      "requiredEffectiveDurability": 11501,
+      "outputMassGrams": 40310,
+      "materialScore": 57
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 1976,
+      "triangleCount": 988,
+      "meshByteLength": 37544
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "squared_timber",
+      "itemCode": 1033,
+      "componentCount": 5,
+      "inputVolumeMm3": 43251038,
+      "usedVolumeMm3": 43251038,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 48400,
+      "equivalentInputUnits": 894
+    },
+    {
+      "materialId": "wooden_plank",
+      "itemCode": 1031,
+      "componentCount": 5,
+      "inputVolumeMm3": 15945435,
+      "usedVolumeMm3": 14343262,
+      "unusedVolumeMm3": 1602173,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 798
+    },
+    {
+      "materialId": "cotton_cloth",
+      "itemCode": 1025,
+      "componentCount": 1,
+      "inputVolumeMm3": 19226074,
+      "usedVolumeMm3": 19226074,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 1000000,
+      "equivalentInputUnits": 20
+    },
+    {
+      "materialId": "red_dye",
+      "itemCode": 1028,
+      "componentCount": 6,
+      "inputVolumeMm3": 2212522,
+      "usedVolumeMm3": 2212522,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 111
+    },
+    {
+      "materialId": "yellow_dye",
+      "itemCode": 1027,
+      "componentCount": 4,
+      "inputVolumeMm3": 2197266,
+      "usedVolumeMm3": 2197266,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 110
+    },
+    {
+      "materialId": "blue_dye",
+      "itemCode": 1029,
+      "componentCount": 1,
+      "inputVolumeMm3": 3433228,
+      "usedVolumeMm3": 1667567,
+      "unusedVolumeMm3": 1765661,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 172
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "framedTextileGeometryValidated": true,
+    "chainMinted": false
+  }
+}

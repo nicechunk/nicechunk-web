@@ -11,7 +11,7 @@ ITEM_NCM is the public NiceChunk forge-item blueprint registry. It follows the s
 - Every item JSON contains its own nine-language names and descriptions.
 - `tools/generate-items.mjs` is the canonical source for the initial collection and regenerates every item JSON deterministically.
 
-The registry currently contains 35 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, containers, cooking, and books and writing. New designs begin with an Imagegen material-style concept; the resulting item JSON records the concept path, provenance, version, and SHA-256 before the forge encoding is accepted.
+The registry currently contains 36 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, containers, cooking, books and writing, and interior decor. New designs begin with an Imagegen material-style concept; the resulting item JSON records the concept path, provenance, version, and SHA-256 before the forge encoding is accepted.
 
 ## Forge guarantees
 
@@ -27,6 +27,7 @@ The generator rejects an item unless all of these checks pass:
 8. Dimensions, material requirements, bill of materials, runtime evidence, design hash, and SHA-256 are written into the item JSON.
 9. When a concept reference is present, its category-bound filename and SHA-256 are validated and written into the item JSON.
 10. Bound books keep every page block inside its cover planes with zero positive-volume intersection, closed volumes keep a portrait cover ratio, and rigid page preview metadata disables cloth deformation that could cross the binding.
+11. Frame-bound textiles keep cloth flush against all four rails, keep dyed motifs on the cloth face without intersections, and disable free-cloth deformation that would detach the fabric from its frame.
 
 `verification.chainMinted` remains `false` because this library validates blueprint readiness; it does not claim that a blueprint PDA has already been created.
 

@@ -1,0 +1,219 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "stacked-archive-volumes",
+  "category": "books-writing",
+  "interaction": "placeable",
+  "names": {
+    "en": "Stacked Archive Volumes",
+    "es": "Volúmenes de archivo apilados",
+    "fr": "Volumes d’archives empilés",
+    "de": "Gestapelte Archivbände",
+    "ja": "積み重ねた公文書冊子",
+    "ru": "Стопка архивных томов",
+    "ko": "쌓아 둔 기록 보관 서적",
+    "zh-Hant": "疊放的檔案藏書",
+    "zh-Hans": "叠放的档案藏书"
+  },
+  "descriptions": {
+    "en": "Stacked Archive Volumes is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Volúmenes de archivo apilados es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Volumes d’archives empilés est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Gestapelte Archivbände ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "積み重ねた公文書冊子は、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Стопка архивных томов — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "쌓아 둔 기록 보관 서적은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "疊放的檔案藏書是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "叠放的档案藏书是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 0.4688,
+    "height": 0.2344,
+    "depth": 0.4375,
+    "sizeQ": [
+      30,
+      15,
+      28
+    ]
+  },
+  "preview": {
+    "yaw": -0.74,
+    "pitch": 0.5
+  },
+  "concept": {
+    "image": "concepts/books-writing/stacked-archive-volumes-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "816220c881e8f799a218054f3feca09c72c5e303963149bed370506e6ca169dc"
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.8HmndaPlmeNVUfDEA6MinUcARKQAWMgYeAAAgAIAIp1HAESAAAgAEAEgYGJPyAIACACKdRQBGgBgKABABYiBi4AwHAAgAinUUARoAYEgAQASKAYGAMB_zIAIp1GAEQf8BQAkAFioGGv-AwASACKdRgBEH_AcAJABIGBiD8gMAEgA",
+    "rawBytes": 129,
+    "sha256": "3d409b5b3f6706020990c347b9190925b63c7f006addb3209ce826a6bdcbb0d8",
+    "designHash": 971814947,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 129,
+    "savedBytes": 0,
+    "sourceComponentCount": 12,
+    "decodedComponentCount": 12,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 1922607,
+        "usedVolumeMm3": 1922607,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "cotton_cloth",
+        "itemCode": 1025,
+        "inputVolumeMm3": 4291534,
+        "usedVolumeMm3": 4291534,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 1922607,
+        "usedVolumeMm3": 1922607,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "resin_binder",
+        "itemCode": 1004,
+        "inputVolumeMm3": 617981,
+        "usedVolumeMm3": 617981,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 1983643,
+        "usedVolumeMm3": 1983643,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "cotton_cloth",
+        "itemCode": 1025,
+        "inputVolumeMm3": 4474640,
+        "usedVolumeMm3": 4474640,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 1983643,
+        "usedVolumeMm3": 1983643,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 7,
+        "materialId": "resin_binder",
+        "itemCode": 1004,
+        "inputVolumeMm3": 686646,
+        "usedVolumeMm3": 686646,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 8,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 1464844,
+        "usedVolumeMm3": 1464844,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 9,
+        "materialId": "cotton_cloth",
+        "itemCode": 1025,
+        "inputVolumeMm3": 3124237,
+        "usedVolumeMm3": 3124237,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 10,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 1464844,
+        "usedVolumeMm3": 1464844,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 11,
+        "materialId": "resin_binder",
+        "itemCode": 1004,
+        "inputVolumeMm3": 549316,
+        "usedVolumeMm3": 549316,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 24485888,
+      "requiredEffectiveDurability": 4551,
+      "outputMassGrams": 9730,
+      "materialScore": 56
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 3072,
+      "triangleCount": 1536,
+      "meshByteLength": 58368
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "wooden_plank",
+      "itemCode": 1031,
+      "componentCount": 6,
+      "inputVolumeMm3": 10742188,
+      "usedVolumeMm3": 10742188,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 538
+    },
+    {
+      "materialId": "cotton_cloth",
+      "itemCode": 1025,
+      "componentCount": 3,
+      "inputVolumeMm3": 11890411,
+      "usedVolumeMm3": 11890411,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 1000000,
+      "equivalentInputUnits": 12
+    },
+    {
+      "materialId": "resin_binder",
+      "itemCode": 1004,
+      "componentCount": 3,
+      "inputVolumeMm3": 1853943,
+      "usedVolumeMm3": 1853943,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 8
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "chainMinted": false
+  }
+}

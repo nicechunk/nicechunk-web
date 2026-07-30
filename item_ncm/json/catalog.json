@@ -31,6 +31,7 @@
     "json/cooking/iron-hearth-cauldron.json",
     "json/cooking/iron-field-cooking-grate.json",
     "json/books-writing/timber-bound-village-ledger.json",
-    "json/books-writing/open-civic-record-book.json"
+    "json/books-writing/open-civic-record-book.json",
+    "json/books-writing/stacked-archive-volumes.json"
   ]
 }

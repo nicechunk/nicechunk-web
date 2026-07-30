@@ -196,6 +196,11 @@ const ITEM_NAMES = Object.freeze({
     "Offenes Bürgerregister", "開かれた行政記録簿", "Открытая городская учётная книга",
     "펼쳐진 마을 행정 기록부", "攤開的市政記錄簿", "摊开的市政记录簿",
   ),
+  "stacked-archive-volumes": names(
+    "Stacked Archive Volumes", "Volúmenes de archivo apilados", "Volumes d’archives empilés",
+    "Gestapelte Archivbände", "積み重ねた公文書冊子", "Стопка архивных томов",
+    "쌓아 둔 기록 보관 서적", "疊放的檔案藏書", "叠放的档案藏书",
+  ),
 });
 
 const ITEM_SPECS = Object.freeze([
@@ -423,6 +428,24 @@ const ITEM_SPECS = Object.freeze([
     part("resin_binder", [2, 2, 15], [0, 4, 0]),
   ], { yaw: -0.45, pitch: 0.6 }, {
     image: "concepts/books-writing/open-civic-record-book-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
+  placeable("books-writing", "stacked-archive-volumes", [
+    part("wooden_plank", [28, 1, 18], [0, 0, 0]),
+    part("cotton_cloth", [25, 3, 15], [0, 2, 0]),
+    part("wooden_plank", [28, 1, 18], [0, 4, 0]),
+    part("resin_binder", [3, 3, 18], [-14, 2, 0]),
+    part("wooden_plank", [20, 1, 26], [3, 5, 0]),
+    part("cotton_cloth", [17, 3, 23], [3, 7, 0]),
+    part("wooden_plank", [20, 1, 26], [3, 9, 0]),
+    part("resin_binder", [20, 3, 3], [3, 7, -13]),
+    part("wooden_plank", [24, 1, 16], [-2, 10, 1]),
+    part("cotton_cloth", [21, 3, 13], [-2, 12, 1]),
+    part("wooden_plank", [24, 1, 16], [-2, 14, 1]),
+    part("resin_binder", [3, 3, 16], [-14, 12, 1]),
+  ], { yaw: -0.74, pitch: 0.5 }, {
+    image: "concepts/books-writing/stacked-archive-volumes-v1.webp",
     source: "imagegen",
     version: 1,
   }),

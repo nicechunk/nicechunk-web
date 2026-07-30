@@ -81,7 +81,7 @@ try {
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 10);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /30 ITEMS/);
+  assert.match(initial.total, /31 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -198,7 +198,7 @@ try {
   assert.ok(cookingGrate.resources.includes("/item_ncm/json/cooking/iron-field-cooking-grate.json"));
 
   await evaluate(client, `document.querySelector('[data-category="books-writing"]').click()`);
-  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 2 && document.querySelector('[data-item="timber-bound-village-ledger"]')`));
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 3 && document.querySelector('[data-item="timber-bound-village-ledger"]')`));
   assert.equal(await evaluate(client, `performance.getEntriesByType("resource").some((entry) => new URL(entry.name).pathname.includes("/item_ncm/json/books-writing/"))`), false,
     "category browsing must not load book item JSON files");
   await evaluate(client, `document.querySelector('[data-item="timber-bound-village-ledger"]').click()`);
@@ -234,6 +234,23 @@ try {
   assert.equal(openRecordBook.componentCount, "6");
   assert.equal(openRecordBook.selectedInUrl, "open-civic-record-book");
   assert.ok(openRecordBook.resources.includes("/item_ncm/json/books-writing/open-civic-record-book.json"));
+
+  await evaluate(client, `document.querySelector('[data-item="stacked-archive-volumes"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="stacked-archive-volumes"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const archiveVolumes = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(archiveVolumes.title, "Stacked Archive Volumes");
+  assert.equal(archiveVolumes.type, "PLACEABLE");
+  assert.equal(archiveVolumes.payloadBytes, "129 / 640 B");
+  assert.equal(archiveVolumes.componentCount, "12");
+  assert.equal(archiveVolumes.selectedInUrl, "stacked-archive-volumes");
+  assert.ok(archiveVolumes.resources.includes("/item_ncm/json/books-writing/stacked-archive-volumes.json"));
 
   await evaluate(client, `document.querySelector('[data-category="mining-tools"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 4 && document.querySelector('[data-item="iron-earthwork-shovel"]')`));

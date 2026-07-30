@@ -1,0 +1,159 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "stone-timber-village-gateway",
+  "category": "wayfinding",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Stone and Timber Village Gateway",
+    "es": "Portal de Aldea de Piedra y Madera",
+    "fr": "Portail de Village en Pierre et Bois",
+    "de": "Dorfportal aus Stein und Holz",
+    "ja": "石と木の村門",
+    "ru": "Деревенские ворота из камня и дерева",
+    "ko": "돌과 목재 마을 관문",
+    "zh-Hant": "石木村莊門樓",
+    "zh-Hans": "石木村庄门楼"
+  },
+  "descriptions": {
+    "en": "A symmetric covered road gateway with a flat nine-voxel polished-stone passage, twin cobblestone shoulders, four grounded timber posts, face-connected knee braces, plank gable infill and a fully supported terracotta canopy.",
+    "es": "Portal vial cubierto y simétrico con un paso plano de piedra pulida de nueve vóxeles, dos basamentos de adoquín, cuatro postes de madera apoyados en el suelo, tornapuntas conectadas por caras, relleno de tablones en los frontones y una cubierta de terracota completamente sustentada.",
+    "fr": "Portail routier couvert et symétrique avec un passage plat en pierre polie de neuf voxels, deux soubassements pavés, quatre poteaux de bois ancrés au sol, des jambes de force jointives, des pignons remplis de planches et un auvent en terre cuite entièrement soutenu.",
+    "de": "Symmetrisches überdachtes Straßenportal mit einem ebenen neun Voxel breiten Gang aus poliertem Stein, zwei Kopfsteinpflaster-Sockeln, vier bodengebundenen Holzpfosten, flächig verbundenen Knaggen, Giebelfüllungen aus Bohlen und einem vollständig getragenen Terrakottadach.",
+    "ja": "幅9ボクセルの平坦な磨き石通路、左右の丸石基壇、地面から立つ4本の木柱、面接続された方杖、板材の妻面、完全に支持されたテラコッタ屋根を備えた、左右対称の通り抜け式村門です。",
+    "ru": "Симметричные крытые деревенские ворота с ровным проходом из полированного камня шириной девять вокселей, двумя булыжными цоколями, четырьмя опирающимися на землю деревянными стойками, соединёнными по граням подкосами, дощатым заполнением фронтонов и полностью поддерживаемым терракотовым навесом.",
+    "ko": "폭 9복셀의 평평한 연마 석재 통로, 좌우 조약돌 기단, 지면에 닿는 목재 기둥 네 개, 면으로 연결된 버팀대, 판재 박공 채움과 완전히 지지된 테라코타 지붕을 갖춘 대칭형 통과식 마을 관문입니다.",
+    "zh-Hant": "左右對稱的有頂道路門樓，設有九體素寬平坦拋光石通道、兩側鵝卵石基臺、四根落地木柱、面連接斜撐、木板山牆填充，以及完整承托的赤陶頂棚。",
+    "zh-Hans": "左右对称的有顶道路门楼，设有九体素宽平坦抛光石通道、两侧鹅卵石基台、四根落地木柱、面连接斜撑、木板山墙填充，以及完整承托的赤陶顶棚。"
+  },
+  "referenceImage": "concepts/wayfinding/stone-timber-village-gateway.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "25 × 13 vu",
+  "height": "29 vu",
+  "referenceScale": "One concept voxel equals one NCM voxel",
+  "preview": {
+    "fitScale": 1.06,
+    "minScale": 4,
+    "yaw": 2.38
+  },
+  "extraMaterials": [
+    {
+      "materialId": 56,
+      "phase": "structure",
+      "label": "Wooden-stick Knee Braces"
+    },
+    {
+      "materialId": 68,
+      "phase": "foundation",
+      "label": "Cobblestone Gateway Shoulders"
+    },
+    {
+      "materialId": 69,
+      "phase": "foundation",
+      "label": "Polished Stone Road and Plinth Caps"
+    }
+  ],
+  "validation": {
+    "expectedVoxelCount": 2182,
+    "expectedPayloadBytes": 225,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [55, 56, 57, 68, 69, 96],
+    "expectedMaterialVoxelCounts": {
+      "55": 242,
+      "56": 12,
+      "57": 1105,
+      "68": 286,
+      "69": 295,
+      "96": 242
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 12,
+    "mirrorAxisZ": 6,
+    "supportColumns": [
+      { "label": "Front-left gateway post", "x": 3, "z": 2, "baseY": 3, "topY": 14 },
+      { "label": "Front-right gateway post", "x": 19, "z": 2, "baseY": 3, "topY": 14 },
+      { "label": "Rear-left gateway post", "x": 3, "z": 8, "baseY": 3, "topY": 14 },
+      { "label": "Rear-right gateway post", "x": 19, "z": 8, "baseY": 3, "topY": 14 }
+    ],
+    "horizontalSpans": [
+      { "label": "Front road crossbeam", "axis": "x", "start": 2, "end": 22, "y": 14, "fixed": 3 },
+      { "label": "Rear road crossbeam", "axis": "x", "start": 2, "end": 22, "y": 14, "fixed": 9 },
+      { "label": "Left continuous eave beam", "axis": "z", "start": 0, "end": 12, "y": 16, "fixed": 2 },
+      { "label": "Right continuous eave beam", "axis": "z", "start": 0, "end": 12, "y": 16, "fixed": 22 },
+      { "label": "Continuous timber ridge", "axis": "z", "start": 0, "end": 12, "y": 28, "fixed": 12 }
+    ],
+    "walkableDecks": [
+      {
+        "label": "Flat front-to-rear village road",
+        "axis": "z",
+        "start": 0,
+        "end": 12,
+        "crossStart": 8,
+        "crossEnd": 16,
+        "topProfile": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "clearance": 12
+      }
+    ],
+    "gableProfiles": [
+      { "label": "Front timber roof truss", "x": 1, "baseY": 17, "z": 0, "width": 23, "slopeMaterialId": 57, "ridgeMaterialId": 57 },
+      { "label": "Front exposed terracotta roof profile", "x": 1, "baseY": 17, "z": 1, "width": 23, "slopeMaterialId": 96, "ridgeMaterialId": 57 },
+      { "label": "Rear exposed terracotta roof profile", "x": 1, "baseY": 17, "z": 11, "width": 23, "slopeMaterialId": 96, "ridgeMaterialId": 57 },
+      { "label": "Rear timber roof truss", "x": 1, "baseY": 17, "z": 12, "width": 23, "slopeMaterialId": 57, "ridgeMaterialId": 57 }
+    ],
+    "diagonalBands": [
+      { "label": "Front-left knee brace", "materialId": 56, "x": 6, "y": 12, "z": 2, "width": 1, "height": 1, "depth": 1, "count": 3, "dx": 1, "dy": 1, "dz": 0 },
+      { "label": "Front-right knee brace", "materialId": 56, "x": 18, "y": 12, "z": 2, "width": 1, "height": 1, "depth": 1, "count": 3, "dx": -1, "dy": 1, "dz": 0 },
+      { "label": "Rear-left knee brace", "materialId": 56, "x": 6, "y": 12, "z": 10, "width": 1, "height": 1, "depth": 1, "count": 3, "dx": 1, "dy": 1, "dz": 0 },
+      { "label": "Rear-right knee brace", "materialId": 56, "x": 18, "y": 12, "z": 10, "width": 1, "height": 1, "depth": 1, "count": 3, "dx": -1, "dy": 1, "dz": 0 }
+    ],
+    "openVolumes": [
+      { "label": "Clear nine-voxel village road", "x": 8, "y": 1, "z": 0, "width": 9, "height": 12, "depth": 13 }
+    ],
+    "approach": [
+      { "x": 12, "z": 0, "topY": 1 },
+      { "x": 12, "z": 3, "topY": 1 },
+      { "x": 12, "z": 6, "topY": 1 },
+      { "x": 12, "z": 9, "topY": 1 },
+      { "x": 12, "z": 12, "topY": 1 }
+    ],
+    "solidPoints": [
+      { "x": 12, "y": 0, "z": 0, "materialId": 69 },
+      { "x": 1, "y": 1, "z": 1, "materialId": 68 },
+      { "x": 2, "y": 2, "z": 1, "materialId": 69 },
+      { "x": 3, "y": 3, "z": 2, "materialId": 57 },
+      { "x": 2, "y": 14, "z": 2, "materialId": 57 },
+      { "x": 6, "y": 12, "z": 2, "materialId": 56 },
+      { "x": 8, "y": 14, "z": 2, "materialId": 56 },
+      { "x": 11, "y": 17, "z": 0, "materialId": 57 },
+      { "x": 1, "y": 17, "z": 1, "materialId": 96 },
+      { "x": 2, "y": 17, "z": 1, "materialId": 55 },
+      { "x": 12, "y": 28, "z": 6, "materialId": 57 }
+    ]
+  },
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARkdDRUCRAEAAQYBCgEgAAABRQcAAAoADAJFAAACAAAIATAAAAJFAQAABgAAAQAAGAJFEQAABgAAAQAAGAJFAgIBBAAKASAAAAIDAwMCAgsCAQAADAIDEwMCAgsCAQAADAIDAg4CFAICAQAADAIDAQ8ABAEMASQAAAEDCxAAAgEMAjgGDAIAAAACAgIAAjgSDAIAAAACAQIAAjgGDAoAAAACAgIAAjgSDAoAAAACAQIABwYCEQEUAAcGAhELFAADBQERABYMBgMBEQAWDAIDCxEAAgsAAQAAGAEDDBwAAAAM"
+  }
+}

@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 1);
-  assert.match(initial.totalBuildingCount, /16 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /17 BUILDINGS/);
   assert.equal(initial.categoryCount, 11);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -532,9 +532,11 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(wayfindingBrowse.activeBuilding, null);
-  assert.equal(wayfindingBrowse.cardCount, 1);
+  assert.equal(wayfindingBrowse.cardCount, 2);
   assert.ok(!wayfindingBrowse.resources.includes("/build_ncm/buildings/wayfinding/crossroads-wayfinding-sign.json"), "category browsing must not load the wayfinding JSON");
   assert.ok(!wayfindingBrowse.resources.includes("/build_ncm/concepts/wayfinding/crossroads-wayfinding-sign.webp"), "category browsing must not load the wayfinding concept art");
+  assert.ok(!wayfindingBrowse.resources.includes("/build_ncm/buildings/wayfinding/stone-timber-village-gateway.json"), "category browsing must not load the gateway JSON");
+  assert.ok(!wayfindingBrowse.resources.includes("/build_ncm/concepts/wayfinding/stone-timber-village-gateway.webp"), "category browsing must not load the gateway concept art");
   await evaluate(client, "document.querySelector('[data-building=crossroads-wayfinding-sign]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'crossroads-wayfinding-sign' && document.querySelector('#modelSize').textContent === '21 × 20 × 21' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const wayfinding = await evaluate(client, `({
@@ -570,7 +572,48 @@ try {
   assert.equal(wayfinding.selectedInUrl, "crossroads-wayfinding-sign");
   assert.ok(wayfinding.resources.includes("/build_ncm/buildings/wayfinding/crossroads-wayfinding-sign.json"));
   assert.ok(wayfinding.resources.includes("/build_ncm/concepts/wayfinding/crossroads-wayfinding-sign.webp"));
+  assert.ok(!wayfinding.resources.includes("/build_ncm/buildings/wayfinding/stone-timber-village-gateway.json"), "selecting the sign must not load the gateway JSON");
+  assert.ok(!wayfinding.resources.includes("/build_ncm/concepts/wayfinding/stone-timber-village-gateway.webp"), "selecting the sign must not load the gateway concept art");
   assert.ok(!wayfinding.resources.some((path) => path.endsWith("crossroads-wayfinding-sign-blueprint.js")));
+
+  await evaluate(client, "document.querySelector('[data-building=stone-timber-village-gateway]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'stone-timber-village-gateway' && document.querySelector('#modelSize').textContent === '25 × 29 × 13' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const gateway = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(gateway.activeCategory, "wayfinding");
+  assert.match(gateway.title, /Stone and Timber Village Gateway/);
+  assert.equal(gateway.modelSize, "25 × 29 × 13");
+  assert.match(gateway.payload, /^NCM3:/);
+  assert.equal(gateway.voxelCount, 2182);
+  for (const id of [55, 56, 57, 68, 69, 96]) assert.match(gateway.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(gateway.uncovered, false);
+  assert.equal(gateway.glazingDisabled, true);
+  assert.equal(gateway.glazingLabel, "Openings: Not applicable");
+  assert.equal(gateway.disabledStyles, 6);
+  assert.equal(gateway.disabledRoofs, 6);
+  assert.equal(gateway.conceptHidden, false);
+  assert.match(gateway.conceptAlt, /Stone and Timber Village Gateway concept reference/);
+  assert.equal(gateway.conceptFit, "contain");
+  assert.equal(gateway.selectedInUrl, "stone-timber-village-gateway");
+  assert.ok(gateway.resources.includes("/build_ncm/buildings/wayfinding/stone-timber-village-gateway.json"));
+  assert.ok(gateway.resources.includes("/build_ncm/concepts/wayfinding/stone-timber-village-gateway.webp"));
+  assert.ok(!gateway.resources.some((path) => path.endsWith("stone-timber-village-gateway-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=commerce]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=covered-market-stall]')"));

@@ -1,0 +1,150 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "stone-timber-footbridge",
+  "category": "transport",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Stone and Timber Footbridge",
+    "es": "Puente Peatonal de Piedra y Madera",
+    "fr": "Passerelle en Pierre et en Bois",
+    "de": "Stein- und Holzsteg",
+    "ja": "石と木の歩道橋",
+    "ru": "Каменно-деревянный пешеходный мост",
+    "ko": "돌·목재 보행교",
+    "zh-Hant": "石木步行橋",
+    "zh-Hans": "石木步行桥"
+  },
+  "descriptions": {
+    "en": "A bidirectional seven-voxel-wide village footbridge with three one-voxel approach rises, grounded stone bridgeheads, twin timber stringers, shallow trusses, an open central underpass, continuous two-level safety rails and four attached amber entrance lanterns.",
+    "es": "Puente peatonal bidireccional de aldea, de siete vóxeles de ancho, con tres ascensos de un vóxel en cada acceso, estribos de piedra apoyados en el suelo, dos largueros de madera, cerchas bajas, paso inferior central abierto, barandillas continuas de dos niveles y cuatro faroles ámbar fijados a las entradas.",
+    "fr": "Passerelle villageoise bidirectionnelle large de sept voxels, avec trois montées d'un voxel à chaque accès, culées en pierre ancrées au sol, deux longerons en bois, fermes basses, passage central inférieur ouvert, garde-corps continus à deux niveaux et quatre lanternes ambrées fixées aux entrées.",
+    "de": "Beidseitig begehbarer, sieben Voxel breiter Dorfsteg mit drei jeweils einen Voxel hohen Anstiegen an beiden Zugängen, bodengegründeten Steinwiderlagern, zwei Holzlängsträgern, flachen Fachwerken, offenem Mitteldurchlass, durchgehenden zweistufigen Geländern und vier befestigten Bernsteinlaternen an den Eingängen.",
+    "ja": "幅7ボクセルで双方向に通行できる村の歩道橋。両端に各1ボクセル高の3段アプローチ、地面支持の石造橋台、2本の木製縦桁、低いトラス、開放された中央下部、連続する二段手すり、入口に固定された琥珀色ランタン4基を備えます。",
+    "ru": "Двусторонний деревенский пешеходный мост шириной семь вокселей с тремя подъёмами по одному вокселю на каждом подходе, опирающимися на землю каменными устоями, парными деревянными прогонами, низкими фермами, открытым центральным пролётом снизу, непрерывными двухъярусными перилами и четырьмя закреплёнными янтарными фонарями у входов.",
+    "ko": "폭 7복셀의 양방향 마을 보행교로, 양쪽 진입부에 각각 한 복셀씩 오르는 3단 경사, 지면에 닿은 석재 교대, 한 쌍의 목재 세로보, 낮은 트러스, 열린 중앙 하부 통로, 끊김 없는 2단 안전 난간과 입구에 고정된 호박색 등 네 개를 갖췄습니다.",
+    "zh-Hant": "七體素寬的雙向村莊步行橋，兩端各有三級一體素高的引橋、落地石砌橋台、雙木縱樑、低矮桁架、開放的中央橋下空間、連續雙層護欄，以及四盞固定於入口的琥珀燈。",
+    "zh-Hans": "七体素宽的双向村庄步行桥，两端各有三级一体素高的引桥、落地石砌桥台、双木纵梁、低矮桁架、开放的中央桥下空间、连续双层护栏，以及四盏固定于入口的琥珀灯。"
+  },
+  "referenceImage": "concepts/transport/stone-timber-footbridge.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 1
+  },
+  "doorOpening": "open",
+  "footprint": "29 × 11 vu",
+  "height": "8 vu",
+  "referenceScale": "One concept voxel equals one NCM voxel",
+  "preview": {
+    "fitScale": 1.04,
+    "minScale": 4,
+    "yaw": 2.36
+  },
+  "extraMaterials": [
+    {
+      "materialId": 56,
+      "phase": "structure",
+      "label": "Wooden-stick Trusses and Safety Rails"
+    },
+    {
+      "materialId": 60,
+      "phase": "openings",
+      "label": "Amber Entrance Lantern Panels"
+    },
+    {
+      "materialId": 64,
+      "phase": "foundation",
+      "label": "Cut-stone Bridgehead Courses"
+    },
+    {
+      "materialId": 69,
+      "phase": "foundation",
+      "label": "Polished Stone Approach Lips"
+    }
+  ],
+  "validation": {
+    "expectedVoxelCount": 784,
+    "expectedPayloadBytes": 437,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [55, 56, 57, 60, 64, 68, 69],
+    "requireConnected": true,
+    "mirrorAxisX": 15,
+    "mirrorAxisZ": 6,
+    "supportColumns": [
+      { "label": "North-west stringer anchor", "x": 8, "z": 2, "baseY": 0, "topY": 2 },
+      { "label": "North-east stringer anchor", "x": 22, "z": 2, "baseY": 0, "topY": 2 },
+      { "label": "South-west stringer anchor", "x": 8, "z": 10, "baseY": 0, "topY": 2 },
+      { "label": "South-east stringer anchor", "x": 22, "z": 10, "baseY": 0, "topY": 2 }
+    ],
+    "horizontalSpans": [
+      { "label": "North upper stringer", "axis": "x", "start": 8, "end": 22, "y": 2, "fixed": 2 },
+      { "label": "South upper stringer", "axis": "x", "start": 8, "end": 22, "y": 2, "fixed": 10 },
+      { "label": "North lower chord", "axis": "x", "start": 9, "end": 21, "y": 1, "fixed": 2 },
+      { "label": "South lower chord", "axis": "x", "start": 9, "end": 21, "y": 1, "fixed": 10 }
+    ],
+    "walkableDecks": [
+      {
+        "label": "Bidirectional seven-wide crossing",
+        "axis": "x",
+        "start": 1,
+        "end": 29,
+        "crossStart": 3,
+        "crossEnd": 9,
+        "clearance": 2,
+        "topProfile": [1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 3, 3, 3, 2, 2, 2, 1, 1, 1],
+        "guardEdges": [2, 10],
+        "guardOffsets": [0, 2]
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "Open central underpass",
+        "x": 10,
+        "y": 0,
+        "z": 3,
+        "width": 11,
+        "height": 2,
+        "depth": 7
+      }
+    ],
+    "solidPoints": [
+      { "x": 2, "y": 0, "z": 6, "materialId": 69 },
+      { "x": 5, "y": 0, "z": 6, "materialId": 68 },
+      { "x": 5, "y": 1, "z": 6, "materialId": 55 },
+      { "x": 8, "y": 1, "z": 6, "materialId": 64 },
+      { "x": 8, "y": 2, "z": 6, "materialId": 55 },
+      { "x": 15, "y": 1, "z": 2, "materialId": 57 },
+      { "x": 15, "y": 2, "z": 6, "materialId": 57 },
+      { "x": 15, "y": 3, "z": 6, "materialId": 55 },
+      { "x": 10, "y": 2, "z": 2, "materialId": 56 },
+      { "x": 15, "y": 4, "z": 2, "materialId": 56 },
+      { "x": 15, "y": 6, "z": 2, "materialId": 56 },
+      { "x": 3, "y": 6, "z": 1, "materialId": 57 },
+      { "x": 2, "y": 2, "z": 1, "materialId": 60 },
+      { "x": 2, "y": 4, "z": 1, "materialId": 55 },
+      { "x": 2, "y": 7, "z": 1, "materialId": 55 }
+    ]
+  },
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:AR8JDSkCAQEAAQgACgEoAAACQAQBAQUACgEiAAACQAcCAQIAAQEcAAACQAcCCgIAAQEcAAACAwgCAg4AAQEAAA4CAwkBAgwAAAEAABACAwkBAgABAAIMAAACAwkBCgABAAIMAAACAwoCAwAABgIKAAACOAkBAgEAAAEAABACOAoCAgEAAAEAABACOBQBAgEAAAEAABACOBMCAgEAAAEAABACRQEAAwIABgE0AAACBgQBAwIABgEoAAACBgcCAwIABgEcAAABBgoDAwoABgU4AQACAgACBTgEAQICAAIFOAcCAgIAAgU4CgMCCgAFBTgVAgICAAIFOBgBAgIAAgU4GwACAgACBTgBAAoCAAIFOAQBCgIAAgU4BwIKAgACBTgKAwoKAAUFOBUCCgIAAgU4GAEKAgACBTgbAAoCAAICAwMAAQAGAAEAABQCAxsAAQAGAAEAABQCPAICAQABAAEAABQCPBwCAQABAAEAABQCBgIBAQAAAAEAABQCBhwBAQAAAAEAABQCBgIEAQAAAAEAABQCBhwEAQAAAAEAABQCBgIHAQEAAAEAABQCBhsHAQEAAAEAABQ"
+  }
+}

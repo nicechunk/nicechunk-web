@@ -9,6 +9,7 @@
     "buildings/utility/covered-village-well.json",
     "buildings/utility/village-twin-lantern.json",
     "buildings/wayfinding/crossroads-wayfinding-sign.json",
-    "buildings/commerce/covered-market-stall.json"
+    "buildings/commerce/covered-market-stall.json",
+    "buildings/transport/stone-timber-footbridge.json"
   ]
 }

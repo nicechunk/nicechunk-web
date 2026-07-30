@@ -44,6 +44,7 @@
   "library.category.utility": "VERSORGUNG",
   "library.category.wayfinding": "WEGWEISER",
   "library.category.commerce": "HANDEL",
+  "library.category.transport": "VERKEHR",
   "library.footprint": "FUSSABDRUCK",
   "library.height": "HÖHE",
   "library.voxels": "VOXEL",

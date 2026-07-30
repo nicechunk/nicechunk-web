@@ -38,7 +38,7 @@ try {
   await client.send("Page.enable");
   await client.send("Emulation.setDeviceMetricsOverride", { width: 1600, height: 1200, deviceScaleFactor: 1, mobile: false });
   await client.send("Page.navigate", { url });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 8 && document.querySelectorAll('[data-building]').length === 1 && document.querySelector('[data-building=hollow-cottage]') && document.querySelector('[data-language-select]').options.length === 9"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 9 && document.querySelectorAll('[data-building]').length === 1 && document.querySelector('[data-building=hollow-cottage]') && document.querySelector('[data-language-select]').options.length === 9"));
 
   const initial = await evaluate(client, `({
     visibleBuildingCount: document.querySelectorAll('[data-building]').length,
@@ -76,8 +76,8 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 1);
-  assert.match(initial.totalBuildingCount, /9 BUILDINGS/);
-  assert.equal(initial.categoryCount, 8);
+  assert.match(initial.totalBuildingCount, /10 BUILDINGS/);
+  assert.equal(initial.categoryCount, 9);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
   assert.equal(initial.buildingLabel, "Hollow Cottage");
@@ -530,6 +530,56 @@ try {
   assert.ok(marketStall.resources.includes("/build_ncm/concepts/commerce/covered-market-stall.webp"));
   assert.ok(!marketStall.resources.some((path) => path.endsWith("covered-market-stall-blueprint.js")));
 
+  await evaluate(client, "document.querySelector('[data-building-category=transport]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=stone-timber-footbridge]')"));
+  const transportBrowse = await evaluate(client, `({
+    activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
+    cardCount: document.querySelectorAll('[data-building]').length,
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(transportBrowse.activeBuilding, null);
+  assert.equal(transportBrowse.cardCount, 1);
+  assert.ok(!transportBrowse.resources.includes("/build_ncm/buildings/transport/stone-timber-footbridge.json"), "category browsing must not load the footbridge JSON");
+  assert.ok(!transportBrowse.resources.includes("/build_ncm/concepts/transport/stone-timber-footbridge.webp"), "category browsing must not load the footbridge concept art");
+  await evaluate(client, "document.querySelector('[data-building=stone-timber-footbridge]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'stone-timber-footbridge' && document.querySelector('#modelSize').textContent === '31 × 9 × 13' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const footbridge = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(footbridge.activeCategory, "transport");
+  assert.match(footbridge.title, /Stone and Timber Footbridge/);
+  assert.equal(footbridge.modelSize, "31 × 9 × 13");
+  assert.match(footbridge.payload, /^NCM3:/);
+  assert.equal(footbridge.voxelCount, 784);
+  for (const id of [55, 56, 57, 60, 64, 68, 69]) assert.match(footbridge.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(footbridge.uncovered, false);
+  assert.equal(footbridge.glazingDisabled, true);
+  assert.equal(footbridge.glazingLabel, "Openings: Not applicable");
+  assert.equal(footbridge.disabledStyles, 6);
+  assert.equal(footbridge.disabledRoofs, 6);
+  assert.equal(footbridge.conceptHidden, false);
+  assert.match(footbridge.conceptAlt, /Stone and Timber Footbridge concept reference/);
+  assert.equal(footbridge.conceptFit, "contain");
+  assert.equal(footbridge.selectedInUrl, "stone-timber-footbridge");
+  assert.ok(footbridge.resources.includes("/build_ncm/buildings/transport/stone-timber-footbridge.json"));
+  assert.ok(footbridge.resources.includes("/build_ncm/concepts/transport/stone-timber-footbridge.webp"));
+  assert.ok(!footbridge.resources.some((path) => path.endsWith("stone-timber-footbridge-blueprint.js")));
+
   await evaluate(client, "document.querySelector('[data-building-category=residential]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=hollow-cottage]')"));
   await evaluate(client, "document.querySelector('[data-building=hollow-cottage]').click()");
@@ -642,7 +692,7 @@ try {
 
   await client.send("Emulation.setDeviceMetricsOverride", { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
   await client.send("Page.reload", { ignoreCache: true });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 8 && document.querySelectorAll('[data-building]').length === 1"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 9 && document.querySelectorAll('[data-building]').length === 1"));
   await evaluate(client, "document.querySelector('[data-material-filter=all]').click()");
   await waitFor(() => evaluate(client, "document.querySelectorAll('#buildingMaterialCatalog .model-material-card').length === 33"));
   const mobile = await evaluate(client, `({
@@ -662,7 +712,7 @@ try {
   assert.equal(mobile.scrollWidth, mobile.clientWidth, "mobile page must not create document-level horizontal overflow");
   assert.equal(mobile.modelCards, 33);
   assert.equal(mobile.modelErrors, 0);
-  assert.equal(mobile.categories, 8);
+  assert.equal(mobile.categories, 9);
   assert.equal(mobile.buildingCards, 1);
   assert.equal(mobile.buildingThumbnails, 0);
   assert.equal(mobile.categoryFlow, "row");

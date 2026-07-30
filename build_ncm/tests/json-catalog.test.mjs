@@ -172,6 +172,8 @@ function validateBuildingEvidence(building, voxels) {
       assert.ok(voxels.has(`${support.x},${y},${support.z}`), `${building.key} has a load-path gap in ${support.label} at ${support.x},${y},${support.z}`);
     }
   }
+  for (const span of validation.horizontalSpans ?? []) validateHorizontalSpan(building, voxels, span);
+  for (const deck of validation.walkableDecks ?? []) validateWalkableDeck(building, voxels, deck);
   for (const volume of validation.openVolumes ?? []) {
     for (let x = volume.x; x < volume.x + volume.width; x += 1) {
       for (let y = volume.y; y < volume.y + volume.height; y += 1) {
@@ -226,6 +228,45 @@ function validateMirrorAxisZ(building, voxels, axisZ) {
   for (const voxel of voxels.values()) {
     const mirror = voxels.get(`${voxel.x},${voxel.y},${axisZ * 2 - voxel.z}`);
     assert.equal(mirror?.material, voxel.material, `${building.key} lost Z symmetry at ${voxel.x},${voxel.y},${voxel.z}`);
+  }
+}
+
+function validateHorizontalSpan(building, voxels, span) {
+  assert.ok(["x", "z"].includes(span.axis), `${building.key} has an invalid ${span.label} span axis`);
+  assert.ok(Number.isInteger(span.start) && Number.isInteger(span.end) && span.start <= span.end, `${building.key} has an invalid ${span.label} span range`);
+  for (let position = span.start; position <= span.end; position += 1) {
+    const x = span.axis === "x" ? position : span.fixed;
+    const z = span.axis === "x" ? span.fixed : position;
+    assert.ok(voxels.has(`${x},${span.y},${z}`), `${building.key} has a structural gap in ${span.label} at ${x},${span.y},${z}`);
+  }
+}
+
+function validateWalkableDeck(building, voxels, deck) {
+  assert.ok(["x", "z"].includes(deck.axis), `${building.key} has an invalid ${deck.label} deck axis`);
+  assert.ok(Number.isInteger(deck.start) && Number.isInteger(deck.end) && deck.start <= deck.end, `${building.key} has an invalid ${deck.label} deck range`);
+  assert.ok(Number.isInteger(deck.crossStart) && Number.isInteger(deck.crossEnd) && deck.crossStart <= deck.crossEnd, `${building.key} has an invalid ${deck.label} deck width`);
+  assert.equal(deck.topProfile.length, deck.end - deck.start + 1, `${building.key} has an incomplete ${deck.label} height profile`);
+  const maxStepRise = building.access?.maxStepRise ?? 2;
+  for (let index = 0; index < deck.topProfile.length; index += 1) {
+    const position = deck.start + index;
+    const topY = deck.topProfile[index];
+    assert.ok(Number.isInteger(topY) && topY > 0, `${building.key} has an invalid ${deck.label} deck height`);
+    if (index > 0) assert.ok(Math.abs(topY - deck.topProfile[index - 1]) <= maxStepRise, `${building.key} exceeds its step-rise limit on ${deck.label}`);
+    for (let cross = deck.crossStart; cross <= deck.crossEnd; cross += 1) {
+      const x = deck.axis === "x" ? position : cross;
+      const z = deck.axis === "x" ? cross : position;
+      assert.ok(voxels.has(`${x},${topY - 1},${z}`), `${building.key} lacks deck support on ${deck.label} at ${x},${z}`);
+      for (let clearance = 0; clearance < deck.clearance; clearance += 1) {
+        assert.equal(voxels.has(`${x},${topY + clearance},${z}`), false, `${building.key} blocks ${deck.label} at ${x},${topY + clearance},${z}`);
+      }
+    }
+    for (const edge of deck.guardEdges ?? []) {
+      const x = deck.axis === "x" ? position : edge;
+      const z = deck.axis === "x" ? edge : position;
+      for (const offset of deck.guardOffsets ?? []) {
+        assert.ok(voxels.has(`${x},${topY + offset},${z}`), `${building.key} has a guard-rail gap on ${deck.label} at ${x},${topY + offset},${z}`);
+      }
+    }
   }
 }
 

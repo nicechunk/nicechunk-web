@@ -44,6 +44,7 @@
   "library.category.utility": "SERVICES",
   "library.category.wayfinding": "ORIENTATION",
   "library.category.commerce": "COMMERCE",
+  "library.category.transport": "TRANSPORT",
   "library.footprint": "EMPREINTE",
   "library.height": "HAUTEUR",
   "library.voxels": "VOXELS",

@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 1);
-  assert.match(initial.totalBuildingCount, /18 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /19 BUILDINGS/);
   assert.equal(initial.categoryCount, 11);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -485,18 +485,20 @@ try {
   assert.ok(!noticeBoard.resources.some((path) => path.endsWith("covered-village-notice-board-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=utility]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=covered-village-well]') && document.querySelector('[data-building=village-twin-lantern]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=covered-village-well]') && document.querySelector('[data-building=village-twin-lantern]') && document.querySelector('[data-building=covered-village-firewood-rack]')"));
   const utilityBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     cardCount: document.querySelectorAll('[data-building]').length,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(utilityBrowse.activeBuilding, null);
-  assert.equal(utilityBrowse.cardCount, 2);
+  assert.equal(utilityBrowse.cardCount, 3);
   assert.ok(!utilityBrowse.resources.includes("/build_ncm/buildings/utility/covered-village-well.json"), "category browsing must not load the well JSON");
   assert.ok(!utilityBrowse.resources.includes("/build_ncm/concepts/utility/covered-village-well.webp"), "category browsing must not load the well concept art");
   assert.ok(!utilityBrowse.resources.includes("/build_ncm/buildings/utility/village-twin-lantern.json"), "category browsing must not load the lantern JSON");
   assert.ok(!utilityBrowse.resources.includes("/build_ncm/concepts/utility/village-twin-lantern.webp"), "category browsing must not load the lantern concept art");
+  assert.ok(!utilityBrowse.resources.includes("/build_ncm/buildings/utility/covered-village-firewood-rack.json"), "category browsing must not load the firewood-rack JSON");
+  assert.ok(!utilityBrowse.resources.includes("/build_ncm/concepts/utility/covered-village-firewood-rack.webp"), "category browsing must not load the firewood-rack concept art");
   await evaluate(client, "document.querySelector('[data-building=covered-village-well]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'covered-village-well' && document.querySelector('#modelSize').textContent === '21 × 22 × 18' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const well = await evaluate(client, `({
@@ -531,6 +533,8 @@ try {
   assert.ok(well.resources.includes("/build_ncm/buildings/utility/covered-village-well.json"));
   assert.ok(well.resources.includes("/build_ncm/concepts/utility/covered-village-well.webp"));
   assert.ok(!well.resources.some((path) => path.endsWith("covered-village-well-blueprint.js")));
+  assert.ok(!well.resources.includes("/build_ncm/buildings/utility/covered-village-firewood-rack.json"), "selecting the well must not load the firewood-rack JSON");
+  assert.ok(!well.resources.includes("/build_ncm/concepts/utility/covered-village-firewood-rack.webp"), "selecting the well must not load the firewood-rack concept art");
 
   await evaluate(client, "document.querySelector('[data-building=village-twin-lantern]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'village-twin-lantern' && document.querySelector('#modelSize').textContent === '19 × 22 × 11' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
@@ -568,6 +572,47 @@ try {
   assert.ok(lantern.resources.includes("/build_ncm/buildings/utility/village-twin-lantern.json"));
   assert.ok(lantern.resources.includes("/build_ncm/concepts/utility/village-twin-lantern.webp"));
   assert.ok(!lantern.resources.some((path) => path.endsWith("village-twin-lantern-blueprint.js")));
+  assert.ok(!lantern.resources.includes("/build_ncm/buildings/utility/covered-village-firewood-rack.json"), "selecting the lantern must not load the firewood-rack JSON");
+  assert.ok(!lantern.resources.includes("/build_ncm/concepts/utility/covered-village-firewood-rack.webp"), "selecting the lantern must not load the firewood-rack concept art");
+
+  await evaluate(client, "document.querySelector('[data-building=covered-village-firewood-rack]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'covered-village-firewood-rack' && document.querySelector('#modelSize').textContent === '25 × 22 × 11' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const firewoodRack = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(firewoodRack.activeCategory, "utility");
+  assert.match(firewoodRack.title, /Covered Village Firewood Rack/);
+  assert.equal(firewoodRack.modelSize, "25 × 22 × 11");
+  assert.match(firewoodRack.payload, /^NCM3:/);
+  assert.equal(firewoodRack.voxelCount, 1586);
+  for (const id of [55, 56, 57, 68, 69, 96]) assert.match(firewoodRack.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(firewoodRack.uncovered, false);
+  assert.equal(firewoodRack.glazingDisabled, true);
+  assert.equal(firewoodRack.glazingLabel, "Openings: Not applicable");
+  assert.equal(firewoodRack.disabledStyles, 6);
+  assert.equal(firewoodRack.disabledRoofs, 6);
+  assert.equal(firewoodRack.conceptHidden, false);
+  assert.match(firewoodRack.conceptAlt, /Covered Village Firewood Rack concept reference/);
+  assert.equal(firewoodRack.conceptFit, "contain");
+  assert.equal(firewoodRack.selectedInUrl, "covered-village-firewood-rack");
+  assert.ok(firewoodRack.resources.includes("/build_ncm/buildings/utility/covered-village-firewood-rack.json"));
+  assert.ok(firewoodRack.resources.includes("/build_ncm/concepts/utility/covered-village-firewood-rack.webp"));
+  assert.ok(!firewoodRack.resources.some((path) => path.endsWith("covered-village-firewood-rack-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=wayfinding]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=crossroads-wayfinding-sign]')"));

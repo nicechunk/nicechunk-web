@@ -1,0 +1,180 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "covered-village-firewood-rack",
+  "category": "utility",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Covered Village Firewood Rack",
+    "es": "Leñero Cubierto de la Aldea",
+    "fr": "Bûcher Couvert du Village",
+    "de": "Überdachtes Dorf-Brennholzregal",
+    "ja": "屋根付き村の薪棚",
+    "ru": "Крытый деревенский дровник",
+    "ko": "지붕 있는 마을 장작대",
+    "zh-Hant": "有頂村莊柴火架",
+    "zh-Hans": "有顶村庄柴火架"
+  },
+  "descriptions": {
+    "en": "A symmetric open-sided village firewood rack with two zero-step polished-stone loading bays, six grounded masonry plinths, six squared-timber posts, raised plank shelves, two ventilated stacks of square-section wooden sticks, face-connected knee braces, plank gable infill and a fully supported terracotta canopy.",
+    "es": "Leñero de aldea simétrico y abierto con dos zonas de carga de piedra pulida sin escalones, seis basamentos de mampostería apoyados en el suelo, seis postes de madera escuadrada, estantes elevados de tablones, dos pilas ventiladas de varillas de madera de sección cuadrada, tornapuntas conectadas por caras, relleno de tablones en los hastiales y una cubierta de terracota completamente sustentada.",
+    "fr": "Bûcher villageois symétrique et ouvert avec deux aires de chargement en pierre polie sans marche, six socles maçonnés ancrés au sol, six poteaux en bois équarri, des étagères surélevées en planches, deux piles ventilées de baguettes de bois à section carrée, des jambes de force jointives, des pignons remplis de planches et un auvent en terre cuite entièrement soutenu.",
+    "de": "Symmetrisches, offenes Dorf-Brennholzregal mit zwei stufenlosen Ladeflächen aus poliertem Stein, sechs bodengebundenen Mauersockeln, sechs Kantholzpfosten, erhöhten Bohlenböden, zwei belüfteten Stapeln aus vierkantigen Holzstäben, flächig verbundenen Knaggen, Bohlenfüllungen in den Giebeln und einem vollständig getragenen Terrakottadach.",
+    "ja": "段差のない2か所の磨き石積み込み場、地面から支える6基の石造基壇、6本の角材柱、持ち上げた板張り棚、角断面の木棒を積んだ通風性のある2区画、面接続された方杖、板張りの妻面、完全に支持されたテラコッタ屋根を備えた、左右対称で開放式の村の薪棚です。",
+    "ru": "Симметричный открытый деревенский дровник с двумя ровными площадками из полированного камня без ступеней, шестью опирающимися на землю каменными цоколями, шестью стойками из бруса, приподнятыми дощатыми полками, двумя проветриваемыми штабелями деревянных реек квадратного сечения, соединёнными по граням подкосами, дощатым заполнением фронтонов и полностью поддерживаемым терракотовым навесом.",
+    "ko": "단차 없는 연마 석재 적재 공간 두 곳, 지면에 닿는 석조 기단 여섯 개, 각목 기둥 여섯 개, 높인 판재 선반, 사각 단면 나무 막대를 쌓은 통풍형 두 구획, 면으로 연결된 버팀대, 판재 박공 채움과 완전히 지지된 테라코타 지붕을 갖춘 대칭형 개방식 마을 장작대입니다.",
+    "zh-Hant": "左右對稱的開敞式村莊柴火架，設有兩處零台階拋光石裝卸區、六座落地石造基臺、六根方木柱、架高木板托層、兩組由方形木棒堆成的通風柴垛、面連接斜撐、木板山牆填充，以及完整承托的赤陶頂棚。",
+    "zh-Hans": "左右对称的开敞式村庄柴火架，设有两处零台阶抛光石装卸区、六座落地石造基台、六根方木柱、架高木板托层、两组由方形木棒堆成的通风柴垛、面连接斜撑、木板山墙填充，以及完整承托的赤陶顶棚。"
+  },
+  "referenceImage": "concepts/utility/covered-village-firewood-rack.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": false,
+    "maxStepRise": 0
+  },
+  "doorOpening": "not-applicable",
+  "footprint": "25 × 11 vu",
+  "height": "22 vu",
+  "referenceScale": "One concept voxel equals one NCM voxel",
+  "preview": {
+    "fitScale": 1.06,
+    "minScale": 4,
+    "yaw": 2.62
+  },
+  "extraMaterials": [
+    {
+      "materialId": 56,
+      "phase": "structure",
+      "label": "Stored Fuel Sticks and Face-connected Knee Braces"
+    },
+    {
+      "materialId": 68,
+      "phase": "foundation",
+      "label": "Cobblestone Post Plinths"
+    },
+    {
+      "materialId": 69,
+      "phase": "foundation",
+      "label": "Polished Stone Loading Apron and Plinth Caps"
+    }
+  ],
+  "validation": {
+    "expectedVoxelCount": 1586,
+    "expectedPayloadBytes": 476,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [55, 56, 57, 68, 69, 96],
+    "expectedMaterialVoxelCounts": {
+      "55": 383,
+      "56": 288,
+      "57": 441,
+      "68": 108,
+      "69": 136,
+      "96": 230
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 12,
+    "supportColumns": [
+      { "label": "Front-left rack post", "x": 2, "z": 3, "baseY": 0, "topY": 14 },
+      { "label": "Front-center rack post", "x": 12, "z": 3, "baseY": 0, "topY": 14 },
+      { "label": "Front-right rack post", "x": 22, "z": 3, "baseY": 0, "topY": 14 },
+      { "label": "Rear-left rack post", "x": 2, "z": 8, "baseY": 0, "topY": 14 },
+      { "label": "Rear-center rack post", "x": 12, "z": 8, "baseY": 0, "topY": 14 },
+      { "label": "Rear-right rack post", "x": 22, "z": 8, "baseY": 0, "topY": 14 }
+    ],
+    "horizontalSpans": [
+      { "label": "Front raised-shelf rail", "axis": "x", "start": 2, "end": 22, "y": 3, "fixed": 4 },
+      { "label": "Rear raised-shelf rail", "axis": "x", "start": 2, "end": 22, "y": 3, "fixed": 7 },
+      { "label": "Front canopy beam", "axis": "x", "start": 1, "end": 23, "y": 14, "fixed": 2 },
+      { "label": "Rear canopy beam", "axis": "x", "start": 1, "end": 23, "y": 14, "fixed": 8 },
+      { "label": "Front continuous eave", "axis": "x", "start": 0, "end": 24, "y": 15, "fixed": 1 },
+      { "label": "Rear continuous eave", "axis": "x", "start": 0, "end": 24, "y": 15, "fixed": 9 },
+      { "label": "Continuous timber ridge", "axis": "x", "start": 0, "end": 24, "y": 21, "fixed": 5 }
+    ],
+    "walkableDecks": [
+      {
+        "label": "Left zero-step loading bay",
+        "axis": "z",
+        "start": 0,
+        "end": 3,
+        "crossStart": 4,
+        "crossEnd": 10,
+        "topProfile": [1, 1, 1, 1],
+        "clearance": 4
+      },
+      {
+        "label": "Right zero-step loading bay",
+        "axis": "z",
+        "start": 0,
+        "end": 3,
+        "crossStart": 14,
+        "crossEnd": 20,
+        "topProfile": [1, 1, 1, 1],
+        "clearance": 4
+      }
+    ],
+    "diagonalBands": [
+      { "label": "Front wooden roof sheathing slope", "materialId": 55, "x": 1, "y": 15, "z": 0, "width": 23, "height": 1, "depth": 1, "count": 6, "dx": 0, "dy": 1, "dz": 1 },
+      { "label": "Rear wooden roof sheathing slope", "materialId": 55, "x": 1, "y": 15, "z": 10, "width": 23, "height": 1, "depth": 1, "count": 6, "dx": 0, "dy": 1, "dz": -1 },
+      { "label": "Front terracotta roof slope", "materialId": 96, "x": 1, "y": 16, "z": 0, "width": 23, "height": 1, "depth": 1, "count": 5, "dx": 0, "dy": 1, "dz": 1 },
+      { "label": "Rear terracotta roof slope", "materialId": 96, "x": 1, "y": 16, "z": 10, "width": 23, "height": 1, "depth": 1, "count": 5, "dx": 0, "dy": 1, "dz": -1 },
+      { "label": "Left front face-connected knee brace", "materialId": 56, "x": 3, "y": 11, "z": 3, "width": 1, "height": 2, "depth": 1, "count": 2, "dx": 1, "dy": 1, "dz": 0 },
+      { "label": "Right front face-connected knee brace", "materialId": 56, "x": 21, "y": 11, "z": 3, "width": 1, "height": 2, "depth": 1, "count": 2, "dx": -1, "dy": 1, "dz": 0 }
+    ],
+    "openVolumes": [
+      { "label": "Clear left loading approach", "x": 4, "y": 1, "z": 0, "width": 7, "height": 4, "depth": 4 },
+      { "label": "Clear right loading approach", "x": 14, "y": 1, "z": 0, "width": 7, "height": 4, "depth": 4 },
+      { "label": "Ventilation gap above left firewood stack", "x": 4, "y": 12, "z": 4, "width": 7, "height": 2, "depth": 4 },
+      { "label": "Ventilation gap above right firewood stack", "x": 14, "y": 12, "z": 4, "width": 7, "height": 2, "depth": 4 }
+    ],
+    "approach": [
+      { "x": 7, "z": 0, "topY": 1 },
+      { "x": 7, "z": 1, "topY": 1 },
+      { "x": 7, "z": 2, "topY": 1 },
+      { "x": 7, "z": 3, "topY": 1 },
+      { "x": 17, "z": 0, "topY": 1 },
+      { "x": 17, "z": 1, "topY": 1 },
+      { "x": 17, "z": 2, "topY": 1 },
+      { "x": 17, "z": 3, "topY": 1 }
+    ],
+    "solidPoints": [
+      { "x": 7, "y": 0, "z": 0, "materialId": 69 },
+      { "x": 2, "y": 0, "z": 3, "materialId": 68 },
+      { "x": 2, "y": 2, "z": 3, "materialId": 69 },
+      { "x": 2, "y": 3, "z": 3, "materialId": 57 },
+      { "x": 7, "y": 4, "z": 5, "materialId": 55 },
+      { "x": 6, "y": 5, "z": 5, "materialId": 56 },
+      { "x": 6, "y": 11, "z": 5, "materialId": 56 },
+      { "x": 18, "y": 5, "z": 5, "materialId": 56 },
+      { "x": 18, "y": 11, "z": 5, "materialId": 56 },
+      { "x": 3, "y": 11, "z": 3, "materialId": 56 },
+      { "x": 4, "y": 12, "z": 3, "materialId": 56 },
+      { "x": 1, "y": 14, "z": 2, "materialId": 57 },
+      { "x": 0, "y": 16, "z": 5, "materialId": 55 },
+      { "x": 12, "y": 15, "z": 0, "materialId": 55 },
+      { "x": 12, "y": 16, "z": 0, "materialId": 96 },
+      { "x": 12, "y": 20, "z": 5, "materialId": 55 },
+      { "x": 12, "y": 21, "z": 5, "materialId": 57 }
+    ]
+  },
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARkWCy0BRQAAABgAAwJEAQACAgECAhQAAAJEAQAHAgECAhQAAAJFAQICAgACAhQAAAJFAQIHAgACAhQAAAIDAgMDAAsAAhQAAAIDAgMIAAsAAhQAAAEDAgMEFAAAAQMCAwcUAAABBgMEBBIAAwE4BAUHBgYAATgOBQcGBgACOAQFBAAAAwMEAAACOA4FBAAAAwMEAAACOAUGBAAAAwIEAAACOA8GBAAAAwIEAAACOAQHBAAAAwMEAAACOA4HBAAAAwMEAAACOAUIBAAAAwIEAAACOA8IBAAAAwIEAAACOAQJBAAAAwMEAAACOA4JBAAAAwMEAAACOAUKBAAAAwIEAAACOA8KBAAAAwIEAAACOAQLBAAAAwMEAAACOA4LBAAAAwMEAAACOAMLAwABAAICAgACOBULAwABAAIBAgACOAsLAwABAAIBAgACOA0LAwABAAICAgACOAMLCAABAAICAgACOBULCAABAAIBAgACOAsLCAABAAIBAgACOA0LCAABAAICAgABAwEOAhYBAQEDAQ4HFgEBAgMBDgICAQYCFAAAAQMADwEYAAABAwAPCRgAAAgGAA8AGAoIBQAQABgKCgYAEAAACgoGGBAAAAoJAwAQABgKAQMAFQUYAAA"
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "covered-village-bread-oven",
+  "category": "civic",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Covered Village Bread Oven",
+    "es": "Horno de Pan Cubierto de la Aldea",
+    "fr": "Four à Pain Couvert du Village",
+    "de": "Überdachter Dorfbackofen",
+    "ja": "屋根付き村のパン窯",
+    "ru": "Крытая деревенская хлебная печь",
+    "ko": "지붕 있는 마을 빵 화덕",
+    "zh-Hant": "有頂村莊麵包爐",
+    "zh-Hans": "有顶村庄面包炉"
+  },
+  "descriptions": {
+    "en": "An enterable communal bread oven with a level five-voxel work aisle, polished-stone apron, cobblestone plinth, fired-clay stepped vault, deep-stone arched baking chamber, paired wooden preparation benches, amber work lamps, a supported terracotta gable and a fired-brick chimney.",
+    "es": "Horno de pan comunal accesible con pasillo de trabajo nivelado de cinco vóxeles, explanada de piedra pulida, zócalo de adoquín, bóveda escalonada de ladrillo cocido, cámara de cocción arqueada de piedra profunda, dos bancos de preparación de madera, lámparas ámbar, hastial de terracota sustentado y chimenea de ladrillo cocido.",
+    "fr": "Four à pain communal accessible avec une allée de travail plane de cinq voxels, un parvis en pierre polie, un soubassement en pavés, une voûte étagée en briques cuites, une chambre de cuisson cintrée en pierre profonde, deux bancs de préparation en bois, des lampes ambrées, un pignon en terre cuite soutenu et une cheminée en briques cuites.",
+    "de": "Begehbarer gemeinschaftlicher Backofen mit ebenem fünf Voxel breitem Arbeitsgang, Vorplatz aus polierten Steinplatten, Kopfsteinpflastersockel, gestuftem Brennziegelgewölbe, gewölbter Backkammer aus Tiefstein, zwei hölzernen Arbeitstischen, Bernsteinlampen, getragenem Terrakottagiebel und Brennziegelschornstein.",
+    "ja": "幅5ボクセルの平坦な作業通路、磨き石の前庭、丸石の基壇、焼成粘土れんがの段状ヴォールト、深層石で縁取ったアーチ形の焼成室、左右一対の木製作業台、琥珀色の作業灯、支持されたテラコッタ切妻屋根、焼成れんがの煙突を備えた、内部に入れる共同パン窯です。",
+    "ru": "Доступная общественная хлебная печь с ровным рабочим проходом шириной пять вокселей, площадкой из полированного камня, булыжным цоколем, ступенчатым сводом из обожжённого кирпича, арочной камерой из глубинного камня, парными деревянными столами, янтарными лампами, опирающимся терракотовым щипцом и кирпичной трубой.",
+    "ko": "폭 5복셀의 평평한 작업 통로, 연마 석재 앞마당, 조약돌 기단, 구운 점토 벽돌의 계단형 볼트, 심층석 아치 화덕실, 좌우 목재 작업대, 호박색 작업등, 지지 구조가 있는 테라코타 박공지붕과 구운 벽돌 굴뚝을 갖춘 출입 가능한 공동 빵 화덕입니다.",
+    "zh-Hant": "可進入的公共麵包爐，設有五體素寬平坦工作通道、拋光石前坪、鵝卵石基座、燒製黏土磚階梯拱頂、深層石拱形烘烤室、左右木製備料臺、琥珀工作燈、具完整承托的赤陶人字頂，以及燒製磚煙囪。",
+    "zh-Hans": "可进入的公共面包炉，设有五体素宽平坦工作通道、抛光石前坪、鹅卵石基座、烧制黏土砖阶梯拱顶、深层石拱形烘烤室、左右木制备料台、琥珀工作灯、具完整承托的赤陶人字顶，以及烧制砖烟囱。"
+  },
+  "referenceImage": "concepts/civic/covered-village-bread-oven.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 1
+  },
+  "doorOpening": "open",
+  "footprint": "21 × 20 vu",
+  "height": "28 vu",
+  "referenceScale": "One concept voxel equals one NCM voxel",
+  "preview": {
+    "fitScale": 1.02,
+    "minScale": 4,
+    "yaw": 2.72
+  },
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "structure",
+      "label": "Wooden Preparation Benches and Roof Sheathing"
+    },
+    {
+      "materialId": 56,
+      "phase": "structure",
+      "label": "Wooden-stick Knee Braces and Lantern Mounts"
+    },
+    {
+      "materialId": 60,
+      "phase": "openings",
+      "label": "Amber Work Lamps"
+    },
+    {
+      "materialId": 62,
+      "phase": "envelope",
+      "label": "Fired-clay Oven Vault and Chimney"
+    },
+    {
+      "materialId": 65,
+      "phase": "envelope",
+      "label": "Deep-stone Hearth and Baking Chamber Lining"
+    },
+    {
+      "materialId": 69,
+      "phase": "foundation",
+      "label": "Polished Stone Work Apron"
+    }
+  ],
+  "validation": {
+    "expectedVoxelCount": 3097,
+    "expectedPayloadBytes": 561,
+    "maxPayloadBytes": 768,
+    "expectedDefaultMaterialIds": [55, 56, 57, 60, 62, 65, 68, 69, 96],
+    "expectedMaterialVoxelCounts": {
+      "55": 433,
+      "56": 72,
+      "57": 324,
+      "60": 4,
+      "62": 783,
+      "65": 238,
+      "68": 369,
+      "69": 157,
+      "96": 717
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 11,
+    "supportColumns": [
+      { "label": "Front-left shelter post", "x": 4, "z": 4, "baseY": 0, "topY": 12 },
+      { "label": "Front-right shelter post", "x": 18, "z": 4, "baseY": 0, "topY": 12 },
+      { "label": "Rear-left shelter post", "x": 4, "z": 15, "baseY": 0, "topY": 12 },
+      { "label": "Rear-right shelter post", "x": 18, "z": 15, "baseY": 0, "topY": 12 }
+    ],
+    "horizontalSpans": [
+      { "label": "Front shelter beam", "axis": "x", "start": 3, "end": 19, "y": 12, "fixed": 4 },
+      { "label": "Rear shelter beam", "axis": "x", "start": 3, "end": 19, "y": 12, "fixed": 15 },
+      { "label": "Left shelter beam", "axis": "z", "start": 4, "end": 16, "y": 12, "fixed": 4 },
+      { "label": "Right shelter beam", "axis": "z", "start": 4, "end": 16, "y": 12, "fixed": 18 },
+      { "label": "Timber roof ridge", "axis": "z", "start": 2, "end": 19, "y": 23, "fixed": 11 }
+    ],
+    "walkableDecks": [
+      {
+        "label": "Front apron and central work aisle",
+        "axis": "z",
+        "start": 0,
+        "end": 8,
+        "crossStart": 9,
+        "crossEnd": 13,
+        "topProfile": [1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "clearance": 9
+      }
+    ],
+    "gableProfiles": [
+      { "label": "Front supported terracotta gable", "x": 1, "baseY": 13, "z": 2, "width": 21, "slopeMaterialId": 96, "ridgeMaterialId": 57 },
+      { "label": "Rear supported terracotta gable", "x": 1, "baseY": 13, "z": 19, "width": 21, "slopeMaterialId": 96, "ridgeMaterialId": 57 }
+    ],
+    "closedVoxelLoops": [
+      {
+        "label": "Open chimney crown",
+        "materialId": 62,
+        "points": [
+          [10, 27, 16], [11, 27, 16], [12, 27, 16], [12, 27, 17],
+          [12, 27, 18], [11, 27, 18], [10, 27, 18], [10, 27, 17]
+        ]
+      }
+    ],
+    "openVolumes": [
+      { "label": "Clear central working aisle", "x": 9, "y": 1, "z": 0, "width": 5, "height": 9, "depth": 9 },
+      { "label": "Open lower baking chamber", "x": 9, "y": 2, "z": 9, "width": 5, "height": 4, "depth": 7 },
+      { "label": "Open upper arched chamber", "x": 10, "y": 6, "z": 9, "width": 3, "height": 1, "depth": 7 }
+    ],
+    "approach": [
+      { "x": 11, "z": 0, "topY": 1 },
+      { "x": 11, "z": 4, "topY": 1 },
+      { "x": 11, "z": 8, "topY": 1 },
+      { "x": 11, "z": 9, "topY": 2 },
+      { "x": 11, "z": 15, "topY": 2 }
+    ],
+    "solidPoints": [
+      { "x": 11, "y": 0, "z": 0, "materialId": 69 },
+      { "x": 2, "y": 0, "z": 3, "materialId": 68 },
+      { "x": 4, "y": 2, "z": 4, "materialId": 57 },
+      { "x": 5, "y": 7, "z": 3, "materialId": 60 },
+      { "x": 4, "y": 4, "z": 7, "materialId": 55 },
+      { "x": 8, "y": 2, "z": 11, "materialId": 65 },
+      { "x": 6, "y": 3, "z": 13, "materialId": 62 },
+      { "x": 11, "y": 2, "z": 16, "materialId": 65 },
+      { "x": 1, "y": 13, "z": 2, "materialId": 96 },
+      { "x": 11, "y": 23, "z": 2, "materialId": 57 },
+      { "x": 11, "y": 25, "z": 17, "materialId": 62 },
+      { "x": 9, "y": 26, "z": 15, "materialId": 62 }
+    ]
+  },
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARccFDwBAQEAAwIBDwEBEwADAgEPAQEEABEOAQIBAQMAAxAADgIBAgADAwEDAR4AAAIBAgAOAwEDAR4AAAFFBAADDgAMAUUFAAAMAAQBAQYACQoBCgE-BgEKAgcJAT4OAQoCBwkBPgkBEQQHAgE-BwgKCAAIAT4ICQsGAAcBPgkKDAQABgE-CgsNAgAFAT4LDA4AAAQBQQcBCQgACAFBBwIJAQQBAUEOAgkBBAEBQQgCCwAEBQFBDgILAAQFAUEJBgkAAAEBQQ0GCQAAAQFBCgcJAgABAUEJAhAEBAABQQkHCwQABQIDAwIEAQoBAR4AAAIDAwIPAQoBAR4AAAEDAwwEEAABAQMDDA8QAAEBAwMMBAEADAEDEgwEAQAMAQMDDAoQAAEBNwQEBQMABAE3DwQFAwAEATcEAgYDAAMBNw8CBgMAAwIDBAEGAAIAAQYAAAIDBAEJAAIAAQYAAAIDDwEGAAIAAQYAAAIDDwEJAAIAAQYAAAI4BQgEAQABAwICAAI4EAgEAQABAwECAAI4BQgPAQABAwICAAI4EAgPAQABAwECAAI4BQYDAAABARgAAAI8BQcDAAEAARgAAAI4BQkDAAABARgAAAI3AQwCAQARCgICAAI3FAwCAQARCgECAAIFAQ0CAQARCgICAAIFFA0CAQARCgECAAEDCxcCAAARAQcKChACDwIBBwkaDwQABAEHChsQAgAAAQcKGxICAAABBwobEQAAAAEHDBsRAAAA"
+  }
+}

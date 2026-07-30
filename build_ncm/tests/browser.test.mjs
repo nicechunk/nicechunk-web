@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 1);
-  assert.match(initial.totalBuildingCount, /13 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /14 BUILDINGS/);
   assert.equal(initial.categoryCount, 11);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -273,7 +273,17 @@ try {
   }
 
   await evaluate(client, "document.querySelector('[data-building-category=civic]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=civic-town-hall]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=civic-town-hall]') && document.querySelector('[data-building=covered-village-bread-oven]')"));
+  const civicBrowse = await evaluate(client, `({
+    activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
+    cardCount: document.querySelectorAll('[data-building]').length,
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(civicBrowse.activeBuilding, null);
+  assert.equal(civicBrowse.cardCount, 2);
+  assert.ok(!civicBrowse.resources.includes("/build_ncm/buildings/civic/civic-town-hall.json"), "category browsing must not load the town-hall JSON");
+  assert.ok(!civicBrowse.resources.includes("/build_ncm/buildings/civic/covered-village-bread-oven.json"), "category browsing must not load the bread-oven JSON");
+  assert.ok(!civicBrowse.resources.includes("/build_ncm/concepts/civic/covered-village-bread-oven.webp"), "category browsing must not load the bread-oven concept art");
   await evaluate(client, "document.querySelector('[data-building=civic-town-hall]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'civic-town-hall' && document.querySelector('#modelSize').textContent === '44 × 42 × 40'"));
   const townHall = await evaluate(client, `({
@@ -346,6 +356,45 @@ try {
     select.dispatchEvent(new Event('change', { bubbles: true }));
   })()`);
   await waitFor(() => evaluate(client, "document.documentElement.lang === 'en'"));
+
+  await evaluate(client, "document.querySelector('[data-building=covered-village-bread-oven]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'covered-village-bread-oven' && document.querySelector('#modelSize').textContent === '23 × 28 × 20' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const breadOven = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(breadOven.activeCategory, "civic");
+  assert.match(breadOven.title, /Covered Village Bread Oven/);
+  assert.equal(breadOven.modelSize, "23 × 28 × 20");
+  assert.match(breadOven.payload, /^NCM3:/);
+  assert.equal(breadOven.voxelCount, 3097);
+  for (const id of [55, 56, 57, 60, 62, 65, 68, 69, 96]) assert.match(breadOven.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(breadOven.uncovered, false);
+  assert.equal(breadOven.glazingDisabled, true);
+  assert.equal(breadOven.glazingLabel, "Openings: Not applicable");
+  assert.equal(breadOven.disabledStyles, 6);
+  assert.equal(breadOven.disabledRoofs, 6);
+  assert.equal(breadOven.conceptHidden, false);
+  assert.match(breadOven.conceptAlt, /Covered Village Bread Oven concept reference/);
+  assert.equal(breadOven.conceptFit, "contain");
+  assert.equal(breadOven.selectedInUrl, "covered-village-bread-oven");
+  assert.ok(breadOven.resources.includes("/build_ncm/buildings/civic/covered-village-bread-oven.json"));
+  assert.ok(breadOven.resources.includes("/build_ncm/concepts/civic/covered-village-bread-oven.webp"));
+  assert.ok(!breadOven.resources.some((path) => path.endsWith("covered-village-bread-oven-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=utility]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=covered-village-well]') && document.querySelector('[data-building=village-twin-lantern]')"));

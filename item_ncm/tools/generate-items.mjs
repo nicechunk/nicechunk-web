@@ -99,6 +99,11 @@ const ITEM_NAMES = Object.freeze({
     "Erntesichel aus Kohlenstoffstahl", "炭素鋼の収穫鎌", "Жатвенный серп из углеродистой стали",
     "탄소강 수확 낫", "碳鋼收割鐮", "碳钢收割镰",
   ),
+  "copper-field-watering-can": names(
+    "Copper Field Watering Can", "Regadera de campo de cobre", "Arrosoir de campagne en cuivre",
+    "Kupferne Feldgießkanne", "銅製の畑用じょうろ", "Медная полевая лейка",
+    "구리 농장 물뿌리개", "銅製田間澆水壺", "铜制田间浇水壶",
+  ),
   "iron-blacksmith-hammer": names(
     "Iron Blacksmith Hammer", "Martillo de herrero de hierro", "Marteau de forgeron en fer", "Eiserner Schmiedehammer",
     "鉄製の鍛冶ハンマー", "Железный кузнечный молот", "철제 대장장이 망치", "鐵製鍛造錘", "铁制锻造锤",
@@ -219,6 +224,19 @@ const ITEM_SPECS = Object.freeze([
     part("wooden_stick", [5, 24, 5], [0, -12, 0], { grip: handGrip(3, -2) }),
     part("carbon_steel", [28, 34, 3], [4, 14, 0], { mask: sickleBlade }),
   ], held([1])),
+  tool("forestry-farming", "copper-field-watering-can", [
+    part("squared_timber", [6, 20, 6], [15, -2, 0], { grip: handGrip(3, -4) }),
+    part("squared_timber", [28, 6, 6], [1, -15, 0]),
+    part("squared_timber", [6, 20, 6], [-10, -2, 0]),
+    part("copper_bloom", [24, 22, 22], [0, 19, 0], { mask: wateringCanBody }),
+    part("copper_bloom", [8, 18, 8], [0, 39, 0]),
+    part("copper_bloom", [16, 6, 16], [0, 51, 0], { mask: wateringRoseMask }),
+    part("copper_bloom", [4, 10, 10], [14, 19, 0], { mask: fillRimMask }),
+  ], held([3, 4, 5]), { yaw: -0.78, pitch: 0.36 }, {
+    image: "concepts/forestry-farming/copper-field-watering-can-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
 
   tool("workshop", "iron-blacksmith-hammer", [
     part("wooden_stick", [6, 36, 6], [0, 0, 0], { grip: handGrip(3, -13) }),
@@ -937,6 +955,28 @@ function bucketMask({ nx, ny, nz }) {
 function sideHandleMask({ ny, nz }) {
   const outer = Math.max(Math.abs(ny), Math.abs(nz)) <= 0.98;
   const inner = Math.abs(ny) < 0.5 && Math.abs(nz) < 0.62;
+  return outer && !inner;
+}
+
+function wateringCanBody({ nx, ny, nz }) {
+  const shell = Math.max(Math.abs(nx), Math.abs(ny), Math.abs(nz)) >= 0.68;
+  const fillOpening = nx > 0.6 && Math.abs(ny) < 0.46 && Math.abs(nz) < 0.46;
+  return shell && !fillOpening;
+}
+
+function wateringRoseMask({ x, nx, ny, nz }) {
+  const face = Math.max(Math.abs(nx), Math.abs(nz));
+  if (face > 0.98) return false;
+  if (ny < -0.46) return true;
+  const rim = face >= 0.7;
+  const brace = Math.abs(nx) <= 0.18 || Math.abs(nz) <= 0.18;
+  const perforated = (x + Math.round((nz + 1) * 4)) % 2 === 0;
+  return rim || brace || !perforated;
+}
+
+function fillRimMask({ ny, nz }) {
+  const outer = Math.max(Math.abs(ny), Math.abs(nz)) <= 0.98;
+  const inner = Math.abs(ny) < 0.5 && Math.abs(nz) < 0.5;
   return outer && !inner;
 }
 

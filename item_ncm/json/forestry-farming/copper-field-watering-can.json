@@ -1,0 +1,184 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "copper-field-watering-can",
+  "category": "forestry-farming",
+  "interaction": "tool",
+  "names": {
+    "en": "Copper Field Watering Can",
+    "es": "Regadera de campo de cobre",
+    "fr": "Arrosoir de campagne en cuivre",
+    "de": "Kupferne Feldgießkanne",
+    "ja": "銅製の畑用じょうろ",
+    "ru": "Медная полевая лейка",
+    "ko": "구리 농장 물뿌리개",
+    "zh-Hant": "銅製田間澆水壺",
+    "zh-Hans": "铜制田间浇水壶"
+  },
+  "descriptions": {
+    "en": "Copper Field Watering Can is a canonical NCF1 hand-held blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Regadera de campo de cobre es un plano NCF1 canónico de mano, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Arrosoir de campagne en cuivre est un plan NCF1 canonique tenu en main, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Kupferne Feldgießkanne ist ein kanonischer, handgeführter NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "銅製の畑用じょうろは、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1手持ち設計図です。",
+    "ru": "Медная полевая лейка — канонический ручной чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "구리 농장 물뿌리개은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 휴대 장비 설계도입니다.",
+    "zh-Hant": "銅製田間澆水壺是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 手持物品設計圖。",
+    "zh-Hans": "铜制田间浇水壶是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 手持物品设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 0.4844,
+    "height": 1.125,
+    "depth": 0.3438,
+    "sizeQ": [
+      31,
+      72,
+      22
+    ]
+  },
+  "preview": {
+    "yaw": -0.78,
+    "pitch": 0.36
+  },
+  "concept": {
+    "image": "concepts/forestry-farming/copper-field-watering-can-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "f8c3ea1f37eb47d4b58bce4924da871d8e41ccf44653b96d81b382e3a6c8a2e4"
+  },
+  "holding": {
+    "gripComponentIndex": 0,
+    "workComponentIndexes": [
+      3,
+      4,
+      5
+    ],
+    "lateralComponentGroups": [],
+    "sourceToAvatarAxes": [
+      "+Y",
+      "-Z",
+      "-X"
+    ],
+    "testedPoseCount": 27
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.___4L4ale2Jzel73B1HiGUGFAYB__ABAP_AAIgAiGUcBgYAP4gAQARDKDCgM_b_gAIADGBYWAACYAIREVNWGhIwADCBIIAAE4AEABiAMIAADMAFgzIXFTIXGTIXGzIXEjMXFDMXGDMXGjMXEzQXJTQXKTQXKzQXIzgXJTgXKTgXKzgXIjoXFDoXGDoXGjoXEzsXFTsXGTsXGzsXEABggUFAOBMAEEDTkYAA",
+    "rawBytes": 170,
+    "sha256": "0f955f34466b3d4aa6f88a3e5af45d026b6cde46a09564d454d698256f0937ef",
+    "designHash": 4055688173,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 170,
+    "savedBytes": 0,
+    "sourceComponentCount": 7,
+    "decodedComponentCount": 7,
+    "appearanceQuadCount": 0,
+    "hasGrip": true,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 2746582,
+        "usedVolumeMm3": 2746582,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 3845215,
+        "usedVolumeMm3": 3845215,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 2746582,
+        "usedVolumeMm3": 2746582,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "copper_bloom",
+        "itemCode": 1015,
+        "inputVolumeMm3": 44311523,
+        "usedVolumeMm3": 29661590,
+        "unusedVolumeMm3": 14649933
+      },
+      {
+        "index": 4,
+        "materialId": "copper_bloom",
+        "itemCode": 1015,
+        "inputVolumeMm3": 4394531,
+        "usedVolumeMm3": 4394531,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "copper_bloom",
+        "itemCode": 1015,
+        "inputVolumeMm3": 5859375,
+        "usedVolumeMm3": 5189732,
+        "unusedVolumeMm3": 669643
+      },
+      {
+        "index": 6,
+        "materialId": "copper_bloom",
+        "itemCode": 1015,
+        "inputVolumeMm3": 1525879,
+        "usedVolumeMm3": 1264299,
+        "unusedVolumeMm3": 261580
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 49807360,
+      "requiredEffectiveDurability": 53464,
+      "outputMassGrams": 327675,
+      "materialScore": 59
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 872,
+      "triangleCount": 436,
+      "meshByteLength": 16568
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "squared_timber",
+      "itemCode": 1033,
+      "componentCount": 3,
+      "inputVolumeMm3": 9338379,
+      "usedVolumeMm3": 9338379,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 48400,
+      "equivalentInputUnits": 193
+    },
+    {
+      "materialId": "copper_bloom",
+      "itemCode": 1015,
+      "componentCount": 4,
+      "inputVolumeMm3": 56091308,
+      "usedVolumeMm3": 40510152,
+      "unusedVolumeMm3": 15581156,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 225
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "chainMinted": false
+  }
+}

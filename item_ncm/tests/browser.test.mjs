@@ -81,7 +81,7 @@ try {
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 9);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /26 ITEMS/);
+  assert.match(initial.total, /27 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -196,6 +196,23 @@ try {
   assert.equal(shovel.payloadBytes, "122 / 640 B");
   assert.equal(shovel.selectedInUrl, "iron-earthwork-shovel");
   assert.ok(shovel.resources.includes("/item_ncm/json/mining-tools/iron-earthwork-shovel.json"));
+
+  await evaluate(client, `document.querySelector('[data-category="forestry-farming"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 4 && document.querySelector('[data-item="copper-field-watering-can"]')`));
+  await evaluate(client, `document.querySelector('[data-item="copper-field-watering-can"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="copper-field-watering-can"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const wateringCan = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(wateringCan.title, "Copper Field Watering Can");
+  assert.equal(wateringCan.type, "HAND-HELD");
+  assert.equal(wateringCan.payloadBytes, "170 / 640 B");
+  assert.equal(wateringCan.selectedInUrl, "copper-field-watering-can");
+  assert.ok(wateringCan.resources.includes("/item_ncm/json/forestry-farming/copper-field-watering-can.json"));
 
   await evaluate(client, `(() => {
     const search = document.querySelector("#itemSearch");

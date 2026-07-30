@@ -38,7 +38,7 @@ try {
   await client.send("Page.enable");
   await client.send("Emulation.setDeviceMetricsOverride", { width: 1600, height: 1200, deviceScaleFactor: 1, mobile: false });
   await client.send("Page.navigate", { url });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 7 && document.querySelectorAll('[data-building]').length === 1 && document.querySelector('[data-building=hollow-cottage]') && document.querySelector('[data-language-select]').options.length === 9"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 8 && document.querySelectorAll('[data-building]').length === 1 && document.querySelector('[data-building=hollow-cottage]') && document.querySelector('[data-language-select]').options.length === 9"));
 
   const initial = await evaluate(client, `({
     visibleBuildingCount: document.querySelectorAll('[data-building]').length,
@@ -76,8 +76,8 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 1);
-  assert.match(initial.totalBuildingCount, /8 BUILDINGS/);
-  assert.equal(initial.categoryCount, 7);
+  assert.match(initial.totalBuildingCount, /9 BUILDINGS/);
+  assert.equal(initial.categoryCount, 8);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
   assert.equal(initial.buildingLabel, "Hollow Cottage");
@@ -480,6 +480,56 @@ try {
   assert.ok(wayfinding.resources.includes("/build_ncm/concepts/wayfinding/crossroads-wayfinding-sign.webp"));
   assert.ok(!wayfinding.resources.some((path) => path.endsWith("crossroads-wayfinding-sign-blueprint.js")));
 
+  await evaluate(client, "document.querySelector('[data-building-category=commerce]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=covered-market-stall]')"));
+  const commerceBrowse = await evaluate(client, `({
+    activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
+    cardCount: document.querySelectorAll('[data-building]').length,
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(commerceBrowse.activeBuilding, null);
+  assert.equal(commerceBrowse.cardCount, 1);
+  assert.ok(!commerceBrowse.resources.includes("/build_ncm/buildings/commerce/covered-market-stall.json"), "category browsing must not load the market-stall JSON");
+  assert.ok(!commerceBrowse.resources.includes("/build_ncm/concepts/commerce/covered-market-stall.webp"), "category browsing must not load the market-stall concept art");
+  await evaluate(client, "document.querySelector('[data-building=covered-market-stall]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'covered-market-stall' && document.querySelector('#modelSize').textContent === '21 × 21 × 15' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const marketStall = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(marketStall.activeCategory, "commerce");
+  assert.match(marketStall.title, /Covered Market Stall/);
+  assert.equal(marketStall.modelSize, "21 × 21 × 15");
+  assert.match(marketStall.payload, /^NCM3:/);
+  assert.equal(marketStall.voxelCount, 1444);
+  for (const id of [55, 56, 57, 60, 68, 69, 74, 75, 96]) assert.match(marketStall.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(marketStall.uncovered, false);
+  assert.equal(marketStall.glazingDisabled, true);
+  assert.equal(marketStall.glazingLabel, "Openings: Not applicable");
+  assert.equal(marketStall.disabledStyles, 6);
+  assert.equal(marketStall.disabledRoofs, 6);
+  assert.equal(marketStall.conceptHidden, false);
+  assert.match(marketStall.conceptAlt, /Covered Market Stall concept reference/);
+  assert.equal(marketStall.conceptFit, "contain");
+  assert.equal(marketStall.selectedInUrl, "covered-market-stall");
+  assert.ok(marketStall.resources.includes("/build_ncm/buildings/commerce/covered-market-stall.json"));
+  assert.ok(marketStall.resources.includes("/build_ncm/concepts/commerce/covered-market-stall.webp"));
+  assert.ok(!marketStall.resources.some((path) => path.endsWith("covered-market-stall-blueprint.js")));
+
   await evaluate(client, "document.querySelector('[data-building-category=residential]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=hollow-cottage]')"));
   await evaluate(client, "document.querySelector('[data-building=hollow-cottage]').click()");
@@ -592,7 +642,7 @@ try {
 
   await client.send("Emulation.setDeviceMetricsOverride", { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
   await client.send("Page.reload", { ignoreCache: true });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 7 && document.querySelectorAll('[data-building]').length === 1"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 8 && document.querySelectorAll('[data-building]').length === 1"));
   await evaluate(client, "document.querySelector('[data-material-filter=all]').click()");
   await waitFor(() => evaluate(client, "document.querySelectorAll('#buildingMaterialCatalog .model-material-card').length === 33"));
   const mobile = await evaluate(client, `({
@@ -612,7 +662,7 @@ try {
   assert.equal(mobile.scrollWidth, mobile.clientWidth, "mobile page must not create document-level horizontal overflow");
   assert.equal(mobile.modelCards, 33);
   assert.equal(mobile.modelErrors, 0);
-  assert.equal(mobile.categories, 7);
+  assert.equal(mobile.categories, 8);
   assert.equal(mobile.buildingCards, 1);
   assert.equal(mobile.buildingThumbnails, 0);
   assert.equal(mobile.categoryFlow, "row");

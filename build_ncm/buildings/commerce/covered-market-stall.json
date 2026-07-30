@@ -1,0 +1,140 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "covered-market-stall",
+  "category": "commerce",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Covered Market Stall",
+    "es": "Puesto de Mercado Cubierto",
+    "fr": "Étal de Marché Couvert",
+    "de": "Überdachter Marktstand",
+    "ja": "屋根付き市場露店",
+    "ru": "Крытый рыночный прилавок",
+    "ko": "지붕 있는 시장 가판대",
+    "zh-Hant": "有頂市集攤位",
+    "zh-Hans": "有顶集市摊位"
+  },
+  "descriptions": {
+    "en": "An enterable village trade stall with a one-voxel rear step, cobblestone plinth, timber frame, terracotta gable, blue-and-white ceramic counter emblems, twin amber lanterns, split shelves and two fixed empty display crates.",
+    "es": "Puesto comercial de aldea accesible con un escalón trasero de un vóxel, zócalo de adoquín, entramado de madera, tejado a dos aguas de terracota, emblemas cerámicos azules y blancos en el mostrador, dos faroles ámbar, estantes divididos y dos cajas de exposición vacías fijadas.",
+    "fr": "Étal villageois accessible avec une marche arrière d'un voxel, socle en pavés, charpente en bois, pignon en terre cuite, emblèmes de comptoir en céramique bleue et blanche, deux lanternes ambrées, étagères séparées et deux caisses d'exposition vides fixées.",
+    "de": "Begehbarer Dorfmarktstand mit einer ein Voxel hohen Hinterstufe, Kopfsteinpflastersockel, Holzrahmen, Terrakotta-Satteldach, blau-weißen Keramikemblemen am Tresen, zwei Bernsteinlaternen, geteilten Regalen und zwei fest montierten leeren Auslagekisten.",
+    "ja": "1ボクセル高の裏階段、丸石の基壇、木骨組み、テラコッタの切妻屋根、青白の陶磁器製カウンター紋、2基の琥珀色ランタン、左右に分かれた棚、固定式の空の陳列箱2個を備えた、内部に入れる村の交易露店です。",
+    "ru": "Доступный изнутри деревенский торговый прилавок с задней ступенью высотой в один воксель, булыжным цоколем, деревянным каркасом, терракотовой двускатной крышей, сине-белыми керамическими знаками на стойке, двумя янтарными фонарями, раздельными полками и двумя закреплёнными пустыми ящиками для выкладки.",
+    "ko": "한 복셀 높이의 뒤쪽 계단, 조약돌 기단, 목재 골조, 테라코타 박공지붕, 청백색 세라믹 계산대 문양, 호박색 등 두 개, 양쪽 진열대와 고정된 빈 진열 상자 두 개를 갖춘 내부 출입형 마을 거래 가판대입니다.",
+    "zh-Hant": "可進入的村莊交易攤位，設有一體素高的後階、鵝卵石基座、木構架、赤陶人字頂、藍白陶瓷櫃檯徽記、兩盞琥珀燈、左右分隔的貨架，以及兩個固定空陳列箱。",
+    "zh-Hans": "可进入的村庄交易摊位，设有一体素高的后阶、鹅卵石基座、木构架、赤陶人字顶、蓝白陶瓷柜台徽记、两盏琥珀灯、左右分隔的货架，以及两个固定空陈列箱。"
+  },
+  "referenceImage": "concepts/commerce/covered-market-stall.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 1
+  },
+  "doorOpening": "open",
+  "footprint": "19 × 13 vu",
+  "height": "21 vu",
+  "referenceScale": "One concept voxel equals one NCM voxel",
+  "preview": {
+    "fitScale": 1.06,
+    "minScale": 5,
+    "yaw": 2.38
+  },
+  "extraMaterials": [
+    {
+      "materialId": 56,
+      "phase": "structure",
+      "label": "Wooden-stick Braces and Crate Rims"
+    },
+    {
+      "materialId": 60,
+      "phase": "openings",
+      "label": "Amber Lantern Panels"
+    },
+    {
+      "materialId": 69,
+      "phase": "foundation",
+      "label": "Polished Stone Approach Steps"
+    },
+    {
+      "materialId": 74,
+      "phase": "finish",
+      "label": "White Ceramic Counter Emblems"
+    },
+    {
+      "materialId": 75,
+      "phase": "finish",
+      "label": "Blue Ceramic Emblem Centers"
+    }
+  ],
+  "validation": {
+    "expectedVoxelCount": 1444,
+    "expectedPayloadBytes": 408,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [55, 56, 57, 60, 68, 69, 74, 75, 96],
+    "requireConnected": true,
+    "mirrorAxisX": 10,
+    "supportColumns": [
+      { "label": "Front-left eave post", "x": 3, "z": 3, "baseY": 0, "topY": 10 },
+      { "label": "Front-right eave post", "x": 17, "z": 3, "baseY": 0, "topY": 10 },
+      { "label": "Rear-left eave post", "x": 3, "z": 11, "baseY": 0, "topY": 10 },
+      { "label": "Rear-right eave post", "x": 17, "z": 11, "baseY": 0, "topY": 10 }
+    ],
+    "openVolumes": [
+      {
+        "label": "Clear rear vendor entrance",
+        "x": 9,
+        "y": 2,
+        "z": 9,
+        "width": 3,
+        "height": 7,
+        "depth": 4
+      }
+    ],
+    "solidPoints": [
+      { "x": 10, "y": 0, "z": 1, "materialId": 69 },
+      { "x": 10, "y": 0, "z": 2, "materialId": 68 },
+      { "x": 10, "y": 1, "z": 9, "materialId": 55 },
+      { "x": 3, "y": 6, "z": 3, "materialId": 57 },
+      { "x": 4, "y": 7, "z": 3, "materialId": 56 },
+      { "x": 10, "y": 5, "z": 4, "materialId": 55 },
+      { "x": 9, "y": 2, "z": 2, "materialId": 74 },
+      { "x": 10, "y": 3, "z": 2, "materialId": 75 },
+      { "x": 3, "y": 6, "z": 2, "materialId": 60 },
+      { "x": 5, "y": 7, "z": 8, "materialId": 56 },
+      { "x": 10, "y": 9, "z": 10, "materialId": 57 },
+      { "x": 1, "y": 11, "z": 5, "materialId": 96 },
+      { "x": 1, "y": 11, "z": 1, "materialId": 57 },
+      { "x": 10, "y": 20, "z": 7, "materialId": 96 }
+    ],
+    "approach": [
+      { "x": 10, "z": 13, "topY": 1 },
+      { "x": 10, "z": 12, "topY": 1 },
+      { "x": 10, "z": 11, "topY": 2 },
+      { "x": 10, "z": 10, "topY": 2 },
+      { "x": 10, "z": 9, "topY": 2 }
+    ]
+  },
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARUVDyUBAQIAAhAACgFFCAABBAAAAUUJAA0CAAABBgQBAwwACAIBAgEDAQEHAR4AAAIBAgELBgEBARQAAAIDAwIDAAgAARwAAAIDAwILAAgAARwAAAIDAwkDDgAAAQAAEAIDAwkEAAAGARwAAAI4BAcDAAEAARgAAAI4BQgDAAAAARQAAAI4BAcLAAEAARgAAAI4BQgLAAAAARQAAAEGBAIDDAIAAQYEBQMMAAECSgQCAgICAAIKAAACSwUDAgAAAAIKAAACBgQCCgQEAAEQAAACBgQFCQQAAQEQAAACBgQICgQAAAEQAAACBgUGCAIAAQEQAAACOAUHCAIAAAEQAAACOAUHCQIAAAEQAAACOAUHCAAAAQEQAAACOAcHCAAAAQEQAAACAwgCCgAHAAEIAAABAwgJCgQAAAI4AwgCAAABARwAAAI8AwYCAAEAARwAAAIGAwUCAAAAARwAAAIGAwgCAAAAARwAAAEGAQoBEgAMAgUBCwEBAAwJAgIAAgUSCwEBAAwJAQIABgMBCwESDAEFChQBAAAM"
+  }
+}

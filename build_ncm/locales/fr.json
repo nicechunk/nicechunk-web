@@ -43,6 +43,7 @@
   "library.category.fortress": "FORTERESSE",
   "library.category.utility": "SERVICES",
   "library.category.wayfinding": "ORIENTATION",
+  "library.category.commerce": "COMMERCE",
   "library.footprint": "EMPREINTE",
   "library.height": "HAUTEUR",
   "library.voxels": "VOXELS",

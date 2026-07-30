@@ -8,6 +8,7 @@
     "buildings/fortress/grand-castle.json",
     "buildings/utility/covered-village-well.json",
     "buildings/utility/village-twin-lantern.json",
-    "buildings/wayfinding/crossroads-wayfinding-sign.json"
+    "buildings/wayfinding/crossroads-wayfinding-sign.json",
+    "buildings/commerce/covered-market-stall.json"
   ]
 }

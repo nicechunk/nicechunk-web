@@ -166,6 +166,12 @@ function validateBuildingEvidence(building, voxels) {
   if (validation.requireConnected) validateConnectedGeometry(building, voxels);
   if (validation.mirrorAxisX != null) validateMirrorAxisX(building, voxels, validation.mirrorAxisX);
   if (validation.mirrorAxisZ != null) validateMirrorAxisZ(building, voxels, validation.mirrorAxisZ);
+  for (const support of validation.supportColumns ?? []) {
+    assert.ok(Number.isInteger(support.baseY) && Number.isInteger(support.topY) && support.baseY <= support.topY, `${building.key} has an invalid ${support.label} support range`);
+    for (let y = support.baseY; y <= support.topY; y += 1) {
+      assert.ok(voxels.has(`${support.x},${y},${support.z}`), `${building.key} has a load-path gap in ${support.label} at ${support.x},${y},${support.z}`);
+    }
+  }
   for (const volume of validation.openVolumes ?? []) {
     for (let x = volume.x; x < volume.x + volume.width; x += 1) {
       for (let y = volume.y; y < volume.y + volume.height; y += 1) {

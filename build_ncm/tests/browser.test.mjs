@@ -357,9 +357,9 @@ try {
   assert.equal(utilityBrowse.activeBuilding, null);
   assert.equal(utilityBrowse.cardCount, 2);
   assert.ok(!utilityBrowse.resources.includes("/build_ncm/buildings/utility/covered-village-well.json"), "category browsing must not load the well JSON");
-  assert.ok(!utilityBrowse.resources.includes("/build_ncm/concepts/utility/covered-village-well.png"), "category browsing must not load the well concept art");
+  assert.ok(!utilityBrowse.resources.includes("/build_ncm/concepts/utility/covered-village-well.webp"), "category browsing must not load the well concept art");
   assert.ok(!utilityBrowse.resources.includes("/build_ncm/buildings/utility/village-twin-lantern.json"), "category browsing must not load the lantern JSON");
-  assert.ok(!utilityBrowse.resources.includes("/build_ncm/concepts/utility/village-twin-lantern.png"), "category browsing must not load the lantern concept art");
+  assert.ok(!utilityBrowse.resources.includes("/build_ncm/concepts/utility/village-twin-lantern.webp"), "category browsing must not load the lantern concept art");
   await evaluate(client, "document.querySelector('[data-building=covered-village-well]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'covered-village-well' && document.querySelector('#modelSize').textContent === '21 × 22 × 18' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const well = await evaluate(client, `({
@@ -392,7 +392,7 @@ try {
   assert.match(well.conceptAlt, /Covered Village Well concept reference/);
   assert.equal(well.selectedInUrl, "covered-village-well");
   assert.ok(well.resources.includes("/build_ncm/buildings/utility/covered-village-well.json"));
-  assert.ok(well.resources.includes("/build_ncm/concepts/utility/covered-village-well.png"));
+  assert.ok(well.resources.includes("/build_ncm/concepts/utility/covered-village-well.webp"));
   assert.ok(!well.resources.some((path) => path.endsWith("covered-village-well-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building=village-twin-lantern]').click()");
@@ -429,7 +429,7 @@ try {
   assert.equal(lantern.conceptFit, "contain");
   assert.equal(lantern.selectedInUrl, "village-twin-lantern");
   assert.ok(lantern.resources.includes("/build_ncm/buildings/utility/village-twin-lantern.json"));
-  assert.ok(lantern.resources.includes("/build_ncm/concepts/utility/village-twin-lantern.png"));
+  assert.ok(lantern.resources.includes("/build_ncm/concepts/utility/village-twin-lantern.webp"));
   assert.ok(!lantern.resources.some((path) => path.endsWith("village-twin-lantern-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=residential]').click()");

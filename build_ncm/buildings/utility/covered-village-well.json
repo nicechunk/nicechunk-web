@@ -25,7 +25,7 @@
     "zh-Hant": "緊湊石造井口，設有單級接近平台、木製絞盤頂棚、赤陶瓦與琥珀燈；NCM 為預先處理的地基保留開放井口。",
     "zh-Hans": "紧凑石造井口，设有单级接近平台、木制绞盘顶棚、赤陶瓦与琥珀灯；NCM 为预先处理的地基保留开放井口。"
   },
-  "referenceImage": "concepts/utility/covered-village-well.png",
+  "referenceImage": "concepts/utility/covered-village-well.webp",
   "defaults": {
     "style": "cottage",
     "roof": "terracotta",

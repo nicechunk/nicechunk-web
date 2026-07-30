@@ -25,7 +25,7 @@
     "zh-Hant": "緊湊型導向路燈，設有單級石座、加固木製橫臂、兩盞琥珀燈與炭黑瓦燈帽；前側留空的平台邊緣可維持村道通行。",
     "zh-Hans": "紧凑型导向路灯，设有单级石座、加固木制横臂、两盏琥珀灯与炭黑瓦灯帽；前侧留空的平台边缘可维持村道通行。"
   },
-  "referenceImage": "concepts/utility/village-twin-lantern.png",
+  "referenceImage": "concepts/utility/village-twin-lantern.webp",
   "defaults": {
     "style": "cottage",
     "roof": "charcoal",

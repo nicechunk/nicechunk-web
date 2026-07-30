@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -64,7 +64,9 @@ for (const relativePath of catalog.buildings) {
   else assert.ok(["open", "not-applicable"].includes(building.doorOpening));
   if (building.referenceImage) {
     assert.match(building.referenceImage, /^concepts\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.(?:png|jpe?g|webp)$/);
-    assert.ok(existsSync(join(root, building.referenceImage)), `${building.key} reference image is missing`);
+    const referencePath = join(root, building.referenceImage);
+    assert.ok(existsSync(referencePath), `${building.key} reference image is missing`);
+    assert.ok(statSync(referencePath).size <= 256 * 1024, `${building.key} reference image must stay web-optimized`);
   }
   assert.equal(building.ncm.format, "NCM3_ROLE_TEMPLATE");
   assert.match(building.ncm.code, /^NCM3:/);

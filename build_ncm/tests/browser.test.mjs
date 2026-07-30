@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 1);
-  assert.match(initial.totalBuildingCount, /12 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /13 BUILDINGS/);
   assert.equal(initial.categoryCount, 11);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -638,9 +638,11 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(agricultureBrowse.activeBuilding, null);
-  assert.equal(agricultureBrowse.cardCount, 1);
+  assert.equal(agricultureBrowse.cardCount, 2);
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/buildings/agriculture/glass-timber-greenhouse.json"), "category browsing must not load the greenhouse JSON");
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/concepts/agriculture/glass-timber-greenhouse.webp"), "category browsing must not load the greenhouse concept art");
+  assert.ok(!agricultureBrowse.resources.includes("/build_ncm/buildings/agriculture/stone-timber-tower-windmill.json"), "category browsing must not load the windmill JSON");
+  assert.ok(!agricultureBrowse.resources.includes("/build_ncm/concepts/agriculture/stone-timber-tower-windmill.webp"), "category browsing must not load the windmill concept art");
   await evaluate(client, "document.querySelector('[data-building=glass-timber-greenhouse]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'glass-timber-greenhouse' && document.querySelector('#modelSize').textContent === '19 × 20 × 27' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const greenhouse = await evaluate(client, `({
@@ -678,7 +680,48 @@ try {
   assert.equal(greenhouse.selectedInUrl, "glass-timber-greenhouse");
   assert.ok(greenhouse.resources.includes("/build_ncm/buildings/agriculture/glass-timber-greenhouse.json"));
   assert.ok(greenhouse.resources.includes("/build_ncm/concepts/agriculture/glass-timber-greenhouse.webp"));
+  assert.ok(!greenhouse.resources.includes("/build_ncm/buildings/agriculture/stone-timber-tower-windmill.json"), "selecting the greenhouse must not load the windmill JSON");
+  assert.ok(!greenhouse.resources.includes("/build_ncm/concepts/agriculture/stone-timber-tower-windmill.webp"), "selecting the greenhouse must not load the windmill concept art");
   assert.ok(!greenhouse.resources.some((path) => path.endsWith("glass-timber-greenhouse-blueprint.js")));
+
+  await evaluate(client, "document.querySelector('[data-building=stone-timber-tower-windmill]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'stone-timber-tower-windmill' && document.querySelector('#modelSize').textContent === '31 × 35 × 25' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const windmill = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(windmill.activeCategory, "agriculture");
+  assert.match(windmill.title, /Stone and Timber Tower Windmill/);
+  assert.equal(windmill.modelSize, "31 × 35 × 25");
+  assert.match(windmill.payload, /^NCM3:/);
+  assert.equal(windmill.voxelCount, 2746);
+  for (const id of [55, 56, 57, 58, 64, 65, 68, 69, 96]) assert.match(windmill.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(windmill.uncovered, false);
+  assert.equal(windmill.glazingDisabled, true);
+  assert.equal(windmill.glazingLabel, "Openings: Not applicable");
+  assert.equal(windmill.disabledStyles, 6);
+  assert.equal(windmill.disabledRoofs, 6);
+  assert.equal(windmill.conceptHidden, false);
+  assert.match(windmill.conceptAlt, /Stone and Timber Tower Windmill concept reference/);
+  assert.equal(windmill.conceptFit, "contain");
+  assert.equal(windmill.selectedInUrl, "stone-timber-tower-windmill");
+  assert.ok(windmill.resources.includes("/build_ncm/buildings/agriculture/stone-timber-tower-windmill.json"));
+  assert.ok(windmill.resources.includes("/build_ncm/concepts/agriculture/stone-timber-tower-windmill.webp"));
+  assert.ok(!windmill.resources.some((path) => path.endsWith("stone-timber-tower-windmill-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=residential]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=hollow-cottage]')"));

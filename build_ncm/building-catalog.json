@@ -12,6 +12,7 @@
     "buildings/commerce/covered-market-stall.json",
     "buildings/transport/stone-timber-footbridge.json",
     "buildings/mining/timber-mine-headframe.json",
-    "buildings/agriculture/glass-timber-greenhouse.json"
+    "buildings/agriculture/glass-timber-greenhouse.json",
+    "buildings/agriculture/stone-timber-tower-windmill.json"
   ]
 }

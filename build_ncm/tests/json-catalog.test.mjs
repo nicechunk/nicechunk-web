@@ -183,6 +183,8 @@ function validateBuildingEvidence(building, voxels) {
   for (const span of validation.horizontalSpans ?? []) validateHorizontalSpan(building, voxels, span);
   for (const deck of validation.walkableDecks ?? []) validateWalkableDeck(building, voxels, deck);
   for (const profile of validation.gableProfiles ?? []) validateGableProfile(building, voxels, profile);
+  for (const band of validation.diagonalBands ?? []) validateDiagonalBand(building, voxels, band);
+  for (const pyramid of validation.steppedPyramids ?? []) validateSteppedPyramid(building, voxels, pyramid);
   for (const loop of validation.closedVoxelLoops ?? []) validateClosedVoxelLoop(building, voxels, loop);
   for (const volume of validation.openVolumes ?? []) {
     for (let x = volume.x; x < volume.x + volume.width; x += 1) {
@@ -345,6 +347,58 @@ function validateGableProfile(building, voxels, profile) {
     const expectedMaterial = left === right ? profile.ridgeMaterialId : profile.slopeMaterialId;
     assert.equal(voxels.get(`${left},${y},${profile.z}`)?.material, expectedMaterial, `${building.key} breaks ${profile.label} at ${left},${y},${profile.z}`);
     assert.equal(voxels.get(`${right},${y},${profile.z}`)?.material, expectedMaterial, `${building.key} breaks ${profile.label} at ${right},${y},${profile.z}`);
+  }
+}
+
+function validateDiagonalBand(building, voxels, band) {
+  for (const key of ["x", "y", "z"]) {
+    assert.ok(Number.isInteger(band[key]) && band[key] >= 0, `${building.key} has an invalid ${band.label} ${key}`);
+  }
+  for (const key of ["width", "height", "depth", "count"]) {
+    assert.ok(Number.isInteger(band[key]) && band[key] > 0, `${building.key} has an invalid ${band.label} ${key}`);
+  }
+  for (const key of ["dx", "dy", "dz"]) {
+    assert.ok(Number.isInteger(band[key]), `${building.key} has an invalid ${band.label} ${key}`);
+  }
+  assert.ok(Number.isInteger(band.materialId) && band.materialId > 0, `${building.key} has an invalid ${band.label} material`);
+  for (let index = 0; index < band.count; index += 1) {
+    const originX = band.x + band.dx * index;
+    const originY = band.y + band.dy * index;
+    const originZ = band.z + band.dz * index;
+    for (let x = originX; x < originX + band.width; x += 1) {
+      for (let y = originY; y < originY + band.height; y += 1) {
+        for (let z = originZ; z < originZ + band.depth; z += 1) {
+          assert.equal(voxels.get(`${x},${y},${z}`)?.material, band.materialId, `${building.key} breaks ${band.label} at ${x},${y},${z}`);
+        }
+      }
+    }
+  }
+}
+
+function validateSteppedPyramid(building, voxels, pyramid) {
+  assert.ok(Number.isInteger(pyramid.materialId) && pyramid.materialId > 0, `${building.key} has an invalid ${pyramid.label} material`);
+  assert.ok(Array.isArray(pyramid.layers) && pyramid.layers.length >= 2, `${building.key} has an incomplete ${pyramid.label}`);
+  let previous = null;
+  for (const layer of pyramid.layers) {
+    for (const key of ["x", "y", "z"]) {
+      assert.ok(Number.isInteger(layer[key]) && layer[key] >= 0, `${building.key} has an invalid ${pyramid.label} ${key}`);
+    }
+    for (const key of ["width", "depth"]) {
+      assert.ok(Number.isInteger(layer[key]) && layer[key] > 0, `${building.key} has an invalid ${pyramid.label} ${key}`);
+    }
+    if (previous) {
+      assert.equal(layer.x, previous.x + 1, `${building.key} loses the X inset in ${pyramid.label}`);
+      assert.equal(layer.y, previous.y + 1, `${building.key} loses the vertical step in ${pyramid.label}`);
+      assert.equal(layer.z, previous.z + 1, `${building.key} loses the Z inset in ${pyramid.label}`);
+      assert.equal(layer.width, previous.width - 2, `${building.key} loses the width taper in ${pyramid.label}`);
+      assert.equal(layer.depth, previous.depth - 2, `${building.key} loses the depth taper in ${pyramid.label}`);
+    }
+    for (let x = layer.x; x < layer.x + layer.width; x += 1) {
+      for (let z = layer.z; z < layer.z + layer.depth; z += 1) {
+        assert.equal(voxels.get(`${x},${layer.y},${z}`)?.material, pyramid.materialId, `${building.key} breaks ${pyramid.label} at ${x},${layer.y},${z}`);
+      }
+    }
+    previous = layer;
   }
 }
 

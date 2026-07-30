@@ -1,0 +1,202 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "stone-timber-tower-windmill",
+  "category": "agriculture",
+  "kind": "habitable-building",
+  "titles": {
+    "en": "Stone and Timber Tower Windmill",
+    "es": "Molino de Torre de Piedra y Madera",
+    "fr": "Moulin-tour en Pierre et Bois",
+    "de": "Stein- und Holzturmwindmühle",
+    "ja": "石造木骨塔風車",
+    "ru": "Каменная башенная мельница с деревянным каркасом",
+    "ko": "석조 목골 탑 풍차",
+    "zh-Hant": "石木塔式風車磨坊",
+    "zh-Hans": "石木塔式风车磨坊"
+  },
+  "descriptions": {
+    "en": "An enterable three-tier tower mill with a one-voxel front approach, an open three-voxel doorway, a hollow stone ground floor, inset masonry stages, clear-glass windows, timber framing, four diagonal wooden shutter sails, a deep-stone bearing and a seven-step terracotta cap roof.",
+    "es": "Molino de torre accesible con acceso frontal de un vóxel, puerta abierta de tres vóxeles, planta baja hueca de piedra, cuerpos de mampostería retranqueados, ventanas de vidrio transparente, entramado de madera, cuatro aspas diagonales de contraventanas de madera, cojinete de piedra profunda y cubierta de terracota escalonada en siete niveles.",
+    "fr": "Moulin-tour accessible avec une approche frontale d'un voxel, une porte ouverte de trois voxels, un rez-de-chaussée creux en pierre, des étages de maçonnerie en retrait, des fenêtres en verre clair, une ossature en bois, quatre ailes diagonales à persiennes de bois, un palier en pierre profonde et un toit de calotte en terre cuite à sept degrés.",
+    "de": "Begehbare dreistufige Turmwindmühle mit einem ein Voxel hohen Frontzugang, einem offenen drei Voxel breiten Portal, hohlem steinernem Erdgeschoss, zurückgesetzten Mauerwerksstufen, Klarglasfenstern, Holzrahmen, vier diagonalen Holzlamellenflügeln, einem Tiefsteinlager und einem siebenstufigen Terrakotta-Kappendach.",
+    "ja": "1ボクセル高の正面進入路、幅3ボクセルの開放入口、中空の石造1階、段階的に内側へ寄る3層の石積み、透明ガラス窓、木骨組み、斜めに交差する4枚の木製鎧戸風車翼、深層石の軸受、7段のテラコッタ風帽屋根を備えた、内部に入れる塔型風車です。",
+    "ru": "Доступная изнутри трёхъярусная башенная мельница с фронтальным подходом высотой один воксель, открытым проёмом шириной три вокселя, полым каменным первым этажом, уступчатыми ярусами кладки, прозрачными окнами, деревянным каркасом, четырьмя диагональными лопастями из деревянных жалюзи, подшипником из глубинного камня и семиступенчатой терракотовой крышей-колпаком.",
+    "ko": "한 복셀 높이의 정면 진입로, 폭 3복셀의 열린 출입구, 속이 빈 석조 1층, 안쪽으로 단차를 둔 3단 석조 탑, 투명 유리창, 목재 골조, 대각선으로 교차하는 네 장의 목재 덧문형 날개, 심층석 축받이와 7단 테라코타 풍모 지붕을 갖춘 내부 출입형 탑 풍차입니다.",
+    "zh-Hant": "可進入的三層塔式風車磨坊，設有一體素高正面引道、三體素寬開放門洞、中空石造底層、逐級內收的砌石塔身、透明玻璃窗、木構框架、四片對角木百葉風帆、深層石軸承，以及七級赤陶風帽屋頂。",
+    "zh-Hans": "可进入的三层塔式风车磨坊，设有一体素高正面引道、三体素宽开放门洞、中空石造底层、逐级内收的砌石塔身、透明玻璃窗、木构框架、四片对角木百叶风帆、深层石轴承，以及七级赤陶风帽屋顶。"
+  },
+  "referenceImage": "concepts/agriculture/stone-timber-tower-windmill.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 1
+  },
+  "doorOpening": "open",
+  "footprint": "25 × 21 vu",
+  "height": "35 vu",
+  "referenceScale": "One concept voxel equals one NCM voxel",
+  "preview": {
+    "fitScale": 0.92,
+    "minScale": 3.5,
+    "yaw": 2.85
+  },
+  "extraMaterials": [
+    {
+      "materialId": 56,
+      "phase": "structure",
+      "label": "Wooden-stick Sail Rails and Cross Slats"
+    },
+    {
+      "materialId": 58,
+      "phase": "openings",
+      "label": "Clear-glass Tower Windows"
+    },
+    {
+      "materialId": 64,
+      "phase": "structure",
+      "label": "Dressed-stone Tower Masonry"
+    },
+    {
+      "materialId": 65,
+      "phase": "structure",
+      "label": "Deep-stone Windshaft Bearing"
+    },
+    {
+      "materialId": 69,
+      "phase": "foundation",
+      "label": "Polished Stone Approach and Tier Ledges"
+    },
+    {
+      "materialId": 96,
+      "phase": "roof",
+      "label": "Terracotta Stepped Cap Roof"
+    }
+  ],
+  "validation": {
+    "expectedVoxelCount": 2746,
+    "expectedPayloadBytes": 817,
+    "maxPayloadBytes": 1024,
+    "expectedDefaultMaterialIds": [55, 56, 57, 58, 64, 65, 68, 69, 96],
+    "expectedMaterialVoxelCounts": {
+      "55": 203,
+      "56": 108,
+      "57": 353,
+      "58": 36,
+      "64": 1236,
+      "65": 27,
+      "68": 225,
+      "69": 103,
+      "96": 455
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 15,
+    "supportColumns": [
+      { "label": "Left doorway post", "x": 13, "z": 6, "baseY": 0, "topY": 7 },
+      { "label": "Right doorway post", "x": 17, "z": 6, "baseY": 0, "topY": 7 },
+      { "label": "Left rear lower post", "x": 9, "z": 19, "baseY": 0, "topY": 7 },
+      { "label": "Right rear lower post", "x": 21, "z": 19, "baseY": 0, "topY": 7 },
+      { "label": "Left rear middle post", "x": 10, "z": 18, "baseY": 7, "topY": 14 },
+      { "label": "Right rear middle post", "x": 20, "z": 18, "baseY": 7, "topY": 14 },
+      { "label": "Left rear upper post", "x": 11, "z": 17, "baseY": 14, "topY": 21 },
+      { "label": "Right rear upper post", "x": 19, "z": 17, "baseY": 14, "topY": 21 }
+    ],
+    "horizontalSpans": [
+      { "label": "Middle-tier doorway header", "axis": "x", "start": 12, "end": 18, "y": 8, "fixed": 7 },
+      { "label": "Lower rear ledge", "axis": "x", "start": 9, "end": 21, "y": 7, "fixed": 19 },
+      { "label": "Timber cap front beam", "axis": "x", "start": 10, "end": 20, "y": 22, "fixed": 8 },
+      { "label": "Windshaft axle", "axis": "z", "start": 3, "end": 8, "y": 22, "fixed": 15 }
+    ],
+    "walkableDecks": [
+      {
+        "label": "Front approach and ground-floor aisle",
+        "axis": "z",
+        "start": 0,
+        "end": 17,
+        "crossStart": 14,
+        "crossEnd": 16,
+        "topProfile": [
+          1, 1, 1, 1, 1, 1,
+          2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
+        ],
+        "clearance": 6
+      }
+    ],
+    "diagonalBands": [
+      { "label": "North-east timber sail spine", "materialId": 57, "x": 17, "y": 24, "z": 2, "width": 2, "height": 2, "depth": 1, "count": 10, "dx": 1, "dy": 1, "dz": 0 },
+      { "label": "North-west timber sail spine", "materialId": 57, "x": 12, "y": 24, "z": 2, "width": 2, "height": 2, "depth": 1, "count": 10, "dx": -1, "dy": 1, "dz": 0 },
+      { "label": "South-east timber sail spine", "materialId": 57, "x": 17, "y": 19, "z": 2, "width": 2, "height": 2, "depth": 1, "count": 10, "dx": 1, "dy": -1, "dz": 0 },
+      { "label": "South-west timber sail spine", "materialId": 57, "x": 12, "y": 19, "z": 2, "width": 2, "height": 2, "depth": 1, "count": 10, "dx": -1, "dy": -1, "dz": 0 },
+      { "label": "North-east wooden shutter sail", "materialId": 55, "x": 16, "y": 26, "z": 3, "width": 4, "height": 1, "depth": 1, "count": 5, "dx": 2, "dy": 2, "dz": 0 },
+      { "label": "North-west wooden shutter sail", "materialId": 55, "x": 11, "y": 26, "z": 3, "width": 4, "height": 1, "depth": 1, "count": 5, "dx": -2, "dy": 2, "dz": 0 },
+      { "label": "South-east wooden shutter sail", "materialId": 55, "x": 16, "y": 17, "z": 3, "width": 4, "height": 1, "depth": 1, "count": 5, "dx": 2, "dy": -2, "dz": 0 },
+      { "label": "South-west wooden shutter sail", "materialId": 55, "x": 11, "y": 17, "z": 3, "width": 4, "height": 1, "depth": 1, "count": 5, "dx": -2, "dy": -2, "dz": 0 }
+    ],
+    "steppedPyramids": [
+      {
+        "label": "Seven-step terracotta cap roof",
+        "materialId": 96,
+        "layers": [
+          { "x": 9, "y": 24, "z": 7, "width": 13, "depth": 13 },
+          { "x": 10, "y": 25, "z": 8, "width": 11, "depth": 11 },
+          { "x": 11, "y": 26, "z": 9, "width": 9, "depth": 9 },
+          { "x": 12, "y": 27, "z": 10, "width": 7, "depth": 7 },
+          { "x": 13, "y": 28, "z": 11, "width": 5, "depth": 5 },
+          { "x": 14, "y": 29, "z": 12, "width": 3, "depth": 3 },
+          { "x": 15, "y": 30, "z": 13, "width": 1, "depth": 1 }
+        ]
+      }
+    ],
+    "openVolumes": [
+      { "label": "Clear polished-stone front approach", "x": 14, "y": 1, "z": 0, "width": 3, "height": 7, "depth": 6 },
+      { "label": "Clear doorway and ground-floor aisle", "x": 14, "y": 2, "z": 6, "width": 3, "height": 6, "depth": 12 }
+    ],
+    "approach": [
+      { "x": 15, "z": 0, "topY": 1 },
+      { "x": 15, "z": 5, "topY": 1 },
+      { "x": 15, "z": 6, "topY": 2 },
+      { "x": 15, "z": 7, "topY": 2 },
+      { "x": 15, "z": 17, "topY": 2 }
+    ],
+    "solidPoints": [
+      { "x": 8, "y": 0, "z": 6, "materialId": 68 },
+      { "x": 15, "y": 0, "z": 0, "materialId": 69 },
+      { "x": 15, "y": 1, "z": 6, "materialId": 55 },
+      { "x": 13, "y": 2, "z": 6, "materialId": 57 },
+      { "x": 11, "y": 2, "z": 6, "materialId": 64 },
+      { "x": 8, "y": 3, "z": 12, "materialId": 58 },
+      { "x": 15, "y": 10, "z": 7, "materialId": 58 },
+      { "x": 15, "y": 17, "z": 8, "materialId": 58 },
+      { "x": 9, "y": 7, "z": 19, "materialId": 69 },
+      { "x": 10, "y": 22, "z": 8, "materialId": 57 },
+      { "x": 9, "y": 24, "z": 7, "materialId": 96 },
+      { "x": 15, "y": 30, "z": 13, "materialId": 96 },
+      { "x": 16, "y": 26, "z": 3, "materialId": 55 },
+      { "x": 16, "y": 26, "z": 2, "materialId": 56 },
+      { "x": 17, "y": 24, "z": 2, "materialId": 57 },
+      { "x": 15, "y": 22, "z": 1, "materialId": 65 },
+      { "x": 15, "y": 22, "z": 5, "materialId": 57 }
+    ]
+  },
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:AR8jGVoBAQgABg4ADgFFDgAAAgAFAQYKAQgKAAoBBg4BBgIAAgFACwEGAgYBAUARAQYCBgEBQAsBEwgGAQFACQEHAQYBAUAUAQcBBgEBQAkBEgEGAQFAFAESAQYBAUAIAQkBAQgBQAgGCQEBCAFACAMJAQICAUAIAw8BAgIBQBUBCQEBCAFAFQYJAQEIAUAVAwkBAgIBQBUDDwECAgE6CAMMAAICAToWAwwAAgICAw0BBgAGAQEIAAACAwkBBwAGAAEYAAACAwkBEwAGAAEYAAABRQkHBwQAAAFFEQcHBAAAAUUJBxMMAAABRQkHCAAACgFFFQcIAAAKAUAMCAcGAQEBQAwNBwYBAQFADAoHAQIBAUARCgcBAgEBOg4KBwICAAFADAgSBgYBAUAJCAoBBgYBQBQICgEGBgFACggIAQYBAUATCAgBBgEBQAoIEQEGAQFAEwgRAQYBAgMKCAgABgABFAAAAgMKCBIABgABFAAAAUUKDggKAAABRQoOEgoAAAFFCg4JAAAIAUUUDgkAAAgBQAwPCAYBAQFADBQIBgEBAUAMEQgBAgEBQBERCAECAQE6DhEIAgIAAUAMDxEGBgEBQAoPCwEGBAFAEw8LAQYEAUALDwkBBgEBQBIPCQEGAQFACw8QAQYBAUASDxABBgECAwsPCQAGAAEQAAACAwsPEQAGAAEQAAABAwoWCAoBAAEDChYSCgEAAQMKFgkAAQgBAxQWCQABCAFgCRgHDAAMAWAKGQgKAAoBYAsaCQgACAFgDBsKBgAGAWANHAsEAAQBYA4dDAIAAgFgDx4NAAAAAgYQGgMDAAAEBAQAAgYLGgMDAAAEAwQAAgYQEQMDAAAEBAMAAgYLEQMDAAAEAwMAAjgQGgIBAQAHAgIAAjgNGgIBAQAHAQIAAjgQEAIBAQAHAgEAAjgNEAIBAQAHAQEAAjgQGgIDAAADBAQAAjgLGgIDAAADAwQAAjgQEQIDAAADBAMAAjgLEQIDAAADAwMAAgMPFgIBAQALAgIAAgMOFgIBAQALAQIAAgMPFQIBAQALAgEAAgMOFQIBAQALAQEAAQMOFQMCAgUBQQ4VAQICAg"
+  }
+}

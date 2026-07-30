@@ -48,6 +48,22 @@ const FORGE_METERS_TO_WORLD_UNITS = 1 / BLOCK_SIZE_METERS;
 const HELD_SOURCE_TO_AVATAR_AXES = Object.freeze(["+Y", "-Z", "-X"]);
 const HELD_POSE_PITCHES = Object.freeze([-0.96, 0, 0.96]);
 const HELD_POSE_PROGRESS = Object.freeze([0.01, 0.1, 0.2, 0.35, 0.55, 0.75, 0.95, 0.999]);
+const BOOK_LAYOUTS = Object.freeze({
+  "timber-bound-village-ledger": { portrait: true, pageSets: [{ page: 1, lower: 0, upper: 2 }] },
+  "open-civic-record-book": { portrait: false, pageSets: [{ page: 3, lower: 0 }, { page: 4, lower: 1 }] },
+  "stacked-archive-volumes": {
+    portrait: false,
+    pageSets: [
+      { page: 1, lower: 0, upper: 2 },
+      { page: 5, lower: 4, upper: 6 },
+      { page: 9, lower: 8, upper: 10 },
+    ],
+  },
+  "civilization-code-codex": { portrait: true, pageSets: [{ page: 1, lower: 0, upper: 2 }] },
+  "mining-skill-manual": { portrait: true, pageSets: [{ page: 1, lower: 0, upper: 2 }] },
+  "forging-skill-treatise": { portrait: true, pageSets: [{ page: 1, lower: 0, upper: 2 }] },
+  "farming-skill-handbook": { portrait: true, pageSets: [{ page: 1, lower: 0, upper: 2 }] },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -431,13 +447,13 @@ const ITEM_SPECS = Object.freeze([
     version: 1,
   }),
 
-  placeable("books-writing", "timber-bound-village-ledger", [
+  placeable("books-writing", "timber-bound-village-ledger", portraitBookParts([
     part("wooden_plank", [22, 1, 16], [0, 0, 0]),
     part("cotton_cloth", [19, 3, 13], [0, 2, 0]),
     part("wooden_plank", [22, 1, 16], [0, 4, 0]),
     part("resin_binder", [3, 3, 16], [-11, 2, 0]),
     ...[-7, 0, 7].map((x) => part("resin_binder", [2, 1, 16], [x, 5, 0])),
-  ], { yaw: -0.78, pitch: 0.5 }, {
+  ]), { yaw: -0.78, pitch: 0.5, clothMotion: "rigid" }, {
     image: "concepts/books-writing/timber-bound-village-ledger-v1.webp",
     source: "imagegen",
     version: 1,
@@ -449,7 +465,7 @@ const ITEM_SPECS = Object.freeze([
     part("cotton_cloth", [14, 2, 15], [-8, 2, 0]),
     part("cotton_cloth", [14, 2, 15], [8, 2, 0]),
     part("resin_binder", [2, 2, 15], [0, 4, 0]),
-  ], { yaw: -0.45, pitch: 0.6 }, {
+  ], { yaw: -0.45, pitch: 0.6, clothMotion: "rigid" }, {
     image: "concepts/books-writing/open-civic-record-book-v1.webp",
     source: "imagegen",
     version: 1,
@@ -467,12 +483,12 @@ const ITEM_SPECS = Object.freeze([
     part("cotton_cloth", [21, 3, 13], [-2, 12, 1]),
     part("wooden_plank", [24, 1, 16], [-2, 14, 1]),
     part("resin_binder", [3, 3, 16], [-14, 12, 1]),
-  ], { yaw: -0.74, pitch: 0.5 }, {
+  ], { yaw: -0.74, pitch: 0.5, clothMotion: "rigid" }, {
     image: "concepts/books-writing/stacked-archive-volumes-v1.webp",
     source: "imagegen",
     version: 1,
   }),
-  placeable("books-writing", "civilization-code-codex", [
+  placeable("books-writing", "civilization-code-codex", portraitBookParts([
     part("wooden_plank", [30, 1, 22], [0, 0, 0]),
     part("cotton_cloth", [27, 5, 19], [0, 3, 0]),
     part("wooden_plank", [30, 1, 22], [0, 6, 0]),
@@ -494,12 +510,12 @@ const ITEM_SPECS = Object.freeze([
     ...[-13, 13].flatMap((x) => [-9, 9].map((z) => part("iron_bloom", [4, 1, 4], [x, 7, z]))),
     part("iron_bloom", [4, 1, 6], [13, 7, 0]),
     part("iron_bloom", [3, 5, 4], [15, 4, 0]),
-  ], { yaw: -0.74, pitch: 0.5 }, {
+  ]), { yaw: -0.74, pitch: 0.5, clothMotion: "rigid" }, {
     image: "concepts/books-writing/civilization-code-codex-v1.webp",
     source: "imagegen",
     version: 1,
   }),
-  placeable("books-writing", "mining-skill-manual", [
+  placeable("books-writing", "mining-skill-manual", portraitBookParts([
     part("wooden_plank", [22, 1, 16], [0, 0, 0]),
     part("cotton_cloth", [19, 3, 13], [0, 2, 0]),
     part("wooden_plank", [22, 1, 16], [0, 4, 0]),
@@ -511,12 +527,12 @@ const ITEM_SPECS = Object.freeze([
     part("iron_bloom", [6, 1, 2], [3, 5, 3]),
     part("iron_bloom", [4, 1, 5], [9, 5, 0]),
     part("iron_bloom", [3, 3, 3], [11, 2, 0]),
-  ], { yaw: -0.72, pitch: 0.48 }, {
+  ]), { yaw: -0.72, pitch: 0.48, clothMotion: "rigid" }, {
     image: "concepts/books-writing/mining-skill-manual-v1.webp",
     source: "imagegen",
     version: 1,
   }),
-  placeable("books-writing", "forging-skill-treatise", [
+  placeable("books-writing", "forging-skill-treatise", portraitBookParts([
     part("wooden_plank", [24, 1, 18], [0, 0, 0]),
     part("cotton_cloth", [21, 3, 15], [0, 2, 0]),
     part("wooden_plank", [24, 1, 18], [0, 4, 0]),
@@ -532,14 +548,14 @@ const ITEM_SPECS = Object.freeze([
     ...[-10, 10].flatMap((x) => [-7, 7].map((z) => part("iron_bloom", [4, 1, 4], [x, 5, z]))),
     part("iron_bloom", [4, 1, 5], [10, 5, 0]),
     part("iron_bloom", [3, 3, 4], [12, 2, 0]),
-  ], { yaw: -0.74, pitch: 0.48 }, {
+  ]), { yaw: -0.74, pitch: 0.48, clothMotion: "rigid" }, {
     image: "concepts/books-writing/forging-skill-treatise-v1.webp",
     source: "imagegen",
     version: 1,
   }),
-  placeable("books-writing", "farming-skill-handbook", [
+  placeable("books-writing", "farming-skill-handbook", portraitBookParts([
     part("wooden_plank", [20, 1, 15], [0, 0, 0]),
-    part("cotton_cloth", [18, 3, 13], [0, 2, 0]),
+    part("cotton_cloth", [17, 3, 13], [0, 2, 0]),
     part("cotton_cloth", [20, 1, 15], [0, 4, 0]),
     part("resin_binder", [3, 3, 15], [-10, 2, 0]),
     part("yellow_dye", [12, 1, 10], [1, 5, 0]),
@@ -552,7 +568,7 @@ const ITEM_SPECS = Object.freeze([
     ...[-5, 0, 5].map((z) => part("resin_binder", [4, 1, 3], [-9, 5, z])),
     part("resin_binder", [4, 1, 4], [8, 5, 0]),
     part("wooden_plank", [3, 3, 4], [10, 2, 0]),
-  ], { yaw: -0.72, pitch: 0.5 }, {
+  ]), { yaw: -0.72, pitch: 0.5, clothMotion: "rigid" }, {
     image: "concepts/books-writing/farming-skill-handbook-v1.webp",
     source: "imagegen",
     version: 1,
@@ -625,6 +641,9 @@ function buildItem(spec) {
     throw new Error(`${spec.key} failed the game runtime restoration gate.`);
   }
   if (Boolean(runtime.grip) !== hasGrip) throw new Error(`${spec.key} lost its grip during compact encoding.`);
+  const bookLayout = BOOK_LAYOUTS[spec.key] ?? null;
+  if (spec.category === "books-writing" && !bookLayout) throw new Error(`${spec.key} is missing its bound-page geometry policy.`);
+  if (bookLayout) validateBookGeometry(spec, runtime, bookLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -673,6 +692,7 @@ function buildItem(spec) {
     preview: {
       yaw: spec.preview?.yaw ?? -0.72,
       pitch: spec.preview?.pitch ?? 0.34,
+      ...(spec.preview?.clothMotion ? { clothMotion: spec.preview.clothMotion } : {}),
     },
     ...(concept ? { concept } : {}),
     ...(holding ? { holding } : {}),
@@ -716,9 +736,49 @@ function buildItem(spec) {
       gripValidated: true,
       gripDirectionValidated: true,
       currentMaterialsOnly: true,
+      ...(bookLayout ? { bookGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
+}
+
+function validateBookGeometry(spec, runtime, layout) {
+  if (spec.preview?.clothMotion !== "rigid") {
+    throw new Error(`${spec.key} must disable cloth deformation for bound pages.`);
+  }
+  if (layout.portrait && runtime.boundsQ.sizeQ[2] <= runtime.boundsQ.sizeQ[0]) {
+    throw new Error(`${spec.key} must keep its cover long edge on source Z.`);
+  }
+  const components = runtime.components ?? [];
+  const componentBounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  for (const { page, lower, upper = null } of layout.pageSets) {
+    const pageComponent = components[page];
+    const pageBounds = componentBounds[page];
+    const lowerBounds = componentBounds[lower];
+    const upperBounds = upper == null ? null : componentBounds[upper];
+    if (!pageComponent || pageComponent.resourceId !== "cloth" || !pageBounds || !lowerBounds || (upper != null && !upperBounds)) {
+      throw new Error(`${spec.key} has an invalid page or cover component index.`);
+    }
+    for (const coverBounds of [lowerBounds, upperBounds].filter(Boolean)) {
+      for (const axis of [0, 2]) {
+        if (pageBounds.min[axis] < coverBounds.min[axis] || pageBounds.max[axis] > coverBounds.max[axis]) {
+          throw new Error(`${spec.key} page ${page} escapes its cover footprint.`);
+        }
+      }
+    }
+    if (pageBounds.min[1] < lowerBounds.max[1] || (upperBounds && pageBounds.max[1] > upperBounds.min[1])) {
+      throw new Error(`${spec.key} page ${page} crosses a cover plane.`);
+    }
+    for (let index = 0; index < componentBounds.length; index += 1) {
+      if (index === page) continue;
+      if (boundsOverlap(pageBounds, componentBounds[index], 0)) {
+        throw new Error(`${spec.key} page ${page} intersects component ${index}.`);
+      }
+    }
+  }
 }
 
 function validateToolHolding(spec, runtime) {
@@ -1214,6 +1274,14 @@ function placeable(category, key, parts, preview = null, concept = null) {
     preview,
     concept: concept ? Object.freeze({ ...concept }) : null,
   });
+}
+
+function portraitBookParts(parts) {
+  return parts.map((entry) => Object.freeze({
+    ...entry,
+    dimsQ: Object.freeze([entry.dimsQ[2], entry.dimsQ[1], entry.dimsQ[0]]),
+    offsetQ: Object.freeze([entry.offsetQ[2], entry.offsetQ[1], entry.offsetQ[0]]),
+  }));
 }
 
 function part(materialId, dimsQ, offsetQ, { grip = null, mask = null } = {}) {

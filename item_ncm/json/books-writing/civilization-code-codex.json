@@ -27,18 +27,19 @@
   },
   "dimensions": {
     "unit": "m",
-    "width": 0.5156,
+    "width": 0.3438,
     "height": 0.1406,
-    "depth": 0.3438,
+    "depth": 0.5156,
     "sizeQ": [
-      33,
+      22,
       9,
-      22
+      33
     ]
   },
   "preview": {
     "yaw": -0.74,
-    "pitch": 0.5
+    "pitch": 0.5,
+    "clothMotion": "rigid"
   },
   "concept": {
     "image": "concepts/books-writing/civilization-code-codex-v1.webp",
@@ -49,10 +50,10 @@
   "forge": {
     "format": "NCF1",
     "version": 15,
-    "code": "NCF1.8MW3IoZmmeOhecQSWwYinUeARaQAWNgomAAAwAIAIp1HgEWAAAwAEAEgYKLPxAMACABCWBYBDgAgOABAAE1IwAgQAQH_ggACakYAQIAIDgQQABNSBAIc_UBwAIAAmpAgEOAaA4AEACbZhwCBABAj-yABNsw4BAgAgQApAAm2YEAhT-gIAAgATbMCAQoBAEAAQAJaGEAIEAECP9IAEtDCAECACBABkACWhgQCDP9AgACABLQwIBBgCgQABAAm2YIAggAQIAAgACakEAQR-YD_uQABNSCAII_MBwJIAAmpBAEEAaA_7kAATUggCCANAcCSAAJqQQBBgGgOABAAE1IGCggDwEAAgAA",
+    "code": "NCF1.8MW3IoZmmeOhecQSWwYinUWAR6QAWJgo2AAAwAIAIp1FgEeAAAwAEAEiwKBgAAP8SABCWA4BFgAAOAJAAE1IEAjD-AHAEgACakCARgBADgCQABNSHAIEAAB_1IAAmpDgECAAA4GkACbZgQCHP7AgASABNswIBDgCgQAJAAm2YUAgQAAI_ogATbMKAQIAAEAQQAJaGBAIQ_0CABIAEtDAgEIAGBAAkACWhgwCBAAAj_SABLQwYBAgAAQApAAm2YIAggAAIAEgACakEAQR-4D_mQABNSCAIIAkB_zIAAmpBAEEfuA4GkAATUggCCAJAcDSAAJqQYBBAAAOBpAAE1IICgYAAEA8gAA",
     "rawBytes": 263,
-    "sha256": "8a730d6b6b12e0b0e935efa3d2625b93d0046f94a54e864899e6751c6a889ea3",
-    "designHash": 3077420385,
+    "sha256": "2516d60cf3918dd4a847903c80df588006a39701c221d5e6c93427e368d39d47",
+    "designHash": 3297771570,
     "encodingMode": "components",
     "sourceEncodingMode": "components",
     "surfaceBaked": false,
@@ -350,6 +351,7 @@
     "gripValidated": true,
     "gripDirectionValidated": true,
     "currentMaterialsOnly": true,
+    "bookGeometryValidated": true,
     "chainMinted": false
   }
 }

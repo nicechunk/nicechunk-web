@@ -95,6 +95,11 @@ function validateItemDefinition(source, entry) {
   if (!Array.isArray(dimensions.sizeQ) || dimensions.sizeQ.length !== 3 || !dimensions.sizeQ.every(positiveInteger)) {
     throw new TypeError(`Item ${source.key} has invalid packed dimensions.`);
   }
+  const preview = source.preview;
+  if (!preview || !Number.isFinite(preview.yaw) || !Number.isFinite(preview.pitch)
+    || (preview.clothMotion != null && !["dynamic", "rigid"].includes(preview.clothMotion))) {
+    throw new TypeError(`Item ${source.key} has invalid preview behavior.`);
+  }
   let concept = null;
   if (source.concept != null) {
     const expectedImage = `concepts/${entry.category}/${entry.key}-v${source.concept.version}.webp`;
@@ -184,7 +189,7 @@ function validateItemDefinition(source, entry) {
     names,
     descriptions,
     dimensions: Object.freeze({ ...dimensions, sizeQ: Object.freeze([...dimensions.sizeQ]) }),
-    preview: Object.freeze({ ...source.preview }),
+    preview: Object.freeze({ ...preview }),
     ...(concept ? { concept } : {}),
     ...(holding ? { holding } : {}),
     forge: Object.freeze({

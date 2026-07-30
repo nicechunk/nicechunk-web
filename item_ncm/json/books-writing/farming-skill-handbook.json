@@ -27,18 +27,19 @@
   },
   "dimensions": {
     "unit": "m",
-    "width": 0.3594,
+    "width": 0.2344,
     "height": 0.1094,
-    "depth": 0.2344,
+    "depth": 0.3594,
     "sizeQ": [
-      23,
+      15,
       7,
-      15
+      23
     ]
   },
   "preview": {
     "yaw": -0.72,
-    "pitch": 0.5
+    "pitch": 0.5,
+    "clothMotion": "rigid"
   },
   "concept": {
     "image": "concepts/books-writing/farming-skill-handbook-v1.webp",
@@ -49,10 +50,10 @@
   "forge": {
     "format": "NCF1",
     "version": 15,
-    "code": "NCF1.8Cg2aHKcaeMPSlDEA4VinUUAQ-QAWJAYaAAAgAIALFAEPAAAgAEAEgYGHv2AIACABNswwBCgAgKABABIgAgQAQF_ogAkQAQIAICgMQASBAIU_oBQAIAJAgEKAQAoAEACEsBQCAgBAb_SABCWAoBAQAgMABAAhLAUAgIAQGAMgAS0MCAQJ_gDf4QAJaGBAIE_wBgEIAEtDAgECAMA3-EACWhgQCBAGAYBCACQQBA37gL_ZABIIAgb9wFAAgAkEAQN-4CgKQASCAIIAgBQAIAIp1AwMEAUAQAEAAA",
+    "code": "NCF1.8Cf2ZjKcaeMPSlDEA4VinUPARSQAWGgYiAAAgAIALDwEUAAAgAEAEh4GBgAAL9iABNswoBDAAAKAJABIEAiD-gFAEgAkCARAAwCgCQASFAIEAABf6IAJCgECAAAoEEACEsAICFP9AYASABCWAEBCgAAMAJAAhLACAhQAwGAEgAS0MCAQJ_gDf4QAJaGBAIEAQBv8IAEtDAgECf4AwDEACWhgQCBAEAYBiACQMBBH9gL-5ABIGAggAAF_cgAkDAQQAoC_uQASCAIIAABQIIAIp1BAMDAAAQFEAAA",
     "rawBytes": 218,
-    "sha256": "27c461cf3d163401ad5602fcaf1d5c607f75f3061cfc2cffbb38759f2a10cc70",
-    "designHash": 2009608209,
+    "sha256": "3af80ca5726344d5080539a61c766a7d27a10455fc395af83e167919ae1b27f1",
+    "designHash": 2348159251,
     "encodingMode": "components",
     "sourceEncodingMode": "components",
     "surfaceBaked": false,
@@ -77,8 +78,8 @@
         "index": 1,
         "materialId": "cotton_cloth",
         "itemCode": 1025,
-        "inputVolumeMm3": 2677917,
-        "usedVolumeMm3": 2677917,
+        "inputVolumeMm3": 2529144,
+        "usedVolumeMm3": 2529144,
         "unusedVolumeMm3": 0
       },
       {
@@ -235,9 +236,9 @@
       }
     ],
     "requirements": {
-      "requiredVolumeMm3": 6844416,
-      "requiredEffectiveDurability": 2186,
-      "outputMassGrams": 3215,
+      "requiredVolumeMm3": 6696960,
+      "requiredEffectiveDurability": 2165,
+      "outputMassGrams": 3195,
       "materialScore": 45
     },
     "runtime": {
@@ -262,8 +263,8 @@
       "materialId": "cotton_cloth",
       "itemCode": 1025,
       "componentCount": 2,
-      "inputVolumeMm3": 3822326,
-      "usedVolumeMm3": 3822326,
+      "inputVolumeMm3": 3673553,
+      "usedVolumeMm3": 3673553,
       "unusedVolumeMm3": 0,
       "unitVolumeMm3": 1000000,
       "equivalentInputUnits": 4
@@ -316,6 +317,7 @@
     "gripValidated": true,
     "gripDirectionValidated": true,
     "currentMaterialsOnly": true,
+    "bookGeometryValidated": true,
     "chainMinted": false
   }
 }

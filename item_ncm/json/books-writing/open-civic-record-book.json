@@ -38,7 +38,8 @@
   },
   "preview": {
     "yaw": -0.45,
-    "pitch": 0.6
+    "pitch": 0.6,
+    "clothMotion": "rigid"
   },
   "concept": {
     "image": "concepts/books-writing/open-civic-record-book-v1.webp",
@@ -166,6 +167,7 @@
     "gripValidated": true,
     "gripDirectionValidated": true,
     "currentMaterialsOnly": true,
+    "bookGeometryValidated": true,
     "chainMinted": false
   }
 }

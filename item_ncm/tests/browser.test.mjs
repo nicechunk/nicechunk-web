@@ -217,6 +217,7 @@ try {
   assert.equal(villageLedger.componentCount, "7");
   assert.equal(villageLedger.selectedInUrl, "timber-bound-village-ledger");
   assert.ok(villageLedger.resources.includes("/item_ncm/json/books-writing/timber-bound-village-ledger.json"));
+  await assertRigidBookPreview(client, { verifyFrames: true });
 
   await evaluate(client, `document.querySelector('[data-item="open-civic-record-book"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelector('[data-item="open-civic-record-book"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
@@ -234,6 +235,7 @@ try {
   assert.equal(openRecordBook.componentCount, "6");
   assert.equal(openRecordBook.selectedInUrl, "open-civic-record-book");
   assert.ok(openRecordBook.resources.includes("/item_ncm/json/books-writing/open-civic-record-book.json"));
+  await assertRigidBookPreview(client);
 
   await evaluate(client, `document.querySelector('[data-item="stacked-archive-volumes"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelector('[data-item="stacked-archive-volumes"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
@@ -251,6 +253,7 @@ try {
   assert.equal(archiveVolumes.componentCount, "12");
   assert.equal(archiveVolumes.selectedInUrl, "stacked-archive-volumes");
   assert.ok(archiveVolumes.resources.includes("/item_ncm/json/books-writing/stacked-archive-volumes.json"));
+  await assertRigidBookPreview(client);
 
   await evaluate(client, `document.querySelector('[data-item="civilization-code-codex"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelector('[data-item="civilization-code-codex"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
@@ -268,6 +271,7 @@ try {
   assert.equal(civilizationCodex.componentCount, "24");
   assert.equal(civilizationCodex.selectedInUrl, "civilization-code-codex");
   assert.ok(civilizationCodex.resources.includes("/item_ncm/json/books-writing/civilization-code-codex.json"));
+  await assertRigidBookPreview(client);
 
   await evaluate(client, `document.querySelector('[data-item="mining-skill-manual"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelector('[data-item="mining-skill-manual"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
@@ -285,6 +289,7 @@ try {
   assert.equal(miningManual.componentCount, "14");
   assert.equal(miningManual.selectedInUrl, "mining-skill-manual");
   assert.ok(miningManual.resources.includes("/item_ncm/json/books-writing/mining-skill-manual.json"));
+  await assertRigidBookPreview(client);
 
   await evaluate(client, `document.querySelector('[data-item="forging-skill-treatise"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelector('[data-item="forging-skill-treatise"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
@@ -302,6 +307,7 @@ try {
   assert.equal(forgingTreatise.componentCount, "20");
   assert.equal(forgingTreatise.selectedInUrl, "forging-skill-treatise");
   assert.ok(forgingTreatise.resources.includes("/item_ncm/json/books-writing/forging-skill-treatise.json"));
+  await assertRigidBookPreview(client);
 
   await evaluate(client, `document.querySelector('[data-item="farming-skill-handbook"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelector('[data-item="farming-skill-handbook"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
@@ -319,6 +325,7 @@ try {
   assert.equal(farmingHandbook.componentCount, "21");
   assert.equal(farmingHandbook.selectedInUrl, "farming-skill-handbook");
   assert.ok(farmingHandbook.resources.includes("/item_ncm/json/books-writing/farming-skill-handbook.json"));
+  await assertRigidBookPreview(client);
 
   await evaluate(client, `document.querySelector('[data-category="mining-tools"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 4 && document.querySelector('[data-item="iron-earthwork-shovel"]')`));
@@ -502,6 +509,24 @@ async function waitFor(check) {
     await new Promise((resolve) => setTimeout(resolve, 50));
   }
   throw new Error("Timed out waiting for browser state.");
+}
+
+async function assertRigidBookPreview(client, { verifyFrames = false } = {}) {
+  const state = await evaluate(client, `({
+    motion: document.querySelector("#forgePreview").dataset.clothMotion,
+    components: document.querySelector("#forgePreview").dataset.clothComponentCount,
+    fps: document.querySelector("#forgePreview").dataset.clothAnimationFps,
+  })`);
+  assert.deepEqual(state, { motion: "rigid", components: "0", fps: "0" });
+  if (!verifyFrames) return;
+  const clip = await evaluate(client, `(() => {
+    const bounds = document.querySelector("#forgePreview").getBoundingClientRect();
+    return { x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height, scale: 1 };
+  })()`);
+  const before = await client.send("Page.captureScreenshot", { format: "png", clip });
+  await new Promise((resolve) => setTimeout(resolve, 180));
+  const after = await client.send("Page.captureScreenshot", { format: "png", clip });
+  assert.equal(after.data, before.data, "rigid book preview must remain pixel-stable across animation frames");
 }
 
 async function evaluate(client, expression) {

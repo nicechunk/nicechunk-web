@@ -28,6 +28,22 @@ const catalog = json(join(root, "json/catalog.json"));
 const rules = json(rulesFile);
 const materialRules = new Map(rules.materials.map((material) => [material.id, material]));
 const runtimeCache = new ForgeRuntimeCache({ maxEntries: 32, maxBytes: 64 * 1024 * 1024 });
+const bookLayouts = new Map([
+  ["timber-bound-village-ledger", { portrait: true, pageSets: [{ page: 1, lower: 0, upper: 2 }] }],
+  ["open-civic-record-book", { portrait: false, pageSets: [{ page: 3, lower: 0 }, { page: 4, lower: 1 }] }],
+  ["stacked-archive-volumes", {
+    portrait: false,
+    pageSets: [
+      { page: 1, lower: 0, upper: 2 },
+      { page: 5, lower: 4, upper: 6 },
+      { page: 9, lower: 8, upper: 10 },
+    ],
+  }],
+  ["civilization-code-codex", { portrait: true, pageSets: [{ page: 1, lower: 0, upper: 2 }] }],
+  ["mining-skill-manual", { portrait: true, pageSets: [{ page: 1, lower: 0, upper: 2 }] }],
+  ["forging-skill-treatise", { portrait: true, pageSets: [{ page: 1, lower: 0, upper: 2 }] }],
+  ["farming-skill-handbook", { portrait: true, pageSets: [{ page: 1, lower: 0, upper: 2 }] }],
+]);
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
@@ -44,6 +60,7 @@ const categories = new Map();
 let tools = 0;
 let placeables = 0;
 let conceptReferences = 0;
+let bookGeometryCount = 0;
 for (const file of catalog.items) {
   assert.match(file, /^json\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/);
   const item = json(join(root, file));
@@ -96,6 +113,16 @@ for (const file of catalog.items) {
   assert.equal(runtime.triangleCount, item.forge.runtime.triangleCount);
   assert.equal(runtime.componentCount, item.forge.decodedComponentCount);
   assert.deepEqual(runtime.boundsQ.sizeQ, item.dimensions.sizeQ);
+  const bookLayout = bookLayouts.get(item.key);
+  if (bookLayout) {
+    bookGeometryCount += 1;
+    assert.equal(item.category, "books-writing");
+    assert.equal(item.preview.clothMotion, "rigid", `${item.key} must render its bound cloth as rigid`);
+    assert.equal(item.verification.bookGeometryValidated, true);
+    assertBookGeometry(item, runtime, bookLayout);
+  } else if (item.category === "books-writing") {
+    assert.fail(`${item.key} is missing its book geometry regression policy`);
+  }
   assert.equal(forgeWorkbenchComponentsConnected(runtime.components), true, `${item.key} must be a connected assembly`);
   const grip = validateForgeGripBindings(runtime.components);
   assert.equal(grip.valid, true, `${item.key} grip must remain valid after decoding`);
@@ -184,6 +211,7 @@ assert.deepEqual([...categories], [
 assert.equal(tools, 15);
 assert.equal(placeables, 20);
 assert.equal(conceptReferences, 11);
+assert.equal(bookGeometryCount, 7);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
 console.log("item_ncm catalog tests passed: 35 canonical NCF1 items across 10 categories");
@@ -210,4 +238,40 @@ function componentGroupSpansQ(components, indexes) {
     }
   }
   return min.map((value, axis) => max[axis] - value);
+}
+
+function assertBookGeometry(item, runtime, layout) {
+  if (layout.portrait) {
+    assert.ok(item.dimensions.sizeQ[2] > item.dimensions.sizeQ[0], `${item.key} cover must be portrait in its resting plane`);
+  }
+  const bounds = runtime.components.map((component) => componentBoundsQ(component));
+  for (const { page, lower, upper = null } of layout.pageSets) {
+    assert.equal(item.forge.materialComponents[page].materialId, "cotton_cloth", `${item.key} page ${page} must use current cotton cloth`);
+    assert.equal(runtime.components[page].resourceId, "cloth");
+    for (const cover of [lower, upper].filter((index) => index != null)) {
+      for (const axis of [0, 2]) {
+        assert.ok(bounds[page].min[axis] >= bounds[cover].min[axis], `${item.key} page ${page} escapes cover ${cover}`);
+        assert.ok(bounds[page].max[axis] <= bounds[cover].max[axis], `${item.key} page ${page} escapes cover ${cover}`);
+      }
+    }
+    assert.ok(bounds[page].min[1] >= bounds[lower].max[1], `${item.key} page ${page} crosses lower cover ${lower}`);
+    if (upper != null) assert.ok(bounds[page].max[1] <= bounds[upper].min[1], `${item.key} page ${page} crosses upper cover ${upper}`);
+    for (let index = 0; index < bounds.length; index += 1) {
+      if (index === page) continue;
+      assert.equal(positiveVolumeOverlap(bounds[page], bounds[index]), false, `${item.key} page ${page} intersects component ${index}`);
+    }
+  }
+}
+
+function componentBoundsQ(component) {
+  return {
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  };
+}
+
+function positiveVolumeOverlap(left, right) {
+  return [0, 1, 2].every((axis) => (
+    Math.min(left.max[axis], right.max[axis]) - Math.max(left.min[axis], right.min[axis]) > 0
+  ));
 }

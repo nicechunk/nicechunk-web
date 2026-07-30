@@ -27,18 +27,19 @@
   },
   "dimensions": {
     "unit": "m",
-    "width": 0.3906,
+    "width": 0.25,
     "height": 0.0938,
-    "depth": 0.25,
+    "depth": 0.3906,
     "sizeQ": [
-      25,
+      16,
       6,
-      16
+      25
     ]
   },
   "preview": {
     "yaw": -0.72,
-    "pitch": 0.48
+    "pitch": 0.48,
+    "clothMotion": "rigid"
   },
   "concept": {
     "image": "concepts/books-writing/mining-skill-manual-v1.webp",
@@ -49,10 +50,10 @@
   "forge": {
     "format": "NCF1",
     "version": 15,
-    "code": "NCF1.8F3GZ2fqrgPoiZUVetOinUWARCQAWJgYaAAAgAIAIp1FgEQAAAgAEAEgYGIP1AIACAAJqQIBDH8AKABAAE1IEAhj-wFAAgACakEAQR-4C_0QABNSCAII_cBQGIAAmpBAEEASAv9EAATUggCCAJAUBiAAJqQgBAgBAL_pAAE1IMAgQAwFAMgACakEAQUBICgAQABNSBgYGAsAgAIAAA",
+    "code": "NCF1.8F3GZ2fqrgPoiZUVetOinUQARaQAWGgYmAAAgAIAIp1EAEWAAAgAEAEiAGBgAAL9SAAJqQwBAgAAL_BAAE1IYAgQAAF_sgACakEAQR_QC_uQABNSCAIIAYBf3IAAmpBAEEf0AoEkAATUggCCAGAUCSAAJqQIBCH-gKARAAE1IEAgwAwFAMgACakFAQQAACgSQABNSBgYGAAAgLIAAA",
     "rawBytes": 157,
-    "sha256": "38d648d8c6a4adf6921b5a115f43cb230af8850331f998cbc334bd3f45da971e",
-    "designHash": 3185402692,
+    "sha256": "a217aa9905968e17b2f209b357dbf7ba15df3bdd6955208eeff3ddcffbe74104",
+    "designHash": 3464683787,
     "encodingMode": "components",
     "sourceEncodingMode": "components",
     "surfaceBaked": false,
@@ -240,6 +241,7 @@
     "gripValidated": true,
     "gripDirectionValidated": true,
     "currentMaterialsOnly": true,
+    "bookGeometryValidated": true,
     "chainMinted": false
   }
 }

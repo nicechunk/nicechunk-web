@@ -38,7 +38,8 @@
   },
   "preview": {
     "yaw": -0.74,
-    "pitch": 0.5
+    "pitch": 0.5,
+    "clothMotion": "rigid"
   },
   "concept": {
     "image": "concepts/books-writing/stacked-archive-volumes-v1.webp",
@@ -214,6 +215,7 @@
     "gripValidated": true,
     "gripDirectionValidated": true,
     "currentMaterialsOnly": true,
+    "bookGeometryValidated": true,
     "chainMinted": false
   }
 }

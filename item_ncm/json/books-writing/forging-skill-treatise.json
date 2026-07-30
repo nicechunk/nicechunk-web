@@ -27,18 +27,19 @@
   },
   "dimensions": {
     "unit": "m",
-    "width": 0.4219,
+    "width": 0.2813,
     "height": 0.1094,
-    "depth": 0.2813,
+    "depth": 0.4219,
     "sizeQ": [
-      27,
+      18,
       7,
-      18
+      27
     ]
   },
   "preview": {
     "yaw": -0.74,
-    "pitch": 0.48
+    "pitch": 0.48,
+    "clothMotion": "rigid"
   },
   "concept": {
     "image": "concepts/books-writing/forging-skill-treatise-v1.webp",
@@ -49,10 +50,10 @@
   "forge": {
     "format": "NCF1",
     "version": 15,
-    "code": "NCF1.8I72iufqqfPojZVWetUinUYARKQAWKgYeAAAgAIAIp1GAESAAAgAEAEgYGJP0AIACABLQwwBCgAgKABAAE1IgAgQAQF_ogACakQAQIAICgMQABNSBAIU_oBQAIAAmpAgEKAQAoAEAATUgQCFABAYACAAJqQwBAgAgMABAAE1IGAgb9QF_ogACakDAQN-oCgAQABNSBgIG_UBQGIAAmpBAEEfsAv8kAATUggCCP2AUByAAJqQQBBAFAL_JAAE1IIAggCgFAcgACakEAQUBQCgAQABNSBgYIAwAgAIAA",
+    "code": "NCF1.8I72iufqqfPojZVWetUinUSARiQAWHgYqAAAgAIAIp1EgEYAAAgAEAEiQGBgAAL9CABLQwoBDAAAKAJAAE1IEAiD-gFAEgACakCARAAwCgCQABNSFAIEAABf6IAAmpCgECAAAoEEAATUhQCBAAAYASAAJqQIBDAAAMAJAAE1IGAgb-gF_UgACakDAQMAAC_qQABNSBgIGAYBf1IAAmpBAEEfyAv7EAATUggCCAHAX9iAAJqQQBBH8gKBRAAE1IIAggBwFAogACakFAQQAACgUQABNSCAYGAAAgMIAA",
     "rawBytes": 220,
-    "sha256": "7d029af319c3f31561a9ef7832b4ed8ba54a0d01ead679a201fff9712d421465",
-    "designHash": 2293330950,
+    "sha256": "9919a878e33b13f2272bc19ed82383a1150c150632afeec19b54f11d4c5f9b31",
+    "designHash": 2213113000,
     "encodingMode": "components",
     "sourceEncodingMode": "components",
     "surfaceBaked": false,
@@ -298,6 +299,7 @@
     "gripValidated": true,
     "gripDirectionValidated": true,
     "currentMaterialsOnly": true,
+    "bookGeometryValidated": true,
     "chainMinted": false
   }
 }

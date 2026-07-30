@@ -27,18 +27,19 @@
   },
   "dimensions": {
     "unit": "m",
-    "width": 0.375,
+    "width": 0.25,
     "height": 0.0938,
-    "depth": 0.25,
+    "depth": 0.375,
     "sizeQ": [
-      24,
+      16,
       6,
-      16
+      24
     ]
   },
   "preview": {
     "yaw": -0.78,
-    "pitch": 0.5
+    "pitch": 0.5,
+    "clothMotion": "rigid"
   },
   "concept": {
     "image": "concepts/books-writing/timber-bound-village-ledger-v1.webp",
@@ -49,10 +50,10 @@
   "forge": {
     "format": "NCF1",
     "version": 15,
-    "code": "NCF1.8CRmYhOjjfNUUhDEA5HinUWARCQAWJgYaAAAgAIAIp1FgEQAAAgAEAEgYGIP1AIACACQIBEH8gKABABIEAiAAAFAAgAkCARAA4CgAQAA",
+    "code": "NCF1.8CRmYhOjjfNUUhDEA5HinUQARaQAWGgYmAAAgAIAIp1EAEWAAAgAEAEiAGBgAAL9SACRABAgAAL_JABIgAgQAAFAAgAkQAQIAACgOQAA",
     "rawBytes": 78,
-    "sha256": "1d6065cf7cbeb7a711a4ac655288aaa71d428226a502f46e2b9ea5ebc95eba87",
-    "designHash": 1645931630,
+    "sha256": "3319f400b21af454f6ed28de57ce176a4e3e94a3acdd37963664b30b2a8c6987",
+    "designHash": 723138249,
     "encodingMode": "components",
     "sourceEncodingMode": "components",
     "surfaceBaked": false,
@@ -174,6 +175,7 @@
     "gripValidated": true,
     "gripDirectionValidated": true,
     "currentMaterialsOnly": true,
+    "bookGeometryValidated": true,
     "chainMinted": false
   }
 }

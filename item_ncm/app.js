@@ -276,7 +276,13 @@ function renderSelectedItem(runtime) {
     renderer.setDesign(runtime.design, {
       componentMaterialIds: selectedItem.forge.materialComponents.map((component) => component.materialId),
     });
+    const clothMotion = selectedItem.preview?.clothMotion ?? "dynamic";
+    if (clothMotion === "rigid") renderer.setClothComponents(null, null);
     renderer.setWorkpieceGrouped(true);
+    const previewState = renderer.snapshot();
+    els.canvas.dataset.clothMotion = clothMotion;
+    els.canvas.dataset.clothComponentCount = String(previewState.clothComponentCount);
+    els.canvas.dataset.clothAnimationFps = String(previewState.clothAnimationFps);
     setPreviewCamera(selectedItem);
   }
 }
@@ -302,6 +308,9 @@ function renderEmptyState() {
   els.payloadBytes.textContent = "0 / 640 B";
   els.payloadHash.textContent = "—";
   els.interactionBadge.textContent = "—";
+  els.canvas.dataset.clothMotion = "none";
+  els.canvas.dataset.clothComponentCount = "0";
+  els.canvas.dataset.clothAnimationFps = "0";
   els.summaryTags.replaceChildren();
   els.metrics.replaceChildren(...[
     "metric.dimensions", "metric.mass", "metric.volume", "metric.payload", "metric.mesh", "metric.components",

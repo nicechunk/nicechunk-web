@@ -26,6 +26,7 @@ The generator rejects an item unless all of these checks pass:
 7. `ForgeRuntimeCache` restores a non-empty game mesh from the encoded payload.
 8. Dimensions, material requirements, bill of materials, runtime evidence, design hash, and SHA-256 are written into the item JSON.
 9. When a concept reference is present, its category-bound filename and SHA-256 are validated and written into the item JSON.
+10. Bound books keep every page block inside its cover planes with zero positive-volume intersection, closed volumes keep a portrait cover ratio, and rigid page preview metadata disables cloth deformation that could cross the binding.
 
 `verification.chainMinted` remains `false` because this library validates blueprint readiness; it does not claim that a blueprint PDA has already been created.
 
@@ -37,6 +38,7 @@ Edit `ITEM_NAMES` and `ITEM_SPECS` in `tools/generate-items.mjs`, using only mat
 node item_ncm/tools/generate-items.mjs
 node item_ncm/tests/catalog.test.mjs
 node item_ncm/tests/i18n.test.mjs
+node item_ncm/tests/browser.test.mjs
 ```
 
 Add the generated item path to no hand-maintained JavaScript list: the generator updates `json/catalog.json`, and the browser derives categories and item IDs directly from those paths.

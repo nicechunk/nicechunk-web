@@ -20,6 +20,7 @@
     "buildings/agriculture/covered-village-apiary.json",
     "buildings/civic/covered-village-notice-board.json",
     "buildings/utility/covered-village-firewood-rack.json",
-    "buildings/transport/two-wheel-village-handcart.json"
+    "buildings/transport/two-wheel-village-handcart.json",
+    "buildings/civic/stone-village-sundial.json"
   ]
 }

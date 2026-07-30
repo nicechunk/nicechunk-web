@@ -1,0 +1,233 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "stone-village-sundial",
+  "category": "civic",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Stone Village Sundial",
+    "es": "Reloj de Sol de Piedra de la Aldea",
+    "fr": "Cadran Solaire en Pierre du Village",
+    "de": "Steinerne Sonnenuhr des Dorfes",
+    "ja": "石造りの村の日時計",
+    "ru": "Каменные деревенские солнечные часы",
+    "ko": "석조 마을 해시계",
+    "zh-Hant": "石造村莊日晷",
+    "zh-Hans": "石制村庄日晷"
+  },
+  "descriptions": {
+    "en": "A grounded civic sundial with a broad multi-tier stone-brick pedestal, a flat polished-stone dial plate, twelve face-supported wooden-stick hour marks and a centered overlapping stepped wooden gnomon inclined across the plate.",
+    "es": "Reloj de sol cívico apoyado en el terreno, con un amplio pedestal escalonado de ladrillo de piedra, una placa de lectura plana de piedra pulida, doce marcas horarias de varillas de madera sustentadas por su base y un gnomon central de madera formado por peldaños superpuestos e inclinado sobre la placa.",
+    "fr": "Cadran solaire civique ancré au sol, doté d'un large piédestal à degrés en briques de pierre, d'une table plane en pierre polie, de douze repères horaires en baguettes de bois reposant sur la table et d'un gnomon central en bois formé de degrés chevauchants et incliné au-dessus du cadran.",
+    "de": "Bodengebundene öffentliche Sonnenuhr mit einem breiten abgestuften Sockel aus Steinziegeln, einer ebenen Zifferblattplatte aus poliertem Stein, zwölf flächig aufliegenden Stundenmarken aus Holzstäben und einem mittigen, überlappend abgestuften Holzgnomon, das sich über die Platte neigt.",
+    "ja": "地面に安定して接する幅広い多段石レンガ台座、平らな磨き石の文字盤、盤面に面で支えられた12本の木棒製時刻目盛り、中央から重なり合う段状に傾斜する木製の日時計針を備えた公共日時計です。",
+    "ru": "Общественные солнечные часы с устойчивым широким ступенчатым постаментом из каменного кирпича, плоской плитой циферблата из полированного камня, двенадцатью опирающимися на неё часовыми метками из деревянных реек и центральным наклонным деревянным гномоном из перекрывающихся ступеней.",
+    "ko": "지면에 안정적으로 닿는 넓은 다단 석재 벽돌 받침대, 평평한 연마 석재 문자판, 판 위에 면으로 지지된 열두 개의 나무 막대 시각 표식, 중앙에서 겹치는 계단 형태로 기울어진 목재 영침을 갖춘 공공 해시계입니다.",
+    "zh-Hant": "落地穩固的公共日晷，設有寬闊多級石磚基座、平坦拋光石晷面、十二個以底面承托的木棒時刻標記，以及由中央向上傾斜、各段相互重疊連接的木製晷針。",
+    "zh-Hans": "落地稳固的公共日晷，设有宽阔多级石砖基座、平坦抛光石晷面、十二个以底面承托的木棒时刻标记，以及由中央向上倾斜、各段相互重叠连接的木制晷针。"
+  },
+  "referenceImage": "concepts/civic/stone-village-sundial.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": false,
+    "maxStepRise": 0
+  },
+  "doorOpening": "not-applicable",
+  "footprint": "17 × 17 vu",
+  "height": "15 vu",
+  "referenceScale": "One concept voxel equals one NCM voxel",
+  "preview": {
+    "fitScale": 1.12,
+    "minScale": 4,
+    "yaw": 2.38
+  },
+  "extraMaterials": [
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Wooden-stick Hour Marks and Face-connected Gnomon"
+    },
+    {
+      "materialId": 64,
+      "phase": "foundation",
+      "label": "Stepped Stone-brick Pedestal"
+    },
+    {
+      "materialId": 69,
+      "phase": "fixtures",
+      "label": "Flat Polished-stone Dial Plate"
+    }
+  ],
+  "validation": {
+    "expectedVoxelCount": 1373,
+    "expectedPayloadBytes": 177,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      56,
+      64,
+      69
+    ],
+    "expectedMaterialVoxelCounts": {
+      "56": 36,
+      "64": 1168,
+      "69": 169
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 8,
+    "supportColumns": [
+      {
+        "label": "Northwest dial support",
+        "x": 4,
+        "z": 4,
+        "baseY": 0,
+        "topY": 8
+      },
+      {
+        "label": "Northeast dial support",
+        "x": 12,
+        "z": 4,
+        "baseY": 0,
+        "topY": 8
+      },
+      {
+        "label": "Southwest dial support",
+        "x": 4,
+        "z": 12,
+        "baseY": 0,
+        "topY": 8
+      },
+      {
+        "label": "Southeast dial support",
+        "x": 12,
+        "z": 12,
+        "baseY": 0,
+        "topY": 8
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Continuous grounded base",
+        "axis": "x",
+        "start": 0,
+        "end": 16,
+        "y": 0,
+        "fixed": 8
+      },
+      {
+        "label": "Continuous polished dial plate",
+        "axis": "x",
+        "start": 2,
+        "end": 14,
+        "y": 8,
+        "fixed": 8
+      },
+      {
+        "label": "Continuous polished dial depth",
+        "axis": "z",
+        "start": 2,
+        "end": 14,
+        "y": 8,
+        "fixed": 8
+      }
+    ],
+    "diagonalBands": [
+      {
+        "label": "Face-connected inclined wooden gnomon",
+        "materialId": 56,
+        "x": 8,
+        "y": 9,
+        "z": 8,
+        "width": 1,
+        "height": 2,
+        "depth": 1,
+        "count": 5,
+        "dx": 0,
+        "dy": 1,
+        "dz": -1
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 0,
+        "y": 0,
+        "z": 0,
+        "materialId": 64
+      },
+      {
+        "x": 1,
+        "y": 1,
+        "z": 1,
+        "materialId": 64
+      },
+      {
+        "x": 8,
+        "y": 6,
+        "z": 8,
+        "materialId": 64
+      },
+      {
+        "x": 2,
+        "y": 8,
+        "z": 2,
+        "materialId": 69
+      },
+      {
+        "x": 8,
+        "y": 9,
+        "z": 3,
+        "materialId": 56
+      },
+      {
+        "x": 3,
+        "y": 9,
+        "z": 8,
+        "materialId": 56
+      },
+      {
+        "x": 13,
+        "y": 9,
+        "z": 8,
+        "materialId": 56
+      },
+      {
+        "x": 8,
+        "y": 9,
+        "z": 13,
+        "materialId": 56
+      },
+      {
+        "x": 7,
+        "y": 9,
+        "z": 8,
+        "materialId": 56
+      },
+      {
+        "x": 8,
+        "y": 14,
+        "z": 4,
+        "materialId": 56
+      }
+    ]
+  },
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:AREPERUBQAAAABAAEAFAAQEBDgAOAUACAgIMAAwBQAMDAwoACgFABAQECAIIAUADBwMKAAoBRQIIAgwADAE4CAkDAAABATgGCQQAAAEBOAQJBgEAAAE4AwkIAQAAATgECQoBAAABOAYJCwAAAQE4CAkMAAABATgKCQsAAAEBOAsJCgEAAAE4DAkIAQAAATgLCQYBAAABOAoJBAAAAQE4BwkIAgAAAjgICQgAAQAEAAIB"
+  }
+}

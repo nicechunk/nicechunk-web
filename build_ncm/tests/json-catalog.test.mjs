@@ -182,6 +182,7 @@ function validateBuildingEvidence(building, voxels) {
   for (const support of validation.steppedSupports ?? []) validateSteppedSupport(building, voxels, support);
   for (const span of validation.horizontalSpans ?? []) validateHorizontalSpan(building, voxels, span);
   for (const deck of validation.walkableDecks ?? []) validateWalkableDeck(building, voxels, deck);
+  for (const profile of validation.gableProfiles ?? []) validateGableProfile(building, voxels, profile);
   for (const loop of validation.closedVoxelLoops ?? []) validateClosedVoxelLoop(building, voxels, loop);
   for (const volume of validation.openVolumes ?? []) {
     for (let x = volume.x; x < volume.x + volume.width; x += 1) {
@@ -326,6 +327,24 @@ function validateWalkableDeck(building, voxels, deck) {
         assert.ok(voxels.has(`${x},${topY + offset},${z}`), `${building.key} has a guard-rail gap on ${deck.label} at ${x},${topY + offset},${z}`);
       }
     }
+  }
+}
+
+function validateGableProfile(building, voxels, profile) {
+  for (const key of ["x", "baseY", "z"]) {
+    assert.ok(Number.isInteger(profile[key]) && profile[key] >= 0, `${building.key} has an invalid ${profile.label} ${key}`);
+  }
+  assert.ok(Number.isInteger(profile.width) && profile.width >= 3 && profile.width % 2 === 1, `${building.key} has an invalid ${profile.label} width`);
+  assert.ok(Number.isInteger(profile.slopeMaterialId) && profile.slopeMaterialId > 0, `${building.key} has an invalid ${profile.label} slope material`);
+  assert.ok(Number.isInteger(profile.ridgeMaterialId) && profile.ridgeMaterialId > 0, `${building.key} has an invalid ${profile.label} ridge material`);
+  const layers = Math.ceil(profile.width / 2);
+  for (let layer = 0; layer < layers; layer += 1) {
+    const y = profile.baseY + layer;
+    const left = profile.x + layer;
+    const right = profile.x + profile.width - 1 - layer;
+    const expectedMaterial = left === right ? profile.ridgeMaterialId : profile.slopeMaterialId;
+    assert.equal(voxels.get(`${left},${y},${profile.z}`)?.material, expectedMaterial, `${building.key} breaks ${profile.label} at ${left},${y},${profile.z}`);
+    assert.equal(voxels.get(`${right},${y},${profile.z}`)?.material, expectedMaterial, `${building.key} breaks ${profile.label} at ${right},${y},${profile.z}`);
   }
 }
 

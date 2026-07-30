@@ -38,7 +38,7 @@ try {
   await client.send("Page.enable");
   await client.send("Emulation.setDeviceMetricsOverride", { width: 1600, height: 1200, deviceScaleFactor: 1, mobile: false });
   await client.send("Page.navigate", { url });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 10 && document.querySelectorAll('[data-building]').length === 1 && document.querySelector('[data-building=hollow-cottage]') && document.querySelector('[data-language-select]').options.length === 9"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 11 && document.querySelectorAll('[data-building]').length === 1 && document.querySelector('[data-building=hollow-cottage]') && document.querySelector('[data-language-select]').options.length === 9"));
 
   const initial = await evaluate(client, `({
     visibleBuildingCount: document.querySelectorAll('[data-building]').length,
@@ -76,8 +76,8 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 1);
-  assert.match(initial.totalBuildingCount, /11 BUILDINGS/);
-  assert.equal(initial.categoryCount, 10);
+  assert.match(initial.totalBuildingCount, /12 BUILDINGS/);
+  assert.equal(initial.categoryCount, 11);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
   assert.equal(initial.buildingLabel, "Hollow Cottage");
@@ -630,6 +630,56 @@ try {
   assert.ok(headframe.resources.includes("/build_ncm/concepts/mining/timber-mine-headframe.webp"));
   assert.ok(!headframe.resources.some((path) => path.endsWith("timber-mine-headframe-blueprint.js")));
 
+  await evaluate(client, "document.querySelector('[data-building-category=agriculture]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=glass-timber-greenhouse]')"));
+  const agricultureBrowse = await evaluate(client, `({
+    activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
+    cardCount: document.querySelectorAll('[data-building]').length,
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(agricultureBrowse.activeBuilding, null);
+  assert.equal(agricultureBrowse.cardCount, 1);
+  assert.ok(!agricultureBrowse.resources.includes("/build_ncm/buildings/agriculture/glass-timber-greenhouse.json"), "category browsing must not load the greenhouse JSON");
+  assert.ok(!agricultureBrowse.resources.includes("/build_ncm/concepts/agriculture/glass-timber-greenhouse.webp"), "category browsing must not load the greenhouse concept art");
+  await evaluate(client, "document.querySelector('[data-building=glass-timber-greenhouse]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'glass-timber-greenhouse' && document.querySelector('#modelSize').textContent === '19 × 20 × 27' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const greenhouse = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(greenhouse.activeCategory, "agriculture");
+  assert.match(greenhouse.title, /Glass and Timber Greenhouse/);
+  assert.equal(greenhouse.modelSize, "19 × 20 × 27");
+  assert.match(greenhouse.payload, /^NCM3:/);
+  assert.equal(greenhouse.voxelCount, 2255);
+  for (const id of [55, 56, 57, 58, 64, 68, 69, 72]) assert.match(greenhouse.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(greenhouse.uncovered, false);
+  assert.equal(greenhouse.glazingDisabled, true);
+  assert.equal(greenhouse.glazingLabel, "Openings: Not applicable");
+  assert.equal(greenhouse.disabledStyles, 6);
+  assert.equal(greenhouse.disabledRoofs, 6);
+  assert.equal(greenhouse.conceptHidden, false);
+  assert.match(greenhouse.conceptAlt, /Glass and Timber Greenhouse concept reference/);
+  assert.equal(greenhouse.conceptFit, "contain");
+  assert.equal(greenhouse.selectedInUrl, "glass-timber-greenhouse");
+  assert.ok(greenhouse.resources.includes("/build_ncm/buildings/agriculture/glass-timber-greenhouse.json"));
+  assert.ok(greenhouse.resources.includes("/build_ncm/concepts/agriculture/glass-timber-greenhouse.webp"));
+  assert.ok(!greenhouse.resources.some((path) => path.endsWith("glass-timber-greenhouse-blueprint.js")));
+
   await evaluate(client, "document.querySelector('[data-building-category=residential]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=hollow-cottage]')"));
   await evaluate(client, "document.querySelector('[data-building=hollow-cottage]').click()");
@@ -742,7 +792,7 @@ try {
 
   await client.send("Emulation.setDeviceMetricsOverride", { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
   await client.send("Page.reload", { ignoreCache: true });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 10 && document.querySelectorAll('[data-building]').length === 1"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 11 && document.querySelectorAll('[data-building]').length === 1"));
   await evaluate(client, "document.querySelector('[data-material-filter=all]').click()");
   await waitFor(() => evaluate(client, "document.querySelectorAll('#buildingMaterialCatalog .model-material-card').length === 33"));
   const mobile = await evaluate(client, `({
@@ -762,7 +812,7 @@ try {
   assert.equal(mobile.scrollWidth, mobile.clientWidth, "mobile page must not create document-level horizontal overflow");
   assert.equal(mobile.modelCards, 33);
   assert.equal(mobile.modelErrors, 0);
-  assert.equal(mobile.categories, 10);
+  assert.equal(mobile.categories, 11);
   assert.equal(mobile.buildingCards, 1);
   assert.equal(mobile.buildingThumbnails, 0);
   assert.equal(mobile.categoryFlow, "row");

@@ -1,0 +1,57 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "freight-warehouse",
+  "category": "industrial",
+  "titles": {
+    "en": "Freight Warehouse",
+    "es": "Almacén de Carga",
+    "fr": "Entrepôt de Fret",
+    "de": "Frachtlager",
+    "ja": "貨物倉庫",
+    "ru": "Грузовой склад",
+    "ko": "화물 창고",
+    "zh-Hant": "貨運倉庫",
+    "zh-Hans": "货运仓库"
+  },
+  "descriptions": {
+    "en": "Large hollow storehouse with twin open cargo bays, loading dock, clerestory glazing and a dark weather roof.",
+    "es": "Gran almacén hueco con dos muelles de carga abiertos, plataforma de carga, ventanas altas y cubierta oscura resistente.",
+    "fr": "Grand entrepôt creux avec deux baies de fret ouvertes, quai de chargement, vitrage haut et toiture sombre résistante.",
+    "de": "Große hohle Lagerhalle mit zwei offenen Frachttoren, Laderampe, Obergadenverglasung und dunklem Wetterschutzdach.",
+    "ja": "2つの開放貨物口、荷役デッキ、高窓、濃色の耐候屋根を備えた大型の中空倉庫。",
+    "ru": "Большой полый склад с двумя открытыми грузовыми проёмами, погрузочной платформой, верхним остеклением и тёмной погодостойкой крышей.",
+    "ko": "두 개의 열린 화물 출입구, 적재 데크, 고측창과 어두운 내후성 지붕을 갖춘 대형 빈 창고입니다.",
+    "zh-Hant": "大型空心倉庫，帶雙開放貨運門洞、裝卸平台、高窗和深色耐候屋頂。",
+    "zh-Hans": "大型空心仓库，带双开放货运门洞、装卸平台、高窗和深色耐候屋顶。"
+  },
+  "defaults": {
+    "style": "castle",
+    "roof": "charcoal",
+    "glazed": true
+  },
+  "doorOpening": "open",
+  "footprint": "32 × 24 vu + dock",
+  "height": "36 vu",
+  "referenceScale": "Large uninterrupted storage hall",
+  "preview": {},
+  "extraMaterials": [
+    {
+      "materialId": 60,
+      "phase": "openings",
+      "label": "Amber Loading-dock Lamp"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ATAkJjsBAQcABiEBGQEGCAIHHwAXAQInBQcADgEBAicFEgAOAgECJwUeAA4AAQInDwkABAgBAicPFQAECAECCAUHAA4DAQIIBRsADgMBAggFCwAEDwECCA8LAAQPAQIJBQcCDgABAhIFBwIOAAECGwUHAg4AAQIkBQcCDgACAgwFBwUEAAISAAACAgwPBwUEAAISAAABAgkFHgIOAAECEgUeAg4AAQIbBR4CDgABAiQFHgIOAAICDAUeBQQAAhIAAAICDA8eBQQAAhIAAAEECAoLAAQPAgQMCgcFBAACEgAAAgQMCh4FBAACEgAAAQMIBQcADgABAwgFHgAOAAEDJwUHAA4AAQMnBR4ADgABAwgTBx8AAAEDCBMeHwAAAQMoBAgACwABAygEEgALAAEDKAQUAAsAAQMoBB4ACwABAygPCAAACgEDKA8UAAAKAQEoAgcEARcBBigEBwQAFwEBLQANAgALAQYsAQ0CAAsBBisCDQIACwEGKgMNAgALAQUoEQYFABkBAy0FBwALAAEDLQUeAAsAAQMpCgYAAgABPCkNBgABAAEBKQ8GAAAAAQMpCh8AAgABPCkNHwABAAEBKQ8fAAAACgIIFAcAFwoCJxQHABcIBQcTBiEZCQMHEwYhGQEHFiASAwIBAQEVIxEFAAM"
+  }
+}

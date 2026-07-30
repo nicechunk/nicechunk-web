@@ -1,0 +1,67 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "seaside-cottage",
+  "category": "coastal",
+  "titles": {
+    "en": "Sea Breeze Cottage",
+    "es": "Casa Brisa Marina",
+    "fr": "Cottage Brise Marine",
+    "de": "Meeresbrise-Haus",
+    "ja": "海風のコテージ",
+    "ru": "Коттедж «Морской бриз»",
+    "ko": "바닷바람 오두막",
+    "zh-Hant": "海風小屋",
+    "zh-Hans": "海风小屋"
+  },
+  "descriptions": {
+    "en": "Raised coastal cottage with a wraparound deck, panoramic glazing, blue tile and an open entrance portal.",
+    "es": "Casa costera elevada con terraza envolvente, acristalamiento panorámico, tejas azules y acceso abierto.",
+    "fr": "Cottage côtier surélevé avec terrasse périphérique, vitrage panoramique, tuiles bleues et entrée ouverte.",
+    "de": "Erhöhtes Küstenhaus mit umlaufender Terrasse, Panoramaverglasung, blauen Ziegeln und offenem Eingang.",
+    "ja": "回廊デッキ、パノラマガラス、青い瓦、開放された入口を備えた高床式の海辺の家。",
+    "ru": "Приподнятый прибрежный коттедж с круговой террасой, панорамным остеклением, синей черепицей и открытым входом.",
+    "ko": "둘레 데크, 파노라마 유리, 파란 기와와 열린 입구를 갖춘 높인 해안 오두막입니다.",
+    "zh-Hant": "架空海岸小屋，帶環繞觀景平台、寬幅玻璃、藍瓦和開放門洞。",
+    "zh-Hans": "架空海岸小屋，带环绕观景平台、宽幅玻璃、蓝瓦和开放门洞。"
+  },
+  "defaults": {
+    "style": "coastal",
+    "roof": "iceBlue",
+    "glazed": true
+  },
+  "doorOpening": "open",
+  "footprint": "22 × 18 vu + deck",
+  "height": "24 vu",
+  "referenceScale": "Raised compact coastal residence",
+  "preview": {},
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "finish",
+      "label": "Salt-treated Wooden Deck"
+    },
+    {
+      "materialId": 60,
+      "phase": "openings",
+      "label": "Amber Porch Lantern"
+    },
+    {
+      "materialId": 75,
+      "phase": "finish",
+      "label": "Blue Ceramic Fascia"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ASYdIDkCAQgACAEDAQISAAACAQgAFgEDAQISAAABBgcEBxUAEQE3HQQGBAATATcHBAUVAAEBNwcEGRUAAQEBIgANAgAFATchAQ0CAAUBNyACDQIABQE3HwMNAgAFAQIcBQcACQABAhwFCAABBgECHAwIAAIMAQIcBRUACQMBAgcFBwAJBAECBwUUAAkEAQIHBQwAAQcBAgcMDAACBwECCAUHAwkAAQIYBQcDCQABAgwFBwsBAAECDAwHCwIAAQIIBRgDCQABAhgFGAMJAAECDAUYCwEAAQIMDBgLAgABBBwHCAAEBgEEBwcMAAQHAQQMBwcLBAABBAwHGAsEAAEDBwUHAAkAAQMHBRgACQABAxwFBwAJAAEDHAUYAAkAAQMHDgcVAAABAwcOGBUAAAEDHQQOAAgAAQMdBBUACAABAx0MDgAABwFLCA0GEwAAAUsIDRkTAAABAyEGBwAABQEDIQYUAAAEAQMhBQcAAgABAyEFDAACAAEDIQUUAAIAAQMhBRgAAgABAx4FDQACAAE8HggNAAEAAQEeCg0AAAABAx4FFgACAAE8HggWAAEAAQEeChYAAAAKAgcPBwARCgIcDwcAEQgFBg4GFxMJAwYOBhcT"
+  }
+}

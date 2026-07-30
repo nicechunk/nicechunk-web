@@ -38,14 +38,15 @@ import {
 } from "./construction-catalog.js";
 import { getLocale, initI18n, onLocaleChange, t } from "./i18n.js";
 import {
-  BUILDING_CATEGORIES,
-  BUILDING_LIBRARY,
-  buildingLibraryEntry,
+  buildingCatalogEntry,
   buildingsInCategory,
-  createLibraryBlueprint,
+  loadBuildingCatalog,
+  loadBuildingDefinition,
+  localizedBuildingText,
 } from "./building-library.js";
 
-initI18n();
+await initI18n();
+const buildingCatalog = await loadBuildingCatalog();
 
 const MAX_PASTED_NCM_CHARACTERS = 131072;
 
@@ -102,13 +103,18 @@ const els = {
   buildingLibraryStatus: document.querySelector("#buildingLibraryStatus"),
 };
 
-let selectedBuilding = initialBuildingEntry();
-let activeBuildingCategory = selectedBuilding.category;
-let selectedStyle = buildingStylePreset(selectedBuilding.defaultStyle);
-let selectedRoof = roofTileVariant(selectedBuilding.defaultRoof);
-let glazed = selectedBuilding.defaultGlazed;
-let blueprint = await createLibraryBlueprint(selectedBuilding, { style: selectedStyle, roofMaterial: selectedRoof.materialId, glazed });
-let formats = buildFormats(blueprint);
+const requestedBuildingEntry = initialBuildingEntry();
+const loadedBuildingDefinitions = new Map();
+const templateBlueprints = new Map();
+let selectedBuildingEntry = null;
+let selectedBuilding = null;
+let pendingBuildingKey = null;
+let activeBuildingCategory = requestedBuildingEntry?.category ?? buildingCatalog.categories[0].key;
+let selectedStyle = buildingStylePreset();
+let selectedRoof = roofTileVariant(selectedStyle.materials.roof);
+let glazed = false;
+let blueprint = null;
+let formats = null;
 let selectedFormat = "ncm3";
 let autoSpin = false;
 let activeBomPhase = "all";
@@ -130,21 +136,20 @@ const materialModels = new MaterialModelPreviewRenderer({
 
 const spatial = new NcmBlueprintRenderer(els.canvas, {
   background: "#0b1017",
-  yaw: selectedBuilding.previewYaw ?? 2.55,
+  yaw: 2.55,
   pitch: 0.58,
   gridVisible: true,
   maxPixelRatio: 1.25,
-  fitScale: selectedBuilding.previewFitScale ?? 1.24,
-  minScale: selectedBuilding.previewMinScale ?? 5,
+  fitScale: 1.24,
+  minScale: 5,
 });
-spatial.setBlueprint(blueprint);
 renderBuildingLibrary();
 renderStylePresets();
 renderRoofVariants();
-renderBlueprintState();
-renderCodePanel();
+renderEmptyBlueprintState();
 setupEvents();
 onLocaleChange(renderLocalizedState);
+if (requestedBuildingEntry) void selectBuilding(requestedBuildingEntry.key);
 
 function buildFormats(nextBlueprint) {
   const voxels = voxelize(nextBlueprint);
@@ -222,10 +227,11 @@ function renderMaterials(counts) {
 
 function renderBuildingLibrary() {
   if (!els.buildingLibrary || !els.buildingCategories) return;
-  const activeCategory = BUILDING_CATEGORIES.find((entry) => entry.key === activeBuildingCategory) ?? BUILDING_CATEGORIES[0];
-  const visibleBuildings = buildingsInCategory(activeCategory);
-  const categories = BUILDING_CATEGORIES.map((categoryEntry) => {
-    const count = buildingsInCategory(categoryEntry).length;
+  const activeCategory = buildingCatalog.categories.find((entry) => entry.key === activeBuildingCategory) ?? buildingCatalog.categories[0];
+  const visibleBuildings = buildingsInCategory(buildingCatalog, activeCategory);
+  const categories = buildingCatalog.categories.map((categoryEntry) => {
+    const count = buildingsInCategory(buildingCatalog, categoryEntry).length;
+    const categoryName = localizedCategoryName(categoryEntry);
     const button = document.createElement("button");
     button.type = "button";
     button.className = "building-category-button";
@@ -233,27 +239,30 @@ function renderBuildingLibrary() {
     button.setAttribute("role", "radio");
     button.setAttribute("aria-checked", String(categoryEntry.key === activeCategory.key));
     button.setAttribute("aria-label", t("library.categorySelectAria", {
-      category: t(categoryEntry.nameKey),
+      category: categoryName,
       count,
     }));
     button.classList.toggle("active", categoryEntry.key === activeCategory.key);
     const label = document.createElement("span");
-    label.textContent = t(categoryEntry.nameKey);
+    label.textContent = categoryName;
     const total = document.createElement("b");
     total.textContent = String(count).padStart(2, "0");
     button.append(label, total);
     return button;
   });
   const cards = visibleBuildings.map((entry, index) => {
+    const definition = loadedBuildingDefinitions.get(entry.key);
+    const buildingName = definition ? localizedBuildingText(definition, "titles", getLocale()) : entry.label;
     const button = document.createElement("button");
     button.type = "button";
     button.className = "building-library-card";
     button.dataset.building = entry.key;
     button.setAttribute("role", "radio");
-    button.setAttribute("aria-checked", String(entry.key === selectedBuilding.key));
-    button.setAttribute("aria-label", t("library.selectAria", { building: t(entry.nameKey) }));
-    button.classList.toggle("active", entry.key === selectedBuilding.key);
-    if (entry.key === selectedBuilding.key && blueprintBusy) button.setAttribute("aria-busy", "true");
+    button.setAttribute("aria-checked", String(entry.key === selectedBuildingEntry?.key));
+    button.setAttribute("aria-label", t("library.selectAria", { building: buildingName }));
+    button.classList.toggle("active", entry.key === selectedBuildingEntry?.key);
+    button.classList.toggle("pending", entry.key === pendingBuildingKey);
+    if (entry.key === pendingBuildingKey && blueprintBusy) button.setAttribute("aria-busy", "true");
 
     const marker = document.createElement("span");
     marker.className = "building-library-marker";
@@ -265,25 +274,34 @@ function renderBuildingLibrary() {
     const copy = document.createElement("span");
     copy.className = "building-library-copy";
     const name = document.createElement("strong");
-    name.textContent = t(entry.nameKey);
+    name.textContent = buildingName;
     const description = document.createElement("em");
-    description.textContent = t(entry.descriptionKey);
+    description.textContent = definition
+      ? localizedBuildingText(definition, "descriptions", getLocale())
+      : t("library.clickToLoad");
     const stats = document.createElement("span");
     stats.className = "building-library-stats";
-    stats.append(
-      libraryStat(entry.footprint, t("library.footprint")),
-      libraryStat(entry.height, t("library.height")),
-    );
+    if (definition) {
+      stats.append(
+        libraryStat(definition.footprint, t("library.footprint")),
+        libraryStat(definition.height, t("library.height")),
+      );
+    } else {
+      stats.append(
+        libraryStat("JSON", t("library.file")),
+        libraryStat(t("library.onDemand"), t("library.mode")),
+      );
+    }
     copy.append(name, description, stats);
     button.append(marker, copy);
     return button;
   });
   els.buildingCategories.replaceChildren(...categories);
   els.buildingLibrary.replaceChildren(...cards);
-  els.buildingLibraryCount.textContent = t("library.count", { count: BUILDING_LIBRARY.length });
-  els.buildingCategoryTitle.textContent = t(activeCategory.nameKey);
+  els.buildingLibraryCount.textContent = t("library.count", { count: buildingCatalog.entries.length });
+  els.buildingCategoryTitle.textContent = localizedCategoryName(activeCategory);
   els.buildingCategoryCount.textContent = t("library.categoryCount", { count: visibleBuildings.length });
-  els.buildingLibrary.setAttribute("aria-label", t("library.buildingsInCategoryAria", { category: t(activeCategory.nameKey) }));
+  els.buildingLibrary.setAttribute("aria-label", t("library.buildingsInCategoryAria", { category: localizedCategoryName(activeCategory) }));
   els.buildingLibraryStatus.textContent = t(
     buildingLibraryStatusMessage.key,
     localizedBuildingLibraryStatusVariables(buildingLibraryStatusMessage.variables),
@@ -302,6 +320,21 @@ function libraryStat(value, label) {
   return item;
 }
 
+function localizedCategoryName(category) {
+  const translated = t(category.nameKey);
+  return translated === category.nameKey ? category.label : translated;
+}
+
+function localizedStyleName(style) {
+  const key = `style.name.${style.key}`;
+  const translated = t(key);
+  return translated === key ? style.name : translated;
+}
+
+function selectedExtraMaterials() {
+  return selectedBuilding?.extraMaterials ?? [];
+}
+
 function renderStylePresets() {
   els.stylePresets.replaceChildren(...BUILDING_STYLE_PRESETS.map((preset) => {
     const button = document.createElement("button");
@@ -311,6 +344,7 @@ function renderStylePresets() {
     button.setAttribute("role", "radio");
     button.setAttribute("aria-checked", String(preset.key === selectedStyle.key));
     button.classList.toggle("active", preset.key === selectedStyle.key);
+    button.disabled = !selectedBuilding || blueprintBusy;
     button.style.setProperty("--style-accent", preset.accent);
     const palette = document.createElement("i");
     palette.className = "style-palette";
@@ -320,14 +354,14 @@ function renderStylePresets() {
       palette.append(swatch);
     }
     const label = document.createElement("strong");
-    label.textContent = preset.name;
+    label.textContent = localizedStyleName(preset);
     button.append(palette, label);
     return button;
   }));
 }
 
 function renderStyleMaterials() {
-  const manifest = buildingStyleRecipeManifest(selectedStyle, selectedRoof, { extraMaterials: selectedBuilding.extraMaterials });
+  const manifest = buildingStyleRecipeManifest(selectedStyle, selectedRoof, { extraMaterials: selectedExtraMaterials() });
   els.styleMaterialGrid.replaceChildren(...manifest.map((entry) => {
     const card = document.createElement("div");
     card.className = `style-material${entry.role === "glazing" && !glazed ? " recommended" : ""}`;
@@ -348,9 +382,13 @@ function renderStyleMaterials() {
     renderMaterialModel(model, displayMaterial(entry.materialId), { width: 82, height: 60 });
     return card;
   }));
-  els.styleName.textContent = selectedStyle.name;
+  const styleName = localizedStyleName(selectedStyle);
+  els.styleName.textContent = styleName;
   els.styleDescription.textContent = t(`style.description.${selectedStyle.key}`);
-  els.buildingTitle.textContent = t("view.title", { building: t(selectedBuilding.nameKey), style: selectedStyle.name });
+  const buildingName = selectedBuilding
+    ? localizedBuildingText(selectedBuilding, "titles", getLocale())
+    : t("view.externalBlueprint");
+  els.buildingTitle.textContent = t("view.title", { building: buildingName, style: styleName });
 }
 
 function renderBuildingMaterialCatalog(counts) {
@@ -363,7 +401,7 @@ function renderBuildingMaterialCatalog(counts) {
     selectedRoof.materialId,
     selectedStyle.materials.floor,
     selectedStyle.materials.chimney,
-    ...selectedBuilding.extraMaterials.map((entry) => entry.materialId),
+    ...selectedExtraMaterials().map((entry) => entry.materialId),
   ]);
   const visible = BUILDING_MATERIAL_CATALOG.filter((entry) => materialCatalogMatches(entry, counts, currentStyleIds));
   els.materialCatalogCount.textContent = `${visible.length} / ${BUILDING_MATERIAL_CATALOG.length}`;
@@ -477,6 +515,7 @@ function renderRoofVariants() {
     button.setAttribute("aria-label", t("roof.variantAria", { name: localized.name, source: localized.source }));
     button.setAttribute("aria-checked", String(variant.key === selectedRoof.key));
     button.classList.toggle("active", variant.key === selectedRoof.key);
+    button.disabled = !selectedBuilding || blueprintBusy;
     button.style.setProperty("--tile-color", variant.color);
     button.style.setProperty("--tile-accent", variant.accent);
     const swatch = document.createElement("canvas");
@@ -490,87 +529,116 @@ function renderRoofVariants() {
   }));
 }
 
-async function rebuildReference() {
+function rebuildReference() {
+  if (!selectedBuilding) return false;
+  const nextBlueprint = createBlueprintFromDefinition(selectedBuilding, {
+    style: selectedStyle,
+    roofMaterial: selectedRoof.materialId,
+    glazed,
+  });
+  blueprint = nextBlueprint;
+  formats = buildFormats(nextBlueprint);
+  codeEditorDirty = false;
+  spatial.fitScale = selectedBuilding.preview.fitScale ?? 1.24;
+  spatial.minScale = selectedBuilding.preview.minScale ?? 5;
+  spatial.setBlueprint(blueprint);
+  renderStylePresets();
+  renderRoofVariants();
+  renderBlueprintState();
+  renderCodePanel();
+  setCodeLoadStatus("code.loadHint");
+  setBuildingLibraryStatus("library.loaded", "ok", {
+    buildingKey: selectedBuilding.key,
+  });
+  return true;
+}
+
+async function selectBuilding(key) {
+  const entry = buildingCatalogEntry(buildingCatalog, key);
   const request = ++blueprintRequest;
-  const building = selectedBuilding;
-  const style = selectedStyle;
-  const roof = selectedRoof;
-  const includeGlazing = glazed;
+  pendingBuildingKey = entry.key;
   blueprintBusy = true;
-  setBuildingLibraryStatus("library.loading", "loading", { buildingNameKey: building.nameKey });
+  setBuildingLibraryStatus("library.loading", "loading", { building: entry.label });
   renderBuildingLibrary();
+  renderStylePresets();
+  renderRoofVariants();
   try {
-    const nextBlueprint = await createLibraryBlueprint(building, {
-      style,
-      roofMaterial: roof.materialId,
-      glazed: includeGlazing,
-    });
+    const definition = await loadBuildingDefinition(entry);
     if (request !== blueprintRequest) return false;
-    const nextFormats = buildFormats(nextBlueprint);
-    if (request !== blueprintRequest) return false;
-    blueprint = nextBlueprint;
-    formats = nextFormats;
-    codeEditorDirty = false;
-    spatial.fitScale = building.previewFitScale ?? 1.24;
-    spatial.minScale = building.previewMinScale ?? 5;
-    spatial.setBlueprint(blueprint);
-    renderStylePresets();
-    renderRoofVariants();
-    renderBlueprintState();
-    renderCodePanel();
-    setCodeLoadStatus("code.loadHint");
-    setBuildingLibraryStatus("library.loaded", "ok", { buildingNameKey: building.nameKey });
-    return true;
+    const style = buildingStylePreset(definition.defaults.style);
+    const roof = roofTileVariant(definition.defaults.roof);
+    loadedBuildingDefinitions.set(entry.key, definition);
+    selectedBuildingEntry = entry;
+    selectedBuilding = definition;
+    selectedStyle = style;
+    selectedRoof = roof;
+    glazed = definition.defaults.glazed;
+    activeBuildingCategory = entry.category;
+    const url = new URL(window.location.href);
+    url.searchParams.set("building", entry.key);
+    window.history.replaceState(null, "", url);
+    spatial.homeYaw = definition.preview.yaw ?? 2.55;
+    spatial.yaw = spatial.homeYaw;
+    spatial.homePitch = 0.58;
+    spatial.pitch = spatial.homePitch;
+    activeBomPhase = "all";
+    els.bomFilters.querySelectorAll("[data-phase]").forEach((item) => item.classList.toggle("active", item.dataset.phase === "all"));
+    return rebuildReference();
   } catch (error) {
     if (request !== blueprintRequest) return false;
-    console.error(`Building blueprint ${building.key} failed to load`, error);
-    setBuildingLibraryStatus("library.loadFailure", "error", { buildingNameKey: building.nameKey });
+    console.error(`Building JSON ${entry.file} failed to load`, error);
+    setBuildingLibraryStatus("library.loadFailure", "error", { building: entry.label });
     return false;
   } finally {
     if (request === blueprintRequest) {
+      pendingBuildingKey = null;
       blueprintBusy = false;
       renderBuildingLibrary();
+      renderStylePresets();
+      renderRoofVariants();
     }
   }
 }
 
-async function selectBuilding(key) {
-  selectedBuilding = buildingLibraryEntry(key);
-  activeBuildingCategory = selectedBuilding.category;
-  const url = new URL(window.location.href);
-  url.searchParams.set("building", selectedBuilding.key);
-  window.history.replaceState(null, "", url);
-  selectedStyle = buildingStylePreset(selectedBuilding.defaultStyle);
-  selectedRoof = roofTileVariant(selectedBuilding.defaultRoof);
-  glazed = selectedBuilding.defaultGlazed;
-  spatial.homeYaw = selectedBuilding.previewYaw ?? 2.55;
-  spatial.yaw = spatial.homeYaw;
-  spatial.homePitch = 0.58;
-  spatial.pitch = spatial.homePitch;
-  activeBomPhase = "all";
-  els.bomFilters.querySelectorAll("[data-phase]").forEach((item) => item.classList.toggle("active", item.dataset.phase === "all"));
-  renderBuildingLibrary();
-  await rebuildReference();
+function initialBuildingEntry() {
+  const requested = new URLSearchParams(window.location.search).get("building");
+  return requested ? buildingCatalog.byKey[requested] ?? null : null;
 }
 
-function initialBuildingEntry() {
-  const requested = new URLSearchParams(window.location.search).get("building") ?? "hollow-cottage";
-  try {
-    return buildingLibraryEntry(requested);
-  } catch {
-    return buildingLibraryEntry("hollow-cottage");
+function createBlueprintFromDefinition(building, { style, roofMaterial, glazed: includeGlazing }) {
+  let template = templateBlueprints.get(building.key);
+  if (!template) {
+    template = decodeNcm3(building.ncm.code);
+    templateBlueprints.set(building.key, template);
   }
+  const roleByMaterial = new Map(Object.entries(building.ncm.materialRoles).map(([role, material]) => [material, role]));
+  const commands = template.commands.flatMap((command) => {
+    if (!Number.isInteger(command.material)) throw new TypeError(`Building ${building.key} uses an unsupported multi-material command.`);
+    const role = roleByMaterial.get(command.material);
+    if (role === "glazing" && !includeGlazing) return [];
+    if (!role) return [{ ...command }];
+    const material = role === "roof" ? roofMaterial : style.materials[role];
+    if (!Number.isInteger(material)) throw new TypeError(`Building ${building.key} cannot resolve material role ${role}.`);
+    return [{ ...command, material }];
+  });
+  return {
+    size: { ...template.size },
+    name: localizedBuildingText(building, "titles", getLocale()),
+    commands,
+  };
 }
 
 function selectStylePreset(key) {
+  if (!selectedBuilding || blueprintBusy) return;
   selectedStyle = buildingStylePreset(key);
   selectedRoof = roofTileVariant(selectedStyle.materials.roof);
-  void rebuildReference();
+  rebuildReference();
 }
 
 function selectRoofVariant(key) {
+  if (!selectedBuilding || blueprintBusy) return;
   selectedRoof = roofTileVariant(key);
-  void rebuildReference();
+  rebuildReference();
 }
 
 function renderTileRecipe(voxelCount) {
@@ -665,7 +733,7 @@ function renderBlueprintState() {
   renderMaterials(counts);
   constructionBill = compileConstructionBillOfMaterials(
     formats.voxels,
-    buildingConstructionProfiles(selectedStyle, selectedRoof, { extraMaterials: selectedBuilding.extraMaterials }),
+    buildingConstructionProfiles(selectedStyle, selectedRoof, { extraMaterials: selectedExtraMaterials() }),
     { catalogVersion: BUILDING_CATALOG_VERSION },
   );
   els.modelSize.textContent = `${blueprint.size.x} × ${blueprint.size.y} × ${blueprint.size.z}`;
@@ -676,6 +744,45 @@ function renderBlueprintState() {
   renderBuildingMaterialCatalog(counts);
   renderBill();
   renderTileRecipe(counts.get(selectedRoof.materialId) ?? 0);
+  setBlueprintControlsEnabled(true);
+}
+
+function renderEmptyBlueprintState({ preserveEditor = false } = {}) {
+  constructionBill = null;
+  els.modelSize.textContent = "—";
+  els.glazing.textContent = t("view.open");
+  els.glazing.setAttribute("aria-pressed", "false");
+  els.glazing.classList.remove("active");
+  els.buildingTitle.textContent = t("view.selectBuildingTitle");
+  els.styleName.textContent = "—";
+  els.styleDescription.textContent = t("view.selectBuildingDescription");
+  els.styleMaterialGrid.replaceChildren(emptyStateMessage(t("view.selectBuildingDescription")));
+  els.materialStrip.replaceChildren(emptyStateMessage(t("materials.awaitingBuilding")));
+  els.bomSummary.replaceChildren(emptyStateMessage(t("bom.awaitingBuilding")));
+  els.bomRows.replaceChildren();
+  if (!preserveEditor || !codeEditorDirty) els.code.value = "";
+  els.metrics.replaceChildren(emptyStateMessage(t("code.awaitingBuilding")));
+  els.note.textContent = t("code.selectBuilding");
+  els.hash.textContent = "—";
+  renderBuildingMaterialCatalog(new Map());
+  renderTileRecipe(0);
+  setBlueprintControlsEnabled(false);
+}
+
+function emptyStateMessage(text) {
+  const message = document.createElement("p");
+  message.className = "building-empty-state";
+  message.textContent = text;
+  return message;
+}
+
+function setBlueprintControlsEnabled(hasBlueprint) {
+  document.querySelectorAll("[data-format]").forEach((button) => { button.disabled = !hasBlueprint; });
+  els.copy.disabled = !hasBlueprint;
+  els.downloadNcm.disabled = !hasBlueprint;
+  els.downloadJson.disabled = !hasBlueprint;
+  els.downloadBom.disabled = !hasBlueprint;
+  els.glazing.disabled = !hasBlueprint || !selectedBuilding || blueprintBusy;
 }
 
 function renderCodePanel({ preserveEditor = false } = {}) {
@@ -695,6 +802,7 @@ function renderCodePanel({ preserveEditor = false } = {}) {
   );
   els.note.textContent = t(`code.note.${selectedFormat}`);
   updateHash(selectedCode);
+  setBlueprintControlsEnabled(true);
 }
 
 function metric(value, label, extra = "") {
@@ -717,6 +825,7 @@ async function updateHash(code) {
 
 function setupEvents() {
   document.querySelectorAll("[data-format]").forEach((button) => button.addEventListener("click", () => {
+    if (!formats) return;
     selectCodeFormat(button.dataset.format);
     codeEditorDirty = false;
     renderCodePanel();
@@ -737,21 +846,23 @@ function setupEvents() {
     els.copy.textContent = t("code.copied");
     setTimeout(() => { els.copy.textContent = t("code.copy"); }, 1200);
   });
-  els.downloadNcm.addEventListener("click", () => downloadText(`${formats.ncm3}\n`, `${fileStem()}.ncm`, "text/plain"));
+  els.downloadNcm.addEventListener("click", () => {
+    if (formats) downloadText(`${formats.ncm3}\n`, `${fileStem()}.ncm`, "text/plain");
+  });
   els.downloadJson.addEventListener("click", () => downloadText(JSON.stringify({
     name: blueprint.name,
     size: blueprint.size,
-    building: selectedBuilding.key,
+    building: selectedBuildingEntry?.key ?? "external-blueprint",
     style: selectedStyle,
     roof: selectedRoof,
     glazed,
     cuboids: formats.cuboids,
   }, null, 2), `${fileStem()}.expanded.json`, "application/json"));
   els.downloadBom.addEventListener("click", () => downloadText(JSON.stringify({
-    blueprint: { libraryKey: selectedBuilding.key, name: blueprint.name, size: blueprint.size, ncm3: formats.ncm3 },
+    blueprint: { libraryKey: selectedBuildingEntry?.key ?? null, name: blueprint.name, size: blueprint.size, ncm3: formats.ncm3 },
     style: selectedStyle,
     openings: glazed ? "glazed" : "open",
-    materialRecipes: buildingStyleRecipeManifest(selectedStyle, selectedRoof, { extraMaterials: selectedBuilding.extraMaterials }),
+    materialRecipes: buildingStyleRecipeManifest(selectedStyle, selectedRoof, { extraMaterials: selectedExtraMaterials() }),
     billOfMaterials: serializeConstructionBillOfMaterials(constructionBill),
   }, null, 2), `${fileStem()}.bom.json`, "application/json"));
   els.stylePresets.addEventListener("click", (event) => {
@@ -766,7 +877,9 @@ function setupEvents() {
   });
   els.buildingLibrary?.addEventListener("click", (event) => {
     const button = event.target.closest("[data-building]");
-    if (button && button.dataset.building !== selectedBuilding.key) void selectBuilding(button.dataset.building);
+    if (button && button.dataset.building !== selectedBuildingEntry?.key && button.dataset.building !== pendingBuildingKey) {
+      void selectBuilding(button.dataset.building);
+    }
   });
   els.roofVariants.addEventListener("click", (event) => {
     const button = event.target.closest("[data-roof]");
@@ -784,7 +897,7 @@ function setupEvents() {
     if (!button || button.dataset.materialFilter === activeMaterialCatalogFilter) return;
     activeMaterialCatalogFilter = button.dataset.materialFilter;
     els.materialCatalogFilters.querySelectorAll("[data-material-filter]").forEach((item) => item.classList.toggle("active", item === button));
-    renderBuildingMaterialCatalog(materialCounts(formats.voxels));
+    renderBuildingMaterialCatalog(formats ? materialCounts(formats.voxels) : new Map());
   });
   els.reset.addEventListener("click", () => spatial.resetView());
   els.grid.addEventListener("click", () => {
@@ -792,8 +905,9 @@ function setupEvents() {
     els.grid.classList.toggle("active", spatial.gridVisible);
   });
   els.glazing.addEventListener("click", () => {
+    if (!selectedBuilding || blueprintBusy) return;
     glazed = !glazed;
-    void rebuildReference();
+    rebuildReference();
   });
   els.spin.addEventListener("click", () => {
     autoSpin = !autoSpin;
@@ -907,7 +1021,7 @@ function detectStyle(counts) {
 }
 
 function fileStem() {
-  return `${selectedBuilding.key}-${selectedStyle.key}-${selectedRoof.key}-${glazed ? "glazed" : "open"}`;
+  return `${selectedBuildingEntry?.key ?? "external-blueprint"}-${selectedStyle.key}-${selectedRoof.key}-${glazed ? "glazed" : "open"}`;
 }
 
 function setPdaStatus(key, state = "", variables = {}) {
@@ -924,8 +1038,12 @@ function setBuildingLibraryStatus(key, state = "", variables = {}) {
 }
 
 function localizedBuildingLibraryStatusVariables(variables) {
-  if (!variables.buildingNameKey) return variables;
-  return { ...variables, building: t(variables.buildingNameKey) };
+  if (!variables.buildingKey) return variables;
+  const building = loadedBuildingDefinitions.get(variables.buildingKey);
+  return {
+    ...variables,
+    building: building ? localizedBuildingText(building, "titles", getLocale()) : variables.buildingKey,
+  };
 }
 
 function downloadText(text, filename, type) {
@@ -941,8 +1059,13 @@ function renderLocalizedState() {
   renderBuildingLibrary();
   renderStylePresets();
   renderRoofVariants();
-  renderBlueprintState();
-  renderCodePanel({ preserveEditor: true });
+  if (formats) {
+    if (selectedBuilding) blueprint.name = localizedBuildingText(selectedBuilding, "titles", getLocale());
+    renderBlueprintState();
+    renderCodePanel({ preserveEditor: true });
+  } else {
+    renderEmptyBlueprintState({ preserveEditor: true });
+  }
   setCodeLoadStatus(codeLoadStatusMessage.key, codeLoadStatusMessage.state, codeLoadStatusMessage.variables);
   setPdaStatus(pdaStatusMessage.key, pdaStatusMessage.state, pdaStatusMessage.variables);
   setBuildingLibraryStatus(

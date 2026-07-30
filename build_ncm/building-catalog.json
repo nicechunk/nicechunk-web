@@ -1,0 +1,10 @@
+{
+  "schema": "nicechunk.building-catalog.v1",
+  "buildings": [
+    "buildings/residential/hollow-cottage.json",
+    "buildings/coastal/seaside-cottage.json",
+    "buildings/civic/civic-town-hall.json",
+    "buildings/industrial/freight-warehouse.json",
+    "buildings/fortress/grand-castle.json"
+  ]
+}

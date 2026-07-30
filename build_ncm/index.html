@@ -7,7 +7,7 @@
     <meta name="description" content="NiceChunk static building compiler powered by chunk.js: build, compress and preview NCM blueprints for PDA storage." />
     <title>BUILD_NCM — NiceChunk Building Compiler</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%23a8ee45' d='m32 3 26 15v29L32 62 6 47V18z'/%3E%3Cpath fill='%2310151c' d='m32 10 19 11v22L32 54 13 43V21z'/%3E%3Cpath fill='%234a96ff' d='m32 10 19 11-19 11-19-11z'/%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="./style.css?v=1.0.0-category-browser" />
+    <link rel="stylesheet" href="./style.css?v=1.1.0-json-catalog" />
   </head>
   <body>
     <header class="topbar">
@@ -22,10 +22,20 @@
           <span>NGINX READY</span>
           <span>NO THREE.JS</span>
         </div>
-        <div class="language-switch" role="group" aria-label="Interface language" data-i18n-aria-label="language.label">
-          <button type="button" class="active" data-locale="en" aria-pressed="true">EN</button>
-          <button type="button" data-locale="zh-Hans" aria-pressed="false">中文</button>
-        </div>
+        <label class="language-switch">
+          <span data-i18n="language.label">Interface language</span>
+          <select data-language-select aria-label="Interface language" data-i18n-aria-label="language.label">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="ja">日本語</option>
+            <option value="ru">Русский</option>
+            <option value="ko">한국어</option>
+            <option value="zh-Hant">繁體中文</option>
+            <option value="zh-Hans">简体中文</option>
+          </select>
+        </label>
       </div>
     </header>
 
@@ -51,8 +61,8 @@
           <span id="buildingLibraryCount" class="library-count">5 BUILDINGS</span>
         </div>
         <div class="building-library-intro">
-          <p data-i18n="library.intro">Browse by category, then select a building to load its blueprint, spatial preview, NCM payload, material counts and BOM.</p>
-          <span data-i18n="library.future">CATEGORY INDEX · BLUEPRINTS LOAD ON DEMAND</span>
+          <p data-i18n="library.intro">The JSON catalog contains filenames only. Select a building to download that building JSON and expand its NCM template.</p>
+          <span data-i18n="library.future">JSON INDEX · BUILDINGS LOAD ON CLICK</span>
         </div>
         <div class="building-library-browser">
           <div id="buildingCategoryList" class="building-category-list" role="radiogroup" aria-label="Building categories" data-i18n-aria-label="library.categoryAria"></div>
@@ -72,7 +82,7 @@
           <div class="panel-head">
             <div>
               <p class="eyebrow">SPATIAL PREVIEW</p>
-              <h2 id="buildingTitle">Cottage Style · Hollow Cottage</h2>
+              <h2 id="buildingTitle">Select a building to load its JSON blueprint.</h2>
             </div>
             <div class="view-actions">
               <button id="toggleGrid" type="button" class="quiet active" data-i18n="view.grid">Grid</button>
@@ -85,7 +95,7 @@
             <canvas id="preview" aria-label="Three-dimensional building preview" data-i18n-aria-label="view.canvasAria"></canvas>
             <div class="canvas-hud top-left">
               <span>MODEL SPACE</span>
-              <strong id="modelSize">32 × 27 × 26</strong>
+              <strong id="modelSize">—</strong>
             </div>
             <div class="canvas-hud bottom-left">
               <span data-i18n="view.hint">chunk.js software voxel renderer · drag to rotate · wheel to zoom</span>
@@ -281,6 +291,6 @@
       <span>Canonical materials · bounded expansion · content-addressed blueprints</span>
     </footer>
 
-    <script type="module" src="./app.js?v=1.0.0-category-browser"></script>
+    <script type="module" src="./app.js?v=1.1.0-json-catalog"></script>
   </body>
 </html>

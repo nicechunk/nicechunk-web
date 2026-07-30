@@ -1,0 +1,51 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "hollow-cottage",
+  "category": "residential",
+  "titles": {
+    "en": "Hollow Cottage",
+    "es": "Casa Hueca",
+    "fr": "Cottage Creux",
+    "de": "Hohles Landhaus",
+    "ja": "中空のコテージ",
+    "ru": "Полый коттедж",
+    "ko": "속이 빈 오두막",
+    "zh-Hant": "空心小屋",
+    "zh-Hans": "空心小屋"
+  },
+  "descriptions": {
+    "en": "A compact hollow residential shell with an open doorway and optional side glazing.",
+    "es": "Una envolvente residencial hueca y compacta con entrada abierta y acristalamiento lateral opcional.",
+    "fr": "Une enveloppe résidentielle creuse et compacte avec une entrée ouverte et un vitrage latéral optionnel.",
+    "de": "Eine kompakte, hohle Wohnhülle mit offenem Eingang und optionaler Seitenverglasung.",
+    "ja": "開放された出入口と任意の側面ガラスを備えた、コンパクトで中空の住宅外殻。",
+    "ru": "Компактная полая жилая оболочка с открытым входом и дополнительным боковым остеклением.",
+    "ko": "열린 출입구와 선택형 측면 유리를 갖춘 작고 속이 빈 주거 외피입니다.",
+    "zh-Hant": "緊湊的空心住宅外殼，帶開放門洞和可選側牆玻璃。",
+    "zh-Hans": "紧凑的空心住宅外壳，带开放门洞和可选侧墙玻璃。"
+  },
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "doorOpening": "open",
+  "footprint": "16 × 13 vu",
+  "height": "20 vu",
+  "referenceScale": "Compact residential shell",
+  "preview": {},
+  "extraMaterials": [],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARgWEhoBAQMAAg8ADAEGBAEDDQAKAQIEAgMCCAABAgsCAwYIAAECBwkDAwEAAQIEAg0NCAABAgQCBAAICAECEQIEAAgCAQIRAgsACAEBAhECBwABAwECEQgHAAIDAQQRBAcAAwMBAwQCAwAIAAEDEQIDAAgAAQMEAg0ACAABAxECDQAIAAEDAwoCDwABAQMDCg0PAAEBAQcAAAMAAgEBCAEBAgABCgIECwMACgoCEQsDAAoIBQMKAg8MCQMDCgIPDAEHDQ4HAQQBAQEMEwYDAAM"
+  }
+}

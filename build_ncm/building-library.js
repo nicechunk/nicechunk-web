@@ -3,175 +3,189 @@ export const BUILDING_LIBRARY_POLICY = Object.freeze({
   entranceRule: "Blueprints keep entrance portals open; players place door items separately.",
 });
 
-export const BUILDING_CATEGORIES = Object.freeze([
-  category({ key: "residential", nameKey: "library.category.residential" }),
-  category({ key: "coastal", nameKey: "library.category.coastal" }),
-  category({ key: "civic", nameKey: "library.category.civic" }),
-  category({ key: "industrial", nameKey: "library.category.industrial" }),
-  category({ key: "fortress", nameKey: "library.category.fortress" }),
+export const BUILDING_DEFINITION_LOCALES = Object.freeze([
+  "en",
+  "es",
+  "fr",
+  "de",
+  "ja",
+  "ru",
+  "ko",
+  "zh-Hant",
+  "zh-Hans",
 ]);
 
-export const BUILDING_CATEGORIES_BY_KEY = Object.freeze(Object.fromEntries(
-  BUILDING_CATEGORIES.map((entry) => [entry.key, entry]),
-));
+const BUILDING_CATALOG_URL = new URL("./building-catalog.json", import.meta.url);
+const CATALOG_SCHEMA = "nicechunk.building-catalog.v1";
+const BUILDING_SCHEMA = "nicechunk.ncm-building.v1";
+const BUILDING_PATH = /^buildings\/([a-z0-9]+(?:-[a-z0-9]+)*)\/([a-z0-9]+(?:-[a-z0-9]+)*)\.json$/;
+const definitionPromises = new Map();
 
-export const BUILDING_LIBRARY = Object.freeze([
-  building({
-    key: "hollow-cottage",
-    name: "Hollow Cottage",
-    nameKey: "library.cottage.name",
-    descriptionKey: "library.cottage.description",
-    category: "residential",
-    defaultStyle: "cottage",
-    defaultRoof: "terracotta",
-    defaultGlazed: false,
-    doorOpening: "open",
-    footprint: "16 × 13 vu",
-    height: "20 vu",
-    referenceScale: "Compact residential shell",
-    extraMaterials: [],
-    blueprintModule: "./house-blueprint.js",
-    blueprintExport: "createReferenceCottage",
-  }),
-  building({
-    key: "seaside-cottage",
-    name: "Sea Breeze Cottage",
-    nameKey: "library.seaside.name",
-    descriptionKey: "library.seaside.description",
-    category: "coastal",
-    defaultStyle: "coastal",
-    defaultRoof: "iceBlue",
-    defaultGlazed: true,
-    doorOpening: "open",
-    footprint: "22 × 18 vu + deck",
-    height: "24 vu",
-    referenceScale: "Raised compact coastal residence",
-    extraMaterials: Object.freeze([
-      Object.freeze({ materialId: 55, phase: "finish", label: "Salt-treated Wooden Deck" }),
-      Object.freeze({ materialId: 60, phase: "openings", label: "Amber Porch Lantern" }),
-      Object.freeze({ materialId: 75, phase: "finish", label: "Blue Ceramic Fascia" }),
-    ]),
-    blueprintModule: "./seaside-cottage-blueprint.js",
-    blueprintExport: "createSeasideCottage",
-  }),
-  building({
-    key: "freight-warehouse",
-    name: "Freight Warehouse",
-    nameKey: "library.warehouse.name",
-    descriptionKey: "library.warehouse.description",
-    category: "industrial",
-    defaultStyle: "castle",
-    defaultRoof: "charcoal",
-    defaultGlazed: true,
-    doorOpening: "open",
-    footprint: "32 × 24 vu + dock",
-    height: "36 vu",
-    referenceScale: "Large uninterrupted storage hall",
-    extraMaterials: Object.freeze([
-      Object.freeze({ materialId: 60, phase: "openings", label: "Amber Loading-dock Lamp" }),
-    ]),
-    blueprintModule: "./warehouse-blueprint.js",
-    blueprintExport: "createFreightWarehouse",
-  }),
-  building({
-    key: "grand-castle",
-    name: "Royal Blue Citadel",
-    nameKey: "library.castle.name",
-    descriptionKey: "library.castle.description",
-    category: "fortress",
-    defaultStyle: "castle",
-    defaultRoof: "iceBlue",
-    defaultGlazed: false,
-    doorOpening: "open",
-    footprint: "144 × 124 vu",
-    height: "85 vu",
-    previewFitScale: 1.12,
-    previewMinScale: 1,
-    previewYaw: 2.35,
-    referenceScale: "Four-tower royal castle with a broad placement courtyard",
-    extraMaterials: Object.freeze([
-      Object.freeze({ materialId: 60, phase: "openings", label: "Amber Gate Brazier" }),
-      Object.freeze({ materialId: 75, phase: "finish", label: "Blue Citadel Banner" }),
-    ]),
-    blueprintModule: "./grand-castle-blueprint.js",
-    blueprintExport: "createGrandCastle",
-  }),
-  building({
-    key: "civic-town-hall",
-    name: "Civic Town Hall",
-    nameKey: "library.townHall.name",
-    descriptionKey: "library.townHall.description",
-    category: "civic",
-    defaultStyle: "coastal",
-    defaultRoof: "iceBlue",
-    defaultGlazed: true,
-    doorOpening: "open",
-    footprint: "28 × 28 vu",
-    height: "42 vu",
-    referenceScale: "7 × 7 design grid at four NCM voxels per cell",
-    extraMaterials: Object.freeze([
-      Object.freeze({ materialId: 60, phase: "openings", label: "Amber Civic Lantern" }),
-      Object.freeze({ materialId: 75, phase: "finish", label: "Blue Civic Crest and Flag" }),
-    ]),
-    blueprintModule: "./civic-town-hall-blueprint.js",
-    blueprintExport: "createCivicTownHall",
-  }),
-]);
+export async function loadBuildingCatalog({ signal } = {}) {
+  const response = await fetch(BUILDING_CATALOG_URL, { signal, cache: "no-cache" });
+  if (!response.ok) throw new Error(`Building catalog request failed with HTTP ${response.status}.`);
+  const source = await response.json();
+  if (source?.schema !== CATALOG_SCHEMA || !Array.isArray(source.buildings)) {
+    throw new TypeError("Invalid building catalog JSON.");
+  }
 
-export const BUILDING_LIBRARY_BY_KEY = Object.freeze(Object.fromEntries(
-  BUILDING_LIBRARY.map((entry) => [entry.key, entry]),
-));
+  const keys = new Set();
+  const files = new Set();
+  const entries = source.buildings.map((file, index) => {
+    if (typeof file !== "string" || files.has(file)) throw new TypeError(`Invalid building catalog filename at index ${index}.`);
+    const match = BUILDING_PATH.exec(file);
+    if (!match) throw new TypeError(`Unsafe building catalog filename: ${file}`);
+    const [, category, key] = match;
+    if (keys.has(key)) throw new TypeError(`Duplicate building key in catalog: ${key}`);
+    files.add(file);
+    keys.add(key);
+    return Object.freeze({
+      key,
+      category,
+      file,
+      label: titleFromSlug(key),
+    });
+  });
+  if (!entries.length) throw new TypeError("Building catalog must contain at least one filename.");
 
-const BLUEPRINT_FACTORY_PROMISES = new Map();
+  const categories = [];
+  const categoryKeys = new Set();
+  for (const entry of entries) {
+    if (categoryKeys.has(entry.category)) continue;
+    categoryKeys.add(entry.category);
+    categories.push(Object.freeze({
+      key: entry.category,
+      nameKey: `library.category.${entry.category}`,
+      label: titleFromSlug(entry.category),
+    }));
+  }
 
-export function buildingLibraryEntry(value = "hollow-cottage") {
-  const entry = typeof value === "object" ? value : BUILDING_LIBRARY_BY_KEY[String(value)];
-  if (!entry || !BUILDING_LIBRARY_BY_KEY[entry.key]) throw new Error(`Unknown building library entry: ${value}`);
+  return Object.freeze({
+    schema: source.schema,
+    entries: Object.freeze(entries),
+    categories: Object.freeze(categories),
+    byKey: Object.freeze(Object.fromEntries(entries.map((entry) => [entry.key, entry]))),
+  });
+}
+
+export function buildingCatalogEntry(catalog, value) {
+  const entry = typeof value === "object" ? value : catalog?.byKey?.[String(value)];
+  if (!entry || catalog?.byKey?.[entry.key] !== entry) throw new Error(`Unknown building catalog entry: ${value}`);
   return entry;
 }
 
-export function buildingsInCategory(categoryOrKey) {
+export function buildingsInCategory(catalog, categoryOrKey) {
   const key = typeof categoryOrKey === "object" ? categoryOrKey?.key : String(categoryOrKey);
-  if (!BUILDING_CATEGORIES_BY_KEY[key]) throw new Error(`Unknown building category: ${key}`);
-  return BUILDING_LIBRARY.filter((entry) => entry.category === key);
+  if (!catalog?.categories?.some((entry) => entry.key === key)) throw new Error(`Unknown building category: ${key}`);
+  return catalog.entries.filter((entry) => entry.category === key);
 }
 
-export async function createLibraryBlueprint(buildingOrKey, options = {}) {
-  const entry = buildingLibraryEntry(buildingOrKey);
-  const createBlueprint = await loadBlueprintFactory(entry);
-  return createBlueprint(options);
-}
-
-async function loadBlueprintFactory(entry) {
-  let promise = BLUEPRINT_FACTORY_PROMISES.get(entry.key);
+export async function loadBuildingDefinition(catalogEntry, { signal } = {}) {
+  const entry = catalogEntry;
+  let promise = definitionPromises.get(entry.file);
   if (!promise) {
-    promise = import(entry.blueprintModule).then((module) => {
-      const createBlueprint = module[entry.blueprintExport];
-      if (typeof createBlueprint !== "function") {
-        throw new TypeError(`Building ${entry.key} does not export ${entry.blueprintExport}().`);
-      }
-      return createBlueprint;
-    });
-    BLUEPRINT_FACTORY_PROMISES.set(entry.key, promise);
+    promise = fetch(new URL(entry.file, BUILDING_CATALOG_URL), { signal, cache: "no-cache" })
+      .then(async (response) => {
+        if (!response.ok) throw new Error(`Building JSON request failed with HTTP ${response.status}.`);
+        return validateBuildingDefinition(await response.json(), entry);
+      });
+    definitionPromises.set(entry.file, promise);
   }
   try {
     return await promise;
   } catch (error) {
-    if (BLUEPRINT_FACTORY_PROMISES.get(entry.key) === promise) BLUEPRINT_FACTORY_PROMISES.delete(entry.key);
+    if (definitionPromises.get(entry.file) === promise) definitionPromises.delete(entry.file);
     throw error;
   }
 }
 
-function category(definition) {
-  if (!definition?.key || !definition.nameKey) throw new TypeError("Invalid building category.");
-  return Object.freeze({ ...definition });
+export function localizedBuildingText(building, field, locale) {
+  const values = building?.[field];
+  if (!values || typeof values !== "object") return "";
+  return values[locale] ?? values.en ?? "";
 }
 
-function building(definition) {
-  const categoryEntry = BUILDING_CATEGORIES_BY_KEY[definition?.category];
-  if (!definition?.key || !categoryEntry || !definition.blueprintModule || !definition.blueprintExport) {
-    throw new TypeError("Invalid building library entry.");
+function validateBuildingDefinition(source, catalogEntry) {
+  if (!source || typeof source !== "object" || Array.isArray(source) || source.schema !== BUILDING_SCHEMA) {
+    throw new TypeError(`Invalid building JSON for ${catalogEntry.key}.`);
   }
-  if (definition.doorOpening !== "open") throw new TypeError(`Building ${definition.key} must keep its entrance portal open.`);
-  return Object.freeze({ ...definition, categoryKey: categoryEntry.nameKey });
+  if (source.key !== catalogEntry.key || source.category !== catalogEntry.category) {
+    throw new TypeError(`Building JSON identity does not match ${catalogEntry.file}.`);
+  }
+  const titles = localizedTextMap(source.titles, "titles", source.key);
+  const descriptions = localizedTextMap(source.descriptions, "descriptions", source.key);
+  const defaults = source.defaults;
+  if (!defaults || typeof defaults.style !== "string" || typeof defaults.roof !== "string" || typeof defaults.glazed !== "boolean") {
+    throw new TypeError(`Building ${source.key} has invalid defaults.`);
+  }
+  if (source.doorOpening !== "open") throw new TypeError(`Building ${source.key} must keep its entrance portal open.`);
+  for (const field of ["footprint", "height", "referenceScale"]) {
+    if (typeof source[field] !== "string" || !source[field].trim()) throw new TypeError(`Building ${source.key} has invalid ${field}.`);
+  }
+
+  const preview = source.preview ?? {};
+  for (const field of ["fitScale", "minScale", "yaw"]) {
+    if (preview[field] != null && (!Number.isFinite(preview[field]) || preview[field] <= 0)) {
+      throw new TypeError(`Building ${source.key} has invalid preview.${field}.`);
+    }
+  }
+
+  const extraMaterials = (source.extraMaterials ?? []).map((item, index) => {
+    if (!Number.isInteger(item?.materialId) || item.materialId <= 0 || typeof item.phase !== "string" || typeof item.label !== "string") {
+      throw new TypeError(`Building ${source.key} has invalid extra material ${index}.`);
+    }
+    return Object.freeze({ materialId: item.materialId, phase: item.phase, label: item.label });
+  });
+
+  const ncm = source.ncm;
+  if (ncm?.format !== "NCM3_ROLE_TEMPLATE" || typeof ncm.code !== "string" || !ncm.code.startsWith("NCM3:")) {
+    throw new TypeError(`Building ${source.key} has invalid NCM template data.`);
+  }
+  if (ncm.code.length > 131072) throw new TypeError(`Building ${source.key} NCM template exceeds the safety limit.`);
+  const materialRoles = ncm.materialRoles;
+  const requiredRoles = ["foundation", "wall", "structure", "glazing", "roof", "floor", "chimney"];
+  if (!materialRoles || requiredRoles.some((role) => !Number.isInteger(materialRoles[role]))) {
+    throw new TypeError(`Building ${source.key} has invalid material-role placeholders.`);
+  }
+  if (new Set(requiredRoles.map((role) => materialRoles[role])).size !== requiredRoles.length) {
+    throw new TypeError(`Building ${source.key} material-role placeholders must be unique.`);
+  }
+
+  return Object.freeze({
+    schema: source.schema,
+    key: source.key,
+    category: source.category,
+    titles,
+    descriptions,
+    defaults: Object.freeze({ ...defaults }),
+    doorOpening: source.doorOpening,
+    footprint: source.footprint,
+    height: source.height,
+    referenceScale: source.referenceScale,
+    preview: Object.freeze({ ...preview }),
+    extraMaterials: Object.freeze(extraMaterials),
+    ncm: Object.freeze({
+      format: ncm.format,
+      code: ncm.code,
+      materialRoles: Object.freeze({ ...materialRoles }),
+    }),
+  });
+}
+
+function localizedTextMap(value, field, buildingKey) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    throw new TypeError(`Building ${buildingKey} has invalid ${field}.`);
+  }
+  const normalized = {};
+  for (const locale of BUILDING_DEFINITION_LOCALES) {
+    if (typeof value[locale] !== "string" || !value[locale].trim()) {
+      throw new TypeError(`Building ${buildingKey} ${field} are missing ${locale}.`);
+    }
+    normalized[locale] = value[locale].trim();
+  }
+  return Object.freeze(normalized);
+}
+
+function titleFromSlug(value) {
+  return value.split("-").map((part) => part[0].toUpperCase() + part.slice(1)).join(" ");
 }

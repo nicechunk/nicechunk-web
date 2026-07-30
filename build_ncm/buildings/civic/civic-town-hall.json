@@ -1,0 +1,62 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "civic-town-hall",
+  "category": "civic",
+  "titles": {
+    "en": "Civic Town Hall",
+    "es": "Ayuntamiento Cívico",
+    "fr": "Hôtel de Ville",
+    "de": "Bürgerliches Rathaus",
+    "ja": "市庁舎",
+    "ru": "Городская ратуша",
+    "ko": "시민 회관",
+    "zh-Hant": "市政廳",
+    "zh-Hans": "市政厅"
+  },
+  "descriptions": {
+    "en": "Large blue-tiled civic hall with an open entrance portal, glazed windows, crest, flag and entrance lamps.",
+    "es": "Gran ayuntamiento de tejas azules con acceso abierto, ventanas acristaladas, emblema, bandera y lámparas de entrada.",
+    "fr": "Grand bâtiment civique aux tuiles bleues avec entrée ouverte, fenêtres vitrées, blason, drapeau et lampes d'entrée.",
+    "de": "Großes Rathaus mit blauen Ziegeln, offenem Eingang, verglasten Fenstern, Wappen, Flagge und Eingangsleuchten.",
+    "ja": "開放された入口、ガラス窓、紋章、旗、入口灯を備えた青瓦の大型市庁舎。",
+    "ru": "Большая ратуша с синей черепицей, открытым входом, остеклёнными окнами, гербом, флагом и входными фонарями.",
+    "ko": "열린 입구, 유리창, 문장, 깃발과 입구 조명을 갖춘 파란 기와의 대형 시민 회관입니다.",
+    "zh-Hant": "大型藍瓦市政建築，包含開放門洞、玻璃窗、市政徽記、旗幟和入口燈柱。",
+    "zh-Hans": "大型蓝瓦市政建筑，包含开放门洞、玻璃窗、市政徽记、旗帜和入口灯柱。"
+  },
+  "defaults": {
+    "style": "coastal",
+    "roof": "iceBlue",
+    "glazed": true
+  },
+  "doorOpening": "open",
+  "footprint": "28 × 28 vu",
+  "height": "42 vu",
+  "referenceScale": "7 × 7 design grid at four NCM voxels per cell",
+  "preview": {},
+  "extraMaterials": [
+    {
+      "materialId": 60,
+      "phase": "openings",
+      "label": "Amber Civic Lantern"
+    },
+    {
+      "materialId": 75,
+      "phase": "finish",
+      "label": "Blue Civic Crest and Flag"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ASwqKDgBAQcABR0AHQEGCAEGGwAbAQEIAgYbAQABAQgCIRsBAAEBCAIHAAEZAQEjAgcAARkBAiMEBgANCAECIwQZAA0IAQIjDQ8ABAkBAggEBgANCAECCAQZAA0IAQIIBA8AAwkBAggNDwAECQECCQQGBg0AAQIcBAYGDQABAhAEBgsDAAECEA0GCwQAAQIJBCEGDQABAhwEIQYNAAECEAQhCwMAAQIQDSELBAABBAgIDwAECQEEEAgGCwQAAQQQCCELBAABAwgEBgANAAEDCAQhAA0AAQMjBAYADQABAyMEIQANAAEDCBEGGwAAAQMIESEbAAABAyQDDgALAAEDJAMZAAsAAQMkDg4AAAsBASQADgUACwEBJAEPAwAJCgIIEgYAGwoCIxIGABsIBQcRBR0dCQMHEQUdHQEBJBUQAAUHAQIlFhEAAwUBSyYXEwABAQEBFCATAwABAQMVIRMACAABPBUpEwAAAAFLFiYTAwEAAUsaJRMDAQABSx4kEwMBAAEBKAAMAAAAAQMoAQwABgABPCgIDAABAAEBKAoMAAAAAQEoABsAAAABAygBGwAGAAE8KAgbAAEAAQEoChsAAAA"
+  }
+}

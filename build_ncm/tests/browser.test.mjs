@@ -38,14 +38,16 @@ try {
   await client.send("Page.enable");
   await client.send("Emulation.setDeviceMetricsOverride", { width: 1600, height: 1200, deviceScaleFactor: 1, mobile: false });
   await client.send("Page.navigate", { url });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 5 && document.querySelectorAll('[data-building]').length === 1 && document.querySelector('[data-building=hollow-cottage]')"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 5 && document.querySelectorAll('[data-building]').length === 1 && document.querySelector('[data-building=hollow-cottage]') && document.querySelector('[data-language-select]').options.length === 9"));
 
   const initial = await evaluate(client, `({
     visibleBuildingCount: document.querySelectorAll('[data-building]').length,
     totalBuildingCount: document.querySelector('#buildingLibraryCount').textContent,
     categoryCount: document.querySelectorAll('[data-building-category]').length,
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
-    activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
+    activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
+    buildingLabel: document.querySelector('[data-building=hollow-cottage] strong')?.textContent,
+    buildingDescription: document.querySelector('[data-building=hollow-cottage] em')?.textContent,
     buildingThumbnailCount: document.querySelectorAll('.building-library-preview').length,
     libraryIsLeft: document.querySelector('.building-library-panel').getBoundingClientRect().right <= document.querySelector('.viewport-card').getBoundingClientRect().left,
     libraryIsSplit: document.querySelector('#buildingCategoryList').getBoundingClientRect().right <= document.querySelector('#buildingLibraryList').getBoundingClientRect().left,
@@ -64,6 +66,9 @@ try {
     modelErrors: document.querySelectorAll('canvas[data-model-error]').length,
     activeStyle: document.querySelector('[data-style].active')?.dataset.style,
     ncm: document.querySelector('#codeOutput').value,
+    modelSize: document.querySelector('#modelSize').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    languages: [...document.querySelector('[data-language-select]').options].map((option) => option.value),
     editorReadOnly: document.querySelector('#codeOutput').readOnly,
     loadButton: document.querySelector('#loadCode')?.textContent,
     codeStatusRole: document.querySelector('#codeLoadStatus')?.getAttribute('role'),
@@ -74,7 +79,9 @@ try {
   assert.match(initial.totalBuildingCount, /5 BUILDINGS/);
   assert.equal(initial.categoryCount, 5);
   assert.equal(initial.activeCategory, "residential");
-  assert.equal(initial.activeBuilding, "hollow-cottage");
+  assert.equal(initial.activeBuilding, null);
+  assert.equal(initial.buildingLabel, "Hollow Cottage");
+  assert.match(initial.buildingDescription, /Click to download this building JSON/);
   assert.equal(initial.buildingThumbnailCount, 0);
   assert.equal(initial.libraryIsLeft, true);
   assert.equal(initial.libraryIsSplit, true);
@@ -85,14 +92,17 @@ try {
   assert.equal(initial.introTitle, "Turn a building into compact on-chain code.");
   assert.equal(initial.bomTitle, "Construction Bill of Materials");
   assert.equal(initial.pdaTitle, "Fetch a Building from a PDA");
-  assert.equal(initial.roleCount, 7);
-  assert.equal(initial.roleModelCount, 7);
-  assert.ok(initial.usedModelCount >= 6);
+  assert.equal(initial.roleCount, 0);
+  assert.equal(initial.roleModelCount, 0);
+  assert.equal(initial.usedModelCount, 0);
   assert.equal(initial.catalogCount, 7);
   assert.equal(initial.catalogModelCount, 7);
   assert.equal(initial.modelErrors, 0);
   assert.equal(initial.activeStyle, "cottage");
-  assert.match(initial.ncm, /^NCM3:/);
+  assert.equal(initial.ncm, "");
+  assert.equal(initial.modelSize, "—");
+  assert.equal(initial.disabledStyles, 6);
+  assert.deepEqual(initial.languages, ["en", "es", "fr", "de", "ja", "ru", "ko", "zh-Hant", "zh-Hans"]);
   assert.equal(initial.editorReadOnly, false);
   assert.equal(initial.loadButton, "Load");
   assert.equal(initial.codeStatusRole, "status");
@@ -102,22 +112,25 @@ try {
   assert.ok(initial.resources.includes("/chunk.js/renderer/texture-array-manager.js"));
   assert.ok(initial.resources.includes("/build_ncm/i18n.js"));
   assert.ok(initial.resources.includes("/build_ncm/building-library.js"));
-  assert.ok(initial.resources.includes("/build_ncm/house-blueprint.js"));
-  assert.ok(!initial.resources.includes("/build_ncm/civic-town-hall-blueprint.js"));
-  assert.ok(!initial.resources.includes("/build_ncm/seaside-cottage-blueprint.js"));
-  assert.ok(!initial.resources.includes("/build_ncm/warehouse-blueprint.js"));
-  assert.ok(!initial.resources.includes("/build_ncm/grand-castle-blueprint.js"));
+  assert.ok(initial.resources.includes("/build_ncm/locales/en.json"));
+  assert.ok(initial.resources.includes("/build_ncm/building-catalog.json"));
+  assert.ok(!initial.resources.some((path) => path.startsWith("/build_ncm/buildings/")), "the initial page must not download any building JSON");
+  assert.ok(!initial.resources.some((path) => path.endsWith("-blueprint.js") || path.endsWith("/house-blueprint.js")), "the JSON runtime must not load building generators");
   assert.ok(!initial.resources.includes("/chunk.js/index.js"), "build_ncm must not load the full chunk.js barrel");
 
   const payloadBeforeLocaleSwitch = initial.ncm;
-  await evaluate(client, "document.querySelector('[data-locale=zh-Hans]').click()");
+  await evaluate(client, `(() => {
+    const select = document.querySelector('[data-language-select]');
+    select.value = 'zh-Hans';
+    select.dispatchEvent(new Event('change', { bubbles: true }));
+  })()`);
   await waitFor(() => evaluate(client, "document.documentElement.lang === 'zh-Hans'"));
   const chinese = await evaluate(client, `({
     title: document.title,
     intro: document.querySelector('.intro h1').textContent,
     bom: document.querySelector('.bom-panel h2').textContent,
     openings: document.querySelector('#toggleGlazing').textContent,
-    metric: document.querySelector('#metrics .metric span').textContent,
+    emptyCode: document.querySelector('#metrics .building-empty-state').textContent,
     payload: document.querySelector('#codeOutput').value,
     models: document.querySelectorAll('canvas[data-material-model]').length,
     errors: document.querySelectorAll('canvas[data-model-error]').length,
@@ -126,14 +139,30 @@ try {
   assert.equal(chinese.intro, "把建筑变成一段可以上链的代码。");
   assert.equal(chinese.bom, "建筑材料清单");
   assert.equal(chinese.openings, "洞口：挖空");
-  assert.equal(chinese.metric, "NCM3 原始载荷");
+  assert.equal(chinese.emptyCode, "尚未加载 NCM 载荷。");
   assert.equal(chinese.payload, payloadBeforeLocaleSwitch, "locale changes must never alter the NCM payload");
-  assert.ok(chinese.models >= 20);
+  assert.ok(chinese.models >= 13);
   assert.equal(chinese.errors, 0);
-  await evaluate(client, "document.querySelector('[data-locale=en]').click()");
+  assert.equal(await evaluate(client, "performance.getEntriesByType('resource').some((entry) => new URL(entry.name).pathname.startsWith('/build_ncm/buildings/'))"), false);
+  await evaluate(client, `(() => {
+    const select = document.querySelector('[data-language-select]');
+    select.value = 'en';
+    select.dispatchEvent(new Event('change', { bubbles: true }));
+  })()`);
   await waitFor(() => evaluate(client, "document.documentElement.lang === 'en' && document.querySelector('.intro h1').textContent.startsWith('Turn a building')"));
 
-  const cottagePayload = initial.ncm;
+  await evaluate(client, "document.querySelector('[data-building=hollow-cottage]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'hollow-cottage' && document.querySelector('#modelSize').textContent === '24 × 22 × 18'"));
+  const cottageLoaded = await evaluate(client, `({
+    title: document.querySelector('#buildingTitle').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.match(cottageLoaded.title, /Hollow Cottage/);
+  assert.match(cottageLoaded.payload, /^NCM3:/);
+  assert.ok(cottageLoaded.resources.includes("/build_ncm/buildings/residential/hollow-cottage.json"));
+  assert.ok(!cottageLoaded.resources.includes("/build_ncm/house-blueprint.js"));
+  const cottagePayload = cottageLoaded.payload;
   const cottageVoxels = Number((await evaluate(client, "document.querySelectorAll('#metrics .metric strong')[2].textContent")).replaceAll(",", ""));
   await evaluate(client, "document.querySelector('[data-building-category=coastal]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'coastal' && document.querySelector('[data-building=seaside-cottage]')"));
@@ -144,7 +173,7 @@ try {
   })`);
   assert.equal(coastalBrowse.activeBuilding, null, "browsing another category must not select or generate a building");
   assert.match(coastalBrowse.previewTitle, /Hollow Cottage/);
-  assert.ok(!coastalBrowse.resources.includes("/build_ncm/seaside-cottage-blueprint.js"), "category browsing must not load its blueprint module");
+  assert.ok(!coastalBrowse.resources.includes("/build_ncm/buildings/coastal/seaside-cottage.json"), "category browsing must not load its building JSON");
   await evaluate(client, "document.querySelector('[data-building=seaside-cottage]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'seaside-cottage' && document.querySelector('#modelSize').textContent === '38 × 29 × 32'"));
   const seaside = await evaluate(client, `({
@@ -173,6 +202,8 @@ try {
   assert.ok(seaside.voxelCount > cottageVoxels);
   assert.equal(seaside.uncovered, false);
   assert.equal(seaside.selectedInUrl, "seaside-cottage");
+  assert.ok(await evaluate(client, "performance.getEntriesByType('resource').some((entry) => new URL(entry.name).pathname === '/build_ncm/buildings/coastal/seaside-cottage.json')"));
+  assert.equal(await evaluate(client, "performance.getEntriesByType('resource').some((entry) => new URL(entry.name).pathname === '/build_ncm/seaside-cottage-blueprint.js')"), false);
 
   await evaluate(client, "document.querySelector('[data-building-category=industrial]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=freight-warehouse]')"));
@@ -274,21 +305,45 @@ try {
   assert.equal(townHall.uncovered, false);
   assert.equal(townHall.modelErrors, 0);
 
-  await evaluate(client, "document.querySelector('[data-locale=zh-Hans]').click()");
-  await waitFor(() => evaluate(client, "document.documentElement.lang === 'zh-Hans' && document.querySelector('[data-building].active')?.dataset.building === 'civic-town-hall'"));
-  const localizedTownHall = await evaluate(client, `({
-    activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
-    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
-    title: document.querySelector('#buildingTitle').textContent,
-    payload: document.querySelector('#codeOutput').value,
-    thumbnails: document.querySelectorAll('.building-library-preview').length,
-  })`);
-  assert.equal(localizedTownHall.activeBuilding, "civic-town-hall");
-  assert.equal(localizedTownHall.activeCategory, "civic");
-  assert.match(localizedTownHall.title, /市政厅/);
-  assert.equal(localizedTownHall.payload, townHall.payload, "locale changes must preserve the selected building payload");
-  assert.equal(localizedTownHall.thumbnails, 0);
-  await evaluate(client, "document.querySelector('[data-locale=en]').click()");
+  const townHallTitles = {
+    en: "Civic Town Hall",
+    es: "Ayuntamiento Cívico",
+    fr: "Hôtel de Ville",
+    de: "Bürgerliches Rathaus",
+    ja: "市庁舎",
+    ru: "Городская ратуша",
+    ko: "시민 회관",
+    "zh-Hant": "市政廳",
+    "zh-Hans": "市政厅",
+  };
+  for (const [locale, expectedTitle] of Object.entries(townHallTitles)) {
+    await evaluate(client, `(() => {
+      const select = document.querySelector('[data-language-select]');
+      select.value = ${JSON.stringify(locale)};
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+    })()`);
+    await waitFor(() => evaluate(client, `document.documentElement.lang === ${JSON.stringify(locale)} && document.querySelector('#buildingTitle').textContent.includes(${JSON.stringify(expectedTitle)})`));
+    const localizedTownHall = await evaluate(client, `({
+      activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
+      activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+      title: document.querySelector('#buildingTitle').textContent,
+      cardTitle: document.querySelector('[data-building=civic-town-hall] strong').textContent,
+      payload: document.querySelector('#codeOutput').value,
+      thumbnails: document.querySelectorAll('.building-library-preview').length,
+    })`);
+    assert.equal(localizedTownHall.activeBuilding, "civic-town-hall");
+    assert.equal(localizedTownHall.activeCategory, "civic");
+    assert.ok(localizedTownHall.title.includes(expectedTitle), `${locale} must use the title stored in the building JSON`);
+    assert.equal(localizedTownHall.cardTitle, expectedTitle, `${locale} library title must come from the loaded building JSON`);
+    assert.equal(localizedTownHall.payload, townHall.payload, "locale changes must preserve the selected building payload");
+    assert.equal(localizedTownHall.thumbnails, 0);
+  }
+  assert.ok(await evaluate(client, `Object.keys(${JSON.stringify(townHallTitles)}).every((locale) => performance.getEntriesByType('resource').some((entry) => new URL(entry.name).pathname === '/build_ncm/locales/' + locale + '.json'))`));
+  await evaluate(client, `(() => {
+    const select = document.querySelector('[data-language-select]');
+    select.value = 'en';
+    select.dispatchEvent(new Event('change', { bubbles: true }));
+  })()`);
   await waitFor(() => evaluate(client, "document.documentElement.lang === 'en'"));
 
   await evaluate(client, "document.querySelector('[data-building-category=residential]').click()");
@@ -448,11 +503,13 @@ try {
   assert.match(directSelection.title, /Royal Blue Citadel/);
   assert.equal(directSelection.modelSize, "152 × 86 × 136");
   assert.match(directSelection.payload, /^NCM3:/);
-  assert.ok(directSelection.resources.includes("/build_ncm/grand-castle-blueprint.js"));
-  assert.ok(!directSelection.resources.includes("/build_ncm/house-blueprint.js"), "a direct link must not load the default cottage module");
-  assert.ok(!directSelection.resources.includes("/build_ncm/seaside-cottage-blueprint.js"));
-  assert.ok(!directSelection.resources.includes("/build_ncm/warehouse-blueprint.js"));
-  assert.ok(!directSelection.resources.includes("/build_ncm/civic-town-hall-blueprint.js"));
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/fortress/grand-castle.json"));
+  assert.equal(
+    directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
+    1,
+    "a direct link must download only its selected building JSON",
+  );
+  assert.ok(!directSelection.resources.some((path) => path.endsWith("-blueprint.js") || path.endsWith("/house-blueprint.js")), "the JSON runtime must not load building generators");
 
   assert.deepEqual(failedResponses, []);
   assert.deepEqual(errors, []);

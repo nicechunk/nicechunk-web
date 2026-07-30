@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 1);
-  assert.match(initial.totalBuildingCount, /15 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /16 BUILDINGS/);
   assert.equal(initial.categoryCount, 11);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -730,11 +730,13 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(agricultureBrowse.activeBuilding, null);
-  assert.equal(agricultureBrowse.cardCount, 2);
+  assert.equal(agricultureBrowse.cardCount, 3);
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/buildings/agriculture/glass-timber-greenhouse.json"), "category browsing must not load the greenhouse JSON");
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/concepts/agriculture/glass-timber-greenhouse.webp"), "category browsing must not load the greenhouse concept art");
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/buildings/agriculture/stone-timber-tower-windmill.json"), "category browsing must not load the windmill JSON");
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/concepts/agriculture/stone-timber-tower-windmill.webp"), "category browsing must not load the windmill concept art");
+  assert.ok(!agricultureBrowse.resources.includes("/build_ncm/buildings/agriculture/covered-village-apiary.json"), "category browsing must not load the apiary JSON");
+  assert.ok(!agricultureBrowse.resources.includes("/build_ncm/concepts/agriculture/covered-village-apiary.webp"), "category browsing must not load the apiary concept art");
   await evaluate(client, "document.querySelector('[data-building=glass-timber-greenhouse]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'glass-timber-greenhouse' && document.querySelector('#modelSize').textContent === '19 × 20 × 27' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const greenhouse = await evaluate(client, `({
@@ -774,6 +776,8 @@ try {
   assert.ok(greenhouse.resources.includes("/build_ncm/concepts/agriculture/glass-timber-greenhouse.webp"));
   assert.ok(!greenhouse.resources.includes("/build_ncm/buildings/agriculture/stone-timber-tower-windmill.json"), "selecting the greenhouse must not load the windmill JSON");
   assert.ok(!greenhouse.resources.includes("/build_ncm/concepts/agriculture/stone-timber-tower-windmill.webp"), "selecting the greenhouse must not load the windmill concept art");
+  assert.ok(!greenhouse.resources.includes("/build_ncm/buildings/agriculture/covered-village-apiary.json"), "selecting the greenhouse must not load the apiary JSON");
+  assert.ok(!greenhouse.resources.includes("/build_ncm/concepts/agriculture/covered-village-apiary.webp"), "selecting the greenhouse must not load the apiary concept art");
   assert.ok(!greenhouse.resources.some((path) => path.endsWith("glass-timber-greenhouse-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building=stone-timber-tower-windmill]').click()");
@@ -813,7 +817,48 @@ try {
   assert.equal(windmill.selectedInUrl, "stone-timber-tower-windmill");
   assert.ok(windmill.resources.includes("/build_ncm/buildings/agriculture/stone-timber-tower-windmill.json"));
   assert.ok(windmill.resources.includes("/build_ncm/concepts/agriculture/stone-timber-tower-windmill.webp"));
+  assert.ok(!windmill.resources.includes("/build_ncm/buildings/agriculture/covered-village-apiary.json"), "selecting the windmill must not load the apiary JSON");
+  assert.ok(!windmill.resources.includes("/build_ncm/concepts/agriculture/covered-village-apiary.webp"), "selecting the windmill must not load the apiary concept art");
   assert.ok(!windmill.resources.some((path) => path.endsWith("stone-timber-tower-windmill-blueprint.js")));
+
+  await evaluate(client, "document.querySelector('[data-building=covered-village-apiary]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'covered-village-apiary' && document.querySelector('#modelSize').textContent === '25 × 25 × 25' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const apiary = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(apiary.activeCategory, "agriculture");
+  assert.match(apiary.title, /Covered Village Apiary/);
+  assert.equal(apiary.modelSize, "25 × 25 × 25");
+  assert.match(apiary.payload, /^NCM3:/);
+  assert.equal(apiary.voxelCount, 5069);
+  for (const id of [55, 56, 57, 60, 68, 69, 96]) assert.match(apiary.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(apiary.uncovered, false);
+  assert.equal(apiary.glazingDisabled, true);
+  assert.equal(apiary.glazingLabel, "Openings: Not applicable");
+  assert.equal(apiary.disabledStyles, 6);
+  assert.equal(apiary.disabledRoofs, 6);
+  assert.equal(apiary.conceptHidden, false);
+  assert.match(apiary.conceptAlt, /Covered Village Apiary concept reference/);
+  assert.equal(apiary.conceptFit, "contain");
+  assert.equal(apiary.selectedInUrl, "covered-village-apiary");
+  assert.ok(apiary.resources.includes("/build_ncm/buildings/agriculture/covered-village-apiary.json"));
+  assert.ok(apiary.resources.includes("/build_ncm/concepts/agriculture/covered-village-apiary.webp"));
+  assert.ok(!apiary.resources.some((path) => path.endsWith("covered-village-apiary-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=residential]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=hollow-cottage]')"));

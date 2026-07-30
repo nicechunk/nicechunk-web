@@ -1,0 +1,183 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "covered-village-apiary",
+  "category": "agriculture",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Covered Village Apiary",
+    "es": "Colmenar Cubierto de la Aldea",
+    "fr": "Rucher Couvert du Village",
+    "de": "Überdachter Dorfbienenstand",
+    "ja": "屋根付き村の養蜂場",
+    "ru": "Крытая деревенская пасека",
+    "ko": "지붕 있는 마을 양봉장",
+    "zh-Hant": "有頂村莊蜂場",
+    "zh-Hans": "有顶村庄蜂场"
+  },
+  "descriptions": {
+    "en": "An open, walk-through village apiary with a level five-voxel polished-stone aisle, a cobblestone work pad, eight grounded timber shelter posts, four roof trusses, six modular two-tier plank hives, amber inspection panels, wooden-stick entrance rails and a fully supported terracotta gable.",
+    "es": "Colmenar de aldea abierto y transitable con un pasillo nivelado de piedra pulida de cinco vóxeles, plataforma de adoquín, ocho postes de madera apoyados en el suelo, cuatro cerchas, seis colmenas modulares de dos cuerpos hechas de tablones, paneles de inspección ámbar, listones de entrada de madera y un tejado a dos aguas de terracota completamente sustentado.",
+    "fr": "Rucher villageois ouvert et traversant avec une allée plane en pierre polie de cinq voxels, une plateforme pavée, huit poteaux de bois ancrés au sol, quatre fermes de toit, six ruches modulaires en planches à deux corps, des panneaux d’inspection ambrés, des barrettes d’entrée en bois et un pignon en terre cuite entièrement soutenu.",
+    "de": "Offener, durchgehbarer Dorfbienenstand mit einem ebenen fünf Voxel breiten Gang aus poliertem Stein, einer Kopfsteinpflaster-Arbeitsfläche, acht bodengebundenen Holzpfosten, vier Dachbindern, sechs modularen zweistöckigen Bohlenbeuten, bernsteinfarbenen Sichtfenstern, hölzernen Einflugleisten und einem vollständig getragenen Terrakotta-Satteldach.",
+    "ja": "幅5ボクセルの平坦な磨き石通路、丸石の作業基壇、地面から立つ8本の木柱、4組の屋根トラス、板材で作られた2段式のモジュール蜂箱6基、琥珀色の点検窓、木製の巣門レール、完全に支持されたテラコッタ切妻屋根を備えた、前後に通り抜けられる開放型の村の養蜂場です。",
+    "ru": "Открытая проходная деревенская пасека с ровным проходом из полированного камня шириной пять вокселей, булыжной рабочей площадкой, восемью опирающимися на землю деревянными стойками, четырьмя фермами крыши, шестью модульными двухъярусными ульями из досок, янтарными смотровыми панелями, деревянными прилётными планками и полностью поддерживаемой терракотовой двускатной крышей.",
+    "ko": "폭 5복셀의 평평한 연마 석재 통로, 조약돌 작업 기단, 지면에 닿는 목재 기둥 여덟 개, 지붕 트러스 네 조, 판재로 만든 2단 모듈형 벌통 여섯 개, 호박색 점검창, 목재 출입 레일과 완전히 지지된 테라코타 박공지붕을 갖춘 앞뒤 통과형 개방식 마을 양봉장입니다.",
+    "zh-Hant": "前後通透的開放式村莊蜂場，設有五體素寬平坦拋光石通道、鵝卵石工作基臺、八根落地木柱、四組屋架、六座雙層模組化木板蜂箱、琥珀檢視窗、木製巢門條，以及完整承托的赤陶人字頂。",
+    "zh-Hans": "前后通透的开放式村庄蜂场，设有五体素宽平坦抛光石通道、鹅卵石工作基台、八根落地木柱、四组屋架、六座双层模块化木板蜂箱、琥珀检视窗、木制巢门条，以及完整承托的赤陶人字顶。"
+  },
+  "referenceImage": "concepts/agriculture/covered-village-apiary.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 1
+  },
+  "doorOpening": "open",
+  "footprint": "23 × 25 vu",
+  "height": "25 vu",
+  "referenceScale": "One concept voxel equals one NCM voxel",
+  "preview": {
+    "fitScale": 1.02,
+    "minScale": 3.8,
+    "yaw": 2.38
+  },
+  "extraMaterials": [
+    {
+      "materialId": 56,
+      "phase": "structure",
+      "label": "Wooden-stick Hive Entrance Rails and Knee Braces"
+    },
+    {
+      "materialId": 60,
+      "phase": "openings",
+      "label": "Amber Hive Inspection Panels"
+    },
+    {
+      "materialId": 69,
+      "phase": "foundation",
+      "label": "Polished Stone Aisle and Hive Pads"
+    }
+  ],
+  "validation": {
+    "expectedVoxelCount": 5069,
+    "expectedPayloadBytes": 711,
+    "maxPayloadBytes": 768,
+    "expectedDefaultMaterialIds": [55, 56, 57, 60, 68, 69, 96],
+    "expectedMaterialVoxelCounts": {
+      "55": 3455,
+      "56": 70,
+      "57": 431,
+      "60": 12,
+      "68": 378,
+      "69": 305,
+      "96": 418
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 12,
+    "supportColumns": [
+      { "label": "Front-left shelter post", "x": 2, "z": 2, "baseY": 0, "topY": 12 },
+      { "label": "Front-right shelter post", "x": 22, "z": 2, "baseY": 0, "topY": 12 },
+      { "label": "Second-left shelter post", "x": 2, "z": 9, "baseY": 0, "topY": 12 },
+      { "label": "Second-right shelter post", "x": 22, "z": 9, "baseY": 0, "topY": 12 },
+      { "label": "Third-left shelter post", "x": 2, "z": 16, "baseY": 0, "topY": 12 },
+      { "label": "Third-right shelter post", "x": 22, "z": 16, "baseY": 0, "topY": 12 },
+      { "label": "Rear-left shelter post", "x": 2, "z": 22, "baseY": 0, "topY": 12 },
+      { "label": "Rear-right shelter post", "x": 22, "z": 22, "baseY": 0, "topY": 12 },
+      { "label": "Front-left hive support", "x": 4, "z": 4, "baseY": 0, "topY": 11 },
+      { "label": "Front-right hive support", "x": 20, "z": 4, "baseY": 0, "topY": 11 },
+      { "label": "Middle-left hive support", "x": 4, "z": 11, "baseY": 0, "topY": 11 },
+      { "label": "Middle-right hive support", "x": 20, "z": 11, "baseY": 0, "topY": 11 },
+      { "label": "Rear-left hive support", "x": 4, "z": 18, "baseY": 0, "topY": 11 },
+      { "label": "Rear-right hive support", "x": 20, "z": 18, "baseY": 0, "topY": 11 }
+    ],
+    "horizontalSpans": [
+      { "label": "Front shelter beam", "axis": "x", "start": 2, "end": 22, "y": 12, "fixed": 2 },
+      { "label": "Rear shelter beam", "axis": "x", "start": 2, "end": 22, "y": 12, "fixed": 22 },
+      { "label": "Left continuous eave beam", "axis": "z", "start": 1, "end": 23, "y": 12, "fixed": 1 },
+      { "label": "Right continuous eave beam", "axis": "z", "start": 1, "end": 23, "y": 12, "fixed": 23 },
+      { "label": "Continuous timber ridge", "axis": "z", "start": 1, "end": 23, "y": 24, "fixed": 12 },
+      { "label": "Front-left projecting hive lid", "axis": "x", "start": 3, "end": 8, "y": 11, "fixed": 3 },
+      { "label": "Front-right projecting hive lid", "axis": "x", "start": 16, "end": 21, "y": 11, "fixed": 3 }
+    ],
+    "walkableDecks": [
+      {
+        "label": "Front-to-rear apiary work aisle",
+        "axis": "z",
+        "start": 0,
+        "end": 24,
+        "crossStart": 10,
+        "crossEnd": 14,
+        "topProfile": [
+          1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+          1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+          1, 1, 1, 1, 1
+        ],
+        "clearance": 10
+      }
+    ],
+    "gableProfiles": [
+      { "label": "Front exposed terracotta roof profile", "x": 1, "baseY": 13, "z": 1, "width": 23, "slopeMaterialId": 96, "ridgeMaterialId": 57 },
+      { "label": "Front timber roof truss", "x": 1, "baseY": 13, "z": 2, "width": 23, "slopeMaterialId": 57, "ridgeMaterialId": 57 },
+      { "label": "Second timber roof truss", "x": 1, "baseY": 13, "z": 9, "width": 23, "slopeMaterialId": 57, "ridgeMaterialId": 57 },
+      { "label": "Third timber roof truss", "x": 1, "baseY": 13, "z": 16, "width": 23, "slopeMaterialId": 57, "ridgeMaterialId": 57 },
+      { "label": "Rear timber roof truss", "x": 1, "baseY": 13, "z": 22, "width": 23, "slopeMaterialId": 57, "ridgeMaterialId": 57 },
+      { "label": "Rear exposed terracotta roof profile", "x": 1, "baseY": 13, "z": 23, "width": 23, "slopeMaterialId": 96, "ridgeMaterialId": 57 }
+    ],
+    "diagonalBands": [
+      { "label": "Front-left knee brace", "materialId": 56, "x": 3, "y": 8, "z": 2, "width": 2, "height": 2, "depth": 1, "count": 4, "dx": 1, "dy": 1, "dz": 0 },
+      { "label": "Front-right knee brace", "materialId": 56, "x": 20, "y": 8, "z": 2, "width": 2, "height": 2, "depth": 1, "count": 4, "dx": -1, "dy": 1, "dz": 0 },
+      { "label": "Rear-left knee brace", "materialId": 56, "x": 3, "y": 8, "z": 22, "width": 2, "height": 2, "depth": 1, "count": 4, "dx": 1, "dy": 1, "dz": 0 },
+      { "label": "Rear-right knee brace", "materialId": 56, "x": 20, "y": 8, "z": 22, "width": 2, "height": 2, "depth": 1, "count": 4, "dx": -1, "dy": 1, "dz": 0 }
+    ],
+    "openVolumes": [
+      { "label": "Clear five-voxel apiary aisle", "x": 10, "y": 1, "z": 0, "width": 5, "height": 10, "depth": 25 }
+    ],
+    "approach": [
+      { "x": 12, "z": 0, "topY": 1 },
+      { "x": 12, "z": 2, "topY": 1 },
+      { "x": 12, "z": 12, "topY": 1 },
+      { "x": 12, "z": 22, "topY": 1 },
+      { "x": 12, "z": 24, "topY": 1 }
+    ],
+    "solidPoints": [
+      { "x": 12, "y": 0, "z": 0, "materialId": 69 },
+      { "x": 1, "y": 0, "z": 2, "materialId": 68 },
+      { "x": 3, "y": 1, "z": 3, "materialId": 69 },
+      { "x": 4, "y": 2, "z": 4, "materialId": 57 },
+      { "x": 4, "y": 4, "z": 4, "materialId": 55 },
+      { "x": 4, "y": 6, "z": 5, "materialId": 55 },
+      { "x": 7, "y": 6, "z": 5, "materialId": 60 },
+      { "x": 8, "y": 5, "z": 4, "materialId": 56 },
+      { "x": 17, "y": 6, "z": 5, "materialId": 60 },
+      { "x": 3, "y": 11, "z": 3, "materialId": 55 },
+      { "x": 2, "y": 1, "z": 2, "materialId": 57 },
+      { "x": 2, "y": 12, "z": 2, "materialId": 57 },
+      { "x": 1, "y": 13, "z": 1, "materialId": 96 },
+      { "x": 2, "y": 13, "z": 1, "materialId": 55 },
+      { "x": 1, "y": 13, "z": 2, "materialId": 57 },
+      { "x": 2, "y": 14, "z": 1, "materialId": 96 },
+      { "x": 12, "y": 24, "z": 12, "materialId": 57 }
+    ]
+  },
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARkZGVcBAQEAAhYAFAFFCgAABAAYAUUDAQMFAAQBAwQCBAABAgEDBwIEAAECAQYEBAQDAAIBBgQFBAMCAgEGBAgEAwICAQYDCwMFAAQBOAgFBAAAAgE8BwYFAAAAATwHCQUAAAABRRABAwUABAEDEQIEAAECAQMUAgQAAQIBBhEEBAMAAgEGEQUEAwICAQYRCAQDAgIBBhALAwUABAE4EAUEAAACATwRBgUAAAABPBEJBQAAAAFFAwEKBQAEAQMEAgsAAQIBAwcCCwABAgEGBAQLAwACAQYEBQsDAgIBBgQICwMCAgEGAwsKBQAEATgIBQsAAAIBPAcGDAAAAAE8BwkMAAAAAUUQAQoFAAQBAxECCwABAgEDFAILAAECAQYRBAsDAAIBBhEFCwMCAgEGEQgLAwICAQYQCwoFAAQBOBAFCwAAAgE8EQYMAAAAATwRCQwAAAABRQMBEQUABAEDBAISAAECAQMHAhIAAQIBBgQEEgMAAgEGBAUSAwICAQYECBIDAgIBBgMLEQUABAE4CAUSAAACATwHBhMAAAABPAcJEwAAAAFFEAERBQAEAQMRAhIAAQIBAxQCEgABAgEGEQQSAwACAQYRBRIDAgIBBhEIEgMCAgEGEAsRBQAEATgQBRIAAAIBPBEGEwAAAAE8EQkTAAAAAQMCAQIACwABAxYBAgALAAEDAgwCFAAAAQMCAQkACwABAxYBCQALAAEDAgwJFAAAAQMCARAACwABAxYBEAALAAEDAgwQFAAAAQMCARYACwABAxYBFgALAAEDAgwWFAAAAQMBDAEBABYBAxYMAQEAFgI4AwgCAQEAAwICAAI4FAgCAQEAAwECAAI4AwgWAQEAAwICAAI4FAgWAQEAAwECAAcGAQ0BFhYDBQENARYWBgMBDQIWAAYDAQ0JFgAGAwENEBYABgMBDRYWAAEDDBgBAAAW"
+  }
+}

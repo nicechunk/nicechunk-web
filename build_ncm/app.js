@@ -101,6 +101,9 @@ const els = {
   buildingLibrary: document.querySelector("#buildingLibraryList"),
   buildingLibraryCount: document.querySelector("#buildingLibraryCount"),
   buildingLibraryStatus: document.querySelector("#buildingLibraryStatus"),
+  conceptReference: document.querySelector("#conceptReference"),
+  conceptImage: document.querySelector("#conceptImage"),
+  conceptCaption: document.querySelector("#conceptCaption"),
 };
 
 const requestedBuildingEntry = initialBuildingEntry();
@@ -344,7 +347,7 @@ function renderStylePresets() {
     button.setAttribute("role", "radio");
     button.setAttribute("aria-checked", String(preset.key === selectedStyle.key));
     button.classList.toggle("active", preset.key === selectedStyle.key);
-    button.disabled = !selectedBuilding || blueprintBusy;
+    button.disabled = !selectedBuilding || blueprintBusy || !selectedBuilding.capabilities.styles;
     button.style.setProperty("--style-accent", preset.accent);
     const palette = document.createElement("i");
     palette.className = "style-palette";
@@ -515,7 +518,7 @@ function renderRoofVariants() {
     button.setAttribute("aria-label", t("roof.variantAria", { name: localized.name, source: localized.source }));
     button.setAttribute("aria-checked", String(variant.key === selectedRoof.key));
     button.classList.toggle("active", variant.key === selectedRoof.key);
-    button.disabled = !selectedBuilding || blueprintBusy;
+    button.disabled = !selectedBuilding || blueprintBusy || !selectedBuilding.capabilities.roofVariants;
     button.style.setProperty("--tile-color", variant.color);
     button.style.setProperty("--tile-accent", variant.accent);
     const swatch = document.createElement("canvas");
@@ -572,7 +575,7 @@ async function selectBuilding(key) {
     selectedBuilding = definition;
     selectedStyle = style;
     selectedRoof = roof;
-    glazed = definition.defaults.glazed;
+    glazed = definition.capabilities.glazing && definition.defaults.glazed;
     activeBuildingCategory = entry.category;
     const url = new URL(window.location.href);
     url.searchParams.set("building", entry.key);
@@ -629,14 +632,14 @@ function createBlueprintFromDefinition(building, { style, roofMaterial, glazed: 
 }
 
 function selectStylePreset(key) {
-  if (!selectedBuilding || blueprintBusy) return;
+  if (!selectedBuilding || blueprintBusy || !selectedBuilding.capabilities.styles) return;
   selectedStyle = buildingStylePreset(key);
-  selectedRoof = roofTileVariant(selectedStyle.materials.roof);
+  if (selectedBuilding.capabilities.roofVariants) selectedRoof = roofTileVariant(selectedStyle.materials.roof);
   rebuildReference();
 }
 
 function selectRoofVariant(key) {
-  if (!selectedBuilding || blueprintBusy) return;
+  if (!selectedBuilding || blueprintBusy || !selectedBuilding.capabilities.roofVariants) return;
   selectedRoof = roofTileVariant(key);
   rebuildReference();
 }
@@ -737,9 +740,12 @@ function renderBlueprintState() {
     { catalogVersion: BUILDING_CATALOG_VERSION },
   );
   els.modelSize.textContent = `${blueprint.size.x} × ${blueprint.size.y} × ${blueprint.size.z}`;
-  els.glazing.textContent = t(glazed ? "view.glazed" : "view.open");
+  els.glazing.textContent = t(selectedBuilding?.capabilities.glazing
+    ? (glazed ? "view.glazed" : "view.open")
+    : "view.notApplicable");
   els.glazing.setAttribute("aria-pressed", String(glazed));
   els.glazing.classList.toggle("active", glazed);
+  renderConceptReference();
   renderStyleMaterials();
   renderBuildingMaterialCatalog(counts);
   renderBill();
@@ -753,6 +759,7 @@ function renderEmptyBlueprintState({ preserveEditor = false } = {}) {
   els.glazing.textContent = t("view.open");
   els.glazing.setAttribute("aria-pressed", "false");
   els.glazing.classList.remove("active");
+  renderConceptReference();
   els.buildingTitle.textContent = t("view.selectBuildingTitle");
   els.styleName.textContent = "—";
   els.styleDescription.textContent = t("view.selectBuildingDescription");
@@ -782,7 +789,24 @@ function setBlueprintControlsEnabled(hasBlueprint) {
   els.downloadNcm.disabled = !hasBlueprint;
   els.downloadJson.disabled = !hasBlueprint;
   els.downloadBom.disabled = !hasBlueprint;
-  els.glazing.disabled = !hasBlueprint || !selectedBuilding || blueprintBusy;
+  els.glazing.disabled = !hasBlueprint || !selectedBuilding || blueprintBusy || !selectedBuilding.capabilities.glazing;
+}
+
+function renderConceptReference() {
+  if (!els.conceptReference || !els.conceptImage || !els.conceptCaption) return;
+  if (!selectedBuilding?.referenceImage) {
+    els.conceptReference.hidden = true;
+    els.conceptImage.removeAttribute("src");
+    els.conceptImage.alt = "";
+    els.conceptCaption.textContent = "";
+    return;
+  }
+  const buildingName = localizedBuildingText(selectedBuilding, "titles", getLocale());
+  const source = new URL(selectedBuilding.referenceImage, import.meta.url).href;
+  if (els.conceptImage.src !== source) els.conceptImage.src = source;
+  els.conceptImage.alt = t("view.conceptAlt", { building: buildingName });
+  els.conceptCaption.textContent = t("view.conceptReference");
+  els.conceptReference.hidden = false;
 }
 
 function renderCodePanel({ preserveEditor = false } = {}) {
@@ -905,7 +929,7 @@ function setupEvents() {
     els.grid.classList.toggle("active", spatial.gridVisible);
   });
   els.glazing.addEventListener("click", () => {
-    if (!selectedBuilding || blueprintBusy) return;
+    if (!selectedBuilding || blueprintBusy || !selectedBuilding.capabilities.glazing) return;
     glazed = !glazed;
     rebuildReference();
   });

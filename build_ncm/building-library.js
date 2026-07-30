@@ -19,6 +19,7 @@ const BUILDING_CATALOG_URL = new URL("./building-catalog.json", import.meta.url)
 const CATALOG_SCHEMA = "nicechunk.building-catalog.v1";
 const BUILDING_SCHEMA = "nicechunk.ncm-building.v1";
 const BUILDING_PATH = /^buildings\/([a-z0-9]+(?:-[a-z0-9]+)*)\/([a-z0-9]+(?:-[a-z0-9]+)*)\.json$/;
+const BUILDING_ASSET_PATH = /^concepts\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.(?:png|jpe?g|webp)$/;
 const definitionPromises = new Map();
 
 export async function loadBuildingCatalog({ signal } = {}) {
@@ -114,11 +115,24 @@ function validateBuildingDefinition(source, catalogEntry) {
   }
   const titles = localizedTextMap(source.titles, "titles", source.key);
   const descriptions = localizedTextMap(source.descriptions, "descriptions", source.key);
+  const kind = typeof source.kind === "string" && source.kind.trim() ? source.kind.trim() : "habitable-building";
+  const referenceImage = source.referenceImage == null ? "" : String(source.referenceImage);
+  if (referenceImage && !BUILDING_ASSET_PATH.test(referenceImage)) {
+    throw new TypeError(`Building ${source.key} has an unsafe reference image path.`);
+  }
   const defaults = source.defaults;
   if (!defaults || typeof defaults.style !== "string" || typeof defaults.roof !== "string" || typeof defaults.glazed !== "boolean") {
     throw new TypeError(`Building ${source.key} has invalid defaults.`);
   }
-  if (source.doorOpening !== "open") throw new TypeError(`Building ${source.key} must keep its entrance portal open.`);
+  const access = normalizeAccess(source.access, kind, source.key);
+  const doorOpening = source.doorOpening ?? (access.enterable ? "open" : "not-applicable");
+  if (access.enterable && doorOpening !== "open") {
+    throw new TypeError(`Enterable building ${source.key} must keep its entrance portal open.`);
+  }
+  if (!access.enterable && !["open", "not-applicable"].includes(doorOpening)) {
+    throw new TypeError(`Surface object ${source.key} has an invalid door-opening policy.`);
+  }
+  const capabilities = normalizeCapabilities(source.capabilities, defaults, source.key);
   for (const field of ["footprint", "height", "referenceScale"]) {
     if (typeof source[field] !== "string" || !source[field].trim()) throw new TypeError(`Building ${source.key} has invalid ${field}.`);
   }
@@ -155,10 +169,14 @@ function validateBuildingDefinition(source, catalogEntry) {
     schema: source.schema,
     key: source.key,
     category: source.category,
+    kind,
     titles,
     descriptions,
+    referenceImage,
     defaults: Object.freeze({ ...defaults }),
-    doorOpening: source.doorOpening,
+    capabilities,
+    access,
+    doorOpening,
     footprint: source.footprint,
     height: source.height,
     referenceScale: source.referenceScale,
@@ -170,6 +188,38 @@ function validateBuildingDefinition(source, catalogEntry) {
       materialRoles: Object.freeze({ ...materialRoles }),
     }),
   });
+}
+
+function normalizeCapabilities(value, defaults, buildingKey) {
+  const source = value ?? {};
+  if (!source || typeof source !== "object" || Array.isArray(source)) {
+    throw new TypeError(`Building ${buildingKey} has invalid capabilities.`);
+  }
+  const capabilities = {
+    styles: source.styles ?? true,
+    roofVariants: source.roofVariants ?? true,
+    glazing: source.glazing ?? true,
+  };
+  if (Object.values(capabilities).some((enabled) => typeof enabled !== "boolean")) {
+    throw new TypeError(`Building ${buildingKey} capabilities must be boolean.`);
+  }
+  if (!capabilities.glazing && defaults.glazed) {
+    throw new TypeError(`Building ${buildingKey} cannot enable glazing by default.`);
+  }
+  return Object.freeze(capabilities);
+}
+
+function normalizeAccess(value, kind, buildingKey) {
+  const source = value ?? {};
+  if (!source || typeof source !== "object" || Array.isArray(source)) {
+    throw new TypeError(`Building ${buildingKey} has invalid access metadata.`);
+  }
+  const enterable = source.enterable ?? kind === "habitable-building";
+  const maxStepRise = source.maxStepRise ?? (enterable ? 2 : 0);
+  if (typeof enterable !== "boolean" || !Number.isInteger(maxStepRise) || maxStepRise < 0 || maxStepRise > 2) {
+    throw new TypeError(`Building ${buildingKey} has invalid player-access limits.`);
+  }
+  return Object.freeze({ enterable, maxStepRise });
 }
 
 function localizedTextMap(value, field, buildingKey) {

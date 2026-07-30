@@ -5,6 +5,7 @@
     "buildings/coastal/seaside-cottage.json",
     "buildings/civic/civic-town-hall.json",
     "buildings/industrial/freight-warehouse.json",
-    "buildings/fortress/grand-castle.json"
+    "buildings/fortress/grand-castle.json",
+    "buildings/utility/covered-village-well.json"
   ]
 }

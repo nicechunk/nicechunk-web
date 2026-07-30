@@ -38,7 +38,7 @@ try {
   await client.send("Page.enable");
   await client.send("Emulation.setDeviceMetricsOverride", { width: 1600, height: 1200, deviceScaleFactor: 1, mobile: false });
   await client.send("Page.navigate", { url });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 5 && document.querySelectorAll('[data-building]').length === 1 && document.querySelector('[data-building=hollow-cottage]') && document.querySelector('[data-language-select]').options.length === 9"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 6 && document.querySelectorAll('[data-building]').length === 1 && document.querySelector('[data-building=hollow-cottage]') && document.querySelector('[data-language-select]').options.length === 9"));
 
   const initial = await evaluate(client, `({
     visibleBuildingCount: document.querySelectorAll('[data-building]').length,
@@ -76,8 +76,8 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 1);
-  assert.match(initial.totalBuildingCount, /5 BUILDINGS/);
-  assert.equal(initial.categoryCount, 5);
+  assert.match(initial.totalBuildingCount, /6 BUILDINGS/);
+  assert.equal(initial.categoryCount, 6);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
   assert.equal(initial.buildingLabel, "Hollow Cottage");
@@ -115,6 +115,7 @@ try {
   assert.ok(initial.resources.includes("/build_ncm/locales/en.json"));
   assert.ok(initial.resources.includes("/build_ncm/building-catalog.json"));
   assert.ok(!initial.resources.some((path) => path.startsWith("/build_ncm/buildings/")), "the initial page must not download any building JSON");
+  assert.ok(!initial.resources.some((path) => path.startsWith("/build_ncm/concepts/")), "the initial page must not download concept art");
   assert.ok(!initial.resources.some((path) => path.endsWith("-blueprint.js") || path.endsWith("/house-blueprint.js")), "the JSON runtime must not load building generators");
   assert.ok(!initial.resources.includes("/chunk.js/index.js"), "build_ncm must not load the full chunk.js barrel");
 
@@ -346,6 +347,50 @@ try {
   })()`);
   await waitFor(() => evaluate(client, "document.documentElement.lang === 'en'"));
 
+  await evaluate(client, "document.querySelector('[data-building-category=utility]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=covered-village-well]')"));
+  const utilityBrowse = await evaluate(client, `({
+    activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(utilityBrowse.activeBuilding, null);
+  assert.ok(!utilityBrowse.resources.includes("/build_ncm/buildings/utility/covered-village-well.json"), "category browsing must not load the well JSON");
+  assert.ok(!utilityBrowse.resources.includes("/build_ncm/concepts/utility/covered-village-well.png"), "category browsing must not load the well concept art");
+  await evaluate(client, "document.querySelector('[data-building=covered-village-well]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'covered-village-well' && document.querySelector('#modelSize').textContent === '21 × 22 × 18' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const well = await evaluate(client, `({
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.match(well.title, /Covered Village Well/);
+  assert.equal(well.modelSize, "21 × 22 × 18");
+  assert.match(well.payload, /^NCM3:/);
+  assert.equal(well.voxelCount, 958);
+  for (const id of [55, 56, 60, 68, 69, 96]) assert.match(well.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(well.uncovered, false);
+  assert.equal(well.glazingDisabled, true);
+  assert.equal(well.glazingLabel, "Openings: Not applicable");
+  assert.equal(well.disabledStyles, 0);
+  assert.equal(well.disabledRoofs, 0);
+  assert.equal(well.conceptHidden, false);
+  assert.match(well.conceptAlt, /Covered Village Well concept reference/);
+  assert.equal(well.selectedInUrl, "covered-village-well");
+  assert.ok(well.resources.includes("/build_ncm/buildings/utility/covered-village-well.json"));
+  assert.ok(well.resources.includes("/build_ncm/concepts/utility/covered-village-well.png"));
+  assert.ok(!well.resources.some((path) => path.endsWith("covered-village-well-blueprint.js")));
+
   await evaluate(client, "document.querySelector('[data-building-category=residential]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=hollow-cottage]')"));
   await evaluate(client, "document.querySelector('[data-building=hollow-cottage]').click()");
@@ -360,6 +405,7 @@ try {
   assert.equal(restoredCottage.modelSize, "24 × 22 × 18");
   assert.equal(restoredCottage.activeStyle, "cottage");
   assert.equal(restoredCottage.glazed, "false");
+  assert.equal(await evaluate(client, "document.querySelector('#conceptReference').hidden"), true);
 
   const cottagePreview = await evaluate(client, "document.querySelector('#preview').toDataURL()");
   await evaluate(client, `(() => {
@@ -457,7 +503,7 @@ try {
 
   await client.send("Emulation.setDeviceMetricsOverride", { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
   await client.send("Page.reload", { ignoreCache: true });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 5 && document.querySelectorAll('[data-building]').length === 1"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 6 && document.querySelectorAll('[data-building]').length === 1"));
   await evaluate(client, "document.querySelector('[data-material-filter=all]').click()");
   await waitFor(() => evaluate(client, "document.querySelectorAll('#buildingMaterialCatalog .model-material-card').length === 33"));
   const mobile = await evaluate(client, `({
@@ -477,7 +523,7 @@ try {
   assert.equal(mobile.scrollWidth, mobile.clientWidth, "mobile page must not create document-level horizontal overflow");
   assert.equal(mobile.modelCards, 33);
   assert.equal(mobile.modelErrors, 0);
-  assert.equal(mobile.categories, 5);
+  assert.equal(mobile.categories, 6);
   assert.equal(mobile.buildingCards, 1);
   assert.equal(mobile.buildingThumbnails, 0);
   assert.equal(mobile.categoryFlow, "row");

@@ -1,9 +1,10 @@
 import assert from "node:assert/strict";
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { decodeNcm3, encodeNcm3 } from "../../chunk.js/ncm/blueprint-codec.js";
+import { decodeNcm3, encodeNcm3, payloadByteLength, voxelize } from "../../chunk.js/ncm/blueprint-codec.js";
+import { BUILDING_MATERIAL_CATALOG } from "../../chunk.js/construction/building-material-catalog.js";
 import { BUILDING_STYLE_PRESETS } from "../../chunk.js/construction/building-style-catalog.js";
 import { ROOF_TILE_VARIANTS } from "../../chunk.js/construction/roof-tile-catalog.js";
 import { createCivicTownHall } from "../civic-town-hall-blueprint.js";
@@ -22,6 +23,9 @@ const generators = new Map([
   ["freight-warehouse", createFreightWarehouse],
   ["grand-castle", createGrandCastle],
 ]);
+const formalMaterialIds = new Set(BUILDING_MATERIAL_CATALOG
+  .filter((entry) => entry.status === "formal")
+  .map((entry) => entry.materialId));
 
 const catalog = readJson(join(root, "building-catalog.json"));
 assert.deepEqual(Object.keys(catalog), ["schema", "buildings"], "the catalog may contain only its schema and building filenames");
@@ -51,36 +55,57 @@ for (const relativePath of catalog.buildings) {
     assert.ok(building.titles[locale].trim(), `${building.key} is missing its ${locale} title`);
     assert.ok(building.descriptions[locale].trim(), `${building.key} is missing its ${locale} description`);
   }
-  assert.equal(building.doorOpening, "open");
+  const kind = building.kind ?? "habitable-building";
+  const enterable = building.access?.enterable ?? kind === "habitable-building";
+  const maxStepRise = building.access?.maxStepRise ?? (enterable ? 2 : 0);
+  assert.equal(typeof enterable, "boolean");
+  assert.ok(Number.isInteger(maxStepRise) && maxStepRise >= 0 && maxStepRise <= 2, `${building.key} has an unsafe player step rise`);
+  if (enterable) assert.equal(building.doorOpening, "open", `${building.key} must have an open player entrance`);
+  else assert.ok(["open", "not-applicable"].includes(building.doorOpening));
+  if (building.referenceImage) {
+    assert.match(building.referenceImage, /^concepts\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.(?:png|jpe?g|webp)$/);
+    assert.ok(existsSync(join(root, building.referenceImage)), `${building.key} reference image is missing`);
+  }
   assert.equal(building.ncm.format, "NCM3_ROLE_TEMPLATE");
   assert.match(building.ncm.code, /^NCM3:/);
   assert.deepEqual(Object.keys(building.ncm.materialRoles), materialRoles);
   assert.deepEqual(Object.values(building.ncm.materialRoles), [1, 2, 3, 4, 5, 6, 7]);
 
-  const generator = generators.get(building.key);
-  assert.ok(generator, `missing canonical generator for ${building.key}`);
   const template = decodeNcm3(building.ncm.code);
+  assert.equal(encodeNcm3(template), building.ncm.code, `${building.key} NCM template must be canonical`);
+  assert.ok(voxelize(template).size > 0, `${building.key} NCM template must contain voxels`);
   const roleByPlaceholder = new Map(Object.entries(building.ncm.materialRoles).map(([role, value]) => [value, role]));
-  for (const style of BUILDING_STYLE_PRESETS) {
-    for (const roof of ROOF_TILE_VARIANTS) {
-      for (const glazed of [false, true]) {
-        const commands = template.commands.flatMap((command) => {
-          const role = roleByPlaceholder.get(command.material);
-          if (role === "glazing" && !glazed) return [];
-          if (!role) return [{ ...command }];
-          return [{
-            ...command,
-            material: role === "roof" ? roof.materialId : style.materials[role],
-          }];
-        });
-        const expanded = { size: { ...template.size }, commands };
-        const canonical = generator({ style: style.key, roofMaterial: roof.materialId, glazed });
-        assert.equal(
-          encodeNcm3(expanded),
-          encodeNcm3(canonical),
-          `${building.key} JSON template diverges for ${style.key}/${roof.key}/${glazed ? "glazed" : "open"}`,
-        );
-        parityChecks += 1;
+  const extraMaterialIds = new Set((building.extraMaterials ?? []).map((entry) => entry.materialId));
+  const fixedMaterialIds = new Set(template.commands
+    .map((command) => command.material)
+    .filter((material) => !roleByPlaceholder.has(material)));
+  assert.deepEqual([...fixedMaterialIds].sort((a, b) => a - b), [...extraMaterialIds].sort((a, b) => a - b), `${building.key} fixed materials must be declared as extras`);
+  const defaultStyle = BUILDING_STYLE_PRESETS.find((style) => style.key === building.defaults.style);
+  const defaultRoof = ROOF_TILE_VARIANTS.find((roof) => roof.key === building.defaults.roof);
+  assert.ok(defaultStyle, `${building.key} has an unknown default style`);
+  assert.ok(defaultRoof, `${building.key} has an unknown default roof`);
+  const defaultCommands = remapCommands(template.commands, roleByPlaceholder, defaultStyle, defaultRoof, building.defaults.glazed);
+  const defaultVoxels = voxelize({ size: { ...template.size }, commands: defaultCommands });
+  const defaultMaterials = new Set(defaultCommands.map((command) => command.material));
+  assert.ok([...defaultMaterials].every((materialId) => formalMaterialIds.has(materialId)), `${building.key} uses a material outside the formal game catalog`);
+  if (!generators.has(building.key)) assert.ok(building.validation, `${building.key} must include self-contained geometry validation metadata`);
+  validateBuildingEvidence(building, defaultVoxels);
+
+  const generator = generators.get(building.key);
+  if (generator) {
+    for (const style of BUILDING_STYLE_PRESETS) {
+      for (const roof of ROOF_TILE_VARIANTS) {
+        for (const glazed of [false, true]) {
+          const commands = remapCommands(template.commands, roleByPlaceholder, style, roof, glazed);
+          const expanded = { size: { ...template.size }, commands };
+          const canonical = generator({ style: style.key, roofMaterial: roof.materialId, glazed });
+          assert.equal(
+            encodeNcm3(expanded),
+            encodeNcm3(canonical),
+            `${building.key} JSON template diverges for ${style.key}/${roof.key}/${glazed ? "glazed" : "open"}`,
+          );
+          parityChecks += 1;
+        }
       }
     }
   }
@@ -111,6 +136,48 @@ console.log(JSON.stringify({
 
 function readJson(path) {
   return JSON.parse(readFileSync(path, "utf8"));
+}
+
+function remapCommands(commands, roleByPlaceholder, style, roof, glazed) {
+  return commands.flatMap((command) => {
+    const role = roleByPlaceholder.get(command.material);
+    if (role === "glazing" && !glazed) return [];
+    if (!role) return [{ ...command }];
+    return [{
+      ...command,
+      material: role === "roof" ? roof.materialId : style.materials[role],
+    }];
+  });
+}
+
+function validateBuildingEvidence(building, voxels) {
+  const validation = building.validation;
+  if (!validation) return;
+  assert.equal(voxels.size, validation.expectedVoxelCount, `${building.key} voxel count changed`);
+  assert.ok(payloadByteLength(building.ncm.code) <= validation.maxPayloadBytes, `${building.key} exceeds its NCM payload budget`);
+  const materialIds = [...new Set([...voxels.values()].map((voxel) => voxel.material))].sort((a, b) => a - b);
+  assert.deepEqual(materialIds, validation.expectedDefaultMaterialIds, `${building.key} default materials changed`);
+  for (const volume of validation.openVolumes ?? []) {
+    for (let x = volume.x; x < volume.x + volume.width; x += 1) {
+      for (let y = volume.y; y < volume.y + volume.height; y += 1) {
+        for (let z = volume.z; z < volume.z + volume.depth; z += 1) {
+          assert.equal(voxels.has(`${x},${y},${z}`), false, `${building.key} blocks ${volume.label} at ${x},${y},${z}`);
+        }
+      }
+    }
+  }
+  for (const point of validation.solidPoints ?? []) {
+    assert.equal(voxels.get(`${point.x},${point.y},${point.z}`)?.material, point.materialId, `${building.key} solid checkpoint changed at ${point.x},${point.y},${point.z}`);
+  }
+  let previousTopY = null;
+  const maxStepRise = building.access?.maxStepRise ?? 2;
+  for (const point of validation.approach ?? []) {
+    assert.ok(voxels.has(`${point.x},${point.topY - 1},${point.z}`), `${building.key} approach lacks support at ${point.x},${point.z}`);
+    assert.equal(voxels.has(`${point.x},${point.topY},${point.z}`), false, `${building.key} approach foot space is blocked at ${point.x},${point.z}`);
+    assert.equal(voxels.has(`${point.x},${point.topY + 1},${point.z}`), false, `${building.key} approach head space is blocked at ${point.x},${point.z}`);
+    if (previousTopY != null) assert.ok(Math.abs(point.topY - previousTopY) <= maxStepRise, `${building.key} approach exceeds its step-rise limit`);
+    previousTopY = point.topY;
+  }
 }
 
 function placeholders(value) {

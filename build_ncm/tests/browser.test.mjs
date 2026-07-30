@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 1);
-  assert.match(initial.totalBuildingCount, /17 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /18 BUILDINGS/);
   assert.equal(initial.categoryCount, 11);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -316,17 +316,19 @@ try {
   }
 
   await evaluate(client, "document.querySelector('[data-building-category=civic]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=civic-town-hall]') && document.querySelector('[data-building=covered-village-bread-oven]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=civic-town-hall]') && document.querySelector('[data-building=covered-village-bread-oven]') && document.querySelector('[data-building=covered-village-notice-board]')"));
   const civicBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     cardCount: document.querySelectorAll('[data-building]').length,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(civicBrowse.activeBuilding, null);
-  assert.equal(civicBrowse.cardCount, 2);
+  assert.equal(civicBrowse.cardCount, 3);
   assert.ok(!civicBrowse.resources.includes("/build_ncm/buildings/civic/civic-town-hall.json"), "category browsing must not load the town-hall JSON");
   assert.ok(!civicBrowse.resources.includes("/build_ncm/buildings/civic/covered-village-bread-oven.json"), "category browsing must not load the bread-oven JSON");
   assert.ok(!civicBrowse.resources.includes("/build_ncm/concepts/civic/covered-village-bread-oven.webp"), "category browsing must not load the bread-oven concept art");
+  assert.ok(!civicBrowse.resources.includes("/build_ncm/buildings/civic/covered-village-notice-board.json"), "category browsing must not load the notice-board JSON");
+  assert.ok(!civicBrowse.resources.includes("/build_ncm/concepts/civic/covered-village-notice-board.webp"), "category browsing must not load the notice-board concept art");
   await evaluate(client, "document.querySelector('[data-building=civic-town-hall]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'civic-town-hall' && document.querySelector('#modelSize').textContent === '44 × 42 × 40'"));
   const townHall = await evaluate(client, `({
@@ -358,6 +360,8 @@ try {
   assert.ok(townHall.voxelCount > cottageVoxels);
   assert.equal(townHall.uncovered, false);
   assert.equal(townHall.modelErrors, 0);
+  assert.equal(await evaluate(client, "performance.getEntriesByType('resource').some((entry) => new URL(entry.name).pathname === '/build_ncm/buildings/civic/covered-village-notice-board.json')"), false, "selecting the town hall must not load the notice-board JSON");
+  assert.equal(await evaluate(client, "performance.getEntriesByType('resource').some((entry) => new URL(entry.name).pathname === '/build_ncm/concepts/civic/covered-village-notice-board.webp')"), false, "selecting the town hall must not load the notice-board concept art");
 
   const townHallTitles = {
     en: "Civic Town Hall",
@@ -438,6 +442,47 @@ try {
   assert.ok(breadOven.resources.includes("/build_ncm/buildings/civic/covered-village-bread-oven.json"));
   assert.ok(breadOven.resources.includes("/build_ncm/concepts/civic/covered-village-bread-oven.webp"));
   assert.ok(!breadOven.resources.some((path) => path.endsWith("covered-village-bread-oven-blueprint.js")));
+  assert.ok(!breadOven.resources.includes("/build_ncm/buildings/civic/covered-village-notice-board.json"), "selecting the bread oven must not load the notice-board JSON");
+  assert.ok(!breadOven.resources.includes("/build_ncm/concepts/civic/covered-village-notice-board.webp"), "selecting the bread oven must not load the notice-board concept art");
+
+  await evaluate(client, "document.querySelector('[data-building=covered-village-notice-board]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'covered-village-notice-board' && document.querySelector('#modelSize').textContent === '23 × 22 × 9' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const noticeBoard = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(noticeBoard.activeCategory, "civic");
+  assert.match(noticeBoard.title, /Covered Village Notice Board/);
+  assert.equal(noticeBoard.modelSize, "23 × 22 × 9");
+  assert.match(noticeBoard.payload, /^NCM3:/);
+  assert.equal(noticeBoard.voxelCount, 1486);
+  for (const id of [55, 56, 57, 58, 68, 69, 74, 75, 96]) assert.match(noticeBoard.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(noticeBoard.uncovered, false);
+  assert.equal(noticeBoard.glazingDisabled, true);
+  assert.equal(noticeBoard.glazingLabel, "Openings: Not applicable");
+  assert.equal(noticeBoard.disabledStyles, 6);
+  assert.equal(noticeBoard.disabledRoofs, 6);
+  assert.equal(noticeBoard.conceptHidden, false);
+  assert.match(noticeBoard.conceptAlt, /Covered Village Notice Board concept reference/);
+  assert.equal(noticeBoard.conceptFit, "contain");
+  assert.equal(noticeBoard.selectedInUrl, "covered-village-notice-board");
+  assert.ok(noticeBoard.resources.includes("/build_ncm/buildings/civic/covered-village-notice-board.json"));
+  assert.ok(noticeBoard.resources.includes("/build_ncm/concepts/civic/covered-village-notice-board.webp"));
+  assert.ok(!noticeBoard.resources.some((path) => path.endsWith("covered-village-notice-board-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=utility]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=covered-village-well]') && document.querySelector('[data-building=village-twin-lantern]')"));

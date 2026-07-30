@@ -1,0 +1,172 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "covered-village-notice-board",
+  "category": "civic",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Covered Village Notice Board",
+    "es": "Tablón de Anuncios Cubierto de la Aldea",
+    "fr": "Panneau d'Affichage Couvert du Village",
+    "de": "Überdachte Anschlagtafel des Dorfes",
+    "ja": "屋根付き村の掲示板",
+    "ru": "Крытая деревенская доска объявлений",
+    "ko": "지붕 있는 마을 게시판",
+    "zh-Hant": "有頂村莊告示欄",
+    "zh-Hans": "有顶村庄告示栏"
+  },
+  "descriptions": {
+    "en": "A symmetric covered village notice board with a level polished-stone viewing apron, twin grounded masonry plinths, two squared-timber posts, face-connected wooden-stick knee braces, a plank-backed eight-module ceramic display, continuous clear-glass protection and a fully supported terracotta gable canopy.",
+    "es": "Tablón de anuncios cubierto y simétrico con una explanada plana de piedra pulida, dos basamentos de mampostería apoyados en el suelo, dos postes de madera escuadrada, tornapuntas de varillas de madera conectadas por caras, un expositor cerámico de ocho módulos sobre fondo de tablones, protección continua de vidrio transparente y un tejadillo a dos aguas de terracota completamente sustentado.",
+    "fr": "Panneau d'affichage couvert et symétrique avec un parvis plan en pierre polie, deux socles de maçonnerie ancrés au sol, deux poteaux en bois équarri, des jambes de force en baguettes de bois jointives, un présentoir en céramique à huit modules sur fond de planches, une protection continue en verre clair et un auvent à pignon en terre cuite entièrement soutenu.",
+    "de": "Symmetrische überdachte Anschlagtafel mit einem ebenen Vorplatz aus poliertem Stein, zwei bodengebundenen Mauersockeln, zwei Kantholzpfosten, flächig verbundenen Knaggen aus Holzstäben, einer achtteiligen Keramikanzeige auf Bohlenrückwand, durchgehendem Klarglasschutz und einem vollständig getragenen Terrakotta-Giebeldach.",
+    "ja": "平坦な磨き石の閲覧スペース、地面から支える左右一対の石造基壇、2本の角材柱、面接続された木棒の方杖、板張りの背面に収めた8区画の陶板表示面、全面を覆う透明ガラス、完全に支持されたテラコッタ切妻屋根を備えた、左右対称の屋根付き村掲示板です。",
+    "ru": "Симметричная крытая деревенская доска объявлений с ровной площадкой из полированного камня, двумя опирающимися на землю каменными цоколями, двумя стойками из бруса, соединёнными по граням подкосами из деревянных реек, керамическим стендом из восьми модулей на дощатой основе, сплошной защитой из прозрачного стекла и полностью поддерживаемым терракотовым двускатным навесом.",
+    "ko": "평평한 연마 석재 열람 공간, 지면에 닿는 좌우 석조 기단, 각목 기둥 두 개, 면으로 연결된 나무 막대 버팀대, 판재 뒷면 위의 8칸 세라믹 게시 모듈, 전면 투명 유리 보호판과 완전히 지지된 테라코타 박공지붕을 갖춘 대칭형 마을 게시판입니다.",
+    "zh-Hant": "左右對稱的有頂村莊告示欄，設有平坦拋光石閱覽前坪、兩座落地石造基臺、兩根方木柱、面連接木棒斜撐、以木板為背襯的八格陶瓷公告模組、整面透明玻璃防護，以及完整承托的赤陶人字頂棚。",
+    "zh-Hans": "左右对称的有顶村庄告示栏，设有平坦抛光石阅览前坪、两座落地石造基台、两根方木柱、面连接木棒斜撑、以木板为背衬的八格陶瓷公告模块、整面透明玻璃防护，以及完整承托的赤陶人字顶棚。"
+  },
+  "referenceImage": "concepts/civic/covered-village-notice-board.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": false,
+    "maxStepRise": 0
+  },
+  "doorOpening": "not-applicable",
+  "footprint": "23 × 9 vu",
+  "height": "22 vu",
+  "referenceScale": "One concept voxel equals one NCM voxel",
+  "preview": {
+    "fitScale": 1.08,
+    "minScale": 4,
+    "yaw": 2.56
+  },
+  "extraMaterials": [
+    {
+      "materialId": 56,
+      "phase": "structure",
+      "label": "Wooden-stick Dividers and Face-connected Knee Braces"
+    },
+    {
+      "materialId": 58,
+      "phase": "envelope",
+      "label": "Continuous Clear-glass Display Cover"
+    },
+    {
+      "materialId": 68,
+      "phase": "foundation",
+      "label": "Cobblestone Post Plinths"
+    },
+    {
+      "materialId": 69,
+      "phase": "foundation",
+      "label": "Polished Stone Plinth Caps and Viewing Apron"
+    },
+    {
+      "materialId": 74,
+      "phase": "fixtures",
+      "label": "White Ceramic Notice Insets"
+    },
+    {
+      "materialId": 75,
+      "phase": "fixtures",
+      "label": "Blue Ceramic Notice Borders"
+    }
+  ],
+  "validation": {
+    "expectedVoxelCount": 1486,
+    "expectedPayloadBytes": 294,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [55, 56, 57, 58, 68, 69, 74, 75, 96],
+    "expectedMaterialVoxelCounts": {
+      "55": 280,
+      "56": 33,
+      "57": 677,
+      "58": 72,
+      "68": 98,
+      "69": 102,
+      "74": 8,
+      "75": 64,
+      "96": 152
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 11,
+    "supportColumns": [
+      { "label": "Left grounded display post", "x": 3, "z": 4, "baseY": 0, "topY": 16 },
+      { "label": "Right grounded display post", "x": 19, "z": 4, "baseY": 0, "topY": 16 }
+    ],
+    "horizontalSpans": [
+      { "label": "Lower display rail", "axis": "x", "start": 4, "end": 18, "y": 5, "fixed": 3 },
+      { "label": "Upper display rail", "axis": "x", "start": 4, "end": 18, "y": 14, "fixed": 3 },
+      { "label": "Front canopy crossbeam", "axis": "x", "start": 0, "end": 22, "y": 15, "fixed": 0 },
+      { "label": "Rear canopy crossbeam", "axis": "x", "start": 0, "end": 22, "y": 15, "fixed": 8 },
+      { "label": "Continuous timber ridge", "axis": "x", "start": 0, "end": 22, "y": 21, "fixed": 4 }
+    ],
+    "walkableDecks": [
+      {
+        "label": "Flat front viewing apron",
+        "axis": "z",
+        "start": 0,
+        "end": 3,
+        "crossStart": 6,
+        "crossEnd": 16,
+        "topProfile": [1, 1, 1, 1],
+        "clearance": 4
+      }
+    ],
+    "diagonalBands": [
+      { "label": "Front wooden roof sheathing slope", "materialId": 55, "x": 1, "y": 16, "z": 0, "width": 21, "height": 1, "depth": 1, "count": 5, "dx": 0, "dy": 1, "dz": 1 },
+      { "label": "Rear wooden roof sheathing slope", "materialId": 55, "x": 1, "y": 16, "z": 8, "width": 21, "height": 1, "depth": 1, "count": 5, "dx": 0, "dy": 1, "dz": -1 },
+      { "label": "Front terracotta roof slope", "materialId": 96, "x": 2, "y": 17, "z": 0, "width": 19, "height": 1, "depth": 1, "count": 4, "dx": 0, "dy": 1, "dz": 1 },
+      { "label": "Rear terracotta roof slope", "materialId": 96, "x": 2, "y": 17, "z": 8, "width": 19, "height": 1, "depth": 1, "count": 4, "dx": 0, "dy": 1, "dz": -1 },
+      { "label": "Left front face-connected knee brace", "materialId": 56, "x": 3, "y": 13, "z": 3, "width": 1, "height": 2, "depth": 1, "count": 2, "dx": 0, "dy": 1, "dz": -1 },
+      { "label": "Right front face-connected knee brace", "materialId": 56, "x": 19, "y": 13, "z": 3, "width": 1, "height": 2, "depth": 1, "count": 2, "dx": 0, "dy": 1, "dz": -1 }
+    ],
+    "openVolumes": [
+      { "label": "Clear front viewing space", "x": 6, "y": 1, "z": 0, "width": 11, "height": 4, "depth": 4 }
+    ],
+    "approach": [
+      { "x": 11, "z": 0, "topY": 1 },
+      { "x": 11, "z": 1, "topY": 1 },
+      { "x": 11, "z": 2, "topY": 1 },
+      { "x": 11, "z": 3, "topY": 1 }
+    ],
+    "solidPoints": [
+      { "x": 11, "y": 0, "z": 0, "materialId": 69 },
+      { "x": 3, "y": 0, "z": 4, "materialId": 68 },
+      { "x": 3, "y": 2, "z": 4, "materialId": 69 },
+      { "x": 3, "y": 3, "z": 4, "materialId": 57 },
+      { "x": 4, "y": 5, "z": 3, "materialId": 57 },
+      { "x": 5, "y": 7, "z": 5, "materialId": 55 },
+      { "x": 5, "y": 7, "z": 4, "materialId": 75 },
+      { "x": 6, "y": 8, "z": 4, "materialId": 74 },
+      { "x": 6, "y": 7, "z": 3, "materialId": 58 },
+      { "x": 11, "y": 10, "z": 3, "materialId": 56 },
+      { "x": 1, "y": 16, "z": 0, "materialId": 55 },
+      { "x": 2, "y": 17, "z": 0, "materialId": 96 },
+      { "x": 11, "y": 20, "z": 4, "materialId": 55 },
+      { "x": 11, "y": 21, "z": 4, "materialId": 57 }
+    ]
+  },
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARcWCRwCRAEAAwQBBAEgAAACRQECAwQABAEgAAABRQUAAAwAAwIDAgMEAg0CASAAAAEDBAUDDgEDAQMEDgMOAQMBBgUHBQwGAAJLBQcEAgIAAQYAAAJLDAcEAgIAAQYAAAJLBQsEAgIAAQYAAAJLDAsEAgIAAQYAAAJKBggEAAAAAQYAAAJKDQgEAAAAAQYAAAJKBgwEAAAAAQYAAAJKDQwEAAAAAQYAAAE6BQcDDAYAATgLBwMABgABOAUKAwwAAAI4Aw0DAAEAAgACAQI4Ew0DAAEAAgACAQI4Aw0HAAEAAQACAgI4Ew0HAAEAAQACAgIDAA8AFgEBAQAADgIDABAAAwAIASYAAAgGARAAFAgIBQERABQICQMBEQAUCAEDABUEFgAA"
+  }
+}

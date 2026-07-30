@@ -17,6 +17,7 @@
     "buildings/agriculture/glass-timber-greenhouse.json",
     "buildings/agriculture/stone-timber-tower-windmill.json",
     "buildings/civic/covered-village-bread-oven.json",
-    "buildings/agriculture/covered-village-apiary.json"
+    "buildings/agriculture/covered-village-apiary.json",
+    "buildings/civic/covered-village-notice-board.json"
   ]
 }

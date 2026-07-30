@@ -23,7 +23,7 @@ const runtimeCache = new ForgeRuntimeCache({ maxEntries: 32, maxBytes: 64 * 1024
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
-assert.equal(catalog.items.length, 24);
+assert.equal(catalog.items.length, 25);
 assert.equal(new Set(catalog.items).size, catalog.items.length);
 
 const listedFiles = new Set(catalog.items);
@@ -35,6 +35,7 @@ assert.deepEqual([...diskFiles].sort(), [...listedFiles].sort(), "every item JSO
 const categories = new Map();
 let tools = 0;
 let placeables = 0;
+let conceptReferences = 0;
 for (const file of catalog.items) {
   assert.match(file, /^json\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/);
   const item = json(join(root, file));
@@ -64,6 +65,15 @@ for (const file of catalog.items) {
   assert.ok(item.forge.rawBytes > 0 && item.forge.rawBytes <= 640);
   assert.equal(item.forge.materialPolicy, "current-smelting-rules-only");
   assert.equal(item.forge.materialRuleSet, rules.ruleSet);
+  if (item.concept) {
+    conceptReferences += 1;
+    assert.equal(item.concept.source, "imagegen");
+    assert.ok(Number.isInteger(item.concept.version) && item.concept.version > 0);
+    assert.equal(item.concept.image, `concepts/${item.category}/${item.key}-v${item.concept.version}.webp`);
+    assert.match(item.concept.sha256, /^[a-f0-9]{64}$/);
+    const conceptBytes = readFileSync(join(root, item.concept.image));
+    assert.equal(createHash("sha256").update(conceptBytes).digest("hex"), item.concept.sha256);
+  }
 
   const decoded = decodeNcf1(item.forge.code, { requireCanonical: true });
   const canonicalBytes = encodeNcf1Bytes(decoded);
@@ -126,12 +136,14 @@ assert.deepEqual([...categories], [
   ["lighting", 3],
   ["furniture", 3],
   ["containers", 3],
+  ["cooking", 1],
 ]);
 assert.equal(tools, 13);
-assert.equal(placeables, 11);
+assert.equal(placeables, 12);
+assert.equal(conceptReferences, 1);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
-console.log("item_ncm catalog tests passed: 24 canonical NCF1 items across 8 categories");
+console.log("item_ncm catalog tests passed: 25 canonical NCF1 items across 9 categories");
 
 function json(file) {
   return JSON.parse(readFileSync(file, "utf8"));

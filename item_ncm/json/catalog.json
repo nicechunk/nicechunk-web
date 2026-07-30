@@ -25,6 +25,7 @@
     "json/furniture/storage-shelf.json",
     "json/containers/banded-wooden-chest.json",
     "json/containers/iron-ore-bucket.json",
-    "json/containers/reinforced-travel-crate.json"
+    "json/containers/reinforced-travel-crate.json",
+    "json/cooking/iron-hearth-cauldron.json"
   ]
 }

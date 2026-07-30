@@ -149,6 +149,10 @@ const ITEM_NAMES = Object.freeze({
     "Reinforced Travel Crate", "Cajón de viaje reforzado", "Caisse de voyage renforcée", "Verstärkte Transportkiste",
     "補強輸送箱", "Усиленный дорожный ящик", "보강 운송 상자", "強化運輸箱", "强化运输箱",
   ),
+  "iron-hearth-cauldron": names(
+    "Iron Hearth Cauldron", "Caldero de hogar de hierro", "Chaudron de foyer en fer", "Eiserner Herdkessel",
+    "鉄製炉端大釜", "Железный очажный котёл", "철제 화덕 가마솥", "鐵製爐灶大鍋", "铁制炉灶大锅",
+  ),
 });
 
 const ITEM_SPECS = Object.freeze([
@@ -306,6 +310,19 @@ const ITEM_SPECS = Object.freeze([
     part("wooden_plank", [54, 5, 38], [0, 42, 0]),
     ...[14, 30].flatMap((y) => [-21, 21].map((z) => part("iron_bloom", [54, 4, 3], [0, y, z]))),
   ]),
+
+  placeable("cooking", "iron-hearth-cauldron", [
+    part("iron_bloom", [26, 16, 26], [0, 21, 0], { mask: cauldronBowlMask }),
+    part("iron_bloom", [30, 3, 30], [0, 29, 0], { mask: cauldronRimMask }),
+    part("iron_bloom", [12, 3, 12], [0, 12, 0], { mask: roundMask }),
+    ...[-4, 4].flatMap((x) => [-4, 4].map((z) => part("iron_bloom", [3, 12, 3], [x, 6, z]))),
+    part("copper_bloom", [3, 12, 16], [-16, 23, 0], { mask: sideHandleMask }),
+    part("copper_bloom", [3, 12, 16], [16, 23, 0], { mask: sideHandleMask }),
+  ], { yaw: -0.76, pitch: 0.48 }, {
+    image: "concepts/cooking/iron-hearth-cauldron-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
 ]);
 
 generate();
@@ -400,6 +417,7 @@ function buildItem(spec) {
   const dimensions = runtime.boundsQ.sizeQ.map((value) => round(value / 64, 4));
   const localizedNames = ITEM_NAMES[spec.key];
   if (!localizedNames) throw new Error(`Missing localized names for ${spec.key}.`);
+  const concept = spec.concept ? buildConcept(spec) : null;
 
   return {
     schema: ITEM_SCHEMA,
@@ -419,6 +437,7 @@ function buildItem(spec) {
       yaw: spec.preview?.yaw ?? -0.72,
       pitch: spec.preview?.pitch ?? 0.34,
     },
+    ...(concept ? { concept } : {}),
     forge: {
       format: "NCF1",
       version: 15,
@@ -460,6 +479,21 @@ function buildItem(spec) {
       currentMaterialsOnly: true,
       chainMinted: false,
     },
+  };
+}
+
+function buildConcept(spec) {
+  const concept = spec.concept;
+  const expectedImage = `concepts/${spec.category}/${spec.key}-v${concept.version}.webp`;
+  if (concept.source !== "imagegen" || !Number.isInteger(concept.version) || concept.version < 1 || concept.image !== expectedImage) {
+    throw new Error(`${spec.key} has invalid concept provenance.`);
+  }
+  const bytes = readFileSync(path.join(itemRoot, concept.image));
+  return {
+    image: concept.image,
+    source: concept.source,
+    version: concept.version,
+    sha256: createHash("sha256").update(bytes).digest("hex"),
   };
 }
 
@@ -569,12 +603,30 @@ function rimMask({ nx, nz }) {
   return radial >= 0.68 && radial <= 1.02;
 }
 
+function cauldronBowlMask({ nx, ny, nz }) {
+  const radial = Math.sqrt(nx * nx + nz * nz);
+  const outer = radial <= 0.98 && ny <= 0.78;
+  const inner = radial < 0.78 && ny > -0.66;
+  return outer && !inner;
+}
+
+function cauldronRimMask({ nx, nz }) {
+  const radial = Math.sqrt(nx * nx + nz * nz);
+  return radial >= 0.78 && radial <= 1.02;
+}
+
 function bucketMask({ nx, ny, nz }) {
   const radial = Math.sqrt(nx * nx + nz * nz);
   const taper = 0.72 + ((ny + 1) / 2) * 0.25;
   const wall = radial >= taper - 0.22 && radial <= taper;
   const bottom = ny < -0.72 && radial <= taper;
   return wall || bottom;
+}
+
+function sideHandleMask({ ny, nz }) {
+  const outer = Math.max(Math.abs(ny), Math.abs(nz)) <= 0.98;
+  const inner = Math.abs(ny) < 0.5 && Math.abs(nz) < 0.62;
+  return outer && !inner;
 }
 
 function names(en, es, fr, de, ja, ru, ko, zhHant, zhHans) {
@@ -611,8 +663,15 @@ function tool(category, key, parts, preview = null) {
   return Object.freeze({ category, key, parts: Object.freeze(parts), interaction: "tool", preview });
 }
 
-function placeable(category, key, parts, preview = null) {
-  return Object.freeze({ category, key, parts: Object.freeze(parts), interaction: "placeable", preview });
+function placeable(category, key, parts, preview = null, concept = null) {
+  return Object.freeze({
+    category,
+    key,
+    parts: Object.freeze(parts),
+    interaction: "placeable",
+    preview,
+    concept: concept ? Object.freeze({ ...concept }) : null,
+  });
 }
 
 function part(materialId, dimsQ, offsetQ, { grip = null, mask = null } = {}) {

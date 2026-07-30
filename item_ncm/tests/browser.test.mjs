@@ -50,7 +50,7 @@ try {
   await client.send("Emulation.setDeviceMetricsOverride", { width: 1600, height: 1200, deviceScaleFactor: 1, mobile: false });
   await client.send("Page.navigate", { url });
   await waitFor(() => evaluate(client, `document.readyState === "complete"
-    && document.querySelectorAll("[data-category]").length === 8
+    && document.querySelectorAll("[data-category]").length === 9
     && document.querySelectorAll("[data-item]").length === 3
     && document.querySelector("#runtimeState").dataset.state === "verified"`));
 
@@ -78,9 +78,9 @@ try {
   assert.equal(initial.locale, "en");
   assert.equal(initial.title, "ITEM_NCM — NiceChunk Forge Item Registry");
   assert.equal(initial.languageCount, 9);
-  assert.equal(initial.categoryCount, 8);
+  assert.equal(initial.categoryCount, 9);
   assert.equal(initial.visibleItems, 3);
-  assert.match(initial.total, /24 ITEMS/);
+  assert.match(initial.total, /25 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -156,6 +156,29 @@ try {
   assert.equal(workbench.selectedInUrl, "timber-workbench");
   assert.ok(workbench.resources.includes("/item_ncm/json/furniture/timber-workbench.json"));
 
+  await evaluate(client, `document.querySelector('[data-category="cooking"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 1 && document.querySelector('[data-item="iron-hearth-cauldron"]')`));
+  assert.equal(await evaluate(client, `performance.getEntriesByType("resource").some((entry) => new URL(entry.name).pathname.includes("/item_ncm/json/cooking/"))`), false,
+    "category browsing must not load cooking item JSON files");
+  await evaluate(client, `document.querySelector('[data-item="iron-hearth-cauldron"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="iron-hearth-cauldron"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const cauldron = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payload: document.querySelector("#codeOutput").value,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    materialRows: document.querySelectorAll("#bomRows .bom-row").length,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(cauldron.title, "Iron Hearth Cauldron");
+  assert.equal(cauldron.type, "PLACEABLE");
+  assert.match(cauldron.payload, /^NCF1\./);
+  assert.equal(cauldron.payloadBytes, "523 / 640 B");
+  assert.equal(cauldron.materialRows, 2);
+  assert.equal(cauldron.selectedInUrl, "iron-hearth-cauldron");
+  assert.ok(cauldron.resources.includes("/item_ncm/json/cooking/iron-hearth-cauldron.json"));
+
   await evaluate(client, `(() => {
     const search = document.querySelector("#itemSearch");
     search.value = "guardian-spear";
@@ -163,6 +186,9 @@ try {
   })()`);
   await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 1 && document.querySelector('[data-item="guardian-spear"]')`));
   assert.equal(await evaluate(client, `document.querySelector("#activeCategoryTitle").textContent`), "SEARCH RESULTS");
+
+  await evaluate(client, `document.querySelector('[data-category="mining-tools"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 3 && document.querySelector('[data-category="mining-tools"].active')`));
 
   await client.send("Emulation.setDeviceMetricsOverride", { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
   await evaluate(client, `(() => {
@@ -187,7 +213,7 @@ try {
   })()`);
   assert.equal(mobile.clientWidth, 390);
   assert.equal(mobile.scrollWidth, mobile.clientWidth, "mobile page must not create document-level horizontal overflow");
-  assert.equal(mobile.categoryCount, 8);
+  assert.equal(mobile.categoryCount, 9);
   assert.equal(mobile.itemCount, 3);
   assert.equal(mobile.libraryBeforePreview, true);
   assert.equal(mobile.previewBeforeDetails, true);

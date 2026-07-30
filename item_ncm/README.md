@@ -6,11 +6,12 @@ ITEM_NCM is the public NiceChunk forge-item blueprint registry. It follows the s
 
 - `json/catalog.json` contains item JSON filenames only.
 - `json/<category>/<item>.json` is one independent, self-contained item definition.
+- `concepts/<category>/<item>-vN.webp` preserves the Imagegen concept reference used before NCF1 modeling.
 - `locales/<locale>.json` contains the page shell translations for all nine supported languages.
 - Every item JSON contains its own nine-language names and descriptions.
 - `tools/generate-items.mjs` is the canonical source for the initial collection and regenerates every item JSON deterministically.
 
-The initial registry contains 24 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, and containers.
+The registry currently contains 25 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, containers, and cooking. New designs begin with an Imagegen material-style concept; the resulting item JSON records the concept path, provenance, version, and SHA-256 before the forge encoding is accepted.
 
 ## Forge guarantees
 
@@ -22,6 +23,7 @@ The generator rejects an item unless all of these checks pass:
 4. The current NCF1 v15 payload round-trips canonically and stays within 640 raw bytes.
 5. `ForgeRuntimeCache` restores a non-empty game mesh from the encoded payload.
 6. Dimensions, material requirements, bill of materials, runtime evidence, design hash, and SHA-256 are written into the item JSON.
+7. When a concept reference is present, its category-bound filename and SHA-256 are validated and written into the item JSON.
 
 `verification.chainMinted` remains `false` because this library validates blueprint readiness; it does not claim that a blueprint PDA has already been created.
 

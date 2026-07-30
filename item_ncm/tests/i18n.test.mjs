@@ -12,7 +12,7 @@ assert.deepEqual(localeFiles, expectedLocales.map((locale) => `${locale}.json`).
 const dictionaries = new Map(localeFiles.map((file) => [file.replace(".json", ""), JSON.parse(readFileSync(join(localeDirectory, file), "utf8"))]));
 const english = dictionaries.get("en");
 const englishKeys = Object.keys(english).sort();
-assert.equal(englishKeys.length, 91);
+assert.equal(englishKeys.length, 92);
 for (const [locale, dictionary] of dictionaries) {
   assert.deepEqual(Object.keys(dictionary).sort(), englishKeys, `${locale} locale keys differ from English`);
   for (const key of englishKeys) {
@@ -28,7 +28,7 @@ const runtimeKeys = [...sources.matchAll(/\bt\("([a-zA-Z0-9_.-]+)"/g)].map((matc
 for (const key of new Set([...staticKeys, ...runtimeKeys])) assert.ok(english[key], `missing locale key used by the page: ${key}`);
 
 for (const key of ["tool", "placeable"]) assert.ok(english[`type.${key}`]);
-for (const key of ["mining-tools", "forestry-farming", "workshop", "weapons", "building-fittings", "lighting", "furniture", "containers"]) {
+for (const key of ["mining-tools", "forestry-farming", "workshop", "weapons", "building-fittings", "lighting", "furniture", "containers", "cooking"]) {
   assert.ok(english[`library.category.${key}`]);
 }
 

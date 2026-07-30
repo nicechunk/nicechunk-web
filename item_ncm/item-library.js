@@ -95,6 +95,15 @@ function validateItemDefinition(source, entry) {
   if (!Array.isArray(dimensions.sizeQ) || dimensions.sizeQ.length !== 3 || !dimensions.sizeQ.every(positiveInteger)) {
     throw new TypeError(`Item ${source.key} has invalid packed dimensions.`);
   }
+  let concept = null;
+  if (source.concept != null) {
+    const expectedImage = `concepts/${entry.category}/${entry.key}-v${source.concept.version}.webp`;
+    if (source.concept?.source !== "imagegen" || !positiveInteger(source.concept.version)
+      || source.concept.image !== expectedImage || !/^[a-f0-9]{64}$/.test(source.concept.sha256)) {
+      throw new TypeError(`Item ${source.key} has invalid concept provenance.`);
+    }
+    concept = Object.freeze({ ...source.concept });
+  }
 
   const forge = source.forge;
   if (forge?.format !== "NCF1" || forge.version !== 15 || typeof forge.code !== "string" || !forge.code.startsWith("NCF1.")) {
@@ -142,6 +151,7 @@ function validateItemDefinition(source, entry) {
     descriptions,
     dimensions: Object.freeze({ ...dimensions, sizeQ: Object.freeze([...dimensions.sizeQ]) }),
     preview: Object.freeze({ ...source.preview }),
+    ...(concept ? { concept } : {}),
     forge: Object.freeze({
       ...forge,
       materialComponents: Object.freeze(forge.materialComponents.map((component) => Object.freeze({ ...component }))),

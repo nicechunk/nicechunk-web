@@ -34,6 +34,7 @@
   "library.category.lighting": "ÉCLAIRAGE",
   "library.category.furniture": "MOBILIER",
   "library.category.containers": "CONTENEURS",
+  "library.category.cooking": "CUISINE",
   "preview.emptyTitle": "Sélectionnez un plan d’objet.",
   "preview.waiting": "EN ATTENTE",
   "preview.reset": "Réinitialiser la vue",

@@ -1,0 +1,184 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "iron-hearth-cauldron",
+  "category": "cooking",
+  "interaction": "placeable",
+  "names": {
+    "en": "Iron Hearth Cauldron",
+    "es": "Caldero de hogar de hierro",
+    "fr": "Chaudron de foyer en fer",
+    "de": "Eiserner Herdkessel",
+    "ja": "鉄製炉端大釜",
+    "ru": "Железный очажный котёл",
+    "ko": "철제 화덕 가마솥",
+    "zh-Hant": "鐵製爐灶大鍋",
+    "zh-Hans": "铁制炉灶大锅"
+  },
+  "descriptions": {
+    "en": "Iron Hearth Cauldron is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Caldero de hogar de hierro es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Chaudron de foyer en fer est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Eiserner Herdkessel ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "鉄製炉端大釜は、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Железный очажный котёл — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "철제 화덕 가마솥은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "鐵製爐灶大鍋是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "铁制炉灶大锅是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 0.5469,
+    "height": 0.4844,
+    "depth": 0.4688,
+    "sizeQ": [
+      35,
+      31,
+      30
+    ]
+  },
+  "preview": {
+    "yaw": -0.76,
+    "pitch": 0.48
+  },
+  "concept": {
+    "image": "concepts/cooking/iron-hearth-cauldron-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "02b919bedc9188519e7ee8dc962918eb663023b1039e4a0436d2c8fe87489fc3"
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.-MvXf8lsskPyoYhimpJCakaEBoAAKgAvAALQyALQrIIPAAnQ2AnQnIkOzIkOgBFQ4BFQoRM9FJCOXJCOABjRaBjRGRi8URi8DJiN5JiNkSC7WSC7BKiM7KiMgEjK6EjKiFjJ4FjJkGDJWGDJGGlIyGlIgACakeAx4AAOgA0TggMDBQGBgwGBAQQBAIEFAgUCBQIFAgUCBQEAgQQBAQGDAYGFAwMCAACakMAwwAAGAAAyQRACAUAYA4CADAIAOAYBQAgbACASAgAoCgCAKAIAoAgCgCgIASAIEwBgDAKAGAwAQDABAMAEAwAYCgDAGAuAQBACACAMAEAwAIHAAgMAEAwAgCAEAEASAYAwCgBgMACDgAIDABgKAMAYA4CACgKAGAwAIOAAgMAGAoAoCADAIAIAwAIVAAgMAIAgAwCACAMACFQAIDACAIAMAgAoCgBgMACDgAIDABgKAKAgA4BgDAKAGAwAIOAAgMAGAoAwBgEgEAQAgAgDABAMACBwAIDABAMAIAgBABALgGAMAoAYDABAMAEAwAQDABgKAMAYEwAgEgIAKAoAgCgCAKAIAoAoCAEgCBsAIBQBgDgIAMAgA4BgFACBEAAJqQMMA3-AN_hAAE1IGGAb_AGAQgACakDDAMAgDf4QABNSBhgGAQBgEIADAwwQfgC4AIIGfJAADAwwQAgC4AIIGfJAAA",
+    "rawBytes": 523,
+    "sha256": "93dff63add12aad2eca7459e70b99766ac9a0117fdac4257580ea576d7a1a6ab",
+    "designHash": 2740744513,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 523,
+    "savedBytes": 0,
+    "sourceComponentCount": 9,
+    "decodedComponentCount": 9,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 41259766,
+        "usedVolumeMm3": 15072445,
+        "unusedVolumeMm3": 26187321
+      },
+      {
+        "index": 1,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 10299683,
+        "usedVolumeMm3": 3993754,
+        "unusedVolumeMm3": 6305929
+      },
+      {
+        "index": 2,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 1647949,
+        "usedVolumeMm3": 1049306,
+        "unusedVolumeMm3": 598643
+      },
+      {
+        "index": 3,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 411987,
+        "usedVolumeMm3": 411987,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 411987,
+        "usedVolumeMm3": 411987,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 411987,
+        "usedVolumeMm3": 411987,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 411987,
+        "usedVolumeMm3": 411987,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 7,
+        "materialId": "copper_bloom",
+        "itemCode": 1015,
+        "inputVolumeMm3": 2197266,
+        "usedVolumeMm3": 1695033,
+        "unusedVolumeMm3": 502233
+      },
+      {
+        "index": 8,
+        "materialId": "copper_bloom",
+        "itemCode": 1015,
+        "inputVolumeMm3": 2197266,
+        "usedVolumeMm3": 1695033,
+        "unusedVolumeMm3": 502233
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 25149440,
+      "requiredEffectiveDurability": 30199,
+      "outputMassGrams": 180145,
+      "materialScore": 66
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 2412,
+      "triangleCount": 1206,
+      "meshByteLength": 45828
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 7,
+      "inputVolumeMm3": 54855346,
+      "usedVolumeMm3": 21763453,
+      "unusedVolumeMm3": 33091893,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 220
+    },
+    {
+      "materialId": "copper_bloom",
+      "itemCode": 1015,
+      "componentCount": 2,
+      "inputVolumeMm3": 4394532,
+      "usedVolumeMm3": 3390066,
+      "unusedVolumeMm3": 1004466,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 18
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "currentMaterialsOnly": true,
+    "chainMinted": false
+  }
+}

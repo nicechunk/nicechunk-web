@@ -1,0 +1,256 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "amber-village-street-lantern",
+  "category": "lighting",
+  "interaction": "placeable",
+  "names": {
+    "en": "Amber Village Street Lantern",
+    "es": "Farola de aldea de vidrio ámbar",
+    "fr": "Réverbère de village en verre ambré",
+    "de": "Dorfstraßenlaterne aus Bernsteinglas",
+    "ja": "琥珀ガラスの村落街灯",
+    "ru": "Деревенский фонарь с янтарным стеклом",
+    "ko": "호박 유리 마을 가로등",
+    "zh-Hant": "琥珀玻璃村莊街燈",
+    "zh-Hans": "琥珀玻璃村庄街灯"
+  },
+  "descriptions": {
+    "en": "Amber Village Street Lantern is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Farola de aldea de vidrio ámbar es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Réverbère de village en verre ambré est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Dorfstraßenlaterne aus Bernsteinglas ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "琥珀ガラスの村落街灯は、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Деревенский фонарь с янтарным стеклом — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "호박 유리 마을 가로등은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "琥珀玻璃村莊街燈是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "琥珀玻璃村庄街灯是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 0.5625,
+    "height": 1.9688,
+    "depth": 0.5625,
+    "sizeQ": [
+      36,
+      126,
+      36
+    ]
+  },
+  "preview": {
+    "yaw": -0.74,
+    "pitch": 0.24
+  },
+  "concept": {
+    "image": "concepts/lighting/amber-village-street-lantern-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "e82b095df28a3f9fee37e3ce98a6df9a9a9f6bdb11797a51256f9093fee47143"
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.___4iLotmZZvrlZdViOSqskBiQAABgAQAIZoMBgwAADAAIAAmpBjoGAAF4AEAATUhwMHAAE8ACAAJqRwEHAACoABAAm0ooKCgABgAAgACakEFAR-gwfoQABNSCCgI_QYAMIAAmpBBQEAYMH6EAATUggoCAMGADCAAJqR4EHgADYABAAYwCDAABwAAgAMQBBAAA6AAQABNSDBAMAAegAIAA",
+    "rawBytes": 160,
+    "sha256": "2415ac0f0716e110409b4aae4b71d32d9d5d299a465a35392df7a252b0366de7",
+    "designHash": 1129436969,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 160,
+    "savedBytes": 0,
+    "sourceComponentCount": 14,
+    "decodedComponentCount": 14,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "polished_stone_slab",
+        "itemCode": 1045,
+        "inputVolumeMm3": 29663086,
+        "usedVolumeMm3": 29663086,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "basalt_brick",
+        "itemCode": 1042,
+        "inputVolumeMm3": 26367188,
+        "usedVolumeMm3": 26367188,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 7965088,
+        "usedVolumeMm3": 7965088,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 4486084,
+        "usedVolumeMm3": 4486084,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 11962891,
+        "usedVolumeMm3": 11962891,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "amber_glass_panel",
+        "itemCode": 1036,
+        "inputVolumeMm3": 30517578,
+        "usedVolumeMm3": 30517578,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 1220703,
+        "usedVolumeMm3": 1220703,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 7,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 1220703,
+        "usedVolumeMm3": 1220703,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 8,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 1220703,
+        "usedVolumeMm3": 1220703,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 9,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 1220703,
+        "usedVolumeMm3": 1220703,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 10,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 13732910,
+        "usedVolumeMm3": 13732910,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 11,
+        "materialId": "copper_bloom",
+        "itemCode": 1015,
+        "inputVolumeMm3": 8789063,
+        "usedVolumeMm3": 8789063,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 12,
+        "materialId": "copper_bloom",
+        "itemCode": 1015,
+        "inputVolumeMm3": 3906250,
+        "usedVolumeMm3": 3906250,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 13,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 1098633,
+        "usedVolumeMm3": 1098633,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 143327232,
+      "requiredEffectiveDurability": 56264,
+      "outputMassGrams": 327675,
+      "materialScore": 61
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 336,
+      "triangleCount": 168,
+      "meshByteLength": 6384
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "polished_stone_slab",
+      "itemCode": 1045,
+      "componentCount": 1,
+      "inputVolumeMm3": 29663086,
+      "usedVolumeMm3": 29663086,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 60000,
+      "equivalentInputUnits": 495
+    },
+    {
+      "materialId": "basalt_brick",
+      "itemCode": 1042,
+      "componentCount": 1,
+      "inputVolumeMm3": 26367188,
+      "usedVolumeMm3": 26367188,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 31250,
+      "equivalentInputUnits": 844
+    },
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 9,
+      "inputVolumeMm3": 44128418,
+      "usedVolumeMm3": 44128418,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 177
+    },
+    {
+      "materialId": "amber_glass_panel",
+      "itemCode": 1036,
+      "componentCount": 1,
+      "inputVolumeMm3": 30517578,
+      "usedVolumeMm3": 30517578,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 60000,
+      "equivalentInputUnits": 509
+    },
+    {
+      "materialId": "copper_bloom",
+      "itemCode": 1015,
+      "componentCount": 2,
+      "inputVolumeMm3": 12695313,
+      "usedVolumeMm3": 12695313,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 51
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "streetLanternGeometryValidated": true,
+    "chainMinted": false
+  }
+}

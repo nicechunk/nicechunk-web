@@ -78,6 +78,20 @@ const DRAWER_CABINET_LAYOUTS = Object.freeze({
     handles: [17, 18, 19, 20, 21, 22],
   },
 });
+const STREET_LANTERN_LAYOUTS = Object.freeze({
+  "amber-village-street-lantern": {
+    plinth: 0,
+    base: 1,
+    post: 2,
+    collar: 3,
+    lowerPlate: 4,
+    glass: 5,
+    corners: [6, 7, 8, 9],
+    upperPlate: 10,
+    cap: [11, 12],
+    finial: 13,
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -197,6 +211,11 @@ const ITEM_NAMES = Object.freeze({
   "basalt-standing-brazier": names(
     "Basalt Standing Brazier", "Brasero de pie de basalto", "Brasero sur pied en basalte", "Basalt-Standfeuerschale",
     "玄武岩の据え置き火鉢", "Базальтовая жаровня на стойке", "현무암 스탠딩 화로", "玄武岩立式火盆", "玄武岩立式火盆",
+  ),
+  "amber-village-street-lantern": names(
+    "Amber Village Street Lantern", "Farola de aldea de vidrio ámbar", "Réverbère de village en verre ambré",
+    "Dorfstraßenlaterne aus Bernsteinglas", "琥珀ガラスの村落街灯", "Деревенский фонарь с янтарным стеклом",
+    "호박 유리 마을 가로등", "琥珀玻璃村莊街燈", "琥珀玻璃村庄街灯",
   ),
   "timber-workbench": names(
     "Timber Workbench", "Banco de trabajo de madera", "Établi en bois", "Holzwerkbank", "木製作業台",
@@ -412,6 +431,23 @@ const ITEM_SPECS = Object.freeze([
     part("iron_bloom", [34, 14, 34], [0, 39, 0], { mask: bowlMask }),
     part("copper_bloom", [36, 4, 36], [0, 46, 0], { mask: rimMask }),
   ]),
+  placeable("lighting", "amber-village-street-lantern", [
+    part("polished_stone_slab", [36, 6, 36], [0, 3, 0]),
+    part("basalt_brick", [24, 12, 24], [0, 12, 0]),
+    part("iron_bloom", [6, 58, 6], [0, 47, 0]),
+    part("iron_bloom", [14, 6, 14], [0, 79, 0]),
+    part("iron_bloom", [28, 4, 28], [0, 84, 0]),
+    part("amber_glass_panel", [20, 20, 20], [0, 96, 0]),
+    ...[-12, 12].flatMap((x) => [-12, 12].map((z) => part("iron_bloom", [4, 20, 4], [x, 96, z]))),
+    part("iron_bloom", [30, 4, 30], [0, 108, 0]),
+    part("copper_bloom", [24, 4, 24], [0, 112, 0]),
+    part("copper_bloom", [16, 4, 16], [0, 116, 0]),
+    part("iron_bloom", [6, 8, 6], [0, 122, 0]),
+  ], { yaw: -0.74, pitch: 0.24 }, {
+    image: "concepts/lighting/amber-village-street-lantern-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
 
   placeable("furniture", "timber-workbench", [
     part("wooden_plank", [78, 6, 38], [0, 53, 0]),
@@ -727,6 +763,8 @@ function buildItem(spec) {
   if (framedTextileLayout) validateFramedTextileGeometry(spec, runtime, framedTextileLayout);
   const drawerCabinetLayout = DRAWER_CABINET_LAYOUTS[spec.key] ?? null;
   if (drawerCabinetLayout) validateDrawerCabinetGeometry(spec, runtime, drawerCabinetLayout);
+  const streetLanternLayout = STREET_LANTERN_LAYOUTS[spec.key] ?? null;
+  if (streetLanternLayout) validateStreetLanternGeometry(spec, runtime, streetLanternLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -822,6 +860,7 @@ function buildItem(spec) {
       ...(bookLayout ? { bookGeometryValidated: true } : {}),
       ...(framedTextileLayout ? { framedTextileGeometryValidated: true } : {}),
       ...(drawerCabinetLayout ? { drawerCabinetGeometryValidated: true } : {}),
+      ...(streetLanternLayout ? { streetLanternGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -953,6 +992,60 @@ function validateDrawerCabinetGeometry(spec, runtime, layout) {
     if (handle.offsetQ[0] !== drawer.offsetQ[0] || handle.offsetQ[1] !== drawer.offsetQ[1]
       || handleBounds.min[2] !== drawerBounds.max[2]) {
       throw new Error(`${spec.key} handle ${handleIndex} is not centered on drawer ${drawerIndex}.`);
+    }
+  }
+  for (let left = 0; left < componentBounds.length; left += 1) {
+    for (let right = left + 1; right < componentBounds.length; right += 1) {
+      if (boundsOverlap(componentBounds[left], componentBounds[right], 0)) {
+        throw new Error(`${spec.key} components ${left} and ${right} intersect.`);
+      }
+    }
+  }
+}
+
+function validateStreetLanternGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 14 || runtime.boundsQ.sizeQ.join(",") !== "36,126,36") {
+    throw new Error(`${spec.key} must preserve its stable human-scale street-light proportions.`);
+  }
+  const components = runtime.components ?? [];
+  const componentBounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    "polished_stone_slab", "basalt_brick", "iron_bloom", "iron_bloom", "iron_bloom",
+    "amber_glass_panel", "iron_bloom", "iron_bloom", "iron_bloom", "iron_bloom",
+    "iron_bloom", "copper_bloom", "copper_bloom", "iron_bloom",
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  const plinth = componentBounds[layout.plinth];
+  const post = components[layout.post];
+  const glass = componentBounds[layout.glass];
+  const lowerPlate = componentBounds[layout.lowerPlate];
+  const upperPlate = componentBounds[layout.upperPlate];
+  if (post.offsetQ[0] !== 0 || post.offsetQ[2] !== 0 || post.dimsQ[1] <= post.dimsQ[0] * 8
+    || plinth.max[0] - plinth.min[0] < upperPlate.max[0] - upperPlate.min[0]
+    || plinth.max[2] - plinth.min[2] < upperPlate.max[2] - upperPlate.min[2]) {
+    throw new Error(`${spec.key} must keep a centered tall post on a stable square plinth.`);
+  }
+  if (glass.min[1] !== lowerPlate.max[1] || glass.max[1] !== upperPlate.min[1]
+    || glass.min[0] < lowerPlate.min[0] || glass.max[0] > lowerPlate.max[0]
+    || glass.min[2] < lowerPlate.min[2] || glass.max[2] > lowerPlate.max[2]) {
+    throw new Error(`${spec.key} amber chamber is not enclosed by its plates.`);
+  }
+  const expectedCornerOffsets = [[-12, 96, -12], [-12, 96, 12], [12, 96, -12], [12, 96, 12]];
+  for (let position = 0; position < layout.corners.length; position += 1) {
+    const cornerIndex = layout.corners[position];
+    const corner = components[cornerIndex];
+    const cornerBounds = componentBounds[cornerIndex];
+    if (corner.offsetQ.some((value, axis) => value !== expectedCornerOffsets[position][axis])
+      || corner.dimsQ.join(",") !== "4,20,4"
+      || cornerBounds.min[1] !== lowerPlate.max[1] || cornerBounds.max[1] !== upperPlate.min[1]) {
+      throw new Error(`${spec.key} has an invalid lantern corner ${cornerIndex}.`);
     }
   }
   for (let left = 0; left < componentBounds.length; left += 1) {

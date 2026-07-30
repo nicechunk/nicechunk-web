@@ -58,10 +58,20 @@ const drawerCabinetLayouts = new Map([
     handles: [17, 18, 19, 20, 21, 22],
   }],
 ]);
+const streetLanternLayouts = new Map([
+  ["amber-village-street-lantern", {
+    plinth: 0,
+    post: 2,
+    lowerPlate: 4,
+    glass: 5,
+    corners: [6, 7, 8, 9],
+    upperPlate: 10,
+  }],
+]);
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
-assert.equal(catalog.items.length, 37);
+assert.equal(catalog.items.length, 38);
 assert.equal(new Set(catalog.items).size, catalog.items.length);
 
 const listedFiles = new Set(catalog.items);
@@ -77,6 +87,7 @@ let conceptReferences = 0;
 let bookGeometryCount = 0;
 let framedTextileGeometryCount = 0;
 let drawerCabinetGeometryCount = 0;
+let streetLanternGeometryCount = 0;
 for (const file of catalog.items) {
   assert.match(file, /^json\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/);
   const item = json(join(root, file));
@@ -153,6 +164,13 @@ for (const file of catalog.items) {
     assert.equal(item.category, "furniture");
     assert.equal(item.verification.drawerCabinetGeometryValidated, true);
     assertDrawerCabinetGeometry(item, runtime, drawerCabinetLayout);
+  }
+  const streetLanternLayout = streetLanternLayouts.get(item.key);
+  if (streetLanternLayout) {
+    streetLanternGeometryCount += 1;
+    assert.equal(item.category, "lighting");
+    assert.equal(item.verification.streetLanternGeometryValidated, true);
+    assertStreetLanternGeometry(item, runtime, streetLanternLayout);
   }
   assert.equal(forgeWorkbenchComponentsConnected(runtime.components), true, `${item.key} must be a connected assembly`);
   const grip = validateForgeGripBindings(runtime.components);
@@ -233,7 +251,7 @@ assert.deepEqual([...categories], [
   ["workshop", 3],
   ["weapons", 3],
   ["building-fittings", 3],
-  ["lighting", 3],
+  ["lighting", 4],
   ["furniture", 4],
   ["containers", 3],
   ["cooking", 2],
@@ -241,14 +259,15 @@ assert.deepEqual([...categories], [
   ["interior-decor", 1],
 ]);
 assert.equal(tools, 15);
-assert.equal(placeables, 22);
-assert.equal(conceptReferences, 13);
+assert.equal(placeables, 23);
+assert.equal(conceptReferences, 14);
 assert.equal(bookGeometryCount, 7);
 assert.equal(framedTextileGeometryCount, 1);
 assert.equal(drawerCabinetGeometryCount, 1);
+assert.equal(streetLanternGeometryCount, 1);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
-console.log("item_ncm catalog tests passed: 37 canonical NCF1 items across 11 categories");
+console.log("item_ncm catalog tests passed: 38 canonical NCF1 items across 11 categories");
 
 function json(file) {
   return JSON.parse(readFileSync(file, "utf8"));
@@ -380,6 +399,37 @@ function assertDrawerCabinetGeometry(item, runtime, layout) {
     assert.equal(handle.offsetQ[1], drawer.offsetQ[1]);
     assert.equal(bounds[handleIndex].min[2], bounds[drawerIndex].max[2]);
   }
+  for (let left = 0; left < bounds.length; left += 1) {
+    for (let right = left + 1; right < bounds.length; right += 1) {
+      assert.equal(positiveVolumeOverlap(bounds[left], bounds[right]), false, `${item.key} components ${left} and ${right} intersect`);
+    }
+  }
+}
+
+function assertStreetLanternGeometry(item, runtime, layout) {
+  assert.equal(runtime.componentCount, 14);
+  assert.deepEqual(item.dimensions.sizeQ, [36, 126, 36]);
+  assert.ok(item.dimensions.height > item.dimensions.width * 3);
+  assert.deepEqual(
+    [...new Set(item.forge.materialComponents.map(({ materialId }) => materialId))].sort(),
+    ["amber_glass_panel", "basalt_brick", "copper_bloom", "iron_bloom", "polished_stone_slab"],
+  );
+  const bounds = runtime.components.map((component) => componentBoundsQ(component));
+  const plinth = bounds[layout.plinth];
+  const post = runtime.components[layout.post];
+  const glass = bounds[layout.glass];
+  const lowerPlate = bounds[layout.lowerPlate];
+  const upperPlate = bounds[layout.upperPlate];
+  assert.deepEqual(post.dimsQ, [6, 58, 6]);
+  assert.deepEqual(post.offsetQ, [0, 47, 0]);
+  assert.ok(plinth.max[0] - plinth.min[0] >= upperPlate.max[0] - upperPlate.min[0]);
+  assert.equal(glass.min[1], lowerPlate.max[1]);
+  assert.equal(glass.max[1], upperPlate.min[1]);
+  assert.equal(item.forge.materialComponents[layout.glass].materialId, "amber_glass_panel");
+  assert.deepEqual(
+    layout.corners.map((index) => runtime.components[index].offsetQ),
+    [[-12, 96, -12], [-12, 96, 12], [12, 96, -12], [12, 96, 12]],
+  );
   for (let left = 0; left < bounds.length; left += 1) {
     for (let right = left + 1; right < bounds.length; right += 1) {
       assert.equal(positiveVolumeOverlap(bounds[left], bounds[right]), false, `${item.key} components ${left} and ${right} intersect`);

@@ -82,7 +82,7 @@ try {
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 11);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /37 ITEMS/);
+  assert.match(initial.total, /38 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -127,6 +127,45 @@ try {
     select.dispatchEvent(new Event("change", { bubbles: true }));
   })()`);
   await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
+
+  await evaluate(client, `document.querySelector('[data-category="lighting"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 4 && document.querySelector('[data-item="amber-village-street-lantern"]')`));
+  assert.equal(await evaluate(client, `performance.getEntriesByType("resource").some((entry) => new URL(entry.name).pathname.includes("/item_ncm/json/lighting/"))`), false,
+    "category browsing must not load lighting item JSON files");
+  await evaluate(client, `document.querySelector('[data-item="amber-village-street-lantern"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="amber-village-street-lantern"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const streetLantern = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payload: document.querySelector("#codeOutput").value,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    materialRows: document.querySelectorAll("#bomRows .bom-row").length,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(streetLantern.title, "Amber Village Street Lantern");
+  assert.equal(streetLantern.type, "PLACEABLE");
+  assert.match(streetLantern.payload, /^NCF1\./);
+  assert.equal(streetLantern.payloadBytes, "160 / 640 B");
+  assert.equal(streetLantern.componentCount, "14");
+  assert.equal(streetLantern.materialRows, 5);
+  assert.equal(streetLantern.selectedInUrl, "amber-village-street-lantern");
+  assert.ok(streetLantern.resources.includes("/item_ncm/json/lighting/amber-village-street-lantern.json"));
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "zh-Hans";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.querySelector("#itemTitle").textContent === "琥珀玻璃村庄街灯"`));
+  assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), streetLantern.payload);
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "en";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
+
   await evaluate(client, `document.querySelector('[data-category="furniture"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 4 && document.querySelector('[data-item="timber-workbench"]')`));
   const furnitureBrowse = await evaluate(client, `({
@@ -137,7 +176,7 @@ try {
   })`);
   assert.equal(furnitureBrowse.activeCategory, "furniture");
   assert.equal(furnitureBrowse.activeItem, null);
-  assert.equal(furnitureBrowse.title, "Carbon-steel Prospector Pick");
+  assert.equal(furnitureBrowse.title, "Amber Village Street Lantern");
   assert.equal(furnitureBrowse.furnitureJsonLoaded, false, "category browsing must not load item JSON files");
 
   await evaluate(client, `document.querySelector('[data-item="timber-workbench"]').click()`);

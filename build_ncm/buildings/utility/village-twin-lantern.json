@@ -1,0 +1,128 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "village-twin-lantern",
+  "category": "utility",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Village Twin Lantern",
+    "es": "Farola Doble de Aldea",
+    "fr": "Réverbère Double du Village",
+    "de": "Dorf-Doppellaterne",
+    "ja": "村の双灯街路灯",
+    "ru": "Двойной деревенский фонарь",
+    "ko": "마을 쌍등 가로등",
+    "zh-Hant": "村莊雙燈路燈",
+    "zh-Hans": "村庄双灯路灯"
+  },
+  "descriptions": {
+    "en": "A compact wayfinding lamp with a one-step stone plinth, braced timber crossarm, two amber lanterns and charcoal tile caps; its clear front apron keeps village paths walkable.",
+    "es": "Farola compacta de orientación con pedestal de piedra de un peldaño, travesaño de madera reforzado, dos faroles ámbar y remates de teja negra; su borde frontal despejado mantiene transitables los caminos de la aldea.",
+    "fr": "Réverbère compact d'orientation avec socle en pierre d'une marche, traverse en bois contreventée, deux lanternes ambrées et chapeaux en tuile noire ; son bord avant dégagé préserve le passage sur les chemins du village.",
+    "de": "Kompakte Wegleuchte mit einstufigem Steinsockel, verstrebt gebautem Holzausleger, zwei bernsteinfarbenen Laternen und Kappen aus schwarzen Dachziegeln; die freie Vorderkante hält Dorfwege begehbar.",
+    "ja": "1段の石台、補強された木製横桁、2基の琥珀色ランタン、炭黒瓦の笠を備えた小型案内灯。前面の空いた縁が村道の通行を保ちます。",
+    "ru": "Компактный путевой фонарь с одноступенчатым каменным цоколем, усиленной деревянной перекладиной, двумя янтарными светильниками и колпаками из чёрной черепицы; свободный передний край сохраняет проход по деревенской дороге.",
+    "ko": "한 칸 석재 받침, 보강된 목재 가로대, 호박색 등 두 개와 숯빛 기와 덮개를 갖춘 소형 길잡이 조명이며, 비워 둔 앞쪽 가장자리가 마을길의 통행 공간을 유지합니다.",
+    "zh-Hant": "緊湊型導向路燈，設有單級石座、加固木製橫臂、兩盞琥珀燈與炭黑瓦燈帽；前側留空的平台邊緣可維持村道通行。",
+    "zh-Hans": "紧凑型导向路灯，设有单级石座、加固木制横臂、两盏琥珀灯与炭黑瓦灯帽；前侧留空的平台边缘可维持村道通行。"
+  },
+  "referenceImage": "concepts/utility/village-twin-lantern.png",
+  "defaults": {
+    "style": "cottage",
+    "roof": "charcoal",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": false,
+    "maxStepRise": 1
+  },
+  "doorOpening": "not-applicable",
+  "footprint": "17 × 7 vu",
+  "height": "22 vu",
+  "referenceScale": "One concept voxel equals one NCM voxel",
+  "preview": {
+    "fitScale": 1.18,
+    "minScale": 5,
+    "yaw": 2.4
+  },
+  "extraMaterials": [
+    {
+      "materialId": 56,
+      "phase": "structure",
+      "label": "Wooden Lantern Joinery"
+    },
+    {
+      "materialId": 60,
+      "phase": "openings",
+      "label": "Amber Lantern Panels"
+    },
+    {
+      "materialId": 69,
+      "phase": "foundation",
+      "label": "Polished Stone Plinth"
+    }
+  ],
+  "validation": {
+    "expectedVoxelCount": 524,
+    "expectedPayloadBytes": 245,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [55, 56, 57, 60, 68, 69, 99],
+    "requireConnected": true,
+    "mirrorAxisX": 9,
+    "openVolumes": [
+      {
+        "label": "Clear outer front apron",
+        "x": 6,
+        "y": 1,
+        "z": 2,
+        "width": 7,
+        "height": 2,
+        "depth": 1
+      },
+      {
+        "label": "Clear inner front walkway",
+        "x": 7,
+        "y": 2,
+        "z": 3,
+        "width": 5,
+        "height": 2,
+        "depth": 1
+      }
+    ],
+    "solidPoints": [
+      { "x": 6, "y": 0, "z": 2, "materialId": 68 },
+      { "x": 7, "y": 1, "z": 3, "materialId": 69 },
+      { "x": 8, "y": 2, "z": 4, "materialId": 57 },
+      { "x": 9, "y": 8, "z": 5, "materialId": 57 },
+      { "x": 1, "y": 18, "z": 4, "materialId": 57 },
+      { "x": 3, "y": 16, "z": 5, "materialId": 56 },
+      { "x": 3, "y": 11, "z": 5, "materialId": 60 },
+      { "x": 2, "y": 9, "z": 4, "materialId": 55 },
+      { "x": 1, "y": 14, "z": 3, "materialId": 99 },
+      { "x": 8, "y": 21, "z": 4, "materialId": 57 }
+    ],
+    "approach": [
+      { "x": 9, "z": 2, "topY": 1 },
+      { "x": 9, "z": 3, "topY": 2 },
+      { "x": 8, "z": 3, "topY": 2 },
+      { "x": 7, "z": 3, "topY": 2 }
+    ]
+  },
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARMWCxwBAQYAAgYABgFFBwEDBAAEAQMIAgQCAQIBAwgEBAINAgEDBxAEBAECAQMBEgQQAQIBBgcUBAQAAgEDCBUEAgACATgGEAUBAAABOAURBQEAAAE4CxAFAQAAATgMEQUBAAABPAIKBAICAgI4AgoEAAIAAQQAAAI4AgoGAAIAAQQAAAEGAgkEAgACAQYCDQQCAAIBBQEOAwQABAEFAg8EAgACATgDDwUAAgABPA4KBAICAgI4DgoEAAIAAQQAAAI4DgoGAAIAAQQAAAEGDgkEAgACAQYODQQCAAIBBQ0OAwQABAEFDg8EAgACATgPDwUAAgA"
+  }
+}

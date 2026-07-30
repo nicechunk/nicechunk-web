@@ -154,9 +154,15 @@ function validateBuildingEvidence(building, voxels) {
   const validation = building.validation;
   if (!validation) return;
   assert.equal(voxels.size, validation.expectedVoxelCount, `${building.key} voxel count changed`);
-  assert.ok(payloadByteLength(building.ncm.code) <= validation.maxPayloadBytes, `${building.key} exceeds its NCM payload budget`);
+  const payloadBytes = payloadByteLength(building.ncm.code);
+  if (validation.expectedPayloadBytes != null) {
+    assert.equal(payloadBytes, validation.expectedPayloadBytes, `${building.key} NCM payload length changed`);
+  }
+  assert.ok(payloadBytes <= validation.maxPayloadBytes, `${building.key} exceeds its NCM payload budget`);
   const materialIds = [...new Set([...voxels.values()].map((voxel) => voxel.material))].sort((a, b) => a - b);
   assert.deepEqual(materialIds, validation.expectedDefaultMaterialIds, `${building.key} default materials changed`);
+  if (validation.requireConnected) validateConnectedGeometry(building, voxels);
+  if (validation.mirrorAxisX != null) validateMirrorAxisX(building, voxels, validation.mirrorAxisX);
   for (const volume of validation.openVolumes ?? []) {
     for (let x = volume.x; x < volume.x + volume.width; x += 1) {
       for (let y = volume.y; y < volume.y + volume.height; y += 1) {
@@ -177,6 +183,32 @@ function validateBuildingEvidence(building, voxels) {
     assert.equal(voxels.has(`${point.x},${point.topY + 1},${point.z}`), false, `${building.key} approach head space is blocked at ${point.x},${point.z}`);
     if (previousTopY != null) assert.ok(Math.abs(point.topY - previousTopY) <= maxStepRise, `${building.key} approach exceeds its step-rise limit`);
     previousTopY = point.topY;
+  }
+}
+
+function validateConnectedGeometry(building, voxels) {
+  const first = voxels.values().next().value;
+  assert.ok(first, `${building.key} has no geometry to connect`);
+  const occupied = new Set(voxels.keys());
+  const queue = [first];
+  const visited = new Set([`${first.x},${first.y},${first.z}`]);
+  for (let index = 0; index < queue.length; index += 1) {
+    const { x, y, z } = queue[index];
+    for (const [dx, dy, dz] of [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]) {
+      const key = `${x + dx},${y + dy},${z + dz}`;
+      if (!occupied.has(key) || visited.has(key)) continue;
+      visited.add(key);
+      queue.push(voxels.get(key));
+    }
+  }
+  assert.equal(visited.size, voxels.size, `${building.key} contains disconnected or floating geometry`);
+}
+
+function validateMirrorAxisX(building, voxels, axisX) {
+  assert.ok(Number.isInteger(axisX) && axisX >= 0, `${building.key} has an invalid X mirror axis`);
+  for (const voxel of voxels.values()) {
+    const mirror = voxels.get(`${axisX * 2 - voxel.x},${voxel.y},${voxel.z}`);
+    assert.equal(mirror?.material, voxel.material, `${building.key} lost X symmetry at ${voxel.x},${voxel.y},${voxel.z}`);
   }
 }
 

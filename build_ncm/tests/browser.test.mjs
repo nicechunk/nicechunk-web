@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 1);
-  assert.match(initial.totalBuildingCount, /6 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /7 BUILDINGS/);
   assert.equal(initial.categoryCount, 6);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -348,14 +348,18 @@ try {
   await waitFor(() => evaluate(client, "document.documentElement.lang === 'en'"));
 
   await evaluate(client, "document.querySelector('[data-building-category=utility]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=covered-village-well]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=covered-village-well]') && document.querySelector('[data-building=village-twin-lantern]')"));
   const utilityBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
+    cardCount: document.querySelectorAll('[data-building]').length,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(utilityBrowse.activeBuilding, null);
+  assert.equal(utilityBrowse.cardCount, 2);
   assert.ok(!utilityBrowse.resources.includes("/build_ncm/buildings/utility/covered-village-well.json"), "category browsing must not load the well JSON");
   assert.ok(!utilityBrowse.resources.includes("/build_ncm/concepts/utility/covered-village-well.png"), "category browsing must not load the well concept art");
+  assert.ok(!utilityBrowse.resources.includes("/build_ncm/buildings/utility/village-twin-lantern.json"), "category browsing must not load the lantern JSON");
+  assert.ok(!utilityBrowse.resources.includes("/build_ncm/concepts/utility/village-twin-lantern.png"), "category browsing must not load the lantern concept art");
   await evaluate(client, "document.querySelector('[data-building=covered-village-well]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'covered-village-well' && document.querySelector('#modelSize').textContent === '21 × 22 × 18' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const well = await evaluate(client, `({
@@ -390,6 +394,43 @@ try {
   assert.ok(well.resources.includes("/build_ncm/buildings/utility/covered-village-well.json"));
   assert.ok(well.resources.includes("/build_ncm/concepts/utility/covered-village-well.png"));
   assert.ok(!well.resources.some((path) => path.endsWith("covered-village-well-blueprint.js")));
+
+  await evaluate(client, "document.querySelector('[data-building=village-twin-lantern]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'village-twin-lantern' && document.querySelector('#modelSize').textContent === '19 × 22 × 11' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const lantern = await evaluate(client, `({
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.match(lantern.title, /Village Twin Lantern/);
+  assert.equal(lantern.modelSize, "19 × 22 × 11");
+  assert.match(lantern.payload, /^NCM3:/);
+  assert.equal(lantern.voxelCount, 524);
+  for (const id of [55, 56, 57, 60, 68, 69, 99]) assert.match(lantern.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(lantern.uncovered, false);
+  assert.equal(lantern.glazingDisabled, true);
+  assert.equal(lantern.glazingLabel, "Openings: Not applicable");
+  assert.equal(lantern.disabledStyles, 6);
+  assert.equal(lantern.disabledRoofs, 6);
+  assert.equal(lantern.conceptHidden, false);
+  assert.match(lantern.conceptAlt, /Village Twin Lantern concept reference/);
+  assert.equal(lantern.conceptFit, "contain");
+  assert.equal(lantern.selectedInUrl, "village-twin-lantern");
+  assert.ok(lantern.resources.includes("/build_ncm/buildings/utility/village-twin-lantern.json"));
+  assert.ok(lantern.resources.includes("/build_ncm/concepts/utility/village-twin-lantern.png"));
+  assert.ok(!lantern.resources.some((path) => path.endsWith("village-twin-lantern-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=residential]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=hollow-cottage]')"));

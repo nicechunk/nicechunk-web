@@ -329,7 +329,7 @@ button.quiet:hover, button.quiet.active { border-color: #46632d; color: var(--li
   pointer-events: none;
 }
 .concept-reference[hidden] { display: none; }
-.concept-reference img { width: 100%; aspect-ratio: 3 / 2; border-radius: 5px; display: block; object-fit: cover; }
+.concept-reference img { width: 100%; aspect-ratio: 3 / 2; border-radius: 5px; display: block; object-fit: contain; background: #10151c; }
 .concept-reference figcaption { padding: 6px 4px 1px; color: var(--lime); font: 7px/1.3 monospace; letter-spacing: .08em; }
 .axis { position: absolute; right: 18px; bottom: 16px; width: 44px; height: 44px; font: 10px monospace; color: var(--muted); }
 .axis span { position: absolute; }

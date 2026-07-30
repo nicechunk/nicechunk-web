@@ -6,6 +6,7 @@
     "buildings/civic/civic-town-hall.json",
     "buildings/industrial/freight-warehouse.json",
     "buildings/fortress/grand-castle.json",
-    "buildings/utility/covered-village-well.json"
+    "buildings/utility/covered-village-well.json",
+    "buildings/utility/village-twin-lantern.json"
   ]
 }

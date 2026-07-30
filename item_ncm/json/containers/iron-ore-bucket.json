@@ -1,0 +1,128 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "iron-ore-bucket",
+  "category": "containers",
+  "interaction": "placeable",
+  "names": {
+    "en": "Iron Ore Bucket",
+    "es": "Cubo de mineral de hierro",
+    "fr": "Seau à minerai en fer",
+    "de": "Eiserner Erzeimer",
+    "ja": "鉄製の鉱石バケツ",
+    "ru": "Железное ведро для руды",
+    "ko": "철제 광석 양동이",
+    "zh-Hant": "鐵製礦石桶",
+    "zh-Hans": "铁制矿石桶"
+  },
+  "descriptions": {
+    "en": "Iron Ore Bucket is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Cubo de mineral de hierro es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Seau à minerai en fer est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Eiserner Erzeimer ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "鉄製の鉱石バケツは、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Железное ведро для руды — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "철제 광석 양동이은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "鐵製礦石桶是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "铁制矿石桶是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 0.5469,
+    "height": 0.7813,
+    "depth": 0.4375,
+    "sizeQ": [
+      35,
+      50,
+      28
+    ]
+  },
+  "preview": {
+    "yaw": -0.72,
+    "pitch": 0.34
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.-UxHnxntvhQxqVdesnECakcHhwAAHgABiQ7ACAWAQGoAgFgEAUAQBIBgEAGAOAgAwCAEAEASAYBABgEAGAOAgAwCADADAEAMAwAgCACAKAMAgAwCACAMAIAoCADADAEAMAwAgCACAMAIAgAgCgDAIAMAgAgDACAIAIAwAgCACAMAIAYAgEACAEAIBAAgCAIAKAIAwAgCACAMAIAgAgDACAIAIAwAgCABAQAEAYAgEACAEAIBAAgBACAQAIAQAQFABAGAoAgAgDACAIAEBAAQCABAQAEAYAgEACAEAIBAAgBACAQAIAQAQFABAEAEBQAQAgCAUAIAQCgCABAQAEAgAQEABAGAIBAAgBACAQAIAQAgEACAEAEBQAQBABAUAEAIAgFAEAUAIAQCgCABAQAEAgAQEABAGAIBAAgBACAQAIAQAgEACAEAEBQAQBABAUAEAIAgFAEAUAIAQCgCACAMAIAgAQEABAIAEBAAQBgCAQAIAQAgEACAEAIBAAgBABAUAEAQAQFABACAIBQAgBgIAKAIAwAgCACAMAIAgAgDACAIAIAwAgCABAQAEAYAgEACAEAIBAAgBACAQAIAQAQFABAIAgAwAwBADAMAIAgAgDACAIAIAoAwCADAIAIAwAgCACAMAIAgAgDACAGAIBAAgBACAQAIAwBAEgGAQAYBABgDgIAMAgAwAwBADAMAIAgAgCgDAIAMAgAgDACBkAIBYBAFAEASAYBABgDgIAMAgPIAgFgEAKAAJqQMYA34BEABAAE1IGMAYEAiAAgACakjAwMAAYAAQAA",
+    "rawBytes": 599,
+    "sha256": "9e64c6d888598387cd4f896f1918b401ad93bbb49d51547b61224b06f7907873",
+    "designHash": 1844638370,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 599,
+    "savedBytes": 0,
+    "sourceComponentCount": 4,
+    "decodedComponentCount": 4,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 89721680,
+        "usedVolumeMm3": 24353027,
+        "unusedVolumeMm3": 65368653
+      },
+      {
+        "index": 1,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 823975,
+        "usedVolumeMm3": 823975,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 823975,
+        "usedVolumeMm3": 823975,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 1201630,
+        "usedVolumeMm3": 1201630,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 27201536,
+      "requiredEffectiveDurability": 31853,
+      "outputMassGrams": 190420,
+      "materialScore": 67
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 1668,
+      "triangleCount": 834,
+      "meshByteLength": 31692
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 4,
+      "inputVolumeMm3": 92571260,
+      "usedVolumeMm3": 27202607,
+      "unusedVolumeMm3": 65368653,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 371
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "currentMaterialsOnly": true,
+    "chainMinted": false
+  }
+}

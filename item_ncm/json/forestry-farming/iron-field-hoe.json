@@ -1,0 +1,122 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "iron-field-hoe",
+  "category": "forestry-farming",
+  "interaction": "tool",
+  "names": {
+    "en": "Iron Field Hoe",
+    "es": "Azada de campo de hierro",
+    "fr": "Houe de champ en fer",
+    "de": "Eiserne Feldhacke",
+    "ja": "鉄製の畑用くわ",
+    "ru": "Железная полевая мотыга",
+    "ko": "철제 밭 괭이",
+    "zh-Hant": "鐵製田間鋤",
+    "zh-Hans": "铁制田间锄"
+  },
+  "descriptions": {
+    "en": "Iron Field Hoe is a canonical NCF1 hand-held blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Azada de campo de hierro es un plano NCF1 canónico de mano, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Houe de champ en fer est un plan NCF1 canonique tenu en main, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Eiserne Feldhacke ist ein kanonischer, handgeführter NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "鉄製の畑用くわは、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1手持ち設計図です。",
+    "ru": "Железная полевая мотыга — канонический ручной чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "철제 밭 괭이은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 휴대 장비 설계도입니다.",
+    "zh-Hant": "鐵製田間鋤是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 手持物品設計圖。",
+    "zh-Hans": "铁制田间锄是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 手持物品设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 0.3438,
+    "height": 1.0313,
+    "depth": 0.1875,
+    "sizeQ": [
+      22,
+      66,
+      12
+    ]
+  },
+  "preview": {
+    "yaw": -0.72,
+    "pitch": 0.34
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.8KcGUpluvfQumWZampCiGUEPgTAL9gAIgACakWBAwA4QgAjAAdQgAlWqoyuk4mekG4okumQgAA",
+    "rawBytes": 55,
+    "sha256": "b280af3cec0f58705ac1bcc9f652314d755e697e6d3178539dbd3f3111e50ff4",
+    "designHash": 460603897,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 55,
+    "savedBytes": 0,
+    "sourceComponentCount": 2,
+    "decodedComponentCount": 2,
+    "appearanceQuadCount": 0,
+    "hasGrip": true,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 3784180,
+        "usedVolumeMm3": 3784180,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 4028320,
+        "usedVolumeMm3": 1627770,
+        "unusedVolumeMm3": 2400550
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 5410816,
+      "requiredEffectiveDurability": 3656,
+      "outputMassGrams": 13360,
+      "materialScore": 67
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 64,
+      "triangleCount": 32,
+      "meshByteLength": 1216
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "squared_timber",
+      "itemCode": 1033,
+      "componentCount": 1,
+      "inputVolumeMm3": 3784180,
+      "usedVolumeMm3": 3784180,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 48400,
+      "equivalentInputUnits": 79
+    },
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 1,
+      "inputVolumeMm3": 4028320,
+      "usedVolumeMm3": 1627770,
+      "unusedVolumeMm3": 2400550,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 17
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "currentMaterialsOnly": true,
+    "chainMinted": false
+  }
+}

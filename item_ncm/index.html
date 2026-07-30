@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#080c11" />
+    <meta name="description" content="Browse canonical NiceChunk NCF1 forge-item blueprints restored by the live game runtime." />
+    <title>ITEM_NCM — NiceChunk Forge Item Registry</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%236de3ef' d='m32 4 25 14v28L32 60 7 46V18z'/%3E%3Cpath fill='%230b1118' d='m32 11 18 10v20L32 51 14 41V21z'/%3E%3Cpath fill='%23b8f34a' d='m32 11 18 10-18 10-18-10z'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="./style.css?v=1.0.0" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./" data-i18n-aria-label="brand.homeAria" aria-label="Item NCM home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-copy"><b>ITEM_NCM</b><small>NICECHUNK / FORGE BLUEPRINT REGISTRY</small></span>
+      </a>
+      <div class="topbar-tools">
+        <div class="runtime-badges" data-i18n-aria-label="header.runtimeAria" aria-label="Runtime properties">
+          <span>NCF1 V15</span>
+          <span>640 BYTE MAX</span>
+          <span>CHUNK.JS RUNTIME</span>
+        </div>
+        <label class="language-switch">
+          <span data-i18n="language.label">Interface language</span>
+          <select data-language-select data-i18n-aria-label="language.label" aria-label="Interface language">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="ja">日本語</option>
+            <option value="ru">Русский</option>
+            <option value="ko">한국어</option>
+            <option value="zh-Hant">繁體中文</option>
+            <option value="zh-Hans">简体中文</option>
+          </select>
+        </label>
+      </div>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="pageTitle">
+        <div>
+          <p class="eyebrow">NCF1 / DETERMINISTIC ITEM BLUEPRINTS</p>
+          <h1 id="pageTitle" data-i18n="intro.title">Forgeable objects, restored from their real on-chain code.</h1>
+          <p class="lede" data-i18n="intro.lede">Every listed object is assembled from current NiceChunk smelting materials, encoded within the NCF1 transaction budget, and reconstructed by the same runtime used by the game.</p>
+        </div>
+        <div class="pipeline" data-i18n-aria-label="intro.pipelineAria" aria-label="Blueprint production pipeline">
+          <span data-i18n="pipeline.materials">MATERIALS</span><i></i>
+          <span>NCF1</span><i></i>
+          <span>PDA</span><i></i>
+          <span data-i18n="pipeline.play">PLAY</span>
+        </div>
+      </section>
+
+      <section class="catalog-shell">
+        <aside class="panel library-panel" aria-labelledby="libraryTitle">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">JSON / LOAD ON SELECTION</p>
+              <h2 id="libraryTitle" data-i18n="library.title">Item Library</h2>
+            </div>
+            <span id="catalogCount" class="count-chip">—</span>
+          </div>
+          <p class="panel-intro" data-i18n="library.intro">The catalog stores filenames only. One independent item JSON is loaded when selected, so the collection can grow without inflating the first page load.</p>
+
+          <label class="search-field">
+            <span class="search-icon" aria-hidden="true"></span>
+            <input id="itemSearch" type="search" autocomplete="off" spellcheck="false" data-i18n-placeholder="library.searchPlaceholder" placeholder="Search item IDs" data-i18n-aria-label="library.searchAria" aria-label="Search item IDs" />
+            <kbd>/</kbd>
+          </label>
+
+          <div id="categoryList" class="category-list" role="radiogroup" data-i18n-aria-label="library.categoryAria" aria-label="Item categories"></div>
+
+          <div class="item-list-head">
+            <strong id="activeCategoryTitle">—</strong>
+            <span id="activeCategoryCount">—</span>
+          </div>
+          <div id="itemList" class="item-list" role="radiogroup" data-i18n-aria-label="library.itemsAria" aria-label="Available forge items"></div>
+          <p id="libraryStatus" class="library-status" role="status" aria-live="polite" data-state="ready"></p>
+        </aside>
+
+        <section class="preview-column">
+          <article class="panel preview-panel" aria-labelledby="itemTitle">
+            <div class="panel-head preview-head">
+              <div>
+                <p class="eyebrow">LIVE CHUNK.JS RESTORATION</p>
+                <h2 id="itemTitle" data-i18n="preview.emptyTitle">Select an item blueprint.</h2>
+              </div>
+              <div class="preview-actions">
+                <span id="runtimeState" class="runtime-state" data-state="waiting"><i></i><b data-i18n="preview.waiting">WAITING</b></span>
+                <button id="resetView" type="button" class="quiet" data-i18n="preview.reset">Reset view</button>
+              </div>
+            </div>
+
+            <div class="canvas-shell">
+              <canvas id="forgePreview" data-i18n-aria-label="preview.canvasAria" aria-label="Three-dimensional forge item preview"></canvas>
+              <div class="canvas-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+              <div class="canvas-hud top-left">
+                <span data-i18n="preview.modelSpace">MODEL SPACE</span>
+                <strong id="modelSize">—</strong>
+              </div>
+              <div class="canvas-hud top-right">
+                <span data-i18n="preview.renderer">RENDERER</span>
+                <strong>CHUNK.JS / WEBGL2</strong>
+              </div>
+              <div class="canvas-hud bottom-left">
+                <span data-i18n="preview.hint">Drag to rotate · wheel or pinch to zoom</span>
+              </div>
+              <div id="previewFallback" class="preview-fallback" hidden>
+                <strong data-i18n="preview.unavailableTitle">Preview unavailable</strong>
+                <span data-i18n="preview.unavailableText">This browser needs WebGL2 to display the game mesh.</span>
+              </div>
+            </div>
+
+            <div class="item-summary">
+              <p id="itemDescription" data-i18n="preview.emptyDescription">Choose a category and item. Its JSON, NCF1 code, material bill and runtime mesh will be verified before display.</p>
+              <div class="summary-tags" id="summaryTags"></div>
+            </div>
+          </article>
+
+          <article class="panel payload-panel">
+            <div class="panel-head compact">
+              <div>
+                <p class="eyebrow">CHAIN PAYLOAD</p>
+                <h2 data-i18n="payload.title">Canonical NCF1 Code</h2>
+              </div>
+              <span id="payloadBytes" class="payload-budget">0 / 640 B</span>
+            </div>
+            <div class="code-wrap">
+              <textarea id="codeOutput" readonly spellcheck="false" data-i18n-aria-label="payload.codeAria" aria-label="Canonical NCF1 item code"></textarea>
+              <button id="copyCode" type="button" class="code-button" disabled data-i18n="payload.copy">Copy code</button>
+            </div>
+            <div class="payload-footer">
+              <div><span>SHA-256</span><code id="payloadHash">—</code></div>
+              <button id="downloadJson" type="button" class="secondary" disabled data-i18n="payload.download">Download item JSON</button>
+            </div>
+          </article>
+        </section>
+
+        <aside class="panel details-panel" aria-labelledby="detailsTitle">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">BLUEPRINT AUDIT</p>
+              <h2 id="detailsTitle" data-i18n="details.title">Item Specification</h2>
+            </div>
+            <span id="interactionBadge" class="type-chip">—</span>
+          </div>
+
+          <div id="metrics" class="metrics" aria-live="polite"></div>
+
+          <section class="audit-section" aria-labelledby="verificationTitle">
+            <div class="section-head">
+              <h3 id="verificationTitle" data-i18n="verification.title">Verification gates</h3>
+              <span id="verificationCount">0 / 5</span>
+            </div>
+            <ul id="verificationList" class="verification-list"></ul>
+          </section>
+
+          <section class="audit-section" aria-labelledby="bomTitle">
+            <div class="section-head">
+              <h3 id="bomTitle" data-i18n="bom.title">Forge bill of materials</h3>
+              <span id="materialTypeCount">—</span>
+            </div>
+            <div class="bom-table" role="table" data-i18n-aria-label="bom.tableAria" aria-label="Forge bill of materials">
+              <div class="bom-head" role="row">
+                <span data-i18n="bom.material">Material</span>
+                <span data-i18n="bom.volume">Used volume</span>
+                <span data-i18n="bom.units">Input units</span>
+              </div>
+              <div id="bomRows"></div>
+            </div>
+          </section>
+
+          <section class="policy-card">
+            <span class="policy-icon" aria-hidden="true"></span>
+            <div>
+              <strong data-i18n="policy.title">Blueprint-ready by construction</strong>
+              <p data-i18n="policy.text">No invented resources: every component maps to the current smelting rules, and the canonical payload restores to a renderable game mesh.</p>
+            </div>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js?v=1.0.0"></script>
+  </body>
+</html>

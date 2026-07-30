@@ -1,0 +1,38 @@
+# ITEM_NCM
+
+ITEM_NCM is the public NiceChunk forge-item blueprint registry. It follows the same filename-indexed, lazy-loaded catalog model as `build_ncm`, while using the current NCF1 forge format instead of the building-specific NCM format.
+
+## Collection layout
+
+- `json/catalog.json` contains item JSON filenames only.
+- `json/<category>/<item>.json` is one independent, self-contained item definition.
+- `locales/<locale>.json` contains the page shell translations for all nine supported languages.
+- Every item JSON contains its own nine-language names and descriptions.
+- `tools/generate-items.mjs` is the canonical source for the initial collection and regenerates every item JSON deterministically.
+
+The initial registry contains 24 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, and containers.
+
+## Forge guarantees
+
+The generator rejects an item unless all of these checks pass:
+
+1. Every material exists in the current `smelting-rules.json` and has a valid item code and unit volume.
+2. All forge components form one connected assembly.
+3. Hand-held items have one valid grip that clears the canonical avatar; placeable items have no grip.
+4. The current NCF1 v15 payload round-trips canonically and stays within 640 raw bytes.
+5. `ForgeRuntimeCache` restores a non-empty game mesh from the encoded payload.
+6. Dimensions, material requirements, bill of materials, runtime evidence, design hash, and SHA-256 are written into the item JSON.
+
+`verification.chainMinted` remains `false` because this library validates blueprint readiness; it does not claim that a blueprint PDA has already been created.
+
+## Add or revise an item
+
+Edit `ITEM_NAMES` and `ITEM_SPECS` in `tools/generate-items.mjs`, using only material IDs present in the current smelting rules. Keep dimensions in Q6 world units and preserve positive-area connections between components. Then run:
+
+```sh
+node item_ncm/tools/generate-items.mjs
+node item_ncm/tests/catalog.test.mjs
+node item_ncm/tests/i18n.test.mjs
+```
+
+Add the generated item path to no hand-maintained JavaScript list: the generator updates `json/catalog.json`, and the browser derives categories and item IDs directly from those paths.

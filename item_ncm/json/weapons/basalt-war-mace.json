@@ -1,0 +1,140 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "basalt-war-mace",
+  "category": "weapons",
+  "interaction": "tool",
+  "names": {
+    "en": "Basalt War Mace",
+    "es": "Maza de guerra de basalto",
+    "fr": "Masse de guerre en basalte",
+    "de": "Basalt-Streitkolben",
+    "ja": "玄武岩の戦棍",
+    "ru": "Базальтовая боевая булава",
+    "ko": "현무암 전투 철퇴",
+    "zh-Hant": "玄武岩戰鎚",
+    "zh-Hans": "玄武岩战锤"
+  },
+  "descriptions": {
+    "en": "Basalt War Mace is a canonical NCF1 hand-held blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Maza de guerra de basalto es un plano NCF1 canónico de mano, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Masse de guerre en basalte est un plan NCF1 canonique tenu en main, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Basalt-Streitkolben ist ein kanonischer, handgeführter NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "玄武岩の戦棍は、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1手持ち設計図です。",
+    "ru": "Базальтовая боевая булава — канонический ручной чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "현무암 전투 철퇴은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 휴대 장비 설계도입니다.",
+    "zh-Hant": "玄武岩戰鎚是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 手持物品設計圖。",
+    "zh-Hans": "玄武岩战锤是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 手持物品设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 0.2813,
+    "height": 1.0625,
+    "depth": 0.2813,
+    "sizeQ": [
+      18,
+      68,
+      18
+    ]
+  },
+  "preview": {
+    "yaw": -0.72,
+    "pitch": 0.34
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.8tVHjStyxTUl1rNUOfDkFKgUAH9gBAP-gAIgACakICAgAAKAAQAIaoJCQkAAIQAEXImwGACAGAYAYAgBAIAEAIAICgAgCACAoAIAgBAIAEAIAYBgBgCAYB4AYBgBgCAEAgAQAgAgKACB4AICgAgCAEAgAQAgBgGAGB4AQCABACACAoAIOgAgKACAIAQCABAeACAoAIVgAgKACB4AICgAhWACAoAIHgAgKACFYAICgAgeACAoAIVgAgKACB4AICgAhWACAoAIHgAgKACFYAICgAgeAEAgAQAgAgKACDoAICgAgCAEAgAQHgBgGAGAIAQCABACACAoAIHgAgKACAIAQCABACAGAYAYHgGACAGAYAYAgBAIAEAIAICgAgCACAoAIAgBAIAEAIAYBgBgCAYJsAA",
+    "rawBytes": 305,
+    "sha256": "4b412718db7013096dd697e4d720c7c89cc581d2444570ac899365b851b4aa8c",
+    "designHash": 373159419,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 305,
+    "savedBytes": 0,
+    "sourceComponentCount": 3,
+    "decodedComponentCount": 3,
+    "appearanceQuadCount": 0,
+    "hasGrip": true,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "wooden_stick",
+        "itemCode": 1032,
+        "inputVolumeMm3": 4005432,
+        "usedVolumeMm3": 4005432,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 1953125,
+        "usedVolumeMm3": 1953125,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "basalt_composite",
+        "itemCode": 1021,
+        "inputVolumeMm3": 22247314,
+        "usedVolumeMm3": 20067985,
+        "unusedVolumeMm3": 2179329
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 26025984,
+      "requiredEffectiveDurability": 11944,
+      "outputMassGrams": 58020,
+      "materialScore": 68
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 1128,
+      "triangleCount": 564,
+      "meshByteLength": 21432
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "wooden_stick",
+      "itemCode": 1032,
+      "componentCount": 1,
+      "inputVolumeMm3": 4005432,
+      "usedVolumeMm3": 4005432,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 4900,
+      "equivalentInputUnits": 818
+    },
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 1,
+      "inputVolumeMm3": 1953125,
+      "usedVolumeMm3": 1953125,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 8
+    },
+    {
+      "materialId": "basalt_composite",
+      "itemCode": 1021,
+      "componentCount": 1,
+      "inputVolumeMm3": 22247314,
+      "usedVolumeMm3": 20067985,
+      "unusedVolumeMm3": 2179329,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 89
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "currentMaterialsOnly": true,
+    "chainMinted": false
+  }
+}

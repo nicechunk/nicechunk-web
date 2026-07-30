@@ -1,0 +1,30 @@
+{
+  "schema": "nicechunk.ncf-item-catalog.v1",
+  "version": 1,
+  "items": [
+    "json/mining-tools/carbon-steel-prospector-pick.json",
+    "json/mining-tools/iron-deep-rock-pickaxe.json",
+    "json/mining-tools/basalt-stonebreaker-maul.json",
+    "json/forestry-farming/carbon-steel-forester-axe.json",
+    "json/forestry-farming/iron-field-hoe.json",
+    "json/forestry-farming/carbon-steel-harvest-sickle.json",
+    "json/workshop/iron-blacksmith-hammer.json",
+    "json/workshop/timber-carpenter-mallet.json",
+    "json/workshop/carbon-steel-masonry-chisel.json",
+    "json/weapons/frontier-longsword.json",
+    "json/weapons/guardian-spear.json",
+    "json/weapons/basalt-war-mace.json",
+    "json/building-fittings/reinforced-timber-door.json",
+    "json/building-fittings/iron-portcullis-panel.json",
+    "json/building-fittings/shuttered-window-frame.json",
+    "json/lighting/amber-twin-hook-lantern.json",
+    "json/lighting/copper-miner-hand-lamp.json",
+    "json/lighting/basalt-standing-brazier.json",
+    "json/furniture/timber-workbench.json",
+    "json/furniture/field-stool.json",
+    "json/furniture/storage-shelf.json",
+    "json/containers/banded-wooden-chest.json",
+    "json/containers/iron-ore-bucket.json",
+    "json/containers/reinforced-travel-crate.json"
+  ]
+}

@@ -1,0 +1,172 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "shuttered-window-frame",
+  "category": "building-fittings",
+  "interaction": "placeable",
+  "names": {
+    "en": "Shuttered Window Frame",
+    "es": "Marco de ventana con contraventanas",
+    "fr": "Cadre de fenêtre à volets",
+    "de": "Fensterrahmen mit Läden",
+    "ja": "鎧戸付き窓枠",
+    "ru": "Оконная рама со ставнями",
+    "ko": "덧문 달린 창틀",
+    "zh-Hant": "百葉窗框",
+    "zh-Hans": "百叶窗框"
+  },
+  "descriptions": {
+    "en": "Shuttered Window Frame is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Marco de ventana con contraventanas es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Cadre de fenêtre à volets est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Fensterrahmen mit Läden ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "鎧戸付き窓枠は、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Оконная рама со ставнями — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "덧문 달린 창틀은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "百葉窗框是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "百叶窗框是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 1.75,
+    "height": 1.125,
+    "depth": 0.0938,
+    "sizeQ": [
+      112,
+      72,
+      6
+    ]
+  },
+  "preview": {
+    "yaw": -0.72,
+    "pitch": 0.34
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.9PyIVhklaIqkhyDJAcHiGU8BgYAABgAQARDKeAwMAARQAIAIhlBkgGe-EgAEAEQygyQDAhCQACABJzjw8AgABIABABFOoodAb0gkAAgAinUUOgMFwSAAQAA",
+    "rawBytes": 89,
+    "sha256": "02f08f8d50ad84ce258be8002d09ce4bd3608dd146d71266c3d8ea8de458fe59",
+    "designHash": 4119335035,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 89,
+    "savedBytes": 0,
+    "sourceComponentCount": 7,
+    "decodedComponentCount": 7,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 8239746,
+        "usedVolumeMm3": 8239746,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 8239746,
+        "usedVolumeMm3": 8239746,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 9887695,
+        "usedVolumeMm3": 9887695,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 9887695,
+        "usedVolumeMm3": 9887695,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "clear_glass_panel",
+        "itemCode": 1034,
+        "inputVolumeMm3": 27465820,
+        "usedVolumeMm3": 27465820,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 13275146,
+        "usedVolumeMm3": 13275146,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 13275146,
+        "usedVolumeMm3": 13275146,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 90243072,
+      "requiredEffectiveDurability": 20945,
+      "outputMassGrams": 102120,
+      "materialScore": 45
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 168,
+      "triangleCount": 84,
+      "meshByteLength": 3192
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "squared_timber",
+      "itemCode": 1033,
+      "componentCount": 4,
+      "inputVolumeMm3": 36254882,
+      "usedVolumeMm3": 36254882,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 48400,
+      "equivalentInputUnits": 750
+    },
+    {
+      "materialId": "clear_glass_panel",
+      "itemCode": 1034,
+      "componentCount": 1,
+      "inputVolumeMm3": 27465820,
+      "usedVolumeMm3": 27465820,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 60000,
+      "equivalentInputUnits": 458
+    },
+    {
+      "materialId": "wooden_plank",
+      "itemCode": 1031,
+      "componentCount": 2,
+      "inputVolumeMm3": 26550292,
+      "usedVolumeMm3": 26550292,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 1328
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "currentMaterialsOnly": true,
+    "chainMinted": false
+  }
+}

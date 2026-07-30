@@ -1,0 +1,148 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "basalt-stonebreaker-maul",
+  "category": "mining-tools",
+  "interaction": "tool",
+  "names": {
+    "en": "Basalt Stonebreaker Maul",
+    "es": "Maza de basalto rompepiedras",
+    "fr": "Maillet brise-pierre en basalte",
+    "de": "Basalt-Steinbrecherhammer",
+    "ja": "玄武岩の砕石大槌",
+    "ru": "Базальтовая кувалда камнелома",
+    "ko": "현무암 쇄석 대형 망치",
+    "zh-Hant": "玄武岩碎石大槌",
+    "zh-Hans": "玄武岩碎石大锤"
+  },
+  "descriptions": {
+    "en": "Basalt Stonebreaker Maul is a canonical NCF1 hand-held blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Maza de basalto rompepiedras es un plano NCF1 canónico de mano, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Maillet brise-pierre en basalte est un plan NCF1 canonique tenu en main, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Basalt-Steinbrecherhammer ist ein kanonischer, handgeführter NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "玄武岩の砕石大槌は、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1手持ち設計図です。",
+    "ru": "Базальтовая кувалда камнелома — канонический ручной чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "현무암 쇄석 대형 망치은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 휴대 장비 설계도입니다.",
+    "zh-Hant": "玄武岩碎石大槌是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 手持物品設計圖。",
+    "zh-Hans": "玄武岩碎石大锤是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 手持物品设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 0.4688,
+    "height": 1.0781,
+    "depth": 0.1875,
+    "sizeQ": [
+      30,
+      69,
+      12
+    ]
+  },
+  "preview": {
+    "yaw": -0.72,
+    "pitch": 0.34
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.8oDHF4qwwaSqugUZcjEiGUFOgXAP9gAIgAQ1QWCgoAARAAQABNSCBgY_MIgAIAAmpBAwMAaEQAEAAA",
+    "rawBytes": 58,
+    "sha256": "94b4e3b765bbec6845a20193709121d1d98f40e59902d18295aef48c1b4c1eb1",
+    "designHash": 2252754636,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 58,
+    "savedBytes": 0,
+    "sourceComponentCount": 4,
+    "decodedComponentCount": 4,
+    "appearanceQuadCount": 0,
+    "hasGrip": true,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 5531311,
+        "usedVolumeMm3": 5531311,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "basalt_composite",
+        "itemCode": 1021,
+        "inputVolumeMm3": 8392334,
+        "usedVolumeMm3": 8392334,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 2197266,
+        "usedVolumeMm3": 2197266,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 2197266,
+        "usedVolumeMm3": 2197266,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 18317312,
+      "requiredEffectiveDurability": 10462,
+      "outputMassGrams": 51260,
+      "materialScore": 68
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 96,
+      "triangleCount": 48,
+      "meshByteLength": 1824
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "squared_timber",
+      "itemCode": 1033,
+      "componentCount": 1,
+      "inputVolumeMm3": 5531311,
+      "usedVolumeMm3": 5531311,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 48400,
+      "equivalentInputUnits": 115
+    },
+    {
+      "materialId": "basalt_composite",
+      "itemCode": 1021,
+      "componentCount": 1,
+      "inputVolumeMm3": 8392334,
+      "usedVolumeMm3": 8392334,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 34
+    },
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 2,
+      "inputVolumeMm3": 4394532,
+      "usedVolumeMm3": 4394532,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 18
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "currentMaterialsOnly": true,
+    "chainMinted": false
+  }
+}

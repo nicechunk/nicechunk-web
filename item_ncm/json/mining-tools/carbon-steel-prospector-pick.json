@@ -1,0 +1,140 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "carbon-steel-prospector-pick",
+  "category": "mining-tools",
+  "interaction": "tool",
+  "names": {
+    "en": "Carbon-steel Prospector Pick",
+    "es": "Pico de prospector de acero al carbono",
+    "fr": "Pic de prospecteur en acier au carbone",
+    "de": "Prospektorenspitzhacke aus Kohlenstoffstahl",
+    "ja": "炭素鋼の探鉱つるはし",
+    "ru": "Геологическая кирка из углеродистой стали",
+    "ko": "탄소강 탐광 곡괭이",
+    "zh-Hant": "碳鋼探礦鎬",
+    "zh-Hans": "碳钢探矿镐"
+  },
+  "descriptions": {
+    "en": "Carbon-steel Prospector Pick is a canonical NCF1 hand-held blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Pico de prospector de acero al carbono es un plano NCF1 canónico de mano, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Pic de prospecteur en acier au carbone est un plan NCF1 canonique tenu en main, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Prospektorenspitzhacke aus Kohlenstoffstahl ist ein kanonischer, handgeführter NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "炭素鋼の探鉱つるはしは、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1手持ち設計図です。",
+    "ru": "Геологическая кирка из углеродистой стали — канонический ручной чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "탄소강 탐광 곡괭이은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 휴대 장비 설계도입니다.",
+    "zh-Hant": "碳鋼探礦鎬是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 手持物品設計圖。",
+    "zh-Hans": "碳钢探矿镐是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 手持物品设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 0.5625,
+    "height": 0.8438,
+    "depth": 0.1094,
+    "sizeQ": [
+      36,
+      54,
+      7
+    ]
+  },
+  "preview": {
+    "yaw": -0.72,
+    "pitch": 0.34
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.8Ol2UbrxxeSvqYYaqmDkEMgTAL-AAIgACJkkBAQAANgArAAdQgA8OgIqOyIqOgQmO2QmOgYiO6YiOgwim6wimi4ke24kenAkWzAkWrIoOqOpAmWkwyWkwiekg2ekggmiQ6miQgACakIBgcAAMAAQAA",
+    "rawBytes": 112,
+    "sha256": "cb6a7ed2727e2fa759f6d16715158e23ae94ab2b9801607563e289f886155232",
+    "designHash": 1968826840,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 112,
+    "savedBytes": 0,
+    "sourceComponentCount": 3,
+    "decodedComponentCount": 3,
+    "appearanceQuadCount": 0,
+    "hasGrip": true,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "wooden_stick",
+        "itemCode": 1032,
+        "inputVolumeMm3": 3051758,
+        "usedVolumeMm3": 3051758,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "carbon_steel",
+        "itemCode": 1019,
+        "inputVolumeMm3": 2197266,
+        "usedVolumeMm3": 1022401,
+        "unusedVolumeMm3": 1174865
+      },
+      {
+        "index": 2,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 1281738,
+        "usedVolumeMm3": 1281738,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 5353472,
+      "requiredEffectiveDurability": 4469,
+      "outputMassGrams": 18675,
+      "materialScore": 70
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 216,
+      "triangleCount": 108,
+      "meshByteLength": 4104
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "wooden_stick",
+      "itemCode": 1032,
+      "componentCount": 1,
+      "inputVolumeMm3": 3051758,
+      "usedVolumeMm3": 3051758,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 4900,
+      "equivalentInputUnits": 623
+    },
+    {
+      "materialId": "carbon_steel",
+      "itemCode": 1019,
+      "componentCount": 1,
+      "inputVolumeMm3": 2197266,
+      "usedVolumeMm3": 1022401,
+      "unusedVolumeMm3": 1174865,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 9
+    },
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 1,
+      "inputVolumeMm3": 1281738,
+      "usedVolumeMm3": 1281738,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 6
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "currentMaterialsOnly": true,
+    "chainMinted": false
+  }
+}

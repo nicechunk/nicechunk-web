@@ -1,0 +1,148 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "basalt-standing-brazier",
+  "category": "lighting",
+  "interaction": "placeable",
+  "names": {
+    "en": "Basalt Standing Brazier",
+    "es": "Brasero de pie de basalto",
+    "fr": "Brasero sur pied en basalte",
+    "de": "Basalt-Standfeuerschale",
+    "ja": "玄武岩の据え置き火鉢",
+    "ru": "Базальтовая жаровня на стойке",
+    "ko": "현무암 스탠딩 화로",
+    "zh-Hant": "玄武岩立式火盆",
+    "zh-Hans": "玄武岩立式火盆"
+  },
+  "descriptions": {
+    "en": "Basalt Standing Brazier is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Brasero de pie de basalto es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Brasero sur pied en basalte est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Basalt-Standfeuerschale ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "玄武岩の据え置き火鉢は、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Базальтовая жаровня на стойке — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "현무암 스탠딩 화로은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "玄武岩立式火盆是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "玄武岩立式火盆是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 0.5625,
+    "height": 0.75,
+    "depth": 0.5625,
+    "sizeQ": [
+      36,
+      48,
+      36
+    ]
+  },
+  "preview": {
+    "yaw": -0.72,
+    "pitch": 0.34
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.___4MhmtrjQyobhjgoEQzQUBhQAABgAQABNSDDgMAAFAAIAAmpIg4iAAE4ALgAC0MgC0KyCDwAJ0NgJ0JyJDsyJDoARUOARUJSQjlyQjgAY0WgY0SGbNAyYjeSYjZmgs1GgswSojOyojIBIyuhIyohYyeBYyZBgyVhgyRhpSMhpSIADJAQkAAFwANE4IDAwUBggICAQGDAYCBhAKFAgUCBQIFAoQBgIGDAYECAgIBhQMDAgAAA",
+    "rawBytes": 181,
+    "sha256": "7c3897547a488164989eb3a8aa80a8ce5e1f2267fedb596c586bd9e31bbcc164",
+    "designHash": 2161956468,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 181,
+    "savedBytes": 0,
+    "sourceComponentCount": 4,
+    "decodedComponentCount": 4,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "basalt_brick",
+        "itemCode": 1042,
+        "inputVolumeMm3": 9155273,
+        "usedVolumeMm3": 9155273,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 3845215,
+        "usedVolumeMm3": 3845215,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 61737061,
+        "usedVolumeMm3": 30616542,
+        "unusedVolumeMm3": 31120519
+      },
+      {
+        "index": 3,
+        "materialId": "copper_bloom",
+        "itemCode": 1015,
+        "inputVolumeMm3": 19775391,
+        "usedVolumeMm3": 8878746,
+        "unusedVolumeMm3": 10896645
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 52494336,
+      "requiredEffectiveDurability": 53602,
+      "outputMassGrams": 327675,
+      "materialScore": 65
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 716,
+      "triangleCount": 358,
+      "meshByteLength": 13604
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "basalt_brick",
+      "itemCode": 1042,
+      "componentCount": 1,
+      "inputVolumeMm3": 9155273,
+      "usedVolumeMm3": 9155273,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 31250,
+      "equivalentInputUnits": 293
+    },
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 2,
+      "inputVolumeMm3": 65582276,
+      "usedVolumeMm3": 34461757,
+      "unusedVolumeMm3": 31120519,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 263
+    },
+    {
+      "materialId": "copper_bloom",
+      "itemCode": 1015,
+      "componentCount": 1,
+      "inputVolumeMm3": 19775391,
+      "usedVolumeMm3": 8878746,
+      "unusedVolumeMm3": 10896645,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 80
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "currentMaterialsOnly": true,
+    "chainMinted": false
+  }
+}

@@ -1,0 +1,194 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "banded-wooden-chest",
+  "category": "containers",
+  "interaction": "placeable",
+  "names": {
+    "en": "Banded Wooden Chest",
+    "es": "Cofre de madera reforzado con bandas",
+    "fr": "Coffre en bois cerclé",
+    "de": "Beschlagene Holztruhe",
+    "ja": "帯金付き木箱",
+    "ru": "Окованный деревянный сундук",
+    "ko": "쇠테 두른 나무 상자",
+    "zh-Hant": "箍帶木箱",
+    "zh-Hans": "箍带木箱"
+  },
+  "descriptions": {
+    "en": "Banded Wooden Chest is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Cofre de madera reforzado con bandas es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Coffre en bois cerclé est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Beschlagene Holztruhe ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "帯金付き木箱は、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Окованный деревянный сундук — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "쇠테 두른 나무 상자은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "箍帶木箱是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "箍带木箱是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 0.8438,
+    "height": 0.5938,
+    "depth": 0.5938,
+    "sizeQ": [
+      54,
+      38,
+      38
+    ]
+  },
+  "preview": {
+    "yaw": -0.72,
+    "pitch": 0.34
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.9Nj4e6artZQjcaKNN2LinU0BCAAABAAQARTqaDgIAAEvyIAIp1NBwEAACQHEAEU6gg4MPoBIACACKdQQcGAMAkABABFOpsCkQAAjAAgACakEHAJ-AJfeQABNSCDgE_AEgRIAAmpBBwCAgCX3kAATUgg4BAQBIESAAJqQgKAwAAp9xAAA",
+    "rawBytes": 132,
+    "sha256": "9fd6d03d3bf1f9eded97f790c9c9e64043988e2705c5f5f09b4bc6356bbced01",
+    "designHash": 2754543839,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 132,
+    "savedBytes": 0,
+    "sourceComponentCount": 11,
+    "decodedComponentCount": 11,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 25390625,
+        "usedVolumeMm3": 25390625,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 22216797,
+        "usedVolumeMm3": 22216797,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 22216797,
+        "usedVolumeMm3": 22216797,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 10253906,
+        "usedVolumeMm3": 10253906,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 10253906,
+        "usedVolumeMm3": 10253906,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 35018921,
+        "usedVolumeMm3": 35018921,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 854492,
+        "usedVolumeMm3": 854492,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 7,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 854492,
+        "usedVolumeMm3": 854492,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 8,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 854492,
+        "usedVolumeMm3": 854492,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 9,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 854492,
+        "usedVolumeMm3": 854492,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 10,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 915527,
+        "usedVolumeMm3": 915527,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 129630208,
+      "requiredEffectiveDurability": 21690,
+      "outputMassGrams": 99275,
+      "materialScore": 63
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 264,
+      "triangleCount": 132,
+      "meshByteLength": 5016
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "wooden_plank",
+      "itemCode": 1031,
+      "componentCount": 6,
+      "inputVolumeMm3": 125350952,
+      "usedVolumeMm3": 125350952,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 6268
+    },
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 5,
+      "inputVolumeMm3": 4333495,
+      "usedVolumeMm3": 4333495,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 18
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "currentMaterialsOnly": true,
+    "chainMinted": false
+  }
+}

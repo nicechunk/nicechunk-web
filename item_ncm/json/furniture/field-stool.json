@@ -1,0 +1,172 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "field-stool",
+  "category": "furniture",
+  "interaction": "placeable",
+  "names": {
+    "en": "Field Stool",
+    "es": "Taburete de campo",
+    "fr": "Tabouret de campagne",
+    "de": "Feldhocker",
+    "ja": "野外用スツール",
+    "ru": "Походный табурет",
+    "ko": "야외용 스툴",
+    "zh-Hant": "野外矮凳",
+    "zh-Hans": "野外矮凳"
+  },
+  "descriptions": {
+    "en": "Field Stool is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Taburete de campo es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Tabouret de campagne est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Feldhocker ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "野外用スツールは、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Походный табурет — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "야외용 스툴은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "野外矮凳是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "野外矮凳是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 0.5313,
+    "height": 0.625,
+    "depth": 0.5313,
+    "sizeQ": [
+      34,
+      40,
+      34
+    ]
+  },
+  "preview": {
+    "yaw": -0.72,
+    "pitch": 0.34
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.8PvYI5VstVPdVcCEA6HinUiBSIAASgAQARDKCkQK_QEf0IAIhlBSIFfoCIGEAEQygpECgMBH9CACIZQUiBQGAiBhABImCAgAAM_QgAkTBAQAAGAYQAA",
+    "rawBytes": 86,
+    "sha256": "1952969aebbcbcb82c385e39640566136453b9e76401882623b35a54617bcd49",
+    "designHash": 4070905923,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 86,
+    "savedBytes": 0,
+    "sourceComponentCount": 7,
+    "decodedComponentCount": 7,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 22048950,
+        "usedVolumeMm3": 22048950,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 3242493,
+        "usedVolumeMm3": 3242493,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 3242493,
+        "usedVolumeMm3": 3242493,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 3242493,
+        "usedVolumeMm3": 3242493,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 3242493,
+        "usedVolumeMm3": 3242493,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "wooden_stick",
+        "itemCode": 1032,
+        "inputVolumeMm3": 1159668,
+        "usedVolumeMm3": 1159668,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "wooden_stick",
+        "itemCode": 1032,
+        "inputVolumeMm3": 1159668,
+        "usedVolumeMm3": 1159668,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 37289984,
+      "requiredEffectiveDurability": 6809,
+      "outputMassGrams": 20145,
+      "materialScore": 62
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 168,
+      "triangleCount": 84,
+      "meshByteLength": 3192
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "wooden_plank",
+      "itemCode": 1031,
+      "componentCount": 1,
+      "inputVolumeMm3": 22048950,
+      "usedVolumeMm3": 22048950,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 1103
+    },
+    {
+      "materialId": "squared_timber",
+      "itemCode": 1033,
+      "componentCount": 4,
+      "inputVolumeMm3": 12969972,
+      "usedVolumeMm3": 12969972,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 48400,
+      "equivalentInputUnits": 268
+    },
+    {
+      "materialId": "wooden_stick",
+      "itemCode": 1032,
+      "componentCount": 2,
+      "inputVolumeMm3": 2319336,
+      "usedVolumeMm3": 2319336,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 4900,
+      "equivalentInputUnits": 474
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "currentMaterialsOnly": true,
+    "chainMinted": false
+  }
+}

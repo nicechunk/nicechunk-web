@@ -92,6 +92,16 @@ const STREET_LANTERN_LAYOUTS = Object.freeze({
     finial: 13,
   },
 });
+const PUBLIC_BENCH_LAYOUTS = Object.freeze({
+  "iron-braced-village-public-bench": {
+    seat: 0,
+    backSlats: [1, 2],
+    backPosts: [3, 4],
+    legs: [5, 6, 7, 8],
+    stretchers: [9, 10],
+    sideBraces: [11, 12],
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -233,6 +243,11 @@ const ITEM_NAMES = Object.freeze({
     "Timber Apothecary Drawer Cabinet", "Gabinete de cajones de boticario de madera", "Meuble d’apothicaire à tiroirs en bois",
     "Apotheker-Schubladenschrank aus Holz", "木製薬種引き出し棚", "Деревянный аптекарский шкаф с ящиками",
     "목재 약재 서랍장", "木製藥材抽屜櫃", "木制药材抽屉柜",
+  ),
+  "iron-braced-village-public-bench": names(
+    "Iron-braced Village Public Bench", "Banco público de aldea reforzado con hierro", "Banc public de village renforcé de fer",
+    "Eisenverstärkte öffentliche Dorfbank", "鉄補強の村の公共ベンチ", "Деревенская общественная скамья с железным усилением",
+    "철제 보강 마을 공공 벤치", "鐵箍村莊公共長椅", "铁箍村庄公共长椅",
   ),
   "banded-wooden-chest": names(
     "Banded Wooden Chest", "Cofre de madera reforzado con bandas", "Coffre en bois cerclé", "Beschlagene Holztruhe",
@@ -480,6 +495,25 @@ const ITEM_SPECS = Object.freeze([
     ...[21, 51].flatMap((y) => [-18, 0, 18].map((x) => part("iron_bloom", [5, 4, 4], [x, y, 11]))),
   ], { yaw: -0.72, pitch: 0.34 }, {
     image: "concepts/furniture/timber-apothecary-drawer-cabinet-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
+  placeable("furniture", "iron-braced-village-public-bench", [
+    part("wooden_plank", [96, 6, 30], [0, 27, 0]),
+    part("wooden_plank", [88, 8, 6], [0, 40, 18]),
+    part("wooden_plank", [88, 8, 6], [0, 50, 18]),
+    part("squared_timber", [4, 34, 6], [-46, 41, 18]),
+    part("squared_timber", [4, 34, 6], [46, 41, 18]),
+    part("squared_timber", [8, 24, 8], [-38, 12, -10]),
+    part("squared_timber", [8, 24, 8], [-38, 12, 10]),
+    part("squared_timber", [8, 24, 8], [38, 12, -10]),
+    part("squared_timber", [8, 24, 8], [38, 12, 10]),
+    part("iron_bloom", [68, 4, 4], [0, 12, -13]),
+    part("iron_bloom", [68, 4, 4], [0, 12, 13]),
+    part("iron_bloom", [4, 4, 12], [-38, 12, 0]),
+    part("iron_bloom", [4, 4, 12], [38, 12, 0]),
+  ], { yaw: -0.74, pitch: 0.3 }, {
+    image: "concepts/furniture/iron-braced-village-public-bench-v1.webp",
     source: "imagegen",
     version: 1,
   }),
@@ -765,6 +799,8 @@ function buildItem(spec) {
   if (drawerCabinetLayout) validateDrawerCabinetGeometry(spec, runtime, drawerCabinetLayout);
   const streetLanternLayout = STREET_LANTERN_LAYOUTS[spec.key] ?? null;
   if (streetLanternLayout) validateStreetLanternGeometry(spec, runtime, streetLanternLayout);
+  const publicBenchLayout = PUBLIC_BENCH_LAYOUTS[spec.key] ?? null;
+  if (publicBenchLayout) validatePublicBenchGeometry(spec, runtime, publicBenchLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -861,6 +897,7 @@ function buildItem(spec) {
       ...(framedTextileLayout ? { framedTextileGeometryValidated: true } : {}),
       ...(drawerCabinetLayout ? { drawerCabinetGeometryValidated: true } : {}),
       ...(streetLanternLayout ? { streetLanternGeometryValidated: true } : {}),
+      ...(publicBenchLayout ? { publicBenchGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -1046,6 +1083,77 @@ function validateStreetLanternGeometry(spec, runtime, layout) {
       || corner.dimsQ.join(",") !== "4,20,4"
       || cornerBounds.min[1] !== lowerPlate.max[1] || cornerBounds.max[1] !== upperPlate.min[1]) {
       throw new Error(`${spec.key} has an invalid lantern corner ${cornerIndex}.`);
+    }
+  }
+  for (let left = 0; left < componentBounds.length; left += 1) {
+    for (let right = left + 1; right < componentBounds.length; right += 1) {
+      if (boundsOverlap(componentBounds[left], componentBounds[right], 0)) {
+        throw new Error(`${spec.key} components ${left} and ${right} intersect.`);
+      }
+    }
+  }
+}
+
+function validatePublicBenchGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 13 || runtime.boundsQ.sizeQ.join(",") !== "96,58,36") {
+    throw new Error(`${spec.key} must preserve its two-person public-bench proportions.`);
+  }
+  const components = runtime.components ?? [];
+  const componentBounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    "wooden_plank", "wooden_plank", "wooden_plank",
+    "squared_timber", "squared_timber", "squared_timber", "squared_timber",
+    "squared_timber", "squared_timber",
+    "iron_bloom", "iron_bloom", "iron_bloom", "iron_bloom",
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  const seat = components[layout.seat];
+  const seatBounds = componentBounds[layout.seat];
+  if (seat.dimsQ.join(",") !== "96,6,30" || seat.offsetQ.join(",") !== "0,27,0"
+    || seatBounds.max[1] < 28 || seatBounds.max[1] > 32) {
+    throw new Error(`${spec.key} has an invalid human-scale seat plane.`);
+  }
+  const expectedLegOffsets = [[-38, 12, -10], [-38, 12, 10], [38, 12, -10], [38, 12, 10]];
+  for (let position = 0; position < layout.legs.length; position += 1) {
+    const legIndex = layout.legs[position];
+    const leg = components[legIndex];
+    const legBounds = componentBounds[legIndex];
+    if (leg.dimsQ.join(",") !== "8,24,8"
+      || leg.offsetQ.some((value, axis) => value !== expectedLegOffsets[position][axis])
+      || legBounds.max[1] !== seatBounds.min[1]) {
+      throw new Error(`${spec.key} has an invalid supporting leg ${legIndex}.`);
+    }
+  }
+  const [leftPostBounds, rightPostBounds] = layout.backPosts.map((index) => componentBounds[index]);
+  for (const slatIndex of layout.backSlats) {
+    const slat = components[slatIndex];
+    const slatBounds = componentBounds[slatIndex];
+    if (slat.dimsQ.join(",") !== "88,8,6"
+      || slatBounds.min[0] !== leftPostBounds.max[0]
+      || slatBounds.max[0] !== rightPostBounds.min[0]
+      || slatBounds.min[2] !== seatBounds.max[2]) {
+      throw new Error(`${spec.key} has an unsupported back slat ${slatIndex}.`);
+    }
+  }
+  const expectedStretcherOffsets = [[0, 12, -13], [0, 12, 13]];
+  for (let position = 0; position < layout.stretchers.length; position += 1) {
+    const stretcher = components[layout.stretchers[position]];
+    if (stretcher.dimsQ.join(",") !== "68,4,4"
+      || stretcher.offsetQ.some((value, axis) => value !== expectedStretcherOffsets[position][axis])) {
+      throw new Error(`${spec.key} has an invalid longitudinal iron stretcher.`);
+    }
+  }
+  for (const braceIndex of layout.sideBraces) {
+    const brace = components[braceIndex];
+    if (brace.dimsQ.join(",") !== "4,4,12" || brace.offsetQ[1] !== 12 || brace.offsetQ[2] !== 0) {
+      throw new Error(`${spec.key} has an invalid side brace ${braceIndex}.`);
     }
   }
   for (let left = 0; left < componentBounds.length; left += 1) {

@@ -1,0 +1,228 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "iron-braced-village-public-bench",
+  "category": "furniture",
+  "interaction": "placeable",
+  "names": {
+    "en": "Iron-braced Village Public Bench",
+    "es": "Banco público de aldea reforzado con hierro",
+    "fr": "Banc public de village renforcé de fer",
+    "de": "Eisenverstärkte öffentliche Dorfbank",
+    "ja": "鉄補強の村の公共ベンチ",
+    "ru": "Деревенская общественная скамья с железным усилением",
+    "ko": "철제 보강 마을 공공 벤치",
+    "zh-Hant": "鐵箍村莊公共長椅",
+    "zh-Hans": "铁箍村庄公共长椅"
+  },
+  "descriptions": {
+    "en": "Iron-braced Village Public Bench is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Banco público de aldea reforzado con hierro es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Banc public de village renforcé de fer est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Eisenverstärkte öffentliche Dorfbank ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "鉄補強の村の公共ベンチは、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Деревенская общественная скамья с железным усилением — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "철제 보강 마을 공공 벤치은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "鐵箍村莊公共長椅是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "铁箍村庄公共长椅是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 1.5,
+    "height": 0.9063,
+    "depth": 0.5625,
+    "sizeQ": [
+      96,
+      58,
+      36
+    ]
+  },
+  "preview": {
+    "yaw": -0.74,
+    "pitch": 0.3
+  },
+  "concept": {
+    "image": "concepts/furniture/iron-braced-village-public-bench-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "bfb99077fb234969cec274c53374160b9e96193060df37e1aa4857b211c75287"
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.9roYgzetubQngZPRWxNinVgBh4AANgAQARTqsBAMAAKASIAIp1WAgGAAGQJEAEQyghEDPSCkEiACIZQQiBgXBSCRABEMoQMBD2gM_YgAiGUIGAh7QGAUQARDKEDAQCYDP2IAIhlCBgIBMBgFEAATUogICAAAz8yAAJqUQEBAAAYBpAAE1IICBj2gMAAgACakEBAwEwGAAQAA",
+    "rawBytes": 153,
+    "sha256": "3d79701112124f7abae14291188f6a663f09e0b3734002d0fad1b85c65dae4f0",
+    "designHash": 2018486886,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 153,
+    "savedBytes": 0,
+    "sourceComponentCount": 13,
+    "decodedComponentCount": 13,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 65917969,
+        "usedVolumeMm3": 65917969,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 16113281,
+        "usedVolumeMm3": 16113281,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 16113281,
+        "usedVolumeMm3": 16113281,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 3112793,
+        "usedVolumeMm3": 3112793,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 3112793,
+        "usedVolumeMm3": 3112793,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 5859375,
+        "usedVolumeMm3": 5859375,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 5859375,
+        "usedVolumeMm3": 5859375,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 7,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 5859375,
+        "usedVolumeMm3": 5859375,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 8,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 5859375,
+        "usedVolumeMm3": 5859375,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 9,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 4150391,
+        "usedVolumeMm3": 4150391,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 10,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 4150391,
+        "usedVolumeMm3": 4150391,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 11,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 732422,
+        "usedVolumeMm3": 732422,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 12,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 732422,
+        "usedVolumeMm3": 732422,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 137560064,
+      "requiredEffectiveDurability": 27653,
+      "outputMassGrams": 137765,
+      "materialScore": 65
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 312,
+      "triangleCount": 156,
+      "meshByteLength": 5928
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "wooden_plank",
+      "itemCode": 1031,
+      "componentCount": 3,
+      "inputVolumeMm3": 98144531,
+      "usedVolumeMm3": 98144531,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 4908
+    },
+    {
+      "materialId": "squared_timber",
+      "itemCode": 1033,
+      "componentCount": 6,
+      "inputVolumeMm3": 29663086,
+      "usedVolumeMm3": 29663086,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 48400,
+      "equivalentInputUnits": 613
+    },
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 4,
+      "inputVolumeMm3": 9765626,
+      "usedVolumeMm3": 9765626,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 40
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "publicBenchGeometryValidated": true,
+    "chainMinted": false
+  }
+}

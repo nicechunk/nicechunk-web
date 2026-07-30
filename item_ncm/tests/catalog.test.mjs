@@ -68,10 +68,20 @@ const streetLanternLayouts = new Map([
     upperPlate: 10,
   }],
 ]);
+const publicBenchLayouts = new Map([
+  ["iron-braced-village-public-bench", {
+    seat: 0,
+    backSlats: [1, 2],
+    backPosts: [3, 4],
+    legs: [5, 6, 7, 8],
+    stretchers: [9, 10],
+    sideBraces: [11, 12],
+  }],
+]);
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
-assert.equal(catalog.items.length, 38);
+assert.equal(catalog.items.length, 39);
 assert.equal(new Set(catalog.items).size, catalog.items.length);
 
 const listedFiles = new Set(catalog.items);
@@ -88,6 +98,7 @@ let bookGeometryCount = 0;
 let framedTextileGeometryCount = 0;
 let drawerCabinetGeometryCount = 0;
 let streetLanternGeometryCount = 0;
+let publicBenchGeometryCount = 0;
 for (const file of catalog.items) {
   assert.match(file, /^json\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/);
   const item = json(join(root, file));
@@ -172,6 +183,13 @@ for (const file of catalog.items) {
     assert.equal(item.verification.streetLanternGeometryValidated, true);
     assertStreetLanternGeometry(item, runtime, streetLanternLayout);
   }
+  const publicBenchLayout = publicBenchLayouts.get(item.key);
+  if (publicBenchLayout) {
+    publicBenchGeometryCount += 1;
+    assert.equal(item.category, "furniture");
+    assert.equal(item.verification.publicBenchGeometryValidated, true);
+    assertPublicBenchGeometry(item, runtime, publicBenchLayout);
+  }
   assert.equal(forgeWorkbenchComponentsConnected(runtime.components), true, `${item.key} must be a connected assembly`);
   const grip = validateForgeGripBindings(runtime.components);
   assert.equal(grip.valid, true, `${item.key} grip must remain valid after decoding`);
@@ -252,22 +270,23 @@ assert.deepEqual([...categories], [
   ["weapons", 3],
   ["building-fittings", 3],
   ["lighting", 4],
-  ["furniture", 4],
+  ["furniture", 5],
   ["containers", 3],
   ["cooking", 2],
   ["books-writing", 7],
   ["interior-decor", 1],
 ]);
 assert.equal(tools, 15);
-assert.equal(placeables, 23);
-assert.equal(conceptReferences, 14);
+assert.equal(placeables, 24);
+assert.equal(conceptReferences, 15);
 assert.equal(bookGeometryCount, 7);
 assert.equal(framedTextileGeometryCount, 1);
 assert.equal(drawerCabinetGeometryCount, 1);
 assert.equal(streetLanternGeometryCount, 1);
+assert.equal(publicBenchGeometryCount, 1);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
-console.log("item_ncm catalog tests passed: 38 canonical NCF1 items across 11 categories");
+console.log("item_ncm catalog tests passed: 39 canonical NCF1 items across 11 categories");
 
 function json(file) {
   return JSON.parse(readFileSync(file, "utf8"));
@@ -430,6 +449,40 @@ function assertStreetLanternGeometry(item, runtime, layout) {
     layout.corners.map((index) => runtime.components[index].offsetQ),
     [[-12, 96, -12], [-12, 96, 12], [12, 96, -12], [12, 96, 12]],
   );
+  for (let left = 0; left < bounds.length; left += 1) {
+    for (let right = left + 1; right < bounds.length; right += 1) {
+      assert.equal(positiveVolumeOverlap(bounds[left], bounds[right]), false, `${item.key} components ${left} and ${right} intersect`);
+    }
+  }
+}
+
+function assertPublicBenchGeometry(item, runtime, layout) {
+  assert.equal(runtime.componentCount, 13);
+  assert.deepEqual(item.dimensions.sizeQ, [96, 58, 36]);
+  assert.ok(item.dimensions.width >= 1.4 && item.dimensions.width <= 1.8);
+  assert.ok(item.dimensions.height >= 0.8 && item.dimensions.height <= 1);
+  assert.deepEqual(
+    [...new Set(item.forge.materialComponents.map(({ materialId }) => materialId))].sort(),
+    ["iron_bloom", "squared_timber", "wooden_plank"],
+  );
+  const bounds = runtime.components.map((component) => componentBoundsQ(component));
+  const seat = runtime.components[layout.seat];
+  const seatBounds = bounds[layout.seat];
+  assert.deepEqual(seat.dimsQ, [96, 6, 30]);
+  assert.equal(seatBounds.max[1], 30);
+  assert.deepEqual(
+    layout.legs.map((index) => runtime.components[index].offsetQ),
+    [[-38, 12, -10], [-38, 12, 10], [38, 12, -10], [38, 12, 10]],
+  );
+  for (const legIndex of layout.legs) assert.equal(bounds[legIndex].max[1], seatBounds.min[1]);
+  const [leftPost, rightPost] = layout.backPosts.map((index) => bounds[index]);
+  for (const slatIndex of layout.backSlats) {
+    assert.equal(bounds[slatIndex].min[0], leftPost.max[0]);
+    assert.equal(bounds[slatIndex].max[0], rightPost.min[0]);
+    assert.equal(bounds[slatIndex].min[2], seatBounds.max[2]);
+  }
+  assert.deepEqual(layout.stretchers.map((index) => runtime.components[index].dimsQ), [[68, 4, 4], [68, 4, 4]]);
+  assert.deepEqual(layout.sideBraces.map((index) => runtime.components[index].dimsQ), [[4, 4, 12], [4, 4, 12]]);
   for (let left = 0; left < bounds.length; left += 1) {
     for (let right = left + 1; right < bounds.length; right += 1) {
       assert.equal(positiveVolumeOverlap(bounds[left], bounds[right]), false, `${item.key} components ${left} and ${right} intersect`);

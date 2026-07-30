@@ -82,7 +82,7 @@ try {
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 11);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /38 ITEMS/);
+  assert.match(initial.total, /39 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -167,7 +167,7 @@ try {
   await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
 
   await evaluate(client, `document.querySelector('[data-category="furniture"]').click()`);
-  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 4 && document.querySelector('[data-item="timber-workbench"]')`));
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 5 && document.querySelector('[data-item="timber-workbench"]')`));
   const furnitureBrowse = await evaluate(client, `({
     activeCategory: document.querySelector("[data-category].active")?.dataset.category,
     activeItem: document.querySelector("[data-item].active")?.dataset.item ?? null,
@@ -225,6 +225,40 @@ try {
   })()`);
   await waitFor(() => evaluate(client, `document.querySelector("#itemTitle").textContent === "木制药材抽屉柜"`));
   assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), apothecaryCabinet.payload);
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "en";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
+
+  await evaluate(client, `document.querySelector('[data-item="iron-braced-village-public-bench"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="iron-braced-village-public-bench"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const publicBench = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payload: document.querySelector("#codeOutput").value,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    materialRows: document.querySelectorAll("#bomRows .bom-row").length,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(publicBench.title, "Iron-braced Village Public Bench");
+  assert.equal(publicBench.type, "PLACEABLE");
+  assert.match(publicBench.payload, /^NCF1\./);
+  assert.equal(publicBench.payloadBytes, "153 / 640 B");
+  assert.equal(publicBench.componentCount, "13");
+  assert.equal(publicBench.materialRows, 3);
+  assert.equal(publicBench.selectedInUrl, "iron-braced-village-public-bench");
+  assert.ok(publicBench.resources.includes("/item_ncm/json/furniture/iron-braced-village-public-bench.json"));
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "zh-Hans";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.querySelector("#itemTitle").textContent === "铁箍村庄公共长椅"`));
+  assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), publicBench.payload);
   await evaluate(client, `(() => {
     const select = document.querySelector("[data-language-select]");
     select.value = "en";

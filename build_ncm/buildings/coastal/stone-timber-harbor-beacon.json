@@ -1,0 +1,198 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "stone-timber-harbor-beacon",
+  "category": "coastal",
+  "kind": "habitable-building",
+  "titles": {
+    "en": "Stone and Timber Harbor Beacon",
+    "es": "Baliza Portuaria de Piedra y Madera",
+    "fr": "Balise Portuaire en Pierre et Bois",
+    "de": "Hafenbake aus Stein und Holz",
+    "ja": "石と木の港湾信標塔",
+    "ru": "Каменно-деревянный портовый маяк",
+    "ko": "석조 목골 항만 표지탑",
+    "zh-Hant": "石木港灣信標塔",
+    "zh-Hans": "石木港湾信标塔"
+  },
+  "descriptions": {
+    "en": "An enterable three-stage harbor beacon with a one-voxel polished-stone approach, an open three-voxel doorway, a hollow stone shaft, stepped deep-stone belts, a timber-framed amber beacon room, a blue ceramic daymark ring and a seven-step terracotta cap.",
+    "es": "Baliza portuaria accesible de tres cuerpos, con acceso de piedra pulida de un vóxel, puerta abierta de tres vóxeles, fuste hueco de piedra, cinturones escalonados de piedra profunda, cámara de señal con entramado de madera y vidrio ámbar, anillo diurno de cerámica azul y cubierta de terracota en siete gradas.",
+    "fr": "Balise portuaire accessible à trois niveaux, avec une approche en pierre polie d’un voxel, une porte ouverte de trois voxels, un fût creux en pierre, des bandeaux étagés en pierre profonde, une lanterne à ossature bois et vitrage ambré, un anneau de jour en céramique bleue et une coiffe en terre cuite à sept degrés.",
+    "de": "Begehbare dreistufige Hafenbake mit einem ein Voxel hohen Zugang aus poliertem Stein, einem offenen drei Voxel breiten Portal, hohlem Steinschaft, gestuften Tiefsteinbändern, holzgerahmter Signalkammer mit Bernsteinglas, blauem Keramik-Tageszeichenring und siebenstufiger Terrakottahaube.",
+    "ja": "1ボクセル高の磨き石の進入路、幅3ボクセルの開放入口、中空の石造塔身、段状の深層石帯、木骨と琥珀色ガラスの信標室、青色陶器の日標帯、7段のテラコッタ屋根を備えた、内部に入れる3層港湾信標塔です。",
+    "ru": "Доступная изнутри трёхъярусная портовая сигнальная башня с подходом из полированного камня высотой один воксель, открытым проёмом шириной три вокселя, полым каменным стволом, ступенчатыми поясами из глубинного камня, деревянным каркасом сигнального помещения с янтарным остеклением, синим керамическим дневным поясом и семиступенчатой терракотовой крышей.",
+    "ko": "한 복셀 높이의 연마 석재 진입로, 폭 3복셀의 열린 출입구, 속이 빈 석조 탑신, 계단식 심층석 띠, 목재 골조와 호박색 유리로 된 표지실, 파란 세라믹 주간 표지 띠, 7단 테라코타 지붕을 갖춘 내부 출입형 3단 항만 표지탑입니다.",
+    "zh-Hant": "可進入的三段式港灣信標塔，設有一體素高拋光石引道、三體素寬開放門洞、中空石造塔身、逐級內收的深層石環帶、木構琥珀玻璃信標室、藍色陶瓷日標環，以及七級赤陶頂蓋。",
+    "zh-Hans": "可进入的三段式港湾信标塔，设有一体素高抛光石引道、三体素宽开放门洞、中空石造塔身、逐级内收的深层石环带、木构琥珀玻璃信标室、蓝色陶瓷日标环，以及七级赤陶顶盖。"
+  },
+  "referenceImage": "concepts/coastal/stone-timber-harbor-beacon.webp",
+  "defaults": {
+    "style": "castle",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 1
+  },
+  "doorOpening": "open",
+  "footprint": "21 × 21 vu",
+  "height": "43 vu",
+  "referenceScale": "One concept voxel equals one NCM voxel",
+  "preview": {
+    "fitScale": 0.9,
+    "minScale": 3.2,
+    "yaw": 2.72
+  },
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "structure",
+      "label": "Wooden-plank Beacon Floor and Roof Deck"
+    },
+    {
+      "materialId": 56,
+      "phase": "openings",
+      "label": "Wooden-stick Amber-window Muntins"
+    },
+    {
+      "materialId": 60,
+      "phase": "openings",
+      "label": "Amber Beacon-room Glazing"
+    },
+    {
+      "materialId": 68,
+      "phase": "foundation",
+      "label": "Cobblestone Harbor Plinth"
+    },
+    {
+      "materialId": 75,
+      "phase": "finish",
+      "label": "Blue Ceramic Daymark Ring"
+    }
+  ],
+  "validation": {
+    "expectedVoxelCount": 3444,
+    "expectedPayloadBytes": 957,
+    "maxPayloadBytes": 1024,
+    "expectedDefaultMaterialIds": [55, 56, 57, 60, 64, 65, 68, 69, 75, 96],
+    "expectedMaterialVoxelCounts": {
+      "55": 294,
+      "56": 36,
+      "57": 198,
+      "60": 180,
+      "64": 880,
+      "65": 565,
+      "68": 423,
+      "69": 270,
+      "75": 44,
+      "96": 554
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 12,
+    "supportColumns": [
+      { "label": "Lower front-left pier", "x": 4, "z": 5, "baseY": 0, "topY": 10 },
+      { "label": "Lower front-right pier", "x": 20, "z": 5, "baseY": 0, "topY": 10 },
+      { "label": "Lower rear-left pier", "x": 4, "z": 19, "baseY": 0, "topY": 10 },
+      { "label": "Lower rear-right pier", "x": 20, "z": 19, "baseY": 0, "topY": 10 },
+      { "label": "Middle front-left pier", "x": 5, "z": 6, "baseY": 10, "topY": 18 },
+      { "label": "Middle front-right pier", "x": 19, "z": 6, "baseY": 10, "topY": 18 },
+      { "label": "Upper front-left beacon post", "x": 6, "z": 7, "baseY": 18, "topY": 33 },
+      { "label": "Upper front-right beacon post", "x": 18, "z": 7, "baseY": 18, "topY": 33 },
+      { "label": "Upper rear-left beacon post", "x": 6, "z": 17, "baseY": 18, "topY": 33 },
+      { "label": "Upper rear-right beacon post", "x": 18, "z": 17, "baseY": 18, "topY": 33 }
+    ],
+    "horizontalSpans": [
+      { "label": "Deep-stone doorway lintel", "axis": "x", "start": 10, "end": 14, "y": 9, "fixed": 5 },
+      { "label": "Lower projecting belt", "axis": "x", "start": 3, "end": 21, "y": 10, "fixed": 4 },
+      { "label": "Middle projecting belt", "axis": "x", "start": 4, "end": 20, "y": 18, "fixed": 5 },
+      { "label": "Upper projecting belt", "axis": "x", "start": 5, "end": 19, "y": 25, "fixed": 6 },
+      { "label": "Beacon front top beam", "axis": "x", "start": 6, "end": 18, "y": 33, "fixed": 7 },
+      { "label": "Beacon rear top beam", "axis": "x", "start": 6, "end": 18, "y": 33, "fixed": 17 },
+      { "label": "Wooden roof deck centerline", "axis": "x", "start": 5, "end": 19, "y": 34, "fixed": 12 }
+    ],
+    "walkableDecks": [
+      {
+        "label": "Polished-stone approach and hollow lower aisle",
+        "axis": "z",
+        "start": 0,
+        "end": 18,
+        "crossStart": 11,
+        "crossEnd": 13,
+        "topProfile": [
+          1, 1, 1, 1, 1,
+          2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
+        ],
+        "clearance": 7
+      }
+    ],
+    "steppedPyramids": [
+      {
+        "label": "Seven-step terracotta beacon cap",
+        "materialId": 96,
+        "layers": [
+          { "x": 5, "y": 35, "z": 6, "width": 15, "depth": 13 },
+          { "x": 6, "y": 36, "z": 7, "width": 13, "depth": 11 },
+          { "x": 7, "y": 37, "z": 8, "width": 11, "depth": 9 },
+          { "x": 8, "y": 38, "z": 9, "width": 9, "depth": 7 },
+          { "x": 9, "y": 39, "z": 10, "width": 7, "depth": 5 },
+          { "x": 10, "y": 40, "z": 11, "width": 5, "depth": 3 },
+          { "x": 11, "y": 41, "z": 12, "width": 3, "depth": 1 }
+        ]
+      }
+    ],
+    "openVolumes": [
+      { "label": "Clear three-voxel doorway and lower aisle", "x": 11, "y": 2, "z": 5, "width": 3, "height": 7, "depth": 14 },
+      { "label": "Hollow stone tower shaft", "x": 7, "y": 10, "z": 8, "width": 11, "height": 16, "depth": 9 },
+      { "label": "Open amber beacon-room interior", "x": 7, "y": 27, "z": 8, "width": 11, "height": 6, "depth": 9 }
+    ],
+    "approach": [
+      { "x": 12, "z": 0, "topY": 1 },
+      { "x": 12, "z": 4, "topY": 1 },
+      { "x": 12, "z": 5, "topY": 2 },
+      { "x": 12, "z": 18, "topY": 2 }
+    ],
+    "solidPoints": [
+      { "x": 12, "y": 0, "z": 0, "materialId": 69 },
+      { "x": 2, "y": 0, "z": 4, "materialId": 68 },
+      { "x": 4, "y": 1, "z": 5, "materialId": 69 },
+      { "x": 4, "y": 2, "z": 5, "materialId": 65 },
+      { "x": 7, "y": 3, "z": 5, "materialId": 57 },
+      { "x": 12, "y": 9, "z": 5, "materialId": 65 },
+      { "x": 3, "y": 10, "z": 4, "materialId": 65 },
+      { "x": 5, "y": 11, "z": 6, "materialId": 57 },
+      { "x": 12, "y": 11, "z": 6, "materialId": 64 },
+      { "x": 4, "y": 18, "z": 5, "materialId": 65 },
+      { "x": 6, "y": 19, "z": 7, "materialId": 57 },
+      { "x": 12, "y": 20, "z": 7, "materialId": 57 },
+      { "x": 5, "y": 25, "z": 6, "materialId": 65 },
+      { "x": 6, "y": 26, "z": 7, "materialId": 75 },
+      { "x": 12, "y": 26, "z": 12, "materialId": 55 },
+      { "x": 6, "y": 27, "z": 7, "materialId": 57 },
+      { "x": 7, "y": 27, "z": 7, "materialId": 60 },
+      { "x": 7, "y": 29, "z": 7, "materialId": 56 },
+      { "x": 6, "y": 33, "z": 7, "materialId": 57 },
+      { "x": 5, "y": 34, "z": 6, "materialId": 55 },
+      { "x": 5, "y": 35, "z": 6, "materialId": 96 },
+      { "x": 12, "y": 42, "z": 12, "materialId": 96 }
+    ]
+  },
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARkrF3cBRAIABBQAEAEGCwAAAgAEAUQCAQQIAAABRA4BBAgAAAFEAgEFAAAPAUQWAQUAAA8BRAMBFBIAAAEGBAEFEAAOAQIEAgUGBwABAg4CBQYHAAECCwkFAgAAAQIEAhMQBwABAgQCBgAHDAECFAIGAAcMAQEEAgUBBwEBARMCBQEHAQEBBAISAQcBAQETAhIBBwEBAwcDBQAFAAEDEQMFAAUAAQMEAwoABQABAxQDCgAFAAEDBAMPAAUAAQMUAw8ABQABAQoJBQQBAAEBAwoEEgAAAQEDChQSAAABAQMKBQAADgEBFQoFAAAOAQEECgUQAAABAQQKExAAAAEBBAoGAAAMAQEUCgYAAAwBAQUKBg4AAAEBBQoSDgAAAQEFCgcAAAoBARMKBwAACgECBQsGDgYAAQIFCxIOBgABAgULBwAGCgECEwsHAAYKAQMFCwYABgABAxMLBgAGAAEDBQsSAAYAAQMTCxIABgABAwwMBgAEAAEDDAwSAAQAAQEEEgUQAAABAQQSExAAAAEBBBIGAAAMAQEUEgYAAAwBAQUSBg4AAAEBBRISDgAAAQEFEgcAAAoBARMSBwAACgEBBhIHDAAAAQEGEhEMAAABAQYSCAAACAEBEhIIAAAIAQIGEwcMBQABAgYTEQwFAAECBhMIAAUIAQISEwgABQgBAwYTBwAFAAEDEhMHAAUAAQMGExEABQABAxITEQAFAAEDDBQHAAMAAQMMFBEAAwABAQUZBg4AAAEBBRkSDgAAAQEFGQcAAAoBARMZBwAACgEBBhkHDAAAAQEGGREMAAABAQYZCAAACAEBEhkIAAAIAUsGGgcMAAABSwYaEQwAAAFLBhoIAAAIAUsSGggAAAgBNwcaCAoACAEDBhsHAAYAAQMMGwcABgABAxIbBwAGAAEDBhsMAAYAAQMSGwwABgABAwYbEQAGAAEDDBsRAAYAAQMSGxEABgABPAcbBwQFAAE8DRsHBAUAATwHGxEEBQABPA0bEQQFAAE8BhsIAAUDATwGGw0ABQMBPBIbCAAFAwE8EhsNAAUDATgHHQcEAAABOA0dBwQAAAE4Bx0RBAAAATgNHREEAAABOAYdCAAAAwE4Bh0NAAADATgSHQgAAAMBOBIdDQAAAwEDBiEHDAAAAQMGIREMAAABAwYhCAAACAEDEiEIAAAIATcFIgYOAAwBBQUjBg4ADAEFBiQHDAAKAQUHJQgKAAgBBQgmCQgABgEFCScKBgAEAQUKKAsEAAIBBQspDAIAAAEFDCoMAAAA"
+  }
+}

@@ -3,6 +3,7 @@
   "buildings": [
     "buildings/residential/hollow-cottage.json",
     "buildings/coastal/seaside-cottage.json",
+    "buildings/coastal/stone-timber-harbor-beacon.json",
     "buildings/civic/civic-town-hall.json",
     "buildings/industrial/freight-warehouse.json",
     "buildings/fortress/grand-castle.json",

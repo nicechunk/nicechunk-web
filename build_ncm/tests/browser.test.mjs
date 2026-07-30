@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 1);
-  assert.match(initial.totalBuildingCount, /14 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /15 BUILDINGS/);
   assert.equal(initial.categoryCount, 11);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -166,7 +166,7 @@ try {
   const cottagePayload = cottageLoaded.payload;
   const cottageVoxels = Number((await evaluate(client, "document.querySelectorAll('#metrics .metric strong')[2].textContent")).replaceAll(",", ""));
   await evaluate(client, "document.querySelector('[data-building-category=coastal]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'coastal' && document.querySelector('[data-building=seaside-cottage]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'coastal' && document.querySelector('[data-building=seaside-cottage]') && document.querySelector('[data-building=stone-timber-harbor-beacon]')"));
   const coastalBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     previewTitle: document.querySelector('#buildingTitle').textContent,
@@ -175,6 +175,8 @@ try {
   assert.equal(coastalBrowse.activeBuilding, null, "browsing another category must not select or generate a building");
   assert.match(coastalBrowse.previewTitle, /Hollow Cottage/);
   assert.ok(!coastalBrowse.resources.includes("/build_ncm/buildings/coastal/seaside-cottage.json"), "category browsing must not load its building JSON");
+  assert.ok(!coastalBrowse.resources.includes("/build_ncm/buildings/coastal/stone-timber-harbor-beacon.json"), "category browsing must not load the harbor-beacon JSON");
+  assert.ok(!coastalBrowse.resources.includes("/build_ncm/concepts/coastal/stone-timber-harbor-beacon.webp"), "category browsing must not load the harbor-beacon concept art");
   await evaluate(client, "document.querySelector('[data-building=seaside-cottage]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'seaside-cottage' && document.querySelector('#modelSize').textContent === '38 × 29 × 32'"));
   const seaside = await evaluate(client, `({
@@ -205,6 +207,47 @@ try {
   assert.equal(seaside.selectedInUrl, "seaside-cottage");
   assert.ok(await evaluate(client, "performance.getEntriesByType('resource').some((entry) => new URL(entry.name).pathname === '/build_ncm/buildings/coastal/seaside-cottage.json')"));
   assert.equal(await evaluate(client, "performance.getEntriesByType('resource').some((entry) => new URL(entry.name).pathname === '/build_ncm/seaside-cottage-blueprint.js')"), false);
+  assert.equal(await evaluate(client, "performance.getEntriesByType('resource').some((entry) => new URL(entry.name).pathname === '/build_ncm/buildings/coastal/stone-timber-harbor-beacon.json')"), false, "selecting the seaside cottage must not load the harbor-beacon JSON");
+  assert.equal(await evaluate(client, "performance.getEntriesByType('resource').some((entry) => new URL(entry.name).pathname === '/build_ncm/concepts/coastal/stone-timber-harbor-beacon.webp')"), false, "selecting the seaside cottage must not load the harbor-beacon concept art");
+
+  await evaluate(client, "document.querySelector('[data-building=stone-timber-harbor-beacon]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'stone-timber-harbor-beacon' && document.querySelector('#modelSize').textContent === '25 × 43 × 23' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const harborBeacon = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(harborBeacon.activeCategory, "coastal");
+  assert.match(harborBeacon.title, /Stone and Timber Harbor Beacon/);
+  assert.equal(harborBeacon.modelSize, "25 × 43 × 23");
+  assert.match(harborBeacon.payload, /^NCM3:/);
+  assert.equal(harborBeacon.voxelCount, 3444);
+  for (const id of [55, 56, 57, 60, 64, 65, 68, 69, 75, 96]) assert.match(harborBeacon.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(harborBeacon.uncovered, false);
+  assert.equal(harborBeacon.glazingDisabled, true);
+  assert.equal(harborBeacon.glazingLabel, "Openings: Not applicable");
+  assert.equal(harborBeacon.disabledStyles, 6);
+  assert.equal(harborBeacon.disabledRoofs, 6);
+  assert.equal(harborBeacon.conceptHidden, false);
+  assert.match(harborBeacon.conceptAlt, /Stone and Timber Harbor Beacon concept reference/);
+  assert.equal(harborBeacon.conceptFit, "contain");
+  assert.equal(harborBeacon.selectedInUrl, "stone-timber-harbor-beacon");
+  assert.ok(harborBeacon.resources.includes("/build_ncm/buildings/coastal/stone-timber-harbor-beacon.json"));
+  assert.ok(harborBeacon.resources.includes("/build_ncm/concepts/coastal/stone-timber-harbor-beacon.webp"));
+  assert.ok(!harborBeacon.resources.some((path) => path.endsWith("stone-timber-harbor-beacon-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=industrial]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=freight-warehouse]')"));

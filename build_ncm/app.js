@@ -38,8 +38,10 @@ import {
 } from "./construction-catalog.js";
 import { getLocale, initI18n, onLocaleChange, t } from "./i18n.js";
 import {
+  BUILDING_CATEGORIES,
   BUILDING_LIBRARY,
   buildingLibraryEntry,
+  buildingsInCategory,
   createLibraryBlueprint,
 } from "./building-library.js";
 
@@ -92,15 +94,20 @@ const els = {
   materialCatalog: document.querySelector("#buildingMaterialCatalog"),
   materialCatalogCount: document.querySelector("#buildingMaterialCatalogCount"),
   materialCatalogFilters: document.querySelector("#buildingMaterialCatalogFilters"),
+  buildingCategories: document.querySelector("#buildingCategoryList"),
+  buildingCategoryTitle: document.querySelector("#buildingCategoryTitle"),
+  buildingCategoryCount: document.querySelector("#buildingCategoryCount"),
   buildingLibrary: document.querySelector("#buildingLibraryList"),
   buildingLibraryCount: document.querySelector("#buildingLibraryCount"),
+  buildingLibraryStatus: document.querySelector("#buildingLibraryStatus"),
 };
 
 let selectedBuilding = initialBuildingEntry();
+let activeBuildingCategory = selectedBuilding.category;
 let selectedStyle = buildingStylePreset(selectedBuilding.defaultStyle);
 let selectedRoof = roofTileVariant(selectedBuilding.defaultRoof);
 let glazed = selectedBuilding.defaultGlazed;
-let blueprint = createLibraryBlueprint(selectedBuilding, { style: selectedStyle, roofMaterial: selectedRoof.materialId, glazed });
+let blueprint = await createLibraryBlueprint(selectedBuilding, { style: selectedStyle, roofMaterial: selectedRoof.materialId, glazed });
 let formats = buildFormats(blueprint);
 let selectedFormat = "ncm3";
 let autoSpin = false;
@@ -111,7 +118,9 @@ let activeMaterialCatalogFilter = "current";
 let pdaStatusMessage = { key: "pda.waiting", variables: {}, state: "" };
 let codeLoadStatusMessage = { key: "code.loadHint", variables: {}, state: "" };
 let codeEditorDirty = false;
-let buildingLibraryRenderToken = 0;
+let blueprintRequest = 0;
+let blueprintBusy = false;
+let buildingLibraryStatusMessage = { key: "library.lazyReady", variables: {}, state: "" };
 
 const materialModels = new MaterialModelPreviewRenderer({
   seed: "nicechunk-mainnet-001",
@@ -212,18 +221,30 @@ function renderMaterials(counts) {
 }
 
 function renderBuildingLibrary() {
-  if (!els.buildingLibrary) return;
-  const previews = [];
-  const cards = BUILDING_LIBRARY.map((entry) => {
-    const style = buildingStylePreset(entry.defaultStyle);
-    const roof = roofTileVariant(entry.defaultRoof);
-    const libraryBlueprint = createLibraryBlueprint(entry, {
-      style,
-      roofMaterial: roof.materialId,
-      glazed: entry.defaultGlazed,
-    });
-    const voxels = voxelize(libraryBlueprint);
-    const code = encodeNcm3(libraryBlueprint);
+  if (!els.buildingLibrary || !els.buildingCategories) return;
+  const activeCategory = BUILDING_CATEGORIES.find((entry) => entry.key === activeBuildingCategory) ?? BUILDING_CATEGORIES[0];
+  const visibleBuildings = buildingsInCategory(activeCategory);
+  const categories = BUILDING_CATEGORIES.map((categoryEntry) => {
+    const count = buildingsInCategory(categoryEntry).length;
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "building-category-button";
+    button.dataset.buildingCategory = categoryEntry.key;
+    button.setAttribute("role", "radio");
+    button.setAttribute("aria-checked", String(categoryEntry.key === activeCategory.key));
+    button.setAttribute("aria-label", t("library.categorySelectAria", {
+      category: t(categoryEntry.nameKey),
+      count,
+    }));
+    button.classList.toggle("active", categoryEntry.key === activeCategory.key);
+    const label = document.createElement("span");
+    label.textContent = t(categoryEntry.nameKey);
+    const total = document.createElement("b");
+    total.textContent = String(count).padStart(2, "0");
+    button.append(label, total);
+    return button;
+  });
+  const cards = visibleBuildings.map((entry, index) => {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "building-library-card";
@@ -232,14 +253,17 @@ function renderBuildingLibrary() {
     button.setAttribute("aria-checked", String(entry.key === selectedBuilding.key));
     button.setAttribute("aria-label", t("library.selectAria", { building: t(entry.nameKey) }));
     button.classList.toggle("active", entry.key === selectedBuilding.key);
+    if (entry.key === selectedBuilding.key && blueprintBusy) button.setAttribute("aria-busy", "true");
 
-    const canvas = document.createElement("canvas");
-    canvas.className = "building-library-preview";
-    canvas.setAttribute("aria-hidden", "true");
+    const marker = document.createElement("span");
+    marker.className = "building-library-marker";
+    marker.setAttribute("aria-hidden", "true");
+    const markerGlyph = document.createElement("i");
+    const markerIndex = document.createElement("b");
+    markerIndex.textContent = String(index + 1).padStart(2, "0");
+    marker.append(markerGlyph, markerIndex);
     const copy = document.createElement("span");
     copy.className = "building-library-copy";
-    const category = document.createElement("small");
-    category.textContent = t(entry.categoryKey);
     const name = document.createElement("strong");
     name.textContent = t(entry.nameKey);
     const description = document.createElement("em");
@@ -249,26 +273,23 @@ function renderBuildingLibrary() {
     stats.append(
       libraryStat(entry.footprint, t("library.footprint")),
       libraryStat(entry.height, t("library.height")),
-      libraryStat(voxels.size.toLocaleString(), t("library.voxels")),
-      libraryStat(`${payloadByteLength(code)} B`, "NCM3"),
     );
-    copy.append(category, name, description, stats);
-    button.append(canvas, copy);
-    previews.push({ canvas, blueprint: libraryBlueprint, fitScale: entry.previewFitScale, yaw: entry.previewYaw });
+    copy.append(name, description, stats);
+    button.append(marker, copy);
     return button;
   });
+  els.buildingCategories.replaceChildren(...categories);
   els.buildingLibrary.replaceChildren(...cards);
   els.buildingLibraryCount.textContent = t("library.count", { count: BUILDING_LIBRARY.length });
-  const renderToken = ++buildingLibraryRenderToken;
-  renderBuildingThumbnailQueue(previews, renderToken);
-}
-
-async function renderBuildingThumbnailQueue(previews, renderToken) {
-  for (const preview of previews) {
-    await new Promise((resolve) => requestAnimationFrame(resolve));
-    if (renderToken !== buildingLibraryRenderToken || !preview.canvas.isConnected) return;
-    renderBuildingThumbnail(preview.canvas, preview.blueprint, preview.fitScale, preview.yaw);
-  }
+  els.buildingCategoryTitle.textContent = t(activeCategory.nameKey);
+  els.buildingCategoryCount.textContent = t("library.categoryCount", { count: visibleBuildings.length });
+  els.buildingLibrary.setAttribute("aria-label", t("library.buildingsInCategoryAria", { category: t(activeCategory.nameKey) }));
+  els.buildingLibraryStatus.textContent = t(
+    buildingLibraryStatusMessage.key,
+    localizedBuildingLibraryStatusVariables(buildingLibraryStatusMessage.variables),
+  );
+  els.buildingLibraryStatus.className = `building-library-status${buildingLibraryStatusMessage.state ? ` ${buildingLibraryStatusMessage.state}` : ""}`;
+  document.querySelector(".building-library-panel")?.classList.toggle("is-loading", blueprintBusy);
 }
 
 function libraryStat(value, label) {
@@ -279,21 +300,6 @@ function libraryStat(value, label) {
   small.textContent = label;
   item.append(strong, small);
   return item;
-}
-
-function renderBuildingThumbnail(canvas, libraryBlueprint, fitScale = 1.24, yaw = 2.55) {
-  const thumbnail = new NcmBlueprintRenderer(canvas, {
-    background: "#0a1017",
-    yaw,
-    pitch: 0.58,
-    gridVisible: false,
-    maxPixelRatio: 1,
-    minScale: 1,
-    fitScale,
-  });
-  thumbnail.setBlueprint(libraryBlueprint);
-  thumbnail.destroy();
-  canvas.dataset.buildingThumbnail = "ready";
 }
 
 function renderStylePresets() {
@@ -484,22 +490,53 @@ function renderRoofVariants() {
   }));
 }
 
-function rebuildReference() {
-  blueprint = createLibraryBlueprint(selectedBuilding, { style: selectedStyle, roofMaterial: selectedRoof.materialId, glazed });
-  formats = buildFormats(blueprint);
-  codeEditorDirty = false;
-  spatial.fitScale = selectedBuilding.previewFitScale ?? 1.24;
-  spatial.minScale = selectedBuilding.previewMinScale ?? 5;
-  spatial.setBlueprint(blueprint);
-  renderStylePresets();
-  renderRoofVariants();
-  renderBlueprintState();
-  renderCodePanel();
-  setCodeLoadStatus("code.loadHint");
+async function rebuildReference() {
+  const request = ++blueprintRequest;
+  const building = selectedBuilding;
+  const style = selectedStyle;
+  const roof = selectedRoof;
+  const includeGlazing = glazed;
+  blueprintBusy = true;
+  setBuildingLibraryStatus("library.loading", "loading", { buildingNameKey: building.nameKey });
+  renderBuildingLibrary();
+  try {
+    const nextBlueprint = await createLibraryBlueprint(building, {
+      style,
+      roofMaterial: roof.materialId,
+      glazed: includeGlazing,
+    });
+    if (request !== blueprintRequest) return false;
+    const nextFormats = buildFormats(nextBlueprint);
+    if (request !== blueprintRequest) return false;
+    blueprint = nextBlueprint;
+    formats = nextFormats;
+    codeEditorDirty = false;
+    spatial.fitScale = building.previewFitScale ?? 1.24;
+    spatial.minScale = building.previewMinScale ?? 5;
+    spatial.setBlueprint(blueprint);
+    renderStylePresets();
+    renderRoofVariants();
+    renderBlueprintState();
+    renderCodePanel();
+    setCodeLoadStatus("code.loadHint");
+    setBuildingLibraryStatus("library.loaded", "ok", { buildingNameKey: building.nameKey });
+    return true;
+  } catch (error) {
+    if (request !== blueprintRequest) return false;
+    console.error(`Building blueprint ${building.key} failed to load`, error);
+    setBuildingLibraryStatus("library.loadFailure", "error", { buildingNameKey: building.nameKey });
+    return false;
+  } finally {
+    if (request === blueprintRequest) {
+      blueprintBusy = false;
+      renderBuildingLibrary();
+    }
+  }
 }
 
-function selectBuilding(key) {
+async function selectBuilding(key) {
   selectedBuilding = buildingLibraryEntry(key);
+  activeBuildingCategory = selectedBuilding.category;
   const url = new URL(window.location.href);
   url.searchParams.set("building", selectedBuilding.key);
   window.history.replaceState(null, "", url);
@@ -512,8 +549,8 @@ function selectBuilding(key) {
   spatial.pitch = spatial.homePitch;
   activeBomPhase = "all";
   els.bomFilters.querySelectorAll("[data-phase]").forEach((item) => item.classList.toggle("active", item.dataset.phase === "all"));
-  rebuildReference();
   renderBuildingLibrary();
+  await rebuildReference();
 }
 
 function initialBuildingEntry() {
@@ -528,12 +565,12 @@ function initialBuildingEntry() {
 function selectStylePreset(key) {
   selectedStyle = buildingStylePreset(key);
   selectedRoof = roofTileVariant(selectedStyle.materials.roof);
-  rebuildReference();
+  void rebuildReference();
 }
 
 function selectRoofVariant(key) {
   selectedRoof = roofTileVariant(key);
-  rebuildReference();
+  void rebuildReference();
 }
 
 function renderTileRecipe(voxelCount) {
@@ -721,9 +758,15 @@ function setupEvents() {
     const button = event.target.closest("[data-style]");
     if (button && button.dataset.style !== selectedStyle.key) selectStylePreset(button.dataset.style);
   });
+  els.buildingCategories?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-building-category]");
+    if (!button || button.dataset.buildingCategory === activeBuildingCategory) return;
+    activeBuildingCategory = button.dataset.buildingCategory;
+    renderBuildingLibrary();
+  });
   els.buildingLibrary?.addEventListener("click", (event) => {
     const button = event.target.closest("[data-building]");
-    if (button && button.dataset.building !== selectedBuilding.key) selectBuilding(button.dataset.building);
+    if (button && button.dataset.building !== selectedBuilding.key) void selectBuilding(button.dataset.building);
   });
   els.roofVariants.addEventListener("click", (event) => {
     const button = event.target.closest("[data-roof]");
@@ -750,7 +793,7 @@ function setupEvents() {
   });
   els.glazing.addEventListener("click", () => {
     glazed = !glazed;
-    rebuildReference();
+    void rebuildReference();
   });
   els.spin.addEventListener("click", () => {
     autoSpin = !autoSpin;
@@ -873,6 +916,18 @@ function setPdaStatus(key, state = "", variables = {}) {
   els.pdaStatus.className = state;
 }
 
+function setBuildingLibraryStatus(key, state = "", variables = {}) {
+  buildingLibraryStatusMessage = { key, state, variables };
+  if (!els.buildingLibraryStatus) return;
+  els.buildingLibraryStatus.textContent = t(key, localizedBuildingLibraryStatusVariables(variables));
+  els.buildingLibraryStatus.className = `building-library-status${state ? ` ${state}` : ""}`;
+}
+
+function localizedBuildingLibraryStatusVariables(variables) {
+  if (!variables.buildingNameKey) return variables;
+  return { ...variables, building: t(variables.buildingNameKey) };
+}
+
 function downloadText(text, filename, type) {
   const url = URL.createObjectURL(new Blob([text], { type }));
   const link = document.createElement("a");
@@ -890,4 +945,9 @@ function renderLocalizedState() {
   renderCodePanel({ preserveEditor: true });
   setCodeLoadStatus(codeLoadStatusMessage.key, codeLoadStatusMessage.state, codeLoadStatusMessage.variables);
   setPdaStatus(pdaStatusMessage.key, pdaStatusMessage.state, pdaStatusMessage.variables);
+  setBuildingLibraryStatus(
+    buildingLibraryStatusMessage.key,
+    buildingLibraryStatusMessage.state,
+    buildingLibraryStatusMessage.variables,
+  );
 }

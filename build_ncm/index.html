@@ -7,7 +7,7 @@
     <meta name="description" content="NiceChunk static building compiler powered by chunk.js: build, compress and preview NCM blueprints for PDA storage." />
     <title>BUILD_NCM — NiceChunk Building Compiler</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%23a8ee45' d='m32 3 26 15v29L32 62 6 47V18z'/%3E%3Cpath fill='%2310151c' d='m32 10 19 11v22L32 54 13 43V21z'/%3E%3Cpath fill='%234a96ff' d='m32 10 19 11-19 11-19-11z'/%3E%3C/svg%3E" />
-    <link rel="stylesheet" href="./style.css?v=0.9.2-royal-blue-citadel" />
+    <link rel="stylesheet" href="./style.css?v=1.0.0-category-browser" />
   </head>
   <body>
     <header class="topbar">
@@ -51,10 +51,20 @@
           <span id="buildingLibraryCount" class="library-count">5 BUILDINGS</span>
         </div>
         <div class="building-library-intro">
-          <p data-i18n="library.intro">Select a building to replace the spatial preview, NCM payload, material counts and BOM. Each library entry owns deterministic geometry and defaults while continuing to use the shared material-style system.</p>
-          <span data-i18n="library.future">Designed for gradual expansion</span>
+          <p data-i18n="library.intro">Browse by category, then select a building to load its blueprint, spatial preview, NCM payload, material counts and BOM.</p>
+          <span data-i18n="library.future">CATEGORY INDEX · BLUEPRINTS LOAD ON DEMAND</span>
         </div>
-        <div id="buildingLibraryList" class="building-library-list" role="radiogroup" aria-label="Available NCM buildings" data-i18n-aria-label="library.aria"></div>
+        <div class="building-library-browser">
+          <div id="buildingCategoryList" class="building-category-list" role="radiogroup" aria-label="Building categories" data-i18n-aria-label="library.categoryAria"></div>
+          <div class="building-library-column">
+            <div class="building-library-column-head">
+              <strong id="buildingCategoryTitle" data-i18n="library.category.residential">RESIDENTIAL</strong>
+              <span id="buildingCategoryCount">1 LISTED</span>
+            </div>
+            <div id="buildingLibraryList" class="building-library-list" role="radiogroup" aria-label="Residential NCM buildings"></div>
+          </div>
+        </div>
+        <p id="buildingLibraryStatus" class="building-library-status" role="status" aria-live="polite" data-i18n="library.lazyReady">Only the selected blueprint is loaded.</p>
       </aside>
 
       <section class="workspace">
@@ -271,6 +281,6 @@
       <span>Canonical materials · bounded expansion · content-addressed blueprints</span>
     </footer>
 
-    <script type="module" src="./app.js?v=0.9.2-royal-blue-citadel"></script>
+    <script type="module" src="./app.js?v=1.0.0-category-browser"></script>
   </body>
 </html>

@@ -38,17 +38,18 @@ try {
   await client.send("Page.enable");
   await client.send("Emulation.setDeviceMetricsOverride", { width: 1600, height: 1200, deviceScaleFactor: 1, mobile: false });
   await client.send("Page.navigate", { url });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building]').length === 5 && document.querySelectorAll('[data-building-thumbnail=ready]').length === 5"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 5 && document.querySelectorAll('[data-building]').length === 1 && document.querySelector('[data-building=hollow-cottage]')"));
 
   const initial = await evaluate(client, `({
-    buildingCount: document.querySelectorAll('[data-building]').length,
+    visibleBuildingCount: document.querySelectorAll('[data-building]').length,
+    totalBuildingCount: document.querySelector('#buildingLibraryCount').textContent,
+    categoryCount: document.querySelectorAll('[data-building-category]').length,
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
     buildingThumbnailCount: document.querySelectorAll('.building-library-preview').length,
-    renderedBuildingThumbnails: document.querySelectorAll('[data-building-thumbnail=ready]').length,
-    distinctBuildingThumbnails: new Set([...document.querySelectorAll('.building-library-preview')].map((canvas) => canvas.toDataURL())).size,
     libraryIsLeft: document.querySelector('.building-library-panel').getBoundingClientRect().right <= document.querySelector('.viewport-card').getBoundingClientRect().left,
+    libraryIsSplit: document.querySelector('#buildingCategoryList').getBoundingClientRect().right <= document.querySelector('#buildingLibraryList').getBoundingClientRect().left,
     libraryOverflowY: getComputedStyle(document.querySelector('#buildingLibraryList')).overflowY,
-    libraryScrollable: document.querySelector('#buildingLibraryList').scrollHeight > document.querySelector('#buildingLibraryList').clientHeight,
     styleCount: document.querySelectorAll('[data-style]').length,
     locale: document.documentElement.lang,
     documentTitle: document.title,
@@ -69,14 +70,15 @@ try {
     hasHorizontalOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(initial.buildingCount, 5);
+  assert.equal(initial.visibleBuildingCount, 1);
+  assert.match(initial.totalBuildingCount, /5 BUILDINGS/);
+  assert.equal(initial.categoryCount, 5);
+  assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, "hollow-cottage");
-  assert.equal(initial.buildingThumbnailCount, 5);
-  assert.equal(initial.renderedBuildingThumbnails, 5);
-  assert.equal(initial.distinctBuildingThumbnails, 5);
+  assert.equal(initial.buildingThumbnailCount, 0);
   assert.equal(initial.libraryIsLeft, true);
+  assert.equal(initial.libraryIsSplit, true);
   assert.equal(initial.libraryOverflowY, "auto");
-  assert.equal(initial.libraryScrollable, true);
   assert.equal(initial.styleCount, 6);
   assert.equal(initial.locale, "en");
   assert.equal(initial.documentTitle, "BUILD_NCM — NiceChunk Building Compiler");
@@ -100,10 +102,11 @@ try {
   assert.ok(initial.resources.includes("/chunk.js/renderer/texture-array-manager.js"));
   assert.ok(initial.resources.includes("/build_ncm/i18n.js"));
   assert.ok(initial.resources.includes("/build_ncm/building-library.js"));
-  assert.ok(initial.resources.includes("/build_ncm/civic-town-hall-blueprint.js"));
-  assert.ok(initial.resources.includes("/build_ncm/seaside-cottage-blueprint.js"));
-  assert.ok(initial.resources.includes("/build_ncm/warehouse-blueprint.js"));
-  assert.ok(initial.resources.includes("/build_ncm/grand-castle-blueprint.js"));
+  assert.ok(initial.resources.includes("/build_ncm/house-blueprint.js"));
+  assert.ok(!initial.resources.includes("/build_ncm/civic-town-hall-blueprint.js"));
+  assert.ok(!initial.resources.includes("/build_ncm/seaside-cottage-blueprint.js"));
+  assert.ok(!initial.resources.includes("/build_ncm/warehouse-blueprint.js"));
+  assert.ok(!initial.resources.includes("/build_ncm/grand-castle-blueprint.js"));
   assert.ok(!initial.resources.includes("/chunk.js/index.js"), "build_ncm must not load the full chunk.js barrel");
 
   const payloadBeforeLocaleSwitch = initial.ncm;
@@ -132,6 +135,16 @@ try {
 
   const cottagePayload = initial.ncm;
   const cottageVoxels = Number((await evaluate(client, "document.querySelectorAll('#metrics .metric strong')[2].textContent")).replaceAll(",", ""));
+  await evaluate(client, "document.querySelector('[data-building-category=coastal]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'coastal' && document.querySelector('[data-building=seaside-cottage]')"));
+  const coastalBrowse = await evaluate(client, `({
+    activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
+    previewTitle: document.querySelector('#buildingTitle').textContent,
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(coastalBrowse.activeBuilding, null, "browsing another category must not select or generate a building");
+  assert.match(coastalBrowse.previewTitle, /Hollow Cottage/);
+  assert.ok(!coastalBrowse.resources.includes("/build_ncm/seaside-cottage-blueprint.js"), "category browsing must not load its blueprint module");
   await evaluate(client, "document.querySelector('[data-building=seaside-cottage]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'seaside-cottage' && document.querySelector('#modelSize').textContent === '38 × 29 × 32'"));
   const seaside = await evaluate(client, `({
@@ -161,6 +174,8 @@ try {
   assert.equal(seaside.uncovered, false);
   assert.equal(seaside.selectedInUrl, "seaside-cottage");
 
+  await evaluate(client, "document.querySelector('[data-building-category=industrial]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=freight-warehouse]')"));
   await evaluate(client, "document.querySelector('[data-building=freight-warehouse]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'freight-warehouse' && document.querySelector('#modelSize').textContent === '48 × 36 × 38'"));
   const warehouse = await evaluate(client, `({
@@ -188,6 +203,8 @@ try {
   assert.equal(warehouse.uncovered, false);
   assert.equal(warehouse.selectedInUrl, "freight-warehouse");
 
+  await evaluate(client, "document.querySelector('[data-building-category=fortress]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=grand-castle]')"));
   await evaluate(client, "document.querySelector('[data-building=grand-castle]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'grand-castle' && document.querySelector('#modelSize').textContent === '152 × 86 × 136'"));
   const castle = await evaluate(client, `({
@@ -223,6 +240,8 @@ try {
     writeFileSync(screenshotPath, Buffer.from(screenshot.data, "base64"));
   }
 
+  await evaluate(client, "document.querySelector('[data-building-category=civic]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=civic-town-hall]')"));
   await evaluate(client, "document.querySelector('[data-building=civic-town-hall]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'civic-town-hall' && document.querySelector('#modelSize').textContent === '44 × 42 × 40'"));
   const townHall = await evaluate(client, `({
@@ -259,17 +278,21 @@ try {
   await waitFor(() => evaluate(client, "document.documentElement.lang === 'zh-Hans' && document.querySelector('[data-building].active')?.dataset.building === 'civic-town-hall'"));
   const localizedTownHall = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     title: document.querySelector('#buildingTitle').textContent,
     payload: document.querySelector('#codeOutput').value,
     thumbnails: document.querySelectorAll('.building-library-preview').length,
   })`);
   assert.equal(localizedTownHall.activeBuilding, "civic-town-hall");
+  assert.equal(localizedTownHall.activeCategory, "civic");
   assert.match(localizedTownHall.title, /市政厅/);
   assert.equal(localizedTownHall.payload, townHall.payload, "locale changes must preserve the selected building payload");
-  assert.equal(localizedTownHall.thumbnails, 5);
+  assert.equal(localizedTownHall.thumbnails, 0);
   await evaluate(client, "document.querySelector('[data-locale=en]').click()");
   await waitFor(() => evaluate(client, "document.documentElement.lang === 'en'"));
 
+  await evaluate(client, "document.querySelector('[data-building-category=residential]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=hollow-cottage]')"));
   await evaluate(client, "document.querySelector('[data-building=hollow-cottage]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'hollow-cottage'"));
   const restoredCottage = await evaluate(client, `({
@@ -379,7 +402,7 @@ try {
 
   await client.send("Emulation.setDeviceMetricsOverride", { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
   await client.send("Page.reload", { ignoreCache: true });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building]').length === 5 && document.querySelectorAll('[data-building-thumbnail=ready]').length === 5"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 5 && document.querySelectorAll('[data-building]').length === 1"));
   await evaluate(client, "document.querySelector('[data-material-filter=all]').click()");
   await waitFor(() => evaluate(client, "document.querySelectorAll('#buildingMaterialCatalog .model-material-card').length === 33"));
   const mobile = await evaluate(client, `({
@@ -387,8 +410,10 @@ try {
     scrollWidth: document.documentElement.scrollWidth,
     modelCards: document.querySelectorAll('#buildingMaterialCatalog .model-material-card').length,
     modelErrors: document.querySelectorAll('canvas[data-model-error]').length,
+    categories: document.querySelectorAll('[data-building-category]').length,
     buildingCards: document.querySelectorAll('[data-building]').length,
     buildingThumbnails: document.querySelectorAll('.building-library-preview').length,
+    categoryFlow: getComputedStyle(document.querySelector('#buildingCategoryList')).flexDirection,
     editorReadOnly: document.querySelector('#codeOutput').readOnly,
     codeActionTopDelta: Math.abs(document.querySelector('#loadCode').getBoundingClientRect().top - document.querySelector('#copyCode').getBoundingClientRect().top),
     loadButtonHeight: document.querySelector('#loadCode').getBoundingClientRect().height,
@@ -397,8 +422,10 @@ try {
   assert.equal(mobile.scrollWidth, mobile.clientWidth, "mobile page must not create document-level horizontal overflow");
   assert.equal(mobile.modelCards, 33);
   assert.equal(mobile.modelErrors, 0);
-  assert.equal(mobile.buildingCards, 5);
-  assert.equal(mobile.buildingThumbnails, 5);
+  assert.equal(mobile.categories, 5);
+  assert.equal(mobile.buildingCards, 1);
+  assert.equal(mobile.buildingThumbnails, 0);
+  assert.equal(mobile.categoryFlow, "row");
   assert.equal(mobile.editorReadOnly, false);
   assert.ok(mobile.codeActionTopDelta < 1, "mobile Load and Copy actions should remain on the same row");
   assert.ok(mobile.loadButtonHeight >= 40);
@@ -407,17 +434,25 @@ try {
   const seasideDirectUrl = new URL(url);
   seasideDirectUrl.searchParams.set("building", "grand-castle");
   await client.send("Page.navigate", { url: seasideDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building].active')?.dataset.building === 'grand-castle'"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'fortress' && document.querySelector('[data-building].active')?.dataset.building === 'grand-castle'"));
   const directSelection = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
     title: document.querySelector('#buildingTitle').textContent,
     modelSize: document.querySelector('#modelSize').textContent,
     payload: document.querySelector('#codeOutput').value,
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
+  assert.equal(directSelection.activeCategory, "fortress");
   assert.equal(directSelection.activeBuilding, "grand-castle");
   assert.match(directSelection.title, /Royal Blue Citadel/);
   assert.equal(directSelection.modelSize, "152 × 86 × 136");
   assert.match(directSelection.payload, /^NCM3:/);
+  assert.ok(directSelection.resources.includes("/build_ncm/grand-castle-blueprint.js"));
+  assert.ok(!directSelection.resources.includes("/build_ncm/house-blueprint.js"), "a direct link must not load the default cottage module");
+  assert.ok(!directSelection.resources.includes("/build_ncm/seaside-cottage-blueprint.js"));
+  assert.ok(!directSelection.resources.includes("/build_ncm/warehouse-blueprint.js"));
+  assert.ok(!directSelection.resources.includes("/build_ncm/civic-town-hall-blueprint.js"));
 
   assert.deepEqual(failedResponses, []);
   assert.deepEqual(errors, []);

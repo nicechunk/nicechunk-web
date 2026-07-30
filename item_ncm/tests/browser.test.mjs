@@ -81,7 +81,7 @@ try {
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 10);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /31 ITEMS/);
+  assert.match(initial.total, /35 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -198,7 +198,7 @@ try {
   assert.ok(cookingGrate.resources.includes("/item_ncm/json/cooking/iron-field-cooking-grate.json"));
 
   await evaluate(client, `document.querySelector('[data-category="books-writing"]').click()`);
-  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 3 && document.querySelector('[data-item="timber-bound-village-ledger"]')`));
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 7 && document.querySelector('[data-item="timber-bound-village-ledger"]')`));
   assert.equal(await evaluate(client, `performance.getEntriesByType("resource").some((entry) => new URL(entry.name).pathname.includes("/item_ncm/json/books-writing/"))`), false,
     "category browsing must not load book item JSON files");
   await evaluate(client, `document.querySelector('[data-item="timber-bound-village-ledger"]').click()`);
@@ -251,6 +251,74 @@ try {
   assert.equal(archiveVolumes.componentCount, "12");
   assert.equal(archiveVolumes.selectedInUrl, "stacked-archive-volumes");
   assert.ok(archiveVolumes.resources.includes("/item_ncm/json/books-writing/stacked-archive-volumes.json"));
+
+  await evaluate(client, `document.querySelector('[data-item="civilization-code-codex"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="civilization-code-codex"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const civilizationCodex = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(civilizationCodex.title, "Civilization Code Codex");
+  assert.equal(civilizationCodex.type, "PLACEABLE");
+  assert.equal(civilizationCodex.payloadBytes, "263 / 640 B");
+  assert.equal(civilizationCodex.componentCount, "24");
+  assert.equal(civilizationCodex.selectedInUrl, "civilization-code-codex");
+  assert.ok(civilizationCodex.resources.includes("/item_ncm/json/books-writing/civilization-code-codex.json"));
+
+  await evaluate(client, `document.querySelector('[data-item="mining-skill-manual"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="mining-skill-manual"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const miningManual = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(miningManual.title, "Mining Skill Manual");
+  assert.equal(miningManual.type, "PLACEABLE");
+  assert.equal(miningManual.payloadBytes, "157 / 640 B");
+  assert.equal(miningManual.componentCount, "14");
+  assert.equal(miningManual.selectedInUrl, "mining-skill-manual");
+  assert.ok(miningManual.resources.includes("/item_ncm/json/books-writing/mining-skill-manual.json"));
+
+  await evaluate(client, `document.querySelector('[data-item="forging-skill-treatise"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="forging-skill-treatise"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const forgingTreatise = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(forgingTreatise.title, "Forging Skill Treatise");
+  assert.equal(forgingTreatise.type, "PLACEABLE");
+  assert.equal(forgingTreatise.payloadBytes, "220 / 640 B");
+  assert.equal(forgingTreatise.componentCount, "20");
+  assert.equal(forgingTreatise.selectedInUrl, "forging-skill-treatise");
+  assert.ok(forgingTreatise.resources.includes("/item_ncm/json/books-writing/forging-skill-treatise.json"));
+
+  await evaluate(client, `document.querySelector('[data-item="farming-skill-handbook"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="farming-skill-handbook"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const farmingHandbook = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(farmingHandbook.title, "Farming Skill Handbook");
+  assert.equal(farmingHandbook.type, "PLACEABLE");
+  assert.equal(farmingHandbook.payloadBytes, "218 / 640 B");
+  assert.equal(farmingHandbook.componentCount, "21");
+  assert.equal(farmingHandbook.selectedInUrl, "farming-skill-handbook");
+  assert.ok(farmingHandbook.resources.includes("/item_ncm/json/books-writing/farming-skill-handbook.json"));
 
   await evaluate(client, `document.querySelector('[data-category="mining-tools"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 4 && document.querySelector('[data-item="iron-earthwork-shovel"]')`));

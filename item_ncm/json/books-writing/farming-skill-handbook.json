@@ -1,0 +1,321 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "farming-skill-handbook",
+  "category": "books-writing",
+  "interaction": "placeable",
+  "names": {
+    "en": "Farming Skill Handbook",
+    "es": "Manual de habilidad agrícola",
+    "fr": "Manuel de compétence agricole",
+    "de": "Handbuch der Landwirtschaft",
+    "ja": "農耕技能書",
+    "ru": "Справочник по земледелию",
+    "ko": "농경 기술서",
+    "zh-Hant": "農耕技能書",
+    "zh-Hans": "农耕技能书"
+  },
+  "descriptions": {
+    "en": "Farming Skill Handbook is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Manual de habilidad agrícola es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Manuel de compétence agricole est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Handbuch der Landwirtschaft ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "農耕技能書は、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Справочник по земледелию — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "농경 기술서은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "農耕技能書是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "农耕技能书是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 0.3594,
+    "height": 0.1094,
+    "depth": 0.2344,
+    "sizeQ": [
+      23,
+      7,
+      15
+    ]
+  },
+  "preview": {
+    "yaw": -0.72,
+    "pitch": 0.5
+  },
+  "concept": {
+    "image": "concepts/books-writing/farming-skill-handbook-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "17ddb0ef6dd629319ff00d4a6ee541162bcadac669f699b463fab2e3b381707c"
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.8Cg2aHKcaeMPSlDEA4VinUUAQ-QAWJAYaAAAgAIALFAEPAAAgAEAEgYGHv2AIACABNswwBCgAgKABABIgAgQAQF_ogAkQAQIAICgMQASBAIU_oBQAIAJAgEKAQAoAEACEsBQCAgBAb_SABCWAoBAQAgMABAAhLAUAgIAQGAMgAS0MCAQJ_gDf4QAJaGBAIE_wBgEIAEtDAgECAMA3-EACWhgQCBAGAYBCACQQBA37gL_ZABIIAgb9wFAAgAkEAQN-4CgKQASCAIIAgBQAIAIp1AwMEAUAQAEAAA",
+    "rawBytes": 218,
+    "sha256": "27c461cf3d163401ad5602fcaf1d5c607f75f3061cfc2cffbb38759f2a10cc70",
+    "designHash": 2009608209,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 218,
+    "savedBytes": 0,
+    "sourceComponentCount": 21,
+    "decodedComponentCount": 21,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 1144409,
+        "usedVolumeMm3": 1144409,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "cotton_cloth",
+        "itemCode": 1025,
+        "inputVolumeMm3": 2677917,
+        "usedVolumeMm3": 2677917,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "cotton_cloth",
+        "itemCode": 1025,
+        "inputVolumeMm3": 1144409,
+        "usedVolumeMm3": 1144409,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "resin_binder",
+        "itemCode": 1004,
+        "inputVolumeMm3": 514984,
+        "usedVolumeMm3": 514984,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "yellow_dye",
+        "itemCode": 1027,
+        "inputVolumeMm3": 457764,
+        "usedVolumeMm3": 457764,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "resin_binder",
+        "itemCode": 1004,
+        "inputVolumeMm3": 122070,
+        "usedVolumeMm3": 122070,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "resin_binder",
+        "itemCode": 1004,
+        "inputVolumeMm3": 122070,
+        "usedVolumeMm3": 122070,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 7,
+        "materialId": "resin_binder",
+        "itemCode": 1004,
+        "inputVolumeMm3": 76294,
+        "usedVolumeMm3": 76294,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 8,
+        "materialId": "resin_binder",
+        "itemCode": 1004,
+        "inputVolumeMm3": 76294,
+        "usedVolumeMm3": 76294,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 9,
+        "materialId": "blue_dye",
+        "itemCode": 1029,
+        "inputVolumeMm3": 38147,
+        "usedVolumeMm3": 38147,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 10,
+        "materialId": "blue_dye",
+        "itemCode": 1029,
+        "inputVolumeMm3": 38147,
+        "usedVolumeMm3": 38147,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 11,
+        "materialId": "blue_dye",
+        "itemCode": 1029,
+        "inputVolumeMm3": 38147,
+        "usedVolumeMm3": 38147,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 12,
+        "materialId": "red_dye",
+        "itemCode": 1028,
+        "inputVolumeMm3": 15259,
+        "usedVolumeMm3": 15259,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 13,
+        "materialId": "red_dye",
+        "itemCode": 1028,
+        "inputVolumeMm3": 15259,
+        "usedVolumeMm3": 15259,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 14,
+        "materialId": "red_dye",
+        "itemCode": 1028,
+        "inputVolumeMm3": 15259,
+        "usedVolumeMm3": 15259,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 15,
+        "materialId": "red_dye",
+        "itemCode": 1028,
+        "inputVolumeMm3": 15259,
+        "usedVolumeMm3": 15259,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 16,
+        "materialId": "resin_binder",
+        "itemCode": 1004,
+        "inputVolumeMm3": 45776,
+        "usedVolumeMm3": 45776,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 17,
+        "materialId": "resin_binder",
+        "itemCode": 1004,
+        "inputVolumeMm3": 45776,
+        "usedVolumeMm3": 45776,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 18,
+        "materialId": "resin_binder",
+        "itemCode": 1004,
+        "inputVolumeMm3": 45776,
+        "usedVolumeMm3": 45776,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 19,
+        "materialId": "resin_binder",
+        "itemCode": 1004,
+        "inputVolumeMm3": 61035,
+        "usedVolumeMm3": 61035,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 20,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 137329,
+        "usedVolumeMm3": 137329,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 6844416,
+      "requiredEffectiveDurability": 2186,
+      "outputMassGrams": 3215,
+      "materialScore": 45
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 2360,
+      "triangleCount": 1180,
+      "meshByteLength": 44840
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "wooden_plank",
+      "itemCode": 1031,
+      "componentCount": 2,
+      "inputVolumeMm3": 1281738,
+      "usedVolumeMm3": 1281738,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 65
+    },
+    {
+      "materialId": "cotton_cloth",
+      "itemCode": 1025,
+      "componentCount": 2,
+      "inputVolumeMm3": 3822326,
+      "usedVolumeMm3": 3822326,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 1000000,
+      "equivalentInputUnits": 4
+    },
+    {
+      "materialId": "resin_binder",
+      "itemCode": 1004,
+      "componentCount": 9,
+      "inputVolumeMm3": 1110075,
+      "usedVolumeMm3": 1110075,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 5
+    },
+    {
+      "materialId": "yellow_dye",
+      "itemCode": 1027,
+      "componentCount": 1,
+      "inputVolumeMm3": 457764,
+      "usedVolumeMm3": 457764,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 23
+    },
+    {
+      "materialId": "blue_dye",
+      "itemCode": 1029,
+      "componentCount": 3,
+      "inputVolumeMm3": 114441,
+      "usedVolumeMm3": 114441,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 6
+    },
+    {
+      "materialId": "red_dye",
+      "itemCode": 1028,
+      "componentCount": 4,
+      "inputVolumeMm3": 61036,
+      "usedVolumeMm3": 61036,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 4
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "chainMinted": false
+  }
+}

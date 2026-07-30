@@ -11,7 +11,7 @@ ITEM_NCM is the public NiceChunk forge-item blueprint registry. It follows the s
 - Every item JSON contains its own nine-language names and descriptions.
 - `tools/generate-items.mjs` is the canonical source for the initial collection and regenerates every item JSON deterministically.
 
-The registry currently contains 31 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, containers, cooking, and books and writing. New designs begin with an Imagegen material-style concept; the resulting item JSON records the concept path, provenance, version, and SHA-256 before the forge encoding is accepted.
+The registry currently contains 35 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, containers, cooking, and books and writing. New designs begin with an Imagegen material-style concept; the resulting item JSON records the concept path, provenance, version, and SHA-256 before the forge encoding is accepted.
 
 ## Forge guarantees
 

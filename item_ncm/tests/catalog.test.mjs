@@ -51,10 +51,17 @@ const framedTextileLayouts = new Map([
     decorations: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21],
   }],
 ]);
+const drawerCabinetLayouts = new Map([
+  ["timber-apothecary-drawer-cabinet", {
+    frame: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    drawers: [11, 12, 13, 14, 15, 16],
+    handles: [17, 18, 19, 20, 21, 22],
+  }],
+]);
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
-assert.equal(catalog.items.length, 36);
+assert.equal(catalog.items.length, 37);
 assert.equal(new Set(catalog.items).size, catalog.items.length);
 
 const listedFiles = new Set(catalog.items);
@@ -69,6 +76,7 @@ let placeables = 0;
 let conceptReferences = 0;
 let bookGeometryCount = 0;
 let framedTextileGeometryCount = 0;
+let drawerCabinetGeometryCount = 0;
 for (const file of catalog.items) {
   assert.match(file, /^json\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/);
   const item = json(join(root, file));
@@ -138,6 +146,13 @@ for (const file of catalog.items) {
     assert.equal(item.preview.clothMotion, "rigid");
     assert.equal(item.verification.framedTextileGeometryValidated, true);
     assertFramedTextileGeometry(item, runtime, framedTextileLayout);
+  }
+  const drawerCabinetLayout = drawerCabinetLayouts.get(item.key);
+  if (drawerCabinetLayout) {
+    drawerCabinetGeometryCount += 1;
+    assert.equal(item.category, "furniture");
+    assert.equal(item.verification.drawerCabinetGeometryValidated, true);
+    assertDrawerCabinetGeometry(item, runtime, drawerCabinetLayout);
   }
   assert.equal(forgeWorkbenchComponentsConnected(runtime.components), true, `${item.key} must be a connected assembly`);
   const grip = validateForgeGripBindings(runtime.components);
@@ -219,20 +234,21 @@ assert.deepEqual([...categories], [
   ["weapons", 3],
   ["building-fittings", 3],
   ["lighting", 3],
-  ["furniture", 3],
+  ["furniture", 4],
   ["containers", 3],
   ["cooking", 2],
   ["books-writing", 7],
   ["interior-decor", 1],
 ]);
 assert.equal(tools, 15);
-assert.equal(placeables, 21);
-assert.equal(conceptReferences, 12);
+assert.equal(placeables, 22);
+assert.equal(conceptReferences, 13);
 assert.equal(bookGeometryCount, 7);
 assert.equal(framedTextileGeometryCount, 1);
+assert.equal(drawerCabinetGeometryCount, 1);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
-console.log("item_ncm catalog tests passed: 36 canonical NCF1 items across 11 categories");
+console.log("item_ncm catalog tests passed: 37 canonical NCF1 items across 11 categories");
 
 function json(file) {
   return JSON.parse(readFileSync(file, "utf8"));
@@ -331,6 +347,42 @@ function assertFramedTextileGeometry(item, runtime, layout) {
         false,
         `${item.key} decorations ${leftDecoration} and ${rightDecoration} intersect`,
       );
+    }
+  }
+}
+
+function assertDrawerCabinetGeometry(item, runtime, layout) {
+  assert.equal(runtime.componentCount, 23);
+  assert.deepEqual(item.dimensions.sizeQ, [64, 78, 26]);
+  assert.ok(item.dimensions.height > item.dimensions.width);
+  assert.ok(item.dimensions.depth < item.dimensions.width * 0.5);
+  assert.deepEqual(
+    [...new Set(item.forge.materialComponents.map(({ materialId }) => materialId))].sort(),
+    ["iron_bloom", "squared_timber", "wooden_plank"],
+  );
+  assert.equal(layout.drawers.length, 6);
+  assert.equal(layout.handles.length, 6);
+  const bounds = runtime.components.map((component) => componentBoundsQ(component));
+  const expectedDrawerOffsets = [
+    [-18, 21, 1], [0, 21, 1], [18, 21, 1],
+    [-18, 51, 1], [0, 51, 1], [18, 51, 1],
+  ];
+  for (let position = 0; position < layout.drawers.length; position += 1) {
+    const drawerIndex = layout.drawers[position];
+    const handleIndex = layout.handles[position];
+    const drawer = runtime.components[drawerIndex];
+    const handle = runtime.components[handleIndex];
+    assert.equal(item.forge.materialComponents[drawerIndex].materialId, "wooden_plank");
+    assert.equal(item.forge.materialComponents[handleIndex].materialId, "iron_bloom");
+    assert.deepEqual(drawer.dimsQ, [16, 26, 16]);
+    assert.deepEqual(drawer.offsetQ, expectedDrawerOffsets[position]);
+    assert.equal(handle.offsetQ[0], drawer.offsetQ[0]);
+    assert.equal(handle.offsetQ[1], drawer.offsetQ[1]);
+    assert.equal(bounds[handleIndex].min[2], bounds[drawerIndex].max[2]);
+  }
+  for (let left = 0; left < bounds.length; left += 1) {
+    for (let right = left + 1; right < bounds.length; right += 1) {
+      assert.equal(positiveVolumeOverlap(bounds[left], bounds[right]), false, `${item.key} components ${left} and ${right} intersect`);
     }
   }
 }

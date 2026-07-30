@@ -71,6 +71,13 @@ const FRAMED_TEXTILE_LAYOUTS = Object.freeze({
     decorations: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21],
   },
 });
+const DRAWER_CABINET_LAYOUTS = Object.freeze({
+  "timber-apothecary-drawer-cabinet": {
+    frame: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    drawers: [11, 12, 13, 14, 15, 16],
+    handles: [17, 18, 19, 20, 21, 22],
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -202,6 +209,11 @@ const ITEM_NAMES = Object.freeze({
   "storage-shelf": names(
     "Storage Shelf", "Estantería de almacenamiento", "Étagère de rangement", "Lagerregal", "収納棚",
     "Складской стеллаж", "수납 선반", "儲物架", "储物架",
+  ),
+  "timber-apothecary-drawer-cabinet": names(
+    "Timber Apothecary Drawer Cabinet", "Gabinete de cajones de boticario de madera", "Meuble d’apothicaire à tiroirs en bois",
+    "Apotheker-Schubladenschrank aus Holz", "木製薬種引き出し棚", "Деревянный аптекарский шкаф с ящиками",
+    "목재 약재 서랍장", "木製藥材抽屜櫃", "木制药材抽屉柜",
   ),
   "banded-wooden-chest": names(
     "Banded Wooden Chest", "Cofre de madera reforzado con bandas", "Coffre en bois cerclé", "Beschlagene Holztruhe",
@@ -418,6 +430,23 @@ const ITEM_SPECS = Object.freeze([
     ...[-28, 28].flatMap((x) => [-10, 10].map((z) => part("squared_timber", [6, 80, 6], [x, 40, z]))),
     ...[8, 30, 52, 74].map((y) => part("wooden_plank", [50, 5, 26], [0, y, 0])),
   ]),
+  placeable("furniture", "timber-apothecary-drawer-cabinet", [
+    part("squared_timber", [6, 68, 22], [-29, 36, 0]),
+    part("squared_timber", [6, 68, 22], [29, 36, 0]),
+    part("squared_timber", [52, 6, 22], [0, 5, 0]),
+    part("wooden_plank", [52, 62, 4], [0, 39, -9]),
+    part("squared_timber", [64, 6, 26], [0, 73, 0]),
+    part("squared_timber", [64, 4, 26], [0, 0, 0]),
+    part("wooden_plank", [52, 4, 4], [0, 36, 9]),
+    ...[-9, 9].map((x) => part("wooden_plank", [2, 26, 4], [x, 21, 9])),
+    ...[-9, 9].map((x) => part("wooden_plank", [2, 26, 4], [x, 51, 9])),
+    ...[21, 51].flatMap((y) => [-18, 0, 18].map((x) => part("wooden_plank", [16, 26, 16], [x, y, 1]))),
+    ...[21, 51].flatMap((y) => [-18, 0, 18].map((x) => part("iron_bloom", [5, 4, 4], [x, y, 11]))),
+  ], { yaw: -0.72, pitch: 0.34 }, {
+    image: "concepts/furniture/timber-apothecary-drawer-cabinet-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
 
   placeable("containers", "banded-wooden-chest", [
     part("wooden_plank", [52, 4, 32], [0, 2, 0]),
@@ -696,6 +725,8 @@ function buildItem(spec) {
   if (bookLayout) validateBookGeometry(spec, runtime, bookLayout);
   const framedTextileLayout = FRAMED_TEXTILE_LAYOUTS[spec.key] ?? null;
   if (framedTextileLayout) validateFramedTextileGeometry(spec, runtime, framedTextileLayout);
+  const drawerCabinetLayout = DRAWER_CABINET_LAYOUTS[spec.key] ?? null;
+  if (drawerCabinetLayout) validateDrawerCabinetGeometry(spec, runtime, drawerCabinetLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -790,6 +821,7 @@ function buildItem(spec) {
       currentMaterialsOnly: true,
       ...(bookLayout ? { bookGeometryValidated: true } : {}),
       ...(framedTextileLayout ? { framedTextileGeometryValidated: true } : {}),
+      ...(drawerCabinetLayout ? { drawerCabinetGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -879,6 +911,54 @@ function validateFramedTextileGeometry(spec, runtime, layout) {
       const rightDecoration = layout.decorations[rightIndex];
       if (boundsOverlap(componentBounds[leftDecoration], componentBounds[rightDecoration], 0)) {
         throw new Error(`${spec.key} decorations ${leftDecoration} and ${rightDecoration} intersect.`);
+      }
+    }
+  }
+}
+
+function validateDrawerCabinetGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 23 || runtime.boundsQ.sizeQ.join(",") !== "64,78,26") {
+    throw new Error(`${spec.key} must preserve its six-drawer furniture scale.`);
+  }
+  const components = runtime.components ?? [];
+  const componentBounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  if (layout.drawers.length !== 6 || layout.handles.length !== 6 || layout.drawers.length !== layout.handles.length) {
+    throw new Error(`${spec.key} must keep exactly six drawers and six pulls.`);
+  }
+  for (const index of layout.frame) {
+    if (!components[index] || !["squared_timber", "wooden_plank"].includes(spec.parts[index]?.materialId)) {
+      throw new Error(`${spec.key} has an invalid timber frame component ${index}.`);
+    }
+  }
+  const expectedDrawerOffsets = [
+    [-18, 21, 1], [0, 21, 1], [18, 21, 1],
+    [-18, 51, 1], [0, 51, 1], [18, 51, 1],
+  ];
+  for (let position = 0; position < layout.drawers.length; position += 1) {
+    const drawerIndex = layout.drawers[position];
+    const handleIndex = layout.handles[position];
+    const drawer = components[drawerIndex];
+    const handle = components[handleIndex];
+    const drawerBounds = componentBounds[drawerIndex];
+    const handleBounds = componentBounds[handleIndex];
+    if (!drawer || !handle || spec.parts[drawerIndex]?.materialId !== "wooden_plank"
+      || spec.parts[handleIndex]?.materialId !== "iron_bloom"
+      || drawer.dimsQ.join(",") !== "16,26,16"
+      || drawer.offsetQ.some((value, axis) => value !== expectedDrawerOffsets[position][axis])) {
+      throw new Error(`${spec.key} has an invalid drawer pair at position ${position}.`);
+    }
+    if (handle.offsetQ[0] !== drawer.offsetQ[0] || handle.offsetQ[1] !== drawer.offsetQ[1]
+      || handleBounds.min[2] !== drawerBounds.max[2]) {
+      throw new Error(`${spec.key} handle ${handleIndex} is not centered on drawer ${drawerIndex}.`);
+    }
+  }
+  for (let left = 0; left < componentBounds.length; left += 1) {
+    for (let right = left + 1; right < componentBounds.length; right += 1) {
+      if (boundsOverlap(componentBounds[left], componentBounds[right], 0)) {
+        throw new Error(`${spec.key} components ${left} and ${right} intersect.`);
       }
     }
   }

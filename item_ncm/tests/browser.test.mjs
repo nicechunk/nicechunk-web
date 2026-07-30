@@ -13,6 +13,7 @@ const localPort = Number(process.env.ITEM_NCM_TEST_PORT ?? 9877);
 const debugPort = Number(process.env.ITEM_NCM_DEBUG_PORT ?? 9325);
 const externalUrl = process.env.ITEM_NCM_TEST_URL ?? "";
 const screenshotPath = process.env.ITEM_NCM_SCREENSHOT_PATH ?? "";
+const screenshotItem = process.env.ITEM_NCM_SCREENSHOT_ITEM ?? "";
 const rulesFile = process.env.ITEM_NCM_RULES_FILE ? normalize(process.env.ITEM_NCM_RULES_FILE) : "";
 const server = externalUrl ? null : await startStaticServer(localPort);
 const url = externalUrl || `http://127.0.0.1:${localPort}/item_ncm/`;
@@ -81,7 +82,7 @@ try {
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 11);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /36 ITEMS/);
+  assert.match(initial.total, /37 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -127,7 +128,7 @@ try {
   })()`);
   await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
   await evaluate(client, `document.querySelector('[data-category="furniture"]').click()`);
-  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 3 && document.querySelector('[data-item="timber-workbench"]')`));
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 4 && document.querySelector('[data-item="timber-workbench"]')`));
   const furnitureBrowse = await evaluate(client, `({
     activeCategory: document.querySelector("[data-category].active")?.dataset.category,
     activeItem: document.querySelector("[data-item].active")?.dataset.item ?? null,
@@ -156,6 +157,41 @@ try {
   assert.equal(workbench.materialRows, 2);
   assert.equal(workbench.selectedInUrl, "timber-workbench");
   assert.ok(workbench.resources.includes("/item_ncm/json/furniture/timber-workbench.json"));
+
+  await evaluate(client, `document.querySelector('[data-item="timber-apothecary-drawer-cabinet"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="timber-apothecary-drawer-cabinet"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const apothecaryCabinet = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payload: document.querySelector("#codeOutput").value,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    materialRows: document.querySelectorAll("#bomRows .bom-row").length,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(apothecaryCabinet.title, "Timber Apothecary Drawer Cabinet");
+  assert.equal(apothecaryCabinet.type, "PLACEABLE");
+  assert.match(apothecaryCabinet.payload, /^NCF1\./);
+  assert.equal(apothecaryCabinet.payloadBytes, "255 / 640 B");
+  assert.equal(apothecaryCabinet.componentCount, "23");
+  assert.equal(apothecaryCabinet.materialRows, 3);
+  assert.equal(apothecaryCabinet.selectedInUrl, "timber-apothecary-drawer-cabinet");
+  assert.ok(apothecaryCabinet.resources.includes("/item_ncm/json/furniture/timber-apothecary-drawer-cabinet.json"));
+
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "zh-Hans";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.querySelector("#itemTitle").textContent === "木制药材抽屉柜"`));
+  assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), apothecaryCabinet.payload);
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "en";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
 
   await evaluate(client, `document.querySelector('[data-category="cooking"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 2 && document.querySelector('[data-item="iron-hearth-cauldron"]')`));
@@ -442,6 +478,15 @@ try {
 
   if (screenshotPath) {
     await client.send("Emulation.setDeviceMetricsOverride", { width: 1600, height: 1200, deviceScaleFactor: 1, mobile: false });
+    if (screenshotItem) {
+      assert.match(screenshotItem, /^[a-z0-9]+(?:-[a-z0-9]+)*$/);
+      const screenshotUrl = new URL(url);
+      screenshotUrl.searchParams.set("item", screenshotItem);
+      await client.send("Page.navigate", { url: screenshotUrl.href });
+      await waitFor(() => evaluate(client, `document.readyState === "complete"
+        && document.querySelector('[data-item="${screenshotItem}"].active')
+        && document.querySelector("#runtimeState").dataset.state === "verified"`));
+    }
     const screenshot = await client.send("Page.captureScreenshot", { format: "png", captureBeyondViewport: false });
     writeFileSync(screenshotPath, Buffer.from(screenshot.data, "base64"));
   }

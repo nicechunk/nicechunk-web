@@ -191,6 +191,11 @@ const ITEM_NAMES = Object.freeze({
     "Holzgebundenes Dorfregister", "木装丁の村落台帳", "Деревенская учётная книга в деревянном переплёте",
     "목재 장정 마을 장부", "木封村莊帳簿", "木封村庄账簿",
   ),
+  "open-civic-record-book": names(
+    "Open Civic Record Book", "Libro de registro cívico abierto", "Registre municipal ouvert",
+    "Offenes Bürgerregister", "開かれた行政記録簿", "Открытая городская учётная книга",
+    "펼쳐진 마을 행정 기록부", "攤開的市政記錄簿", "摊开的市政记录簿",
+  ),
 });
 
 const ITEM_SPECS = Object.freeze([
@@ -406,6 +411,18 @@ const ITEM_SPECS = Object.freeze([
     ...[-7, 0, 7].map((x) => part("resin_binder", [2, 1, 16], [x, 5, 0])),
   ], { yaw: -0.78, pitch: 0.5 }, {
     image: "concepts/books-writing/timber-bound-village-ledger-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
+  placeable("books-writing", "open-civic-record-book", [
+    part("wooden_plank", [16, 2, 18], [-9, 0, 0]),
+    part("wooden_plank", [16, 2, 18], [9, 0, 0]),
+    part("resin_binder", [2, 4, 18], [0, 1, 0]),
+    part("cotton_cloth", [14, 2, 15], [-8, 2, 0]),
+    part("cotton_cloth", [14, 2, 15], [8, 2, 0]),
+    part("resin_binder", [2, 2, 15], [0, 4, 0]),
+  ], { yaw: -0.45, pitch: 0.6 }, {
+    image: "concepts/books-writing/open-civic-record-book-v1.webp",
     source: "imagegen",
     version: 1,
   }),

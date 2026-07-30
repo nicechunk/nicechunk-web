@@ -81,7 +81,7 @@ try {
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 10);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /29 ITEMS/);
+  assert.match(initial.total, /30 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -198,7 +198,7 @@ try {
   assert.ok(cookingGrate.resources.includes("/item_ncm/json/cooking/iron-field-cooking-grate.json"));
 
   await evaluate(client, `document.querySelector('[data-category="books-writing"]').click()`);
-  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 1 && document.querySelector('[data-item="timber-bound-village-ledger"]')`));
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 2 && document.querySelector('[data-item="timber-bound-village-ledger"]')`));
   assert.equal(await evaluate(client, `performance.getEntriesByType("resource").some((entry) => new URL(entry.name).pathname.includes("/item_ncm/json/books-writing/"))`), false,
     "category browsing must not load book item JSON files");
   await evaluate(client, `document.querySelector('[data-item="timber-bound-village-ledger"]').click()`);
@@ -217,6 +217,23 @@ try {
   assert.equal(villageLedger.componentCount, "7");
   assert.equal(villageLedger.selectedInUrl, "timber-bound-village-ledger");
   assert.ok(villageLedger.resources.includes("/item_ncm/json/books-writing/timber-bound-village-ledger.json"));
+
+  await evaluate(client, `document.querySelector('[data-item="open-civic-record-book"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="open-civic-record-book"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const openRecordBook = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(openRecordBook.title, "Open Civic Record Book");
+  assert.equal(openRecordBook.type, "PLACEABLE");
+  assert.equal(openRecordBook.payloadBytes, "72 / 640 B");
+  assert.equal(openRecordBook.componentCount, "6");
+  assert.equal(openRecordBook.selectedInUrl, "open-civic-record-book");
+  assert.ok(openRecordBook.resources.includes("/item_ncm/json/books-writing/open-civic-record-book.json"));
 
   await evaluate(client, `document.querySelector('[data-category="mining-tools"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 4 && document.querySelector('[data-item="iron-earthwork-shovel"]')`));

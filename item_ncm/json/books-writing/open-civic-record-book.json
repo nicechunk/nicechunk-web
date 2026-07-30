@@ -1,0 +1,171 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "open-civic-record-book",
+  "category": "books-writing",
+  "interaction": "placeable",
+  "names": {
+    "en": "Open Civic Record Book",
+    "es": "Libro de registro cívico abierto",
+    "fr": "Registre municipal ouvert",
+    "de": "Offenes Bürgerregister",
+    "ja": "開かれた行政記録簿",
+    "ru": "Открытая городская учётная книга",
+    "ko": "펼쳐진 마을 행정 기록부",
+    "zh-Hant": "攤開的市政記錄簿",
+    "zh-Hans": "摊开的市政记录簿"
+  },
+  "descriptions": {
+    "en": "Open Civic Record Book is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Libro de registro cívico abierto es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Registre municipal ouvert est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Offenes Bürgerregister ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "開かれた行政記録簿は、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Открытая городская учётная книга — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "펼쳐진 마을 행정 기록부은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "攤開的市政記錄簿是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "摊开的市政记录簿是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 0.5313,
+    "height": 0.0938,
+    "depth": 0.2813,
+    "sizeQ": [
+      34,
+      6,
+      18
+    ]
+  },
+  "preview": {
+    "yaw": -0.45,
+    "pitch": 0.6
+  },
+  "concept": {
+    "image": "concepts/books-writing/open-civic-record-book-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "be7f53afd007a180f2c52688806a1050ac497d471de90ad8866666f949e6fdac"
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.8C72f9QlmcNWUfDEA6GinUQAhJ-4AAAQARTqIAQkAkAAAIAJAgQSAAAIAEAFhwEHv4AIACACw4CDwEAEABABIEBB4AAEAAgA",
+    "rawBytes": 72,
+    "sha256": "036c8414778056c5ebc4660675d3a06516bb54b8b86ecb786c2f515451a26a12",
+    "designHash": 3739937523,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 72,
+    "savedBytes": 0,
+    "sourceComponentCount": 6,
+    "decodedComponentCount": 6,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 2197266,
+        "usedVolumeMm3": 2197266,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 2197266,
+        "usedVolumeMm3": 2197266,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "resin_binder",
+        "itemCode": 1004,
+        "inputVolumeMm3": 549316,
+        "usedVolumeMm3": 549316,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "cotton_cloth",
+        "itemCode": 1025,
+        "inputVolumeMm3": 1602173,
+        "usedVolumeMm3": 1602173,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "cotton_cloth",
+        "itemCode": 1025,
+        "inputVolumeMm3": 1602173,
+        "usedVolumeMm3": 1602173,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "resin_binder",
+        "itemCode": 1004,
+        "inputVolumeMm3": 228882,
+        "usedVolumeMm3": 228882,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 8376320,
+      "requiredEffectiveDurability": 2485,
+      "outputMassGrams": 3755,
+      "materialScore": 56
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 2000,
+      "triangleCount": 1000,
+      "meshByteLength": 38000
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "wooden_plank",
+      "itemCode": 1031,
+      "componentCount": 2,
+      "inputVolumeMm3": 4394532,
+      "usedVolumeMm3": 4394532,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 220
+    },
+    {
+      "materialId": "resin_binder",
+      "itemCode": 1004,
+      "componentCount": 2,
+      "inputVolumeMm3": 778198,
+      "usedVolumeMm3": 778198,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 4
+    },
+    {
+      "materialId": "cotton_cloth",
+      "itemCode": 1025,
+      "componentCount": 2,
+      "inputVolumeMm3": 3204346,
+      "usedVolumeMm3": 3204346,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 1000000,
+      "equivalentInputUnits": 4
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "chainMinted": false
+  }
+}

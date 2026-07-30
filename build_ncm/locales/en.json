@@ -42,6 +42,7 @@
   "library.category.industrial": "INDUSTRIAL",
   "library.category.fortress": "FORTRESS",
   "library.category.utility": "UTILITY",
+  "library.category.wayfinding": "WAYFINDING",
   "library.footprint": "FOOTPRINT",
   "library.height": "HEIGHT",
   "library.voxels": "VOXELS",

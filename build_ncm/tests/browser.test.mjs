@@ -38,7 +38,7 @@ try {
   await client.send("Page.enable");
   await client.send("Emulation.setDeviceMetricsOverride", { width: 1600, height: 1200, deviceScaleFactor: 1, mobile: false });
   await client.send("Page.navigate", { url });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 6 && document.querySelectorAll('[data-building]').length === 1 && document.querySelector('[data-building=hollow-cottage]') && document.querySelector('[data-language-select]').options.length === 9"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 7 && document.querySelectorAll('[data-building]').length === 1 && document.querySelector('[data-building=hollow-cottage]') && document.querySelector('[data-language-select]').options.length === 9"));
 
   const initial = await evaluate(client, `({
     visibleBuildingCount: document.querySelectorAll('[data-building]').length,
@@ -76,8 +76,8 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 1);
-  assert.match(initial.totalBuildingCount, /7 BUILDINGS/);
-  assert.equal(initial.categoryCount, 6);
+  assert.match(initial.totalBuildingCount, /8 BUILDINGS/);
+  assert.equal(initial.categoryCount, 7);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
   assert.equal(initial.buildingLabel, "Hollow Cottage");
@@ -432,6 +432,54 @@ try {
   assert.ok(lantern.resources.includes("/build_ncm/concepts/utility/village-twin-lantern.webp"));
   assert.ok(!lantern.resources.some((path) => path.endsWith("village-twin-lantern-blueprint.js")));
 
+  await evaluate(client, "document.querySelector('[data-building-category=wayfinding]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=crossroads-wayfinding-sign]')"));
+  const wayfindingBrowse = await evaluate(client, `({
+    activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
+    cardCount: document.querySelectorAll('[data-building]').length,
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(wayfindingBrowse.activeBuilding, null);
+  assert.equal(wayfindingBrowse.cardCount, 1);
+  assert.ok(!wayfindingBrowse.resources.includes("/build_ncm/buildings/wayfinding/crossroads-wayfinding-sign.json"), "category browsing must not load the wayfinding JSON");
+  assert.ok(!wayfindingBrowse.resources.includes("/build_ncm/concepts/wayfinding/crossroads-wayfinding-sign.webp"), "category browsing must not load the wayfinding concept art");
+  await evaluate(client, "document.querySelector('[data-building=crossroads-wayfinding-sign]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'crossroads-wayfinding-sign' && document.querySelector('#modelSize').textContent === '21 × 20 × 21' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const wayfinding = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(wayfinding.activeCategory, "wayfinding");
+  assert.match(wayfinding.title, /Crossroads Wayfinding Sign/);
+  assert.equal(wayfinding.modelSize, "21 × 20 × 21");
+  assert.match(wayfinding.payload, /^NCM3:/);
+  assert.equal(wayfinding.voxelCount, 632);
+  for (const id of [55, 57, 68, 69, 74, 75]) assert.match(wayfinding.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(wayfinding.uncovered, false);
+  assert.equal(wayfinding.glazingDisabled, true);
+  assert.equal(wayfinding.glazingLabel, "Openings: Not applicable");
+  assert.equal(wayfinding.disabledStyles, 6);
+  assert.equal(wayfinding.disabledRoofs, 6);
+  assert.equal(wayfinding.conceptHidden, false);
+  assert.match(wayfinding.conceptAlt, /Crossroads Wayfinding Sign concept reference/);
+  assert.equal(wayfinding.selectedInUrl, "crossroads-wayfinding-sign");
+  assert.ok(wayfinding.resources.includes("/build_ncm/buildings/wayfinding/crossroads-wayfinding-sign.json"));
+  assert.ok(wayfinding.resources.includes("/build_ncm/concepts/wayfinding/crossroads-wayfinding-sign.webp"));
+  assert.ok(!wayfinding.resources.some((path) => path.endsWith("crossroads-wayfinding-sign-blueprint.js")));
+
   await evaluate(client, "document.querySelector('[data-building-category=residential]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=hollow-cottage]')"));
   await evaluate(client, "document.querySelector('[data-building=hollow-cottage]').click()");
@@ -544,7 +592,7 @@ try {
 
   await client.send("Emulation.setDeviceMetricsOverride", { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
   await client.send("Page.reload", { ignoreCache: true });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 6 && document.querySelectorAll('[data-building]').length === 1"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 7 && document.querySelectorAll('[data-building]').length === 1"));
   await evaluate(client, "document.querySelector('[data-material-filter=all]').click()");
   await waitFor(() => evaluate(client, "document.querySelectorAll('#buildingMaterialCatalog .model-material-card').length === 33"));
   const mobile = await evaluate(client, `({
@@ -564,7 +612,7 @@ try {
   assert.equal(mobile.scrollWidth, mobile.clientWidth, "mobile page must not create document-level horizontal overflow");
   assert.equal(mobile.modelCards, 33);
   assert.equal(mobile.modelErrors, 0);
-  assert.equal(mobile.categories, 6);
+  assert.equal(mobile.categories, 7);
   assert.equal(mobile.buildingCards, 1);
   assert.equal(mobile.buildingThumbnails, 0);
   assert.equal(mobile.categoryFlow, "row");

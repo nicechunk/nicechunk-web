@@ -42,6 +42,7 @@
   "library.category.industrial": "工业",
   "library.category.fortress": "堡垒",
   "library.category.utility": "公用设施",
+  "library.category.wayfinding": "导向",
   "library.footprint": "占地",
   "library.height": "高度",
   "library.voxels": "体素",

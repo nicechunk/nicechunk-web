@@ -42,6 +42,7 @@
   "library.category.industrial": "ПРОМЫШЛЕННЫЙ",
   "library.category.fortress": "КРЕПОСТЬ",
   "library.category.utility": "ИНФРАСТРУКТУРА",
+  "library.category.wayfinding": "НАВИГАЦИЯ",
   "library.footprint": "СЛЕД",
   "library.height": "ВЫСОТА",
   "library.voxels": "ВОКСЕЛЫ",

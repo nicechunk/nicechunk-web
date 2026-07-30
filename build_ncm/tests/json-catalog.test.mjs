@@ -165,6 +165,7 @@ function validateBuildingEvidence(building, voxels) {
   assert.deepEqual(materialIds, validation.expectedDefaultMaterialIds, `${building.key} default materials changed`);
   if (validation.requireConnected) validateConnectedGeometry(building, voxels);
   if (validation.mirrorAxisX != null) validateMirrorAxisX(building, voxels, validation.mirrorAxisX);
+  if (validation.mirrorAxisZ != null) validateMirrorAxisZ(building, voxels, validation.mirrorAxisZ);
   for (const volume of validation.openVolumes ?? []) {
     for (let x = volume.x; x < volume.x + volume.width; x += 1) {
       for (let y = volume.y; y < volume.y + volume.height; y += 1) {
@@ -211,6 +212,14 @@ function validateMirrorAxisX(building, voxels, axisX) {
   for (const voxel of voxels.values()) {
     const mirror = voxels.get(`${axisX * 2 - voxel.x},${voxel.y},${voxel.z}`);
     assert.equal(mirror?.material, voxel.material, `${building.key} lost X symmetry at ${voxel.x},${voxel.y},${voxel.z}`);
+  }
+}
+
+function validateMirrorAxisZ(building, voxels, axisZ) {
+  assert.ok(Number.isInteger(axisZ) && axisZ >= 0, `${building.key} has an invalid Z mirror axis`);
+  for (const voxel of voxels.values()) {
+    const mirror = voxels.get(`${voxel.x},${voxel.y},${axisZ * 2 - voxel.z}`);
+    assert.equal(mirror?.material, voxel.material, `${building.key} lost Z symmetry at ${voxel.x},${voxel.y},${voxel.z}`);
   }
 }
 

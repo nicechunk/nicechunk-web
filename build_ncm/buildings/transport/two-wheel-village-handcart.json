@@ -1,0 +1,151 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "two-wheel-village-handcart",
+  "category": "transport",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Two-wheel Village Handcart",
+    "es": "Carro de Mano de Aldea de Dos Ruedas",
+    "fr": "Charrette à Bras de Village à Deux Roues",
+    "de": "Zweirädriger Dorfhandkarren",
+    "ja": "村の二輪手押し車",
+    "ru": "Двухколёсная деревенская ручная телега",
+    "ko": "마을 이륜 손수레",
+    "zh-Hant": "雙輪村莊手推車",
+    "zh-Hans": "双轮村庄手推车"
+  },
+  "descriptions": {
+    "en": "A symmetric all-wood handcart with two grounded closed wooden-stick wheel rims, four-spoke wheel crosses, a continuous squared-timber axle, rectangular chassis, supported plank cargo floor, low sideboards, rear tailboard, clear open cargo volume and two face-connected descending handles.",
+    "es": "Carro de mano simétrico construido enteramente en madera, con dos llantas cerradas de varillas de madera apoyadas en el suelo, cruces de cuatro radios, un eje continuo de madera escuadrada, bastidor rectangular, piso de carga de tablones sustentado, laterales bajos, compuerta trasera, volumen de carga abierto y despejado, y dos mangos descendentes conectados por caras.",
+    "fr": "Charrette à bras symétrique entièrement en bois avec deux jantes fermées en baguettes de bois posées au sol, des croisillons à quatre rayons, un essieu continu en bois équarri, un châssis rectangulaire, un plancher de chargement soutenu en planches, des ridelles basses, un panneau arrière, un volume de chargement ouvert et dégagé, et deux poignées descendantes jointives.",
+    "de": "Symmetrischer Handkarren vollständig aus Holz mit zwei bodenberührenden geschlossenen Radkränzen aus Holzstäben, vierspeichigen Radkreuzen, durchgehender Kantholzachse, rechteckigem Fahrgestell, getragenem Bohlen-Ladeboden, niedrigen Seitenwänden, hinterer Bordwand, freiem offenem Laderaum und zwei flächig verbundenen abfallenden Griffen.",
+    "ja": "地面に接する閉じた木棒製の2輪リム、4方向のスポーク、左右を貫く角材の車軸、長方形の車台、支持された板張りの荷台床、低い側板、後部あおり、開放された空の荷室、面接続された2本の下降ハンドルを備えた、左右対称の全木製手押し車です。",
+    "ru": "Симметричная полностью деревянная ручная телега с двумя замкнутыми ободами из деревянных реек, касающимися земли, четырёхлучевыми спицами, сплошной осью из бруса, прямоугольной рамой, опирающимся дощатым полом кузова, низкими бортами, задним бортом, свободным открытым грузовым объёмом и двумя соединёнными по граням понижающимися рукоятями.",
+    "ko": "지면에 닿는 닫힌 나무 막대 바퀴 테 두 개, 네 방향 바퀴살, 좌우를 관통하는 각목 차축, 직사각형 차대, 지지된 판재 적재 바닥, 낮은 측판, 뒤 적재판, 비어 있는 개방형 적재 공간과 면으로 연결된 하향 손잡이 두 개를 갖춘 대칭형 전목재 손수레입니다.",
+    "zh-Hant": "左右對稱的全木製手推車，設有兩個落地閉合木棒輪圈、四向輻條、貫通左右的方木輪軸、長方形底架、具承托的木板貨斗底、低矮側板、後擋板、保持淨空的開放貨斗，以及兩根以面連接階梯下降的把手。",
+    "zh-Hans": "左右对称的全木制手推车，设有两个落地闭合木棒轮圈、四向辐条、贯通左右的方木轮轴、长方形底架、具承托的木板货斗底、低矮侧板、后挡板、保持净空的开放货斗，以及两根以面连接阶梯下降的把手。"
+  },
+  "referenceImage": "concepts/transport/two-wheel-village-handcart.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": false,
+    "maxStepRise": 0
+  },
+  "doorOpening": "not-applicable",
+  "footprint": "23 × 14 vu",
+  "height": "11 vu",
+  "referenceScale": "One concept voxel equals one NCM voxel",
+  "preview": {
+    "fitScale": 1.12,
+    "minScale": 4,
+    "yaw": 2.44
+  },
+  "extraMaterials": [
+    {
+      "materialId": 56,
+      "phase": "structure",
+      "label": "Wooden-stick Wheel Rims, Spokes and Handles"
+    }
+  ],
+  "validation": {
+    "expectedVoxelCount": 386,
+    "expectedPayloadBytes": 285,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [55, 56, 57],
+    "expectedMaterialVoxelCounts": {
+      "55": 173,
+      "56": 142,
+      "57": 71
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 11,
+    "supportColumns": [
+      { "label": "Left grounded wheel spoke", "x": 2, "z": 8, "baseY": 0, "topY": 10 },
+      { "label": "Right grounded wheel spoke", "x": 20, "z": 8, "baseY": 0, "topY": 10 }
+    ],
+    "horizontalSpans": [
+      { "label": "Continuous wheel axle", "axis": "x", "start": 2, "end": 20, "y": 5, "fixed": 8 },
+      { "label": "Front chassis crossrail", "axis": "x", "start": 5, "end": 17, "y": 5, "fixed": 5 },
+      { "label": "Rear chassis crossrail", "axis": "x", "start": 5, "end": 17, "y": 5, "fixed": 12 },
+      { "label": "Left chassis rail", "axis": "z", "start": 5, "end": 12, "y": 5, "fixed": 5 },
+      { "label": "Right chassis rail", "axis": "z", "start": 5, "end": 12, "y": 5, "fixed": 17 }
+    ],
+    "diagonalBands": [
+      { "label": "Left face-connected descending handle", "materialId": 56, "x": 7, "y": 2, "z": 0, "width": 1, "height": 2, "depth": 2, "count": 4, "dx": 0, "dy": 1, "dz": 1 },
+      { "label": "Right face-connected descending handle", "materialId": 56, "x": 15, "y": 2, "z": 0, "width": 1, "height": 2, "depth": 2, "count": 4, "dx": 0, "dy": 1, "dz": 1 }
+    ],
+    "closedVoxelLoops": [
+      {
+        "label": "Left closed wheel rim",
+        "materialId": 56,
+        "points": [
+          [2, 0, 7], [2, 0, 8], [2, 0, 9],
+          [2, 1, 9], [2, 1, 10], [2, 1, 11],
+          [2, 2, 11], [2, 2, 12], [2, 3, 12], [2, 4, 12], [2, 5, 12], [2, 6, 12], [2, 7, 12], [2, 8, 12],
+          [2, 8, 11], [2, 9, 11], [2, 9, 10], [2, 9, 9],
+          [2, 10, 9], [2, 10, 8], [2, 10, 7],
+          [2, 9, 7], [2, 9, 6], [2, 9, 5],
+          [2, 8, 5], [2, 8, 4], [2, 7, 4], [2, 6, 4], [2, 5, 4], [2, 4, 4], [2, 3, 4], [2, 2, 4],
+          [2, 2, 5], [2, 1, 5], [2, 1, 6], [2, 1, 7]
+        ]
+      },
+      {
+        "label": "Right closed wheel rim",
+        "materialId": 56,
+        "points": [
+          [20, 0, 7], [20, 0, 8], [20, 0, 9],
+          [20, 1, 9], [20, 1, 10], [20, 1, 11],
+          [20, 2, 11], [20, 2, 12], [20, 3, 12], [20, 4, 12], [20, 5, 12], [20, 6, 12], [20, 7, 12], [20, 8, 12],
+          [20, 8, 11], [20, 9, 11], [20, 9, 10], [20, 9, 9],
+          [20, 10, 9], [20, 10, 8], [20, 10, 7],
+          [20, 9, 7], [20, 9, 6], [20, 9, 5],
+          [20, 8, 5], [20, 8, 4], [20, 7, 4], [20, 6, 4], [20, 5, 4], [20, 4, 4], [20, 3, 4], [20, 2, 4],
+          [20, 2, 5], [20, 1, 5], [20, 1, 6], [20, 1, 7]
+        ]
+      }
+    ],
+    "openVolumes": [
+      { "label": "Clear open cargo bed", "x": 6, "y": 7, "z": 5, "width": 11, "height": 3, "depth": 7 }
+    ],
+    "solidPoints": [
+      { "x": 2, "y": 0, "z": 8, "materialId": 56 },
+      { "x": 20, "y": 0, "z": 8, "materialId": 56 },
+      { "x": 2, "y": 5, "z": 4, "materialId": 56 },
+      { "x": 20, "y": 5, "z": 12, "materialId": 56 },
+      { "x": 11, "y": 5, "z": 8, "materialId": 57 },
+      { "x": 5, "y": 5, "z": 5, "materialId": 57 },
+      { "x": 11, "y": 6, "z": 8, "materialId": 55 },
+      { "x": 5, "y": 8, "z": 8, "materialId": 55 },
+      { "x": 17, "y": 8, "z": 8, "materialId": 55 },
+      { "x": 11, "y": 8, "z": 12, "materialId": 55 },
+      { "x": 5, "y": 10, "z": 5, "materialId": 57 },
+      { "x": 17, "y": 10, "z": 12, "materialId": 57 },
+      { "x": 7, "y": 2, "z": 0, "materialId": 56 },
+      { "x": 15, "y": 2, "z": 0, "materialId": 56 },
+      { "x": 7, "y": 5, "z": 4, "materialId": 56 },
+      { "x": 15, "y": 5, "z": 4, "materialId": 56 }
+    ]
+  },
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARcLDiEBOAIABwAAAgE4AgEFAAACATgCAQkAAAIBOAICBAAGAQE4AgILAAYBATgCCQUAAAIBOAIJCQAAAgE4AgoHAAACATgCBQQAAAgBOAIACAAKAAE4FAAHAAACATgUAQUAAAIBOBQBCQAAAgE4FAIEAAYBATgUAgsABgEBOBQJBQAAAgE4FAkJAAACATgUCgcAAAIBOBQFBAAACAE4FAAIAAoAAQMCBQgSAAABAwUFBQwAAAEDBQUMDAAAAQMFBQUAAAcBAxEFBQAABwEGBQYFDAAHAQYFBwYAAgUBBhEHBgACBQEGBgcMCgIAAgMFBwUAAwABGAAAAgMFBwwAAwABGAAAAjgHAgAAAQEDAAICAjgPAgAAAQEDAAIC"
+  }
+}

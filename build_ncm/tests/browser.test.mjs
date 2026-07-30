@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 1);
-  assert.match(initial.totalBuildingCount, /19 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /20 BUILDINGS/);
   assert.equal(initial.categoryCount, 11);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -763,9 +763,11 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(transportBrowse.activeBuilding, null);
-  assert.equal(transportBrowse.cardCount, 1);
+  assert.equal(transportBrowse.cardCount, 2);
   assert.ok(!transportBrowse.resources.includes("/build_ncm/buildings/transport/stone-timber-footbridge.json"), "category browsing must not load the footbridge JSON");
   assert.ok(!transportBrowse.resources.includes("/build_ncm/concepts/transport/stone-timber-footbridge.webp"), "category browsing must not load the footbridge concept art");
+  assert.ok(!transportBrowse.resources.includes("/build_ncm/buildings/transport/two-wheel-village-handcart.json"), "category browsing must not load the handcart JSON");
+  assert.ok(!transportBrowse.resources.includes("/build_ncm/concepts/transport/two-wheel-village-handcart.webp"), "category browsing must not load the handcart concept art");
   await evaluate(client, "document.querySelector('[data-building=stone-timber-footbridge]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'stone-timber-footbridge' && document.querySelector('#modelSize').textContent === '31 × 9 × 13' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const footbridge = await evaluate(client, `({
@@ -804,6 +806,47 @@ try {
   assert.ok(footbridge.resources.includes("/build_ncm/buildings/transport/stone-timber-footbridge.json"));
   assert.ok(footbridge.resources.includes("/build_ncm/concepts/transport/stone-timber-footbridge.webp"));
   assert.ok(!footbridge.resources.some((path) => path.endsWith("stone-timber-footbridge-blueprint.js")));
+  assert.ok(!footbridge.resources.includes("/build_ncm/buildings/transport/two-wheel-village-handcart.json"), "selecting the footbridge must not load the handcart JSON");
+  assert.ok(!footbridge.resources.includes("/build_ncm/concepts/transport/two-wheel-village-handcart.webp"), "selecting the footbridge must not load the handcart concept art");
+
+  await evaluate(client, "document.querySelector('[data-building=two-wheel-village-handcart]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'two-wheel-village-handcart' && document.querySelector('#modelSize').textContent === '23 × 11 × 14' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const handcart = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(handcart.activeCategory, "transport");
+  assert.match(handcart.title, /Two-wheel Village Handcart/);
+  assert.equal(handcart.modelSize, "23 × 11 × 14");
+  assert.match(handcart.payload, /^NCM3:/);
+  assert.equal(handcart.voxelCount, 386);
+  for (const id of [55, 56, 57]) assert.match(handcart.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(handcart.uncovered, false);
+  assert.equal(handcart.glazingDisabled, true);
+  assert.equal(handcart.glazingLabel, "Openings: Not applicable");
+  assert.equal(handcart.disabledStyles, 6);
+  assert.equal(handcart.disabledRoofs, 6);
+  assert.equal(handcart.conceptHidden, false);
+  assert.match(handcart.conceptAlt, /Two-wheel Village Handcart concept reference/);
+  assert.equal(handcart.conceptFit, "contain");
+  assert.equal(handcart.selectedInUrl, "two-wheel-village-handcart");
+  assert.ok(handcart.resources.includes("/build_ncm/buildings/transport/two-wheel-village-handcart.json"));
+  assert.ok(handcart.resources.includes("/build_ncm/concepts/transport/two-wheel-village-handcart.webp"));
+  assert.ok(!handcart.resources.some((path) => path.endsWith("two-wheel-village-handcart-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=mining]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=timber-mine-headframe]')"));

@@ -59,6 +59,7 @@
   "verification.runtime": "Malla del juego restaurada",
   "verification.connected": "Todos los componentes conectados",
   "verification.grip": "Agarre e interacción válidos",
+  "verification.direction": "Dirección de agarre y separación en movimiento válidas",
   "verification.materials": "Solo materiales de fundición actuales",
   "verification.pass": "VÁLIDO",
   "verification.pending": "PENDIENTE",

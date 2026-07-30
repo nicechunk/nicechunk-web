@@ -27,26 +27,47 @@
   },
   "dimensions": {
     "unit": "m",
-    "width": 0.5156,
+    "width": 0.1563,
     "height": 0.7031,
-    "depth": 0.1563,
+    "depth": 0.5156,
     "sizeQ": [
-      33,
+      10,
       45,
-      10
+      33
     ]
   },
   "preview": {
     "yaw": -0.72,
     "pitch": 0.34
   },
+  "holding": {
+    "gripComponentIndex": 0,
+    "workComponentIndexes": [
+      1,
+      2,
+      3
+    ],
+    "lateralComponentGroups": [
+      [
+        1,
+        2,
+        3
+      ]
+    ],
+    "sourceToAvatarAxes": [
+      "+Y",
+      "-Z",
+      "-X"
+    ],
+    "testedPoseCount": 27
+  },
   "forge": {
     "format": "NCF1",
     "version": 15,
-    "code": "NCF1.82PmwItyxeSwrYactlEkFJAXAP-gAIgACakWCAgAALAAQABEyChQU_IFgAIAAiZBQoKAcCwAEAA",
+    "code": "NCF1.825G15tyxeSwrYZctlEkGJAbAP8wAIgACakICBYAALAAQABEyFBQKAAFvyIAAiZCgoFAACwHEAA",
     "rawBytes": 56,
-    "sha256": "c061c34f5834858308d17c033909950aeef6ec29243423159d44f0a4a6c28c34",
-    "designHash": 1639857900,
+    "sha256": "b6284fb66e4c5b45d725f5652fde42c0fc0d7761058c22b82ec81cabb576caff",
+    "designHash": 4286174711,
     "encodingMode": "components",
     "sourceEncodingMode": "components",
     "surfaceBaked": false,
@@ -63,8 +84,8 @@
         "index": 0,
         "materialId": "wooden_stick",
         "itemCode": 1032,
-        "inputVolumeMm3": 3433228,
-        "usedVolumeMm3": 3433228,
+        "inputVolumeMm3": 4943848,
+        "usedVolumeMm3": 4943848,
         "unusedVolumeMm3": 0
       },
       {
@@ -93,9 +114,9 @@
       }
     ],
     "requirements": {
-      "requiredVolumeMm3": 12615680,
-      "requiredEffectiveDurability": 12789,
-      "outputMassGrams": 69430,
+      "requiredVolumeMm3": 14127104,
+      "requiredEffectiveDurability": 13021,
+      "outputMassGrams": 70260,
       "materialScore": 71
     },
     "runtime": {
@@ -110,11 +131,11 @@
       "materialId": "wooden_stick",
       "itemCode": 1032,
       "componentCount": 1,
-      "inputVolumeMm3": 3433228,
-      "usedVolumeMm3": 3433228,
+      "inputVolumeMm3": 4943848,
+      "usedVolumeMm3": 4943848,
       "unusedVolumeMm3": 0,
       "unitVolumeMm3": 4900,
-      "equivalentInputUnits": 701
+      "equivalentInputUnits": 1009
     },
     {
       "materialId": "iron_bloom",
@@ -142,6 +163,7 @@
     "gameRuntimeRestored": true,
     "connectedComponents": true,
     "gripValidated": true,
+    "gripDirectionValidated": true,
     "currentMaterialsOnly": true,
     "chainMinted": false
   }

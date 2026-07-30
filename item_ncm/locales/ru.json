@@ -59,6 +59,7 @@
   "verification.runtime": "Игровая сетка восстановлена",
   "verification.connected": "Все кузнечные компоненты соединены",
   "verification.grip": "Хват и взаимодействие допустимы",
+  "verification.direction": "Направление удержания и зазоры при движении корректны",
   "verification.materials": "Только текущие материалы плавки",
   "verification.pass": "ПРОЙДЕНО",
   "verification.pending": "ОЖИДАЕТ",

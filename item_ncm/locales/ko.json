@@ -59,6 +59,7 @@
   "verification.runtime": "게임 런타임 메시 복원",
   "verification.connected": "모든 단조 구성품 연결",
   "verification.grip": "그립과 상호작용 규칙 유효",
+  "verification.direction": "잡는 방향과 동작 여유 공간이 올바름",
   "verification.materials": "현재 제련 재료만 사용",
   "verification.pass": "통과",
   "verification.pending": "대기",

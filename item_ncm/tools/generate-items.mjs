@@ -19,10 +19,21 @@ import {
 } from "../../chunk.js/forge/forge-workbench.js";
 import { validateForgeGripBindings } from "../../chunk.js/forge/forge-grip-validation.js";
 import { ForgeRuntimeCache } from "../../chunk.js/forge/forge-runtime-cache.js";
+import {
+  DEFAULT_PEASANT_GUY_NCM,
+  avatarRightHandRotations,
+  createAvatarMeshFromNcm,
+  forgeAvatarTargetGrip,
+  resolveAvatarMiningPose,
+  updateAvatarMeshVertices,
+} from "../../chunk.js/renderer/avatar-mesh.js";
 
 const itemRoot = path.resolve(import.meta.dirname, "..");
 const projectRoot = path.resolve(itemRoot, "..");
-const rules = JSON.parse(readFileSync(path.join(projectRoot, "public/rules/smelting-rules.json"), "utf8"));
+const rulesFile = process.env.ITEM_NCM_RULES_FILE
+  ? path.resolve(process.env.ITEM_NCM_RULES_FILE)
+  : path.join(projectRoot, "public/rules/smelting-rules.json");
+const rules = JSON.parse(readFileSync(rulesFile, "utf8"));
 const materialById = new Map(rules.materials.map((material) => [material.id, material]));
 const runtimeCache = new ForgeRuntimeCache({ maxEntries: 32, maxBytes: 64 * 1024 * 1024 });
 
@@ -30,6 +41,13 @@ const LOCALES = Object.freeze(["en", "es", "fr", "de", "ja", "ru", "ko", "zh-Han
 const CATALOG_SCHEMA = "nicechunk.ncf-item-catalog.v1";
 const ITEM_SCHEMA = "nicechunk.ncf-item.v1";
 const MATERIAL_POLICY = "current-smelting-rules-only";
+const BLOCK_SIZE_METERS = 0.4;
+const AVATAR_HEIGHT_METERS = 1.75;
+const AVATAR_SCALE = (AVATAR_HEIGHT_METERS / BLOCK_SIZE_METERS) / 2.52;
+const FORGE_METERS_TO_WORLD_UNITS = 1 / BLOCK_SIZE_METERS;
+const HELD_SOURCE_TO_AVATAR_AXES = Object.freeze(["+Y", "-Z", "-X"]);
+const HELD_POSE_PITCHES = Object.freeze([-0.96, 0, 0.96]);
+const HELD_POSE_PROGRESS = Object.freeze([0.01, 0.1, 0.2, 0.35, 0.55, 0.75, 0.95, 0.999]);
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -61,6 +79,11 @@ const ITEM_NAMES = Object.freeze({
     "Basalt Stonebreaker Maul", "Maza de basalto rompepiedras", "Maillet brise-pierre en basalte",
     "Basalt-Steinbrecherhammer", "玄武岩の砕石大槌", "Базальтовая кувалда камнелома",
     "현무암 쇄석 대형 망치", "玄武岩碎石大槌", "玄武岩碎石大锤",
+  ),
+  "iron-earthwork-shovel": names(
+    "Iron Earthwork Shovel", "Pala de terraplén de hierro", "Pelle de terrassement en fer",
+    "Eiserne Erdbauschaufel", "鉄製土工作業シャベル", "Железная землеройная лопата",
+    "철제 토공 삽", "鐵製土工作業鏟", "铁制土工作业铲",
   ),
   "carbon-steel-forester-axe": names(
     "Carbon-steel Forester Axe", "Hacha forestal de acero al carbono", "Hache forestière en acier au carbone",
@@ -158,69 +181,79 @@ const ITEM_NAMES = Object.freeze({
 const ITEM_SPECS = Object.freeze([
   tool("mining-tools", "carbon-steel-prospector-pick", [
     part("wooden_stick", [4, 50, 4], [0, 0, 0], { grip: handGrip(2, -8) }),
-    part("carbon_steel", [36, 4, 4], [0, 27, 0], { mask: taperAlongX }),
+    part("carbon_steel", [4, 4, 36], [0, 27, 0], { mask: taperAlongZ }),
     part("iron_bloom", [8, 6, 7], [0, 24, 0]),
-  ]),
+  ], held([1, 2], [[1]])),
   tool("mining-tools", "iron-deep-rock-pickaxe", [
     part("squared_timber", [5, 54, 5], [0, 0, 0], { grip: handGrip(3, -10) }),
-    part("iron_bloom", [40, 5, 5], [0, 29, 0], { mask: taperAlongX }),
+    part("iron_bloom", [5, 5, 40], [0, 29, 0], { mask: taperAlongZ }),
     part("carbon_steel", [8, 6, 2], [0, 29, 4]),
-  ]),
+  ], held([1, 2], [[1]])),
   tool("mining-tools", "basalt-stonebreaker-maul", [
     part("squared_timber", [5, 58, 5], [0, 0, 0], { grip: handGrip(3, -10) }),
-    part("basalt_composite", [22, 10, 10], [0, 34, 0]),
-    part("iron_bloom", [4, 12, 12], [-13, 34, 0]),
-    part("iron_bloom", [4, 12, 12], [13, 34, 0]),
-  ]),
+    part("basalt_composite", [10, 10, 22], [0, 34, 0]),
+    part("iron_bloom", [12, 12, 4], [0, 34, -13]),
+    part("iron_bloom", [12, 12, 4], [0, 34, 13]),
+  ], held([1, 2, 3], [[1, 2, 3]])),
+  tool("mining-tools", "iron-earthwork-shovel", [
+    part("squared_timber", [6, 58, 6], [0, -4, 0], { grip: handGrip(3, -22) }),
+    part("iron_bloom", [4, 26, 24], [0, 36, 0], { mask: shovelBlade }),
+    part("carbon_steel", [8, 8, 7], [0, 24, 0]),
+    part("squared_timber", [6, 6, 18], [0, -36, 0]),
+  ], held([1, 2], [[1], [3]]), { yaw: -0.74, pitch: 0.39 }, {
+    image: "concepts/mining-tools/iron-earthwork-shovel-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
 
   tool("forestry-farming", "carbon-steel-forester-axe", [
     part("wooden_stick", [4, 48, 4], [0, 0, 0], { grip: handGrip(2, -8) }),
     part("carbon_steel", [20, 18, 4], [7, 29, 0], { mask: axeBlade }),
     part("iron_bloom", [7, 8, 7], [0, 24, 0]),
-  ]),
+  ], held([1, 2])),
   tool("forestry-farming", "iron-field-hoe", [
     part("squared_timber", [4, 62, 4], [0, 0, 0], { grip: handGrip(2, -10) }),
-    part("iron_bloom", [22, 4, 12], [7, 33, 0], { mask: hoeBlade }),
-  ]),
+    part("iron_bloom", [12, 4, 22], [-5, 33, 0], { mask: hoeBlade }),
+  ], held([1], [[1]])),
   tool("forestry-farming", "carbon-steel-harvest-sickle", [
     part("wooden_stick", [5, 24, 5], [0, -12, 0], { grip: handGrip(3, -2) }),
     part("carbon_steel", [28, 34, 3], [4, 14, 0], { mask: sickleBlade }),
-  ]),
+  ], held([1])),
 
   tool("workshop", "iron-blacksmith-hammer", [
-    part("wooden_stick", [5, 36, 5], [0, 0, 0], { grip: handGrip(3, -6) }),
-    part("iron_bloom", [22, 8, 8], [0, 22, 0]),
-    part("carbon_steel", [5, 10, 10], [-14, 22, 0]),
-    part("carbon_steel", [5, 10, 10], [14, 22, 0]),
-  ]),
+    part("wooden_stick", [6, 36, 6], [0, 0, 0], { grip: handGrip(3, -13) }),
+    part("iron_bloom", [8, 8, 22], [0, 22, 0]),
+    part("carbon_steel", [10, 10, 5], [0, 22, -14]),
+    part("carbon_steel", [10, 10, 5], [0, 22, 14]),
+  ], held([1, 2, 3], [[1, 2, 3]])),
   tool("workshop", "timber-carpenter-mallet", [
-    part("wooden_stick", [5, 34, 5], [0, 0, 0], { grip: handGrip(3, -6) }),
-    part("squared_timber", [24, 12, 12], [0, 23, 0]),
-    part("wooden_plank", [4, 14, 14], [-14, 23, 0]),
-    part("wooden_plank", [4, 14, 14], [14, 23, 0]),
-  ]),
+    part("wooden_stick", [8, 34, 8], [0, 0, 0], { grip: handGrip(4, -15) }),
+    part("squared_timber", [10, 10, 24], [0, 22, 0]),
+    part("wooden_plank", [12, 12, 4], [0, 22, -14]),
+    part("wooden_plank", [12, 12, 4], [0, 22, 14]),
+  ], held([1, 2, 3], [[1, 2, 3]])),
   tool("workshop", "carbon-steel-masonry-chisel", [
     part("carbon_steel", [5, 30, 5], [0, 0, 0], { grip: handGrip(3, -5) }),
     part("carbon_steel", [4, 14, 4], [0, 22, 0], { mask: chiselTip }),
     part("iron_bloom", [9, 4, 9], [0, -17, 0]),
-  ]),
+  ], held([1])),
 
   tool("weapons", "frontier-longsword", [
     part("wooden_stick", [5, 20, 8], [0, -30, 0], { grip: handGrip(3, 0) }),
     part("iron_bloom", [8, 8, 8], [0, -44, 0], { mask: roundMask }),
-    part("carbon_steel", [24, 4, 6], [0, -18, 0]),
+    part("carbon_steel", [6, 4, 24], [0, -18, 0]),
     part("carbon_steel", [9, 62, 3], [0, 15, 0], { mask: swordBlade }),
-  ]),
+  ], held([3], [[2]])),
   tool("weapons", "guardian-spear", [
     part("squared_timber", [4, 84, 4], [0, -10, 0], { grip: handGrip(2, -8) }),
     part("carbon_steel", [12, 24, 4], [0, 44, 0], { mask: spearHead }),
     part("iron_bloom", [7, 8, 7], [0, 30, 0]),
-  ]),
+  ], held([1, 2])),
   tool("weapons", "basalt-war-mace", [
     part("wooden_stick", [5, 42, 5], [0, -5, 0], { grip: handGrip(3, -6) }),
     part("iron_bloom", [8, 8, 8], [0, 20, 0]),
     part("basalt_composite", [18, 18, 18], [0, 33, 0], { mask: maceHead }),
-  ]),
+  ], held([1, 2])),
 
   placeable("building-fittings", "reinforced-timber-door", [
     ...[-21, -7, 7, 21].map((x) => part("wooden_plank", [14, 118, 4], [x, 59, 0])),
@@ -259,7 +292,7 @@ const ITEM_SPECS = Object.freeze([
     part("copper_bloom", [14, 12, 14], [0, 4, 0], { mask: roundMask }),
     part("glass_ingot", [10, 10, 3], [0, 4, 9]),
     part("copper_bloom", [12, 4, 12], [0, 12, 0]),
-  ]),
+  ], held([1, 2, 3, 4])),
   placeable("lighting", "basalt-standing-brazier", [
     part("basalt_brick", [20, 6, 20], [0, 3, 0]),
     part("iron_bloom", [6, 28, 6], [0, 20, 0]),
@@ -418,6 +451,9 @@ function buildItem(spec) {
   const localizedNames = ITEM_NAMES[spec.key];
   if (!localizedNames) throw new Error(`Missing localized names for ${spec.key}.`);
   const concept = spec.concept ? buildConcept(spec) : null;
+  const holding = spec.interaction === "tool"
+    ? validateToolHolding(spec, runtime)
+    : null;
 
   return {
     schema: ITEM_SCHEMA,
@@ -438,6 +474,7 @@ function buildItem(spec) {
       pitch: spec.preview?.pitch ?? 0.34,
     },
     ...(concept ? { concept } : {}),
+    ...(holding ? { holding } : {}),
     forge: {
       format: "NCF1",
       version: 15,
@@ -476,10 +513,276 @@ function buildItem(spec) {
       gameRuntimeRestored: true,
       connectedComponents: true,
       gripValidated: true,
+      gripDirectionValidated: true,
       currentMaterialsOnly: true,
       chainMinted: false,
     },
   };
+}
+
+function validateToolHolding(spec, runtime) {
+  const policy = spec.holding;
+  const components = runtime.components ?? [];
+  const gripIndexes = components
+    .map((component, index) => component?.grip ? index : -1)
+    .filter((index) => index >= 0);
+  if (!policy || gripIndexes.length !== 1) throw new Error(`${spec.key} must define one directional holding policy.`);
+  const gripComponentIndex = gripIndexes[0];
+  const workComponentIndexes = validatedComponentIndexes(policy.workComponentIndexes, components.length, `${spec.key} work components`);
+  if (!workComponentIndexes.length || workComponentIndexes.includes(gripComponentIndex)) {
+    throw new Error(`${spec.key} must identify a work end separate from its gripped handle.`);
+  }
+  const lateralComponentGroups = policy.lateralComponentGroups.map((group, index) => (
+    validatedComponentIndexes(group, components.length, `${spec.key} lateral group ${index}`)
+  ));
+  const gripComponent = components[gripComponentIndex];
+  const designGripQ = gripComponent.grip.offsetQ.map((value, axis) => value + gripComponent.offsetQ[axis]);
+  for (const componentIndex of workComponentIndexes) {
+    if (components[componentIndex].offsetQ[1] <= designGripQ[1]) {
+      throw new Error(`${spec.key} work component ${componentIndex} does not extend forward from the hand.`);
+    }
+  }
+  for (const [index, group] of lateralComponentGroups.entries()) {
+    const spans = componentGroupSpansQ(components, group);
+    if (spans[2] <= spans[0] * 1.1) {
+      throw new Error(`${spec.key} lateral group ${index} is not modeled across source Z.`);
+    }
+  }
+
+  const basis = forgeGripSourceBasis(gripComponent.grip);
+  assertDirection(spec.key, "source +X", mapForgeDirection([1, 0, 0], basis), [0, 1, 0]);
+  assertDirection(spec.key, "source +Y", mapForgeDirection([0, 1, 0], basis), [0, 0, -1]);
+  assertDirection(spec.key, "source +Z", mapForgeDirection([0, 0, 1], basis), [-1, 0, 0]);
+
+  const avatarMesh = createAvatarMeshFromNcm(DEFAULT_PEASANT_GUY_NCM, {
+    scale: AVATAR_SCALE,
+    attachIronPickaxe: true,
+    attachForgedPickaxe: true,
+    forgeRuntime: runtime,
+    forgeMetersToWorldUnits: FORGE_METERS_TO_WORLD_UNITS,
+  });
+  const forgedPart = avatarMesh.parts.find((part) => part.forgedTool && part.forgeDesignHash === runtime.designHash);
+  const collisionParts = (avatarMesh.collisionParts ?? []).filter((part) => part.equipmentId === "forged_pickaxe");
+  if (!forgedPart || collisionParts.length !== components.length) {
+    throw new Error(`${spec.key} failed to mount its exact restored geometry on the canonical avatar.`);
+  }
+  assertMountedScale(spec.key, runtime, forgedPart);
+  const targetGrip = forgeAvatarTargetGrip(avatarMesh.handAnchors.right_hand_item, avatarMesh.modelScale);
+  for (const componentIndex of workComponentIndexes) {
+    if (collisionParts[componentIndex].cz >= targetGrip[2] - 0.01) {
+      throw new Error(`${spec.key} work component ${componentIndex} points back toward the avatar after mounting.`);
+    }
+  }
+  for (const [index, group] of lateralComponentGroups.entries()) {
+    const spans = boxGroupSpans(collisionParts, group);
+    if (spans[0] <= spans[1] * 1.1) {
+      throw new Error(`${spec.key} lateral group ${index} is not horizontal after avatar mounting.`);
+    }
+  }
+  const testedPoseCount = validateMountedMotion(spec.key, avatarMesh, gripComponentIndex);
+
+  return {
+    gripComponentIndex,
+    workComponentIndexes,
+    lateralComponentGroups,
+    sourceToAvatarAxes: [...HELD_SOURCE_TO_AVATAR_AXES],
+    testedPoseCount,
+  };
+}
+
+function validatedComponentIndexes(input, componentCount, label) {
+  if (!Array.isArray(input)) throw new Error(`${label} must be an array.`);
+  const values = input.map(Number);
+  if (values.some((value) => !Number.isInteger(value) || value < 0 || value >= componentCount)
+      || new Set(values).size !== values.length) {
+    throw new Error(`${label} contains an invalid component index.`);
+  }
+  return values;
+}
+
+function componentGroupSpansQ(components, indexes) {
+  const min = [Infinity, Infinity, Infinity];
+  const max = [-Infinity, -Infinity, -Infinity];
+  for (const index of indexes) {
+    const component = components[index];
+    for (let axis = 0; axis < 3; axis += 1) {
+      min[axis] = Math.min(min[axis], component.offsetQ[axis] - component.dimsQ[axis] * 0.5);
+      max[axis] = Math.max(max[axis], component.offsetQ[axis] + component.dimsQ[axis] * 0.5);
+    }
+  }
+  return min.map((value, axis) => max[axis] - value);
+}
+
+function forgeGripSourceBasis(grip) {
+  const approach = [0, 0, 0];
+  approach[Math.max(0, Math.min(2, Math.trunc(grip.axis ?? 1)))] = Number(grip.sign) >= 0 ? 1 : -1;
+  let front = Math.abs(approach[1]) < 0.75 ? [0, 1, 0] : [0, 0, -Math.sign(approach[1]) || -1];
+  front = normalize(subtract(front, scale(approach, dot(front, approach))));
+  const rotation = (Math.trunc(Number(grip.rotation) || 0) & 3) * Math.PI / 2;
+  if (rotation) front = rotateAroundAxis(front, approach, rotation);
+  return { side: normalize(cross(front, approach)), front, approach };
+}
+
+function mapForgeDirection(vector, basis) {
+  const side = dot(vector, basis.side);
+  const front = dot(vector, basis.front);
+  const approach = dot(vector, basis.approach);
+  return [side, approach, -front];
+}
+
+function assertDirection(key, label, actual, expected) {
+  if (actual.some((value, axis) => Math.abs(value - expected[axis]) > 1e-8)) {
+    throw new Error(`${key} maps ${label} to an unsafe avatar direction.`);
+  }
+}
+
+function assertMountedScale(key, runtime, forgedPart) {
+  const sourceBounds = unionPickBounds(runtime.mesh.pickBounds ?? []);
+  const sourceMeters = sourceBounds.min.map((value, axis) => sourceBounds.max[axis] - value).sort((left, right) => left - right);
+  const mountedMeters = [forgedPart.sx, forgedPart.sy, forgedPart.sz]
+    .map((value) => value * BLOCK_SIZE_METERS)
+    .sort((left, right) => left - right);
+  for (let axis = 0; axis < 3; axis += 1) {
+    if (Math.abs(sourceMeters[axis] - mountedMeters[axis]) > 0.0001) {
+      throw new Error(`${key} changed physical scale while mounting on the avatar.`);
+    }
+  }
+}
+
+function unionPickBounds(bounds) {
+  const result = { min: [Infinity, Infinity, Infinity], max: [-Infinity, -Infinity, -Infinity] };
+  for (const bound of bounds) {
+    for (let axis = 0; axis < 3; axis += 1) {
+      result.min[axis] = Math.min(result.min[axis], bound.min[axis]);
+      result.max[axis] = Math.max(result.max[axis], bound.max[axis]);
+    }
+  }
+  return result;
+}
+
+function boxGroupSpans(parts, indexes) {
+  const bounds = unionBoxBounds(indexes.map((index) => parts[index]));
+  return bounds.min.map((value, axis) => bounds.max[axis] - value);
+}
+
+function validateMountedMotion(key, avatarMesh, gripComponentIndex) {
+  const equipment = {
+    rightHand: "pickaxe",
+    equipmentId: "forged_pickaxe",
+    forged: true,
+    designHash: avatarMesh.parts.find((part) => part.forgedTool)?.forgeDesignHash,
+  };
+  const frames = [
+    { label: "idle", animation: { moving: false, timeMs: 0, equipment }, armX: 0, mining: false },
+    { label: "walk-forward", animation: { moving: true, timeMs: Math.PI * 0.5 / 0.011, equipment }, armX: -0.32, mining: false },
+    { label: "walk-back", animation: { moving: true, timeMs: Math.PI * 1.5 / 0.011, equipment }, armX: 0.32, mining: false },
+  ];
+  for (const pitchOffset of HELD_POSE_PITCHES) {
+    for (const progress of HELD_POSE_PROGRESS) {
+      const pose = resolveAvatarMiningPose(progress, pitchOffset);
+      frames.push({
+        label: `swing-${pitchOffset}-${progress}`,
+        animation: { timeMs: 0, equipment, miningProgress: progress, miningAimPitch: pitchOffset },
+        armX: pose.armX,
+        mining: pose.active,
+      });
+    }
+  }
+
+  const collisionParts = (avatarMesh.collisionParts ?? []).filter((part) => part.equipmentId === "forged_pickaxe");
+  for (const frame of frames) {
+    const vertices = new Float32Array(updateAvatarMeshVertices(avatarMesh, frame.animation));
+    const bodyBounds = avatarPartBounds(avatarMesh, vertices, (part) => (
+      !part.equipment && !["left_arm", "right_arm", "right_hand_item"].includes(part.bone)
+    ));
+    const handBounds = unionBounds(avatarPartBounds(avatarMesh, vertices, (part) => part.bone === "right_arm"));
+    const rotation = avatarRightHandRotations(avatarMesh, "forged_pickaxe", {
+      armX: frame.armX,
+      mining: frame.mining,
+    }).right_hand_item;
+    const pivot = avatarMesh.pivots.right_hand_item;
+    const offset = avatarMesh.boneOffsets.right_hand_item ?? [0, 0, 0];
+    const posedTools = collisionParts.map((part) => posedBoxBounds(part, pivot, rotation, offset));
+    for (const toolBounds of posedTools) {
+      for (const bodyPart of bodyBounds) {
+        if (boundsOverlap(toolBounds, bodyPart, 0.00001)) {
+          const pose = avatarMesh.equipmentPoses?.forged_pickaxe;
+          throw new Error(`${key} intersects ${bodyPart.name} during ${frame.label} (carryZ=${pose?.carryZ}, miningZ=${pose?.miningZ}).`);
+        }
+      }
+    }
+    if (!boundsOverlap(posedTools[gripComponentIndex], handBounds, 0)) {
+      throw new Error(`${key} detaches from the hand during ${frame.label}.`);
+    }
+  }
+  return frames.length;
+}
+
+function avatarPartBounds(mesh, vertices, predicate) {
+  const result = [];
+  let vertexCursor = 0;
+  for (const part of mesh.parts) {
+    const vertexCount = part.geometry ? part.geometry.vertices.length / 10 : 24;
+    if (predicate(part)) {
+      const bounds = { name: part.name || part.bone || "part", min: [Infinity, Infinity, Infinity], max: [-Infinity, -Infinity, -Infinity] };
+      for (let index = vertexCursor; index < vertexCursor + vertexCount; index += 1) {
+        const offset = index * 10;
+        for (let axis = 0; axis < 3; axis += 1) {
+          bounds.min[axis] = Math.min(bounds.min[axis], vertices[offset + axis]);
+          bounds.max[axis] = Math.max(bounds.max[axis], vertices[offset + axis]);
+        }
+      }
+      result.push(bounds);
+    }
+    vertexCursor += vertexCount;
+  }
+  return result;
+}
+
+function posedBoxBounds(part, pivot, rotation, offset) {
+  const bounds = { min: [Infinity, Infinity, Infinity], max: [-Infinity, -Infinity, -Infinity] };
+  for (const x of [part.cx - part.sx * 0.5, part.cx + part.sx * 0.5]) {
+    for (const y of [part.cy - part.sy * 0.5, part.cy + part.sy * 0.5]) {
+      for (const z of [part.cz - part.sz * 0.5, part.cz + part.sz * 0.5]) {
+        const point = rotate([x - pivot[0], y - pivot[1], z - pivot[2]], rotation)
+          .map((value, axis) => value + pivot[axis] + (offset[axis] || 0));
+        for (let axis = 0; axis < 3; axis += 1) {
+          bounds.min[axis] = Math.min(bounds.min[axis], point[axis]);
+          bounds.max[axis] = Math.max(bounds.max[axis], point[axis]);
+        }
+      }
+    }
+  }
+  return bounds;
+}
+
+function unionBoxBounds(parts) {
+  return parts.reduce((bounds, part) => {
+    bounds.min[0] = Math.min(bounds.min[0], part.cx - part.sx * 0.5);
+    bounds.min[1] = Math.min(bounds.min[1], part.cy - part.sy * 0.5);
+    bounds.min[2] = Math.min(bounds.min[2], part.cz - part.sz * 0.5);
+    bounds.max[0] = Math.max(bounds.max[0], part.cx + part.sx * 0.5);
+    bounds.max[1] = Math.max(bounds.max[1], part.cy + part.sy * 0.5);
+    bounds.max[2] = Math.max(bounds.max[2], part.cz + part.sz * 0.5);
+    return bounds;
+  }, { min: [Infinity, Infinity, Infinity], max: [-Infinity, -Infinity, -Infinity] });
+}
+
+function unionBounds(boundsList) {
+  const bounds = { min: [Infinity, Infinity, Infinity], max: [-Infinity, -Infinity, -Infinity] };
+  for (const entry of boundsList) {
+    for (let axis = 0; axis < 3; axis += 1) {
+      bounds.min[axis] = Math.min(bounds.min[axis], entry.min[axis]);
+      bounds.max[axis] = Math.max(bounds.max[axis], entry.max[axis]);
+    }
+  }
+  return bounds;
+}
+
+function boundsOverlap(left, right, clearance = 0) {
+  return [0, 1, 2].every((axis) => (
+    Math.min(left.max[axis], right.max[axis]) - Math.max(left.min[axis], right.min[axis]) > clearance
+  ));
 }
 
 function buildConcept(spec) {
@@ -547,8 +850,16 @@ function createSolid(predicate) {
   return solid;
 }
 
-function taperAlongX({ nx, ny, nz }) {
-  return Math.abs(ny) <= 0.22 + (1 - Math.abs(nx)) * 0.72 && Math.abs(nz) <= 0.82;
+function taperAlongZ({ nx, ny, nz }) {
+  const thickness = 0.18 + (1 - Math.abs(nz)) * 0.8;
+  return Math.abs(nx) <= thickness && Math.abs(ny) <= thickness;
+}
+
+function shovelBlade({ nx, ny, nz }) {
+  const forward = (ny + 1) / 2;
+  const halfWidth = Math.min(0.98, 0.36 + forward * 0.88);
+  const clippedFrontCorner = ny > 0.78 && Math.abs(nz) > 0.86;
+  return Math.abs(nx) <= 0.86 && Math.abs(nz) <= halfWidth && !clippedFrontCorner;
 }
 
 function axeBlade({ nx, ny, nz }) {
@@ -659,8 +970,16 @@ function localizedDescriptions(localizedNames, interaction) {
   return Object.freeze(Object.fromEntries(LOCALES.map((locale) => [locale, templates[locale](localizedNames[locale])])));
 }
 
-function tool(category, key, parts, preview = null) {
-  return Object.freeze({ category, key, parts: Object.freeze(parts), interaction: "tool", preview });
+function tool(category, key, parts, holding, preview = null, concept = null) {
+  return Object.freeze({
+    category,
+    key,
+    parts: Object.freeze(parts),
+    interaction: "tool",
+    holding,
+    preview,
+    concept: concept ? Object.freeze({ ...concept }) : null,
+  });
 }
 
 function placeable(category, key, parts, preview = null, concept = null) {
@@ -680,6 +999,70 @@ function part(materialId, dimsQ, offsetQ, { grip = null, mask = null } = {}) {
 
 function handGrip(x, y = 0, z = 0) {
   return Object.freeze({ offsetQ: Object.freeze([x, y, z]), axis: 0, sign: 1, rotation: 0 });
+}
+
+function held(workComponentIndexes, lateralComponentGroups = []) {
+  return Object.freeze({
+    workComponentIndexes: Object.freeze([...workComponentIndexes]),
+    lateralComponentGroups: Object.freeze(lateralComponentGroups.map((group) => Object.freeze([...group]))),
+  });
+}
+
+function dot(left, right) {
+  return left[0] * right[0] + left[1] * right[1] + left[2] * right[2];
+}
+
+function cross(left, right) {
+  return [
+    left[1] * right[2] - left[2] * right[1],
+    left[2] * right[0] - left[0] * right[2],
+    left[0] * right[1] - left[1] * right[0],
+  ];
+}
+
+function subtract(left, right) {
+  return [left[0] - right[0], left[1] - right[1], left[2] - right[2]];
+}
+
+function scale(vector, amount) {
+  return [vector[0] * amount, vector[1] * amount, vector[2] * amount];
+}
+
+function normalize(vector) {
+  const length = Math.hypot(vector[0], vector[1], vector[2]) || 1;
+  return scale(vector, 1 / length);
+}
+
+function rotateAroundAxis(vector, axis, angle) {
+  const cosine = Math.cos(angle);
+  const sine = Math.sin(angle);
+  const parallel = scale(axis, dot(axis, vector) * (1 - cosine));
+  const perpendicular = scale(cross(axis, vector), sine);
+  return [
+    vector[0] * cosine + perpendicular[0] + parallel[0],
+    vector[1] * cosine + perpendicular[1] + parallel[1],
+    vector[2] * cosine + perpendicular[2] + parallel[2],
+  ];
+}
+
+function rotate(vector, rotation = {}) {
+  let [x, y, z] = vector;
+  if (rotation.z) {
+    const cosine = Math.cos(rotation.z);
+    const sine = Math.sin(rotation.z);
+    [x, y] = [x * cosine - y * sine, x * sine + y * cosine];
+  }
+  if (rotation.x) {
+    const cosine = Math.cos(rotation.x);
+    const sine = Math.sin(rotation.x);
+    [y, z] = [y * cosine - z * sine, y * sine + z * cosine];
+  }
+  if (rotation.y) {
+    const cosine = Math.cos(rotation.y);
+    const sine = Math.sin(rotation.y);
+    [x, z] = [x * cosine + z * sine, -x * sine + z * cosine];
+  }
+  return [x, y, z];
 }
 
 function round(value, decimals = 3) {

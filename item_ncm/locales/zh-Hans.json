@@ -59,6 +59,7 @@
   "verification.runtime": "游戏运行时网格已还原",
   "verification.connected": "全部锻造组件已连接",
   "verification.grip": "握点与交互规则有效",
+  "verification.direction": "握持方向与动作间隙有效",
   "verification.materials": "仅使用现行熔炼材料",
   "verification.pass": "通过",
   "verification.pending": "待验证",

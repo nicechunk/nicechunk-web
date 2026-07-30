@@ -27,26 +27,47 @@
   },
   "dimensions": {
     "unit": "m",
-    "width": 0.4688,
+    "width": 0.1875,
     "height": 1.0781,
-    "depth": 0.1875,
+    "depth": 0.4688,
     "sizeQ": [
-      30,
+      12,
       69,
-      12
+      30
     ]
   },
   "preview": {
     "yaw": -0.72,
     "pitch": 0.34
   },
+  "holding": {
+    "gripComponentIndex": 0,
+    "workComponentIndexes": [
+      1,
+      2,
+      3
+    ],
+    "lateralComponentGroups": [
+      [
+        1,
+        2,
+        3
+      ]
+    ],
+    "sourceToAvatarAxes": [
+      "+Y",
+      "-Z",
+      "-X"
+    ],
+    "testedPoseCount": 27
+  },
   "forge": {
     "format": "NCF1",
     "version": 15,
-    "code": "NCF1.8oDHF4qwwaSqugUZcjEiGUFOgXAP9gAIgAQ1QWCgoAARAAQABNSCBgY_MIgAIAAmpBAwMAaEQAEAAA",
+    "code": "NCF1.8oDHF4qwwaSqugUZcjEiGUFOgXAP9gAIgAQ1QKChYAARAAQABNSGBgIAAIvzIAAmpDAwEAAEQGkAAA",
     "rawBytes": 58,
-    "sha256": "94b4e3b765bbec6845a20193709121d1d98f40e59902d18295aef48c1b4c1eb1",
-    "designHash": 2252754636,
+    "sha256": "62611c2cdc66d81711ea6c4067ca4ae7d748463666380b6b5bf111c0191340b8",
+    "designHash": 102270061,
     "encodingMode": "components",
     "sourceEncodingMode": "components",
     "surfaceBaked": false,
@@ -142,6 +163,7 @@
     "gameRuntimeRestored": true,
     "connectedComponents": true,
     "gripValidated": true,
+    "gripDirectionValidated": true,
     "currentMaterialsOnly": true,
     "chainMinted": false
   }

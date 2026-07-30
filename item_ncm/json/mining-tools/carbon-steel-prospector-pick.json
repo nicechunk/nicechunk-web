@@ -27,30 +27,48 @@
   },
   "dimensions": {
     "unit": "m",
-    "width": 0.5625,
+    "width": 0.125,
     "height": 0.8438,
-    "depth": 0.1094,
+    "depth": 0.5625,
     "sizeQ": [
-      36,
+      8,
       54,
-      7
+      36
     ]
   },
   "preview": {
     "yaw": -0.72,
     "pitch": 0.34
   },
+  "holding": {
+    "gripComponentIndex": 0,
+    "workComponentIndexes": [
+      1,
+      2
+    ],
+    "lateralComponentGroups": [
+      [
+        1
+      ]
+    ],
+    "sourceToAvatarAxes": [
+      "+Y",
+      "-Z",
+      "-X"
+    ],
+    "testedPoseCount": 27
+  },
   "forge": {
     "format": "NCF1",
     "version": 15,
-    "code": "NCF1.8Ol2UbrxxeSvqYYaqmDkEMgTAL-AAIgACJkkBAQAANgArAAdQgA8OgIqOyIqOgQmO2QmOgYiO6YiOgwim6wimi4ke24kenAkWzAkWrIoOqOpAmWkwyWkwiekg2ekggmiQ6miQgACakIBgcAAMAAQAA",
-    "rawBytes": 112,
-    "sha256": "cb6a7ed2727e2fa759f6d16715158e23ae94ab2b9801607563e289f886155232",
-    "designHash": 1968826840,
+    "code": "NCF1.8NcGTtrxweRvqYYaqnDkEMgTAL-AAIgACJkEBCQAANgAAoQegEAUAQNgBAFAEAUAQBQBAugGAQAYBABgEAGCaAgAwCADAIAMAgAwCADAIB6AoAgCgCAKAIAoAgCgCAKBaAwAQDABAMAEAwAQDABAMAEAwAQDAIAMAEAwAQDABAMAEAwAQDABAMAEAwAQDABAMAEAwAQDABAMAEAwAQDABAMAEAwAQDABAMAEAwCADABAMAEAwAQDABAMAEAwAQDABAMBaAoAgCgCAKAIAoAgCgCAKB6AgAwCADAIAMAgAwCADAICaAYBABgEAGAQAYLoBAFAEAUAQBQBA2AEAUAQHoAAmpCAYHAADAAEAAA",
+    "rawBytes": 269,
+    "sha256": "2b724a890f5709ccbd1ed75579d3496a7b1a685fbee4cae7a4832aad7357f6f9",
+    "designHash": 2132705593,
     "encodingMode": "components",
     "sourceEncodingMode": "components",
     "surfaceBaked": false,
-    "sourceBytes": 112,
+    "sourceBytes": 269,
     "savedBytes": 0,
     "sourceComponentCount": 3,
     "decodedComponentCount": 3,
@@ -72,8 +90,8 @@
         "materialId": "carbon_steel",
         "itemCode": 1019,
         "inputVolumeMm3": 2197266,
-        "usedVolumeMm3": 1022401,
-        "unusedVolumeMm3": 1174865
+        "usedVolumeMm3": 834064,
+        "unusedVolumeMm3": 1363202
       },
       {
         "index": 2,
@@ -85,16 +103,16 @@
       }
     ],
     "requirements": {
-      "requiredVolumeMm3": 5353472,
-      "requiredEffectiveDurability": 4469,
-      "outputMassGrams": 18675,
+      "requiredVolumeMm3": 5165056,
+      "requiredEffectiveDurability": 4211,
+      "outputMassGrams": 17200,
       "materialScore": 70
     },
     "runtime": {
       "kind": "ncf1-forge-runtime-v1",
-      "vertexCount": 216,
-      "triangleCount": 108,
-      "meshByteLength": 4104
+      "vertexCount": 416,
+      "triangleCount": 208,
+      "meshByteLength": 7904
     }
   },
   "billOfMaterials": [
@@ -113,8 +131,8 @@
       "itemCode": 1019,
       "componentCount": 1,
       "inputVolumeMm3": 2197266,
-      "usedVolumeMm3": 1022401,
-      "unusedVolumeMm3": 1174865,
+      "usedVolumeMm3": 834064,
+      "unusedVolumeMm3": 1363202,
       "unitVolumeMm3": 250000,
       "equivalentInputUnits": 9
     },
@@ -134,6 +152,7 @@
     "gameRuntimeRestored": true,
     "connectedComponents": true,
     "gripValidated": true,
+    "gripDirectionValidated": true,
     "currentMaterialsOnly": true,
     "chainMinted": false
   }

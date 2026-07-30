@@ -12,7 +12,7 @@ assert.deepEqual(localeFiles, expectedLocales.map((locale) => `${locale}.json`).
 const dictionaries = new Map(localeFiles.map((file) => [file.replace(".json", ""), JSON.parse(readFileSync(join(localeDirectory, file), "utf8"))]));
 const english = dictionaries.get("en");
 const englishKeys = Object.keys(english).sort();
-assert.equal(englishKeys.length, 92);
+assert.equal(englishKeys.length, 93);
 for (const [locale, dictionary] of dictionaries) {
   assert.deepEqual(Object.keys(dictionary).sort(), englishKeys, `${locale} locale keys differ from English`);
   for (const key of englishKeys) {

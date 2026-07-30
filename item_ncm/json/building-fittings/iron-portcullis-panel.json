@@ -188,6 +188,7 @@
     "gameRuntimeRestored": true,
     "connectedComponents": true,
     "gripValidated": true,
+    "gripDirectionValidated": true,
     "currentMaterialsOnly": true,
     "chainMinted": false
   }

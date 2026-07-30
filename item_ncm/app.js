@@ -306,7 +306,7 @@ function renderEmptyState() {
   els.metrics.replaceChildren(...[
     "metric.dimensions", "metric.mass", "metric.volume", "metric.payload", "metric.mesh", "metric.components",
   ].map((key) => metricCard(t(key), "—", t("metric.awaiting"))));
-  els.verificationCount.textContent = "0 / 5";
+  els.verificationCount.textContent = "0 / 6";
   els.verificationList.replaceChildren(...verificationKeys().map((key) => verificationRow(t(key), false)));
   els.materialTypeCount.textContent = "—";
   const empty = document.createElement("div");
@@ -344,13 +344,14 @@ function renderMetrics() {
 }
 
 function renderVerification() {
-  els.verificationCount.textContent = "5 / 5";
+  els.verificationCount.textContent = "6 / 6";
   els.verificationList.replaceChildren(...verificationKeys().map((key) => verificationRow(t(key), true)));
 }
 
 function verificationKeys() {
   return [
-    "verification.canonical", "verification.runtime", "verification.connected", "verification.grip", "verification.materials",
+    "verification.canonical", "verification.runtime", "verification.connected", "verification.grip",
+    "verification.direction", "verification.materials",
   ];
 }
 

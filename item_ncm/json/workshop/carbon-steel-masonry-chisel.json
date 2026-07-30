@@ -40,6 +40,19 @@
     "yaw": -0.72,
     "pitch": 0.34
   },
+  "holding": {
+    "gripComponentIndex": 0,
+    "workComponentIndexes": [
+      1
+    ],
+    "lateralComponentGroups": [],
+    "sourceToAvatarAxes": [
+      "+Y",
+      "-Z",
+      "-X"
+    ],
+    "testedPoseCount": 27
+  },
   "forge": {
     "format": "NCF1",
     "version": 15,
@@ -124,6 +137,7 @@
     "gameRuntimeRestored": true,
     "connectedComponents": true,
     "gripValidated": true,
+    "gripDirectionValidated": true,
     "currentMaterialsOnly": true,
     "chainMinted": false
   }

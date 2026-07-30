@@ -104,6 +104,27 @@ function validateItemDefinition(source, entry) {
     }
     concept = Object.freeze({ ...source.concept });
   }
+  let holding = null;
+  if (source.interaction === "tool") {
+    const value = source.holding;
+    if (!value || !nonNegativeInteger(value.gripComponentIndex)
+      || !validIndexList(value.workComponentIndexes, { nonEmpty: true })
+      || value.workComponentIndexes.includes(value.gripComponentIndex)
+      || !Array.isArray(value.lateralComponentGroups)
+      || value.lateralComponentGroups.some((group) => !validIndexList(group, { nonEmpty: true }))
+      || JSON.stringify(value.sourceToAvatarAxes) !== JSON.stringify(["+Y", "-Z", "-X"])
+      || !positiveInteger(value.testedPoseCount)) {
+      throw new TypeError(`Item ${source.key} has invalid holding-direction evidence.`);
+    }
+    holding = Object.freeze({
+      ...value,
+      workComponentIndexes: Object.freeze([...value.workComponentIndexes]),
+      lateralComponentGroups: Object.freeze(value.lateralComponentGroups.map((group) => Object.freeze([...group]))),
+      sourceToAvatarAxes: Object.freeze([...value.sourceToAvatarAxes]),
+    });
+  } else if (source.holding != null) {
+    throw new TypeError(`Placeable item ${source.key} must not define a hand-held direction.`);
+  }
 
   const forge = source.forge;
   if (forge?.format !== "NCF1" || forge.version !== 15 || typeof forge.code !== "string" || !forge.code.startsWith("NCF1.")) {
@@ -124,6 +145,16 @@ function validateItemDefinition(source, entry) {
       throw new TypeError(`Item ${source.key} has an invalid material component.`);
     }
   }
+  if (holding) {
+    const indexes = [
+      holding.gripComponentIndex,
+      ...holding.workComponentIndexes,
+      ...holding.lateralComponentGroups.flat(),
+    ];
+    if (indexes.some((index) => index >= forge.materialComponents.length)) {
+      throw new TypeError(`Item ${source.key} holding evidence references a missing component.`);
+    }
+  }
   const requirements = forge.requirements;
   if (!positiveInteger(requirements?.requiredVolumeMm3) || !positiveInteger(requirements?.outputMassGrams)) {
     throw new TypeError(`Item ${source.key} has invalid material requirements.`);
@@ -142,7 +173,10 @@ function validateItemDefinition(source, entry) {
     }
     materialIds.add(material.materialId);
   }
-  const verificationKeys = ["canonicalRoundTrip", "gameRuntimeRestored", "connectedComponents", "gripValidated", "currentMaterialsOnly"];
+  const verificationKeys = [
+    "canonicalRoundTrip", "gameRuntimeRestored", "connectedComponents", "gripValidated",
+    "gripDirectionValidated", "currentMaterialsOnly",
+  ];
   if (verificationKeys.some((key) => source.verification?.[key] !== true)) throw new TypeError(`Item ${source.key} has incomplete verification evidence.`);
 
   return Object.freeze({
@@ -152,6 +186,7 @@ function validateItemDefinition(source, entry) {
     dimensions: Object.freeze({ ...dimensions, sizeQ: Object.freeze([...dimensions.sizeQ]) }),
     preview: Object.freeze({ ...source.preview }),
     ...(concept ? { concept } : {}),
+    ...(holding ? { holding } : {}),
     forge: Object.freeze({
       ...forge,
       materialComponents: Object.freeze(forge.materialComponents.map((component) => Object.freeze({ ...component }))),
@@ -179,6 +214,17 @@ function titleFromSlug(value) {
 
 function positiveInteger(value) {
   return Number.isInteger(value) && value > 0;
+}
+
+function nonNegativeInteger(value) {
+  return Number.isInteger(value) && value >= 0;
+}
+
+function validIndexList(value, { nonEmpty = false } = {}) {
+  return Array.isArray(value)
+    && (!nonEmpty || value.length > 0)
+    && value.every(nonNegativeInteger)
+    && new Set(value).size === value.length;
 }
 
 function positiveNumber(value) {

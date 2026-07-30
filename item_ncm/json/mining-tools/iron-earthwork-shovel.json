@@ -1,0 +1,176 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "iron-earthwork-shovel",
+  "category": "mining-tools",
+  "interaction": "tool",
+  "names": {
+    "en": "Iron Earthwork Shovel",
+    "es": "Pala de terraplén de hierro",
+    "fr": "Pelle de terrassement en fer",
+    "de": "Eiserne Erdbauschaufel",
+    "ja": "鉄製土工作業シャベル",
+    "ru": "Железная землеройная лопата",
+    "ko": "철제 토공 삽",
+    "zh-Hant": "鐵製土工作業鏟",
+    "zh-Hans": "铁制土工作业铲"
+  },
+  "descriptions": {
+    "en": "Iron Earthwork Shovel is a canonical NCF1 hand-held blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Pala de terraplén de hierro es un plano NCF1 canónico de mano, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Pelle de terrassement en fer est un plan NCF1 canonique tenu en main, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Eiserne Erdbauschaufel ist ein kanonischer, handgeführter NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "鉄製土工作業シャベルは、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1手持ち設計図です。",
+    "ru": "Железная землеройная лопата — канонический ручной чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "철제 토공 삽은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 휴대 장비 설계도입니다.",
+    "zh-Hant": "鐵製土工作業鏟是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 手持物品設計圖。",
+    "zh-Hans": "铁制土工作业铲是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 手持物品设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 0.125,
+    "height": 1.375,
+    "depth": 0.375,
+    "sizeQ": [
+      8,
+      88,
+      24
+    ]
+  },
+  "preview": {
+    "yaw": -0.74,
+    "pitch": 0.39
+  },
+  "concept": {
+    "image": "concepts/mining-tools/iron-earthwork-shovel-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "49e8fd9d9377c1b29201e5adbde74971304726f037306da35ab4d899b7c58d66"
+  },
+  "holding": {
+    "gripComponentIndex": 0,
+    "workComponentIndexes": [
+      1,
+      2
+    ],
+    "lateralComponentGroups": [
+      [
+        1
+      ],
+      [
+        3
+      ]
+    ],
+    "sourceToAvatarAxes": [
+      "+Y",
+      "-Z",
+      "-X"
+    ],
+    "testedPoseCount": 27
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.8whHF5pwwfRvpXZbqnEiGUGOgYAH-ABAP6gAIgACakEGhgAASAAqAAcwgwCnawCnDIYIgA8ogoiO6oiOgBcYgZCWaZCWAB8QgRiN6RiNgCCVaCCVCFYSCV4JieYRCu4IjO4IgACJkICAcAAMAAQARDKDAwkAD3AAIAA",
+    "rawBytes": 122,
+    "sha256": "69dfc6217cd23106c0c40d03a53640d9d1a025b817dd5aeb22cfae036370b85f",
+    "designHash": 1837460254,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 122,
+    "savedBytes": 0,
+    "sourceComponentCount": 4,
+    "decodedComponentCount": 4,
+    "appearanceQuadCount": 0,
+    "hasGrip": true,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 7965088,
+        "usedVolumeMm3": 7965088,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 9521484,
+        "usedVolumeMm3": 6179248,
+        "unusedVolumeMm3": 3342236
+      },
+      {
+        "index": 2,
+        "materialId": "carbon_steel",
+        "itemCode": 1019,
+        "inputVolumeMm3": 1708984,
+        "usedVolumeMm3": 1708984,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 2471924,
+        "usedVolumeMm3": 2471924,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 18321408,
+      "requiredEffectiveDurability": 12093,
+      "outputMassGrams": 62100,
+      "materialScore": 69
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 216,
+      "triangleCount": 108,
+      "meshByteLength": 4104
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "squared_timber",
+      "itemCode": 1033,
+      "componentCount": 2,
+      "inputVolumeMm3": 10437012,
+      "usedVolumeMm3": 10437012,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 48400,
+      "equivalentInputUnits": 216
+    },
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 1,
+      "inputVolumeMm3": 9521484,
+      "usedVolumeMm3": 6179248,
+      "unusedVolumeMm3": 3342236,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 39
+    },
+    {
+      "materialId": "carbon_steel",
+      "itemCode": 1019,
+      "componentCount": 1,
+      "inputVolumeMm3": 1708984,
+      "usedVolumeMm3": 1708984,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 7
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "chainMinted": false
+  }
+}

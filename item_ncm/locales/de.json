@@ -59,6 +59,7 @@
   "verification.runtime": "Spielgitter wiederhergestellt",
   "verification.connected": "Alle Schmiedekomponenten verbunden",
   "verification.grip": "Griff und Interaktion gültig",
+  "verification.direction": "Halteausrichtung und Bewegungsspielraum gültig",
   "verification.materials": "Nur aktuelle Schmelzmaterialien",
   "verification.pass": "BESTANDEN",
   "verification.pending": "AUSSTEHEND",

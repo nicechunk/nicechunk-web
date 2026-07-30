@@ -59,6 +59,7 @@
   "verification.runtime": "ゲーム実行時メッシュを復元",
   "verification.connected": "全鍛造部品が接続済み",
   "verification.grip": "握りと操作規則が有効",
+  "verification.direction": "保持方向と動作時のクリアランスが有効",
   "verification.materials": "現行の製錬素材のみ使用",
   "verification.pass": "合格",
   "verification.pending": "未検証",

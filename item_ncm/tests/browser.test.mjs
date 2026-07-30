@@ -13,6 +13,7 @@ const localPort = Number(process.env.ITEM_NCM_TEST_PORT ?? 9877);
 const debugPort = Number(process.env.ITEM_NCM_DEBUG_PORT ?? 9325);
 const externalUrl = process.env.ITEM_NCM_TEST_URL ?? "";
 const screenshotPath = process.env.ITEM_NCM_SCREENSHOT_PATH ?? "";
+const rulesFile = process.env.ITEM_NCM_RULES_FILE ? normalize(process.env.ITEM_NCM_RULES_FILE) : "";
 const server = externalUrl ? null : await startStaticServer(localPort);
 const url = externalUrl || `http://127.0.0.1:${localPort}/item_ncm/`;
 const profile = mkdtempSync(join(tmpdir(), "item-ncm-chrome-"));
@@ -51,7 +52,7 @@ try {
   await client.send("Page.navigate", { url });
   await waitFor(() => evaluate(client, `document.readyState === "complete"
     && document.querySelectorAll("[data-category]").length === 9
-    && document.querySelectorAll("[data-item]").length === 3
+    && document.querySelectorAll("[data-item]").length === 4
     && document.querySelector("#runtimeState").dataset.state === "verified"`));
 
   const initial = await evaluate(client, `({
@@ -79,14 +80,14 @@ try {
   assert.equal(initial.title, "ITEM_NCM — NiceChunk Forge Item Registry");
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 9);
-  assert.equal(initial.visibleItems, 3);
-  assert.match(initial.total, /25 ITEMS/);
+  assert.equal(initial.visibleItems, 4);
+  assert.match(initial.total, /26 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
-  assert.equal(initial.payloadBytes, "112 / 640 B");
+  assert.equal(initial.payloadBytes, "269 / 640 B");
   assert.equal(initial.metricCount, 6);
-  assert.equal(initial.verificationCount, 5);
+  assert.equal(initial.verificationCount, 6);
   assert.equal(initial.bomCount, 3);
   assert.equal(initial.fallbackHidden, true);
   assert.ok(initial.canvasWidth > 0 && initial.canvasHeight > 0);
@@ -179,6 +180,23 @@ try {
   assert.equal(cauldron.selectedInUrl, "iron-hearth-cauldron");
   assert.ok(cauldron.resources.includes("/item_ncm/json/cooking/iron-hearth-cauldron.json"));
 
+  await evaluate(client, `document.querySelector('[data-category="mining-tools"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 4 && document.querySelector('[data-item="iron-earthwork-shovel"]')`));
+  await evaluate(client, `document.querySelector('[data-item="iron-earthwork-shovel"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="iron-earthwork-shovel"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const shovel = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(shovel.title, "Iron Earthwork Shovel");
+  assert.equal(shovel.type, "HAND-HELD");
+  assert.equal(shovel.payloadBytes, "122 / 640 B");
+  assert.equal(shovel.selectedInUrl, "iron-earthwork-shovel");
+  assert.ok(shovel.resources.includes("/item_ncm/json/mining-tools/iron-earthwork-shovel.json"));
+
   await evaluate(client, `(() => {
     const search = document.querySelector("#itemSearch");
     search.value = "guardian-spear";
@@ -188,7 +206,7 @@ try {
   assert.equal(await evaluate(client, `document.querySelector("#activeCategoryTitle").textContent`), "SEARCH RESULTS");
 
   await evaluate(client, `document.querySelector('[data-category="mining-tools"]').click()`);
-  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 3 && document.querySelector('[data-category="mining-tools"].active')`));
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 4 && document.querySelector('[data-category="mining-tools"].active')`));
 
   await client.send("Emulation.setDeviceMetricsOverride", { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
   await evaluate(client, `(() => {
@@ -196,7 +214,7 @@ try {
     search.value = "";
     search.dispatchEvent(new Event("input", { bubbles: true }));
   })()`);
-  await waitFor(() => evaluate(client, `document.documentElement.clientWidth === 390 && document.querySelectorAll("[data-item]").length === 3`));
+  await waitFor(() => evaluate(client, `document.documentElement.clientWidth === 390 && document.querySelectorAll("[data-item]").length === 4`));
   const mobile = await evaluate(client, `(() => {
     const library = document.querySelector(".library-panel").getBoundingClientRect();
     const preview = document.querySelector(".preview-column").getBoundingClientRect();
@@ -214,7 +232,7 @@ try {
   assert.equal(mobile.clientWidth, 390);
   assert.equal(mobile.scrollWidth, mobile.clientWidth, "mobile page must not create document-level horizontal overflow");
   assert.equal(mobile.categoryCount, 9);
-  assert.equal(mobile.itemCount, 3);
+  assert.equal(mobile.itemCount, 4);
   assert.equal(mobile.libraryBeforePreview, true);
   assert.equal(mobile.previewBeforeDetails, true);
   assert.ok(mobile.canvasHeight >= 380);
@@ -281,12 +299,14 @@ async function startStaticServer(port) {
 
 function publicFile(pathname) {
   const clean = normalize(pathname).replace(/^[/\\]+/, "");
+  if (pathname === "/rules/smelting-rules.json" && rulesFile) return rulesFile;
   if (pathname.startsWith("/item_ncm/") || pathname.startsWith("/chunk.js/")) return join(projectRoot, clean);
   if (pathname.startsWith("/rules/")) return join(projectRoot, "public", clean);
   return null;
 }
 
 function insideProject(file) {
+  if (rulesFile && file === rulesFile) return true;
   const prefix = `${projectRoot}${sep}`;
   return file.startsWith(prefix) && !file.includes(`${sep}..${sep}`);
 }

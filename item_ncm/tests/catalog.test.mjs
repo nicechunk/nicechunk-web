@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readdirSync, readFileSync } from "node:fs";
-import { dirname, join, relative } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import {
@@ -12,18 +12,26 @@ import {
 import { validateForgeGripBindings } from "../../chunk.js/forge/forge-grip-validation.js";
 import { ForgeRuntimeCache } from "../../chunk.js/forge/forge-runtime-cache.js";
 import { forgeWorkbenchComponentsConnected } from "../../chunk.js/forge/forge-workbench.js";
+import {
+  DEFAULT_PEASANT_GUY_NCM,
+  createAvatarMeshFromNcm,
+  forgeAvatarTargetGrip,
+} from "../../chunk.js/renderer/avatar-mesh.js";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const projectRoot = join(root, "..");
+const rulesFile = process.env.ITEM_NCM_RULES_FILE
+  ? resolve(process.env.ITEM_NCM_RULES_FILE)
+  : join(projectRoot, "public/rules/smelting-rules.json");
 const locales = ["en", "es", "fr", "de", "ja", "ru", "ko", "zh-Hant", "zh-Hans"];
 const catalog = json(join(root, "json/catalog.json"));
-const rules = json(join(projectRoot, "public/rules/smelting-rules.json"));
+const rules = json(rulesFile);
 const materialRules = new Map(rules.materials.map((material) => [material.id, material]));
 const runtimeCache = new ForgeRuntimeCache({ maxEntries: 32, maxBytes: 64 * 1024 * 1024 });
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
-assert.equal(catalog.items.length, 25);
+assert.equal(catalog.items.length, 26);
 assert.equal(new Set(catalog.items).size, catalog.items.length);
 
 const listedFiles = new Set(catalog.items);
@@ -93,6 +101,37 @@ for (const file of catalog.items) {
   assert.equal(grip.valid, true, `${item.key} grip must remain valid after decoding`);
   assert.equal(grip.gripCount, item.interaction === "tool" ? 1 : 0);
   assert.equal(Boolean(runtime.grip), item.interaction === "tool");
+  if (item.interaction === "tool") {
+    assert.deepEqual(item.holding.sourceToAvatarAxes, ["+Y", "-Z", "-X"]);
+    assert.equal(item.holding.testedPoseCount, 27);
+    assert.ok(Number.isInteger(item.holding.gripComponentIndex));
+    assert.ok(item.holding.workComponentIndexes.length > 0);
+    const gripComponent = runtime.components[item.holding.gripComponentIndex];
+    const designGripQ = gripComponent.grip.offsetQ.map((value, axis) => value + gripComponent.offsetQ[axis]);
+    for (const componentIndex of item.holding.workComponentIndexes) {
+      assert.ok(runtime.components[componentIndex].offsetQ[1] > designGripQ[1], `${item.key} work end must be forward in source space`);
+    }
+    for (const group of item.holding.lateralComponentGroups) {
+      const spans = componentGroupSpansQ(runtime.components, group);
+      assert.ok(spans[2] > spans[0] * 1.1, `${item.key} lateral work must use source Z`);
+    }
+
+    const avatarMesh = createAvatarMeshFromNcm(DEFAULT_PEASANT_GUY_NCM, {
+      scale: (1.75 / 0.4) / 2.52,
+      attachIronPickaxe: true,
+      attachForgedPickaxe: true,
+      forgeRuntime: runtime,
+      forgeMetersToWorldUnits: 1 / 0.4,
+    });
+    const mounted = (avatarMesh.collisionParts ?? []).filter((part) => part.equipmentId === "forged_pickaxe");
+    const targetGrip = forgeAvatarTargetGrip(avatarMesh.handAnchors.right_hand_item, avatarMesh.modelScale);
+    assert.equal(mounted.length, runtime.componentCount, `${item.key} must mount every restored component`);
+    for (const componentIndex of item.holding.workComponentIndexes) {
+      assert.ok(mounted[componentIndex].cz < targetGrip[2] - 0.01, `${item.key} work end must face away from the avatar`);
+    }
+  } else {
+    assert.equal(item.holding, undefined);
+  }
 
   const requirements = forgeMaterialRequirements(canonicalBytes);
   assert.equal(requirements.designHash, item.forge.designHash);
@@ -121,14 +160,17 @@ for (const file of catalog.items) {
     assert.equal(material.unitVolumeMm3, rule.unitVolumeMm3);
     assert.equal(material.equivalentInputUnits, Math.ceil(material.inputVolumeMm3 / material.unitVolumeMm3));
   }
-  for (const key of ["canonicalRoundTrip", "gameRuntimeRestored", "connectedComponents", "gripValidated", "currentMaterialsOnly"]) {
+  for (const key of [
+    "canonicalRoundTrip", "gameRuntimeRestored", "connectedComponents", "gripValidated",
+    "gripDirectionValidated", "currentMaterialsOnly",
+  ]) {
     assert.equal(item.verification[key], true, `${item.key} must pass ${key}`);
   }
   assert.equal(item.verification.chainMinted, false);
 }
 
 assert.deepEqual([...categories], [
-  ["mining-tools", 3],
+  ["mining-tools", 4],
   ["forestry-farming", 3],
   ["workshop", 3],
   ["weapons", 3],
@@ -138,12 +180,12 @@ assert.deepEqual([...categories], [
   ["containers", 3],
   ["cooking", 1],
 ]);
-assert.equal(tools, 13);
+assert.equal(tools, 14);
 assert.equal(placeables, 12);
-assert.equal(conceptReferences, 1);
+assert.equal(conceptReferences, 2);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
-console.log("item_ncm catalog tests passed: 25 canonical NCF1 items across 9 categories");
+console.log("item_ncm catalog tests passed: 26 canonical NCF1 items across 9 categories");
 
 function json(file) {
   return JSON.parse(readFileSync(file, "utf8"));
@@ -154,4 +196,17 @@ function walkJson(directory) {
     const file = join(directory, entry.name);
     return entry.isDirectory() ? walkJson(file) : entry.name.endsWith(".json") ? [file] : [];
   });
+}
+
+function componentGroupSpansQ(components, indexes) {
+  const min = [Infinity, Infinity, Infinity];
+  const max = [-Infinity, -Infinity, -Infinity];
+  for (const index of indexes) {
+    const component = components[index];
+    for (let axis = 0; axis < 3; axis += 1) {
+      min[axis] = Math.min(min[axis], component.offsetQ[axis] - component.dimsQ[axis] * 0.5);
+      max[axis] = Math.max(max[axis], component.offsetQ[axis] + component.dimsQ[axis] * 0.5);
+    }
+  }
+  return min.map((value, axis) => max[axis] - value);
 }

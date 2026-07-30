@@ -59,6 +59,7 @@
   "verification.runtime": "Game runtime mesh restored",
   "verification.connected": "All forge components connected",
   "verification.grip": "Grip and interaction policy valid",
+  "verification.direction": "Held direction and motion clearance valid",
   "verification.materials": "Current smelting materials only",
   "verification.pass": "PASS",
   "verification.pending": "PENDING",

@@ -59,6 +59,7 @@
   "verification.runtime": "Maillage du moteur restauré",
   "verification.connected": "Tous les composants sont reliés",
   "verification.grip": "Prise et interaction valides",
+  "verification.direction": "Orientation en main et dégagement en mouvement valides",
   "verification.materials": "Matériaux de fusion actuels uniquement",
   "verification.pass": "VALIDÉ",
   "verification.pending": "EN ATTENTE",

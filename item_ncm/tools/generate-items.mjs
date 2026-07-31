@@ -102,6 +102,22 @@ const PUBLIC_BENCH_LAYOUTS = Object.freeze({
     sideBraces: [11, 12],
   },
 });
+const WALL_CLOCK_LAYOUTS = Object.freeze({
+  "copper-rimmed-village-wall-clock": {
+    backplate: 0,
+    outerFrame: [1, 2, 3, 4],
+    hanger: [5, 6],
+    dial: 7,
+    bezel: 8,
+    faceGlass: 9,
+    hourStuds: 10,
+    hands: 11,
+    centerPin: 12,
+    pendulumGlass: 13,
+    pendulumFrame: [14, 15, 16, 17],
+    pendulum: [18, 19],
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -309,6 +325,11 @@ const ITEM_NAMES = Object.freeze({
     "Timber-framed Woven Tapestry", "Tapiz tejido con marco de madera", "Tapisserie tissée à cadre en bois",
     "Gewebter Wandteppich im Holzrahmen", "木枠の織りタペストリー", "Тканый гобелен в деревянной раме",
     "목재 틀 직조 태피스트리", "木框編織壁毯", "木框编织壁毯",
+  ),
+  "copper-rimmed-village-wall-clock": names(
+    "Copper-rimmed Village Wall Clock", "Reloj de pared de aldea con aro de cobre", "Horloge murale de village cerclée de cuivre",
+    "Dorf-Wanduhr mit Kupferrand", "銅縁の村落壁掛け時計", "Деревенские настенные часы с медным ободом",
+    "구리 테두리 마을 벽시계", "銅邊村莊掛鐘", "铜边村庄挂钟",
   ),
 });
 
@@ -722,6 +743,32 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+  placeable("interior-decor", "copper-rimmed-village-wall-clock", [
+    part("wooden_plank", [40, 64, 1], [0, 0, 0]),
+    part("squared_timber", [4, 56, 1], [-18, 0, 1]),
+    part("squared_timber", [4, 56, 1], [18, 0, 1]),
+    part("squared_timber", [32, 4, 1], [0, 30, 1]),
+    part("squared_timber", [32, 4, 1], [0, -30, 1]),
+    part("squared_timber", [12, 4, 1], [0, 34, 1]),
+    part("iron_bloom", [4, 4, 1], [0, 34, 2]),
+    part("wooden_plank", [30, 30, 1], [0, 10, 1], { mask: clockFaceMask }),
+    part("copper_bloom", [34, 34, 1], [0, 10, 2], { mask: clockBezelMask }),
+    part("clear_glass_panel", [30, 30, 1], [0, 10, 3], { mask: clockFaceMask }),
+    part("iron_bloom", [28, 28, 1], [0, 10, 4], { mask: clockHourStudMask }),
+    part("copper_bloom", [16, 16, 1], [0, 10, 5], { mask: clockHandsMask }),
+    part("iron_bloom", [3, 3, 1], [0, 10, 6]),
+    part("clear_glass_panel", [16, 18, 1], [0, -17, 1]),
+    part("squared_timber", [2, 20, 1], [-9, -17, 1]),
+    part("squared_timber", [2, 20, 1], [9, -17, 1]),
+    part("squared_timber", [16, 2, 1], [0, -7, 1]),
+    part("squared_timber", [16, 2, 1], [0, -27, 1]),
+    part("copper_bloom", [2, 10, 1], [0, -13, 2]),
+    part("copper_bloom", [8, 8, 1], [0, -22, 2], { mask: roundMask }),
+  ], { yaw: -0.48, pitch: 0.24 }, {
+    image: "concepts/interior-decor/copper-rimmed-village-wall-clock-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
 ]);
 
 generate();
@@ -801,6 +848,8 @@ function buildItem(spec) {
   if (streetLanternLayout) validateStreetLanternGeometry(spec, runtime, streetLanternLayout);
   const publicBenchLayout = PUBLIC_BENCH_LAYOUTS[spec.key] ?? null;
   if (publicBenchLayout) validatePublicBenchGeometry(spec, runtime, publicBenchLayout);
+  const wallClockLayout = WALL_CLOCK_LAYOUTS[spec.key] ?? null;
+  if (wallClockLayout) validateWallClockGeometry(spec, runtime, wallClockLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -898,6 +947,7 @@ function buildItem(spec) {
       ...(drawerCabinetLayout ? { drawerCabinetGeometryValidated: true } : {}),
       ...(streetLanternLayout ? { streetLanternGeometryValidated: true } : {}),
       ...(publicBenchLayout ? { publicBenchGeometryValidated: true } : {}),
+      ...(wallClockLayout ? { wallClockGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -1155,6 +1205,107 @@ function validatePublicBenchGeometry(spec, runtime, layout) {
     if (brace.dimsQ.join(",") !== "4,4,12" || brace.offsetQ[1] !== 12 || brace.offsetQ[2] !== 0) {
       throw new Error(`${spec.key} has an invalid side brace ${braceIndex}.`);
     }
+  }
+  for (let left = 0; left < componentBounds.length; left += 1) {
+    for (let right = left + 1; right < componentBounds.length; right += 1) {
+      if (boundsOverlap(componentBounds[left], componentBounds[right], 0)) {
+        throw new Error(`${spec.key} components ${left} and ${right} intersect.`);
+      }
+    }
+  }
+}
+
+function validateWallClockGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 20 || runtime.boundsQ.sizeQ.join(",") !== "40,68,7") {
+    throw new Error(`${spec.key} must preserve its human-scale wall-clock proportions.`);
+  }
+  const components = runtime.components ?? [];
+  const componentBounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    "wooden_plank",
+    "squared_timber", "squared_timber", "squared_timber", "squared_timber", "squared_timber",
+    "iron_bloom", "wooden_plank", "copper_bloom", "clear_glass_panel",
+    "iron_bloom", "copper_bloom", "iron_bloom", "clear_glass_panel",
+    "squared_timber", "squared_timber", "squared_timber", "squared_timber",
+    "copper_bloom", "copper_bloom",
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+
+  const backplate = components[layout.backplate];
+  if (backplate.dimsQ.join(",") !== "40,64,1" || backplate.offsetQ.join(",") !== "0,0,0") {
+    throw new Error(`${spec.key} must keep one continuous timber wall backplate.`);
+  }
+  const expectedOuterFrame = [
+    { dims: "4,56,1", offset: "-18,0,1" },
+    { dims: "4,56,1", offset: "18,0,1" },
+    { dims: "32,4,1", offset: "0,30,1" },
+    { dims: "32,4,1", offset: "0,-30,1" },
+  ];
+  for (let position = 0; position < layout.outerFrame.length; position += 1) {
+    const component = components[layout.outerFrame[position]];
+    if (component.dimsQ.join(",") !== expectedOuterFrame[position].dims
+      || component.offsetQ.join(",") !== expectedOuterFrame[position].offset) {
+      throw new Error(`${spec.key} has an invalid outer frame rail.`);
+    }
+  }
+  const [timberHanger, ironHanger] = layout.hanger.map((index) => components[index]);
+  const [timberHangerBounds, ironHangerBounds] = layout.hanger.map((index) => componentBounds[index]);
+  const topRailBounds = componentBounds[layout.outerFrame[2]];
+  if (timberHanger.dimsQ.join(",") !== "12,4,1" || timberHanger.offsetQ.join(",") !== "0,34,1"
+    || ironHanger.dimsQ.join(",") !== "4,4,1" || ironHanger.offsetQ.join(",") !== "0,34,2"
+    || timberHangerBounds.min[1] !== topRailBounds.max[1]
+    || ironHangerBounds.min[2] !== timberHangerBounds.max[2]) {
+    throw new Error(`${spec.key} must retain its connected timber-and-iron wall hanger.`);
+  }
+
+  const dial = components[layout.dial];
+  const bezel = components[layout.bezel];
+  const faceGlass = components[layout.faceGlass];
+  const dialBounds = componentBounds[layout.dial];
+  const bezelBounds = componentBounds[layout.bezel];
+  const glassBounds = componentBounds[layout.faceGlass];
+  if (dial.dimsQ.join(",") !== "30,30,1" || dial.offsetQ.join(",") !== "0,10,1"
+    || bezel.dimsQ.join(",") !== "34,34,1" || bezel.offsetQ.join(",") !== "0,10,2"
+    || faceGlass.dimsQ.join(",") !== "30,30,1" || faceGlass.offsetQ.join(",") !== "0,10,3"
+    || dialBounds.max[2] !== bezelBounds.min[2] || bezelBounds.max[2] !== glassBounds.min[2]) {
+    throw new Error(`${spec.key} must keep its dial, copper bezel, and glass in ordered touching layers.`);
+  }
+  const hourStuds = components[layout.hourStuds];
+  const hourStudBounds = componentBounds[layout.hourStuds];
+  const hands = components[layout.hands];
+  const handBounds = componentBounds[layout.hands];
+  const centerPin = components[layout.centerPin];
+  const pinBounds = componentBounds[layout.centerPin];
+  if (hourStuds.dimsQ.join(",") !== "28,28,1" || hourStuds.offsetQ.join(",") !== "0,10,4"
+    || hands.dimsQ.join(",") !== "16,16,1" || hands.offsetQ.join(",") !== "0,10,5"
+    || centerPin.dimsQ.join(",") !== "3,3,1" || centerPin.offsetQ.join(",") !== "0,10,6"
+    || hourStudBounds.min[2] !== glassBounds.max[2]
+    || handBounds.min[2] !== hourStudBounds.max[2]
+    || pinBounds.min[2] !== handBounds.max[2]
+    || hourStudBounds.min[0] < glassBounds.min[0] || hourStudBounds.max[0] > glassBounds.max[0]
+    || hourStudBounds.min[1] < glassBounds.min[1] || hourStudBounds.max[1] > glassBounds.max[1]) {
+    throw new Error(`${spec.key} must keep twelve hour studs and readable hands secured above its glass face.`);
+  }
+
+  const pendulumGlass = componentBounds[layout.pendulumGlass];
+  const [leftFrame, rightFrame, topFrame, bottomFrame] = layout.pendulumFrame.map((index) => componentBounds[index]);
+  if (pendulumGlass.min[0] !== leftFrame.max[0] || pendulumGlass.max[0] !== rightFrame.min[0]
+    || pendulumGlass.max[1] !== topFrame.min[1] || pendulumGlass.min[1] !== bottomFrame.max[1]) {
+    throw new Error(`${spec.key} pendulum glass must remain enclosed by its timber frame.`);
+  }
+  const [rodBounds, bobBounds] = layout.pendulum.map((index) => componentBounds[index]);
+  if (rodBounds.min[2] !== pendulumGlass.max[2] || bobBounds.min[2] !== pendulumGlass.max[2]
+    || rodBounds.min[1] !== bobBounds.max[1]
+    || bobBounds.min[0] < pendulumGlass.min[0] || bobBounds.max[0] > pendulumGlass.max[0]
+    || bobBounds.min[1] < pendulumGlass.min[1] || rodBounds.max[1] > pendulumGlass.max[1]) {
+    throw new Error(`${spec.key} pendulum must remain connected and contained behind its window.`);
   }
   for (let left = 0; left < componentBounds.length; left += 1) {
     for (let right = left + 1; right < componentBounds.length; right += 1) {
@@ -1529,6 +1680,31 @@ function tapestryKnotMask({ x, y }) {
 
 function tapestryHangerMask({ x, y }) {
   return x < 2 || x >= FORGE_COMPONENT_GRID.x - 2 || y < 2 || y >= FORGE_COMPONENT_GRID.y - 2;
+}
+
+function clockFaceMask({ nx, ny }) {
+  return Math.abs(nx) <= 0.98 && Math.abs(ny) <= 0.98 && Math.abs(nx) + Math.abs(ny) <= 1.55;
+}
+
+function clockBezelMask({ nx, ny }) {
+  const outer = Math.abs(nx) <= 0.98 && Math.abs(ny) <= 0.98 && Math.abs(nx) + Math.abs(ny) <= 1.55;
+  const inner = Math.abs(nx) < 0.74 && Math.abs(ny) < 0.74 && Math.abs(nx) + Math.abs(ny) < 1.12;
+  return outer && !inner;
+}
+
+function clockHourStudMask({ x, y }) {
+  const hourStud = [
+    [6, 9], [9, 8], [11, 7], [12, 5], [11, 3], [9, 1],
+    [6, 0], [4, 1], [2, 3], [1, 5], [2, 7], [4, 8],
+  ].some(([studX, studY]) => x === studX && y === studY);
+  const centerHub = (x === 6 || x === 7) && (y === 4 || y === 5);
+  return hourStud || centerHub;
+}
+
+function clockHandsMask({ x, y }) {
+  const hourHand = (x === 6 || x === 7) && y >= 4 && y <= 8;
+  const minuteHand = (y === 4 || y === 5) && x >= 6 && x <= 12;
+  return hourHand || minuteHand;
 }
 
 function chiselTip({ nx, ny, nz }) {

@@ -82,7 +82,7 @@ try {
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 11);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /39 ITEMS/);
+  assert.match(initial.total, /40 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -437,7 +437,9 @@ try {
   await assertRigidClothPreview(client);
 
   await evaluate(client, `document.querySelector('[data-category="interior-decor"]').click()`);
-  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 1 && document.querySelector('[data-item="timber-framed-woven-tapestry"]')`));
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 2
+    && document.querySelector('[data-item="timber-framed-woven-tapestry"]')
+    && document.querySelector('[data-item="copper-rimmed-village-wall-clock"]')`));
   assert.equal(await evaluate(client, `performance.getEntriesByType("resource").some((entry) => new URL(entry.name).pathname.includes("/item_ncm/json/interior-decor/"))`), false,
     "category browsing must not load interior decor item JSON files");
   await evaluate(client, `document.querySelector('[data-item="timber-framed-woven-tapestry"]').click()`);
@@ -460,14 +462,36 @@ try {
   assert.ok(tapestry.resources.includes("/item_ncm/json/interior-decor/timber-framed-woven-tapestry.json"));
   await assertRigidClothPreview(client, { verifyFrames: true });
 
+  await evaluate(client, `document.querySelector('[data-item="copper-rimmed-village-wall-clock"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="copper-rimmed-village-wall-clock"].active')
+    && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const wallClock = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payload: document.querySelector("#codeOutput").value,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    materialRows: document.querySelectorAll("#bomRows .bom-row").length,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(wallClock.title, "Copper-rimmed Village Wall Clock");
+  assert.equal(wallClock.type, "PLACEABLE");
+  assert.match(wallClock.payload, /^NCF1\./);
+  assert.equal(wallClock.payloadBytes, "591 / 640 B");
+  assert.equal(wallClock.componentCount, "20");
+  assert.equal(wallClock.materialRows, 5);
+  assert.equal(wallClock.selectedInUrl, "copper-rimmed-village-wall-clock");
+  assert.ok(wallClock.resources.includes("/item_ncm/json/interior-decor/copper-rimmed-village-wall-clock.json"));
+
   await evaluate(client, `(() => {
     const select = document.querySelector("[data-language-select]");
     select.value = "zh-Hans";
     select.dispatchEvent(new Event("change", { bubbles: true }));
   })()`);
-  await waitFor(() => evaluate(client, `document.querySelector("#itemTitle").textContent === "木框编织壁毯"`));
+  await waitFor(() => evaluate(client, `document.querySelector("#itemTitle").textContent === "铜边村庄挂钟"`));
   assert.equal(await evaluate(client, `document.querySelector('[data-category="interior-decor"] span').textContent`), "室内装饰");
-  assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), tapestry.payload);
+  assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), wallClock.payload);
   await evaluate(client, `(() => {
     const select = document.querySelector("[data-language-select]");
     select.value = "en";

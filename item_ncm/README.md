@@ -11,7 +11,7 @@ ITEM_NCM is the public NiceChunk forge-item blueprint registry. It follows the s
 - Every item JSON contains its own nine-language names and descriptions.
 - `tools/generate-items.mjs` is the canonical source for the initial collection and regenerates every item JSON deterministically.
 
-The registry currently contains 39 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, containers, cooking, books and writing, and interior decor. New designs begin with an Imagegen material-style concept; the resulting item JSON records the concept path, provenance, version, and SHA-256 before the forge encoding is accepted.
+The registry currently contains 40 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, containers, cooking, books and writing, and interior decor. New designs begin with an Imagegen material-style concept; the resulting item JSON records the concept path, provenance, version, and SHA-256 before the forge encoding is accepted.
 
 ## Forge guarantees
 
@@ -31,6 +31,7 @@ The generator rejects an item unless all of these checks pass:
 12. Multi-drawer cabinets preserve a human-scale portrait footprint, align every iron pull with one closed drawer, and reject any positive-volume component intersection.
 13. Street lanterns keep a stable square plinth, a centered high post, and an amber chamber enclosed by top and bottom plates with four aligned corner rails and no component intersection.
 14. Public benches preserve a two-person human scale, a safe seat height, four supporting legs, two supported back slats, and a symmetric iron-braced underframe without component intersection.
+15. Wall clocks keep a human-scale portrait backplate, a connected wall hanger, ordered timber-dial/copper-bezel/glass layers, twelve iron hour studs, readable copper hands, and a framed glass pendulum chamber without component intersection.
 
 `verification.chainMinted` remains `false` because this library validates blueprint readiness; it does not claim that a blueprint PDA has already been created.
 

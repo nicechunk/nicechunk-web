@@ -78,10 +78,26 @@ const publicBenchLayouts = new Map([
     sideBraces: [11, 12],
   }],
 ]);
+const wallClockLayouts = new Map([
+  ["copper-rimmed-village-wall-clock", {
+    backplate: 0,
+    outerFrame: [1, 2, 3, 4],
+    hanger: [5, 6],
+    dial: 7,
+    bezel: 8,
+    faceGlass: 9,
+    hourStuds: 10,
+    hands: 11,
+    centerPin: 12,
+    pendulumGlass: 13,
+    pendulumFrame: [14, 15, 16, 17],
+    pendulum: [18, 19],
+  }],
+]);
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
-assert.equal(catalog.items.length, 39);
+assert.equal(catalog.items.length, 40);
 assert.equal(new Set(catalog.items).size, catalog.items.length);
 
 const listedFiles = new Set(catalog.items);
@@ -99,6 +115,7 @@ let framedTextileGeometryCount = 0;
 let drawerCabinetGeometryCount = 0;
 let streetLanternGeometryCount = 0;
 let publicBenchGeometryCount = 0;
+let wallClockGeometryCount = 0;
 for (const file of catalog.items) {
   assert.match(file, /^json\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/);
   const item = json(join(root, file));
@@ -190,6 +207,13 @@ for (const file of catalog.items) {
     assert.equal(item.verification.publicBenchGeometryValidated, true);
     assertPublicBenchGeometry(item, runtime, publicBenchLayout);
   }
+  const wallClockLayout = wallClockLayouts.get(item.key);
+  if (wallClockLayout) {
+    wallClockGeometryCount += 1;
+    assert.equal(item.category, "interior-decor");
+    assert.equal(item.verification.wallClockGeometryValidated, true);
+    assertWallClockGeometry(item, runtime, wallClockLayout);
+  }
   assert.equal(forgeWorkbenchComponentsConnected(runtime.components), true, `${item.key} must be a connected assembly`);
   const grip = validateForgeGripBindings(runtime.components);
   assert.equal(grip.valid, true, `${item.key} grip must remain valid after decoding`);
@@ -274,19 +298,20 @@ assert.deepEqual([...categories], [
   ["containers", 3],
   ["cooking", 2],
   ["books-writing", 7],
-  ["interior-decor", 1],
+  ["interior-decor", 2],
 ]);
 assert.equal(tools, 15);
-assert.equal(placeables, 24);
-assert.equal(conceptReferences, 15);
+assert.equal(placeables, 25);
+assert.equal(conceptReferences, 16);
 assert.equal(bookGeometryCount, 7);
 assert.equal(framedTextileGeometryCount, 1);
 assert.equal(drawerCabinetGeometryCount, 1);
 assert.equal(streetLanternGeometryCount, 1);
 assert.equal(publicBenchGeometryCount, 1);
+assert.equal(wallClockGeometryCount, 1);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
-console.log("item_ncm catalog tests passed: 39 canonical NCF1 items across 11 categories");
+console.log("item_ncm catalog tests passed: 40 canonical NCF1 items across 11 categories");
 
 function json(file) {
   return JSON.parse(readFileSync(file, "utf8"));
@@ -483,6 +508,53 @@ function assertPublicBenchGeometry(item, runtime, layout) {
   }
   assert.deepEqual(layout.stretchers.map((index) => runtime.components[index].dimsQ), [[68, 4, 4], [68, 4, 4]]);
   assert.deepEqual(layout.sideBraces.map((index) => runtime.components[index].dimsQ), [[4, 4, 12], [4, 4, 12]]);
+  for (let left = 0; left < bounds.length; left += 1) {
+    for (let right = left + 1; right < bounds.length; right += 1) {
+      assert.equal(positiveVolumeOverlap(bounds[left], bounds[right]), false, `${item.key} components ${left} and ${right} intersect`);
+    }
+  }
+}
+
+function assertWallClockGeometry(item, runtime, layout) {
+  assert.equal(runtime.componentCount, 20);
+  assert.deepEqual(item.dimensions.sizeQ, [40, 68, 7]);
+  assert.ok(item.dimensions.width >= 0.55 && item.dimensions.width <= 0.7);
+  assert.ok(item.dimensions.height >= 0.9 && item.dimensions.height <= 1.15);
+  assert.ok(item.dimensions.depth >= 0.08 && item.dimensions.depth <= 0.14);
+  assert.deepEqual(
+    [...new Set(item.forge.materialComponents.map(({ materialId }) => materialId))].sort(),
+    ["clear_glass_panel", "copper_bloom", "iron_bloom", "squared_timber", "wooden_plank"],
+  );
+  const components = runtime.components;
+  const bounds = components.map((component) => componentBoundsQ(component));
+  assert.deepEqual(components[layout.backplate].dimsQ, [40, 64, 1]);
+  assert.deepEqual(components[layout.backplate].offsetQ, [0, 0, 0]);
+  assert.deepEqual(
+    layout.outerFrame.map((index) => components[index].offsetQ),
+    [[-18, 0, 1], [18, 0, 1], [0, 30, 1], [0, -30, 1]],
+  );
+  assert.deepEqual(layout.hanger.map((index) => components[index].offsetQ), [[0, 34, 1], [0, 34, 2]]);
+  assert.deepEqual(components[layout.dial].offsetQ, [0, 10, 1]);
+  assert.deepEqual(components[layout.bezel].offsetQ, [0, 10, 2]);
+  assert.deepEqual(components[layout.faceGlass].offsetQ, [0, 10, 3]);
+  assert.equal(bounds[layout.dial].max[2], bounds[layout.bezel].min[2]);
+  assert.equal(bounds[layout.bezel].max[2], bounds[layout.faceGlass].min[2]);
+  assert.deepEqual(components[layout.hourStuds].dimsQ, [28, 28, 1]);
+  assert.deepEqual(components[layout.hands].dimsQ, [16, 16, 1]);
+  assert.deepEqual(components[layout.centerPin].dimsQ, [3, 3, 1]);
+  assert.equal(bounds[layout.hourStuds].min[2], bounds[layout.faceGlass].max[2]);
+  assert.equal(bounds[layout.hands].min[2], bounds[layout.hourStuds].max[2]);
+  assert.equal(bounds[layout.centerPin].min[2], bounds[layout.hands].max[2]);
+  const pendulumGlass = bounds[layout.pendulumGlass];
+  const [leftFrame, rightFrame, topFrame, bottomFrame] = layout.pendulumFrame.map((index) => bounds[index]);
+  assert.equal(pendulumGlass.min[0], leftFrame.max[0]);
+  assert.equal(pendulumGlass.max[0], rightFrame.min[0]);
+  assert.equal(pendulumGlass.max[1], topFrame.min[1]);
+  assert.equal(pendulumGlass.min[1], bottomFrame.max[1]);
+  const [rod, bob] = layout.pendulum.map((index) => bounds[index]);
+  assert.equal(rod.min[2], pendulumGlass.max[2]);
+  assert.equal(bob.min[2], pendulumGlass.max[2]);
+  assert.equal(rod.min[1], bob.max[1]);
   for (let left = 0; left < bounds.length; left += 1) {
     for (let right = left + 1; right < bounds.length; right += 1) {
       assert.equal(positiveVolumeOverlap(bounds[left], bounds[right]), false, `${item.key} components ${left} and ${right} intersect`);

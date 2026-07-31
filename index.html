@@ -40,9 +40,10 @@
       }
     </script>
 
-    <div class="shader-layer" aria-hidden="true">
-      <canvas id="voxelShader"></canvas>
-      <div class="shader-vignette"></div>
+    <div class="home-world-layer" aria-hidden="true">
+      <div class="home-world-static"></div>
+      <canvas id="homeWorldCanvas" data-scene-ready="false" data-scene-renderer="chunk.js-webgl2"></canvas>
+      <div class="home-world-vignette"></div>
     </div>
 
     <nav class="side-nav" aria-label="Section navigation" data-home-i18n-aria-label="sideNav.aria">
@@ -115,12 +116,14 @@
               <li data-home-i18n="hero.badges.watchers">Guardian Network Coming Soon</li>
             </ul>
           </div>
-          <div class="hero-logo-wrap">
-            <video class="hero-logo hero-logo-video" autoplay muted loop playsinline preload="metadata" poster="/media/nck-hero-logo-v0149.png" aria-hidden="true">
-              <source src="/media/nck-hero-logo-v0149.webm" type="video/webm" />
-              <img src="/media/nck.png" alt="" />
-            </video>
-            <span aria-hidden="true"></span>
+          <div class="hero-world-stage" aria-hidden="true">
+            <div class="hero-logo-wrap home-world-logo-fallback">
+              <video class="hero-logo hero-logo-video" autoplay muted loop playsinline preload="metadata" poster="/media/nck-hero-logo-v0149.png">
+                <source src="/media/nck-hero-logo-v0149.webm" type="video/webm" />
+                <img src="/media/nck.png" alt="" />
+              </video>
+              <span></span>
+            </div>
           </div>
         </div>
       </section>

@@ -12,8 +12,8 @@
   background: #0c0e12;
   color: #e2e2e8;
   --bg: #0c0e12;
-  --panel: rgba(255, 255, 255, 0.035);
-  --panel-strong: rgba(255, 255, 255, 0.06);
+  --panel: rgba(8, 12, 17, 0.3);
+  --panel-strong: rgba(8, 12, 17, 0.42);
   --line: rgba(255, 255, 255, 0.08);
   --blue: #00a3ff;
   --blue-soft: #98cbff;
@@ -55,27 +55,52 @@ img {
   max-width: 100%;
 }
 
-.shader-layer {
+.home-world-layer {
   position: fixed;
   inset: 0;
   z-index: 0;
   overflow: hidden;
+  background: var(--bg);
   pointer-events: none;
 }
 
-.shader-layer canvas {
+.home-world-layer canvas,
+.home-world-static,
+.home-world-vignette {
+  position: absolute;
+  inset: 0;
+}
+
+.home-world-layer canvas {
+  z-index: 1;
   width: 100%;
   height: 100%;
   display: block;
+  opacity: 0;
+  transition: opacity 400ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.shader-vignette {
-  position: absolute;
-  inset: 0;
+.home-world-static {
+  z-index: 0;
   background:
-    linear-gradient(180deg, rgba(12, 14, 18, 0.58), transparent 38%, rgba(12, 14, 18, 0.64)),
-    radial-gradient(circle at 50% 50%, transparent 0%, rgba(12, 14, 18, 0.2) 48%, rgba(12, 14, 18, 0.75) 100%);
-  mix-blend-mode: multiply;
+    radial-gradient(circle at 74% 46%, rgba(24, 92, 119, 0.35), transparent 34%),
+    linear-gradient(150deg, #121b22 0%, #0c1218 44%, #090b0f 100%);
+  transition: opacity 400ms cubic-bezier(0.4, 0, 1, 1);
+}
+
+.home-world-vignette {
+  z-index: 2;
+  background:
+    linear-gradient(90deg, rgba(7, 10, 14, 0.52) 0%, rgba(7, 10, 14, 0.16) 48%, rgba(7, 10, 14, 0.08) 70%, rgba(7, 10, 14, 0.32) 100%),
+    linear-gradient(180deg, rgba(7, 10, 14, 0.38), transparent 26%, transparent 70%, rgba(7, 10, 14, 0.58));
+}
+
+.home-world-ready .home-world-layer canvas {
+  opacity: 1;
+}
+
+.home-world-ready .home-world-static {
+  opacity: 0;
 }
 
 .site-header {
@@ -453,6 +478,21 @@ img {
   position: relative;
 }
 
+.hero-world-stage {
+  display: grid;
+  min-height: clamp(22rem, 52vh, 38rem);
+  place-items: center;
+}
+
+.home-world-logo-fallback {
+  transition: opacity 250ms cubic-bezier(0.4, 0, 1, 1), visibility 0ms linear 250ms;
+}
+
+.home-world-ready .home-world-logo-fallback {
+  visibility: hidden;
+  opacity: 0;
+}
+
 .hero-logo-wrap span {
   position: absolute;
   inset: 0;
@@ -775,7 +815,18 @@ dt {
   border-radius: 0.5rem;
   background: var(--panel);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(10px);
+}
+
+.home-world-ready .hero-copy,
+.home-world-ready .world-copy,
+.home-world-ready .watcher-side-copy,
+.home-world-ready .roadmap-layout {
+  padding: clamp(1.1rem, 2.5vw, 2rem);
+  border: 1px solid rgba(152, 203, 255, 0.12);
+  border-radius: 0.5rem;
+  background: rgba(7, 10, 14, 0.3);
+  backdrop-filter: blur(10px);
 }
 
 .module-card {
@@ -1469,6 +1520,10 @@ dt {
     text-align: center;
   }
 
+  .hero-world-stage {
+    min-height: clamp(15rem, 34vh, 24rem);
+  }
+
   .hero-subtitle {
     margin-right: auto;
     margin-left: auto;
@@ -1589,6 +1644,12 @@ dt {
     margin: 0.75rem auto 0.35rem;
   }
 
+  #section-0 .hero-world-stage {
+    order: 3;
+    width: 100%;
+    min-height: 28vh;
+  }
+
   #section-0 .hero-logo-wrap span {
     transform: scale(1.08);
     filter: blur(30px);
@@ -1618,6 +1679,13 @@ dt {
     margin: 0.35rem auto 0;
     font-size: 0.95rem;
     line-height: 1.62;
+  }
+
+
+  .home-world-vignette {
+    background:
+      linear-gradient(180deg, rgba(7, 10, 14, 0.44), rgba(7, 10, 14, 0.08) 36%, rgba(7, 10, 14, 0.18) 68%, rgba(7, 10, 14, 0.62)),
+      linear-gradient(90deg, rgba(7, 10, 14, 0.24), transparent 50%, rgba(7, 10, 14, 0.22));
   }
 
   .hero-logo {
@@ -1727,6 +1795,14 @@ dt {
 
   .site-footer nav {
     gap: 0.9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-world-layer canvas,
+  .home-world-static,
+  .home-world-logo-fallback {
+    transition: none;
   }
 }
 

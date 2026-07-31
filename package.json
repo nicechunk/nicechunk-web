@@ -12,6 +12,7 @@
     "dev": "vite --host 0.0.0.0",
     "preview": "vite preview --host 0.0.0.0",
     "test:forge-volume": "node tests/forged-item-volume-codec.test.mjs",
+    "test:home-world": "node tests/home-chunkjs-scene.test.mjs",
     "validate:ncm-fixtures": "node scripts/validate-ncm-fixtures.mjs",
     "validate:release": "npm run audit:deps && npm run audit:licenses && npm run build"
   },

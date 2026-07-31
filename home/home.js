@@ -1,6 +1,7 @@
 import "./style.css";
 import "../src/site-header.css";
 import { finishSiteLoading, setSiteLoadingProgress } from "../src/site-ui.js";
+import { createHomeWorldScene, HOME_WORLD_SECTION_VIEWS } from "./chunkjs-world-scene.js";
 
 const languageStorageKey = "nicechunk.language";
 const localeVersionPrefix = "nicechunk.home.locale.version.";
@@ -12,7 +13,7 @@ const container = document.querySelector("#scrollContainer");
 const sections = [...document.querySelectorAll(".snap-section")];
 const dots = [...document.querySelectorAll(".side-dot")];
 const header = document.querySelector("#siteHeader");
-const shaderCanvas = document.querySelector("#voxelShader");
+const homeWorldCanvas = document.querySelector("#homeWorldCanvas");
 const seedChunkCanvas = document.querySelector("#seedChunkCanvas");
 const seedValue = document.querySelector("#seedValue");
 const watcherNetworkCanvas = document.querySelector("#watcherNetworkCanvas");
@@ -36,6 +37,7 @@ const plannedLanguages = [
 let dictionary = {};
 let activeLanguage = normalizeLanguage(localStorage.getItem(languageStorageKey)) || "en";
 let activeSectionIndex = 0;
+let homeWorldScene = null;
 
 initHome();
 
@@ -49,9 +51,12 @@ async function initHome() {
   setupSectionObserver();
   setupNavigation();
   setupMobileSectionPaging();
-  setupShader(shaderCanvas, container);
+  homeWorldScene = createHomeWorldScene(homeWorldCanvas);
+  homeWorldScene.focus(HOME_WORLD_SECTION_VIEWS[activeSectionIndex], { immediate: true });
   setupSeedChunkAnimation(seedChunkCanvas, seedValue);
   setupWatcherNetworkAnimation(watcherNetworkCanvas);
+  setSiteLoadingProgress(82);
+  await Promise.race([homeWorldScene.ready, delay(1_800)]);
   finishSiteLoading();
 }
 
@@ -182,16 +187,20 @@ function updateWalletAction() {
 
 function setupSectionObserver() {
   if (!container || !sections.length) return;
+  const visibility = new Map(sections.map((section) => [section, 0]));
 
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        const index = sections.indexOf(entry.target);
-        setActiveSection(index);
+        visibility.set(entry.target, entry.isIntersecting ? entry.intersectionRatio : 0);
       });
+
+      const [mostVisible, ratio] = [...visibility.entries()]
+        .sort((left, right) => right[1] - left[1])[0] || [];
+      if (!mostVisible || ratio < 0.15) return;
+      setActiveSection(sections.indexOf(mostVisible));
     },
-    { root: container, threshold: 0.56 },
+    { root: container, threshold: [0.15, 0.3, 0.5, 0.7] },
   );
 
   sections.forEach((section) => observer.observe(section));
@@ -274,150 +283,11 @@ function scrollToSection(index) {
 
 function setActiveSection(index) {
   activeSectionIndex = Math.max(0, Math.min(sections.length - 1, index));
-  sections.forEach((section, sectionIndex) => section.classList.toggle("active", sectionIndex === index));
-  dots.forEach((dot, dotIndex) => dot.classList.toggle("active", dotIndex === index));
-  header?.classList.toggle("scrolled", index > 0);
-}
-
-function setupShader(canvas, scrollRoot) {
-  if (!canvas || !scrollRoot) return;
-  const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-  if (!gl) {
-    canvas.classList.add("shader-unavailable");
-    return;
-  }
-
-  const vertexSource = `
-attribute vec2 a_position;
-varying vec2 v_texCoord;
-void main() {
-  v_texCoord = a_position * 0.5 + 0.5;
-  gl_Position = vec4(a_position, 0.0, 1.0);
-}`;
-  const fragmentSource = `
-precision highp float;
-
-varying vec2 v_texCoord;
-uniform float u_time;
-uniform vec2 u_resolution;
-uniform float u_scrollProgress;
-uniform vec2 u_mouse;
-
-float random(vec2 st) {
-  return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
-}
-
-float sdBox(vec2 p, vec2 b) {
-  vec2 d = abs(p) - b;
-  return length(max(d, 0.0)) + min(max(d.x, d.y), 0.0);
-}
-
-void main() {
-  vec2 uv = v_texCoord;
-  vec2 center = (uv - 0.5) * 2.0;
-  center.x *= u_resolution.x / u_resolution.y;
-
-  vec3 blue = vec3(0.0, 0.639, 1.0);
-  vec3 green = vec3(0.549, 1.0, 0.0);
-  vec3 bg = vec3(0.047, 0.055, 0.071);
-
-  float p = u_scrollProgress;
-  float transition = abs(fract(p + 0.5) - 0.5) * 2.0;
-  float snap = smoothstep(0.0, 1.0, 1.0 - transition);
-  float zoom = mix(5.0, 20.0, snap);
-  if (p < 0.85) {
-    zoom = mix(1.0, 15.0, smoothstep(0.0, 1.0, p));
-  }
-
-  vec2 mouse = (u_mouse / u_resolution - 0.5) * 2.0;
-  mouse.x *= u_resolution.x / u_resolution.y;
-  vec2 pan = vec2(p * 3.0, p * 1.5) + vec2(u_time * 0.05, u_time * 0.03) + mouse * 0.08;
-  vec2 grid = (center / zoom) * 8.0 + pan;
-  vec2 id = floor(grid);
-  vec2 f = fract(grid) - 0.5;
-
-  float wave = sin(u_time * 0.8 + length(id) * 0.3) * 0.5 + 0.5;
-  float box = sdBox(f, vec2(0.42 + wave * 0.04));
-  float mask = smoothstep(0.01, 0.0, box);
-  float edge = smoothstep(0.02, 0.0, abs(box));
-
-  vec3 cube = mix(blue * 0.2, blue, wave);
-  if (random(id + 13.0) > 0.85) {
-    cube = mix(green * 0.2, green, wave);
-  }
-
-  vec3 color = mix(bg, cube, mask);
-  color += edge * cube * 1.5;
-  color += transition * blue * 0.05;
-  color *= 1.0 - length(center * 0.4);
-
-  gl_FragColor = vec4(color, 1.0);
-}`;
-
-  const program = gl.createProgram();
-  gl.attachShader(program, compileShader(gl, gl.VERTEX_SHADER, vertexSource));
-  gl.attachShader(program, compileShader(gl, gl.FRAGMENT_SHADER, fragmentSource));
-  gl.linkProgram(program);
-  gl.useProgram(program);
-
-  const buffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
-  const position = gl.getAttribLocation(program, "a_position");
-  gl.enableVertexAttribArray(position);
-  gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
-
-  const uniforms = {
-    time: gl.getUniformLocation(program, "u_time"),
-    resolution: gl.getUniformLocation(program, "u_resolution"),
-    scroll: gl.getUniformLocation(program, "u_scrollProgress"),
-    mouse: gl.getUniformLocation(program, "u_mouse"),
-  };
-  const mouse = { x: 0, y: 0 };
-  let scrollProgress = 0;
-
-  const syncSize = () => {
-    const width = canvas.clientWidth || window.innerWidth;
-    const height = canvas.clientHeight || window.innerHeight;
-    const scale = Math.min(window.devicePixelRatio || 1, 2);
-    const nextWidth = Math.floor(width * scale);
-    const nextHeight = Math.floor(height * scale);
-    if (canvas.width !== nextWidth || canvas.height !== nextHeight) {
-      canvas.width = nextWidth;
-      canvas.height = nextHeight;
-    }
-  };
-
-  window.addEventListener("resize", syncSize);
-  window.addEventListener("pointermove", (event) => {
-    const rect = canvas.getBoundingClientRect();
-    mouse.x = ((event.clientX - rect.left) / Math.max(rect.width, 1)) * canvas.width;
-    mouse.y = (1 - (event.clientY - rect.top) / Math.max(rect.height, 1)) * canvas.height;
-  });
-  scrollRoot.addEventListener("scroll", () => {
-    scrollProgress = scrollRoot.scrollTop / Math.max(scrollRoot.clientHeight, 1);
-  });
-
-  syncSize();
-  render(0);
-
-  function render(time) {
-    syncSize();
-    gl.viewport(0, 0, canvas.width, canvas.height);
-    gl.uniform1f(uniforms.time, time * 0.001);
-    gl.uniform2f(uniforms.resolution, canvas.width, canvas.height);
-    gl.uniform1f(uniforms.scroll, scrollProgress);
-    gl.uniform2f(uniforms.mouse, mouse.x, mouse.y);
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    requestAnimationFrame(render);
-  }
-}
-
-function compileShader(gl, type, source) {
-  const shader = gl.createShader(type);
-  gl.shaderSource(shader, source);
-  gl.compileShader(shader);
-  return shader;
+  sections.forEach((section, sectionIndex) => section.classList.toggle("active", sectionIndex === activeSectionIndex));
+  dots.forEach((dot, dotIndex) => dot.classList.toggle("active", dotIndex === activeSectionIndex));
+  header?.classList.toggle("scrolled", activeSectionIndex > 0);
+  const view = HOME_WORLD_SECTION_VIEWS[activeSectionIndex];
+  if (homeWorldCanvas?.dataset.sceneView !== view) homeWorldScene?.focus(view);
 }
 
 function setupSeedChunkAnimation(canvas, seedElement) {
@@ -781,3 +651,9 @@ function formatWallet(address) {
   if (address.length <= 10) return address;
   return `${address.slice(0, 4)}...${address.slice(-4)}`;
 }
+
+function delay(milliseconds) {
+  return new Promise((resolve) => window.setTimeout(resolve, milliseconds));
+}
+
+window.addEventListener("pagehide", () => homeWorldScene?.destroy(), { once: true });

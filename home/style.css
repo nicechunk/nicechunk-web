@@ -510,7 +510,7 @@ img {
   filter: drop-shadow(0 0 30px rgba(0, 163, 255, 0.48));
 }
 
-.hero-logo-video {
+.hero-logo-image {
   display: block;
   background: transparent;
   pointer-events: none;

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-01T05:52:53.116Z",
+  "generatedAt": "2026-08-01T11:12:23.367Z",
   "assetRoots": [
     "public/media",
     "p_d"
@@ -207,6 +207,16 @@
       "surface": "general-media",
       "sourceStatus": "project-media",
       "canonical": false
+    },
+    {
+      "path": "public/media/home-world-terrain-v1.bin",
+      "mediaType": "application/octet-stream",
+      "bytes": 340374,
+      "sha256": "2c722bf1bf35b09ced199edff3dcb203a11ef7288a2f81fdf188260a01d0e6b4",
+      "dimensions": null,
+      "surface": "homepage-world",
+      "sourceStatus": "generated-project-data",
+      "canonical": true
     },
     {
       "path": "public/media/login-preview.png",

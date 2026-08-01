@@ -20,6 +20,13 @@ const allowedLicenses = new Set([
 
 const trackedExceptions = new Map([
   [
+    "@horang-corp/avr-gcc-wasm",
+    {
+      license: "SEE LICENSE IN THIRD_PARTY_NOTICES.md",
+      reason: "Direct browser compiler dependency containing GPL-3.0-or-later GCC/binutils and avr-libc artifacts; retain its third-party notices and corresponding-source obligations as an explicit release review item.",
+    },
+  ],
+  [
     "argparse",
     {
       license: "Python-2.0",

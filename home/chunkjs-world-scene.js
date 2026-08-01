@@ -3,29 +3,26 @@ import noticeBoardDefinition from "../build_ncm/buildings/civic/covered-village-
 import hollowCottageDefinition from "../build_ncm/buildings/residential/hollow-cottage.json";
 import footbridgeDefinition from "../build_ncm/buildings/transport/stone-timber-footbridge.json";
 import windmillDefinition from "../build_ncm/buildings/agriculture/stone-timber-tower-windmill.json";
+import {
+  ACTOR_SITES,
+  DESKTOP_TERRAIN_VIEW_DISTANCE,
+  MINING_TARGET,
+  MOBILE_TERRAIN_VIEW_DISTANCE,
+  PRESENTATION_GROUND_Y,
+  PRESENTATION_WATER_BED_Y,
+  STRUCTURE_LAYOUT,
+  WORLD_CENTER,
+} from "./home-world-layout.js";
+import {
+  applyHomeWorldTerrain,
+  loadHomeWorldTerrain,
+} from "./home-world-terrain.js";
 
 const DEFAULT_RUNTIME_ROOT = "/chunk.js";
 const SECTION_VIEWS = Object.freeze(["arrival", "world", "market", "guardian", "roadmap"]);
-// A naturally generated, broad coastal plain from the canonical mainnet seed.
-const WORLD_CENTER = Object.freeze({ x: 2432, y: 100, z: 1712 });
-const MOBILE_TERRAIN_VIEW_DISTANCE = 6;
-const DESKTOP_TERRAIN_VIEW_DISTANCE = 7;
 const CAMERA_TRANSITION_MS = 1_180;
 const AVATAR_HEIGHT_BLOCKS = 1.75 / 0.4;
 const AVATAR_VISUAL_SCALE = AVATAR_HEIGHT_BLOCKS / 2.52;
-const PRESENTATION_GROUND_Y = 99;
-const PRESENTATION_WATER_Y = 96;
-const PRESENTATION_WATER_BED_Y = 93;
-const COASTAL_WATER_MARGIN = 18;
-const MINING_TARGET = Object.freeze({ x: 2385, z: 1644 });
-const ACTOR_SITES = Object.freeze({
-  boy: Object.freeze({ x: 2526, z: 1788, yaw: -2.35 }),
-  boyMine: Object.freeze({ x: 2388, z: 1648, yaw: -2.36 }),
-  girl: Object.freeze({ x: 2535, z: 1768, yaw: -2.42 }),
-  girlCottage: Object.freeze({ x: 2399, z: 1703, yaw: 1.48 }),
-  bridgeEast: Object.freeze({ x: 2464, z: 1700 }),
-  bridgeWest: Object.freeze({ x: 2428, z: 1700 }),
-});
 const ACTOR_ROUTES = Object.freeze({
   boy: createRoute([
     routeStop("idle", ACTOR_SITES.boy, 4_000),
@@ -54,76 +51,17 @@ const ACTOR_ROUTES = Object.freeze({
     routeWalk({ x: 2516, z: 1748 }, ACTOR_SITES.girl, 9_000),
   ]),
 });
-const PRESENTATION_LANDMASSES = Object.freeze([
-  Object.freeze({ x: 2392, z: 1715, radiusX: 77, radiusZ: 112 }),
-  Object.freeze({ x: 2494, z: 1712, radiusX: 83, radiusZ: 112 }),
-]);
-const WESTERN_BAY = Object.freeze({ x: 2356, z: 1710, radiusX: 43, radiusZ: 61 });
-const COASTAL_STAGE_BOUNDS = Object.freeze({ minX: 2320, maxX: 2559, minZ: 1600, maxZ: 1839 });
-const STRUCTURE_SPECS = Object.freeze([
-  Object.freeze({
-    id: "coastal-cottage",
-    definition: cottageDefinition,
-    minX: 2359,
-    minZ: 1687,
-    surfaceY: PRESENTATION_WATER_BED_Y,
-    quarterTurns: 0,
-    siteMode: "water",
-  }),
-  Object.freeze({
-    id: "river-footbridge",
-    definition: footbridgeDefinition,
-    minX: 2431,
-    minZ: 1694,
-    surfaceY: PRESENTATION_GROUND_Y,
-    quarterTurns: 0,
-    siteMode: "bridge",
-    walkable: true,
-    walkCorridor: Object.freeze({ minLocalZ: 4, maxLocalZ: 8 }),
-  }),
-  Object.freeze({
-    id: "village-notice-board",
-    definition: noticeBoardDefinition,
-    minX: 2480,
-    minZ: 1742,
-    surfaceY: 100,
-    quarterTurns: 1,
-  }),
-  Object.freeze({
-    id: "hollow-cottage",
-    definition: hollowCottageDefinition,
-    minX: 2488,
-    minZ: 1682,
-    surfaceY: 100,
-    quarterTurns: 2,
-  }),
-  Object.freeze({
-    id: "tower-windmill",
-    definition: windmillDefinition,
-    minX: 2510,
-    minZ: 1624,
-    surfaceY: 100,
-    quarterTurns: 2,
-  }),
-]);
-const PRESENTATION_TREES = Object.freeze([
-  Object.freeze({ x: 2400, z: 1629, height: 6 }),
-  Object.freeze({ x: 2373, z: 1770, height: 7 }),
-  Object.freeze({ x: 2414, z: 1800, height: 6 }),
-  Object.freeze({ x: 2490, z: 1652, height: 6 }),
-  Object.freeze({ x: 2531, z: 1712, height: 7 }),
-  Object.freeze({ x: 2508, z: 1791, height: 6 }),
-]);
-const PRESENTATION_PLANTS = Object.freeze([
-  Object.freeze({ x: 2520, z: 1735, block: "flowerYellow" }),
-  Object.freeze({ x: 2492, z: 1664, block: "flowerWhite" }),
-  Object.freeze({ x: 2533, z: 1762, block: "flowerPink" }),
-  Object.freeze({ x: 2498, z: 1772, block: "flowerBlue" }),
-  Object.freeze({ x: 2408, z: 1668, block: "flowerRed" }),
-  Object.freeze({ x: 2386, z: 1782, block: "grassPlant" }),
-  Object.freeze({ x: 2420, z: 1742, block: "grassPlant" }),
-  Object.freeze({ x: 2398, z: 1685, block: "flowerWhite" }),
-]);
+const STRUCTURE_DEFINITIONS = Object.freeze({
+  cottage: cottageDefinition,
+  noticeBoard: noticeBoardDefinition,
+  hollowCottage: hollowCottageDefinition,
+  footbridge: footbridgeDefinition,
+  windmill: windmillDefinition,
+});
+const STRUCTURE_SPECS = Object.freeze(STRUCTURE_LAYOUT.map((spec) => Object.freeze({
+  ...spec,
+  definition: STRUCTURE_DEFINITIONS[spec.definitionKey],
+})));
 
 const CAMERA_PRESETS = Object.freeze({
   arrival: Object.freeze({
@@ -163,7 +101,6 @@ export function createHomeWorldScene(canvas, options = {}) {
   const terrainViewDistance = lowPower || window.innerWidth < 700
     ? MOBILE_TERRAIN_VIEW_DISTANCE
     : DESKTOP_TERRAIN_VIEW_DISTANCE;
-  let expectedTerrainChunks = (terrainViewDistance * 2 + 1) ** 2;
   const terrainWorkerCount = lowPower || window.innerWidth < 700
     ? 2
     : Math.max(1, Math.min(4, Math.trunc(Number(navigator.hardwareConcurrency) || 4)));
@@ -192,6 +129,7 @@ export function createHomeWorldScene(canvas, options = {}) {
   let cameraStart = cameraPoseForView("arrival", canvasAspect(canvas));
   let cameraTarget = cameraStart;
   let lastMiningBurst = -1;
+  const buildMetrics = { baseBuilds: 0, remeshBuilds: 0 };
   let resolveReady;
   const ready = new Promise((resolve) => {
     resolveReady = resolve;
@@ -203,6 +141,9 @@ export function createHomeWorldScene(canvas, options = {}) {
     avatars: 0,
     drawCalls: 0,
     triangles: 0,
+    baseBuilds: 0,
+    remeshBuilds: 0,
+    requiredTerrainChunks: 0,
     maxFps,
   });
 
@@ -267,6 +208,7 @@ export function createHomeWorldScene(canvas, options = {}) {
       cameraState: camera,
     });
     const renderStats = renderer.render(camera, visibleChunks, avatars, overlaysForView(timestamp));
+    const readiness = cameraReadiness(camera);
     lastStats = Object.freeze({
       backend: "chunk.js-webgl2",
       terrainChunks: terrainChunks.length,
@@ -274,15 +216,51 @@ export function createHomeWorldScene(canvas, options = {}) {
       avatars: avatars.length,
       drawCalls: renderStats.drawCalls || 0,
       triangles: renderStats.triangles || 0,
+      baseBuilds: buildMetrics.baseBuilds,
+      remeshBuilds: buildMetrics.remeshBuilds,
+      requiredTerrainChunks: readiness.requiredTerrainChunks,
       maxFps,
     });
     canvas.dataset.sceneTerrainChunks = String(lastStats.terrainChunks);
     canvas.dataset.sceneStructureChunks = String(lastStats.structureChunks);
     canvas.dataset.sceneDrawCalls = String(lastStats.drawCalls);
     canvas.dataset.sceneTriangles = String(lastStats.triangles);
+    canvas.dataset.sceneRequiredTerrainChunks = String(readiness.requiredTerrainChunks);
+    canvas.dataset.sceneReadyTerrainChunks = String(readiness.readyTerrainChunks);
+    canvas.dataset.sceneRequiredStructureChunks = String(readiness.requiredStructureChunks);
 
-    if (canvas.dataset.sceneReady !== "true" && terrainChunks.length >= expectedTerrainChunks) markReady();
+    if (canvas.dataset.sceneReady !== "true" && readiness.ready) markReady();
     schedule();
+  }
+
+  function cameraReadiness(camera) {
+    const requiredTerrainIds = new Set();
+    for (const chunk of chunks.chunks.values()) {
+      if (runtime.chunkIntersectsCameraFrustum(terrainReadinessProbe(chunk), camera)) requiredTerrainIds.add(chunk.id);
+    }
+    const requiredStructures = structureChunks.filter((chunk) => runtime.chunkIntersectsCameraFrustum(chunk, camera));
+    for (const structure of requiredStructures) requiredTerrainIds.add(`${structure.chunkX},${structure.chunkZ}`);
+    let readyTerrainChunks = 0;
+    for (const id of requiredTerrainIds) {
+      if (gpuMeshReady(chunks.chunks.get(id))) readyTerrainChunks += 1;
+    }
+    const readyStructures = requiredStructures.filter(gpuMeshReady).length;
+    return {
+      ready: requiredTerrainIds.size > 0
+        && readyTerrainChunks === requiredTerrainIds.size
+        && readyStructures === requiredStructures.length,
+      requiredTerrainChunks: requiredTerrainIds.size,
+      readyTerrainChunks,
+      requiredStructureChunks: requiredStructures.length,
+    };
+  }
+
+  function recordBuildEvent(type) {
+    if (type === "chunk-build-done") buildMetrics.baseBuilds += 1;
+    else if (type === "chunk-remesh-done") buildMetrics.remeshBuilds += 1;
+    else return;
+    canvas.dataset.sceneBaseBuilds = String(buildMetrics.baseBuilds);
+    canvas.dataset.sceneRemeshBuilds = String(buildMetrics.remeshBuilds);
   }
 
   function updateActors(timestamp) {
@@ -393,8 +371,15 @@ export function createHomeWorldScene(canvas, options = {}) {
     try {
       await nextFrame();
       if (destroyed) return;
-      runtime = await loadChunkRuntime(options.runtimeRoot || DEFAULT_RUNTIME_ROOT);
+      const [loadedRuntime, presentationTerrain] = await Promise.all([
+        loadChunkRuntime(options.runtimeRoot || DEFAULT_RUNTIME_ROOT),
+        loadHomeWorldTerrain(options.terrainUrl),
+      ]);
+      runtime = loadedRuntime;
       if (destroyed) return;
+      if (presentationTerrain.generationVersion !== runtime.DEFAULT_GENERATION_VERSION) {
+        throw new Error("Homepage terrain generation does not match the active Chunk.js runtime.");
+      }
       worldConfig = runtime.createWorldGeneratorConfig({
         worldSeed: runtime.MAINNET_WORLD_SEED,
         generationVersion: runtime.DEFAULT_GENERATION_VERSION,
@@ -421,21 +406,27 @@ export function createHomeWorldScene(canvas, options = {}) {
         deferInitialBuilds: true,
         visibilityLingerFrames: 0,
       });
+      chunks.setRenderLogger({ record: recordBuildEvent });
       chunks.updatePlayerPosition(WORLD_CENTER.x, WORLD_CENTER.y, WORLD_CENTER.z, {
         directionX: 0.18,
         directionZ: -1,
       });
-      const presentationBounds = presentationBoundsForView(WORLD_CENTER, terrainViewDistance);
-      chunks.applyPendingDelta(
-        createPresentationDeltas(runtime, worldConfig, presentationBounds),
-        "homepage-scene-presentation",
-      );
-      expectedTerrainChunks = chunks.chunks.size;
+      const villagerMeshes = createVillagerMeshes(runtime);
+      const terrainResult = await applyHomeWorldTerrain(chunks, presentationTerrain, {
+        yieldEvery: lowPower ? 4 : 8,
+        onProgress: ({ appliedChunks, appliedDeltas }) => {
+          canvas.dataset.sceneTerrainPreparedChunks = String(appliedChunks);
+          canvas.dataset.sceneTerrainPreparedDeltas = String(appliedDeltas);
+        },
+      });
+      canvas.dataset.sceneTerrainTotalChunks = String(chunks.chunks.size);
+      canvas.dataset.sceneTerrainDeltas = String(terrainResult.appliedDeltas);
+      canvas.dataset.sceneTerrainFingerprint = presentationTerrain.fingerprint;
       chunks.setBuildConcurrencyLimit(terrainWorkerCount);
       const structures = createStructures(runtime);
       structureChunks = structures.chunks;
       structureWalkSurfaces = structures.walkSurfaces;
-      const [boyMesh, girlMesh] = await createVillagerMeshes(runtime);
+      const [boyMesh, girlMesh] = await villagerMeshes;
       if (destroyed) return;
       renderer.uploadAvatarMesh("villager-boy", boyMesh);
       renderer.uploadAvatarMesh("villager-girl", girlMesh);
@@ -539,6 +530,7 @@ async function loadChunkRuntime(runtimeRoot) {
     avatarMesh,
     camera,
     renderer,
+    frustum,
     blockRegistry,
     worldGenerator,
   ] = await Promise.all([
@@ -548,6 +540,7 @@ async function loadChunkRuntime(runtimeRoot) {
     load("renderer/avatar-mesh.js"),
     load("renderer/camera.js"),
     load("renderer/webgl2-renderer.js"),
+    load("renderer/frustum.js"),
     load("world/block-registry.js"),
     load("world/world-generator.js"),
   ]);
@@ -559,6 +552,7 @@ async function loadChunkRuntime(runtimeRoot) {
     createAvatarMeshFromNcm: avatarMesh.createAvatarMeshFromNcm,
     createCameraState: camera.createCameraState,
     WebGL2VoxelRenderer: renderer.WebGL2VoxelRenderer,
+    chunkIntersectsCameraFrustum: frustum.chunkIntersectsCameraFrustum,
     BLOCK_ID: blockRegistry.BLOCK_ID,
     MATERIAL_ID: blockRegistry.MATERIAL_ID,
     createWorldGeneratorConfig: worldGenerator.createWorldGeneratorConfig,
@@ -635,142 +629,6 @@ async function fetchNcm(url) {
   const code = (await response.text()).trim();
   if (!code.startsWith("NCM2:") && !code.startsWith("NCM4:")) throw new Error("Canonical avatar model is invalid.");
   return code;
-}
-
-function createPresentationDeltas(runtime, worldConfig, bounds = COASTAL_STAGE_BOUNDS) {
-  const deltas = new Map();
-  const put = (worldX, worldY, worldZ, blockId) => {
-    if (worldX < bounds.minX || worldX > bounds.maxX || worldZ < bounds.minZ || worldZ > bounds.maxZ) return;
-    deltas.set(`${worldX},${worldY},${worldZ}`, { worldX, worldY, worldZ, blockId });
-  };
-
-  addCoastalStageDeltas(runtime, worldConfig, put, bounds);
-  addStructureSiteDeltas(runtime, worldConfig, put);
-  put(MINING_TARGET.x, PRESENTATION_GROUND_Y, MINING_TARGET.z, runtime.BLOCK_ID.coal);
-  PRESENTATION_TREES.forEach((tree) => addTreeDeltas(runtime, worldConfig, tree, put));
-  PRESENTATION_PLANTS.forEach((plant) => {
-    put(plant.x, PRESENTATION_GROUND_Y + 1, plant.z, runtime.BLOCK_ID[plant.block]);
-  });
-  return [...deltas.values()];
-}
-
-function presentationBoundsForView(center, viewDistance) {
-  const chunkSize = 16;
-  const centerChunkX = Math.floor(center.x / chunkSize);
-  const centerChunkZ = Math.floor(center.z / chunkSize);
-  return Object.freeze({
-    minX: Math.max(COASTAL_STAGE_BOUNDS.minX, (centerChunkX - viewDistance) * chunkSize),
-    maxX: Math.min(COASTAL_STAGE_BOUNDS.maxX, (centerChunkX + viewDistance + 1) * chunkSize - 1),
-    minZ: Math.max(COASTAL_STAGE_BOUNDS.minZ, (centerChunkZ - viewDistance) * chunkSize),
-    maxZ: Math.min(COASTAL_STAGE_BOUNDS.maxZ, (centerChunkZ + viewDistance + 1) * chunkSize - 1),
-  });
-}
-
-function addCoastalStageDeltas(runtime, worldConfig, put, bounds) {
-  const { minX, maxX, minZ, maxZ } = bounds;
-  for (let z = minZ; z <= maxZ; z += 1) {
-    for (let x = minX; x <= maxX; x += 1) {
-      const landDistance = Math.min(...PRESENTATION_LANDMASSES.map((landmass) => ellipseDistance(x, z, landmass)));
-      const riverDistance = presentationRiverDistance(x, z);
-      const bayDistance = ellipseDistance(x, z, WESTERN_BAY);
-      const edgeDistance = presentationEdgeDistance(x, z);
-      if (landDistance > 0 || riverDistance <= 0 || bayDistance <= 0 || edgeDistance <= 0) {
-        addWaterColumn(runtime, worldConfig, x, z, put);
-        continue;
-      }
-      const shoreDistance = Math.min(-landDistance, riverDistance, bayDistance, edgeDistance);
-      if (shoreDistance <= 4.25) {
-        addLandColumn(runtime, worldConfig, x, z, PRESENTATION_WATER_Y + 1, runtime.BLOCK_ID.sand, put, true);
-        continue;
-      }
-      addLandColumn(runtime, worldConfig, x, z, PRESENTATION_GROUND_Y, runtime.BLOCK_ID.grass, put, true);
-    }
-  }
-}
-
-function addWaterColumn(runtime, worldConfig, x, z, put) {
-  const sourceY = runtime.terrainSurfaceHeight(worldConfig, x, z);
-  put(x, PRESENTATION_WATER_BED_Y, z, runtime.BLOCK_ID.sand);
-  for (let y = PRESENTATION_WATER_BED_Y + 1; y <= PRESENTATION_WATER_Y; y += 1) {
-    put(x, y, z, runtime.BLOCK_ID.water);
-  }
-  for (let y = PRESENTATION_WATER_Y + 1; y <= Math.max(PRESENTATION_WATER_Y + 1, sourceY + 8); y += 1) {
-    put(x, y, z, runtime.BLOCK_ID.air);
-  }
-}
-
-function addLandColumn(runtime, worldConfig, x, z, targetY, topBlockId, put, clearDecorations) {
-  const sourceY = runtime.terrainSurfaceHeight(worldConfig, x, z);
-  const fillStart = Math.min(sourceY + 1, targetY);
-  for (let y = fillStart; y < targetY; y += 1) put(x, y, z, runtime.BLOCK_ID.dirt);
-  put(x, targetY, z, topBlockId);
-  const clearTop = clearDecorations ? sourceY + 8 : Math.max(sourceY, targetY);
-  for (let y = targetY + 1; y <= clearTop; y += 1) put(x, y, z, runtime.BLOCK_ID.air);
-}
-
-function presentationRiverDistance(x, z) {
-  const amount = clamp(
-    (z - COASTAL_STAGE_BOUNDS.minZ) / (COASTAL_STAGE_BOUNDS.maxZ - COASTAL_STAGE_BOUNDS.minZ),
-    0,
-    1,
-  );
-  const centerX = 2446 + Math.sin(amount * Math.PI * 2) * 4;
-  const halfWidth = 8.5 + Math.sin(amount * Math.PI) * 1.5;
-  return Math.abs(x - centerX) - halfWidth;
-}
-
-function presentationEdgeDistance(x, z) {
-  return Math.min(
-    x - COASTAL_STAGE_BOUNDS.minX,
-    COASTAL_STAGE_BOUNDS.maxX - x,
-    z - COASTAL_STAGE_BOUNDS.minZ,
-    COASTAL_STAGE_BOUNDS.maxZ - z,
-  ) - COASTAL_WATER_MARGIN;
-}
-
-function ellipseDistance(x, z, ellipse) {
-  const normalized = Math.hypot((x - ellipse.x) / ellipse.radiusX, (z - ellipse.z) / ellipse.radiusZ);
-  return (normalized - 1) * Math.min(ellipse.radiusX, ellipse.radiusZ);
-}
-
-function addStructureSiteDeltas(runtime, worldConfig, put) {
-  for (const spec of STRUCTURE_SPECS) {
-    const building = runtime.parseNcm3Building(spec.definition.ncm.code, { id: spec.id });
-    const width = spec.quarterTurns % 2 === 0 ? building.size.x : building.size.z;
-    const depth = spec.quarterTurns % 2 === 0 ? building.size.z : building.size.x;
-    const groundY = spec.surfaceY - 1;
-    for (let z = spec.minZ; z < spec.minZ + depth; z += 1) {
-      for (let x = spec.minX; x < spec.minX + width; x += 1) {
-        const sourceY = runtime.terrainSurfaceHeight(worldConfig, x, z);
-        if (spec.siteMode === "water") {
-          addWaterColumn(runtime, worldConfig, x, z, put);
-        } else if (spec.siteMode !== "bridge") {
-          addLandColumn(runtime, worldConfig, x, z, groundY, runtime.BLOCK_ID.grass, put, true);
-        }
-        const clearFromY = spec.siteMode === "water" ? PRESENTATION_WATER_Y + 1 : PRESENTATION_GROUND_Y + 1;
-        for (let y = clearFromY; y <= Math.max(sourceY + 14, clearFromY); y += 1) {
-          put(x, y, z, runtime.BLOCK_ID.air);
-        }
-      }
-    }
-  }
-}
-
-function addTreeDeltas(runtime, worldConfig, tree, put) {
-  const groundY = PRESENTATION_GROUND_Y;
-  const crownY = groundY + tree.height;
-  for (let dy = -2; dy <= 2; dy += 1) {
-    for (let dz = -2; dz <= 2; dz += 1) {
-      for (let dx = -2; dx <= 2; dx += 1) {
-        const distance = Math.abs(dx) + Math.abs(dz) + Math.max(0, Math.abs(dy) - 1);
-        if (distance > 4 || (dx === 0 && dz === 0 && dy < 1)) continue;
-        put(tree.x + dx, crownY + dy, tree.z + dz, runtime.BLOCK_ID.leaves);
-      }
-    }
-  }
-  for (let y = groundY + 1; y <= crownY + 1; y += 1) {
-    put(tree.x, y, tree.z, runtime.BLOCK_ID.trunk);
-  }
 }
 
 function routeWalk(from, to, durationMs) {
@@ -968,6 +826,28 @@ function cameraStateFromPose(runtime, pose, aspect, far = 560) {
     near: 0.1,
     far,
   });
+}
+
+function terrainReadinessProbe(chunk) {
+  const centerY = (PRESENTATION_WATER_BED_Y + PRESENTATION_GROUND_Y + 12) * 0.5;
+  return {
+    chunkX: chunk.chunkX,
+    chunkZ: chunk.chunkZ,
+    frustumCullEligible: true,
+    frustumBounds: {
+      centerX: chunk.chunkX * 16 + 8,
+      centerY,
+      centerZ: chunk.chunkZ * 16 + 8,
+      radius: Math.hypot(12, 14, 12),
+    },
+  };
+}
+
+function gpuMeshReady(chunk) {
+  if (!chunk?.mesh) return false;
+  if (chunk.mesh.indexCount > 0 && !chunk.gpuUploaded) return false;
+  if (chunk.visualMesh?.indexCount > 0 && !chunk.visualGpuUploaded) return false;
+  return true;
 }
 
 function isWebGl2UnavailableError(error) {

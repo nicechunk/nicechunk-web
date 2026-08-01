@@ -10,6 +10,7 @@
     "build": "vite build",
     "build:nginx": "vite build",
     "dev": "vite --host 0.0.0.0",
+    "generate:home-world": "node scripts/generate-home-world-terrain.mjs",
     "preview": "vite preview --host 0.0.0.0",
     "test:forge-volume": "node tests/forged-item-volume-codec.test.mjs",
     "test:home-world": "node tests/home-chunkjs-scene.test.mjs",
@@ -35,6 +36,7 @@
     "vite": "^8.1.0"
   },
   "overrides": {
+    "brace-expansion": "^2.1.4",
     "mocha": {
       "diff": "^9.0.0",
       "serialize-javascript": "^7.0.6"

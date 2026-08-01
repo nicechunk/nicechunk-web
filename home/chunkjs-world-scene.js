@@ -1,137 +1,154 @@
 import cottageDefinition from "../build_ncm/buildings/coastal/seaside-cottage.json";
-import marketDefinition from "../build_ncm/buildings/commerce/covered-market-stall.json";
-import mineDefinition from "../build_ncm/buildings/mining/timber-mine-headframe.json";
+import noticeBoardDefinition from "../build_ncm/buildings/civic/covered-village-notice-board.json";
+import hollowCottageDefinition from "../build_ncm/buildings/residential/hollow-cottage.json";
+import footbridgeDefinition from "../build_ncm/buildings/transport/stone-timber-footbridge.json";
 import windmillDefinition from "../build_ncm/buildings/agriculture/stone-timber-tower-windmill.json";
 
 const DEFAULT_RUNTIME_ROOT = "/chunk.js";
 const SECTION_VIEWS = Object.freeze(["arrival", "world", "market", "guardian", "roadmap"]);
 // A naturally generated, broad coastal plain from the canonical mainnet seed.
 const WORLD_CENTER = Object.freeze({ x: 2432, y: 100, z: 1712 });
-const MOBILE_TERRAIN_VIEW_DISTANCE = 4;
-const DESKTOP_TERRAIN_VIEW_DISTANCE = 5;
+const MOBILE_TERRAIN_VIEW_DISTANCE = 6;
+const DESKTOP_TERRAIN_VIEW_DISTANCE = 7;
 const CAMERA_TRANSITION_MS = 1_180;
 const AVATAR_HEIGHT_BLOCKS = 1.75 / 0.4;
 const AVATAR_VISUAL_SCALE = AVATAR_HEIGHT_BLOCKS / 2.52;
 const PRESENTATION_GROUND_Y = 99;
 const PRESENTATION_WATER_Y = 96;
 const PRESENTATION_WATER_BED_Y = 93;
-const MINING_TARGET = Object.freeze({ x: 2405, z: 1683 });
+const MINING_TARGET = Object.freeze({ x: 2385, z: 1644 });
 const ACTOR_SITES = Object.freeze({
-  boy: Object.freeze({ x: 2514, z: 1744, yaw: -2.35 }),
-  boyMine: Object.freeze({ x: 2408, z: 1686, yaw: -2.36 }),
-  girl: Object.freeze({ x: 2518, z: 1742, yaw: -2.42 }),
-  girlMarket: Object.freeze({ x: 2431, z: 1626, yaw: -2.7 }),
+  boy: Object.freeze({ x: 2544, z: 1785, yaw: -2.35 }),
+  boyMine: Object.freeze({ x: 2388, z: 1648, yaw: -2.36 }),
+  girl: Object.freeze({ x: 2553, z: 1768, yaw: -2.42 }),
+  girlCottage: Object.freeze({ x: 2399, z: 1703, yaw: 1.48 }),
+  bridgeEast: Object.freeze({ x: 2464, z: 1700 }),
+  bridgeWest: Object.freeze({ x: 2428, z: 1700 }),
 });
 const ACTOR_ROUTES = Object.freeze({
   boy: createRoute([
     routeStop("idle", ACTOR_SITES.boy, 4_000),
-    routeWalk(ACTOR_SITES.boy, { x: 2471, z: 1678 }, 14_500),
-    routeWalk({ x: 2471, z: 1678 }, { x: 2439, z: 1669 }, 6_600),
-    routeWalk({ x: 2439, z: 1669 }, ACTOR_SITES.boyMine, 6_200),
+    routeWalk(ACTOR_SITES.boy, { x: 2506, z: 1750 }, 9_000),
+    routeWalk({ x: 2506, z: 1750 }, ACTOR_SITES.bridgeEast, 9_000),
+    routeWalk(ACTOR_SITES.bridgeEast, ACTOR_SITES.bridgeWest, 8_400),
+    routeWalk(ACTOR_SITES.bridgeWest, { x: 2408, z: 1678 }, 7_000),
+    routeWalk({ x: 2408, z: 1678 }, ACTOR_SITES.boyMine, 7_200),
     routeStop("mine", ACTOR_SITES.boyMine, 5_200, { lookAt: MINING_TARGET }),
-    routeWalk(ACTOR_SITES.boyMine, { x: 2441, z: 1669 }, 6_600),
-    routeWalk({ x: 2441, z: 1669 }, { x: 2474, z: 1679 }, 6_800),
-    routeWalk({ x: 2474, z: 1679 }, ACTOR_SITES.boy, 14_200),
+    routeWalk(ACTOR_SITES.boyMine, { x: 2408, z: 1678 }, 7_200),
+    routeWalk({ x: 2408, z: 1678 }, ACTOR_SITES.bridgeWest, 7_000),
+    routeWalk(ACTOR_SITES.bridgeWest, ACTOR_SITES.bridgeEast, 8_400),
+    routeWalk(ACTOR_SITES.bridgeEast, { x: 2506, z: 1750 }, 9_000),
+    routeWalk({ x: 2506, z: 1750 }, ACTOR_SITES.boy, 9_000),
   ]),
   girl: createRoute([
     routeStop("idle", ACTOR_SITES.girl, 4_400),
-    routeWalk(ACTOR_SITES.girl, { x: 2488, z: 1677 }, 18_000),
-    routeWalk({ x: 2488, z: 1677 }, { x: 2452, z: 1650 }, 7_800),
-    routeWalk({ x: 2452, z: 1650 }, ACTOR_SITES.girlMarket, 5_400),
-    routeStop("idle", ACTOR_SITES.girlMarket, 3_000, { yaw: 2.35 }),
-    routeWalk(ACTOR_SITES.girlMarket, { x: 2451, z: 1668 }, 5_400),
-    routeStop("idle", { x: 2451, z: 1668 }, 2_200, { yaw: 1.35 }),
-    routeWalk({ x: 2451, z: 1668 }, { x: 2477, z: 1682 }, 5_800),
-    routeWalk({ x: 2477, z: 1682 }, ACTOR_SITES.girl, 17_500),
+    routeWalk(ACTOR_SITES.girl, { x: 2516, z: 1748 }, 9_000),
+    routeWalk({ x: 2516, z: 1748 }, ACTOR_SITES.bridgeEast, 9_000),
+    routeWalk(ACTOR_SITES.bridgeEast, ACTOR_SITES.bridgeWest, 8_400),
+    routeWalk(ACTOR_SITES.bridgeWest, ACTOR_SITES.girlCottage, 8_200),
+    routeStop("idle", ACTOR_SITES.girlCottage, 3_600, { yaw: 1.48 }),
+    routeWalk(ACTOR_SITES.girlCottage, ACTOR_SITES.bridgeWest, 8_200),
+    routeWalk(ACTOR_SITES.bridgeWest, ACTOR_SITES.bridgeEast, 8_400),
+    routeWalk(ACTOR_SITES.bridgeEast, { x: 2516, z: 1748 }, 9_000),
+    routeWalk({ x: 2516, z: 1748 }, ACTOR_SITES.girl, 9_000),
   ]),
 });
-const COASTAL_TERRACES = Object.freeze([
-  Object.freeze({ x: 2395, z: 1659, radiusX: 69, radiusZ: 42 }),
-  Object.freeze({ x: 2460, z: 1655, radiusX: 55, radiusZ: 29 }),
-  Object.freeze({ x: 2518, z: 1744, radiusX: 36, radiusZ: 26 }),
+const PRESENTATION_LANDMASSES = Object.freeze([
+  Object.freeze({ x: 2392, z: 1715, radiusX: 77, radiusZ: 112 }),
+  Object.freeze({ x: 2494, z: 1712, radiusX: 83, radiusZ: 112 }),
 ]);
-const COASTAL_CAUSEWAYS = Object.freeze([
-  Object.freeze({ from: ACTOR_SITES.boy, to: Object.freeze({ x: 2471, z: 1678 }), radius: 5 }),
-  Object.freeze({ from: ACTOR_SITES.girl, to: Object.freeze({ x: 2488, z: 1677 }), radius: 5 }),
-  Object.freeze({ from: Object.freeze({ x: 2452, z: 1650 }), to: ACTOR_SITES.girlMarket, radius: 4 }),
-]);
-const COASTAL_STAGE_BOUNDS = Object.freeze({ minX: 2348, maxX: 2538, minZ: 1622, maxZ: 1768 });
+const WESTERN_BAY = Object.freeze({ x: 2356, z: 1710, radiusX: 43, radiusZ: 61 });
+const COASTAL_STAGE_BOUNDS = Object.freeze({ minX: 2320, maxX: 2559, minZ: 1600, maxZ: 1839 });
 const STRUCTURE_SPECS = Object.freeze([
   Object.freeze({
     id: "coastal-cottage",
     definition: cottageDefinition,
-    minX: 2378,
-    minZ: 1630,
-    surfaceY: 100,
+    minX: 2359,
+    minZ: 1687,
+    surfaceY: PRESENTATION_WATER_BED_Y,
     quarterTurns: 0,
+    siteMode: "water",
   }),
   Object.freeze({
-    id: "covered-market",
-    definition: marketDefinition,
-    minX: 2418,
-    minZ: 1610,
-    surfaceY: 100,
-    quarterTurns: 2,
+    id: "river-footbridge",
+    definition: footbridgeDefinition,
+    minX: 2431,
+    minZ: 1694,
+    surfaceY: PRESENTATION_GROUND_Y,
+    quarterTurns: 0,
+    siteMode: "bridge",
+    walkable: true,
+    walkCorridor: Object.freeze({ minLocalZ: 4, maxLocalZ: 8 }),
   }),
   Object.freeze({
-    id: "mine-headframe",
-    definition: mineDefinition,
-    minX: 2382,
-    minZ: 1678,
+    id: "village-notice-board",
+    definition: noticeBoardDefinition,
+    minX: 2480,
+    minZ: 1742,
     surfaceY: 100,
     quarterTurns: 1,
   }),
   Object.freeze({
+    id: "hollow-cottage",
+    definition: hollowCottageDefinition,
+    minX: 2488,
+    minZ: 1682,
+    surfaceY: 100,
+    quarterTurns: 2,
+  }),
+  Object.freeze({
     id: "tower-windmill",
     definition: windmillDefinition,
-    minX: 2345,
-    minZ: 1644,
+    minX: 2510,
+    minZ: 1624,
     surfaceY: 100,
     quarterTurns: 2,
   }),
 ]);
 const PRESENTATION_TREES = Object.freeze([
-  Object.freeze({ x: 2454, z: 1645, height: 6 }),
-  Object.freeze({ x: 2355, z: 1683, height: 7 }),
-  Object.freeze({ x: 2521, z: 1661, height: 6 }),
-  Object.freeze({ x: 2481, z: 1640, height: 5 }),
+  Object.freeze({ x: 2400, z: 1629, height: 6 }),
+  Object.freeze({ x: 2373, z: 1770, height: 7 }),
+  Object.freeze({ x: 2414, z: 1800, height: 6 }),
+  Object.freeze({ x: 2490, z: 1652, height: 6 }),
+  Object.freeze({ x: 2531, z: 1712, height: 7 }),
+  Object.freeze({ x: 2508, z: 1791, height: 6 }),
 ]);
 const PRESENTATION_PLANTS = Object.freeze([
-  Object.freeze({ x: 2511, z: 1694, block: "flowerYellow" }),
-  Object.freeze({ x: 2487, z: 1662, block: "flowerWhite" }),
-  Object.freeze({ x: 2517, z: 1681, block: "flowerPink" }),
-  Object.freeze({ x: 2508, z: 1668, block: "flowerBlue" }),
-  Object.freeze({ x: 2435, z: 1658, block: "flowerRed" }),
-  Object.freeze({ x: 2471, z: 1664, block: "grassPlant" }),
-  Object.freeze({ x: 2450, z: 1649, block: "grassPlant" }),
-  Object.freeze({ x: 2369, z: 1674, block: "flowerWhite" }),
+  Object.freeze({ x: 2520, z: 1735, block: "flowerYellow" }),
+  Object.freeze({ x: 2492, z: 1664, block: "flowerWhite" }),
+  Object.freeze({ x: 2538, z: 1762, block: "flowerPink" }),
+  Object.freeze({ x: 2498, z: 1772, block: "flowerBlue" }),
+  Object.freeze({ x: 2408, z: 1668, block: "flowerRed" }),
+  Object.freeze({ x: 2386, z: 1782, block: "grassPlant" }),
+  Object.freeze({ x: 2420, z: 1742, block: "grassPlant" }),
+  Object.freeze({ x: 2398, z: 1685, block: "flowerWhite" }),
 ]);
 
 const CAMERA_PRESETS = Object.freeze({
   arrival: Object.freeze({
-    eye: [2523, 108.5, 1762],
-    target: [2452, 99.2, 1681],
-    fov: 44,
+    eye: [2585, 130, 1815],
+    target: [2444, 99.2, 1704],
+    fov: 47,
   }),
   world: Object.freeze({
-    eye: [2479, 109, 1740],
-    target: [MINING_TARGET.x, 99.5, MINING_TARGET.z],
+    eye: [2570, 122, 1805],
+    target: [2438, 99.5, 1698],
     fov: 45,
   }),
   market: Object.freeze({
-    eye: [2490, 109, 1695],
-    target: [2428, 100, 1620],
-    fov: 45,
-  }),
-  guardian: Object.freeze({
-    eye: [2488, 122, 1742],
-    target: [2368, 112, 1645],
+    eye: [2588, 119, 1805],
+    target: [2490, 101, 1715],
     fov: 43,
   }),
+  guardian: Object.freeze({
+    eye: [2595, 130, 1760],
+    target: [2518, 111, 1634],
+    fov: 42,
+  }),
   roadmap: Object.freeze({
-    eye: [2520, 142, 1780],
-    target: [2438, 99, 1680],
-    fov: 50,
+    eye: [2630, 192, 1885],
+    target: [2440, 99, 1715],
+    fov: 51,
   }),
 });
 
@@ -158,6 +175,7 @@ export function createHomeWorldScene(canvas, options = {}) {
   let renderer = null;
   let chunks = null;
   let structureChunks = [];
+  let structureWalkSurfaces = new Map();
   let avatars = [];
   let resizeObserver = null;
   let animationFrame = 0;
@@ -280,7 +298,7 @@ export function createHomeWorldScene(canvas, options = {}) {
     const miningProgress = miningActive ? boyPose.progress : 0;
 
     if (boy) {
-      positionAvatarAt(runtime, worldConfig, chunks, boy, boyPose);
+      positionAvatarAt(runtime, worldConfig, chunks, structureWalkSurfaces, boy, boyPose);
       boy.animation = {
         moving: boyPose.phase === "walk" && !reducedMotion.matches,
         miningProgress,
@@ -291,7 +309,7 @@ export function createHomeWorldScene(canvas, options = {}) {
       exposeActorState(canvas, "boy", boy, boyPose);
     }
     if (girl) {
-      positionAvatarAt(runtime, worldConfig, chunks, girl, girlPose);
+      positionAvatarAt(runtime, worldConfig, chunks, structureWalkSurfaces, girl, girlPose);
       girl.animation = {
         moving: girlPose.phase === "walk" && !reducedMotion.matches,
         timeMs: timestamp,
@@ -356,12 +374,13 @@ export function createHomeWorldScene(canvas, options = {}) {
     updateActors(startedAt);
     canvas.dataset.sceneReady = "true";
     canvas.dataset.sceneRenderer = "chunk.js-webgl2";
-    canvas.dataset.sceneTerrainProfile = "open-coastal-plain";
+    canvas.dataset.sceneTerrainProfile = "two-landmasses-river-bay";
+    canvas.dataset.sceneMapBounds = "240x240";
     canvas.dataset.sceneSeed = runtime.MAINNET_WORLD_SEED;
     canvas.dataset.sceneGeneration = String(runtime.DEFAULT_GENERATION_VERSION);
     canvas.dataset.sceneAvatars = "NCM2:villager-boy,NCM2:villager-girl";
     canvas.dataset.sceneBuildings = STRUCTURE_SPECS.map((spec) => `NCM3:${spec.id}`).join(",");
-    canvas.dataset.sceneActorBehavior = "waypoint-walk-idle-mine-loop";
+    canvas.dataset.sceneActorBehavior = "waypoint-walk-bridge-idle-mine-loop";
     document.documentElement.classList.remove("home-world-fallback");
     document.documentElement.classList.add("home-world-ready");
     options.onReady?.(lastStats);
@@ -387,10 +406,6 @@ export function createHomeWorldScene(canvas, options = {}) {
         maxChunkUploadsPerFrame: lowPower ? 2 : 5,
         maxMobileDpr: 1,
         maxDesktopDpr: lowPower ? 1 : 1.25,
-        cloudHeight: 176,
-        cloudRadius: 440,
-        cloudCellSize: lowPower ? 58 : 44,
-        cloudFarPadding: 100,
         maxVoxelParticles: lowPower ? 48 : 96,
       });
       renderer.init();
@@ -409,10 +424,16 @@ export function createHomeWorldScene(canvas, options = {}) {
         directionX: 0.18,
         directionZ: -1,
       });
-      chunks.applyPendingDelta(createPresentationDeltas(runtime, worldConfig), "homepage-scene-presentation");
+      const presentationBounds = presentationBoundsForView(WORLD_CENTER, terrainViewDistance);
+      chunks.applyPendingDelta(
+        createPresentationDeltas(runtime, worldConfig, presentationBounds),
+        "homepage-scene-presentation",
+      );
       expectedTerrainChunks = chunks.chunks.size;
       chunks.setBuildConcurrencyLimit(terrainWorkerCount);
-      structureChunks = createStructures(runtime);
+      const structures = createStructures(runtime);
+      structureChunks = structures.chunks;
+      structureWalkSurfaces = structures.walkSurfaces;
       const [boyMesh, girlMesh] = await createVillagerMeshes(runtime);
       if (destroyed) return;
       renderer.uploadAvatarMesh("villager-boy", boyMesh);
@@ -548,6 +569,7 @@ async function loadChunkRuntime(runtimeRoot) {
 
 function createStructures(runtime) {
   const chunks = [];
+  const walkSurfaces = new Map();
   let revision = 1;
   for (const spec of STRUCTURE_SPECS) {
     const building = runtime.parseNcm3Building(spec.definition.ncm.code, {
@@ -573,9 +595,19 @@ function createStructures(runtime) {
     placementChunks.forEach((chunk) => {
       chunk.sceneStructureId = spec.id;
     });
+    if (spec.walkable) addStructureWalkSurfaces(placement, spec, walkSurfaces);
     chunks.push(...placementChunks);
   }
-  return chunks;
+  return { chunks, walkSurfaces };
+}
+
+function addStructureWalkSurfaces(placement, spec, walkSurfaces) {
+  const corridor = spec.walkCorridor;
+  for (const voxel of placement.worldVoxels.values()) {
+    if (corridor && (voxel.localZ < corridor.minLocalZ || voxel.localZ > corridor.maxLocalZ)) continue;
+    const key = `${voxel.x},${voxel.z}`;
+    walkSurfaces.set(key, Math.max(walkSurfaces.get(key) ?? -Infinity, voxel.y));
+  }
 }
 
 async function createVillagerMeshes(runtime) {
@@ -604,43 +636,52 @@ async function fetchNcm(url) {
   return code;
 }
 
-function createPresentationDeltas(runtime, worldConfig) {
+function createPresentationDeltas(runtime, worldConfig, bounds = COASTAL_STAGE_BOUNDS) {
   const deltas = new Map();
   const put = (worldX, worldY, worldZ, blockId) => {
+    if (worldX < bounds.minX || worldX > bounds.maxX || worldZ < bounds.minZ || worldZ > bounds.maxZ) return;
     deltas.set(`${worldX},${worldY},${worldZ}`, { worldX, worldY, worldZ, blockId });
   };
 
-  addCoastalStageDeltas(runtime, worldConfig, put);
+  addCoastalStageDeltas(runtime, worldConfig, put, bounds);
   addStructureSiteDeltas(runtime, worldConfig, put);
   put(MINING_TARGET.x, PRESENTATION_GROUND_Y, MINING_TARGET.z, runtime.BLOCK_ID.coal);
   PRESENTATION_TREES.forEach((tree) => addTreeDeltas(runtime, worldConfig, tree, put));
   PRESENTATION_PLANTS.forEach((plant) => {
-    const surfaceY = runtime.terrainSurfaceHeight(worldConfig, plant.x, plant.z);
-    put(plant.x, surfaceY + 1, plant.z, runtime.BLOCK_ID[plant.block]);
+    put(plant.x, PRESENTATION_GROUND_Y + 1, plant.z, runtime.BLOCK_ID[plant.block]);
   });
   return [...deltas.values()];
 }
 
-function addCoastalStageDeltas(runtime, worldConfig, put) {
-  const { minX, maxX, minZ, maxZ } = COASTAL_STAGE_BOUNDS;
+function presentationBoundsForView(center, viewDistance) {
+  const chunkSize = 16;
+  const centerChunkX = Math.floor(center.x / chunkSize);
+  const centerChunkZ = Math.floor(center.z / chunkSize);
+  return Object.freeze({
+    minX: Math.max(COASTAL_STAGE_BOUNDS.minX, (centerChunkX - viewDistance) * chunkSize),
+    maxX: Math.min(COASTAL_STAGE_BOUNDS.maxX, (centerChunkX + viewDistance + 1) * chunkSize - 1),
+    minZ: Math.max(COASTAL_STAGE_BOUNDS.minZ, (centerChunkZ - viewDistance) * chunkSize),
+    maxZ: Math.min(COASTAL_STAGE_BOUNDS.maxZ, (centerChunkZ + viewDistance + 1) * chunkSize - 1),
+  });
+}
+
+function addCoastalStageDeltas(runtime, worldConfig, put, bounds) {
+  const { minX, maxX, minZ, maxZ } = bounds;
   for (let z = minZ; z <= maxZ; z += 1) {
     for (let x = minX; x <= maxX; x += 1) {
-      const terraceDistance = Math.min(...COASTAL_TERRACES.map((terrace) => ellipseDistance(x, z, terrace)));
-      const causewayDistance = Math.min(...COASTAL_CAUSEWAYS.map((causeway) => capsuleDistance(x, z, causeway)));
-      const landDistance = Math.min(terraceDistance, causewayDistance);
-      const waterDistance = coastalWaterDistance(x, z);
-      if (waterDistance <= 0 && causewayDistance > 0) {
+      const landDistance = Math.min(...PRESENTATION_LANDMASSES.map((landmass) => ellipseDistance(x, z, landmass)));
+      const riverDistance = presentationRiverDistance(x, z);
+      const bayDistance = ellipseDistance(x, z, WESTERN_BAY);
+      if (landDistance > 0 || riverDistance <= 0 || bayDistance <= 0) {
         addWaterColumn(runtime, worldConfig, x, z, put);
         continue;
       }
-      if (landDistance > 0) continue;
-      if (waterDistance <= 3.25 && causewayDistance > 0) {
+      const shoreDistance = Math.min(-landDistance, riverDistance, bayDistance);
+      if (shoreDistance <= 4.25) {
         addLandColumn(runtime, worldConfig, x, z, PRESENTATION_WATER_Y + 1, runtime.BLOCK_ID.sand, put, true);
         continue;
       }
-      const sourceY = runtime.terrainSurfaceHeight(worldConfig, x, z);
-      const targetY = Math.max(PRESENTATION_GROUND_Y, Math.min(PRESENTATION_GROUND_Y + 1, sourceY));
-      addLandColumn(runtime, worldConfig, x, z, targetY, runtime.BLOCK_ID.grass, put, false);
+      addLandColumn(runtime, worldConfig, x, z, PRESENTATION_GROUND_Y, runtime.BLOCK_ID.grass, put, true);
     }
   }
 }
@@ -665,33 +706,20 @@ function addLandColumn(runtime, worldConfig, x, z, targetY, topBlockId, put, cle
   for (let y = targetY + 1; y <= clearTop; y += 1) put(x, y, z, runtime.BLOCK_ID.air);
 }
 
-function coastalWaterDistance(x, z) {
-  const lagoon = ellipseDistance(x, z, { x: 2444, z: 1708, radiusX: 44, radiusZ: 29 });
-  const westernCove = ellipseDistance(x, z, { x: 2407, z: 1720, radiusX: 29, radiusZ: 19 });
-  const channelStartZ = 1717;
-  const channelEndZ = COASTAL_STAGE_BOUNDS.maxZ + 2;
-  const amount = clamp((z - channelStartZ) / (channelEndZ - channelStartZ), 0, 1);
-  const centerX = 2444 + amount * 12 - Math.sin(amount * Math.PI) * 6;
-  const halfWidth = 18 + amount * 17;
-  const channel = Math.max(Math.abs(x - centerX) - halfWidth, channelStartZ - z, z - channelEndZ);
-  return Math.min(lagoon, westernCove, channel);
+function presentationRiverDistance(x, z) {
+  const amount = clamp(
+    (z - COASTAL_STAGE_BOUNDS.minZ) / (COASTAL_STAGE_BOUNDS.maxZ - COASTAL_STAGE_BOUNDS.minZ),
+    0,
+    1,
+  );
+  const centerX = 2446 + Math.sin(amount * Math.PI * 2) * 4;
+  const halfWidth = 8.5 + Math.sin(amount * Math.PI) * 1.5;
+  return Math.abs(x - centerX) - halfWidth;
 }
 
 function ellipseDistance(x, z, ellipse) {
   const normalized = Math.hypot((x - ellipse.x) / ellipse.radiusX, (z - ellipse.z) / ellipse.radiusZ);
   return (normalized - 1) * Math.min(ellipse.radiusX, ellipse.radiusZ);
-}
-
-function capsuleDistance(x, z, capsule) {
-  const dx = capsule.to.x - capsule.from.x;
-  const dz = capsule.to.z - capsule.from.z;
-  const lengthSquared = dx * dx + dz * dz;
-  const amount = lengthSquared > 0
-    ? clamp(((x - capsule.from.x) * dx + (z - capsule.from.z) * dz) / lengthSquared, 0, 1)
-    : 0;
-  const closestX = capsule.from.x + dx * amount;
-  const closestZ = capsule.from.z + dz * amount;
-  return Math.hypot(x - closestX, z - closestZ) - capsule.radius;
 }
 
 function addStructureSiteDeltas(runtime, worldConfig, put) {
@@ -703,11 +731,13 @@ function addStructureSiteDeltas(runtime, worldConfig, put) {
     for (let z = spec.minZ; z < spec.minZ + depth; z += 1) {
       for (let x = spec.minX; x < spec.minX + width; x += 1) {
         const sourceY = runtime.terrainSurfaceHeight(worldConfig, x, z);
-        for (let y = sourceY + 1; y < groundY; y += 1) {
-          put(x, y, z, runtime.BLOCK_ID.dirt);
+        if (spec.siteMode === "water") {
+          addWaterColumn(runtime, worldConfig, x, z, put);
+        } else if (spec.siteMode !== "bridge") {
+          addLandColumn(runtime, worldConfig, x, z, groundY, runtime.BLOCK_ID.grass, put, true);
         }
-        put(x, groundY, z, runtime.BLOCK_ID.grass);
-        for (let y = groundY + 1; y <= Math.max(sourceY + 14, groundY + 1); y += 1) {
+        const clearFromY = spec.siteMode === "water" ? PRESENTATION_WATER_Y + 1 : PRESENTATION_GROUND_Y + 1;
+        for (let y = clearFromY; y <= Math.max(sourceY + 14, clearFromY); y += 1) {
           put(x, y, z, runtime.BLOCK_ID.air);
         }
       }
@@ -716,7 +746,7 @@ function addStructureSiteDeltas(runtime, worldConfig, put) {
 }
 
 function addTreeDeltas(runtime, worldConfig, tree, put) {
-  const groundY = Math.max(PRESENTATION_GROUND_Y, runtime.terrainSurfaceHeight(worldConfig, tree.x, tree.z));
+  const groundY = PRESENTATION_GROUND_Y;
   const crownY = groundY + tree.height;
   for (let dy = -2; dy <= 2; dy += 1) {
     for (let dz = -2; dz <= 2; dz += 1) {
@@ -850,13 +880,16 @@ function createAvatar(runtime, worldConfig, role, site, meshId) {
   };
 }
 
-function positionAvatarAt(runtime, worldConfig, chunks, avatar, pose) {
+function positionAvatarAt(runtime, worldConfig, chunks, structureWalkSurfaces, avatar, pose) {
   const actualX = pose.x + 0.5;
   const actualZ = pose.z + 0.5;
   const worldX = Math.floor(actualX);
   const worldZ = Math.floor(actualZ);
-  const worldY = chunks?.getOpaqueColumnTopAtWorld(worldX, worldZ) + 1
-    || runtime.terrainSurfaceHeight(worldConfig, worldX, worldZ) + 1;
+  const structureSurfaceY = structureWalkSurfaces.get(`${worldX},${worldZ}`);
+  const worldY = Number.isFinite(structureSurfaceY)
+    ? structureSurfaceY + 1
+    : chunks?.getOpaqueColumnTopAtWorld(worldX, worldZ) + 1
+      || runtime.terrainSurfaceHeight(worldConfig, worldX, worldZ) + 1;
   avatar.worldX = worldX;
   avatar.worldY = worldY;
   avatar.worldZ = worldZ;
@@ -886,9 +919,8 @@ function cameraPoseForView(view, aspect) {
   const target = [...source.target];
   let eye;
   if (mobile && view === "arrival") {
-    target[0] += 26;
-    target[2] -= 11;
-    eye = [...source.eye];
+    target.splice(0, 3, 2510, 100, 1725);
+    eye = [2581, 124, 1812];
   } else {
     const distanceScale = mobile ? 1.25 : 1;
     eye = target.map((value, index) => value + (source.eye[index] - source.target[index]) * distanceScale);
@@ -896,7 +928,7 @@ function cameraPoseForView(view, aspect) {
   return {
     eye,
     target,
-    fov: source.fov + (mobile ? (view === "arrival" ? 16 : 4) : 0),
+    fov: source.fov + (mobile ? (view === "arrival" ? 5 : 4) : 0),
   };
 }
 

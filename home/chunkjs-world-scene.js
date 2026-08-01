@@ -792,11 +792,11 @@ function sampleRoute(route, elapsedMs) {
   const x = mix(segment.from.x, segment.to.x, progress);
   const z = mix(segment.from.z, segment.to.z, progress);
   const yaw = segment.lookAt
-    ? Math.atan2(segment.lookAt.x - x, segment.lookAt.z - z)
+    ? headingYaw({ x, z }, segment.lookAt)
     : Number.isFinite(segment.yaw)
       ? segment.yaw
       : segment.phase === "walk"
-        ? Math.atan2(segment.to.x - segment.from.x, segment.to.z - segment.from.z)
+        ? headingYaw(segment.from, segment.to)
         : segment.from.yaw ?? 0;
   return {
     phase: segment.phase,
@@ -808,6 +808,10 @@ function sampleRoute(route, elapsedMs) {
     segmentIndex,
     distance: cycle * route.distance + segment.startDistance + segment.distance * progress,
   };
+}
+
+function headingYaw(from, to) {
+  return Math.atan2(-(to.x - from.x), -(to.z - from.z));
 }
 
 function staticRoutePose(route) {
@@ -868,6 +872,7 @@ function exposeActorState(canvas, actor, avatar, pose) {
   canvas.dataset[`${prefix}Cycle`] = String(pose.cycle);
   canvas.dataset[`${prefix}Segment`] = String(pose.segmentIndex);
   canvas.dataset[`${prefix}Distance`] = pose.distance.toFixed(2);
+  canvas.dataset[`${prefix}Yaw`] = avatar.yaw.toFixed(6);
   canvas.dataset[`${prefix}Position`] = [
     avatar.worldX + avatar.localOffsetX,
     avatar.worldY,

@@ -1,15 +1,18 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 
-const [html, home, scene] = await Promise.all([
+const [html, home, scene, assetManifest] = await Promise.all([
   readFile(new URL("../index.html", import.meta.url), "utf8"),
   readFile(new URL("../home/home.js", import.meta.url), "utf8"),
   readFile(new URL("../home/chunkjs-world-scene.js", import.meta.url), "utf8"),
+  readFile(new URL("../public/asset-manifest.json", import.meta.url), "utf8"),
 ]);
 
 assert.match(html, /id="homeWorldCanvas"/u);
 assert.doesNotMatch(html, /voxelShader/u);
 assert.doesNotMatch(html, /<video\b|nck-hero-logo-v0149\.webm/u);
+assert.doesNotMatch(assetManifest, /nck-hero-logo-v0149\.webm/u);
+await assert.rejects(access(new URL("../public/media/nck-hero-logo-v0149.webm", import.meta.url)));
 assert.match(html, /<img class="hero-logo hero-logo-image" src="\/media\/nck-hero-logo-v0149\.png" alt="" \/>/u);
 assert.doesNotMatch(home, /setupShader|experimental-webgl/u);
 assert.match(home, /HOME_WORLD_SECTION_VIEWS\[activeSectionIndex\]/u);
@@ -64,9 +67,13 @@ assert.match(scene, /const cycleTime = safeElapsed % route\.durationMs/u);
 assert.match(scene, /staticRoutePose\(ACTOR_ROUTES\.boy\)/u);
 assert.match(scene, /positionAvatarAt\(runtime, worldConfig, chunks, boy, boyPose\)/u);
 assert.match(scene, /positionAvatarAt\(runtime, worldConfig, chunks, girl, girlPose\)/u);
-assert.match(scene, /Math\.atan2\(segment\.to\.x - segment\.from\.x, segment\.to\.z - segment\.from\.z\)/u);
+assert.match(scene, /function headingYaw\(from, to\)/u);
+assert.match(scene, /return Math\.atan2\(-\(to\.x - from\.x\), -\(to\.z - from\.z\)\);/u);
+assert.match(scene, /headingYaw\(\{ x, z \}, segment\.lookAt\)/u);
+assert.match(scene, /headingYaw\(segment\.from, segment\.to\)/u);
 assert.match(scene, /getOpaqueColumnTopAtWorld\(worldX, worldZ\)/u);
 assert.match(scene, /exposeActorState\(canvas, "boy", boy, boyPose\)/u);
+assert.match(scene, /canvas\.dataset\[`\$\{prefix\}Yaw`\] = avatar\.yaw\.toFixed\(6\)/u);
 assert.match(scene, /addCoastalStageDeltas\(runtime, worldConfig, put\)/u);
 assert.match(scene, /coastalWaterDistance\(x, z\)/u);
 assert.doesNotMatch(scene, /function positionAvatar\(/u);

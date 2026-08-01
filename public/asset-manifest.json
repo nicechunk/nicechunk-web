@@ -215,16 +215,6 @@
       "canonical": true
     },
     {
-      "path": "public/media/nck-hero-logo-v0149.webm",
-      "mediaType": "video/webm",
-      "bytes": 1292273,
-      "sha256": "92020089bde1eb49213cd25cde9ae3d501220adaaff2c82234ae07db12c7492d",
-      "dimensions": null,
-      "surface": "brand",
-      "sourceStatus": "project-brand",
-      "canonical": true
-    },
-    {
       "path": "public/media/nck.png",
       "mediaType": "image/png",
       "bytes": 45366,

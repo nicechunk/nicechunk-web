@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-01T05:04:04.244Z",
+  "generatedAt": "2026-08-01T05:52:53.116Z",
   "assetRoots": [
     "public/media",
     "p_d"
@@ -187,6 +187,26 @@
       "surface": "forging",
       "sourceStatus": "project-media",
       "canonical": true
+    },
+    {
+      "path": "public/media/home-world-preview-desktop.webp",
+      "mediaType": "application/octet-stream",
+      "bytes": 98462,
+      "sha256": "72c9177a2a8205a42f055a4216e692ea59c84a58aaa320bccc386533a4d428d5",
+      "dimensions": null,
+      "surface": "general-media",
+      "sourceStatus": "project-media",
+      "canonical": false
+    },
+    {
+      "path": "public/media/home-world-preview-mobile.webp",
+      "mediaType": "application/octet-stream",
+      "bytes": 27294,
+      "sha256": "549b96bc56b88b25a0b11f07c44db1d72ce2dfcbae92e48c1295e28ebf7c1cba",
+      "dimensions": null,
+      "surface": "general-media",
+      "sourceStatus": "project-media",
+      "canonical": false
     },
     {
       "path": "public/media/login-preview.png",

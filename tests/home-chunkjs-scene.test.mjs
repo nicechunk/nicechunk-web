@@ -1,10 +1,11 @@
 import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 
-const [html, home, scene, assetManifest] = await Promise.all([
+const [html, home, scene, style, assetManifest] = await Promise.all([
   readFile(new URL("../index.html", import.meta.url), "utf8"),
   readFile(new URL("../home/home.js", import.meta.url), "utf8"),
   readFile(new URL("../home/chunkjs-world-scene.js", import.meta.url), "utf8"),
+  readFile(new URL("../home/style.css", import.meta.url), "utf8"),
   readFile(new URL("../public/asset-manifest.json", import.meta.url), "utf8"),
 ]);
 
@@ -16,7 +17,19 @@ for (const extension of ["png", "webm"]) {
   await assert.rejects(access(new URL(`../public/media/nck-hero-logo-v0149.${extension}`, import.meta.url)));
 }
 assert.match(html, /<div class="hero-world-stage" aria-hidden="true"><\/div>/u);
+for (const viewport of ["desktop", "mobile"]) {
+  const previewPath = `home-world-preview-${viewport}.webp`;
+  assert.ok(html.includes(`/media/${previewPath}`), `Missing ${viewport} preview preload.`);
+  assert.ok(style.includes(`/media/${previewPath}`), `Missing ${viewport} preview style.`);
+  assert.ok(assetManifest.includes(`public/media/${previewPath}`), `Missing ${viewport} preview manifest entry.`);
+  await access(new URL(`../public/media/${previewPath}`, import.meta.url));
+}
 assert.doesNotMatch(home, /setupShader|experimental-webgl/u);
+const initHome = home.match(/async function initHome\(\) \{[\s\S]*?\n\}/u)?.[0] || "";
+assert.ok(
+  initHome.indexOf("homeWorldScene = createHomeWorldScene(homeWorldCanvas)") < initHome.indexOf("await "),
+  "The Chunk.js scene must start before async navigation and locale initialization.",
+);
 assert.match(home, /HOME_WORLD_SECTION_VIEWS\[activeSectionIndex\]/u);
 assert.match(home, /visibility = new Map/u);
 assert.match(home, /ratio < 0\.15/u);

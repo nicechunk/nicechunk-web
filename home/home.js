@@ -43,6 +43,8 @@ initHome();
 
 async function initHome() {
   setSiteLoadingProgress(32);
+  homeWorldScene = createHomeWorldScene(homeWorldCanvas);
+  homeWorldScene.focus(HOME_WORLD_SECTION_VIEWS[activeSectionIndex], { immediate: true });
   dictionary = await loadHomeDictionary(activeLanguage);
   setSiteLoadingProgress(58);
   applyHomeTranslations(document);
@@ -51,8 +53,6 @@ async function initHome() {
   setupSectionObserver();
   setupNavigation();
   setupMobileSectionPaging();
-  homeWorldScene = createHomeWorldScene(homeWorldCanvas);
-  homeWorldScene.focus(HOME_WORLD_SECTION_VIEWS[activeSectionIndex], { immediate: true });
   setupSeedChunkAnimation(seedChunkCanvas, seedValue);
   setupWatcherNetworkAnimation(watcherNetworkCanvas);
   setSiteLoadingProgress(82);

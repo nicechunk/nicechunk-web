@@ -64,6 +64,7 @@ assert.match(scene, /WORLD_CENTER = Object\.freeze\(\{ x: 2432, y: 100, z: 1712 
 assert.match(scene, /MOBILE_TERRAIN_VIEW_DISTANCE = 6/u);
 assert.match(scene, /DESKTOP_TERRAIN_VIEW_DISTANCE = 7/u);
 assert.match(scene, /COASTAL_STAGE_BOUNDS = Object\.freeze\(\{ minX: 2320, maxX: 2559, minZ: 1600, maxZ: 1839 \}\)/u);
+assert.match(scene, /COASTAL_WATER_MARGIN = 18/u);
 assert.match(scene, /sceneTerrainProfile = "two-landmasses-river-bay"/u);
 assert.match(scene, /sceneMapBounds = "240x240"/u);
 assert.match(scene, /sceneActorBehavior = "waypoint-walk-bridge-idle-mine-loop"/u);
@@ -93,6 +94,10 @@ assert.match(scene, /presentationBoundsForView\(WORLD_CENTER, terrainViewDistanc
 assert.match(scene, /function presentationBoundsForView\(center, viewDistance\)/u);
 assert.match(scene, /addCoastalStageDeltas\(runtime, worldConfig, put, bounds\)/u);
 assert.match(scene, /presentationRiverDistance\(x, z\)/u);
+assert.match(scene, /presentationEdgeDistance\(x, z\)/u);
+assert.match(scene, /function presentationEdgeDistance\(x, z\)/u);
+assert.match(scene, /bayDistance <= 0 \|\| edgeDistance <= 0/u);
+assert.match(scene, /const shoreDistance = Math\.min\(-landDistance, riverDistance, bayDistance, edgeDistance\)/u);
 assert.match(scene, /ellipseDistance\(x, z, WESTERN_BAY\)/u);
 for (const cloudOverride of ["cloudHeight", "cloudRadius", "cloudCellSize", "cloudFarPadding"]) {
   assert.doesNotMatch(scene, new RegExp(`${cloudOverride}:`, "u"));

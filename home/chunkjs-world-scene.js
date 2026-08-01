@@ -16,11 +16,12 @@ const AVATAR_VISUAL_SCALE = AVATAR_HEIGHT_BLOCKS / 2.52;
 const PRESENTATION_GROUND_Y = 99;
 const PRESENTATION_WATER_Y = 96;
 const PRESENTATION_WATER_BED_Y = 93;
+const COASTAL_WATER_MARGIN = 18;
 const MINING_TARGET = Object.freeze({ x: 2385, z: 1644 });
 const ACTOR_SITES = Object.freeze({
-  boy: Object.freeze({ x: 2544, z: 1785, yaw: -2.35 }),
+  boy: Object.freeze({ x: 2526, z: 1788, yaw: -2.35 }),
   boyMine: Object.freeze({ x: 2388, z: 1648, yaw: -2.36 }),
-  girl: Object.freeze({ x: 2553, z: 1768, yaw: -2.42 }),
+  girl: Object.freeze({ x: 2535, z: 1768, yaw: -2.42 }),
   girlCottage: Object.freeze({ x: 2399, z: 1703, yaw: 1.48 }),
   bridgeEast: Object.freeze({ x: 2464, z: 1700 }),
   bridgeWest: Object.freeze({ x: 2428, z: 1700 }),
@@ -116,7 +117,7 @@ const PRESENTATION_TREES = Object.freeze([
 const PRESENTATION_PLANTS = Object.freeze([
   Object.freeze({ x: 2520, z: 1735, block: "flowerYellow" }),
   Object.freeze({ x: 2492, z: 1664, block: "flowerWhite" }),
-  Object.freeze({ x: 2538, z: 1762, block: "flowerPink" }),
+  Object.freeze({ x: 2533, z: 1762, block: "flowerPink" }),
   Object.freeze({ x: 2498, z: 1772, block: "flowerBlue" }),
   Object.freeze({ x: 2408, z: 1668, block: "flowerRed" }),
   Object.freeze({ x: 2386, z: 1782, block: "grassPlant" }),
@@ -672,11 +673,12 @@ function addCoastalStageDeltas(runtime, worldConfig, put, bounds) {
       const landDistance = Math.min(...PRESENTATION_LANDMASSES.map((landmass) => ellipseDistance(x, z, landmass)));
       const riverDistance = presentationRiverDistance(x, z);
       const bayDistance = ellipseDistance(x, z, WESTERN_BAY);
-      if (landDistance > 0 || riverDistance <= 0 || bayDistance <= 0) {
+      const edgeDistance = presentationEdgeDistance(x, z);
+      if (landDistance > 0 || riverDistance <= 0 || bayDistance <= 0 || edgeDistance <= 0) {
         addWaterColumn(runtime, worldConfig, x, z, put);
         continue;
       }
-      const shoreDistance = Math.min(-landDistance, riverDistance, bayDistance);
+      const shoreDistance = Math.min(-landDistance, riverDistance, bayDistance, edgeDistance);
       if (shoreDistance <= 4.25) {
         addLandColumn(runtime, worldConfig, x, z, PRESENTATION_WATER_Y + 1, runtime.BLOCK_ID.sand, put, true);
         continue;
@@ -715,6 +717,15 @@ function presentationRiverDistance(x, z) {
   const centerX = 2446 + Math.sin(amount * Math.PI * 2) * 4;
   const halfWidth = 8.5 + Math.sin(amount * Math.PI) * 1.5;
   return Math.abs(x - centerX) - halfWidth;
+}
+
+function presentationEdgeDistance(x, z) {
+  return Math.min(
+    x - COASTAL_STAGE_BOUNDS.minX,
+    COASTAL_STAGE_BOUNDS.maxX - x,
+    z - COASTAL_STAGE_BOUNDS.minZ,
+    COASTAL_STAGE_BOUNDS.maxZ - z,
+  ) - COASTAL_WATER_MARGIN;
 }
 
 function ellipseDistance(x, z, ellipse) {

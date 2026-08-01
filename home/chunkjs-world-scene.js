@@ -19,6 +19,8 @@ import {
 } from "./home-world-terrain.js";
 
 const DEFAULT_RUNTIME_ROOT = "/chunk.js";
+const CHUNK_RUNTIME_BUNDLE = "chunk/browser-runtime.js";
+const CHUNK_WORKER_BUNDLE = "chunk/chunk-build-worker.bundle.js";
 const SECTION_VIEWS = Object.freeze(["arrival", "world", "market", "guardian", "roadmap"]);
 const CAMERA_TRANSITION_MS = 1_180;
 const AVATAR_HEIGHT_BLOCKS = 1.75 / 0.4;
@@ -403,6 +405,7 @@ export function createHomeWorldScene(canvas, options = {}) {
         preloadMargin: 0,
         useWorkers: true,
         workerCount: terrainWorkerCount,
+        workerUrl: runtimeAssetUrl(options.runtimeRoot || DEFAULT_RUNTIME_ROOT, CHUNK_WORKER_BUNDLE),
         deferInitialBuilds: true,
         visibilityLingerFrames: 0,
       });
@@ -422,6 +425,8 @@ export function createHomeWorldScene(canvas, options = {}) {
       canvas.dataset.sceneTerrainTotalChunks = String(chunks.chunks.size);
       canvas.dataset.sceneTerrainDeltas = String(terrainResult.appliedDeltas);
       canvas.dataset.sceneTerrainFingerprint = presentationTerrain.fingerprint;
+      canvas.dataset.sceneTerrainEncoding = presentationTerrain.transferEncoding;
+      canvas.dataset.sceneTerrainTransferBytes = String(presentationTerrain.transferBytes);
       chunks.setBuildConcurrencyLimit(terrainWorkerCount);
       const structures = createStructures(runtime);
       structureChunks = structures.chunks;
@@ -522,44 +527,11 @@ export function createHomeWorldScene(canvas, options = {}) {
 
 async function loadChunkRuntime(runtimeRoot) {
   const root = String(runtimeRoot || DEFAULT_RUNTIME_ROOT).replace(/\/+$/, "");
-  const load = (path) => import(/* @vite-ignore */ `${root}/${path}`);
-  const [
-    chunkManager,
-    buildingMesher,
-    buildingParser,
-    avatarMesh,
-    camera,
-    renderer,
-    frustum,
-    blockRegistry,
-    worldGenerator,
-  ] = await Promise.all([
-    load("chunk/chunk-manager.js"),
-    load("construction/building-mesher.js"),
-    load("construction/building-parser.js"),
-    load("renderer/avatar-mesh.js"),
-    load("renderer/camera.js"),
-    load("renderer/webgl2-renderer.js"),
-    load("renderer/frustum.js"),
-    load("world/block-registry.js"),
-    load("world/world-generator.js"),
-  ]);
-  return {
-    ChunkManager: chunkManager.ChunkManager,
-    createBuildingChunkMeshes: buildingMesher.createBuildingChunkMeshes,
-    createBuildingPlacement: buildingParser.createBuildingPlacement,
-    parseNcm3Building: buildingParser.parseNcm3Building,
-    createAvatarMeshFromNcm: avatarMesh.createAvatarMeshFromNcm,
-    createCameraState: camera.createCameraState,
-    WebGL2VoxelRenderer: renderer.WebGL2VoxelRenderer,
-    chunkIntersectsCameraFrustum: frustum.chunkIntersectsCameraFrustum,
-    BLOCK_ID: blockRegistry.BLOCK_ID,
-    MATERIAL_ID: blockRegistry.MATERIAL_ID,
-    createWorldGeneratorConfig: worldGenerator.createWorldGeneratorConfig,
-    DEFAULT_GENERATION_VERSION: worldGenerator.DEFAULT_GENERATION_VERSION,
-    MAINNET_WORLD_SEED: worldGenerator.MAINNET_WORLD_SEED,
-    terrainSurfaceHeight: worldGenerator.terrainSurfaceHeight,
-  };
+  return import(/* @vite-ignore */ runtimeAssetUrl(root, CHUNK_RUNTIME_BUNDLE));
+}
+
+function runtimeAssetUrl(runtimeRoot, relativePath) {
+  return `${String(runtimeRoot || DEFAULT_RUNTIME_ROOT).replace(/\/+$/, "")}/${relativePath}`;
 }
 
 function createStructures(runtime) {

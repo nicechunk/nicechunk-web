@@ -1,13 +1,14 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { access, readFile } from "node:fs/promises";
+import { gunzipSync } from "node:zlib";
 
 import {
   decodeHomeWorldTerrain,
   unpackHomeWorldTerrainChunk,
 } from "../home/home-world-terrain.js";
 
-const [html, home, scene, layout, terrainModule, generator, style, assetManifestSource, terrainBytes] = await Promise.all([
+const [html, home, scene, layout, terrainModule, generator, style, assetManifestSource, terrainBytes, compressedTerrainBytes] = await Promise.all([
   readFile(new URL("../index.html", import.meta.url), "utf8"),
   readFile(new URL("../home/home.js", import.meta.url), "utf8"),
   readFile(new URL("../home/chunkjs-world-scene.js", import.meta.url), "utf8"),
@@ -17,6 +18,7 @@ const [html, home, scene, layout, terrainModule, generator, style, assetManifest
   readFile(new URL("../home/style.css", import.meta.url), "utf8"),
   readFile(new URL("../public/asset-manifest.json", import.meta.url), "utf8"),
   readFile(new URL("../public/media/home-world-terrain-v1.bin", import.meta.url)),
+  readFile(new URL("../public/media/home-world-terrain-v1.bin.gz", import.meta.url)),
 ]);
 const assetManifest = JSON.parse(assetManifestSource);
 
@@ -46,19 +48,10 @@ assert.match(home, /HOME_WORLD_SECTION_VIEWS\[activeSectionIndex\]/u);
 assert.match(home, /visibility = new Map/u);
 assert.match(home, /ratio < 0\.15/u);
 
-for (const modulePath of [
-  "chunk/chunk-manager.js",
-  "construction/building-mesher.js",
-  "construction/building-parser.js",
-  "renderer/avatar-mesh.js",
-  "renderer/camera.js",
-  "renderer/frustum.js",
-  "renderer/webgl2-renderer.js",
-  "world/block-registry.js",
-  "world/world-generator.js",
-]) {
-  assert.ok(scene.includes(modulePath), `Missing Chunk.js runtime module: ${modulePath}`);
-}
+assert.match(scene, /CHUNK_RUNTIME_BUNDLE = "chunk\/browser-runtime\.js"/u);
+assert.match(scene, /CHUNK_WORKER_BUNDLE = "chunk\/chunk-build-worker\.bundle\.js"/u);
+assert.match(scene, /return import\(\/\* @vite-ignore \*\/ runtimeAssetUrl\(root, CHUNK_RUNTIME_BUNDLE\)\)/u);
+assert.doesNotMatch(scene, /load\("(?:construction|renderer|world)\//u);
 
 for (const modelPath of [
   "/media/vox/chr_peasant_guy_blackhair.ncm",
@@ -123,8 +116,11 @@ assert.match(scene, /gpuMeshReady\(chunks\.chunks\.get\(id\)\)/u);
 assert.match(scene, /readiness\.ready\) markReady\(\)/u);
 assert.doesNotMatch(scene, /terrainChunks\.length >=|expectedTerrainChunks|createPresentationDeltas|presentationBoundsForView/u);
 assert.match(terrainModule, /new Int32Array\(entry\.deltaCount \* 4\)/u);
+assert.match(terrainModule, /new DecompressionStream\("gzip"\)/u);
+assert.match(terrainModule, /withTransferMetadata\(decodeHomeWorldTerrain\(bytes\), "identity"/u);
 assert.match(generator, /createPresentationDeltas/u);
 assert.match(generator, /MAX_RUNS_PER_COLUMN = 15/u);
+assert.match(generator, /gzipSync\(encoded\.bytes, \{ level: 9 \}\)/u);
 
 const terrain = decodeHomeWorldTerrain(terrainBytes);
 assert.equal(terrain.formatVersion, 1);
@@ -136,6 +132,8 @@ assert.equal(terrain.chunks.size, 225);
 assert.equal(terrain.runCount, 155_760);
 assert.equal(terrain.deltaCount, 620_172);
 assert.equal(terrain.fingerprint, "c0c5275f6e1e1f745e076e5dd2484e93");
+assert.deepEqual(gunzipSync(compressedTerrainBytes), terrainBytes);
+assert.ok(compressedTerrainBytes.byteLength < terrainBytes.byteLength / 20);
 
 const centerDeltas = unpackHomeWorldTerrainChunk(terrain, 152, 107);
 assert.ok(centerDeltas instanceof Int32Array);
@@ -153,6 +151,10 @@ const terrainAsset = assetManifest.assets.find((asset) => asset.path === "public
 assert.ok(terrainAsset, "Missing compact homepage terrain manifest entry.");
 assert.equal(terrainAsset.bytes, terrainBytes.byteLength);
 assert.equal(terrainAsset.sha256, createHash("sha256").update(terrainBytes).digest("hex"));
+const compressedTerrainAsset = assetManifest.assets.find((asset) => asset.path === "public/media/home-world-terrain-v1.bin.gz");
+assert.ok(compressedTerrainAsset, "Missing compressed homepage terrain manifest entry.");
+assert.equal(compressedTerrainAsset.bytes, compressedTerrainBytes.byteLength);
+assert.equal(compressedTerrainAsset.sha256, createHash("sha256").update(compressedTerrainBytes).digest("hex"));
 
 for (const cloudOverride of ["cloudHeight", "cloudRadius", "cloudCellSize", "cloudFarPadding"]) {
   assert.doesNotMatch(scene, new RegExp(`${cloudOverride}:`, "u"));

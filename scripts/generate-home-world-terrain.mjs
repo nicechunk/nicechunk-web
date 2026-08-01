@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { access, mkdir, readFile, rename, rm, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { gzipSync } from "node:zlib";
 
 import {
   COASTAL_STAGE_BOUNDS,
@@ -54,20 +55,33 @@ const encoded = encodeTerrain(deltas, {
   generationVersion: worldGenerator.DEFAULT_GENERATION_VERSION,
   fingerprint: layoutFingerprint(worldGenerator, definitions),
 });
+const compressed = gzipSync(encoded.bytes, { level: 9 });
+const compressedOutput = `${output}.gz`;
 
 await mkdir(dirname(output), { recursive: true });
 const temporary = `${output}.tmp-${process.pid}`;
+const compressedTemporary = `${compressedOutput}.tmp-${process.pid}`;
 try {
-  await writeFile(temporary, encoded.bytes);
+  await Promise.all([
+    writeFile(temporary, encoded.bytes),
+    writeFile(compressedTemporary, compressed),
+  ]);
   await rename(temporary, output);
+  await rename(compressedTemporary, compressedOutput);
 } finally {
-  await rm(temporary, { force: true });
+  await Promise.all([
+    rm(temporary, { force: true }),
+    rm(compressedTemporary, { force: true }),
+  ]);
 }
 
 console.log(JSON.stringify({
   output,
   bytes: encoded.bytes.byteLength,
   sha256: createHash("sha256").update(encoded.bytes).digest("hex"),
+  compressedOutput,
+  compressedBytes: compressed.byteLength,
+  compressedSha256: createHash("sha256").update(compressed).digest("hex"),
   chunks: encoded.chunkCount,
   deltas: encoded.deltaCount,
   runs: encoded.runCount,

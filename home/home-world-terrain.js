@@ -5,15 +5,38 @@ const COLUMN_COUNT = 256;
 const PACKED_COLUMN_COUNT_BYTES = COLUMN_COUNT / 2;
 
 export const HOME_WORLD_TERRAIN_URL = "/media/home-world-terrain-v1.bin";
+export const HOME_WORLD_TERRAIN_COMPRESSED_URL = `${HOME_WORLD_TERRAIN_URL}.gz`;
 
-export async function loadHomeWorldTerrain(url = HOME_WORLD_TERRAIN_URL, { signal } = {}) {
+export async function loadHomeWorldTerrain(url = HOME_WORLD_TERRAIN_URL, {
+  compressedUrl = url === HOME_WORLD_TERRAIN_URL ? HOME_WORLD_TERRAIN_COMPRESSED_URL : `${url}.gz`,
+  signal,
+} = {}) {
+  if (typeof DecompressionStream === "function") {
+    try {
+      const response = await fetchTerrain(compressedUrl, signal);
+      const compressed = await response.arrayBuffer();
+      const stream = new Response(compressed).body.pipeThrough(new DecompressionStream("gzip"));
+      const bytes = await new Response(stream).arrayBuffer();
+      return withTransferMetadata(decodeHomeWorldTerrain(bytes), "gzip", compressed.byteLength);
+    } catch {
+      // The uncompressed file preserves support for older browsers and damaged intermediary caches.
+    }
+  }
+
+  const response = await fetchTerrain(url, signal);
+  const bytes = await response.arrayBuffer();
+  return withTransferMetadata(decodeHomeWorldTerrain(bytes), "identity", bytes.byteLength);
+}
+
+async function fetchTerrain(url, signal) {
   const response = await fetch(url, {
     cache: "force-cache",
     headers: { Accept: "application/octet-stream" },
     signal,
   });
   if (!response.ok) throw new Error(`Unable to load homepage terrain (${response.status}).`);
-  return decodeHomeWorldTerrain(await response.arrayBuffer());
+  if (!response.body) throw new Error("Homepage terrain response has no body.");
+  return response;
 }
 
 export function decodeHomeWorldTerrain(source) {
@@ -175,4 +198,8 @@ function yieldMainThread() {
 
 function hex(bytes) {
   return Array.from(bytes, (value) => value.toString(16).padStart(2, "0")).join("");
+}
+
+function withTransferMetadata(terrain, transferEncoding, transferBytes) {
+  return Object.freeze({ ...terrain, transferEncoding, transferBytes });
 }

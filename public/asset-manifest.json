@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-06-28T16:41:30.173Z",
+  "generatedAt": "2026-08-01T05:04:04.244Z",
   "assetRoots": [
     "public/media",
     "p_d"
@@ -200,19 +200,6 @@
       "surface": "login",
       "sourceStatus": "project-media",
       "canonical": false
-    },
-    {
-      "path": "public/media/nck-hero-logo-v0149.png",
-      "mediaType": "image/png",
-      "bytes": 473762,
-      "sha256": "427ef32b3cf3ed1947beb5d3208e2ab9e7175978d519794cc4089ec905c447f3",
-      "dimensions": {
-        "width": 512,
-        "height": 512
-      },
-      "surface": "brand",
-      "sourceStatus": "project-brand",
-      "canonical": true
     },
     {
       "path": "public/media/nck.png",

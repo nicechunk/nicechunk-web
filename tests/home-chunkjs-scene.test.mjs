@@ -10,10 +10,12 @@ const [html, home, scene, assetManifest] = await Promise.all([
 
 assert.match(html, /id="homeWorldCanvas"/u);
 assert.doesNotMatch(html, /voxelShader/u);
-assert.doesNotMatch(html, /<video\b|nck-hero-logo-v0149\.webm/u);
-assert.doesNotMatch(assetManifest, /nck-hero-logo-v0149\.webm/u);
-await assert.rejects(access(new URL("../public/media/nck-hero-logo-v0149.webm", import.meta.url)));
-assert.match(html, /<img class="hero-logo hero-logo-image" src="\/media\/nck-hero-logo-v0149\.png" alt="" \/>/u);
+assert.doesNotMatch(html, /<video\b|nck-hero-logo-v0149\.(?:png|webm)/u);
+assert.doesNotMatch(assetManifest, /nck-hero-logo-v0149\.(?:png|webm)/u);
+for (const extension of ["png", "webm"]) {
+  await assert.rejects(access(new URL(`../public/media/nck-hero-logo-v0149.${extension}`, import.meta.url)));
+}
+assert.match(html, /<div class="hero-world-stage" aria-hidden="true"><\/div>/u);
 assert.doesNotMatch(home, /setupShader|experimental-webgl/u);
 assert.match(home, /HOME_WORLD_SECTION_VIEWS\[activeSectionIndex\]/u);
 assert.match(home, /visibility = new Map/u);

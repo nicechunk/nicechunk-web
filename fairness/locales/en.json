@@ -202,5 +202,47 @@
     "docs": "Open Docs",
     "worldRules": "World Rules",
     "enterWorld": "Enter World"
+  },
+  "common": {
+    "language": "Language",
+    "comingSoon": "Coming soon",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "NiceChunk home",
+    "primaryNavigationAria": "Primary navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "routes": {
+      "home": "Home",
+      "roadbook": "Roadbook",
+      "worldRules": "World Rules",
+      "resources": "Resources",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "Elements",
+      "fairness": "Fairness",
+      "proofOfFrontier": "Proof",
+      "seed": "Seed",
+      "guardians": "Guardians",
+      "contracts": "Contracts",
+      "civilization": "Civilization",
+      "trust": "Trust",
+      "whitepaper": "Whitepaper",
+      "docs": "Docs",
+      "miner": "Miner",
+      "enterWorld": "Enter World"
+    }
   }
 }

@@ -8,7 +8,7 @@ import {
   unpackHomeWorldTerrainChunk,
 } from "../home/home-world-terrain.js";
 
-const [html, home, scene, layout, terrainModule, generator, style, assetManifestSource, terrainBytes, compressedTerrainBytes] = await Promise.all([
+const [html, home, scene, layout, terrainModule, generator, style, siteUi, siteHeaderCss, siteHeader, assetManifestSource, terrainBytes, compressedTerrainBytes] = await Promise.all([
   readFile(new URL("../index.html", import.meta.url), "utf8"),
   readFile(new URL("../home/home.js", import.meta.url), "utf8"),
   readFile(new URL("../home/chunkjs-world-scene.js", import.meta.url), "utf8"),
@@ -16,6 +16,9 @@ const [html, home, scene, layout, terrainModule, generator, style, assetManifest
   readFile(new URL("../home/home-world-terrain.js", import.meta.url), "utf8"),
   readFile(new URL("../scripts/generate-home-world-terrain.mjs", import.meta.url), "utf8"),
   readFile(new URL("../home/style.css", import.meta.url), "utf8"),
+  readFile(new URL("../src/site-ui.js", import.meta.url), "utf8"),
+  readFile(new URL("../src/site-header.css", import.meta.url), "utf8"),
+  readFile(new URL("../src/site-header.js", import.meta.url), "utf8"),
   readFile(new URL("../public/asset-manifest.json", import.meta.url), "utf8"),
   readFile(new URL("../public/media/home-world-terrain-v1.bin", import.meta.url)),
   readFile(new URL("../public/media/home-world-terrain-v1.bin.gz", import.meta.url)),
@@ -26,10 +29,15 @@ assert.match(html, /id="homeWorldCanvas"/u);
 assert.doesNotMatch(html, /voxelShader/u);
 assert.doesNotMatch(html, /<video\b|nck-hero-logo-v0149\.(?:png|webm)/u);
 assert.doesNotMatch(assetManifestSource, /nck-hero-logo-v0149\.(?:png|webm)/u);
+assert.match(siteUi, /if \(!document\.querySelector\("\[data-site-footer-native\]"\)\) ensureUnifiedFooter\(\);/u);
+assert.match(siteHeader, /mergeClassNames\(header\.className, "site-header site-header-shared"\)/u);
+assert.match(siteHeaderCss, /header\.site-header\.site-header-shared\[data-site-header-mounted="true"\] \{/u);
+assert.doesNotMatch(siteHeaderCss, /^\s*\.site-header\s*\{/mu);
 for (const extension of ["png", "webm"]) {
   await assert.rejects(access(new URL(`../public/media/nck-hero-logo-v0149.${extension}`, import.meta.url)));
 }
 assert.match(html, /<div class="hero-world-stage" aria-hidden="true"><\/div>/u);
+assert.match(html, /<footer class="site-footer" data-site-footer-native>/u);
 for (const viewport of ["desktop", "mobile"]) {
   const previewPath = `home-world-preview-${viewport}.webp`;
   assert.ok(html.includes(`/media/${previewPath}`), `Missing ${viewport} preview preload.`);

@@ -1,5 +1,6 @@
 import { currentLanguage, initI18n, t } from "../src/i18n.js";
 import "../src/site-header.css";
+import "../src/site-header-bootstrap.js";
 import { finishSiteLoading, setSiteLoadingProgress } from "../src/site-ui.js";
 import { decodeNcm } from "../src/vox/ncm.js";
 import {

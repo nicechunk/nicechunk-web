@@ -380,5 +380,47 @@
     "connect": "지갑 연결",
     "docs": "문서 읽기",
     "fairness": "공정성 모델"
+  },
+  "common": {
+    "language": "언어",
+    "comingSoon": "곧 제공",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "NiceChunk 홈",
+    "primaryNavigationAria": "기본 탐색",
+    "openMenu": "메뉴 열기",
+    "closeMenu": "메뉴 닫기",
+    "routes": {
+      "home": "홈",
+      "roadbook": "로드북",
+      "worldRules": "월드 규칙",
+      "resources": "자원",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "원소",
+      "fairness": "공정성",
+      "proofOfFrontier": "증명",
+      "seed": "시드",
+      "guardians": "가디언",
+      "contracts": "컨트랙트",
+      "civilization": "문명",
+      "trust": "신뢰",
+      "whitepaper": "Whitepaper",
+      "docs": "문서",
+      "miner": "마이너",
+      "enterWorld": "월드 입장"
+    }
   }
 }

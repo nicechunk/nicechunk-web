@@ -2,8 +2,50 @@
   "_meta": {
     "language": "fr",
     "label": "French",
-    "version": "home-locale-fr-a0209577b24523a3",
-    "contentHash": "a0209577b24523a3"
+    "version": "home-locale-fr-5b2b3d784dede98b",
+    "contentHash": "5b2b3d784dede98b"
+  },
+  "common": {
+    "language": "Langue",
+    "comingSoon": "Bientôt disponible",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "Accueil NiceChunk",
+    "primaryNavigationAria": "Navigation principale",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "routes": {
+      "home": "Accueil",
+      "roadbook": "Route",
+      "worldRules": "Règles",
+      "resources": "Ressources",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "Éléments",
+      "fairness": "Équité",
+      "proofOfFrontier": "Preuve",
+      "seed": "Graine",
+      "guardians": "Gardiens",
+      "contracts": "Contrats",
+      "civilization": "Civilisation",
+      "trust": "Confiance",
+      "whitepaper": "Whitepaper",
+      "docs": "Docs",
+      "miner": "Mineur",
+      "enterWorld": "Entrer dans le monde"
+    }
   },
   "siteFooter": {
     "tagline": "Un protocole de monde voxel seedé sur Solana.",

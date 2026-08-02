@@ -46,10 +46,13 @@ function installSiteUi() {
   if (window.__nicechunkSiteUiInstalled) return;
   window.__nicechunkSiteUiInstalled = true;
   document.documentElement.classList.add("site-ui-ready");
-  ensureUnifiedNavigation();
-  ensureUnifiedFooter();
-  installMobileMenu();
-  installHeaderMetrics();
+  const usesSharedHeader = Boolean(document.querySelector("[data-site-header-root]"));
+  if (!usesSharedHeader) ensureUnifiedNavigation();
+  if (!document.querySelector("[data-site-footer-native]")) ensureUnifiedFooter();
+  if (!usesSharedHeader) {
+    installMobileMenu();
+    installHeaderMetrics();
+  }
   startSiteLoading(16);
   installRouteLoading();
   window.addEventListener("load", () => {
@@ -76,6 +79,7 @@ const unifiedNavItems = [
   { key: "civilization", href: "/civilization/" },
   { key: "trust", href: "/trust/" },
   { key: "docs", href: "/docs/" },
+  { key: "miner", href: "/miner/" },
 ];
 
 const navActiveAliases = {
@@ -132,7 +136,9 @@ const unifiedNavLabels = {
     contracts: "Contracts",
     civilization: "Civilization",
     trust: "Trust",
+    whitepaper: "Whitepaper",
     docs: "Docs",
+    miner: "Miner",
   },
   es: {
     home: "Inicio",
@@ -149,7 +155,9 @@ const unifiedNavLabels = {
     contracts: "Contratos",
     civilization: "Civilización",
     trust: "Confianza",
+    whitepaper: "Whitepaper",
     docs: "Docs",
+    miner: "Miner",
   },
   fr: {
     home: "Accueil",
@@ -166,7 +174,9 @@ const unifiedNavLabels = {
     contracts: "Contrats",
     civilization: "Civilisation",
     trust: "Confiance",
+    whitepaper: "Whitepaper",
     docs: "Docs",
+    miner: "Mineur",
   },
   de: {
     home: "Home",
@@ -183,7 +193,9 @@ const unifiedNavLabels = {
     contracts: "Contracts",
     civilization: "Zivilisation",
     trust: "Trust",
+    whitepaper: "Whitepaper",
     docs: "Docs",
+    miner: "Miner",
   },
   ja: {
     home: "ホーム",
@@ -200,7 +212,9 @@ const unifiedNavLabels = {
     contracts: "契約",
     civilization: "文明",
     trust: "信頼",
+    whitepaper: "Whitepaper",
     docs: "ドキュメント",
+    miner: "マイナー",
   },
   ru: {
     home: "Главная",
@@ -217,7 +231,9 @@ const unifiedNavLabels = {
     contracts: "Контракты",
     civilization: "Цивилизация",
     trust: "Доверие",
+    whitepaper: "Whitepaper",
     docs: "Документы",
+    miner: "Майнер",
   },
   ko: {
     home: "홈",
@@ -234,7 +250,9 @@ const unifiedNavLabels = {
     contracts: "컨트랙트",
     civilization: "문명",
     trust: "신뢰",
+    whitepaper: "Whitepaper",
     docs: "문서",
+    miner: "마이너",
   },
   "zh-Hant": {
     home: "首頁",
@@ -251,7 +269,9 @@ const unifiedNavLabels = {
     contracts: "合約",
     civilization: "文明",
     trust: "信任",
+    whitepaper: "Whitepaper",
     docs: "文檔",
+    miner: "礦工",
   },
   "zh-Hans": {
     home: "首页",
@@ -268,7 +288,9 @@ const unifiedNavLabels = {
     contracts: "合约",
     civilization: "文明",
     trust: "信任",
+    whitepaper: "Whitepaper",
     docs: "文档",
+    miner: "矿工",
   },
 };
 
@@ -291,6 +313,16 @@ function ensureUnifiedNavigation() {
     });
 
     container.replaceChildren(...orderedLinks);
+  });
+
+  document.querySelectorAll(".site-header .nav-actions").forEach((container) => {
+    let link = container.querySelector('a[href="/whitepaper/"], [data-site-nav-key="whitepaper"]');
+    if (!link) link = document.createElement("a");
+    link.href = "/whitepaper/";
+    link.classList.add("header-action", "header-whitepaper-action");
+    link.dataset.siteNavKey = "whitepaper";
+    link.classList.toggle("active", isActiveNavPath("/whitepaper/"));
+    container.prepend(link);
   });
 
   updateUnifiedNavigationLabels();
@@ -493,7 +525,7 @@ function installMobileMenu() {
   });
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
+    if (event.key === "Escape" && !event.defaultPrevented) {
       setMobileMenuOpen(false);
     }
   });
@@ -506,19 +538,35 @@ function installMobileMenu() {
   });
 
   window.addEventListener("resize", () => {
-    if (!window.matchMedia("(max-width: 760px)").matches) {
-      setMobileMenuOpen(false);
+    const mobile = window.matchMedia("(max-width: 760px)").matches;
+    if (!mobile || !header.classList.contains("mobile-menu-open")) {
+      setMobileMenuOpen(false, { restoreFocus: false });
     }
   }, { passive: true });
+
+  setMobileMenuOpen(false, { restoreFocus: false });
 }
 
-function setMobileMenuOpen(open) {
+function setMobileMenuOpen(open, { restoreFocus = true } = {}) {
   const header = document.querySelector(".site-header");
   const button = header?.querySelector(".site-menu-toggle");
-  if (!header || !button) return;
+  const nav = header?.querySelector(".site-nav, .top-nav");
+  if (!header || !button || !nav) return;
+  const wasOpen = header.classList.contains("mobile-menu-open");
+  const mobile = window.matchMedia("(max-width: 760px)").matches;
+  if (!open && wasOpen && mobile && restoreFocus && nav.contains(document.activeElement)) {
+    button.focus();
+  }
   header.classList.toggle("mobile-menu-open", open);
   document.documentElement.classList.toggle("site-mobile-menu-open", open);
   button.setAttribute("aria-expanded", open ? "true" : "false");
+  if (mobile && !open) {
+    nav.setAttribute("aria-hidden", "true");
+    nav.setAttribute("inert", "");
+  } else {
+    nav.removeAttribute("aria-hidden");
+    nav.removeAttribute("inert");
+  }
   window.setTimeout(updateHeaderMetrics, 40);
   window.setTimeout(updateHeaderMetrics, 180);
 }

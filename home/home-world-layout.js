@@ -12,9 +12,20 @@ export const ACTOR_SITES = Object.freeze({
   boyMine: Object.freeze({ x: 2388, z: 1648, yaw: -2.36 }),
   girl: Object.freeze({ x: 2535, z: 1768, yaw: -2.42 }),
   girlCottage: Object.freeze({ x: 2399, z: 1703, yaw: 1.48 }),
+  economyBoy: Object.freeze({ x: 2484, z: 1725, yaw: -1.42 }),
+  economyGirl: Object.freeze({ x: 2492, z: 1725, yaw: 1.42 }),
+  guardianBoy: Object.freeze({ x: 2514, z: 1657, yaw: -1.57 }),
+  guardianGirl: Object.freeze({ x: 2524, z: 1657, yaw: 1.57 }),
   bridgeEast: Object.freeze({ x: 2464, z: 1700 }),
   bridgeWest: Object.freeze({ x: 2428, z: 1700 }),
 });
+
+export const ECONOMY_FLOW_SITES = Object.freeze([
+  Object.freeze({ x: 2478, z: 1722 }),
+  Object.freeze({ x: 2483, z: 1722 }),
+  Object.freeze({ x: 2488, z: 1722 }),
+  Object.freeze({ x: 2493, z: 1722 }),
+]);
 
 export const PRESENTATION_LANDMASSES = Object.freeze([
   Object.freeze({ x: 2392, z: 1715, radiusX: 77, radiusZ: 112 }),

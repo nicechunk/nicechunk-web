@@ -162,5 +162,47 @@
     "title": "加入第一批种子用户。",
     "register": "注册白名单",
     "wallet": "连接钱包"
+  },
+  "common": {
+    "language": "语言",
+    "comingSoon": "即将推出",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "NiceChunk 首页",
+    "primaryNavigationAria": "主导航",
+    "openMenu": "打开菜单",
+    "closeMenu": "关闭菜单",
+    "routes": {
+      "home": "首页",
+      "roadbook": "路书",
+      "worldRules": "世界规则",
+      "resources": "资源",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "元素",
+      "fairness": "公平性",
+      "proofOfFrontier": "证明",
+      "seed": "种子",
+      "guardians": "守护者",
+      "contracts": "合约",
+      "civilization": "文明",
+      "trust": "信任",
+      "whitepaper": "Whitepaper",
+      "docs": "文档",
+      "miner": "矿工",
+      "enterWorld": "进入世界"
+    }
   }
 }

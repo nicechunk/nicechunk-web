@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hans",
     "label": "Simplified Chinese",
-    "version": "civilization-locale-zh-Hans-afe520e3fce64b55",
-    "contentHash": "afe520e3fce64b55"
+    "version": "civilization-locale-zh-Hans-8fd9e963b3811ac4",
+    "contentHash": "8fd9e963b3811ac4"
   },
   "siteFooter": {
     "tagline": "Solana 上的种子体素世界协议。",
@@ -22,7 +22,7 @@
   "common": {
     "brand": "NICECHUNK",
     "language": "语言",
-    "comingSoon": "即将开放",
+    "comingSoon": "即将推出",
     "languageNative": {
       "en": "English",
       "es": "Español",
@@ -2932,6 +2932,33 @@
         "noAddressPrivilege": "授予单一地址特权",
         "noOwnershipSeizure": "改变既有玩家资产所有权"
       }
+    }
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "NiceChunk 首页",
+    "primaryNavigationAria": "主导航",
+    "openMenu": "打开菜单",
+    "closeMenu": "关闭菜单",
+    "routes": {
+      "home": "首页",
+      "roadbook": "路书",
+      "worldRules": "世界规则",
+      "resources": "资源",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "元素",
+      "fairness": "公平性",
+      "proofOfFrontier": "证明",
+      "seed": "种子",
+      "guardians": "守护者",
+      "contracts": "合约",
+      "civilization": "文明",
+      "trust": "信任",
+      "whitepaper": "Whitepaper",
+      "docs": "文档",
+      "miner": "矿工",
+      "enterWorld": "进入世界"
     }
   }
 }

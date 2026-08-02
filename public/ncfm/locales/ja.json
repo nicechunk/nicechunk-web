@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ja",
     "label": "Japanese",
-    "version": "ncfm-locale-ja-c5672bce8e188d7c",
-    "contentHash": "c5672bce8e188d7c"
+    "version": "ncfm-locale-ja-79256d124f22046c",
+    "contentHash": "79256d124f22046c"
   },
   "siteFooter": {
     "tagline": "Solana 上のシード型ボクセルワールドプロトコル。",
@@ -32,6 +32,34 @@
       "ko": "한국어",
       "zhHant": "繁體中文",
       "zhHans": "简体中文"
+    },
+    "comingSoon": "近日公開"
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "NiceChunk ホーム",
+    "primaryNavigationAria": "メインナビゲーション",
+    "openMenu": "メニューを開く",
+    "closeMenu": "メニューを閉じる",
+    "routes": {
+      "home": "ホーム",
+      "roadbook": "ロードブック",
+      "worldRules": "世界ルール",
+      "resources": "資源",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "元素",
+      "fairness": "公平性",
+      "proofOfFrontier": "証明",
+      "seed": "シード",
+      "guardians": "ガーディアン",
+      "contracts": "コントラクト",
+      "civilization": "文明",
+      "trust": "信頼",
+      "whitepaper": "Whitepaper",
+      "docs": "ドキュメント",
+      "miner": "マイナー",
+      "enterWorld": "ワールドへ入る"
     }
   }
 }

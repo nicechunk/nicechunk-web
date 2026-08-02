@@ -2,8 +2,50 @@
   "_meta": {
     "language": "ko",
     "label": "Korean",
-    "version": "home-locale-ko-7d72a42a958bcdb4",
-    "contentHash": "7d72a42a958bcdb4"
+    "version": "home-locale-ko-1bcaedec155e5b29",
+    "contentHash": "1bcaedec155e5b29"
+  },
+  "common": {
+    "language": "언어",
+    "comingSoon": "곧 제공",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "NiceChunk 홈",
+    "primaryNavigationAria": "기본 탐색",
+    "openMenu": "메뉴 열기",
+    "closeMenu": "메뉴 닫기",
+    "routes": {
+      "home": "홈",
+      "roadbook": "로드북",
+      "worldRules": "월드 규칙",
+      "resources": "자원",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "원소",
+      "fairness": "공정성",
+      "proofOfFrontier": "증명",
+      "seed": "시드",
+      "guardians": "가디언",
+      "contracts": "컨트랙트",
+      "civilization": "문명",
+      "trust": "신뢰",
+      "whitepaper": "Whitepaper",
+      "docs": "문서",
+      "miner": "마이너",
+      "enterWorld": "월드 입장"
+    }
   },
   "siteFooter": {
     "tagline": "Solana 기반 시드형 복셀 월드 프로토콜.",

@@ -2,8 +2,8 @@
   "_meta": {
     "language": "es",
     "label": "Spanish",
-    "version": "ncfm-locale-es-59bc5080ed2c9211",
-    "contentHash": "59bc5080ed2c9211"
+    "version": "ncfm-locale-es-addad6831f2b5bcd",
+    "contentHash": "addad6831f2b5bcd"
   },
   "siteFooter": {
     "tagline": "Un protocolo de mundo voxel con semillas en Solana.",
@@ -32,6 +32,34 @@
       "ko": "한국어",
       "zhHant": "繁體中文",
       "zhHans": "简体中文"
+    },
+    "comingSoon": "Próximamente"
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "Inicio de NiceChunk",
+    "primaryNavigationAria": "Navegación principal",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "routes": {
+      "home": "Inicio",
+      "roadbook": "Ruta",
+      "worldRules": "Reglas",
+      "resources": "Recursos",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "Elementos",
+      "fairness": "Equidad",
+      "proofOfFrontier": "Prueba",
+      "seed": "Semilla",
+      "guardians": "Guardianes",
+      "contracts": "Contratos",
+      "civilization": "Civilización",
+      "trust": "Confianza",
+      "whitepaper": "Whitepaper",
+      "docs": "Docs",
+      "miner": "Miner",
+      "enterWorld": "Entrar al mundo"
     }
   }
 }

@@ -1,5 +1,6 @@
 import "./style.css";
 import "../src/site-header.css";
+import "../src/site-header-bootstrap.js";
 import { finishSiteLoading, setSiteLoadingProgress } from "../src/site-ui.js";
 import * as THREE from "three";
 import { terrainProfile, setWorldSeed } from "../src/world/generator.js";

@@ -1,5 +1,6 @@
 import "./style.css";
 import "../src/site-header.css";
+import "../src/site-header-bootstrap.js";
 import bs58 from "bs58";
 import nacl from "tweetnacl";
 import * as THREE from "three";

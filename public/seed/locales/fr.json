@@ -2,8 +2,8 @@
   "_meta": {
     "language": "fr",
     "label": "French",
-    "version": "seed-locale-fr-28692249d7199557",
-    "contentHash": "28692249d7199557"
+    "version": "seed-locale-fr-5876cf275a4565ce",
+    "contentHash": "5876cf275a4565ce"
   },
   "meta": {
     "title": "Campagne Utilisateurs Seed NiceChunk",
@@ -168,5 +168,47 @@
     "title": "Rejoignez les Premiers Utilisateurs Seed.",
     "register": "S'inscrire à la Whitelist",
     "wallet": "Connecter le Wallet"
+  },
+  "common": {
+    "language": "Langue",
+    "comingSoon": "Bientôt disponible",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "Accueil NiceChunk",
+    "primaryNavigationAria": "Navigation principale",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "routes": {
+      "home": "Accueil",
+      "roadbook": "Route",
+      "worldRules": "Règles",
+      "resources": "Ressources",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "Éléments",
+      "fairness": "Équité",
+      "proofOfFrontier": "Preuve",
+      "seed": "Graine",
+      "guardians": "Gardiens",
+      "contracts": "Contrats",
+      "civilization": "Civilisation",
+      "trust": "Confiance",
+      "whitepaper": "Whitepaper",
+      "docs": "Docs",
+      "miner": "Mineur",
+      "enterWorld": "Entrer dans le monde"
+    }
   }
 }

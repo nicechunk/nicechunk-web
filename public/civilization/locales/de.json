@@ -2,8 +2,8 @@
   "_meta": {
     "language": "de",
     "label": "German",
-    "version": "civilization-locale-de-4908af2e18f45138",
-    "contentHash": "4908af2e18f45138"
+    "version": "civilization-locale-de-7a22bd103b7b06e3",
+    "contentHash": "7a22bd103b7b06e3"
   },
   "siteFooter": {
     "tagline": "Ein Seed-Voxelwelt-Protokoll auf Solana.",
@@ -32,7 +32,8 @@
       "ko": "한국어",
       "zhHant": "繁體中文",
       "zhHans": "简体中文"
-    }
+    },
+    "comingSoon": "Demnächst"
   },
   "civilization": {
     "meta": {
@@ -2931,6 +2932,33 @@
         "noAddressPrivilege": "Granting single-address privilege",
         "noOwnershipSeizure": "Changing ownership of existing player assets"
       }
+    }
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "NiceChunk-Startseite",
+    "primaryNavigationAria": "Hauptnavigation",
+    "openMenu": "Menü öffnen",
+    "closeMenu": "Menü schließen",
+    "routes": {
+      "home": "Home",
+      "roadbook": "Roadbook",
+      "worldRules": "Weltregeln",
+      "resources": "Ressourcen",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "Elemente",
+      "fairness": "Fairness",
+      "proofOfFrontier": "Beweis",
+      "seed": "Seed",
+      "guardians": "Wächter",
+      "contracts": "Verträge",
+      "civilization": "Zivilisation",
+      "trust": "Vertrauen",
+      "whitepaper": "Whitepaper",
+      "docs": "Docs",
+      "miner": "Miner",
+      "enterWorld": "Welt betreten"
     }
   }
 }

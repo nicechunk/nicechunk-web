@@ -2,8 +2,8 @@
   "_meta": {
     "language": "fr",
     "label": "French",
-    "version": "ncm-dna-locale-fr-110f48bf38d4d926",
-    "contentHash": "110f48bf38d4d926"
+    "version": "ncm-dna-locale-fr-e9489a6f49a1b623",
+    "contentHash": "e9489a6f49a1b623"
   },
   "siteFooter": {
     "tagline": "Un protocole de monde voxel seedé sur Solana.",
@@ -32,7 +32,8 @@
       "ko": "한국어",
       "zhHant": "繁體中文",
       "zhHans": "简体中文"
-    }
+    },
+    "comingSoon": "Bientôt disponible"
   },
   "ncmDna": {
     "nav": {
@@ -193,6 +194,33 @@
       "seedGrown": "Graine générée : {hash}",
       "invalidGene": "Gène invalide : {message}",
       "invalidSeed": "Graine invalide : {message}"
+    }
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "Accueil NiceChunk",
+    "primaryNavigationAria": "Navigation principale",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "routes": {
+      "home": "Accueil",
+      "roadbook": "Route",
+      "worldRules": "Règles",
+      "resources": "Ressources",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "Éléments",
+      "fairness": "Équité",
+      "proofOfFrontier": "Preuve",
+      "seed": "Graine",
+      "guardians": "Gardiens",
+      "contracts": "Contrats",
+      "civilization": "Civilisation",
+      "trust": "Confiance",
+      "whitepaper": "Whitepaper",
+      "docs": "Docs",
+      "miner": "Mineur",
+      "enterWorld": "Entrer dans le monde"
     }
   }
 }

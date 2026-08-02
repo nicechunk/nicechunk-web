@@ -6,6 +6,7 @@ import windmillDefinition from "../build_ncm/buildings/agriculture/stone-timber-
 import {
   ACTOR_SITES,
   DESKTOP_TERRAIN_VIEW_DISTANCE,
+  ECONOMY_FLOW_SITES,
   MINING_TARGET,
   MOBILE_TERRAIN_VIEW_DISTANCE,
   PRESENTATION_GROUND_Y,
@@ -128,6 +129,7 @@ export function createHomeWorldScene(canvas, options = {}) {
   let pointerX = 0;
   let pointerY = 0;
   let transitionStart = startedAt;
+  let focusStartedAt = startedAt;
   let cameraStart = cameraPoseForView("arrival", canvasAspect(canvas));
   let cameraTarget = cameraStart;
   let lastMiningBurst = -1;
@@ -165,9 +167,11 @@ export function createHomeWorldScene(canvas, options = {}) {
     const timestamp = performance.now();
     cameraStart = resolveCameraPose(timestamp, false);
     focusView = view;
+    focusStartedAt = timestamp;
     cameraTarget = cameraPoseForView(view, canvasAspect(canvas));
     transitionStart = immediate || reducedMotion.matches ? timestamp - CAMERA_TRANSITION_MS : timestamp;
     canvas.dataset.sceneView = view;
+    canvas.dataset.sceneCue = sceneCueForView(view);
     renderFrame(timestamp, true);
     schedule();
   };
@@ -267,14 +271,25 @@ export function createHomeWorldScene(canvas, options = {}) {
 
   function updateActors(timestamp) {
     const elapsed = Math.max(0, timestamp - startedAt) * actorTimeScale;
+    const focusElapsed = Math.max(0, timestamp - focusStartedAt);
     const boy = avatars.find((avatar) => avatar.role === "villager-boy");
     const girl = avatars.find((avatar) => avatar.role === "villager-girl");
-    const boyPose = reducedMotion.matches
+    let boyPose = reducedMotion.matches
       ? staticRoutePose(ACTOR_ROUTES.boy)
       : sampleRoute(ACTOR_ROUTES.boy, elapsed);
-    const girlPose = reducedMotion.matches
+    let girlPose = reducedMotion.matches
       ? staticRoutePose(ACTOR_ROUTES.girl)
       : sampleRoute(ACTOR_ROUTES.girl, elapsed + 1_800);
+
+    if (focusView === "world") {
+      boyPose = focusedMiningPose(focusElapsed, reducedMotion.matches);
+    } else if (focusView === "market") {
+      boyPose = focusedIdlePose(ACTOR_SITES.economyBoy, ACTOR_SITES.economyGirl, focusElapsed);
+      girlPose = focusedIdlePose(ACTOR_SITES.economyGirl, ACTOR_SITES.economyBoy, focusElapsed);
+    } else if (focusView === "guardian") {
+      boyPose = focusedIdlePose(ACTOR_SITES.guardianBoy, ACTOR_SITES.guardianGirl, focusElapsed);
+      girlPose = focusedIdlePose(ACTOR_SITES.guardianGirl, ACTOR_SITES.guardianBoy, focusElapsed);
+    }
     const miningActive = boyPose.phase === "mine";
     const miningProgress = miningActive ? boyPose.progress : 0;
 
@@ -314,34 +329,85 @@ export function createHomeWorldScene(canvas, options = {}) {
   }
 
   function overlaysForView(timestamp) {
+    const pulse = reducedMotion.matches ? 0.52 : 0.38 + (Math.sin(timestamp * 0.004) + 1) * 0.16;
     if (focusView === "world") {
-      const pulse = reducedMotion.matches ? 0.24 : 0.18 + (Math.sin(timestamp * 0.004) + 1) * 0.07;
       return [{
         worldX: MINING_TARGET.x,
         worldY: miningTargetY(),
         worldZ: MINING_TARGET.z,
         size: 1,
         expand: 0.025,
-        fillColor: [0.1, 0.72, 1, pulse * 0.2],
+        fillColor: [0.1, 0.72, 1, pulse * 0.12],
         lineColor: [0.28, 0.9, 1, 0.82],
       }];
     }
     if (focusView === "market") {
-      return [{
-        shape: "foundation",
-        worldX: 2468,
-        worldY: 100.02,
-        worldZ: 1657,
-        width: 21,
-        depth: 15,
-        preview: true,
-        grid: false,
-        fillColor: [0.76, 0.94, 0.16, 0.018],
-        edgeColor: [0.76, 0.94, 0.16, 0.34],
-        glowColor: [0.76, 0.94, 0.16, 0.1],
-      }];
+      const activeIndex = reducedMotion.matches ? ECONOMY_FLOW_SITES.length - 1 : Math.floor(timestamp / 520) % ECONOMY_FLOW_SITES.length;
+      const flow = ECONOMY_FLOW_SITES.map((site, index) => ({
+        worldX: site.x,
+        worldY: surfaceYAt(site.x, site.z) + 1.05,
+        worldZ: site.z,
+        size: index === ECONOMY_FLOW_SITES.length - 1 ? 1.45 : 0.9,
+        expand: index === activeIndex ? 0.12 : 0.025,
+        fillColor: index === activeIndex
+          ? [0.66, 0.92, 0.32, 0.22]
+          : [0.26, 0.72, 0.92, 0.06],
+        lineColor: index === activeIndex
+          ? [0.76, 1, 0.42, 0.9]
+          : [0.4, 0.82, 1, 0.46],
+      }));
+      return [
+        {
+          shape: "foundation",
+          worldX: 2475,
+          worldY: surfaceYAt(2475, 1719) + 1.02,
+          worldZ: 1719,
+          width: 22,
+          depth: 9,
+          preview: true,
+          grid: false,
+          fillColor: [0.66, 0.92, 0.32, 0.018],
+          edgeColor: [0.76, 1, 0.42, pulse * 0.5],
+          glowColor: [0.5, 0.9, 0.24, pulse * 0.18],
+        },
+        ...flow,
+      ];
+    }
+    if (focusView === "guardian") {
+      const [boy, girl] = avatars;
+      if (!boy || !girl) return [];
+      const minX = Math.min(boy.worldX, girl.worldX);
+      const minZ = Math.min(boy.worldZ, girl.worldZ);
+      return [
+        avatarRelayOverlay(boy, pulse),
+        avatarRelayOverlay(girl, pulse),
+        {
+          shape: "foundation",
+          worldX: minX,
+          worldY: Math.min(boy.worldY, girl.worldY) + 0.04,
+          worldZ: minZ,
+          width: Math.max(1, Math.abs(girl.worldX - boy.worldX) + 1),
+          depth: Math.max(1, Math.abs(girl.worldZ - boy.worldZ) + 1),
+          preview: false,
+          grid: false,
+          fillColor: [0.12, 0.72, 1, 0.016],
+          edgeColor: [0.32, 0.88, 1, pulse * 0.5],
+          glowColor: [0.2, 0.78, 1, pulse * 0.2],
+        },
+      ];
+    }
+    if (focusView === "roadmap") {
+      return [
+        buildingProgressOverlay(2431, 1694, 42, 13, pulse),
+        buildingProgressOverlay(2510, 1624, 28, 26, pulse * 0.86),
+      ];
     }
     return [];
+  }
+
+  function surfaceYAt(worldX, worldZ) {
+    return chunks?.getOpaqueColumnTopAtWorld(worldX, worldZ)
+      ?? runtime.terrainSurfaceHeight(worldConfig, worldX, worldZ);
   }
 
   function miningTargetY() {
@@ -362,6 +428,7 @@ export function createHomeWorldScene(canvas, options = {}) {
     canvas.dataset.sceneAvatars = "NCM2:villager-boy,NCM2:villager-girl";
     canvas.dataset.sceneBuildings = STRUCTURE_SPECS.map((spec) => `NCM3:${spec.id}`).join(",");
     canvas.dataset.sceneActorBehavior = "waypoint-walk-bridge-idle-mine-loop";
+    canvas.dataset.sceneActionModes = "terrain-delta,material-flow,guardian-relay,building-progress";
     document.documentElement.classList.remove("home-world-fallback");
     document.documentElement.classList.add("home-world-ready");
     options.onReady?.(lastStats);
@@ -601,6 +668,76 @@ async function fetchNcm(url) {
   const code = (await response.text()).trim();
   if (!code.startsWith("NCM2:") && !code.startsWith("NCM4:")) throw new Error("Canonical avatar model is invalid.");
   return code;
+}
+
+function focusedMiningPose(elapsedMs, reducedMotion) {
+  const cycleDuration = 1_480;
+  const cycle = Math.floor(elapsedMs / cycleDuration);
+  const cycleProgress = reducedMotion ? 0.42 : (elapsedMs % cycleDuration) / cycleDuration;
+  return {
+    phase: "mine",
+    x: ACTOR_SITES.boyMine.x,
+    z: ACTOR_SITES.boyMine.z,
+    yaw: headingYaw(ACTOR_SITES.boyMine, MINING_TARGET),
+    progress: cycleProgress,
+    cycle,
+    segmentIndex: 0,
+    distance: 0,
+  };
+}
+
+function focusedIdlePose(site, lookAt, elapsedMs) {
+  return {
+    phase: "idle",
+    x: site.x,
+    z: site.z,
+    yaw: headingYaw(site, lookAt),
+    progress: 0,
+    cycle: Math.floor(elapsedMs / 4_000),
+    segmentIndex: 0,
+    distance: 0,
+  };
+}
+
+function avatarRelayOverlay(avatar, pulse) {
+  return {
+    worldX: avatar.worldX + avatar.localOffsetX - 0.6,
+    worldY: avatar.worldY,
+    worldZ: avatar.worldZ + avatar.localOffsetZ - 0.6,
+    sizeX: 1.2,
+    sizeY: AVATAR_HEIGHT_BLOCKS,
+    sizeZ: 1.2,
+    expand: 0.03,
+    fillColor: [0.12, 0.72, 1, 0.025],
+    lineColor: [0.32, 0.88, 1, pulse * 0.72],
+  };
+}
+
+function buildingProgressOverlay(worldX, worldZ, width, depth, pulse) {
+  return {
+    shape: "foundation",
+    worldX,
+    worldY: PRESENTATION_GROUND_Y + 1.02,
+    worldZ,
+    width,
+    depth,
+    preview: true,
+    grid: true,
+    fillColor: [0.2, 0.72, 1, 0.014],
+    gridColor: [0.42, 0.86, 1, pulse * 0.16],
+    edgeColor: [0.66, 0.94, 1, pulse * 0.52],
+    glowColor: [0.2, 0.76, 1, pulse * 0.18],
+  };
+}
+
+function sceneCueForView(view) {
+  return {
+    arrival: "world-travel",
+    world: "terrain-delta",
+    market: "material-flow",
+    guardian: "guardian-relay",
+    roadmap: "building-progress",
+  }[view] || "world-travel";
 }
 
 function routeWalk(from, to, durationMs) {

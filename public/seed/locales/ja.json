@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ja",
     "label": "Japanese",
-    "version": "seed-locale-ja-0a9a4ca94d1631b3",
-    "contentHash": "0a9a4ca94d1631b3"
+    "version": "seed-locale-ja-eda86666acad2f06",
+    "contentHash": "eda86666acad2f06"
   },
   "meta": {
     "title": "NiceChunk Seed User Campaign",
@@ -168,5 +168,47 @@
     "title": "最初の Seed ユーザーに参加。",
     "register": "Whitelist に登録",
     "wallet": "ウォレット接続"
+  },
+  "common": {
+    "language": "言語",
+    "comingSoon": "近日公開",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "NiceChunk ホーム",
+    "primaryNavigationAria": "メインナビゲーション",
+    "openMenu": "メニューを開く",
+    "closeMenu": "メニューを閉じる",
+    "routes": {
+      "home": "ホーム",
+      "roadbook": "ロードブック",
+      "worldRules": "世界ルール",
+      "resources": "資源",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "元素",
+      "fairness": "公平性",
+      "proofOfFrontier": "証明",
+      "seed": "シード",
+      "guardians": "ガーディアン",
+      "contracts": "コントラクト",
+      "civilization": "文明",
+      "trust": "信頼",
+      "whitepaper": "Whitepaper",
+      "docs": "ドキュメント",
+      "miner": "マイナー",
+      "enterWorld": "ワールドへ入る"
+    }
   }
 }

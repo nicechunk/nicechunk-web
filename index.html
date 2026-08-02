@@ -1,7 +1,27 @@
 <!doctype html>
-<html lang="en" data-i18n-scope="home">
+<html lang="en" data-i18n-scope="home" data-i18n-build-version="__NICECHUNK_BUILD_VERSION__">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      (() => {
+        const supported = ["en", "es", "fr", "de", "ja", "ru", "ko", "zh-Hant", "zh-Hans"];
+        const stored = String(localStorage.getItem("nicechunk.language") || "").trim();
+        const lower = stored.toLowerCase();
+        let language = supported.includes(stored) ? stored : supported.find((code) => code.toLowerCase() === lower.split("-")[0]);
+        if (["zh-tw", "zh-hk", "zh-mo", "zh-hant"].includes(lower)) language = "zh-Hant";
+        if (["zh", "zh-cn", "zh-sg", "zh-hans"].includes(lower)) language = "zh-Hans";
+        language ||= "en";
+        const version = document.documentElement.dataset.i18nBuildVersion || "";
+        if (version && localStorage.getItem(`nicechunk.home.locale.version.${language}`) === version) return;
+        const localeBase = "/home/locales";
+        const url = `${localeBase}/${encodeURIComponent(language)}.json`;
+        window.__nicechunkLocalePreload = {
+          language,
+          localeBase,
+          promise: fetch(url, { cache: "no-store", headers: { Accept: "application/json" } }),
+        };
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0c0e12" />
     <meta name="color-scheme" content="dark" />
@@ -12,7 +32,7 @@
     <link rel="manifest" href="/site.webmanifest?v=0.1.53" />
     <link rel="preload" as="image" href="/media/home-world-preview-desktop.webp" media="(min-width: 681px)" fetchpriority="high" />
     <link rel="preload" as="image" href="/media/home-world-preview-mobile.webp" media="(max-width: 680px)" fetchpriority="high" />
-    <meta name="description" content="NiceChunk is a playable voxel civilization on Solana Devnet: deterministic terrain, verified mining, physical materials, forging, building, markets, skills, and Guardian relays." data-home-i18n-content="meta.description" />
+    <meta name="description" content="NiceChunk is a playable voxel civilization on Solana Devnet: deterministic terrain, verified mining, physical materials, forging, building, markets, skills, and Guardian relays." data-i18n-content="meta.description" />
     <title data-home-i18n="meta.title">NiceChunk | Build the world. Verify the change.</title>
   </head>
   <body>
@@ -29,6 +49,7 @@
         "/ncm_dna": "/ncm_dna/",
         "/elements": "/elements/",
         "/docs": "/docs/",
+        "/whitepaper": "/whitepaper/",
         "/fairness": "/fairness/",
         "/forging": "/forging/",
         "/mining": "/mining/",
@@ -48,69 +69,49 @@
       <div class="home-world-vignette"></div>
     </div>
 
-    <nav class="side-nav" aria-label="Section navigation" data-home-i18n-aria-label="sideNav.aria">
-      <button class="side-dot active" type="button" data-section-index="0" aria-label="Intro" data-home-i18n-aria-label="sideNav.intro">
-        <span data-home-i18n="sideNav.intro">Intro</span>
-      </button>
-      <button class="side-dot" type="button" data-section-index="1" aria-label="World" data-home-i18n-aria-label="sideNav.world">
-        <span data-home-i18n="sideNav.world">World</span>
-      </button>
-      <button class="side-dot" type="button" data-section-index="2" aria-label="Economy" data-home-i18n-aria-label="sideNav.economy">
-        <span data-home-i18n="sideNav.economy">Economy</span>
-      </button>
-      <button class="side-dot" type="button" data-section-index="3" aria-label="Guardians" data-home-i18n-aria-label="sideNav.watchers">
-        <span data-home-i18n="sideNav.watchers">Guardians</span>
-      </button>
-      <button class="side-dot" type="button" data-section-index="4" aria-label="Roadmap" data-home-i18n-aria-label="sideNav.roadmap">
-        <span data-home-i18n="sideNav.roadmap">Roadmap</span>
-      </button>
+    <nav class="chapter-nav" aria-label="Section navigation" data-home-i18n-aria-label="sideNav.aria">
+      <p class="chapter-counter" aria-hidden="true">
+        <strong id="chapterCurrent">01</strong>
+        <i></i>
+        <span>05</span>
+      </p>
+      <div class="chapter-nav-list">
+        <button class="side-dot active" type="button" data-section-index="0" aria-label="Intro" data-home-i18n-aria-label="sideNav.intro">
+          <b>01</b>
+          <span data-home-i18n="sideNav.intro">Intro</span>
+        </button>
+        <button class="side-dot" type="button" data-section-index="1" aria-label="World" data-home-i18n-aria-label="sideNav.world">
+          <b>02</b>
+          <span data-home-i18n="sideNav.world">World</span>
+        </button>
+        <button class="side-dot" type="button" data-section-index="2" aria-label="Economy" data-home-i18n-aria-label="sideNav.economy">
+          <b>03</b>
+          <span data-home-i18n="sideNav.economy">Economy</span>
+        </button>
+        <button class="side-dot" type="button" data-section-index="3" aria-label="Guardians" data-home-i18n-aria-label="sideNav.watchers">
+          <b>04</b>
+          <span data-home-i18n="sideNav.watchers">Guardians</span>
+        </button>
+        <button class="side-dot" type="button" data-section-index="4" aria-label="Roadmap" data-home-i18n-aria-label="sideNav.roadmap">
+          <b>05</b>
+          <span data-home-i18n="sideNav.roadmap">Roadmap</span>
+        </button>
+      </div>
     </nav>
 
-    <header class="site-header" id="siteHeader">
-      <a class="brand-mark" href="/" aria-label="NiceChunk">
-        <img src="/media/nck.png" alt="" />
-        <span>NICECHUNK</span>
-      </a>
-      <nav class="site-nav" aria-label="Primary navigation" data-home-i18n-aria-label="nav.aria">
-        <div class="nav-links">
-          <a class="active" href="/" data-home-i18n="nav.home">Home</a>
-          <a href="/roadmap/" data-home-i18n="nav.roadbook">Roadbook</a>
-          <a href="/world_rule/" data-home-i18n="nav.worldRules">World Rules</a>
-          <a href="/resource_rule/" data-home-i18n="nav.resources">Resources</a>
-          <a href="/ncm/" data-home-i18n="nav.ncm">NCM</a>
-          <a href="/ncfm/">NCFM</a>
-          <a href="/elements/" data-home-i18n="nav.elements">Elements</a>
-          <a href="/fairness/" data-home-i18n="nav.fairness">Fairness</a>
-          <a href="/proof-of-frontier/" data-home-i18n="nav.proofOfFrontier">Proof</a>
-          <a href="/guardian/" data-home-i18n="nav.guardians">Guardians</a>
-          <a href="/contracts/" data-home-i18n="nav.contracts">Contracts</a>
-          <a href="/docs/" data-home-i18n="nav.docs">Docs</a>
-        </div>
-        <div class="nav-actions">
-          <a class="header-action" href="/play/" data-home-i18n="nav.enterWorld">Enter World</a>
-          <div class="home-language language-picker" aria-label="Language" data-home-i18n-aria-label="language.aria">
-            <button class="home-language-trigger" type="button" aria-haspopup="listbox" aria-expanded="false">
-              <span class="home-language-current">English (English)</span>
-              <span class="home-language-caret" aria-hidden="true"></span>
-            </button>
-            <div class="home-language-menu" role="listbox"></div>
-          </div>
-        </div>
-      </nav>
-    </header>
+    <header class="site-header" id="siteHeader" data-site-header-root data-site-header-pending="true"></header>
 
     <main id="scrollContainer" class="scroll-container">
-      <section class="snap-section active" id="section-0" aria-labelledby="heroTitle">
-        <div class="zoom-content hero-grid">
-          <div class="hero-copy">
+      <section class="snap-section active" id="section-0" data-scene-view="arrival" aria-labelledby="heroTitle">
+        <div class="chapter-layout chapter-layout-hero">
+          <div class="chapter-card hero-copy">
             <p class="eyebrow" data-home-i18n="hero.eyebrow">Playable Devnet Alpha</p>
             <h1 id="heroTitle" data-home-i18n="hero.title">Build the world. Verify the change.</h1>
             <p class="hero-subtitle" data-home-i18n="hero.subtitle">Explore a deterministic voxel world, mine measured resources, smelt and forge materials, build, trade exact items, and grow skills. Chunk.js renders each moment; Solana programs settle persistent state; Guardians relay nearby play.</p>
-            <div class="cta-actions hero-actions">
+            <div class="chapter-actions hero-actions">
               <a class="primary-action" href="/play/" data-home-i18n="hero.enterWorld">Enter World</a>
             </div>
-            <ul class="status-badges" aria-label="Product status" data-home-i18n-aria-label="hero.statusAria">
-              <li data-home-i18n="hero.badges.alpha">Playable Devnet Alpha</li>
+            <ul class="chapter-telemetry" aria-label="Product status" data-home-i18n-aria-label="hero.statusAria">
               <li data-home-i18n="hero.badges.solana">Solana Program State</li>
               <li data-home-i18n="hero.badges.seeded">Chunk.js Voxel Engine</li>
               <li data-home-i18n="hero.badges.watchers">Guardian Realtime Relay</li>
@@ -120,150 +121,90 @@
         </div>
       </section>
 
-      <section class="snap-section" id="section-1" aria-labelledby="worldTitle">
-        <div class="zoom-content world-concept-shell">
-          <div class="world-concept-layout">
-            <div class="world-copy">
-              <p class="eyebrow blue" data-home-i18n="world.eyebrow">Verifiable World</p>
-              <h2 id="worldTitle" data-home-i18n="world.title">Untouched terrain is generated. Player changes are recorded.</h2>
-              <p data-home-i18n="world.body">Seed and coordinates reconstruct every untouched block. When a player mines or builds, Solana programs validate the action and record the persistent delta. The browser can rebuild the same base world without downloading a hidden master map.</p>
-              <div class="world-readout" aria-hidden="true">
-                <i></i>
-                <span data-home-i18n="world.readout.protocol">BASE: DETERMINISTIC RECONSTRUCTION</span>
-                <span data-home-i18n="world.readout.state">CHANGE: SOLANA CHUNK DELTAS</span>
-                <span data-home-i18n="world.readout.verify">RENDER: CHUNK.JS WEBGL2</span>
-              </div>
+      <section class="snap-section" id="section-1" data-scene-view="world" aria-labelledby="worldTitle">
+        <div class="chapter-layout">
+          <div class="chapter-card world-copy">
+            <p class="eyebrow blue" data-home-i18n="world.eyebrow">Verifiable World</p>
+            <h2 id="worldTitle" data-home-i18n="world.title">Untouched terrain is generated. Player changes are recorded.</h2>
+            <p data-home-i18n="world.body">Seed and coordinates reconstruct every untouched block. When a player mines or builds, Solana programs validate the action and record the persistent delta. The browser can rebuild the same base world without downloading a hidden master map.</p>
+            <div class="world-readout">
+              <span data-home-i18n="world.readout.protocol">BASE: DETERMINISTIC RECONSTRUCTION</span>
+              <span data-home-i18n="world.readout.state">CHANGE: SOLANA CHUNK DELTAS</span>
+              <span data-home-i18n="world.readout.verify">RENDER: CHUNK.JS WEBGL2</span>
             </div>
-            <div class="glass-card seed-animation-card">
-              <div class="seed-stage">
-                <canvas id="seedChunkCanvas" aria-hidden="true"></canvas>
-                <div class="seed-meta">
-                  <p class="eyebrow" data-home-i18n="world.seed.eyebrow">Deterministic Chunk</p>
-                  <strong data-home-i18n="world.seed.title">Reconstruct, don't preload</strong>
-                  <span data-home-i18n="world.seed.body">World seed plus coordinates produce terrain, water, vegetation, and resource candidates on demand.</span>
-                  <dl>
-                    <dt data-home-i18n="world.seed.label">Seed</dt>
-                    <dd id="seedValue">NCK-000000</dd>
-                  </dl>
-                </div>
-              </div>
+            <div class="chapter-actions">
+              <a class="secondary-action" href="/world_rule/" data-home-i18n="rules.cta">Read World Rules</a>
             </div>
-          </div>
-          <div class="module-grid gameplay-grid module-strip">
-            <a class="glass-card module-card" href="/play/">
-              <span class="module-symbol">EXP</span>
-              <strong data-home-i18n="gameplay.explore.title">Explore a Reconstructable World</strong>
-              <span data-home-i18n="gameplay.explore.body">The browser generates terrain and biomes from public inputs, so the same seed and coordinates recover the same untouched world.</span>
-            </a>
-            <a class="glass-card module-card" href="/play/">
-              <span class="module-symbol">MIN</span>
-              <strong data-home-i18n="gameplay.mine.title">Mine Verified Blocks</strong>
-              <span data-home-i18n="gameplay.mine.body">A successful mining transaction updates the block, backpack, source counters, and skill records across one accepted chain action.</span>
-            </a>
-            <a class="glass-card module-card" href="/forging/">
-              <span class="module-symbol">FRG</span>
-              <strong data-home-i18n="gameplay.forge.title">Smelt, Shape &amp; Forge</strong>
-              <span data-home-i18n="gameplay.forge.body">Recipes consume exact inputs, produce materials by measured volume and yield, then turn those materials into verifiable geometry.</span>
-            </a>
-            <a class="glass-card module-card" href="/player_set/">
-              <span class="module-symbol">ID</span>
-              <strong data-home-i18n="gameplay.identity.title">Own Your Player Records</strong>
-              <span data-home-i18n="gameplay.identity.body">Your wallet controls the player profile, backpack, and ten-skill ledger. Progress is more than a temporary browser save.</span>
-            </a>
-            <a class="glass-card module-card" href="#section-3" data-scroll-target="3">
-              <span class="module-symbol">GDN</span>
-              <strong data-home-i18n="gameplay.watchers.title">See Nearby Players Live</strong>
-              <span data-home-i18n="gameplay.watchers.body">Guardians relay nearby presence, movement, and chat without taking custody of assets or replacing chain settlement.</span>
-            </a>
           </div>
         </div>
       </section>
 
-      <section class="snap-section" id="section-2" aria-labelledby="economyTitle">
-        <div class="zoom-content architecture-grid">
-          <div class="protocol-copy">
+      <section class="snap-section" id="section-2" data-scene-view="market" aria-labelledby="economyTitle">
+        <div class="chapter-layout chapter-layout-right">
+          <div class="chapter-card economy-copy">
             <p class="eyebrow blue" data-home-i18n="economy.eyebrow">Material Economy</p>
             <h2 id="economyTitle" data-home-i18n="economy.title">A material economy you can inspect.</h2>
             <p data-home-i18n="economy.body">Resources carry measured volume, density, and mass from extraction through smelting and forging. Backpack custody, recipe inputs, forged geometry, and market listings stay explicit, so an item is more than a thumbnail or balance.</p>
-          </div>
-          <div class="glass-card economy-list-card">
-            <p class="eyebrow" data-home-i18n="economy.utilityEyebrow">Live Economy Layers</p>
-            <ul class="utility-list">
+            <ul class="chapter-facts">
               <li data-home-i18n="economy.utility.genesis">Measured resource volume, density, and mass</li>
-              <li data-home-i18n="economy.utility.actions">Backpack custody and exact recipe inputs</li>
               <li data-home-i18n="economy.utility.forging">Smelting output and player skill bonuses</li>
-              <li data-home-i18n="economy.utility.market">Forged geometry backed by material records</li>
               <li data-home-i18n="economy.utility.governance">Exact-item escrow with atomic SOL or NCK settlement</li>
             </ul>
+            <div class="chapter-actions">
+              <a class="secondary-action" href="/forging/" data-home-i18n="gameplay.forge.title">Smelt, Shape &amp; Forge</a>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="snap-section" id="section-3" aria-labelledby="watchersTitle">
-        <div class="zoom-content watcher-concept-shell">
-          <div class="watcher-concept-grid">
-            <div class="protocol-copy watcher-side-copy">
-              <p class="eyebrow blue" data-home-i18n="watchers.eyebrow">Guardian Realtime Relay</p>
-              <h2 id="watchersTitle" data-home-i18n="watchers.title">Fast nearby play, without a second game authority.</h2>
-              <p data-home-i18n="watchers.body">Guardians discover regions and relay nearby presence, movement, chat, and short-lived hints. They never custody items or settle transactions; Solana remains the authority for persistent game state.</p>
-            </div>
-            <div class="glass-card watcher-animation-card" aria-label="Guardian network animation" data-home-i18n-aria-label="watchers.animation.aria">
-              <canvas id="watcherNetworkCanvas" aria-hidden="true"></canvas>
-              <div class="watcher-copy">
-                <strong data-home-i18n="watchers.animation.title">Guardian Node</strong>
-                <span data-home-i18n="watchers.animation.body">Realtime relay, not settlement</span>
-              </div>
-            </div>
-            <div class="protocol-copy watcher-side-copy rules-side-copy">
-              <p class="eyebrow blue" data-home-i18n="rules.eyebrow">Explicit Trust Boundary</p>
-              <h2 data-home-i18n="rules.title">Four layers. One explicit trust boundary.</h2>
-              <p data-home-i18n="rules.body">The browser renders immediate, reversible feedback. Guardians relay the live moment. Solana programs validate narrow actions and persist accepted state. Deterministic reconstruction rebuilds everything untouched from public inputs.</p>
-              <a class="secondary-action inline-action" href="/world_rule/" data-home-i18n="rules.cta">Read World Rules</a>
-              <a class="secondary-action inline-action" href="/guardian/" data-home-i18n="watchers.guardianConsole">Open Guardian Console</a>
-            </div>
-          </div>
-          <ul class="status-badges watcher-status-row">
-            <li data-home-i18n="watchers.badges.noCustody">No asset custody</li>
-            <li data-home-i18n="watchers.badges.noTransactions">No transaction settlement</li>
-            <li data-home-i18n="watchers.badges.communication">Nearby presence, movement &amp; chat</li>
+      <section class="snap-section" id="section-3" data-scene-view="guardian" aria-labelledby="watchersTitle">
+        <div class="chapter-layout">
+          <div class="chapter-card watcher-copy">
+            <p class="eyebrow blue" data-home-i18n="watchers.eyebrow">Guardian Realtime Relay</p>
+            <h2 id="watchersTitle" data-home-i18n="watchers.title">Fast nearby play, without a second game authority.</h2>
+            <p data-home-i18n="watchers.body">Guardians discover regions and relay nearby presence, movement, chat, and short-lived hints. They never custody items or settle transactions; Solana remains the authority for persistent game state.</p>
+            <ul class="chapter-facts watcher-facts">
+              <li data-home-i18n="watchers.badges.noCustody">No asset custody</li>
+              <li data-home-i18n="watchers.badges.noTransactions">No transaction settlement</li>
+              <li data-home-i18n="watchers.badges.communication">Nearby presence, movement &amp; chat</li>
             </ul>
+            <div class="chapter-actions">
+              <a class="secondary-action" href="/guardian/" data-home-i18n="watchers.guardianConsole">Open Guardian Console</a>
+              <a class="text-action" href="/world_rule/" data-home-i18n="rules.cta">Read World Rules</a>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section class="snap-section cta-section" id="section-4" aria-labelledby="roadmapTitle">
-        <div class="zoom-content cta-shell">
-          <div class="roadmap-layout">
-            <div>
+      <section class="snap-section" id="section-4" data-scene-view="roadmap" aria-labelledby="roadmapTitle">
+        <div class="chapter-layout chapter-layout-wide">
+          <div class="chapter-card roadmap-layout">
+            <div class="roadmap-copy">
               <p class="eyebrow blue" data-home-i18n="roadmap.eyebrow">Product Status</p>
               <h2 id="roadmapTitle" data-home-i18n="roadmap.title">Playable now, expanding in public.</h2>
+              <div class="chapter-actions">
+                <a class="primary-action" href="/roadmap/" data-home-i18n="roadmap.readFull">Read Full Roadbook</a>
+              </div>
             </div>
-            <ol class="timeline-list roadmap-list">
+            <ol class="roadmap-list">
               <li>
                 <strong data-home-i18n="roadmap.phase1.title">Live - Verifiable World</strong>
-                <p data-home-i18n="roadmap.phase1.body">Chunk.js browser client, deterministic terrain, wallets, profiles, and chain-checked mining.</p>
               </li>
               <li>
                 <strong data-home-i18n="roadmap.phase2.title">Live - Material Economy</strong>
-                <p data-home-i18n="roadmap.phase2.body">Backpacks, measured resources, smelting, forging, and ten on-chain skill records.</p>
               </li>
               <li>
                 <strong data-home-i18n="roadmap.phase3.title">Live Alpha - Marketplace &amp; Building</strong>
-                <p data-home-i18n="roadmap.phase3.body">Exact-item escrow, SOL/NCK settlement, blueprints, and persistent player construction.</p>
               </li>
               <li>
                 <strong data-home-i18n="roadmap.phase4.title">Expanding - Guardian Regions</strong>
-                <p data-home-i18n="roadmap.phase4.body">Regional discovery, nearby presence, movement, chat, and broader relay coverage.</p>
               </li>
               <li>
                 <strong data-home-i18n="roadmap.phase5.title">Research - Useful Compute &amp; Governance</strong>
-                <p data-home-i18n="roadmap.phase5.body">NCM search, useful-compute proofs, and rule evolution remain open research, not hidden promises.</p>
               </li>
             </ol>
-            <div class="roadmap-actions">
-              <a class="primary-action" href="/roadmap/" data-home-i18n="roadmap.readFull">Read Full Roadbook</a>
-            </div>
           </div>
-          <footer class="site-footer">
+          <footer class="site-footer" data-site-footer-native>
             <div>
               <a class="brand-mark" href="/" aria-label="NiceChunk">
                 <img src="/media/nck.png" alt="" />
@@ -279,7 +220,7 @@
               <a href="/contracts/" data-home-i18n="footer.contracts">Contracts</a>
               <a href="#section-2" data-scroll-target="2" data-home-i18n="footer.nckEconomy">Material Economy</a>
               <a href="#section-3" data-scroll-target="3" data-home-i18n="footer.watcherNetwork">Guardian Network</a>
-              <a href="/docs/" data-home-i18n="footer.whitepaper">Whitepaper</a>
+              <a href="/whitepaper/" data-home-i18n="footer.whitepaper">Whitepaper</a>
               <a href="/fairness/" data-home-i18n="footer.fairness">Fairness</a>
             </nav>
           </footer>

@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ru",
     "label": "Russian",
-    "version": "ncm-dna-locale-ru-a806e8166f2d8b33",
-    "contentHash": "a806e8166f2d8b33"
+    "version": "ncm-dna-locale-ru-e867e833574bb9a9",
+    "contentHash": "e867e833574bb9a9"
   },
   "siteFooter": {
     "tagline": "Seeded voxel world protocol on Solana.",
@@ -32,7 +32,8 @@
       "ko": "한국어",
       "zhHant": "繁體中文",
       "zhHans": "简体中文"
-    }
+    },
+    "comingSoon": "Скоро"
   },
   "ncmDna": {
     "nav": {
@@ -193,6 +194,33 @@
       "seedGrown": "Seed выращен: {hash}",
       "invalidGene": "Недопустимый ген: {message}",
       "invalidSeed": "Недопустимый seed: {message}"
+    }
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "Главная NiceChunk",
+    "primaryNavigationAria": "Основная навигация",
+    "openMenu": "Открыть меню",
+    "closeMenu": "Закрыть меню",
+    "routes": {
+      "home": "Главная",
+      "roadbook": "План",
+      "worldRules": "Правила",
+      "resources": "Ресурсы",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "Элементы",
+      "fairness": "Честность",
+      "proofOfFrontier": "Доказательство",
+      "seed": "Сид",
+      "guardians": "Стражи",
+      "contracts": "Контракты",
+      "civilization": "Цивилизация",
+      "trust": "Доверие",
+      "whitepaper": "Whitepaper",
+      "docs": "Документы",
+      "miner": "Майнер",
+      "enterWorld": "Войти в мир"
     }
   }
 }

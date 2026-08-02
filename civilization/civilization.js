@@ -2,6 +2,7 @@ import { initI18n, t } from "../src/i18n.js";
 import { finishSiteLoading, setSiteLoadingProgress } from "../src/site-ui.js";
 import "./style.css";
 import "../src/site-header.css";
+import "../src/site-header-bootstrap.js";
 
 /**
  * @typedef {"natural" | "civilization"} LawType

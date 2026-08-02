@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hant",
     "label": "Traditional Chinese",
-    "version": "ncm-dna-locale-zh-Hant-dd443ef0fe12b17f",
-    "contentHash": "dd443ef0fe12b17f"
+    "version": "ncm-dna-locale-zh-Hant-c49613da135c2513",
+    "contentHash": "c49613da135c2513"
   },
   "siteFooter": {
     "tagline": "Solana 上的種子體素世界協議。",
@@ -32,7 +32,8 @@
       "ko": "한국어",
       "zhHant": "繁體中文",
       "zhHans": "简体中文"
-    }
+    },
+    "comingSoon": "即將推出"
   },
   "ncmDna": {
     "nav": {
@@ -193,6 +194,33 @@
       "seedGrown": "種子已生長：{hash}",
       "invalidGene": "无效基因：{message}",
       "invalidSeed": "无效種子：{message}"
+    }
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "NiceChunk 首頁",
+    "primaryNavigationAria": "主要導覽",
+    "openMenu": "開啟選單",
+    "closeMenu": "關閉選單",
+    "routes": {
+      "home": "首頁",
+      "roadbook": "路書",
+      "worldRules": "世界規則",
+      "resources": "資源",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "元素",
+      "fairness": "公平性",
+      "proofOfFrontier": "證明",
+      "seed": "種子",
+      "guardians": "守護者",
+      "contracts": "合約",
+      "civilization": "文明",
+      "trust": "信任",
+      "whitepaper": "Whitepaper",
+      "docs": "文檔",
+      "miner": "礦工",
+      "enterWorld": "進入世界"
     }
   }
 }

@@ -3,6 +3,7 @@ import { finishSiteLoading, setSiteLoadingProgress } from "../src/site-ui.js";
 import { parseVox } from "../src/vox/ncm.js";
 import "./style.css";
 import "../src/site-header.css";
+import "../src/site-header-bootstrap.js";
 
 const fallbackCopy = {
   meta: {

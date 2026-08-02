@@ -1826,5 +1826,47 @@
         "use": "Verifica que los listados conserven procedencia del recurso y estado de liquidación."
       }
     ]
+  },
+  "common": {
+    "language": "Idioma",
+    "comingSoon": "Próximamente",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "Inicio de NiceChunk",
+    "primaryNavigationAria": "Navegación principal",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "routes": {
+      "home": "Inicio",
+      "roadbook": "Ruta",
+      "worldRules": "Reglas",
+      "resources": "Recursos",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "Elementos",
+      "fairness": "Equidad",
+      "proofOfFrontier": "Prueba",
+      "seed": "Semilla",
+      "guardians": "Guardianes",
+      "contracts": "Contratos",
+      "civilization": "Civilización",
+      "trust": "Confianza",
+      "whitepaper": "Whitepaper",
+      "docs": "Docs",
+      "miner": "Miner",
+      "enterWorld": "Entrar al mundo"
+    }
   }
 }

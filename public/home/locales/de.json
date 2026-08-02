@@ -2,8 +2,8 @@
   "_meta": {
     "language": "de",
     "label": "German",
-    "version": "home-locale-de-7cd6a66f78e6a0d2",
-    "contentHash": "7cd6a66f78e6a0d2"
+    "version": "home-locale-de-f9a85004ae8176d2",
+    "contentHash": "f9a85004ae8176d2"
   },
   "siteFooter": {
     "tagline": "Ein Seed-Voxelwelt-Protokoll auf Solana.",
@@ -20,7 +20,8 @@
     "copyright": "2026 NiceChunk. Alle Rechte vorbehalten."
   },
   "meta": {
-    "title": "NiceChunk | Besitzen Sie die Welt, ein chunk nach dem anderen"
+    "title": "NiceChunk | Baue die Welt. Prüfe jede Änderung.",
+    "description": "NiceChunk ist eine spielbare Voxel-Zivilisation auf Solana Devnet: deterministisches Terrain, geprüftes Mining, physische Materialien, Schmieden, Bauen, Markt, Skills und Guardian-Relays."
   },
   "nav": {
     "aria": "Primäre Navigation",
@@ -36,7 +37,8 @@
     "elements": "Elemente",
     "docs": "Dokumente",
     "enterWorld": "Betritt die Welt",
-    "guardians": "Wächter"
+    "guardians": "Wächter",
+    "contracts": "Verträge"
   },
   "language": {
     "aria": "Sprache"
@@ -50,128 +52,129 @@
     "roadmap": "Fahrplan"
   },
   "hero": {
-    "eyebrow": "Alpha Live-Vorschau",
-    "title": "Besitze die Welt, ein chunk nach dem anderen.",
-    "subtitle": "NiceChunk ist eine von Solana betriebene Voxelwelt, in der jeder chunk von Spielern gesät, erkundebar, abbaubar und gestaltet ist. Erkunden Sie Land, entdecken Sie Ressourcen, schmieden Sie Vermögenswerte und schließen Sie sich einer dauerhaften Weltwirtschaft an, die auf überprüfbaren Spielständen basiert.",
-    "enterWorld": "Betritt die Welt",
+    "eyebrow": "Spielbare Devnet-Alpha",
+    "title": "Baue die Welt. Prüfe jede Änderung.",
+    "subtitle": "Erkunde eine deterministische Voxelwelt, baue messbare Ressourcen ab, schmelze und schmiede Materialien, baue, handle exakte Gegenstände und entwickle Skills. Chunk.js rendert den Moment; Solana-Programme schreiben dauerhaften Zustand; Guardians übertragen das Geschehen in der Nähe.",
+    "enterWorld": "Welt betreten",
     "connectWallet": "Wallet verbinden",
     "readRoadbook": "Roadbook lesen",
-    "readRules": "Lesen Sie die Weltregeln",
+    "readRules": "Weltregeln lesen",
     "statusAria": "Produktstatus",
     "badges": {
-      "alpha": "Alpha Live-Vorschau",
-      "solana": "Solana Wallet bereit",
-      "seeded": "Gesäte Chunk-Engine",
-      "watchers": "Guardian Network Demnächst verfügbar"
+      "alpha": "Spielbare Devnet-Alpha",
+      "solana": "Zustand in Solana-Programmen",
+      "seeded": "Chunk.js Voxel-Engine",
+      "watchers": "Guardian-Echtzeit-Relay"
     }
   },
   "world": {
-    "eyebrow": "Welt",
-    "title": "Eine Welt, die aus Samen entsteht und von Spielern verändert wird.",
-    "body": "NiceChunk ist keine feste Karte. Die Welt erweitert chunk um chunk. Gelände, Ressourcen und Spieleraktionen bilden einen dauerhaften Zustand, der überprüft, gehandelt und ausgebaut werden kann. Jeder Entdecker hilft dabei, die Welt zu enthüllen. Jeder Baumeister hinterlässt Spuren.",
+    "eyebrow": "Prüfbare Welt",
+    "title": "Unverändertes Terrain wird erzeugt. Spieleränderungen werden aufgezeichnet.",
+    "body": "Seed und Koordinaten rekonstruieren jeden unveränderten Block. Wenn Spieler abbauen oder bauen, prüfen Solana-Programme die Aktion und speichern die dauerhafte Änderung. Der Browser kann dieselbe Basiswelt ohne versteckte Masterkarte wiederherstellen.",
     "seed": {
-      "eyebrow": "Gesätes Chunk",
-      "title": "Lebendige Saatguterzeugung",
-      "body": "Ein sich ändernder Seed erstellt eine neue chunk-Vorschau mit Geländehöhe, Wasser, Wald, Sand, Schnee und Ressourcenhinweisen.",
-      "label": "Samen"
+      "eyebrow": "Deterministischer Chunk",
+      "title": "Rekonstruieren statt vorladen",
+      "body": "Welt-Seed und Koordinaten erzeugen Terrain, Wasser, Vegetation und mögliche Ressourcen bei Bedarf.",
+      "label": "Seed"
     },
     "readout": {
-      "protocol": "PROTOKOLL: SEEDED CHUNK ENGINE",
-      "state": "STATUS: SPIELER BESCHREIBBAR",
-      "verify": "ÜBERPRÜFEN: DETERMINISTISCHE REGELN"
+      "protocol": "BASIS: DETERMINISTISCHE REKONSTRUKTION",
+      "state": "ÄNDERUNG: SOLANA-CHUNK-DELTAS",
+      "verify": "RENDERING: CHUNK.JS WEBGL2"
     }
   },
   "gameplay": {
     "explore": {
-      "title": "Entdecken Sie Chunks",
-      "body": "Betreten Sie die browserbasierte Voxel-Welt. Bewegen Sie sich über gesätes Gelände, entdecken Sie neue chunks und finden Sie Orte, die es wert sind, beansprucht zu werden."
+      "title": "Erkunde eine rekonstruierbare Welt",
+      "body": "Der Browser erzeugt Terrain und Biome aus öffentlichen Eingaben; gleicher Seed und gleiche Koordinaten ergeben dieselbe unveränderte Welt."
     },
     "mine": {
-      "title": "Bergbauressourcen",
-      "body": "Durchbrechen Sie Blockaden, decken Sie verborgene Ressourcen auf und verwandeln Sie Erkundungen in nützliche Materialien für die Weltwirtschaft."
+      "title": "Baue geprüfte Blöcke ab",
+      "body": "Eine erfolgreiche Mining-Transaktion aktualisiert Block, Rucksack, Quellenzähler und Skills in einer akzeptierten Chain-Aktion."
     },
     "forge": {
-      "title": "Vermögenswerte fälschen",
-      "body": "Kombinieren Sie Rohstoffe zu Werkzeugen, Bauplänen, Ausrüstung und zukünftigen handelbaren Spielgütern."
+      "title": "Schmelze, forme und schmiede",
+      "body": "Rezepte verbrauchen exakte Eingaben, erzeugen Material nach gemessenem Volumen und Ertrag und formen daraus prüfbare Geometrie."
     },
     "identity": {
-      "title": "Spieleridentität",
-      "body": "Verbinden Sie Ihr wallet, erstellen Sie Ihr Spielerprofil und tragen Sie Ihren Fortschritt durch die NiceChunk-Welt."
+      "title": "Besitze deine Spielerdaten",
+      "body": "Deine Wallet kontrolliert Profil, Rucksack und das Register mit zehn Skills. Fortschritt ist mehr als ein temporärer Browserstand."
     },
     "watchers": {
-      "title": "Guardian Network",
-      "body": "Guardian-Knoten tragen dazu bei, Regionen zugänglich zu machen, Echtzeitkommunikation zu unterstützen und die Welt auf die dezentrale Koordination vorzubereiten."
+      "title": "Sieh Spieler in der Nähe live",
+      "body": "Guardians übertragen Präsenz, Bewegung und Chat in der Nähe, ohne Assets zu verwahren oder Chain-Abwicklung zu ersetzen."
     }
   },
   "economy": {
-    "eyebrow": "NCK Wirtschaft",
-    "title": "NCK treibt die NiceChunk-Wirtschaft an.",
-    "body": "NCK ist als Kern-Utility-Token von NiceChunk konzipiert. Es kann für Genesis-Zugriff, In-World-Aktionen, Forging-Systeme, Marktabwicklung und zukünftige Governance-Mechanismen verwendet werden. Das Ziel ist einfach: Die Weltwirtschaft soll den Akteuren gehören, die sie erforschen, bauen, abbauen und betreiben.",
-    "utilityEyebrow": "Geplanter Nutzen",
+    "eyebrow": "Materialwirtschaft",
+    "title": "Eine Materialwirtschaft, die du prüfen kannst.",
+    "body": "Ressourcen behalten messbares Volumen, Dichte und Masse vom Abbau über das Schmelzen bis zum Schmieden. Rucksackverwahrung, Rezepteingaben, geschmiedete Geometrie und Marktangebote bleiben explizit: Ein Gegenstand ist mehr als Vorschaubild oder Kontostand.",
+    "utilityEyebrow": "Aktive Wirtschaftsebenen",
     "utility": {
-      "genesis": "Genesis Pass-Zugriff verbunden mit NCK",
-      "actions": "In-World-Handlung und Materialschleifen",
-      "forging": "Schmiedesysteme und Vermögensbildung",
-      "market": "Marktplatzabwicklung",
-      "governance": "Zukünftige Mechanismen der Weltregierung"
+      "genesis": "Gemessenes Volumen, Dichte und Masse von Ressourcen",
+      "actions": "Rucksackverwahrung und exakte Rezepteingaben",
+      "forging": "Schmelzertrag und Skill-Boni",
+      "market": "Geschmiedete Geometrie mit Materialnachweisen",
+      "governance": "Exakte Gegenstandsverwahrung mit atomarer SOL- oder NCK-Abwicklung"
     }
   },
   "watchers": {
-    "eyebrow": "Guardian Network",
-    "title": "Führen Sie ein Guardian aus. Halten Sie eine Region am Leben.",
-    "body": "Guardian-Knoten sind die Zugriffsschicht von NiceChunk. Sie kontrollieren weder Spielervermögen noch verarbeiten sie On-Chain-Transaktionen. Stattdessen helfen sie den Regionen, erreichbar zu bleiben, bieten Echtzeitkommunikation und unterstützen die lokale Weltaktivität. Während die Welt wächst, wird Guardians zur Infrastruktur, die chunks am Leben erhält.",
+    "eyebrow": "Guardian-Echtzeit-Relay",
+    "title": "Schnelles Spiel in der Nähe, ohne zweite Spielautorität.",
+    "body": "Guardians finden Regionen und übertragen Präsenz, Bewegung, Chat und kurzlebige Hinweise in der Nähe. Sie verwahren keine Gegenstände und wickeln keine Transaktionen ab; Solana bleibt die Autorität für dauerhaften Spielzustand.",
     "badges": {
-      "noCustody": "Keine Vermögensverwahrung",
-      "noTransactions": "Keine Verarbeitung von Spielertransaktionen",
-      "communication": "Regionskommunikation in Echtzeit"
+      "noCustody": "Keine Asset-Verwahrung",
+      "noTransactions": "Keine Transaktionsabwicklung",
+      "communication": "Präsenz, Bewegung und Chat in der Nähe"
     },
     "animation": {
-      "aria": "Guardian Netzwerkanimation",
+      "aria": "Animation des Guardian-Echtzeit-Relays",
       "title": "Guardian-Knoten",
-      "body": "Regionszugriffsschicht"
+      "body": "Echtzeit-Relay, keine Abwicklung"
     },
     "guardianConsole": "Guardian-Konsole öffnen"
   },
   "rules": {
-    "eyebrow": "Open-World-Regeln",
-    "title": "Transparente Weltregeln.",
-    "body": "NiceChunk basiert auf offenen Generierungsregeln. Chunks werden aus Seeds generiert, Spieleraktionen aktualisieren den Weltzustand und wichtige wirtschaftliche Aktionen sind so gestaltet, dass sie überprüfbar sind. Die Welt soll spielbar, aber auch begehbar sein.",
-    "cta": "Lesen Sie die Weltregeln"
+    "eyebrow": "Explizite Vertrauensgrenze",
+    "title": "Vier Ebenen. Eine explizite Vertrauensgrenze.",
+    "body": "Der Browser zeigt sofortiges, rückgängig machbares Feedback. Guardians übertragen den Live-Moment. Solana-Programme prüfen eng begrenzte Aktionen und speichern akzeptierten Zustand. Deterministische Rekonstruktion baut alles Unveränderte aus öffentlichen Eingaben neu auf.",
+    "cta": "Weltregeln lesen"
   },
   "roadmap": {
-    "eyebrow": "Fahrplan",
-    "title": "Von der Alpha-Weltvorschau zum spielereigenen Protokoll.",
+    "eyebrow": "Produktstatus",
+    "title": "Jetzt spielbar, öffentlich im Ausbau.",
     "phase1": {
-      "title": "Phase 1 – Alpha-Weltvorschau",
-      "body": "Browser-Voxel-Client, wallet-Verbindung, Vorschau des gesäten Geländes, Player-Setup."
+      "title": "Live - Prüfbare Welt",
+      "body": "Chunk.js-Browserclient, deterministisches Terrain, Wallets, Profile und auf der Chain geprüftes Mining."
     },
     "phase2": {
-      "title": "Phase 2 – Bergbau und Schmieden",
-      "body": "Ressourcenentdeckung, Blockinteraktion, Materiallogik, Schmiedebank, grundlegende Asset-Schleife."
+      "title": "Live - Materialwirtschaft",
+      "body": "Rucksäcke, messbare Ressourcen, Schmelzen, Schmieden und zehn On-Chain-Skillregister."
     },
     "phase3": {
-      "title": "Phase 3 - NCK Wirtschaft",
-      "body": "Genesis-Pass, NCK-Dienstprogramm, Marktplatzabwicklung, spielereigene Asset-Schicht."
+      "title": "Live Alpha - Markt und Bauen",
+      "body": "Exakte Gegenstandsverwahrung, SOL/NCK-Abwicklung, Baupläne und dauerhafte Spielerkonstruktionen."
     },
     "phase4": {
-      "title": "Phase 4 - Guardian Network",
-      "body": "Regionszugangsknoten, Echtzeitkommunikation, Beobachterabsteckung, Teilnahme auf Regionsebene."
+      "title": "Im Ausbau - Guardian-Regionen",
+      "body": "Regionssuche, Präsenz, Bewegung, Chat und wachsende Relay-Abdeckung."
     },
     "phase5": {
-      "title": "Phase 5 – Weltregierung",
-      "body": "Gebietsregeln, Weltparameter, Spielerabstimmung, langfristige Protokollverwaltung."
+      "title": "Forschung - Nützliche Rechenarbeit und Governance",
+      "body": "NCM-Suche, Proofs nützlicher Rechenarbeit und Regelentwicklung bleiben offene Forschung, keine versteckten Versprechen."
     },
-    "readFull": "Lesen Sie das vollständige Roadbook"
+    "readFull": "Vollständiges Roadbook lesen"
   },
   "footer": {
-    "aria": "Fußnavigation",
-    "tagline": "Ein gesetztes Voxel-Weltprotokoll auf Solana.",
-    "enterWorld": "Betritt die Welt",
+    "aria": "Footer-Navigation",
+    "tagline": "Eine prüfbare Voxel-Zivilisation auf Solana.",
+    "enterWorld": "Welt betreten",
     "roadbook": "Roadbook",
     "worldRules": "Weltregeln",
     "proofOfFrontier": "Proof of Frontier",
-    "nckEconomy": "NCK Wirtschaft",
-    "watcherNetwork": "Guardian Network",
+    "contracts": "Verträge",
+    "nckEconomy": "Materialwirtschaft",
+    "watcherNetwork": "Guardian-Netzwerk",
     "whitepaper": "Whitepaper",
     "fairness": "Fairness",
     "github": "GitHub"

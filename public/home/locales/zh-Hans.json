@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hans",
     "label": "Simplified Chinese",
-    "version": "home-locale-zh-Hans-90d0c7510c83e7a3",
-    "contentHash": "90d0c7510c83e7a3"
+    "version": "home-locale-zh-Hans-a0959dc486fcd012",
+    "contentHash": "a0959dc486fcd012"
   },
   "siteFooter": {
     "tagline": "Solana 上的种子体素世界协议。",
@@ -20,7 +20,8 @@
     "copyright": "2026 NiceChunk。保留所有权利。"
   },
   "meta": {
-    "title": "NiceChunk | 一块一块，开采属于玩家的链上世界"
+    "title": "NiceChunk | 建造世界，验证每次改变",
+    "description": "NiceChunk 是运行在 Solana Devnet 上的可玩体素文明：确定性地形、链上验证挖掘、物理材料、熔炼、锻造、建造、市场、技能与守护者实时中继。"
   },
   "nav": {
     "aria": "主导航",
@@ -51,128 +52,128 @@
     "roadmap": "路线图"
   },
   "hero": {
-    "eyebrow": "Alpha 预览已开放",
-    "title": "一块一块，开采属于玩家的链上世界",
-    "subtitle": "NiceChunk 是一个运行在 Solana 上的去中心化体素世界。每个 Chunk 都由种子生成，由玩家探索、挖掘、建造，并把关键资产与经济行为写入链上。你不是进入一张地图，而是在参与一个不断扩张的世界协议。",
+    "eyebrow": "Devnet 可玩 Alpha",
+    "title": "建造世界，验证每次改变。",
+    "subtitle": "探索一个可确定性重建的体素世界，挖掘带真实体积与重量的资源，熔炼、锻造、建造、交易精确物品并成长技能。Chunk.js 负责即时渲染，Solana 程序结算持久状态，守护者中继附近玩家的实时互动。",
     "enterWorld": "进入世界",
     "connectWallet": "连接钱包",
     "readRoadbook": "查看路书",
     "readRules": "查看世界规则",
     "statusAria": "产品状态",
     "badges": {
-      "alpha": "Alpha 预览已开放",
-      "solana": "Solana 钱包接入",
-      "seeded": "种子 Chunk 引擎",
-      "watchers": "守护者网络即将开放"
+      "alpha": "Devnet 可玩 Alpha",
+      "solana": "Solana 程序状态",
+      "seeded": "Chunk.js 体素引擎",
+      "watchers": "守护者实时中继"
     }
   },
   "world": {
-    "eyebrow": "世界",
-    "title": "一个由种子生成、由玩家改变的世界",
-    "body": "NiceChunk 不是一张固定地图，而是一个不断扩张的方块世界。玩家进入 Chunk，探索地形、挖掘资源、建造资产，并推动世界状态持续变化。每一次行动，都在让这个世界变得更真实。",
+    "eyebrow": "可验证世界",
+    "title": "未改变的地形由规则生成，玩家造成的改变被记录。",
+    "body": "种子与坐标可以重建每一个未改动方块。玩家挖掘或建造时，Solana 程序验证操作并记录持久化差量；浏览器无需下载隐藏的主地图，也能重建相同的基础世界。",
     "seed": {
-      "eyebrow": "种子 Chunk",
-      "title": "实时种子生成",
-      "body": "变化的种子会生成新的 Chunk 预览，包含地形高度、水域、树林、沙地、雪地和资源提示。",
+      "eyebrow": "确定性 Chunk",
+      "title": "按需重建，而不是预先加载",
+      "body": "世界种子与坐标会按需生成地形、水域、植被和资源候选。",
       "label": "种子"
     },
     "readout": {
-      "protocol": "协议：种子 Chunk 引擎",
-      "state": "状态：玩家可写入",
-      "verify": "验证：确定性规则"
+      "protocol": "基础：确定性重建",
+      "state": "改变：SOLANA CHUNK 差量",
+      "verify": "渲染：CHUNK.JS WEBGL2"
     }
   },
   "gameplay": {
     "explore": {
-      "title": "探索 Chunk",
-      "body": "进入浏览器方块世界，探索由种子生成的地形，发现新的区域和资源点。"
+      "title": "探索可重建的世界",
+      "body": "浏览器按公开输入生成地形与生态；相同的种子和坐标会恢复相同的未改动世界。"
     },
     "mine": {
-      "title": "挖掘资源",
-      "body": "破坏方块，触发资源发现，把探索行为转化为可使用的材料。"
+      "title": "挖掘经验证的方块",
+      "body": "成功的挖掘交易会在一次已接受的链上操作中更新方块、背包、来源计数和技能记录。"
     },
     "forge": {
-      "title": "锻造资产",
-      "body": "将原始资源合成为工具、蓝图、装备和未来可交易的游戏资产。"
+      "title": "熔炼、塑形与锻造",
+      "body": "配方消耗精确输入，按体积和产出率生成材料，再把材料塑造成可验证几何。"
     },
     "identity": {
-      "title": "玩家身份",
-      "body": "连接钱包，创建角色档案，让你的身份、资产和进度进入 NiceChunk 世界。"
+      "title": "拥有你的玩家记录",
+      "body": "钱包控制角色档案、背包和十项技能账本；进度不是浏览器里的一条临时记录。"
     },
     "watchers": {
-      "title": "守护者网络",
-      "body": "守护者节点让区域可访问、支持实时通信，并为未来的去中心化世界协作提供基础。"
+      "title": "实时看到附近玩家",
+      "body": "守护者中继附近玩家的出现、移动与聊天，但不托管资产，也不代替链上结算。"
     }
   },
   "economy": {
-    "eyebrow": "NCK 经济",
-    "title": "NCK 驱动 NiceChunk 的世界经济",
-    "body": "NCK 是 NiceChunk 的核心功能型代币，计划用于创世通行证、游戏内行为、锻造系统、市场结算以及未来的治理机制。NiceChunk 的目标不是做一个只有皮肤交易的小游戏，而是建立一个由探索者、矿工、建造者和守护者共同参与的世界经济。",
-    "utilityEyebrow": "计划功能",
+    "eyebrow": "材料经济",
+    "title": "一套可以逐项检查的材料经济。",
+    "body": "资源从采集到熔炼、锻造都携带可度量的体积、密度与重量。背包托管、配方输入、锻造几何和市场挂单都有明确记录，因此物品不只是缩略图或余额数字。",
+    "utilityEyebrow": "正在运行的经济层",
     "utility": {
-      "genesis": "创世通行证与 NCK 连接",
-      "actions": "游戏内行为和材料循环",
-      "forging": "锻造系统和资产创建",
-      "market": "市场结算",
-      "governance": "未来世界治理机制"
+      "genesis": "可度量的资源体积、密度与重量",
+      "actions": "背包托管与精确配方输入",
+      "forging": "熔炼产出与玩家技能加成",
+      "market": "由材料记录支撑的锻造几何",
+      "governance": "精确物品托管，使用 SOL 或 NCK 原子结算"
     }
   },
   "watchers": {
-    "eyebrow": "守护者网络",
-    "title": "运行守护者，让一个区域保持在线",
-    "body": "守护者是 NiceChunk 的区域访问层。它不托管玩家资产，也不替玩家处理链上交易，而是为特定区域提供连接、通信和实时协作能力。随着世界扩张，守护者将成为维持 Chunk 活跃的重要基础设施。",
+    "eyebrow": "守护者实时中继",
+    "title": "更快的附近互动，不增加第二套游戏权威。",
+    "body": "守护者发现区域并中继附近玩家的出现、移动、聊天和短时提示。它们不托管物品、不结算交易；Solana 仍是持久游戏状态的权威。",
     "badges": {
       "noCustody": "不托管玩家资产",
-      "noTransactions": "不处理玩家交易",
-      "communication": "区域实时通信"
+      "noTransactions": "不负责交易结算",
+      "communication": "附近玩家、移动与聊天"
     },
     "animation": {
-      "aria": "守护者网络动画",
+      "aria": "守护者实时中继动画",
       "title": "守护者节点",
-      "body": "区域访问层"
+      "body": "实时中继，不负责结算"
     },
     "guardianConsole": "打开守护者控制台"
   },
   "rules": {
-    "eyebrow": "开放世界规则",
-    "title": "透明的世界规则",
-    "body": "NiceChunk 的世界不是黑箱。Chunk 由种子生成，玩家行为改变世界状态，关键经济行为会尽量保持可验证。这个世界既要能玩，也要能被检查。",
+    "eyebrow": "明确的信任边界",
+    "title": "四个层次，一条明确的信任边界。",
+    "body": "浏览器提供即时、可撤销的反馈；守护者中继当下的实时互动；Solana 程序验证边界清晰的操作并持久化已接受状态；确定性重建则依据公开输入恢复所有未改动内容。",
     "cta": "查看世界规则"
   },
   "roadmap": {
-    "eyebrow": "路线图",
-    "title": "从 Alpha 世界预览，到玩家拥有的世界协议。",
+    "eyebrow": "产品状态",
+    "title": "现在已经可玩，并持续公开扩展。",
     "phase1": {
-      "title": "阶段 1 - Alpha 世界预览",
-      "body": "浏览器体素客户端、钱包连接、种子地形预览、玩家档案。"
+      "title": "已上线 - 可验证世界",
+      "body": "Chunk.js 浏览器客户端、确定性地形、钱包、角色档案与链上验证挖掘。"
     },
     "phase2": {
-      "title": "阶段 2 - 挖掘与锻造",
-      "body": "资源发现、方块交互、材料逻辑、锻造台、基础资产循环。"
+      "title": "已上线 - 材料经济",
+      "body": "背包、可度量资源、熔炼、锻造与十项链上技能记录。"
     },
     "phase3": {
-      "title": "阶段 3 - NCK 经济",
-      "body": "创世通行证、NCK 功能场景、市场结算、玩家资产层。"
+      "title": "Alpha 已上线 - 市场与建造",
+      "body": "精确物品托管、SOL/NCK 结算、蓝图与持久化玩家建筑。"
     },
     "phase4": {
-      "title": "阶段 4 - 守护者网络",
-      "body": "区域访问节点、实时通信、守护者质押、区域级参与机制。"
+      "title": "扩展中 - 守护者区域",
+      "body": "区域发现、附近玩家、移动、聊天与更广的中继覆盖。"
     },
     "phase5": {
-      "title": "阶段 5 - 世界治理",
-      "body": "领地规则、世界参数、玩家投票、长期协议治理。"
+      "title": "研究中 - 有用计算与治理",
+      "body": "NCM 搜索、有用计算证明与规则演化仍是公开研究，而不是藏在页面里的承诺。"
     },
     "readFull": "查看完整路书"
   },
   "footer": {
     "aria": "页脚导航",
-    "tagline": "运行在 Solana 上的种子体素世界协议。",
+    "tagline": "Solana 上的可验证体素文明。",
     "enterWorld": "进入世界",
     "roadbook": "路书",
     "worldRules": "世界规则",
-    "proofOfFrontier": "世界轮廓证明",
+    "proofOfFrontier": "世界边界证明",
     "contracts": "合约",
-    "nckEconomy": "NCK 经济",
+    "nckEconomy": "材料经济",
     "watcherNetwork": "守护者网络",
     "whitepaper": "白皮书",
     "fairness": "公平模型",

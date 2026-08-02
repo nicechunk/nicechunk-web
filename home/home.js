@@ -89,6 +89,11 @@ function applyHomeTranslations(root) {
   const title = homeText("meta.title");
   if (title) document.title = title;
 
+  root.querySelectorAll("[data-home-i18n-content]").forEach((element) => {
+    const value = homeText(element.dataset.homeI18nContent);
+    if (value) element.setAttribute("content", value);
+  });
+
   root.querySelectorAll("[data-home-i18n]").forEach((element) => {
     const value = homeText(element.dataset.homeI18n);
     if (value) element.textContent = value;

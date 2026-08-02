@@ -1,6 +1,7 @@
 {
   "meta": {
-    "title": "NiceChunk | 한 번에 chunk 하나씩 세상을 소유하세요"
+    "title": "NiceChunk | 세계를 만들고, 변화를 검증하세요.",
+    "description": "NiceChunk는 Solana Devnet에서 플레이할 수 있는 복셀 문명입니다. 결정론적 지형, 검증된 채굴, 물리 재료, 제련, 단조, 건축, 시장, 스킬, Guardian 릴레이를 제공합니다."
   },
   "nav": {
     "aria": "기본 탐색",
@@ -16,7 +17,8 @@
     "elements": "요소",
     "docs": "문서",
     "enterWorld": "엔터 월드",
-    "guardians": "가디언"
+    "guardians": "가디언",
+    "contracts": "컨트랙트"
   },
   "language": {
     "aria": "언어"
@@ -30,128 +32,129 @@
     "roadmap": "로드맵"
   },
   "hero": {
-    "eyebrow": "Alpha 미리보기 라이브",
-    "title": "한 번에 하나의 chunk씩 세계를 소유하세요.",
-    "subtitle": "NiceChunk는 모든 chunk가 플레이어에 의해 시드되고, 탐색되고, 채굴되고, 형성되는 Solana 기반 복셀 세계입니다. 땅을 탐험하고, 자원을 발견하고, 자산을 만들고, 검증 가능한 게임 상태를 기반으로 구축된 지속적인 세계 경제에 참여하세요.",
-    "enterWorld": "엔터 월드",
+    "eyebrow": "플레이 가능한 Devnet 알파",
+    "title": "세계를 만들고, 변화를 검증하세요.",
+    "subtitle": "결정론적 복셀 세계를 탐험하고, 측정 가능한 자원을 채굴하고, 재료를 제련·단조하고, 건축하고, 동일성이 보존된 아이템을 거래하며 스킬을 성장시키세요. Chunk.js가 순간을 렌더링하고, Solana 프로그램이 영구 상태를 확정하며, Guardian이 주변 플레이를 중계합니다.",
+    "enterWorld": "월드 입장",
     "connectWallet": "지갑 연결",
     "readRoadbook": "로드북 읽기",
-    "readRules": "세계 규칙 읽기",
+    "readRules": "월드 규칙 읽기",
     "statusAria": "제품 상태",
     "badges": {
-      "alpha": "Alpha 미리보기 라이브",
-      "solana": "Solana 지갑 준비",
-      "seeded": "시드된 Chunk 엔진",
-      "watchers": "Guardian Network 출시 예정"
+      "alpha": "플레이 가능한 Devnet 알파",
+      "solana": "Solana 프로그램 상태",
+      "seeded": "Chunk.js 복셀 엔진",
+      "watchers": "Guardian 실시간 릴레이"
     }
   },
   "world": {
-    "eyebrow": "월드",
-    "title": "시드가 생성하고 플레이어가 변경하는 세계.",
-    "body": "NiceChunk는 고정 맵이 아닙니다. 세상은 chunk로 chunk를 확장합니다. 지형, 자원, 플레이어 행동은 확인, 거래, 구축이 가능한 지속적인 상태를 형성합니다. 모든 탐험가는 세상을 밝히는 데 도움을 줍니다. 모든 건축업자는 흔적을 남깁니다.",
+    "eyebrow": "검증 가능한 세계",
+    "title": "손대지 않은 지형은 생성되고, 플레이어의 변화는 기록됩니다.",
+    "body": "시드와 좌표로 변경되지 않은 모든 블록을 재구성합니다. 플레이어가 채굴하거나 건축하면 Solana 프로그램이 행동을 검증하고 영구 변경분을 기록합니다. 브라우저는 숨겨진 마스터 맵 없이도 같은 기반 세계를 복원합니다.",
     "seed": {
-      "eyebrow": "시드 Chunk",
-      "title": "라이브 시드 생성",
-      "body": "시드를 변경하면 지형 높이, 물, 숲, 모래, 눈 및 자원 힌트가 포함된 새로운 chunk 미리보기가 생성됩니다.",
-      "label": "씨앗"
+      "eyebrow": "결정론적 Chunk",
+      "title": "미리 불러오지 않고 재구성",
+      "body": "월드 시드와 좌표가 필요할 때 지형, 물, 식생, 자원 후보를 생성합니다.",
+      "label": "시드"
     },
     "readout": {
-      "protocol": "프로토콜: 시드 청크 엔진",
-      "state": "상태: 플레이어 쓰기 가능",
-      "verify": "확인: 결정론적 규칙"
+      "protocol": "기반: 결정론적 재구성",
+      "state": "변경: SOLANA CHUNK 델타",
+      "verify": "렌더링: CHUNK.JS WEBGL2"
     }
   },
   "gameplay": {
     "explore": {
-      "title": "Chunks 탐색",
-      "body": "브라우저 기반 복셀 세계로 들어가세요. 시드된 지형을 가로질러 이동하고, 새로운 chunks를 발견하고, 소유권을 주장할 가치가 있는 장소를 찾으세요."
+      "title": "재구성 가능한 세계 탐험",
+      "body": "브라우저가 공개 입력으로 지형과 생물군계를 생성하므로 같은 시드와 좌표는 같은 미변경 세계를 복원합니다."
     },
     "mine": {
-      "title": "광산 자원",
-      "body": "블록을 부수고, 숨겨진 자원을 찾아내고, 탐사를 세계 경제에 유용한 자료로 전환하세요."
+      "title": "검증된 블록 채굴",
+      "body": "성공한 채굴 트랜잭션은 하나의 승인된 체인 행동으로 블록, 배낭, 원천 카운터, 스킬 기록을 갱신합니다."
     },
     "forge": {
-      "title": "Forge 자산",
-      "body": "원자재를 도구, 청사진, 장비 및 향후 거래 가능한 게임 자산으로 결합합니다."
+      "title": "제련하고, 빚고, 단조하기",
+      "body": "레시피는 정확한 입력을 소비하고 측정된 부피와 수율로 재료를 만든 뒤 검증 가능한 형상으로 바꿉니다."
     },
     "identity": {
-      "title": "플레이어 신원",
-      "body": "wallet를 연결하고, 플레이어 프로필을 생성하고, NiceChunk 세계 전체에 진행 상황을 전달하세요."
+      "title": "플레이어 기록 소유",
+      "body": "지갑이 프로필, 배낭, 10개 스킬 원장을 제어합니다. 진행 상황은 임시 브라우저 저장값이 아닙니다."
     },
     "watchers": {
-      "title": "Guardian Network",
-      "body": "Guardian 노드는 지역에 대한 접근성을 높이고, 실시간 통신을 지원하며, 분산된 조정을 위해 세계를 준비하는 데 도움이 됩니다."
+      "title": "주변 플레이어 실시간 확인",
+      "body": "Guardian은 자산을 보관하거나 체인 결제를 대체하지 않고 주변 접속, 이동, 채팅을 중계합니다."
     }
   },
   "economy": {
-    "eyebrow": "NCK 경제",
-    "title": "NCK는 NiceChunk 경제를 강화합니다.",
-    "body": "NCK는 NiceChunk의 핵심 유틸리티 토큰으로 설계되었습니다. 이는 창세기 접근, 세계 내 행동, 단조 시스템, 시장 결제 및 미래 거버넌스 메커니즘에 사용될 수 있습니다. 목표는 간단합니다. 세계 경제를 탐험하고, 건설하고, 채굴하고, 운영하는 플레이어의 소유로 만드는 것입니다.",
-    "utilityEyebrow": "계획 유틸리티",
+    "eyebrow": "재료 경제",
+    "title": "직접 확인할 수 있는 재료 경제.",
+    "body": "자원은 채집부터 제련과 단조까지 측정된 부피, 밀도, 질량을 유지합니다. 배낭 보관, 레시피 입력, 단조 형상, 시장 매물이 명시되므로 아이템은 썸네일이나 잔액 이상의 존재입니다.",
+    "utilityEyebrow": "운영 중인 경제 계층",
     "utility": {
-      "genesis": "NCK에 연결된 Genesis Pass 액세스",
-      "actions": "세계 내 액션 및 재료 루프",
-      "forging": "단조 시스템 및 자산 생성",
-      "market": "마켓플레이스 정산",
-      "governance": "미래 세계 거버넌스 메커니즘"
+      "genesis": "측정된 자원 부피, 밀도, 질량",
+      "actions": "배낭 보관과 정확한 레시피 입력",
+      "forging": "제련 산출량과 플레이어 스킬 보너스",
+      "market": "재료 기록에 기반한 단조 형상",
+      "governance": "동일 아이템 에스크로와 SOL 또는 NCK 원자적 결제"
     }
   },
   "watchers": {
-    "eyebrow": "Guardian Network",
-    "title": "Guardian를 실행합니다. 지역을 살아있게 유지하세요.",
-    "body": "Guardian 노드는 NiceChunk의 액세스 계층입니다. 그들은 플레이어 자산을 통제하거나 온체인 거래를 처리하지 않습니다. 대신, 지역에 계속 연락할 수 있도록 돕고, 실시간 통신을 제공하며, 지역 세계 활동을 지원합니다. 세상이 성장함에 따라 Guardians는 chunks를 살아있게 하는 인프라가 됩니다.",
+    "eyebrow": "Guardian 실시간 릴레이",
+    "title": "두 번째 게임 권한 없이 빠른 주변 플레이.",
+    "body": "Guardian은 지역을 찾고 주변 접속, 이동, 채팅, 짧은 힌트를 중계합니다. 아이템을 보관하거나 거래를 결제하지 않으며, 영구 게임 상태의 권한은 Solana에 남습니다.",
     "badges": {
       "noCustody": "자산 보관 없음",
-      "noTransactions": "플레이어 거래 처리 없음",
-      "communication": "실시간 지역통신"
+      "noTransactions": "트랜잭션 결제 없음",
+      "communication": "주변 접속, 이동, 채팅"
     },
     "animation": {
-      "aria": "Guardian 네트워크 애니메이션",
+      "aria": "Guardian 실시간 릴레이 애니메이션",
       "title": "Guardian 노드",
-      "body": "지역 액세스 레이어"
+      "body": "실시간 중계, 결제 아님"
     },
-    "guardianConsole": "가디언 콘솔 열기"
+    "guardianConsole": "Guardian 콘솔 열기"
   },
   "rules": {
-    "eyebrow": "오픈 월드 규칙",
-    "title": "투명한 세계 규칙.",
-    "body": "NiceChunk는 개방형 생성 규칙을 기반으로 구축되었습니다. Chunks는 시드에서 생성되고, 플레이어의 행동은 세계 상태를 업데이트하며, 중요한 경제적 행동은 검증 가능하도록 설계되었습니다. 세상은 플레이할 수 있어야 하지만 검사도 가능해야 합니다.",
-    "cta": "세계 규칙 읽기"
+    "eyebrow": "명시적 신뢰 경계",
+    "title": "네 개의 계층, 하나의 명시적 신뢰 경계.",
+    "body": "브라우저는 즉시 되돌릴 수 있는 반응을 렌더링합니다. Guardian은 지금의 실시간 상황을 중계합니다. Solana 프로그램은 범위가 좁은 행동을 검증하고 승인된 상태를 영구 저장합니다. 결정론적 재구성은 공개 입력으로 미변경 부분을 복원합니다.",
+    "cta": "월드 규칙 읽기"
   },
   "roadmap": {
-    "eyebrow": "로드맵",
-    "title": "알파 세계 미리보기부터 플레이어 소유 프로토콜까지.",
+    "eyebrow": "제품 상태",
+    "title": "지금 플레이 가능하며, 공개적으로 확장 중입니다.",
     "phase1": {
-      "title": "1단계 - Alpha 세계 미리보기",
-      "body": "브라우저 복셀 클라이언트, wallet 연결, 시드 지형 미리보기, 플레이어 설정."
+      "title": "운영 중 - 검증 가능한 세계",
+      "body": "Chunk.js 브라우저 클라이언트, 결정론적 지형, 지갑, 프로필, 체인 검증 채굴."
     },
     "phase2": {
-      "title": "2단계 - 채광 및 단조",
-      "body": "자원 발견, 블록 상호 작용, 재료 논리, 단조 벤치, 기본 자산 루프."
+      "title": "운영 중 - 재료 경제",
+      "body": "배낭, 측정 자원, 제련, 단조, 10개 온체인 스킬 기록."
     },
     "phase3": {
-      "title": "3단계 - NCK 경제",
-      "body": "제네시스 패스, NCK 유틸리티, 마켓플레이스 정산, 플레이어 소유 자산 레이어."
+      "title": "알파 운영 중 - 시장과 건축",
+      "body": "동일 아이템 에스크로, SOL/NCK 결제, 설계도, 영구 플레이어 건축물."
     },
     "phase4": {
-      "title": "4단계 - Guardian Network",
-      "body": "지역 액세스 노드, 실시간 통신, 감시자 스테이킹, 지역 수준 참여."
+      "title": "확장 중 - Guardian 지역",
+      "body": "지역 검색, 주변 접속, 이동, 채팅, 더 넓은 릴레이 범위."
     },
     "phase5": {
-      "title": "5단계 - 세계 거버넌스",
-      "body": "영토 규칙, 세계 매개변수, 플레이어 투표, 장기 프로토콜 거버넌스."
+      "title": "연구 중 - 유용 연산과 거버넌스",
+      "body": "NCM 탐색, 유용 연산 증명, 규칙 진화는 숨은 약속이 아니라 공개 연구로 남아 있습니다."
     },
     "readFull": "전체 로드북 읽기"
   },
   "footer": {
     "aria": "바닥글 탐색",
-    "tagline": "Solana에 시드된 복셀 월드 프로토콜입니다.",
-    "enterWorld": "엔터 월드",
+    "tagline": "Solana 위의 검증 가능한 복셀 문명.",
+    "enterWorld": "월드 입장",
     "roadbook": "로드북",
-    "worldRules": "세계 규칙",
+    "worldRules": "월드 규칙",
     "proofOfFrontier": "Proof of Frontier",
-    "nckEconomy": "NCK 경제",
-    "watcherNetwork": "Guardian Network",
+    "contracts": "컨트랙트",
+    "nckEconomy": "재료 경제",
+    "watcherNetwork": "Guardian 네트워크",
     "whitepaper": "백서",
     "fairness": "공정성",
     "github": "GitHub"

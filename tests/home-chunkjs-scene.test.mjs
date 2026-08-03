@@ -38,6 +38,11 @@ for (const extension of ["png", "webm"]) {
 }
 assert.match(html, /<div class="hero-world-stage" aria-hidden="true"><\/div>/u);
 assert.match(html, /<footer class="site-footer" data-site-footer-native>/u);
+assert.equal([...html.matchAll(/class="chapter-copy-line"/gu)].length, 9);
+assert.match(style, /\.chapter-copy-line \{[\s\S]*?box-decoration-break: clone;/u);
+assert.match(style, /\.chapter-card \{[\s\S]*?background: transparent;[\s\S]*?backdrop-filter: none;/u);
+assert.match(style, /\.side-dot \{[\s\S]*?background: transparent;[\s\S]*?border: 0;/u);
+assert.doesNotMatch(style, /transition:\s*all/u);
 for (const viewport of ["desktop", "mobile"]) {
   const previewPath = `home-world-preview-${viewport}.webp`;
   assert.ok(html.includes(`/media/${previewPath}`), `Missing ${viewport} preview preload.`);

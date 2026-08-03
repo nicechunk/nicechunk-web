@@ -117,6 +117,10 @@ html[data-home-chapter="market"] .home-world-vignette {
   pointer-events: none;
 }
 
+.home-camera-transitioning .home-building-inspector {
+  visibility: hidden;
+}
+
 .ncm-inspector-connector {
   position: absolute;
   inset: 0;
@@ -133,20 +137,17 @@ html[data-home-chapter="market"] .home-world-vignette {
   vector-effect: non-scaling-stroke;
   opacity: 0;
   stroke-dasharray: 10 7;
-  transition: opacity 100ms var(--ncm-inspector-exit) 260ms;
+  transition: opacity 80ms var(--ncm-inspector-exit);
 }
 
 .ncm-building-outline-shadow {
   stroke: rgba(4, 10, 19, 0.92);
-  stroke-width: 5.6px;
+  stroke-width: 4px;
 }
 
 .ncm-building-outline {
   stroke: var(--ncm-inspector-white);
-  stroke-width: 2.15px;
-  filter:
-    drop-shadow(0 0 1px rgba(255, 255, 255, 0.98))
-    drop-shadow(0 0 6px rgba(108, 210, 255, 0.52));
+  stroke-width: 2px;
 }
 
 .ncm-connector-shadow,
@@ -535,40 +536,6 @@ html[data-home-chapter="market"] .home-world-vignette {
   transition-duration: 150ms;
   transition-delay: 0ms;
   transition-timing-function: var(--ncm-inspector-enter);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .home-building-inspector[data-active="true"] .ncm-building-outline-shadow {
-    animation: ncm-building-outline-dash 1.35s steps(8, end) infinite;
-  }
-
-  .home-building-inspector[data-active="true"] .ncm-building-outline {
-    animation:
-      ncm-building-outline-dash 1.35s steps(8, end) infinite,
-      ncm-building-outline-ink-pulse 1.35s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  }
-}
-
-@keyframes ncm-building-outline-dash {
-  to {
-    stroke-dashoffset: -34;
-  }
-}
-
-@keyframes ncm-building-outline-ink-pulse {
-  0%, 100% {
-    opacity: 0.76;
-    filter:
-      drop-shadow(0 0 1px rgba(255, 255, 255, 0.94))
-      drop-shadow(0 0 4px rgba(108, 210, 255, 0.4));
-  }
-
-  50% {
-    opacity: 1;
-    filter:
-      drop-shadow(0 0 2px rgba(255, 255, 255, 1))
-      drop-shadow(0 0 8px rgba(108, 210, 255, 0.66));
-  }
 }
 
 .home-building-inspector[data-active="true"] .ncm-connector-anchor,
@@ -1719,10 +1686,5 @@ html[data-i18n-scope="home"] .site-header.scrolled {
   .ncm-inspector-code-heading,
   .ncm-inspector-code {
     transition: none;
-  }
-
-  .ncm-building-outline-shadow,
-  .ncm-building-outline {
-    animation: none;
   }
 }

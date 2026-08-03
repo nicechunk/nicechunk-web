@@ -121,9 +121,15 @@ assert.match(scene, /projectWorldPointWithProjector\(worldPoints\[index\], proje
 assert.match(scene, /points: Object\.freeze\(points\)/u);
 assert.match(scene, /mergeStructureSurfaceCells\(group\.cells\)/u);
 assert.match(scene, /structureSurfaceRectangleCorners\(group, rectangle\)/u);
+assert.match(scene, /const BUILDING_OUTLINE_MASK_SCALE = 0\.5;/u);
+assert.match(scene, /const BUILDING_OUTLINE_MASK_ALPHA_THRESHOLD = 128;/u);
+assert.match(scene, /const BUILDING_OUTLINE_SIMPLIFY_TOLERANCE = 0\.6;/u);
 assert.equal([...scene.matchAll(/inspectables\.push\(createInspectableStructure/gu)].length, 2);
 assert.match(scene, /projectWorldPoint\(corner, pose, viewport\)/u);
 assert.match(scene, /\(hover: hover\) and \(pointer: fine\)/u);
+assert.match(scene, /setCameraTransitioning\(cameraTransitionActive\(timestamp\)\)/u);
+assert.match(scene, /const enabled = !cameraTransitioning/u);
+assert.match(scene, /canvas\.dataset\.sceneCameraTransitioning = String\(active\)/u);
 
 assert.match(inspector, /const INSPECTOR_TIMING = Object\.freeze/u);
 assert.match(inspector, /target\.ncmCode/u);
@@ -136,9 +142,9 @@ assert.match(inspector, /detail\.bounds\.right \+ PANEL_GAP_PX/u);
 assert.doesNotMatch(inspector, /transition:\s*all/u);
 assert.match(style, /\.ncm-building-outline \{[\s\S]*?stroke: var\(--ncm-inspector-white\);/u);
 assert.match(style, /stroke-dasharray: 10 7;/u);
-assert.match(style, /@keyframes ncm-building-outline-dash/u);
-assert.match(style, /@keyframes ncm-building-outline-ink-pulse/u);
-assert.doesNotMatch(style, /@keyframes ncm-building-outline[^}]+transform: scale/isu);
+assert.match(style, /\.home-camera-transitioning \.home-building-inspector \{\s*visibility: hidden;/u);
+assert.doesNotMatch(style, /@keyframes ncm-building-outline/u);
+assert.doesNotMatch(style, /\.ncm-building-outline \{[^}]*filter:/su);
 assert.match(style, /font: 650 11px\/1\.52/u);
 
 for (const { language, source, public: publicLocale } of homeLocales) {

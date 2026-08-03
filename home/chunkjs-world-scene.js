@@ -31,8 +31,8 @@ const BUILDING_INSPECTOR_MIN_VIEWPORT = 901;
 const BUILDING_INSPECTOR_MIN_TARGET_PX = 30;
 const BUILDING_OUTLINE_MASK_SCALE = 0.5;
 const BUILDING_OUTLINE_MASK_MAX_SIZE = 640;
-const BUILDING_OUTLINE_MASK_ALPHA_THRESHOLD = 72;
-const BUILDING_OUTLINE_SIMPLIFY_TOLERANCE = 1.15;
+const BUILDING_OUTLINE_MASK_ALPHA_THRESHOLD = 128;
+const BUILDING_OUTLINE_SIMPLIFY_TOLERANCE = 0.6;
 const AVATAR_HEIGHT_BLOCKS = 1.75 / 0.4;
 const AVATAR_VISUAL_SCALE = AVATAR_HEIGHT_BLOCKS / 2.52;
 const buildingOutlineCache = new WeakMap();
@@ -147,6 +147,7 @@ export function createHomeWorldScene(canvas, options = {}) {
   let pointerInspectionEligible = false;
   let inspectedBuildingId = "";
   let transitionStart = startedAt;
+  let cameraTransitioning = false;
   let focusStartedAt = startedAt;
   let cameraStart = cameraPoseForView("arrival", canvasAspect(canvas));
   let cameraTarget = cameraStart;
@@ -188,6 +189,7 @@ export function createHomeWorldScene(canvas, options = {}) {
     focusStartedAt = timestamp;
     cameraTarget = cameraPoseForView(view, canvasAspect(canvas));
     transitionStart = immediate || reducedMotion.matches ? timestamp - CAMERA_TRANSITION_MS : timestamp;
+    setCameraTransitioning(cameraTransitionActive(timestamp));
     canvas.dataset.sceneView = view;
     canvas.dataset.sceneCue = sceneCueForView(view);
     renderFrame(timestamp, true);
@@ -209,6 +211,18 @@ export function createHomeWorldScene(canvas, options = {}) {
     return pose;
   };
 
+  const cameraTransitionActive = (timestamp) => (
+    !reducedMotion.matches && timestamp - transitionStart < CAMERA_TRANSITION_MS
+  );
+
+  const setCameraTransitioning = (active) => {
+    if (cameraTransitioning === active) return;
+    cameraTransitioning = active;
+    canvas.dataset.sceneCameraTransitioning = String(active);
+    document.documentElement.classList.toggle("home-camera-transitioning", active);
+    if (active) emitBuildingInspection(null);
+  };
+
   function renderFrame(timestamp, force = false) {
     animationFrame = 0;
     if (destroyed || document.hidden || !initialized || !renderer || !chunks || !runtime) return;
@@ -228,6 +242,7 @@ export function createHomeWorldScene(canvas, options = {}) {
     const activeStructureChunks = structureChunks;
     const visibleChunks = terrainChunks.concat(activeStructureChunks);
     const cameraPose = resolveCameraPose(timestamp);
+    setCameraTransitioning(cameraTransitionActive(timestamp));
     const camera = cameraStateFromPose(runtime, cameraPose, canvasAspect(canvas));
     renderer.prepareChunksForRender(visibleChunks, {
       maxUploads: lowPower ? 2 : 5,
@@ -450,7 +465,8 @@ export function createHomeWorldScene(canvas, options = {}) {
 
   function updateBuildingInspection(cameraPose) {
     if (typeof options.onBuildingInspect !== "function") return;
-    const enabled = inspectorHoverMedia.matches
+    const enabled = !cameraTransitioning
+      && inspectorHoverMedia.matches
       && window.innerWidth >= BUILDING_INSPECTOR_MIN_VIEWPORT
       && pointerInspectionEligible
       && canvas.dataset.sceneReady === "true";
@@ -624,6 +640,7 @@ export function createHomeWorldScene(canvas, options = {}) {
 
   function handleUnavailable(error) {
     emitBuildingInspection(null);
+    setCameraTransitioning(false);
     renderer?.dispose();
     chunks?.dispose();
     renderer = null;
@@ -645,6 +662,7 @@ export function createHomeWorldScene(canvas, options = {}) {
   const handleVisibility = () => {
     if (document.hidden) {
       emitBuildingInspection(null);
+      setCameraTransitioning(false);
       if (animationFrame) cancelAnimationFrame(animationFrame);
       animationFrame = 0;
       return;
@@ -691,6 +709,7 @@ export function createHomeWorldScene(canvas, options = {}) {
   cleanups.push(() => inspectorHoverMedia.removeEventListener?.("change", handleVisibility));
   canvas.dataset.sceneView = focusView;
   canvas.dataset.sceneReady = "false";
+  canvas.dataset.sceneCameraTransitioning = "false";
   void initialize();
 
   return {
@@ -712,6 +731,7 @@ export function createHomeWorldScene(canvas, options = {}) {
       renderer = null;
       chunks = null;
       document.documentElement.classList.remove("home-world-ready");
+      document.documentElement.classList.remove("home-camera-transitioning");
     },
   };
 }

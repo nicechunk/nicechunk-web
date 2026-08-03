@@ -24,6 +24,9 @@ const CHUNK_RUNTIME_BUNDLE = "chunk/browser-runtime.js";
 const CHUNK_WORKER_BUNDLE = "chunk/chunk-build-worker.bundle.js";
 const SECTION_VIEWS = Object.freeze(["arrival", "world", "market", "guardian", "roadmap"]);
 const CAMERA_TRANSITION_MS = 1_180;
+const WINDMILL_ROTATION_MS = 42_000;
+const WINDMILL_FRAME_MS = 1_000 / 12;
+const WINDMILL_VERTEX_PACK_SCALE = 64;
 const AVATAR_HEIGHT_BLOCKS = 1.75 / 0.4;
 const AVATAR_VISUAL_SCALE = AVATAR_HEIGHT_BLOCKS / 2.52;
 const ACTOR_ROUTES = Object.freeze({
@@ -68,29 +71,29 @@ const STRUCTURE_SPECS = Object.freeze(STRUCTURE_LAYOUT.map((spec) => Object.free
 
 const CAMERA_PRESETS = Object.freeze({
   arrival: Object.freeze({
-    eye: [2585, 130, 1815],
-    target: [2444, 99.2, 1704],
-    fov: 47,
-  }),
-  world: Object.freeze({
-    eye: [2570, 122, 1805],
-    target: [2438, 99.5, 1698],
-    fov: 45,
-  }),
-  market: Object.freeze({
-    eye: [2588, 119, 1805],
-    target: [2490, 101, 1715],
+    eye: [2548, 117, 1780],
+    target: [2465, 101, 1710],
     fov: 43,
   }),
+  world: Object.freeze({
+    eye: [2444, 112, 1705],
+    target: [2388, 101, 1647],
+    fov: 39,
+  }),
+  market: Object.freeze({
+    eye: [2543, 113, 1771],
+    target: [2488, 102, 1724],
+    fov: 39,
+  }),
   guardian: Object.freeze({
-    eye: [2595, 130, 1760],
-    target: [2518, 111, 1634],
-    fov: 42,
+    eye: [2570, 115, 1718],
+    target: [2519, 103, 1657],
+    fov: 39,
   }),
   roadmap: Object.freeze({
-    eye: [2630, 192, 1885],
-    target: [2440, 99, 1715],
-    fov: 51,
+    eye: [2570, 134, 1708],
+    target: [2525, 117, 1646],
+    fov: 41,
   }),
 });
 
@@ -117,6 +120,7 @@ export function createHomeWorldScene(canvas, options = {}) {
   let chunks = null;
   let structureChunks = [];
   let structureWalkSurfaces = new Map();
+  let windmillRotor = null;
   let avatars = [];
   let resizeObserver = null;
   let animationFrame = 0;
@@ -203,6 +207,7 @@ export function createHomeWorldScene(canvas, options = {}) {
     lastFrameTime = timestamp;
     chunks.rebuildDirtyChunks(lowPower ? 2.6 : 4.8);
     updateActors(timestamp);
+    updateWindmillRotor(timestamp);
     renderer.updateVoxelParticles(dt, (worldX, worldZ) => chunks.getOpaqueColumnTopAtWorld(worldX, worldZ) + 1);
 
     const terrainChunks = [...chunks.chunks.values()].filter((chunk) => chunk.mesh);
@@ -328,6 +333,18 @@ export function createHomeWorldScene(canvas, options = {}) {
     }
   }
 
+  function updateWindmillRotor(timestamp) {
+    if (!windmillRotor) return;
+    const rotating = canvas.dataset.sceneReady === "true" && !reducedMotion.matches;
+    const angle = rotating
+      ? (Math.max(0, timestamp - startedAt) % WINDMILL_ROTATION_MS) / WINDMILL_ROTATION_MS * Math.PI * 2
+      : 0;
+    const updated = windmillRotor.update(angle, timestamp, rotating ? WINDMILL_FRAME_MS : 0);
+    if (!updated) return;
+    canvas.dataset.sceneWindmillAngle = angle.toFixed(5);
+    canvas.dataset.sceneWindmillRotating = String(rotating);
+  }
+
   function overlaysForView(timestamp) {
     const pulse = reducedMotion.matches ? 0.52 : 0.38 + (Math.sin(timestamp * 0.004) + 1) * 0.16;
     if (focusView === "world") {
@@ -429,6 +446,9 @@ export function createHomeWorldScene(canvas, options = {}) {
     canvas.dataset.sceneBuildings = STRUCTURE_SPECS.map((spec) => `NCM3:${spec.id}`).join(",");
     canvas.dataset.sceneActorBehavior = "waypoint-walk-bridge-idle-mine-loop";
     canvas.dataset.sceneActionModes = "terrain-delta,material-flow,guardian-relay,building-progress";
+    canvas.dataset.sceneWindmillRotationMs = String(WINDMILL_ROTATION_MS);
+    canvas.dataset.sceneWindmillAngle ||= "0.00000";
+    canvas.dataset.sceneWindmillRotating = String(!reducedMotion.matches);
     document.documentElement.classList.remove("home-world-fallback");
     document.documentElement.classList.add("home-world-ready");
     options.onReady?.(lastStats);
@@ -498,6 +518,7 @@ export function createHomeWorldScene(canvas, options = {}) {
       const structures = createStructures(runtime);
       structureChunks = structures.chunks;
       structureWalkSurfaces = structures.walkSurfaces;
+      windmillRotor = structures.windmillRotor;
       const [boyMesh, girlMesh] = await villagerMeshes;
       if (destroyed) return;
       renderer.uploadAvatarMesh("villager-boy", boyMesh);
@@ -604,6 +625,7 @@ function runtimeAssetUrl(runtimeRoot, relativePath) {
 function createStructures(runtime) {
   const chunks = [];
   const walkSurfaces = new Map();
+  let windmillRotor = null;
   let revision = 1;
   for (const spec of STRUCTURE_SPECS) {
     const building = runtime.parseNcm3Building(spec.definition.ncm.code, {
@@ -621,6 +643,32 @@ function createStructures(runtime) {
       width: footprint.width,
       depth: footprint.depth,
     };
+    if (spec.id === "tower-windmill") {
+      const split = splitWindmillBuilding(building, spec.definition);
+      const bodyPlacement = runtime.createBuildingPlacement(split.body, foundation, {
+        placementId: spec.id,
+        quarterTurns: spec.quarterTurns,
+      });
+      const rotorPlacement = runtime.createBuildingPlacement(split.rotor, foundation, {
+        placementId: `${spec.id}-rotor`,
+        quarterTurns: spec.quarterTurns,
+      });
+      const bodyChunks = runtime.createBuildingChunkMeshes(bodyPlacement, { chunkSize: 16, revision: revision++ });
+      const rotorChunks = runtime.createBuildingChunkMeshes(rotorPlacement, { chunkSize: 16, revision: revision++ });
+      bodyChunks.forEach((chunk) => {
+        chunk.sceneStructureId = spec.id;
+      });
+      rotorChunks.forEach((chunk) => {
+        chunk.sceneStructureId = spec.id;
+        chunk.sceneAnimatedPart = "windmill-rotor";
+        chunk.regionBatchEligible = false;
+        chunk.frustumCullEligible = false;
+      });
+      windmillRotor = createWindmillRotor(rotorPlacement, rotorChunks, spec.definition);
+      chunks.push(...bodyChunks, ...rotorChunks);
+      continue;
+    }
+
     const placement = runtime.createBuildingPlacement(building, foundation, {
       placementId: spec.id,
       quarterTurns: spec.quarterTurns,
@@ -632,7 +680,145 @@ function createStructures(runtime) {
     if (spec.walkable) addStructureWalkSurfaces(placement, spec, walkSurfaces);
     chunks.push(...placementChunks);
   }
-  return { chunks, walkSurfaces };
+  return { chunks, walkSurfaces, windmillRotor };
+}
+
+function splitWindmillBuilding(building, definition) {
+  const rotorKeys = windmillRotorVoxelKeys(definition);
+  const sailMaterialIds = new Set((definition.extraMaterials || [])
+    .filter((entry) => /sail|slat/iu.test(String(entry.label || "")))
+    .map((entry) => Number(entry.materialId)));
+  const bodyVoxels = new Map();
+  const rotorVoxels = new Map();
+  for (const [key, voxel] of building.voxels) {
+    const target = rotorKeys.has(localVoxelKey(voxel.x, voxel.y, voxel.z)) || sailMaterialIds.has(voxel.material)
+      ? rotorVoxels
+      : bodyVoxels;
+    target.set(key, voxel);
+  }
+  if (!bodyVoxels.size || !rotorVoxels.size) throw new Error("The homepage windmill rotor could not be separated from its tower.");
+  return {
+    body: cloneParsedBuilding(building, `${building.id}-body`, bodyVoxels),
+    rotor: cloneParsedBuilding(building, `${building.id}-rotor`, rotorVoxels),
+  };
+}
+
+function windmillRotorVoxelKeys(definition) {
+  const keys = new Set();
+  for (const band of definition.validation?.diagonalBands || []) {
+    for (let index = 0; index < band.count; index += 1) {
+      const originX = band.x + band.dx * index;
+      const originY = band.y + band.dy * index;
+      const originZ = band.z + band.dz * index;
+      for (let z = originZ; z < originZ + band.depth; z += 1) {
+        for (let y = originY; y < originY + band.height; y += 1) {
+          for (let x = originX; x < originX + band.width; x += 1) keys.add(localVoxelKey(x, y, z));
+        }
+      }
+    }
+  }
+  return keys;
+}
+
+function cloneParsedBuilding(building, id, voxels) {
+  return Object.freeze({
+    ...building,
+    id,
+    voxels,
+    voxelCount: voxels.size,
+    materials: Object.freeze(Array.from(new Set(Array.from(voxels.values(), (voxel) => voxel.material))).sort((a, b) => a - b)),
+  });
+}
+
+function createWindmillRotor(placement, chunks, definition) {
+  const shaft = (definition.validation?.horizontalSpans || [])
+    .find((entry) => /windshaft axle/iu.test(String(entry.label || "")));
+  const rotorPlaneZ = Number(definition.validation?.diagonalBands?.[0]?.z);
+  const localPivot = {
+    x: Number(shaft?.fixed),
+    y: Number(shaft?.y),
+    z: rotorPlaneZ,
+  };
+  if (!Object.values(localPivot).every(Number.isFinite)) {
+    throw new Error("The homepage windmill shaft metadata is incomplete.");
+  }
+  const rotatedPivot = rotateLocalCenter(
+    localPivot.x + 0.5,
+    localPivot.z + 0.5,
+    placement.building.size,
+    placement.quarterTurns,
+  );
+  const pivot = Object.freeze({
+    x: placement.origin.x + rotatedPivot.x,
+    y: placement.origin.y + localPivot.y + 0.5,
+    z: placement.origin.z + rotatedPivot.z,
+  });
+  const sources = chunks.map((chunk) => Object.freeze({
+    chunk,
+    vertices: new Uint8Array(chunk.mesh.vertices),
+  }));
+  let lastAngle = 0;
+  let lastUpdateAt = -Infinity;
+  let revision = Math.max(...chunks.map((chunk) => chunk.meshVersion || chunk.version || 1));
+
+  return Object.freeze({
+    pivot,
+    update(angle, timestamp, minimumInterval = 0) {
+      if (timestamp - lastUpdateAt < minimumInterval) return false;
+      if (Math.abs(angle - lastAngle) < 0.00001) return false;
+      revision += 1;
+      for (const source of sources) {
+        source.chunk.mesh = rotatedRotorMesh(source.chunk, source.vertices, pivot, angle);
+        source.chunk.meshVersion = revision;
+        source.chunk.version = revision;
+        source.chunk.gpuUploaded = false;
+      }
+      lastAngle = angle;
+      lastUpdateAt = timestamp;
+      return true;
+    },
+  });
+}
+
+function rotateLocalCenter(x, z, size, quarterTurns) {
+  if (quarterTurns === 1) return { x: size.z - z, z: x };
+  if (quarterTurns === 2) return { x: size.x - x, z: size.z - z };
+  if (quarterTurns === 3) return { x: z, z: size.x - x };
+  return { x, z };
+}
+
+function rotatedRotorMesh(chunk, sourceVertices, pivot, angle) {
+  const vertices = new Uint8Array(sourceVertices);
+  const source = new DataView(sourceVertices.buffer, sourceVertices.byteOffset, sourceVertices.byteLength);
+  const target = new DataView(vertices.buffer, vertices.byteOffset, vertices.byteLength);
+  const chunkOriginX = chunk.chunkX * chunk.chunkSize;
+  const chunkOriginZ = chunk.chunkZ * chunk.chunkSize;
+  const cosine = Math.cos(angle);
+  const sine = Math.sin(angle);
+  for (let offset = 0; offset < vertices.byteLength; offset += 20) {
+    const sourceScale = Math.max(1, source.getInt16(offset + 6, true));
+    const worldX = chunkOriginX + source.getInt16(offset, true) / sourceScale;
+    const worldY = source.getInt16(offset + 2, true) / sourceScale;
+    const worldZ = chunkOriginZ + source.getInt16(offset + 4, true) / sourceScale;
+    const deltaX = worldX - pivot.x;
+    const deltaY = worldY - pivot.y;
+    const rotatedWorldX = pivot.x + deltaX * cosine - deltaY * sine;
+    const rotatedWorldY = pivot.y + deltaX * sine + deltaY * cosine;
+    target.setInt16(offset, Math.round((rotatedWorldX - chunkOriginX) * WINDMILL_VERTEX_PACK_SCALE), true);
+    target.setInt16(offset + 2, Math.round(rotatedWorldY * WINDMILL_VERTEX_PACK_SCALE), true);
+    target.setInt16(offset + 4, Math.round((worldZ - chunkOriginZ) * WINDMILL_VERTEX_PACK_SCALE), true);
+    target.setInt16(offset + 6, WINDMILL_VERTEX_PACK_SCALE, true);
+
+    const normalX = source.getInt8(offset + 8) / 127;
+    const normalY = source.getInt8(offset + 9) / 127;
+    target.setInt8(offset + 8, Math.round((normalX * cosine - normalY * sine) * 127));
+    target.setInt8(offset + 9, Math.round((normalX * sine + normalY * cosine) * 127));
+  }
+  return Object.freeze({ ...chunk.mesh, vertices });
+}
+
+function localVoxelKey(x, y, z) {
+  return `${x},${y},${z}`;
 }
 
 function addStructureWalkSurfaces(placement, spec, walkSurfaces) {
@@ -897,16 +1083,16 @@ function cameraPoseForView(view, aspect) {
   const target = [...source.target];
   let eye;
   if (mobile && view === "arrival") {
-    target.splice(0, 3, 2510, 100, 1725);
-    eye = [2581, 124, 1812];
+    target.splice(0, 3, 2503, 101, 1723);
+    eye = [2558, 116, 1781];
   } else {
-    const distanceScale = mobile ? 1.25 : 1;
+    const distanceScale = mobile ? 1.08 : 1;
     eye = target.map((value, index) => value + (source.eye[index] - source.target[index]) * distanceScale);
   }
   return {
     eye,
     target,
-    fov: source.fov + (mobile ? (view === "arrival" ? 5 : 4) : 0),
+    fov: source.fov + (mobile ? 2 : 0),
   };
 }
 

@@ -96,6 +96,11 @@ assert.match(layout, /COASTAL_WATER_MARGIN = 18/u);
 assert.match(scene, /sceneTerrainProfile = "two-landmasses-river-bay"/u);
 assert.match(scene, /sceneMapBounds = "240x240"/u);
 assert.match(scene, /sceneActorBehavior = "waypoint-walk-bridge-idle-mine-loop"/u);
+assert.match(scene, /WINDMILL_ROTATION_MS = 42_000/u);
+assert.match(scene, /splitWindmillBuilding\(building, spec\.definition\)/u);
+assert.match(scene, /sceneAnimatedPart = "windmill-rotor"/u);
+assert.match(scene, /function rotatedRotorMesh\(chunk, sourceVertices, pivot, angle\)/u);
+assert.match(scene, /sceneWindmillRotating = String\(!reducedMotion\.matches\)/u);
 assert.match(layout, /id: "coastal-cottage"[\s\S]*?surfaceY: PRESENTATION_WATER_BED_Y[\s\S]*?siteMode: "water"/u);
 assert.match(layout, /id: "river-footbridge"[\s\S]*?siteMode: "bridge"[\s\S]*?walkable: true/u);
 assert.match(layout, /id: "tower-windmill"[\s\S]*?quarterTurns: 2/u);
@@ -127,6 +132,8 @@ assert.match(terrainModule, /new Int32Array\(entry\.deltaCount \* 4\)/u);
 assert.match(terrainModule, /new DecompressionStream\("gzip"\)/u);
 assert.match(terrainModule, /withTransferMetadata\(decodeHomeWorldTerrain\(bytes\), "identity"/u);
 assert.match(generator, /createPresentationDeltas/u);
+assert.match(generator, /presentationReliefRise\(x, z, shoreDistance\)/u);
+assert.match(generator, /treeSurfaceY = surfaceHeights\.get/u);
 assert.match(generator, /MAX_RUNS_PER_COLUMN = 15/u);
 assert.match(generator, /gzipSync\(encoded\.bytes, \{ level: 9 \}\)/u);
 
@@ -137,11 +144,37 @@ assert.equal(terrain.chunkSize, 16);
 assert.equal(terrain.width, 15);
 assert.equal(terrain.depth, 15);
 assert.equal(terrain.chunks.size, 225);
-assert.equal(terrain.runCount, 155_760);
-assert.equal(terrain.deltaCount, 620_172);
-assert.equal(terrain.fingerprint, "c0c5275f6e1e1f745e076e5dd2484e93");
+assert.equal(terrain.runCount, 155_921);
+assert.equal(terrain.deltaCount, 621_618);
+assert.equal(terrain.fingerprint, "59beb5ad830be97321f01490e42b9f81");
 assert.deepEqual(gunzipSync(compressedTerrainBytes), terrainBytes);
 assert.ok(compressedTerrainBytes.byteLength < terrainBytes.byteLength / 20);
+
+for (const [worldX, worldZ, expectedY] of [
+  [2400, 1642, 101],
+  [2396, 1787, 100],
+  [2522, 1784, 101],
+  [2432, 1712, 99],
+]) {
+  const packed = unpackHomeWorldTerrainChunk(terrain, Math.floor(worldX / 16), Math.floor(worldZ / 16));
+  let topY = -Infinity;
+  for (let offset = 0; offset < packed.length; offset += 4) {
+    if (packed[offset] !== worldX || packed[offset + 2] !== worldZ || packed[offset + 3] === 0) continue;
+    topY = Math.max(topY, packed[offset + 1]);
+  }
+  assert.equal(topY, expectedY, `Unexpected homepage relief height at ${worldX},${worldZ}.`);
+}
+
+for (const view of ["arrival", "world", "market", "guardian", "roadmap"]) {
+  const preset = scene.match(new RegExp(`${view}: Object\\.freeze\\(\\{[\\s\\S]*?eye: \\[([^\\]]+)\\],[\\s\\S]*?target: \\[([^\\]]+)\\]`, "u"));
+  assert.ok(preset, `Missing ${view} camera preset.`);
+  const eye = preset[1].split(",").map(Number);
+  const target = preset[2].split(",").map(Number);
+  const distance = Math.hypot(...eye.map((value, index) => value - target[index]));
+  assert.ok(distance < 112, `${view} camera is too far from its subject (${distance.toFixed(2)}).`);
+}
+assert.match(scene, /const distanceScale = mobile \? 1\.08 : 1/u);
+assert.match(scene, /fov: source\.fov \+ \(mobile \? 2 : 0\)/u);
 
 const centerDeltas = unpackHomeWorldTerrainChunk(terrain, 152, 107);
 assert.ok(centerDeltas instanceof Int32Array);

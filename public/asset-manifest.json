@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-01T12:27:00.987Z",
+  "generatedAt": "2026-08-03T04:26:02.485Z",
   "assetRoots": [
     "public/media",
     "p_d"
@@ -191,8 +191,8 @@
     {
       "path": "public/media/home-world-preview-desktop.webp",
       "mediaType": "application/octet-stream",
-      "bytes": 98462,
-      "sha256": "72c9177a2a8205a42f055a4216e692ea59c84a58aaa320bccc386533a4d428d5",
+      "bytes": 130478,
+      "sha256": "ea32848ae65e5fe9b707915ec8c80de31d7b5e0744df722c6af03bc565154f0e",
       "dimensions": null,
       "surface": "general-media",
       "sourceStatus": "project-media",
@@ -201,8 +201,8 @@
     {
       "path": "public/media/home-world-preview-mobile.webp",
       "mediaType": "application/octet-stream",
-      "bytes": 27294,
-      "sha256": "549b96bc56b88b25a0b11f07c44db1d72ce2dfcbae92e48c1295e28ebf7c1cba",
+      "bytes": 44014,
+      "sha256": "d6fcf1b2a45cdef210668147e711639eb9674417121934543ebf857fec9fe5bb",
       "dimensions": null,
       "surface": "general-media",
       "sourceStatus": "project-media",
@@ -211,21 +211,21 @@
     {
       "path": "public/media/home-world-terrain-v1.bin",
       "mediaType": "application/octet-stream",
-      "bytes": 340374,
-      "sha256": "2c722bf1bf35b09ced199edff3dcb203a11ef7288a2f81fdf188260a01d0e6b4",
+      "bytes": 340696,
+      "sha256": "1037d9ae37ea8fb04057b0073dc221816762b60b12eaa747ec55ee2773ceaca0",
       "dimensions": null,
-      "surface": "homepage-world",
-      "sourceStatus": "generated-project-data",
+      "surface": "general-media",
+      "sourceStatus": "project-media",
       "canonical": true
     },
     {
       "path": "public/media/home-world-terrain-v1.bin.gz",
       "mediaType": "application/octet-stream",
-      "bytes": 11358,
-      "sha256": "e816dc2694f7cf49d94cf4d43cdec84e263a99cbe434c198beb2c218d61fba64",
+      "bytes": 12201,
+      "sha256": "88a0334bad71790b348a47109723b9e457db05bd437ecda84d815f63ac735761",
       "dimensions": null,
-      "surface": "homepage-world",
-      "sourceStatus": "generated-project-data",
+      "surface": "general-media",
+      "sourceStatus": "project-media",
       "canonical": true
     },
     {

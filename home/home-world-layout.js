@@ -32,6 +32,18 @@ export const PRESENTATION_LANDMASSES = Object.freeze([
   Object.freeze({ x: 2494, z: 1712, radiusX: 83, radiusZ: 112 }),
 ]);
 
+export const PRESENTATION_RELIEF = Object.freeze({
+  version: 1,
+  maxRise: 2,
+  shoreFadeStart: 6,
+  shoreFadeEnd: 18,
+  hills: Object.freeze([
+    Object.freeze({ x: 2400, z: 1642, radiusX: 42, radiusZ: 34, height: 2 }),
+    Object.freeze({ x: 2396, z: 1787, radiusX: 35, radiusZ: 31, height: 1 }),
+    Object.freeze({ x: 2522, z: 1784, radiusX: 40, radiusZ: 34, height: 2 }),
+  ]),
+});
+
 export const WESTERN_BAY = Object.freeze({ x: 2356, z: 1710, radiusX: 43, radiusZ: 61 });
 export const COASTAL_STAGE_BOUNDS = Object.freeze({ minX: 2320, maxX: 2559, minZ: 1600, maxZ: 1839 });
 

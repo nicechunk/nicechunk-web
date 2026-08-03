@@ -34,6 +34,8 @@ const homeLocales = await Promise.all(homeLocaleCodes.map(async (language) => ({
 
 assert.match(html, /id="homeWorldCanvas"/u);
 assert.match(html, /id="homeBuildingInspector"/u);
+assert.match(html, /id="ncmInspectorBuildingOutline"/u);
+assert.match(html, /id="ncmInspectorBuildingOutlineShadow"/u);
 assert.equal([...html.matchAll(/pathLength="1"/gu)].length, 2);
 assert.doesNotMatch(html, /voxelShader/u);
 assert.doesNotMatch(html, /<video\b|nck-hero-logo-v0149\.(?:png|webm)/u);
@@ -103,6 +105,8 @@ assert.match(scene, /sceneInspectableBuildings = structureInspectables\.map/u);
 assert.match(scene, /raycastInspectableStructure\(projection\.target, pointerRay\)/u);
 assert.match(scene, /hasWorldVoxel: \(x, y, z\) => occupiedVoxels\.has/u);
 assert.match(scene, /anchor: visibleProjectionAnchor\(topCenter, center, rect, viewport\)/u);
+assert.match(scene, /outline: Object\.freeze\(convexHull2d\(points\)/u);
+assert.match(scene, /outline: match\.outline/u);
 assert.equal([...scene.matchAll(/inspectables\.push\(createInspectableStructure/gu)].length, 2);
 assert.match(scene, /projectWorldPoint\(corner, pose, viewport\)/u);
 assert.match(scene, /\(hover: hover\) and \(pointer: fine\)/u);
@@ -111,7 +115,12 @@ assert.match(inspector, /const INSPECTOR_TIMING = Object\.freeze/u);
 assert.match(inspector, /target\.ncmCode/u);
 assert.match(inspector, /target\.voxelCount \/ Math\.max\(1, target\.payloadBytes\)/u);
 assert.match(inspector, /root\.dataset\.active = "false"/u);
+assert.match(inspector, /updateBuildingOutline\(detail\.outline, detail\.bounds\)/u);
+assert.match(inspector, /detail\.bounds\.right \+ PANEL_GAP_PX/u);
 assert.doesNotMatch(inspector, /transition:\s*all/u);
+assert.match(style, /\.ncm-building-outline \{[\s\S]*?stroke-dasharray: 7 6;/u);
+assert.match(style, /@keyframes ncm-building-outline-breathe/u);
+assert.match(style, /font: 600 10px\/1\.5/u);
 
 for (const { language, source, public: publicLocale } of homeLocales) {
   assert.deepEqual(publicLocale.buildingInspector, source.buildingInspector, `Public ${language} inspector copy is stale.`);

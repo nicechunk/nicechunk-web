@@ -123,6 +123,33 @@ html[data-home-chapter="market"] .home-world-vignette {
   overflow: visible;
 }
 
+.ncm-building-outline-shadow,
+.ncm-building-outline {
+  vector-effect: non-scaling-stroke;
+  opacity: 0;
+  transform: scale(0.985);
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    opacity 100ms var(--ncm-inspector-exit) 260ms,
+    transform 150ms var(--ncm-inspector-exit) 260ms;
+}
+
+.ncm-building-outline-shadow {
+  fill: rgba(1, 7, 9, 0.045);
+  stroke: rgba(1, 7, 9, 0.72);
+  stroke-width: 4px;
+  stroke-dasharray: 7 6;
+}
+
+.ncm-building-outline {
+  fill: rgba(142, 227, 255, 0.055);
+  stroke: var(--ncm-inspector-cyan);
+  stroke-width: 1.35px;
+  stroke-dasharray: 7 6;
+  filter: drop-shadow(0 0 5px rgba(142, 227, 255, 0.5));
+}
+
 .ncm-connector-shadow,
 .ncm-connector-line {
   fill: none;
@@ -168,8 +195,8 @@ html[data-home-chapter="market"] .home-world-vignette {
   position: absolute;
   top: 0;
   left: 0;
-  width: min(430px, calc(100vw - 48px));
-  min-height: 260px;
+  width: min(470px, calc(100vw - 36px));
+  min-height: 320px;
   color: var(--home-text);
   transform: translate3d(var(--ncm-inspector-x, 24px), var(--ncm-inspector-y, 96px), 0);
   will-change: transform;
@@ -180,13 +207,13 @@ html[data-home-chapter="market"] .home-world-vignette {
   z-index: -1;
   inset: 0;
   background:
-    linear-gradient(rgba(142, 227, 255, 0.035) 1px, transparent 1px) 0 0 / 100% 20px,
-    linear-gradient(90deg, rgba(142, 227, 255, 0.028) 1px, transparent 1px) 0 0 / 20px 100%,
-    linear-gradient(135deg, rgba(8, 20, 22, 0.74), rgba(4, 11, 13, 0.64));
+    linear-gradient(rgba(142, 227, 255, 0.04) 1px, transparent 1px) 0 0 / 100% 24px,
+    linear-gradient(90deg, rgba(142, 227, 255, 0.032) 1px, transparent 1px) 0 0 / 24px 100%,
+    linear-gradient(135deg, rgba(8, 20, 22, 0.62), rgba(4, 11, 13, 0.5));
   box-shadow:
     0 20px 54px rgba(0, 0, 0, 0.2),
     inset 0 0 0 1px rgba(142, 227, 255, 0.05);
-  backdrop-filter: blur(9px) saturate(0.82);
+  backdrop-filter: blur(10px) saturate(0.88);
   clip-path: inset(0 100% 0 0);
   transition: clip-path 100ms var(--ncm-inspector-exit) 140ms;
 }
@@ -272,7 +299,7 @@ html[data-home-chapter="market"] .home-world-vignette {
 
 .ncm-inspector-content {
   position: relative;
-  padding: 17px 18px 16px;
+  padding: 20px 21px 19px;
 }
 
 .ncm-inspector-header,
@@ -309,7 +336,7 @@ html[data-home-chapter="market"] .home-world-vignette {
 
 .ncm-inspector-eyebrow {
   color: var(--ncm-inspector-green);
-  font-size: 7px;
+  font-size: 10px;
   font-weight: 900;
   letter-spacing: 0.16em;
   line-height: 1.4;
@@ -318,7 +345,7 @@ html[data-home-chapter="market"] .home-world-vignette {
 .ncm-inspector-header h2 {
   margin: 4px 0 2px;
   color: #fff;
-  font-size: 16px;
+  font-size: 21px;
   font-weight: 900;
   letter-spacing: -0.035em;
   line-height: 1.08;
@@ -327,7 +354,7 @@ html[data-home-chapter="market"] .home-world-vignette {
 
 .ncm-inspector-header code {
   color: rgba(203, 231, 238, 0.65);
-  font-size: 7px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.12em;
 }
@@ -336,9 +363,9 @@ html[data-home-chapter="market"] .home-world-vignette {
   display: flex;
   align-items: center;
   gap: 6px;
-  max-width: 128px;
+  max-width: 150px;
   color: rgba(226, 247, 252, 0.72);
-  font-size: 6.5px;
+  font-size: 10px;
   font-weight: 900;
   letter-spacing: 0.1em;
   line-height: 1.45;
@@ -347,8 +374,8 @@ html[data-home-chapter="market"] .home-world-vignette {
 
 .ncm-inspector-state i {
   flex: 0 0 auto;
-  width: 5px;
-  height: 5px;
+  width: 7px;
+  height: 7px;
   background: var(--ncm-inspector-green);
   box-shadow: 0 0 8px rgba(185, 244, 125, 0.46);
 }
@@ -356,7 +383,7 @@ html[data-home-chapter="market"] .home-world-vignette {
 .ncm-inspector-detail {
   margin-top: 10px;
   color: rgba(229, 240, 238, 0.7);
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 650;
   line-height: 1.5;
   transition-delay: 20ms;
@@ -373,7 +400,7 @@ html[data-home-chapter="market"] .home-world-vignette {
 
 .ncm-inspector-metrics > div {
   min-width: 0;
-  padding: 8px 9px;
+  padding: 10px 11px;
   background: rgba(3, 10, 12, 0.56);
 }
 
@@ -396,7 +423,7 @@ html[data-home-chapter="market"] .home-world-vignette {
 .ncm-inspector-metrics dt {
   overflow: hidden;
   color: rgba(177, 210, 217, 0.58);
-  font-size: 6px;
+  font-size: 10px;
   font-weight: 850;
   letter-spacing: 0.09em;
   line-height: 1.3;
@@ -408,7 +435,7 @@ html[data-home-chapter="market"] .home-world-vignette {
   margin-top: 3px;
   overflow: hidden;
   color: var(--ncm-inspector-green);
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 900;
   letter-spacing: 0.02em;
   line-height: 1.2;
@@ -422,7 +449,7 @@ html[data-home-chapter="market"] .home-world-vignette {
   gap: 12px;
   margin-top: 11px;
   color: rgba(142, 227, 255, 0.78);
-  font-size: 6.5px;
+  font-size: 10px;
   font-weight: 900;
   letter-spacing: 0.12em;
   line-height: 1.4;
@@ -436,12 +463,12 @@ html[data-home-chapter="market"] .home-world-vignette {
 .ncm-inspector-code {
   max-width: 100%;
   margin: 5px 0 0;
-  padding: 8px 9px;
+  padding: 10px 11px;
   overflow: hidden;
   color: rgba(207, 239, 246, 0.66);
   background: rgba(2, 8, 10, 0.52);
   border-left: 1px solid rgba(185, 244, 125, 0.5);
-  font: 600 6px/1.42 "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
+  font: 600 10px/1.5 "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
   letter-spacing: 0.005em;
   overflow-wrap: anywhere;
   text-shadow: 0 1px 5px rgba(0, 0, 0, 0.68);
@@ -455,6 +482,33 @@ html[data-home-chapter="market"] .home-world-vignette {
   transition-duration: 260ms;
   transition-delay: 20ms;
   transition-timing-function: var(--ncm-inspector-enter);
+}
+
+.home-building-inspector[data-active="true"] .ncm-building-outline-shadow,
+.home-building-inspector[data-active="true"] .ncm-building-outline {
+  opacity: 1;
+  transform: scale(1);
+  transition-duration: 200ms;
+  transition-delay: 0ms;
+  transition-timing-function: var(--ncm-inspector-enter);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .home-building-inspector[data-active="true"] .ncm-building-outline {
+    animation: ncm-building-outline-breathe 1.8s ease-in-out 200ms infinite;
+  }
+}
+
+@keyframes ncm-building-outline-breathe {
+  0%, 100% {
+    opacity: 0.68;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.012);
+  }
 }
 
 .home-building-inspector[data-active="true"] .ncm-connector-anchor,

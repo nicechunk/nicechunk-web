@@ -485,6 +485,7 @@ export function createHomeWorldScene(canvas, options = {}) {
       target: match.target,
       anchor: match.anchor,
       bounds: match.rect,
+      outline: match.outline,
     });
   }
 
@@ -1315,6 +1316,7 @@ function projectInspectableStructure(target, pose, viewport, pointer) {
     target,
     rect,
     hitRect,
+    outline: Object.freeze(convexHull2d(points).map((point) => Object.freeze({ x: point.x, y: point.y }))),
     anchor: visibleProjectionAnchor(topCenter, center, rect, viewport),
     depth: center.depth,
     pointerDistance: Math.hypot(
@@ -1322,6 +1324,33 @@ function projectInspectableStructure(target, pose, viewport, pointer) {
       pointerDistanceAxis(pointer.y - centerY, hitHeight),
     ),
   };
+}
+
+function convexHull2d(points) {
+  const unique = [...new Map(points.map((point) => [
+    `${point.x.toFixed(3)},${point.y.toFixed(3)}`,
+    point,
+  ])).values()].sort((left, right) => left.x - right.x || left.y - right.y);
+  if (unique.length <= 2) return unique;
+
+  const cross = (origin, left, right) => (
+    (left.x - origin.x) * (right.y - origin.y)
+    - (left.y - origin.y) * (right.x - origin.x)
+  );
+  const lower = [];
+  for (const point of unique) {
+    while (lower.length >= 2 && cross(lower.at(-2), lower.at(-1), point) <= 0) lower.pop();
+    lower.push(point);
+  }
+  const upper = [];
+  for (let index = unique.length - 1; index >= 0; index -= 1) {
+    const point = unique[index];
+    while (upper.length >= 2 && cross(upper.at(-2), upper.at(-1), point) <= 0) upper.pop();
+    upper.push(point);
+  }
+  lower.pop();
+  upper.pop();
+  return [...lower, ...upper];
 }
 
 function visibleProjectionAnchor(topCenter, center, rect, viewport) {

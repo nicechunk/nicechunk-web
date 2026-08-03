@@ -4,9 +4,10 @@ const INSPECTOR_TIMING = Object.freeze({
   exitTotalMs: 380,
 });
 const MIN_DESKTOP_WIDTH = 901;
-const VIEWPORT_MARGIN = 24;
-const CONNECTOR_LEAD_PX = 24;
-const CONNECTOR_TERMINAL_PX = 18;
+const VIEWPORT_MARGIN = 18;
+const PANEL_GAP_PX = 18;
+const CONNECTOR_LEAD_PX = 10;
+const CONNECTOR_TERMINAL_PX = 8;
 
 /*
  * enter  000ms anchor | 020ms connector | 090ms surface | 140ms frame
@@ -17,6 +18,8 @@ export function createHomeBuildingInspector(root) {
   if (!(root instanceof HTMLElement)) return createNoopInspector();
 
   const panel = root.querySelector(".ncm-inspector-panel");
+  const buildingOutline = root.querySelector("#ncmInspectorBuildingOutline");
+  const buildingOutlineShadow = root.querySelector("#ncmInspectorBuildingOutlineShadow");
   const connector = root.querySelector("#ncmInspectorConnector");
   const connectorShadow = root.querySelector("#ncmInspectorConnectorShadow");
   const anchor = root.querySelector("#ncmInspectorAnchor");
@@ -29,15 +32,18 @@ export function createHomeBuildingInspector(root) {
   const expansion = root.querySelector("#ncmInspectorExpansion");
   const codeLength = root.querySelector("#ncmInspectorCodeLength");
   const code = root.querySelector("#ncmInspectorCode");
-  if (!panel || !connector || !connectorShadow || !anchor || !terminal || !title || !identity
+  if (!panel || !buildingOutline || !buildingOutlineShadow || !connector || !connectorShadow
+    || !anchor || !terminal || !title || !identity
     || !payload || !voxels || !modelSize || !expansion || !codeLength || !code) {
     return createNoopInspector();
   }
 
   let currentDetail = null;
   let currentLayout = null;
+  let panelSize = null;
   let closeTimer = 0;
   let lastConnectorPath = "";
+  let lastOutlinePoints = "";
 
   function update(detail) {
     if (!detail?.target || window.innerWidth < MIN_DESKTOP_WIDTH) {
@@ -52,10 +58,11 @@ export function createHomeBuildingInspector(root) {
     if (changed) {
       renderContent(detail.target);
       root.dataset.buildingId = detail.target.id;
-      currentLayout = placePanel(detail);
+      panelSize = null;
     }
-    if (!currentLayout) currentLayout = placePanel(detail);
-    updateConnector(detail.anchor, currentLayout);
+    if (changed || !currentLayout) currentLayout = placePanel(detail);
+    updateBuildingOutline(detail.outline, detail.bounds);
+    updateConnector(detail, currentLayout);
     root.dataset.active = "true";
     document.documentElement.classList.add("home-building-hover");
   }
@@ -71,15 +78,19 @@ export function createHomeBuildingInspector(root) {
       root.removeAttribute("data-building-id");
       root.removeAttribute("data-side");
       currentLayout = null;
+      panelSize = null;
       lastConnectorPath = "";
+      lastOutlinePoints = "";
     }, INSPECTOR_TIMING.exitTotalMs);
   }
 
   function refresh() {
     if (!currentDetail) return;
     renderContent(currentDetail.target);
+    panelSize = null;
     currentLayout = placePanel(currentDetail);
-    updateConnector(currentDetail.anchor, currentLayout);
+    updateBuildingOutline(currentDetail.outline, currentDetail.bounds);
+    updateConnector(currentDetail, currentLayout);
   }
 
   function renderContent(target) {
@@ -99,38 +110,50 @@ export function createHomeBuildingInspector(root) {
   }
 
   function placePanel(detail) {
-    const panelRect = panel.getBoundingClientRect();
-    const width = panelRect.width;
-    const height = panelRect.height;
+    if (!panelSize) {
+      const panelRect = panel.getBoundingClientRect();
+      panelSize = Object.freeze({ width: panelRect.width, height: panelRect.height });
+    }
+    const { width, height } = panelSize;
     const viewport = { width: window.innerWidth, height: window.innerHeight };
     const headerBottom = document.querySelector(".site-header")?.getBoundingClientRect().bottom || 76;
-    const minY = Math.min(viewport.height - height - VIEWPORT_MARGIN, headerBottom + 20);
+    const minY = Math.min(viewport.height - height - VIEWPORT_MARGIN, headerBottom + 14);
     const maxY = Math.max(minY, viewport.height - height - VIEWPORT_MARGIN);
     const verticalPositions = uniqueNumbers([
-      clamp(detail.anchor.y - height * 0.28, minY, maxY),
-      minY,
-      maxY,
+      clamp(detail.bounds.top - 14, minY, maxY),
+      clamp(detail.anchor.y - 52, minY, maxY),
+      clamp((detail.bounds.top + detail.bounds.bottom - height) * 0.5, minY, maxY),
     ]);
-    const horizontalPositions = uniqueNumbers([
-      clamp(detail.anchor.x + 72, VIEWPORT_MARGIN, viewport.width - width - VIEWPORT_MARGIN),
-      clamp(detail.anchor.x - width - 72, VIEWPORT_MARGIN, viewport.width - width - VIEWPORT_MARGIN),
-      VIEWPORT_MARGIN,
-      Math.max(VIEWPORT_MARGIN, viewport.width - width - VIEWPORT_MARGIN),
-    ]);
+    const maxX = Math.max(VIEWPORT_MARGIN, viewport.width - width - VIEWPORT_MARGIN);
+    const horizontalPositions = [
+      { x: clamp(detail.bounds.right + PANEL_GAP_PX, VIEWPORT_MARGIN, maxX), side: "right" },
+      { x: clamp(detail.bounds.left - width - PANEL_GAP_PX, VIEWPORT_MARGIN, maxX), side: "left" },
+    ];
     const obstructions = [...document.querySelectorAll(".snap-section.active .chapter-card, .chapter-nav")]
       .map((element) => element.getBoundingClientRect())
       .filter((rect) => rect.width > 0 && rect.height > 0);
 
     const candidates = [];
-    for (const x of horizontalPositions) {
+    for (const horizontal of horizontalPositions) {
       for (const y of verticalPositions) {
+        const { x, side } = horizontal;
         const rect = { left: x, top: y, right: x + width, bottom: y + height, width, height };
-        const side = x + width * 0.5 >= detail.anchor.x ? "right" : "left";
         const obstructionPenalty = obstructions.reduce((sum, obstruction) => sum + intersectionArea(rect, obstruction), 0);
-        const buildingPenalty = intersectionArea(rect, detail.bounds) * 3;
+        const buildingPenalty = intersectionArea(rect, detail.bounds);
         const edgeX = side === "right" ? x : x + width;
-        const distance = Math.hypot(edgeX - detail.anchor.x, y + height * 0.28 - detail.anchor.y);
-        candidates.push({ x, y, width, height, side, score: obstructionPenalty * 12 + buildingPenalty * 18 + distance });
+        const terminalY = clamp(detail.anchor.y, y + 54, y + height - 38);
+        const distance = Math.hypot(edgeX - detail.anchor.x, terminalY - detail.anchor.y);
+        const panelArea = Math.max(1, width * height);
+        candidates.push({
+          x,
+          y,
+          width,
+          height,
+          side,
+          score: (obstructionPenalty / panelArea) * 1_200
+            + (buildingPenalty / panelArea) * 2_400
+            + distance,
+        });
       }
     }
     candidates.sort((left, right) => left.score - right.score);
@@ -147,11 +170,34 @@ export function createHomeBuildingInspector(root) {
     return layout;
   }
 
-  function updateConnector(projectedAnchor, layout) {
+  function updateBuildingOutline(projectedOutline, bounds) {
+    const points = Array.isArray(projectedOutline) && projectedOutline.length >= 3
+      ? projectedOutline
+      : [
+        { x: bounds.left, y: bounds.top },
+        { x: bounds.right, y: bounds.top },
+        { x: bounds.right, y: bounds.bottom },
+        { x: bounds.left, y: bounds.bottom },
+      ];
+    const pointList = points
+      .map((point) => `${point.x.toFixed(2)},${point.y.toFixed(2)}`)
+      .join(" ");
+    if (pointList === lastOutlinePoints) return;
+    buildingOutline.setAttribute("points", pointList);
+    buildingOutlineShadow.setAttribute("points", pointList);
+    lastOutlinePoints = pointList;
+  }
+
+  function updateConnector(detail, layout) {
     const viewportWidth = Math.max(1, window.innerWidth);
     const viewportHeight = Math.max(1, window.innerHeight);
-    const anchorX = clamp(projectedAnchor.x, 0, viewportWidth);
-    const anchorY = clamp(projectedAnchor.y, 0, viewportHeight);
+    const edgeX = layout.side === "right" ? detail.bounds.right : detail.bounds.left;
+    const anchorX = clamp(edgeX, 0, viewportWidth);
+    const anchorY = clamp(
+      detail.anchor.y,
+      Math.max(0, detail.bounds.top + 4),
+      Math.min(viewportHeight, detail.bounds.bottom - 4),
+    );
     const terminalX = layout.side === "right" ? layout.x : layout.x + layout.width;
     const terminalY = clamp(anchorY, layout.y + 42, layout.y + layout.height - 30);
     const direction = terminalX >= anchorX ? 1 : -1;

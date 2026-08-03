@@ -29,8 +29,14 @@ const WINDMILL_FRAME_MS = 1_000 / 12;
 const WINDMILL_VERTEX_PACK_SCALE = 64;
 const BUILDING_INSPECTOR_MIN_VIEWPORT = 901;
 const BUILDING_INSPECTOR_MIN_TARGET_PX = 30;
+const BUILDING_OUTLINE_MASK_SCALE = 0.65;
+const BUILDING_OUTLINE_MASK_MAX_SIZE = 640;
+const BUILDING_OUTLINE_MASK_ALPHA_THRESHOLD = 72;
+const BUILDING_OUTLINE_SIMPLIFY_TOLERANCE = 1.15;
 const AVATAR_HEIGHT_BLOCKS = 1.75 / 0.4;
 const AVATAR_VISUAL_SCALE = AVATAR_HEIGHT_BLOCKS / 2.52;
+const buildingOutlineCache = new WeakMap();
+let buildingOutlineMaskCanvas = null;
 const ACTOR_ROUTES = Object.freeze({
   boy: createRoute([
     routeStop("idle", ACTOR_SITES.boy, 4_000),
@@ -481,11 +487,17 @@ export function createHomeWorldScene(canvas, options = {}) {
     }
 
     inspectedBuildingId = match.target.id;
+    const outline = projectInspectableModelOutline(
+      match.target,
+      cameraPose,
+      canvasRect,
+      windmillRotor?.currentAngle?.() || 0,
+    );
     options.onBuildingInspect({
       target: match.target,
       anchor: match.anchor,
       bounds: match.rect,
-      outline: match.outline,
+      outline,
     });
   }
 
@@ -757,7 +769,10 @@ function createStructures(runtime) {
         chunk.frustumCullEligible = false;
       });
       windmillRotor = createWindmillRotor(rotorPlacement, rotorChunks, spec.definition);
-      inspectables.push(createInspectableStructure(building, [bodyPlacement, rotorPlacement], spec));
+      inspectables.push(createInspectableStructure(building, [
+        { placement: bodyPlacement },
+        { placement: rotorPlacement, rotationPivot: windmillRotor.pivot },
+      ], spec));
       chunks.push(...bodyChunks, ...rotorChunks);
       continue;
     }
@@ -778,13 +793,19 @@ function createStructures(runtime) {
 }
 
 function createInspectableStructure(building, placements, spec) {
-  const bounds = worldVoxelBounds(placements);
+  const components = placements.map((entry) => entry?.placement ? entry : { placement: entry });
+  const placementList = components.map((entry) => entry.placement);
+  const bounds = worldVoxelBounds(placementList);
   const occupiedVoxels = new Set();
-  for (const placement of placements) {
+  for (const placement of placementList) {
     for (const voxel of placement.worldVoxels.values()) {
       occupiedVoxels.add(worldVoxelKey(voxel.x, voxel.y, voxel.z));
     }
   }
+  const outlineGroups = components.map(({ placement, rotationPivot = null }) => Object.freeze({
+    faces: structureSurfaceFaces(placement.worldVoxels.values()),
+    rotationPivot,
+  }));
   return Object.freeze({
     id: spec.id,
     titles: Object.freeze({ ...spec.definition.titles }),
@@ -795,8 +816,43 @@ function createInspectableStructure(building, placements, spec) {
     modelSize: Object.freeze({ ...building.size }),
     worldBounds: bounds,
     corners: Object.freeze(buildingBoundsCorners(bounds)),
+    outlineGroups: Object.freeze(outlineGroups),
     hasWorldVoxel: (x, y, z) => occupiedVoxels.has(worldVoxelKey(x, y, z)),
   });
+}
+
+const STRUCTURE_FACE_DEFINITIONS = Object.freeze([
+  Object.freeze({ neighbor: [-1, 0, 0], normal: [-1, 0, 0], corners: [[0, 0, 0], [0, 1, 0], [0, 1, 1], [0, 0, 1]] }),
+  Object.freeze({ neighbor: [1, 0, 0], normal: [1, 0, 0], corners: [[1, 0, 0], [1, 0, 1], [1, 1, 1], [1, 1, 0]] }),
+  Object.freeze({ neighbor: [0, -1, 0], normal: [0, -1, 0], corners: [[0, 0, 0], [0, 0, 1], [1, 0, 1], [1, 0, 0]] }),
+  Object.freeze({ neighbor: [0, 1, 0], normal: [0, 1, 0], corners: [[0, 1, 0], [1, 1, 0], [1, 1, 1], [0, 1, 1]] }),
+  Object.freeze({ neighbor: [0, 0, -1], normal: [0, 0, -1], corners: [[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0]] }),
+  Object.freeze({ neighbor: [0, 0, 1], normal: [0, 0, 1], corners: [[0, 0, 1], [0, 1, 1], [1, 1, 1], [1, 0, 1]] }),
+]);
+
+function structureSurfaceFaces(voxels) {
+  const voxelList = Array.from(voxels, (voxel) => Object.freeze({ x: voxel.x, y: voxel.y, z: voxel.z }));
+  const occupied = new Set(voxelList.map((voxel) => worldVoxelKey(voxel.x, voxel.y, voxel.z)));
+  const faces = [];
+  for (const voxel of voxelList) {
+    for (const face of STRUCTURE_FACE_DEFINITIONS) {
+      if (occupied.has(worldVoxelKey(
+        voxel.x + face.neighbor[0],
+        voxel.y + face.neighbor[1],
+        voxel.z + face.neighbor[2],
+      ))) continue;
+      const corners = face.corners.map((corner) => Object.freeze([
+        voxel.x + corner[0],
+        voxel.y + corner[1],
+        voxel.z + corner[2],
+      ]));
+      faces.push(Object.freeze({
+        corners: Object.freeze(corners),
+        normal: face.normal,
+      }));
+    }
+  }
+  return Object.freeze(faces);
 }
 
 function worldVoxelBounds(placements) {
@@ -912,6 +968,9 @@ function createWindmillRotor(placement, chunks, definition) {
 
   return Object.freeze({
     pivot,
+    currentAngle() {
+      return lastAngle;
+    },
     update(angle, timestamp, minimumInterval = 0) {
       if (timestamp - lastUpdateAt < minimumInterval) return false;
       if (Math.abs(angle - lastAngle) < 0.00001) return false;
@@ -1316,7 +1375,6 @@ function projectInspectableStructure(target, pose, viewport, pointer) {
     target,
     rect,
     hitRect,
-    outline: Object.freeze(convexHull2d(points).map((point) => Object.freeze({ x: point.x, y: point.y }))),
     anchor: visibleProjectionAnchor(topCenter, center, rect, viewport),
     depth: center.depth,
     pointerDistance: Math.hypot(
@@ -1326,31 +1384,310 @@ function projectInspectableStructure(target, pose, viewport, pointer) {
   };
 }
 
-function convexHull2d(points) {
-  const unique = [...new Map(points.map((point) => [
-    `${point.x.toFixed(3)},${point.y.toFixed(3)}`,
-    point,
-  ])).values()].sort((left, right) => left.x - right.x || left.y - right.y);
-  if (unique.length <= 2) return unique;
+function projectInspectableModelOutline(target, pose, viewport, animationAngle = 0) {
+  const cacheKey = projectedOutlineCacheKey(target, pose, viewport, animationAngle);
+  const cached = buildingOutlineCache.get(target);
+  if (cached?.key === cacheKey) return cached.outline;
+  const now = globalThis.performance?.now?.() ?? Date.now();
+  if (cached && now - cached.updatedAt < WINDMILL_FRAME_MS) return cached.outline;
 
-  const cross = (origin, left, right) => (
-    (left.x - origin.x) * (right.y - origin.y)
-    - (left.y - origin.y) * (right.x - origin.x)
+  const projectedFaces = [];
+  for (const group of target.outlineGroups || []) {
+    const angle = group.rotationPivot ? animationAngle : 0;
+    for (const face of group.faces) {
+      const corners = face.corners.map((corner) => (
+        rotateStructureOutlinePoint(corner, group.rotationPivot, angle)
+      ));
+      const center = corners.reduce((sum, corner) => [
+        sum[0] + corner[0] * 0.25,
+        sum[1] + corner[1] * 0.25,
+        sum[2] + corner[2] * 0.25,
+      ], [0, 0, 0]);
+      const normal = rotateStructureOutlineNormal(face.normal, angle);
+      if (dotVector(normal, subtractVector(pose.eye, center)) <= 0.0001) continue;
+      const projected = corners.map((corner) => projectWorldPoint(corner, pose, viewport));
+      if (projected.some((corner) => !corner) || !projectedPolygonIntersectsViewport(projected, viewport)) continue;
+      projectedFaces.push(projected);
+    }
+  }
+  const outline = rasterizeInspectableSilhouette(projectedFaces, viewport);
+  buildingOutlineCache.set(target, Object.freeze({ key: cacheKey, updatedAt: now, outline }));
+  return outline;
+}
+
+function projectedOutlineCacheKey(target, pose, viewport, animationAngle) {
+  const animated = target.outlineGroups?.some((group) => group.rotationPivot);
+  const angleStep = animated
+    ? Math.round((((animationAngle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2)) * 512 / (Math.PI * 2))
+    : 0;
+  return [
+    ...pose.eye.map((value) => Number(value).toFixed(2)),
+    ...pose.target.map((value) => Number(value).toFixed(2)),
+    Number(pose.fov).toFixed(2),
+    Number(viewport.left).toFixed(1),
+    Number(viewport.top).toFixed(1),
+    Math.round(viewport.width),
+    Math.round(viewport.height),
+    angleStep,
+  ].join("|");
+}
+
+function rasterizeInspectableSilhouette(projectedFaces, viewport) {
+  if (!projectedFaces.length || typeof document === "undefined") return null;
+  const points = projectedFaces.flat();
+  const margin = 3;
+  const left = Math.max(viewport.left - margin, Math.min(...points.map((point) => point.x)) - margin);
+  const top = Math.max(viewport.top - margin, Math.min(...points.map((point) => point.y)) - margin);
+  const right = Math.min(viewport.right + margin, Math.max(...points.map((point) => point.x)) + margin);
+  const bottom = Math.min(viewport.bottom + margin, Math.max(...points.map((point) => point.y)) + margin);
+  const width = right - left;
+  const height = bottom - top;
+  if (width <= 0 || height <= 0) return null;
+
+  const padding = 3;
+  const scale = Math.min(
+    BUILDING_OUTLINE_MASK_SCALE,
+    (BUILDING_OUTLINE_MASK_MAX_SIZE - padding * 2) / width,
+    (BUILDING_OUTLINE_MASK_MAX_SIZE - padding * 2) / height,
   );
-  const lower = [];
-  for (const point of unique) {
-    while (lower.length >= 2 && cross(lower.at(-2), lower.at(-1), point) <= 0) lower.pop();
-    lower.push(point);
+  if (!Number.isFinite(scale) || scale <= 0) return null;
+  const canvasWidth = Math.max(1, Math.ceil(width * scale) + padding * 2);
+  const canvasHeight = Math.max(1, Math.ceil(height * scale) + padding * 2);
+  const canvas = reusableBuildingOutlineMaskCanvas(canvasWidth, canvasHeight);
+  const context = canvas.getContext("2d", { willReadFrequently: true });
+  if (!context) return null;
+
+  context.setTransform(1, 0, 0, 1, 0, 0);
+  context.clearRect(0, 0, canvasWidth, canvasHeight);
+  context.setTransform(scale, 0, 0, scale, padding - left * scale, padding - top * scale);
+  context.fillStyle = "#fff";
+  context.strokeStyle = "#fff";
+  context.lineWidth = 0.9 / scale;
+  context.lineJoin = "round";
+  context.beginPath();
+  for (const face of projectedFaces) {
+    context.moveTo(face[0].x, face[0].y);
+    for (let index = 1; index < face.length; index += 1) context.lineTo(face[index].x, face[index].y);
+    context.closePath();
   }
-  const upper = [];
-  for (let index = unique.length - 1; index >= 0; index -= 1) {
-    const point = unique[index];
-    while (upper.length >= 2 && cross(upper.at(-2), upper.at(-1), point) <= 0) upper.pop();
-    upper.push(point);
+  context.fill();
+  context.stroke();
+  context.setTransform(1, 0, 0, 1, 0, 0);
+
+  const image = context.getImageData(0, 0, canvasWidth, canvasHeight);
+  const contours = traceStructureMaskContours(image.data, canvasWidth, canvasHeight)
+    .filter((contour) => polygonSignedArea(contour) > 0.5)
+    .map((contour) => simplifyClosedContour(contour, BUILDING_OUTLINE_SIMPLIFY_TOLERANCE))
+    .filter((contour) => contour.length >= 3)
+    .map((contour) => contour.map(([x, y]) => Object.freeze({
+      x: left + (x - padding) / scale,
+      y: top + (y - padding) / scale,
+    })));
+  if (!contours.length) return null;
+
+  const screenPoints = contours.flat();
+  const outlineLeft = Math.min(...screenPoints.map((point) => point.x));
+  const outlineTop = Math.min(...screenPoints.map((point) => point.y));
+  const outlineRight = Math.max(...screenPoints.map((point) => point.x));
+  const outlineBottom = Math.max(...screenPoints.map((point) => point.y));
+  const path = contours.map((contour) => [
+    `M ${contour[0].x.toFixed(2)} ${contour[0].y.toFixed(2)}`,
+    ...contour.slice(1).map((point) => `L ${point.x.toFixed(2)} ${point.y.toFixed(2)}`),
+    "Z",
+  ].join(" ")).join(" ");
+  return Object.freeze({
+    path,
+    segmentCount: contours.reduce((sum, contour) => sum + contour.length, 0),
+    bounds: Object.freeze({
+      left: outlineLeft,
+      top: outlineTop,
+      right: outlineRight,
+      bottom: outlineBottom,
+      width: outlineRight - outlineLeft,
+      height: outlineBottom - outlineTop,
+    }),
+  });
+}
+
+function reusableBuildingOutlineMaskCanvas(width, height) {
+  if (!buildingOutlineMaskCanvas) buildingOutlineMaskCanvas = document.createElement("canvas");
+  if (buildingOutlineMaskCanvas.width !== width) buildingOutlineMaskCanvas.width = width;
+  if (buildingOutlineMaskCanvas.height !== height) buildingOutlineMaskCanvas.height = height;
+  return buildingOutlineMaskCanvas;
+}
+
+function traceStructureMaskContours(rgba, width, height) {
+  const filled = new Uint8Array(width * height);
+  for (let index = 0; index < filled.length; index += 1) {
+    filled[index] = rgba[index * 4 + 3] >= BUILDING_OUTLINE_MASK_ALPHA_THRESHOLD ? 1 : 0;
   }
-  lower.pop();
-  upper.pop();
-  return [...lower, ...upper];
+  const isFilled = (x, y) => x >= 0 && y >= 0 && x < width && y < height && filled[y * width + x] === 1;
+  const edges = [];
+  const outgoing = new Map();
+  const pointKey = (x, y) => y * (width + 1) + x;
+  const addEdge = (startX, startY, endX, endY, direction) => {
+    const edge = { startX, startY, endX, endY, direction, visited: false };
+    edges.push(edge);
+    const key = pointKey(startX, startY);
+    const bucket = outgoing.get(key);
+    if (bucket) bucket.push(edge);
+    else outgoing.set(key, [edge]);
+  };
+
+  for (let y = 0; y < height; y += 1) {
+    for (let x = 0; x < width; x += 1) {
+      if (!isFilled(x, y)) continue;
+      if (!isFilled(x, y - 1)) addEdge(x, y, x + 1, y, 0);
+      if (!isFilled(x + 1, y)) addEdge(x + 1, y, x + 1, y + 1, 1);
+      if (!isFilled(x, y + 1)) addEdge(x + 1, y + 1, x, y + 1, 2);
+      if (!isFilled(x - 1, y)) addEdge(x, y + 1, x, y, 3);
+    }
+  }
+
+  const contours = [];
+  for (const firstEdge of edges) {
+    if (firstEdge.visited) continue;
+    const startKey = pointKey(firstEdge.startX, firstEdge.startY);
+    const contour = [];
+    let edge = firstEdge;
+    let closed = false;
+    for (let guard = 0; guard <= edges.length; guard += 1) {
+      edge.visited = true;
+      contour.push([edge.startX, edge.startY]);
+      const endKey = pointKey(edge.endX, edge.endY);
+      if (endKey === startKey) {
+        closed = true;
+        break;
+      }
+      const candidates = (outgoing.get(endKey) || []).filter((candidate) => !candidate.visited);
+      edge = selectMaskBoundaryEdge(candidates, edge.direction);
+      if (!edge) break;
+    }
+    if (closed && contour.length >= 4) contours.push(removeCollinearContourPoints(contour));
+  }
+  return contours;
+}
+
+function selectMaskBoundaryEdge(candidates, incomingDirection) {
+  const turnPriority = [1, 0, 3, 2];
+  return candidates.sort((left, right) => (
+    turnPriority.indexOf((left.direction - incomingDirection + 4) % 4)
+      - turnPriority.indexOf((right.direction - incomingDirection + 4) % 4)
+  ))[0] || null;
+}
+
+function removeCollinearContourPoints(points) {
+  if (points.length < 4) return points;
+  return points.filter((point, index) => {
+    const previous = points[(index - 1 + points.length) % points.length];
+    const next = points[(index + 1) % points.length];
+    return (point[0] - previous[0]) * (next[1] - point[1])
+      !== (point[1] - previous[1]) * (next[0] - point[0]);
+  });
+}
+
+function simplifyClosedContour(points, tolerance) {
+  const clean = removeCollinearContourPoints(points);
+  if (clean.length <= 4) return clean;
+  let splitIndex = 1;
+  let farthestDistance = 0;
+  for (let index = 1; index < clean.length; index += 1) {
+    const distance = squaredDistance(clean[0], clean[index]);
+    if (distance > farthestDistance) {
+      farthestDistance = distance;
+      splitIndex = index;
+    }
+  }
+  const firstArc = simplifyOpenPolyline(clean.slice(0, splitIndex + 1), tolerance);
+  const secondArc = simplifyOpenPolyline([...clean.slice(splitIndex), clean[0]], tolerance);
+  return [...firstArc, ...secondArc.slice(1, -1)];
+}
+
+function simplifyOpenPolyline(points, tolerance) {
+  if (points.length <= 2) return points;
+  const keep = new Uint8Array(points.length);
+  const stack = [[0, points.length - 1]];
+  keep[0] = 1;
+  keep[points.length - 1] = 1;
+  const toleranceSquared = tolerance * tolerance;
+  while (stack.length) {
+    const [start, end] = stack.pop();
+    let farthestIndex = -1;
+    let farthestDistance = toleranceSquared;
+    for (let index = start + 1; index < end; index += 1) {
+      const distance = squaredSegmentDistance(points[index], points[start], points[end]);
+      if (distance > farthestDistance) {
+        farthestDistance = distance;
+        farthestIndex = index;
+      }
+    }
+    if (farthestIndex < 0) continue;
+    keep[farthestIndex] = 1;
+    stack.push([start, farthestIndex], [farthestIndex, end]);
+  }
+  return points.filter((_, index) => keep[index] === 1);
+}
+
+function squaredSegmentDistance(point, start, end) {
+  const deltaX = end[0] - start[0];
+  const deltaY = end[1] - start[1];
+  const lengthSquared = deltaX * deltaX + deltaY * deltaY;
+  if (!lengthSquared) return squaredDistance(point, start);
+  const amount = clamp(
+    ((point[0] - start[0]) * deltaX + (point[1] - start[1]) * deltaY) / lengthSquared,
+    0,
+    1,
+  );
+  const projected = [start[0] + deltaX * amount, start[1] + deltaY * amount];
+  return squaredDistance(point, projected);
+}
+
+function squaredDistance(left, right) {
+  const deltaX = left[0] - right[0];
+  const deltaY = left[1] - right[1];
+  return deltaX * deltaX + deltaY * deltaY;
+}
+
+function polygonSignedArea(points) {
+  let area = 0;
+  for (let index = 0; index < points.length; index += 1) {
+    const current = points[index];
+    const next = points[(index + 1) % points.length];
+    area += current[0] * next[1] - next[0] * current[1];
+  }
+  return area * 0.5;
+}
+
+function rotateStructureOutlinePoint(point, pivot, angle) {
+  if (!pivot || Math.abs(angle) < 0.00001) return point;
+  const cosine = Math.cos(angle);
+  const sine = Math.sin(angle);
+  const deltaX = point[0] - pivot.x;
+  const deltaY = point[1] - pivot.y;
+  return [
+    pivot.x + deltaX * cosine - deltaY * sine,
+    pivot.y + deltaX * sine + deltaY * cosine,
+    point[2],
+  ];
+}
+
+function rotateStructureOutlineNormal(normal, angle) {
+  if (Math.abs(angle) < 0.00001) return normal;
+  const cosine = Math.cos(angle);
+  const sine = Math.sin(angle);
+  return [
+    normal[0] * cosine - normal[1] * sine,
+    normal[0] * sine + normal[1] * cosine,
+    normal[2],
+  ];
+}
+
+function projectedPolygonIntersectsViewport(points, viewport) {
+  const margin = 8;
+  return Math.max(...points.map((point) => point.x)) >= viewport.left - margin
+    && Math.min(...points.map((point) => point.x)) <= viewport.right + margin
+    && Math.max(...points.map((point) => point.y)) >= viewport.top - margin
+    && Math.min(...points.map((point) => point.y)) <= viewport.bottom + margin;
 }
 
 function visibleProjectionAnchor(topCenter, center, rect, viewport) {

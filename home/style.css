@@ -125,6 +125,9 @@ html[data-home-chapter="market"] .home-world-vignette {
 
 .ncm-building-outline-shadow,
 .ncm-building-outline {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
   opacity: 0;
   transform: scale(0.985);
@@ -136,14 +139,12 @@ html[data-home-chapter="market"] .home-world-vignette {
 }
 
 .ncm-building-outline-shadow {
-  fill: rgba(1, 7, 9, 0.045);
   stroke: rgba(1, 7, 9, 0.72);
   stroke-width: 4px;
   stroke-dasharray: 7 6;
 }
 
 .ncm-building-outline {
-  fill: rgba(142, 227, 255, 0.055);
   stroke: var(--ncm-inspector-cyan);
   stroke-width: 1.35px;
   stroke-dasharray: 7 6;

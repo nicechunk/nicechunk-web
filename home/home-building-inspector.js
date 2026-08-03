@@ -43,7 +43,7 @@ export function createHomeBuildingInspector(root) {
   let panelSize = null;
   let closeTimer = 0;
   let lastConnectorPath = "";
-  let lastOutlinePoints = "";
+  let lastOutlinePath = "";
 
   function update(detail) {
     if (!detail?.target || window.innerWidth < MIN_DESKTOP_WIDTH) {
@@ -61,7 +61,7 @@ export function createHomeBuildingInspector(root) {
       panelSize = null;
     }
     if (changed || !currentLayout) currentLayout = placePanel(detail);
-    updateBuildingOutline(detail.outline, detail.bounds);
+    updateBuildingOutline(detail.outline);
     updateConnector(detail, currentLayout);
     root.dataset.active = "true";
     document.documentElement.classList.add("home-building-hover");
@@ -80,7 +80,8 @@ export function createHomeBuildingInspector(root) {
       currentLayout = null;
       panelSize = null;
       lastConnectorPath = "";
-      lastOutlinePoints = "";
+      lastOutlinePath = "";
+      root.removeAttribute("data-outline-segments");
     }, INSPECTOR_TIMING.exitTotalMs);
   }
 
@@ -89,7 +90,7 @@ export function createHomeBuildingInspector(root) {
     renderContent(currentDetail.target);
     panelSize = null;
     currentLayout = placePanel(currentDetail);
-    updateBuildingOutline(currentDetail.outline, currentDetail.bounds);
+    updateBuildingOutline(currentDetail.outline);
     updateConnector(currentDetail, currentLayout);
   }
 
@@ -170,33 +171,25 @@ export function createHomeBuildingInspector(root) {
     return layout;
   }
 
-  function updateBuildingOutline(projectedOutline, bounds) {
-    const points = Array.isArray(projectedOutline) && projectedOutline.length >= 3
-      ? projectedOutline
-      : [
-        { x: bounds.left, y: bounds.top },
-        { x: bounds.right, y: bounds.top },
-        { x: bounds.right, y: bounds.bottom },
-        { x: bounds.left, y: bounds.bottom },
-      ];
-    const pointList = points
-      .map((point) => `${point.x.toFixed(2)},${point.y.toFixed(2)}`)
-      .join(" ");
-    if (pointList === lastOutlinePoints) return;
-    buildingOutline.setAttribute("points", pointList);
-    buildingOutlineShadow.setAttribute("points", pointList);
-    lastOutlinePoints = pointList;
+  function updateBuildingOutline(projectedOutline) {
+    const path = typeof projectedOutline?.path === "string" ? projectedOutline.path : "";
+    root.dataset.outlineSegments = String(projectedOutline?.segmentCount || 0);
+    if (path === lastOutlinePath) return;
+    buildingOutline.setAttribute("d", path);
+    buildingOutlineShadow.setAttribute("d", path);
+    lastOutlinePath = path;
   }
 
   function updateConnector(detail, layout) {
     const viewportWidth = Math.max(1, window.innerWidth);
     const viewportHeight = Math.max(1, window.innerHeight);
-    const edgeX = layout.side === "right" ? detail.bounds.right : detail.bounds.left;
+    const outlineBounds = detail.outline?.bounds || detail.bounds;
+    const edgeX = layout.side === "right" ? outlineBounds.right : outlineBounds.left;
     const anchorX = clamp(edgeX, 0, viewportWidth);
     const anchorY = clamp(
       detail.anchor.y,
-      Math.max(0, detail.bounds.top + 4),
-      Math.min(viewportHeight, detail.bounds.bottom - 4),
+      Math.max(0, outlineBounds.top + 4),
+      Math.min(viewportHeight, outlineBounds.bottom - 4),
     );
     const terminalX = layout.side === "right" ? layout.x : layout.x + layout.width;
     const terminalY = clamp(anchorY, layout.y + 42, layout.y + layout.height - 30);

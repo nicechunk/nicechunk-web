@@ -2022,7 +2022,7 @@ function pointerDistanceAxis(center, extent) {
 
 function isBuildingInspectionPointerTarget(target) {
   if (!(target instanceof Element)) return true;
-  return !target.closest("a, button, input, select, textarea, [contenteditable], .chapter-card, .chapter-nav, .site-header, .site-footer");
+  return !target.closest("a, button, input, select, textarea, [contenteditable], .chapter-card, .chapter-nav, .terrain-pouw-demo, .site-header, .site-footer");
 }
 
 function terrainReadinessProbe(chunk) {

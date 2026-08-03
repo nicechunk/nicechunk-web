@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ru",
     "label": "Russian",
-    "version": "home-locale-ru-218ecfd281d9bde8",
-    "contentHash": "218ecfd281d9bde8"
+    "version": "home-locale-ru-60b49fa08ec5d0c5",
+    "contentHash": "60b49fa08ec5d0c5"
   },
   "common": {
     "language": "Язык",
@@ -124,6 +124,23 @@
       "state": "ИЗМЕНЕНИЕ: SOLANA CHUNK DELTAS",
       "verify": "РЕНДЕР: CHUNK.JS WEBGL2"
     }
+  },
+  "terrainPouw": {
+    "aria": "Эксперимент NCM4 для рельефа с доказательством полезной работы",
+    "eyebrow": "ЭКСПЕРИМЕНТ NCM4 POUW ДЛЯ РЕЛЬЕФА",
+    "title": "Полезная работа должна превзойти лучшее представление.",
+    "source": "ТЕКУЩИЙ РЕЛЬЕФ · NCHT V1",
+    "candidate": "NCM4P · 225 ЗАПИСЕЙ CHUNK",
+    "proof": "СЕМАНТИЧЕСКОЕ ДОКАЗАТЕЛЬСТВО",
+    "exact": "225/225 ТОЧНО · 0 РАЗЛИЧИЙ",
+    "decision": "РЕШЕНИЕ POUW",
+    "retained": "СОХРАНЁН NCHT V1",
+    "larger": "NCM4P БОЛЬШЕ НА 85,16 %",
+    "summary": "NCM4P уменьшает универсальную проекцию NCM3 на 49,48 %, но PoUW принимает только точный кандидат, который меньше лучшего известного представления.",
+    "caveat": "Обратимая исследовательская проекция building-profile; текущий terrain profile по-прежнему описывает только удаления.",
+    "report": "Проверить доказательство",
+    "bundle": "Пакет NCM4",
+    "miner": "Запустить Miner"
   },
   "gameplay": {
     "explore": {

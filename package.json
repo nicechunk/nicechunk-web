@@ -9,6 +9,7 @@
     "audit:licenses": "node scripts/audit-licenses.mjs",
     "build": "vite build",
     "build:nginx": "vite build",
+    "benchmark:home-world:ncm4": "node scripts/benchmark-home-world-ncm4.mjs",
     "dev": "vite --host 0.0.0.0",
     "generate:home-world": "node scripts/generate-home-world-terrain.mjs",
     "preview": "vite preview --host 0.0.0.0",

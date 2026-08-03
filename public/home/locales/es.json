@@ -2,8 +2,8 @@
   "_meta": {
     "language": "es",
     "label": "Spanish",
-    "version": "home-locale-es-e3bfa19b52ceb260",
-    "contentHash": "e3bfa19b52ceb260"
+    "version": "home-locale-es-15443aff60aff89b",
+    "contentHash": "15443aff60aff89b"
   },
   "common": {
     "language": "Idioma",
@@ -124,6 +124,23 @@
       "state": "CAMBIO: DELTAS DE CHUNK EN SOLANA",
       "verify": "RENDER: CHUNK.JS WEBGL2"
     }
+  },
+  "terrainPouw": {
+    "aria": "Experimento de terreno NCM4 con prueba de trabajo útil",
+    "eyebrow": "EXPERIMENTO DE TERRENO NCM4 POUW",
+    "title": "El trabajo útil debe superar a la mejor representación.",
+    "source": "TERRENO ACTUAL · NCHT V1",
+    "candidate": "NCM4P · 225 REGISTROS CHUNK",
+    "proof": "PRUEBA SEMÁNTICA",
+    "exact": "225/225 EXACTOS · 0 DIFERENCIAS",
+    "decision": "DECISIÓN POUW",
+    "retained": "SE CONSERVA NCHT V1",
+    "larger": "NCM4P ES 85,16 % MAYOR",
+    "summary": "NCM4P reduce un 49,48 % la proyección NCM3 genérica, pero PoUW solo acepta candidatos exactos y menores que la mejor representación conocida.",
+    "caveat": "Proyección de investigación reversible con perfil building; el perfil terrain actual solo representa eliminaciones.",
+    "report": "Ver prueba",
+    "bundle": "Paquete NCM4",
+    "miner": "Ejecutar Miner"
   },
   "gameplay": {
     "explore": {

@@ -273,8 +273,12 @@ export function applyTranslations(root = document) {
   document.documentElement.lang = activeLanguage;
   setupLanguageControls(root);
 
-  root.querySelectorAll("[data-i18n]").forEach((element) => {
-    element.textContent = t(element.dataset.i18n);
+  const textAttributes = pageI18nScope === "home"
+    ? ["data-i18n", "data-home-i18n"]
+    : ["data-i18n"];
+  root.querySelectorAll(textAttributes.map((attribute) => `[${attribute}]`).join(",")).forEach((element) => {
+    const key = textAttributes.map((attribute) => element.getAttribute(attribute)).find(Boolean);
+    if (key) element.textContent = t(key);
   });
 
   translateAttribute(root, "data-i18n-title", "title");
@@ -283,6 +287,14 @@ export function applyTranslations(root = document) {
   translateAttribute(root, "data-i18n-label", "label");
   translateAttribute(root, "data-i18n-value", "value");
   translateAttribute(root, "data-i18n-content", "content");
+  if (pageI18nScope === "home") {
+    translateAttribute(root, "data-home-i18n-title", "title");
+    translateAttribute(root, "data-home-i18n-placeholder", "placeholder");
+    translateAttribute(root, "data-home-i18n-aria-label", "aria-label");
+    translateAttribute(root, "data-home-i18n-label", "label");
+    translateAttribute(root, "data-home-i18n-value", "value");
+    translateAttribute(root, "data-home-i18n-content", "content");
+  }
 }
 
 export function setupLanguageControls(root = document) {

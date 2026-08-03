@@ -63,6 +63,23 @@
       "verify": "渲染：CHUNK.JS WEBGL2"
     }
   },
+  "terrainPouw": {
+    "aria": "NCM4 有用計算證明地形實驗",
+    "eyebrow": "NCM4 POUW 地形實驗",
+    "title": "有用計算必須優於目前最佳表達。",
+    "source": "目前地形 · NCHT V1",
+    "candidate": "NCM4P · 225 個 CHUNK 記錄",
+    "proof": "語義證明",
+    "exact": "225/225 完全一致 · 0 處差異",
+    "decision": "POUW 決策",
+    "retained": "保留 NCHT V1",
+    "larger": "NCM4P 大 85.16%",
+    "summary": "NCM4P 相比通用 NCM3 投影減少 49.48%，但 PoUW 只接受語義完全一致且小於目前最佳表達的候選。",
+    "caveat": "可逆的 building-profile 研究投影；目前 terrain profile 仍只表達刪除座標。",
+    "report": "查看證明",
+    "bundle": "NCM4 稽核包",
+    "miner": "執行礦工"
+  },
   "gameplay": {
     "explore": {
       "title": "探索可重建的世界",

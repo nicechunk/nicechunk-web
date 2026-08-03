@@ -63,6 +63,23 @@
       "verify": "RENDU : CHUNK.JS WEBGL2"
     }
   },
+  "terrainPouw": {
+    "aria": "Expérience de terrain NCM4 avec preuve de calcul utile",
+    "eyebrow": "EXPÉRIENCE DE TERRAIN NCM4 POUW",
+    "title": "Le calcul utile doit battre la meilleure représentation.",
+    "source": "TERRAIN ACTUEL · NCHT V1",
+    "candidate": "NCM4P · 225 ENREGISTREMENTS CHUNK",
+    "proof": "PREUVE SÉMANTIQUE",
+    "exact": "225/225 EXACTS · 0 ÉCART",
+    "decision": "DÉCISION POUW",
+    "retained": "NCHT V1 CONSERVÉ",
+    "larger": "NCM4P EST 85,16 % PLUS GRAND",
+    "summary": "NCM4P réduit de 49,48 % la projection NCM3 générique, mais PoUW n'accepte qu'un candidat exact et plus petit que la meilleure représentation connue.",
+    "caveat": "Projection de recherche réversible avec le profil building ; le profil terrain actuel ne représente encore que les suppressions.",
+    "report": "Voir la preuve",
+    "bundle": "Paquet NCM4",
+    "miner": "Lancer Miner"
+  },
   "gameplay": {
     "explore": {
       "title": "Explorez un monde reconstructible",

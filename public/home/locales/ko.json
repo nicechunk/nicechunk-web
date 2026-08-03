@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ko",
     "label": "Korean",
-    "version": "home-locale-ko-4e43a7e8d85b89ee",
-    "contentHash": "4e43a7e8d85b89ee"
+    "version": "home-locale-ko-986710cf73dd4879",
+    "contentHash": "986710cf73dd4879"
   },
   "common": {
     "language": "언어",
@@ -124,6 +124,23 @@
       "state": "변경: SOLANA CHUNK 델타",
       "verify": "렌더링: CHUNK.JS WEBGL2"
     }
+  },
+  "terrainPouw": {
+    "aria": "NCM4 유용 작업 증명 지형 실험",
+    "eyebrow": "NCM4 POUW 지형 실험",
+    "title": "유용한 작업은 현재 최적 표현보다 작아야 합니다.",
+    "source": "현재 지형 · NCHT V1",
+    "candidate": "NCM4P · 225개 CHUNK 레코드",
+    "proof": "의미론 증명",
+    "exact": "225/225 완전 일치 · 불일치 0",
+    "decision": "POUW 결정",
+    "retained": "NCHT V1 유지",
+    "larger": "NCM4P가 85.16% 더 큼",
+    "summary": "NCM4P는 범용 NCM3 투영을 49.48% 줄였지만, PoUW는 의미가 완전히 같고 알려진 최적 표현보다 작은 후보만 승인합니다.",
+    "caveat": "가역적인 building-profile 연구 투영이며, 현재 terrain profile은 삭제 좌표만 표현합니다.",
+    "report": "증명 보기",
+    "bundle": "NCM4 번들",
+    "miner": "Miner 실행"
   },
   "gameplay": {
     "explore": {

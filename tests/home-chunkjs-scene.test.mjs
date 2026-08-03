@@ -8,7 +8,7 @@ import {
   unpackHomeWorldTerrainChunk,
 } from "../home/home-world-terrain.js";
 
-const [html, home, inspector, scene, layout, terrainModule, generator, style, siteUi, siteHeaderCss, siteHeader, assetManifestSource, terrainBytes, compressedTerrainBytes] = await Promise.all([
+const [html, home, inspector, scene, layout, terrainModule, generator, ncm4Benchmark, style, i18nSource, siteUi, siteHeaderCss, siteHeader, packageSource, assetManifestSource, terrainBytes, compressedTerrainBytes, ncm4ReportSource, ncm4BundleBytes] = await Promise.all([
   readFile(new URL("../index.html", import.meta.url), "utf8"),
   readFile(new URL("../home/home.js", import.meta.url), "utf8"),
   readFile(new URL("../home/home-building-inspector.js", import.meta.url), "utf8"),
@@ -16,15 +16,22 @@ const [html, home, inspector, scene, layout, terrainModule, generator, style, si
   readFile(new URL("../home/home-world-layout.js", import.meta.url), "utf8"),
   readFile(new URL("../home/home-world-terrain.js", import.meta.url), "utf8"),
   readFile(new URL("../scripts/generate-home-world-terrain.mjs", import.meta.url), "utf8"),
+  readFile(new URL("../scripts/benchmark-home-world-ncm4.mjs", import.meta.url), "utf8"),
   readFile(new URL("../home/style.css", import.meta.url), "utf8"),
+  readFile(new URL("../src/i18n.js", import.meta.url), "utf8"),
   readFile(new URL("../src/site-ui.js", import.meta.url), "utf8"),
   readFile(new URL("../src/site-header.css", import.meta.url), "utf8"),
   readFile(new URL("../src/site-header.js", import.meta.url), "utf8"),
+  readFile(new URL("../package.json", import.meta.url), "utf8"),
   readFile(new URL("../public/asset-manifest.json", import.meta.url), "utf8"),
   readFile(new URL("../public/media/home-world-terrain-v1.bin", import.meta.url)),
   readFile(new URL("../public/media/home-world-terrain-v1.bin.gz", import.meta.url)),
+  readFile(new URL("../public/media/home-world-terrain-ncm4-v1-report.json", import.meta.url), "utf8"),
+  readFile(new URL("../public/media/home-world-terrain-ncm4-v1.ncm4b", import.meta.url)),
 ]);
+const packageJson = JSON.parse(packageSource);
 const assetManifest = JSON.parse(assetManifestSource);
+const ncm4Report = JSON.parse(ncm4ReportSource);
 const homeLocaleCodes = ["en", "es", "fr", "de", "ja", "ru", "ko", "zh-Hant", "zh-Hans"];
 const homeLocales = await Promise.all(homeLocaleCodes.map(async (language) => ({
   language,
@@ -48,6 +55,15 @@ for (const extension of ["png", "webm"]) {
   await assert.rejects(access(new URL(`../public/media/nck-hero-logo-v0149.${extension}`, import.meta.url)));
 }
 assert.match(html, /<div class="hero-world-stage" aria-hidden="true"><\/div>/u);
+assert.match(html, /class="chapter-layout chapter-layout-world"/u);
+assert.match(html, /class="terrain-pouw-demo"/u);
+assert.match(html, /data-source-bytes="340696"/u);
+assert.match(html, /data-candidate-bytes="630844"/u);
+assert.match(html, /data-exact-chunks="225"/u);
+assert.match(html, /data-mismatch-count="0"/u);
+assert.match(html, /href="\/media\/home-world-terrain-ncm4-v1-report\.json"/u);
+assert.match(html, /href="\/media\/home-world-terrain-ncm4-v1\.ncm4b" download/u);
+assert.equal([...html.matchAll(/data-i18n="terrainPouw\./gu)].length, 14);
 assert.match(html, /<footer class="site-footer" data-site-footer-native>/u);
 assert.equal([...html.matchAll(/class="chapter-copy-line"/gu)].length, 9);
 assert.match(style, /\.chapter-copy-line \{[\s\S]*?box-decoration-break: clone;/u);
@@ -56,6 +72,13 @@ assert.match(style, /\.side-dot \{[\s\S]*?background: transparent;[\s\S]*?border
 assert.doesNotMatch(style, /transition:\s*all/u);
 assert.match(style, /@media \(hover: none\), \(pointer: coarse\), \(max-width: 900px\)/u);
 assert.match(style, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.ncm-connector-line/u);
+assert.match(style, /--terrain-pouw-source-ratio: 54%;/u);
+assert.match(style, /PoUW reveal storyboard/u);
+assert.match(style, /\.snap-section\.active \.terrain-pouw-candidate > i > b \{\s*width: 100%;/u);
+assert.match(style, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.terrain-pouw-demo,/u);
+assert.match(i18nSource, /pageI18nScope === "home"[\s\S]*?"data-home-i18n"/u);
+assert.match(i18nSource, /translateAttribute\(root, "data-home-i18n-aria-label", "aria-label"\)/u);
+assert.equal(packageJson.scripts["benchmark:home-world:ncm4"], "node scripts/benchmark-home-world-ncm4.mjs");
 for (const viewport of ["desktop", "mobile"]) {
   const previewPath = `home-world-preview-${viewport}.webp`;
   assert.ok(html.includes(`/media/${previewPath}`), `Missing ${viewport} preview preload.`);
@@ -130,6 +153,7 @@ assert.match(scene, /\(hover: hover\) and \(pointer: fine\)/u);
 assert.match(scene, /setCameraTransitioning\(cameraTransitionActive\(timestamp\)\)/u);
 assert.match(scene, /const enabled = !cameraTransitioning/u);
 assert.match(scene, /canvas\.dataset\.sceneCameraTransitioning = String\(active\)/u);
+assert.match(scene, /\.terrain-pouw-demo/u);
 
 assert.match(inspector, /const INSPECTOR_TIMING = Object\.freeze/u);
 assert.match(inspector, /target\.ncmCode/u);
@@ -149,6 +173,7 @@ assert.match(style, /font: 650 11px\/1\.52/u);
 
 for (const { language, source, public: publicLocale } of homeLocales) {
   assert.deepEqual(publicLocale.buildingInspector, source.buildingInspector, `Public ${language} inspector copy is stale.`);
+  assert.deepEqual(publicLocale.terrainPouw, source.terrainPouw, `Public ${language} terrain PoUW copy is stale.`);
   const { _meta: meta, ...publicBody } = publicLocale;
   const contentHash = createHash("sha256").update(JSON.stringify(publicBody)).digest("hex").slice(0, 16);
   assert.equal(meta.contentHash, contentHash, `Public ${language} locale hash is stale.`);
@@ -158,6 +183,10 @@ for (const { language, source, public: publicLocale } of homeLocales) {
     assert.equal(typeof dictionary.buildingInspector?.detail, "string", `Missing ${language} building inspector detail.`);
     assert.equal(typeof dictionary.buildingInspector?.fullCode, "string", `Missing ${language} building inspector code label.`);
     assert.match(dictionary.buildingInspector.codeLength, /\{count\}/u, `Missing ${language} code-length token.`);
+    for (const key of ["aria", "eyebrow", "title", "source", "candidate", "proof", "exact", "decision", "retained", "larger", "summary", "caveat", "report", "bundle", "miner"]) {
+      assert.equal(typeof dictionary.terrainPouw?.[key], "string", `Missing ${language} terrain PoUW ${key} copy.`);
+      assert.ok(dictionary.terrainPouw[key].trim().length > 0, `Empty ${language} terrain PoUW ${key} copy.`);
+    }
   }
 }
 
@@ -236,6 +265,10 @@ assert.match(generator, /presentationReliefRise\(x, z, shoreDistance\)/u);
 assert.match(generator, /treeSurfaceY = surfaceHeights\.get/u);
 assert.match(generator, /MAX_RUNS_PER_COLUMN = 15/u);
 assert.match(generator, /gzipSync\(encoded\.bytes, \{ level: 9 \}\)/u);
+assert.match(ncm4Benchmark, /material = deltas\[offset \+ 3\] \+ 1/u);
+assert.match(ncm4Benchmark, /"--json", "ncm4", "verify"/u);
+assert.match(ncm4Benchmark, /verifyBundle\(bundleBytes, records, bounds\.minY, bounds\.height\)/u);
+assert.match(ncm4Benchmark, /candidate\.subarray\(0, 4\)\.toString\("ascii"\) !== "NC4P"/u);
 
 const terrain = decodeHomeWorldTerrain(terrainBytes);
 assert.equal(terrain.formatVersion, 1);
@@ -249,6 +282,52 @@ assert.equal(terrain.deltaCount, 621_618);
 assert.equal(terrain.fingerprint, "59beb5ad830be97321f01490e42b9f81");
 assert.deepEqual(gunzipSync(compressedTerrainBytes), terrainBytes);
 assert.ok(compressedTerrainBytes.byteLength < terrainBytes.byteLength / 20);
+
+assert.equal(ncm4Report.schema, "nicechunk.home.terrain-ncm4-research.v1");
+assert.equal(ncm4Report.source.format, "NCHT-v1");
+assert.equal(ncm4Report.source.bytes, terrainBytes.byteLength);
+assert.equal(ncm4Report.source.gzipBytes, compressedTerrainBytes.byteLength);
+assert.equal(ncm4Report.source.sha256, createHash("sha256").update(terrainBytes).digest("hex"));
+assert.equal(ncm4Report.source.fingerprint, terrain.fingerprint);
+assert.equal(ncm4Report.source.chunks, terrain.chunks.size);
+assert.equal(ncm4Report.source.deltas, terrain.deltaCount);
+assert.equal(ncm4Report.source.runs, terrain.runCount);
+assert.equal(ncm4Report.projection.format, "NCM4B-v1");
+assert.equal(ncm4Report.projection.ncm4Format, "ncm4-pouw-v1");
+assert.equal(ncm4Report.projection.profile, "building");
+assert.equal(ncm4Report.projection.genericNcm3Bytes, 1_248_718);
+assert.equal(ncm4Report.projection.ncm4RecordBytes, 630_844);
+assert.equal(ncm4Report.projection.bundleBytes, 632_654);
+assert.equal(ncm4Report.projection.ncm4SavedPercentAgainstNcm3, 49.4807);
+assert.equal(ncm4Report.projection.ncm4LargerPercentAgainstNcht, 85.1633);
+assert.equal(ncm4Report.projection.exactChunks, 225);
+assert.equal(ncm4Report.projection.chunkCount, 225);
+assert.equal(ncm4Report.projection.mismatchCount, 0);
+assert.equal(ncm4Report.projection.selectedRepresentation, "NCHT-v1");
+assert.equal(ncm4Report.decision.accepted, false);
+assert.match(ncm4Report.caveat, /not the current ChunkBroken-only NCM4 terrain profile/u);
+assert.equal(ncm4Report.chunks.length, 225);
+assert.ok(ncm4Report.chunks.every((chunk) => chunk.exact && chunk.mismatchCount === 0 && chunk.acceptedAgainstNcm3));
+assert.equal(ncm4Report.chunks.reduce((total, chunk) => total + chunk.deltaCount, 0), terrain.deltaCount);
+assert.equal(ncm4Report.chunks.reduce((total, chunk) => total + chunk.runCount, 0), terrain.runCount);
+assert.equal(ncm4Report.chunks.reduce((total, chunk) => total + chunk.ncm4Bytes, 0), 630_844);
+assert.equal(ncm4BundleBytes.byteLength, ncm4Report.projection.bundleBytes);
+assert.equal(createHash("sha256").update(ncm4BundleBytes).digest("hex"), ncm4Report.projection.bundleSha256);
+assert.equal(ncm4BundleBytes.subarray(0, 4).toString("ascii"), "NC4B");
+assert.equal(ncm4BundleBytes[4], 1);
+assert.equal(ncm4BundleBytes.readUInt16LE(5), 225);
+assert.equal(ncm4BundleBytes.readInt16LE(7), 85);
+assert.equal(ncm4BundleBytes[9], 30);
+let ncm4BundleOffset = 10;
+for (const proof of ncm4Report.chunks) {
+  assert.equal(ncm4BundleBytes.readInt16LE(ncm4BundleOffset), proof.chunkX);
+  assert.equal(ncm4BundleBytes.readInt16LE(ncm4BundleOffset + 2), proof.chunkZ);
+  assert.equal(ncm4BundleBytes.readUInt32LE(ncm4BundleOffset + 4), proof.ncm4Bytes);
+  ncm4BundleOffset += 8;
+  assert.equal(ncm4BundleBytes.subarray(ncm4BundleOffset, ncm4BundleOffset + 4).toString("ascii"), "NC4P");
+  ncm4BundleOffset += proof.ncm4Bytes;
+}
+assert.equal(ncm4BundleOffset, ncm4BundleBytes.length);
 
 for (const [worldX, worldZ, expectedY] of [
   [2400, 1642, 101],
@@ -296,6 +375,17 @@ const compressedTerrainAsset = assetManifest.assets.find((asset) => asset.path =
 assert.ok(compressedTerrainAsset, "Missing compressed homepage terrain manifest entry.");
 assert.equal(compressedTerrainAsset.bytes, compressedTerrainBytes.byteLength);
 assert.equal(compressedTerrainAsset.sha256, createHash("sha256").update(compressedTerrainBytes).digest("hex"));
+for (const [path, bytes] of [
+  ["public/media/home-world-terrain-ncm4-v1-report.json", Buffer.from(ncm4ReportSource)],
+  ["public/media/home-world-terrain-ncm4-v1.ncm4b", ncm4BundleBytes],
+]) {
+  const asset = assetManifest.assets.find((entry) => entry.path === path);
+  assert.ok(asset, `Missing NCM4 terrain research asset: ${path}`);
+  assert.equal(asset.bytes, bytes.byteLength);
+  assert.equal(asset.sha256, createHash("sha256").update(bytes).digest("hex"));
+  assert.equal(asset.sourceStatus, "generated-research");
+  assert.equal(asset.canonical, false);
+}
 
 for (const cloudOverride of ["cloudHeight", "cloudRadius", "cloudCellSize", "cloudFarPadding"]) {
   assert.doesNotMatch(scene, new RegExp(`${cloudOverride}:`, "u"));

@@ -209,6 +209,26 @@
       "canonical": false
     },
     {
+      "path": "public/media/home-world-terrain-ncm4-v1-report.json",
+      "mediaType": "application/json",
+      "surface": "general-media",
+      "sourceStatus": "generated-research",
+      "canonical": false,
+      "bytes": 121046,
+      "sha256": "9b7bf63a6799788455493c0b12fe11151372ed0c4941e28549f106354aabe7b6",
+      "dimensions": null
+    },
+    {
+      "path": "public/media/home-world-terrain-ncm4-v1.ncm4b",
+      "mediaType": "application/octet-stream",
+      "surface": "general-media",
+      "sourceStatus": "generated-research",
+      "canonical": false,
+      "bytes": 632654,
+      "sha256": "b0200dd4a683e73e51e3456260d025cfbb4b2d97d0e531c8ffe71700e28152df",
+      "dimensions": null
+    },
+    {
       "path": "public/media/home-world-terrain-v1.bin",
       "mediaType": "application/octet-stream",
       "bytes": 340696,

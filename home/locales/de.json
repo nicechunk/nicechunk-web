@@ -63,6 +63,23 @@
       "verify": "RENDERING: CHUNK.JS WEBGL2"
     }
   },
+  "terrainPouw": {
+    "aria": "NCM4-Terrainexperiment mit Proof of Useful Work",
+    "eyebrow": "NCM4-POUW-TERRAINEXPERIMENT",
+    "title": "Nützliche Arbeit muss die beste Darstellung schlagen.",
+    "source": "AKTUELLES TERRAIN · NCHT V1",
+    "candidate": "NCM4P · 225 CHUNK-DATENSÄTZE",
+    "proof": "SEMANTISCHER NACHWEIS",
+    "exact": "225/225 EXAKT · 0 ABWEICHUNGEN",
+    "decision": "POUW-ENTSCHEIDUNG",
+    "retained": "NCHT V1 BEIBEHALTEN",
+    "larger": "NCM4P IST 85,16 % GRÖSSER",
+    "summary": "NCM4P verkleinert die generische NCM3-Projektion um 49,48 %, doch PoUW akzeptiert nur Kandidaten, die exakt und kleiner als die beste bekannte Darstellung sind.",
+    "caveat": "Reversible Forschungsprojektion mit Building-Profil; das aktuelle Terrain-Profil bildet weiterhin nur Löschungen ab.",
+    "report": "Nachweis prüfen",
+    "bundle": "NCM4-Paket",
+    "miner": "Miner starten"
+  },
   "gameplay": {
     "explore": {
       "title": "Erkunde eine rekonstruierbare Welt",

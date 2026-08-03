@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hans",
     "label": "Simplified Chinese",
-    "version": "home-locale-zh-Hans-3e3b6900b7bc3d65",
-    "contentHash": "3e3b6900b7bc3d65"
+    "version": "home-locale-zh-Hans-554c06f0fddf1762",
+    "contentHash": "554c06f0fddf1762"
   },
   "common": {
     "language": "语言",
@@ -124,6 +124,23 @@
       "state": "改变：SOLANA CHUNK 差量",
       "verify": "渲染：CHUNK.JS WEBGL2"
     }
+  },
+  "terrainPouw": {
+    "aria": "NCM4 有用计算证明地形实验",
+    "eyebrow": "NCM4 POUW 地形实验",
+    "title": "有用计算必须优于当前最佳表达。",
+    "source": "当前地形 · NCHT V1",
+    "candidate": "NCM4P · 225 个 CHUNK 记录",
+    "proof": "语义证明",
+    "exact": "225/225 完全一致 · 0 处差异",
+    "decision": "POUW 决策",
+    "retained": "保留 NCHT V1",
+    "larger": "NCM4P 大 85.16%",
+    "summary": "NCM4P 相比通用 NCM3 投影减少 49.48%，但 PoUW 只接受语义完全一致且小于当前最佳表达的候选。",
+    "caveat": "可逆的 building-profile 研究投影；当前 terrain profile 仍只表达删除坐标。",
+    "report": "查看证明",
+    "bundle": "NCM4 审计包",
+    "miner": "运行矿工"
   },
   "gameplay": {
     "explore": {

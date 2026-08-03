@@ -27,6 +27,8 @@ const CAMERA_TRANSITION_MS = 1_180;
 const WINDMILL_ROTATION_MS = 42_000;
 const WINDMILL_FRAME_MS = 1_000 / 12;
 const WINDMILL_VERTEX_PACK_SCALE = 64;
+const BUILDING_INSPECTOR_MIN_VIEWPORT = 901;
+const BUILDING_INSPECTOR_MIN_TARGET_PX = 30;
 const AVATAR_HEIGHT_BLOCKS = 1.75 / 0.4;
 const AVATAR_VISUAL_SCALE = AVATAR_HEIGHT_BLOCKS / 2.52;
 const ACTOR_ROUTES = Object.freeze({
@@ -101,6 +103,7 @@ export function createHomeWorldScene(canvas, options = {}) {
   if (!(canvas instanceof HTMLCanvasElement)) return createNoopController();
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const inspectorHoverMedia = window.matchMedia("(hover: hover) and (pointer: fine)");
   const lowPower = Number(navigator.deviceMemory || 8) <= 4 || navigator.connection?.saveData === true;
   const requestedFps = Number(options.maxFps) || (window.innerWidth < 700 ? 20 : 30);
   const maxFps = Math.max(12, Math.min(lowPower ? 20 : 30, requestedFps));
@@ -120,6 +123,7 @@ export function createHomeWorldScene(canvas, options = {}) {
   let chunks = null;
   let structureChunks = [];
   let structureWalkSurfaces = new Map();
+  let structureInspectables = [];
   let windmillRotor = null;
   let avatars = [];
   let resizeObserver = null;
@@ -132,6 +136,10 @@ export function createHomeWorldScene(canvas, options = {}) {
   let focusView = "arrival";
   let pointerX = 0;
   let pointerY = 0;
+  let pointerClientX = -1;
+  let pointerClientY = -1;
+  let pointerInspectionEligible = false;
+  let inspectedBuildingId = "";
   let transitionStart = startedAt;
   let focusStartedAt = startedAt;
   let cameraStart = cameraPoseForView("arrival", canvasAspect(canvas));
@@ -213,12 +221,14 @@ export function createHomeWorldScene(canvas, options = {}) {
     const terrainChunks = [...chunks.chunks.values()].filter((chunk) => chunk.mesh);
     const activeStructureChunks = structureChunks;
     const visibleChunks = terrainChunks.concat(activeStructureChunks);
-    const camera = cameraStateFromPose(runtime, resolveCameraPose(timestamp), canvasAspect(canvas));
+    const cameraPose = resolveCameraPose(timestamp);
+    const camera = cameraStateFromPose(runtime, cameraPose, canvasAspect(canvas));
     renderer.prepareChunksForRender(visibleChunks, {
       maxUploads: lowPower ? 2 : 5,
       cameraState: camera,
     });
     const renderStats = renderer.render(camera, visibleChunks, avatars, overlaysForView(timestamp));
+    updateBuildingInspection(cameraPose);
     const readiness = cameraReadiness(camera);
     lastStats = Object.freeze({
       backend: "chunk.js-webgl2",
@@ -432,6 +442,63 @@ export function createHomeWorldScene(canvas, options = {}) {
       ?? runtime.terrainSurfaceHeight(worldConfig, MINING_TARGET.x, MINING_TARGET.z);
   }
 
+  function updateBuildingInspection(cameraPose) {
+    if (typeof options.onBuildingInspect !== "function") return;
+    const enabled = inspectorHoverMedia.matches
+      && window.innerWidth >= BUILDING_INSPECTOR_MIN_VIEWPORT
+      && pointerInspectionEligible
+      && canvas.dataset.sceneReady === "true";
+    if (!enabled || !structureInspectables.length) {
+      emitBuildingInspection(null);
+      return;
+    }
+
+    const canvasRect = canvas.getBoundingClientRect();
+    const matches = structureInspectables
+      .map((target) => projectInspectableStructure(target, cameraPose, canvasRect, {
+        x: pointerClientX,
+        y: pointerClientY,
+      }))
+      .filter((projection) => projection && pointInsideRect(pointerClientX, pointerClientY, projection.hitRect));
+    const pointerRay = createPointerRay(cameraPose, canvasRect, {
+      x: pointerClientX,
+      y: pointerClientY,
+    });
+    const voxelMatches = pointerRay
+      ? matches
+        .map((projection) => ({
+          projection,
+          distance: raycastInspectableStructure(projection.target, pointerRay),
+        }))
+        .filter((candidate) => candidate.distance !== null)
+        .sort((left, right) => left.distance - right.distance)
+      : [];
+    const match = voxelMatches[0]?.projection || matches
+      .sort((left, right) => left.depth - right.depth || left.pointerDistance - right.pointerDistance)[0];
+    if (!match) {
+      emitBuildingInspection(null);
+      return;
+    }
+
+    inspectedBuildingId = match.target.id;
+    options.onBuildingInspect({
+      target: match.target,
+      anchor: match.anchor,
+      bounds: match.rect,
+    });
+  }
+
+  function emitBuildingInspection(detail) {
+    if (detail) {
+      inspectedBuildingId = detail.target.id;
+      options.onBuildingInspect?.(detail);
+      return;
+    }
+    if (!inspectedBuildingId) return;
+    inspectedBuildingId = "";
+    options.onBuildingInspect?.(null);
+  }
+
   function markReady() {
     startedAt = performance.now();
     lastMiningBurst = -1;
@@ -444,6 +511,7 @@ export function createHomeWorldScene(canvas, options = {}) {
     canvas.dataset.sceneGeneration = String(runtime.DEFAULT_GENERATION_VERSION);
     canvas.dataset.sceneAvatars = "NCM2:villager-boy,NCM2:villager-girl";
     canvas.dataset.sceneBuildings = STRUCTURE_SPECS.map((spec) => `NCM3:${spec.id}`).join(",");
+    canvas.dataset.sceneInspectableBuildings = structureInspectables.map((target) => target.id).join(",");
     canvas.dataset.sceneActorBehavior = "waypoint-walk-bridge-idle-mine-loop";
     canvas.dataset.sceneActionModes = "terrain-delta,material-flow,guardian-relay,building-progress";
     canvas.dataset.sceneWindmillRotationMs = String(WINDMILL_ROTATION_MS);
@@ -518,6 +586,7 @@ export function createHomeWorldScene(canvas, options = {}) {
       const structures = createStructures(runtime);
       structureChunks = structures.chunks;
       structureWalkSurfaces = structures.walkSurfaces;
+      structureInspectables = structures.inspectables;
       windmillRotor = structures.windmillRotor;
       const [boyMesh, girlMesh] = await villagerMeshes;
       if (destroyed) return;
@@ -541,6 +610,7 @@ export function createHomeWorldScene(canvas, options = {}) {
   }
 
   function handleUnavailable(error) {
+    emitBuildingInspection(null);
     renderer?.dispose();
     chunks?.dispose();
     renderer = null;
@@ -561,6 +631,7 @@ export function createHomeWorldScene(canvas, options = {}) {
 
   const handleVisibility = () => {
     if (document.hidden) {
+      emitBuildingInspection(null);
       if (animationFrame) cancelAnimationFrame(animationFrame);
       animationFrame = 0;
       return;
@@ -572,6 +643,18 @@ export function createHomeWorldScene(canvas, options = {}) {
     if (event.pointerType && event.pointerType !== "mouse") return;
     pointerX = (event.clientX / Math.max(window.innerWidth, 1) - 0.5) * 2;
     pointerY = (event.clientY / Math.max(window.innerHeight, 1) - 0.5) * 2;
+    pointerClientX = event.clientX;
+    pointerClientY = event.clientY;
+    pointerInspectionEligible = isBuildingInspectionPointerTarget(event.target);
+  };
+  const handlePointerOut = (event) => {
+    if (event.relatedTarget) return;
+    pointerInspectionEligible = false;
+    emitBuildingInspection(null);
+  };
+  const handleWindowBlur = () => {
+    pointerInspectionEligible = false;
+    emitBuildingInspection(null);
   };
 
   resizeObserver = new ResizeObserver(() => {
@@ -583,10 +666,16 @@ export function createHomeWorldScene(canvas, options = {}) {
   resizeObserver.observe(canvas);
   document.addEventListener("visibilitychange", handleVisibility);
   window.addEventListener("pointermove", handlePointerMove, { passive: true });
+  window.addEventListener("pointerout", handlePointerOut, { passive: true });
+  window.addEventListener("blur", handleWindowBlur);
   reducedMotion.addEventListener?.("change", handleVisibility);
+  inspectorHoverMedia.addEventListener?.("change", handleVisibility);
   cleanups.push(() => document.removeEventListener("visibilitychange", handleVisibility));
   cleanups.push(() => window.removeEventListener("pointermove", handlePointerMove));
+  cleanups.push(() => window.removeEventListener("pointerout", handlePointerOut));
+  cleanups.push(() => window.removeEventListener("blur", handleWindowBlur));
   cleanups.push(() => reducedMotion.removeEventListener?.("change", handleVisibility));
+  cleanups.push(() => inspectorHoverMedia.removeEventListener?.("change", handleVisibility));
   canvas.dataset.sceneView = focusView;
   canvas.dataset.sceneReady = "false";
   void initialize();
@@ -602,6 +691,7 @@ export function createHomeWorldScene(canvas, options = {}) {
       destroyed = true;
       settle("destroyed");
       if (animationFrame) cancelAnimationFrame(animationFrame);
+      emitBuildingInspection(null);
       resizeObserver?.disconnect();
       cleanups.forEach((cleanup) => cleanup());
       renderer?.dispose();
@@ -625,6 +715,7 @@ function runtimeAssetUrl(runtimeRoot, relativePath) {
 function createStructures(runtime) {
   const chunks = [];
   const walkSurfaces = new Map();
+  const inspectables = [];
   let windmillRotor = null;
   let revision = 1;
   for (const spec of STRUCTURE_SPECS) {
@@ -665,6 +756,7 @@ function createStructures(runtime) {
         chunk.frustumCullEligible = false;
       });
       windmillRotor = createWindmillRotor(rotorPlacement, rotorChunks, spec.definition);
+      inspectables.push(createInspectableStructure(building, [bodyPlacement, rotorPlacement], spec));
       chunks.push(...bodyChunks, ...rotorChunks);
       continue;
     }
@@ -678,9 +770,65 @@ function createStructures(runtime) {
       chunk.sceneStructureId = spec.id;
     });
     if (spec.walkable) addStructureWalkSurfaces(placement, spec, walkSurfaces);
+    inspectables.push(createInspectableStructure(building, [placement], spec));
     chunks.push(...placementChunks);
   }
-  return { chunks, walkSurfaces, windmillRotor };
+  return { chunks, walkSurfaces, inspectables, windmillRotor };
+}
+
+function createInspectableStructure(building, placements, spec) {
+  const bounds = worldVoxelBounds(placements);
+  const occupiedVoxels = new Set();
+  for (const placement of placements) {
+    for (const voxel of placement.worldVoxels.values()) {
+      occupiedVoxels.add(worldVoxelKey(voxel.x, voxel.y, voxel.z));
+    }
+  }
+  return Object.freeze({
+    id: spec.id,
+    titles: Object.freeze({ ...spec.definition.titles }),
+    descriptions: Object.freeze({ ...spec.definition.descriptions }),
+    ncmCode: spec.definition.ncm.code,
+    payloadBytes: building.payloadBytes,
+    voxelCount: building.voxels.size,
+    modelSize: Object.freeze({ ...building.size }),
+    worldBounds: bounds,
+    corners: Object.freeze(buildingBoundsCorners(bounds)),
+    hasWorldVoxel: (x, y, z) => occupiedVoxels.has(worldVoxelKey(x, y, z)),
+  });
+}
+
+function worldVoxelBounds(placements) {
+  const bounds = {
+    minX: Infinity,
+    minY: Infinity,
+    minZ: Infinity,
+    maxX: -Infinity,
+    maxY: -Infinity,
+    maxZ: -Infinity,
+  };
+  for (const placement of placements) {
+    for (const voxel of placement.worldVoxels.values()) {
+      bounds.minX = Math.min(bounds.minX, voxel.x);
+      bounds.minY = Math.min(bounds.minY, voxel.y);
+      bounds.minZ = Math.min(bounds.minZ, voxel.z);
+      bounds.maxX = Math.max(bounds.maxX, voxel.x + 1);
+      bounds.maxY = Math.max(bounds.maxY, voxel.y + 1);
+      bounds.maxZ = Math.max(bounds.maxZ, voxel.z + 1);
+    }
+  }
+  if (!Object.values(bounds).every(Number.isFinite)) throw new Error("Homepage building inspection bounds are unavailable.");
+  return Object.freeze(bounds);
+}
+
+function buildingBoundsCorners(bounds) {
+  const corners = [];
+  for (const x of [bounds.minX, bounds.maxX]) {
+    for (const y of [bounds.minY, bounds.maxY]) {
+      for (const z of [bounds.minZ, bounds.maxZ]) corners.push(Object.freeze([x, y, z]));
+    }
+  }
+  return corners;
 }
 
 function splitWindmillBuilding(building, definition) {
@@ -1121,6 +1269,227 @@ function cameraStateFromPose(runtime, pose, aspect, far = 560) {
     near: 0.1,
     far,
   });
+}
+
+function projectInspectableStructure(target, pose, viewport, pointer) {
+  const points = target.corners
+    .map((corner) => projectWorldPoint(corner, pose, viewport))
+    .filter(Boolean);
+  if (points.length < 4) return null;
+  const left = Math.min(...points.map((point) => point.x));
+  const top = Math.min(...points.map((point) => point.y));
+  const right = Math.max(...points.map((point) => point.x));
+  const bottom = Math.max(...points.map((point) => point.y));
+  if (right < viewport.left || left > viewport.right || bottom < viewport.top || top > viewport.bottom) return null;
+
+  const rect = Object.freeze({
+    left,
+    top,
+    right,
+    bottom,
+    width: right - left,
+    height: bottom - top,
+  });
+  const centerX = (left + right) * 0.5;
+  const centerY = (top + bottom) * 0.5;
+  const hitWidth = Math.max(BUILDING_INSPECTOR_MIN_TARGET_PX, rect.width);
+  const hitHeight = Math.max(BUILDING_INSPECTOR_MIN_TARGET_PX, rect.height);
+  const hitRect = Object.freeze({
+    left: centerX - hitWidth * 0.5,
+    top: centerY - hitHeight * 0.5,
+    right: centerX + hitWidth * 0.5,
+    bottom: centerY + hitHeight * 0.5,
+  });
+  const topCenter = projectWorldPoint([
+    (target.worldBounds.minX + target.worldBounds.maxX) * 0.5,
+    target.worldBounds.maxY,
+    (target.worldBounds.minZ + target.worldBounds.maxZ) * 0.5,
+  ], pose, viewport);
+  const center = projectWorldPoint([
+    (target.worldBounds.minX + target.worldBounds.maxX) * 0.5,
+    (target.worldBounds.minY + target.worldBounds.maxY) * 0.5,
+    (target.worldBounds.minZ + target.worldBounds.maxZ) * 0.5,
+  ], pose, viewport);
+  if (!center) return null;
+  return {
+    target,
+    rect,
+    hitRect,
+    anchor: visibleProjectionAnchor(topCenter, center, rect, viewport),
+    depth: center.depth,
+    pointerDistance: Math.hypot(
+      pointerDistanceAxis(pointer.x - centerX, hitWidth),
+      pointerDistanceAxis(pointer.y - centerY, hitHeight),
+    ),
+  };
+}
+
+function visibleProjectionAnchor(topCenter, center, rect, viewport) {
+  const visibleRect = {
+    left: Math.max(viewport.left, rect.left),
+    top: Math.max(viewport.top, rect.top),
+    right: Math.min(viewport.right, rect.right),
+    bottom: Math.min(viewport.bottom, rect.bottom),
+  };
+  const preferred = topCenter && pointInsideRect(topCenter.x, topCenter.y, visibleRect)
+    ? topCenter
+    : center;
+  const insetX = Math.min(6, Math.max(0, (visibleRect.right - visibleRect.left) * 0.5));
+  const insetY = Math.min(6, Math.max(0, (visibleRect.bottom - visibleRect.top) * 0.5));
+  return Object.freeze({
+    x: clamp(preferred.x, visibleRect.left + insetX, visibleRect.right - insetX),
+    y: clamp(preferred.y, visibleRect.top + insetY, visibleRect.bottom - insetY),
+  });
+}
+
+function createPointerRay(pose, viewport, pointer) {
+  if (!viewport.width || !viewport.height) return null;
+  const forward = normalizeVector(subtractVector(pose.target, pose.eye));
+  const right = normalizeVector(crossVector(forward, [0, 1, 0]));
+  const up = crossVector(right, forward);
+  const tangent = Math.tan((pose.fov * Math.PI) / 360);
+  const aspect = Math.max(0.25, viewport.width / Math.max(1, viewport.height));
+  const normalizedX = ((pointer.x - viewport.left) / viewport.width) * 2 - 1;
+  const normalizedY = 1 - ((pointer.y - viewport.top) / viewport.height) * 2;
+  return Object.freeze({
+    origin: pose.eye,
+    direction: normalizeVector([
+      forward[0] + right[0] * normalizedX * tangent * aspect + up[0] * normalizedY * tangent,
+      forward[1] + right[1] * normalizedX * tangent * aspect + up[1] * normalizedY * tangent,
+      forward[2] + right[2] * normalizedX * tangent * aspect + up[2] * normalizedY * tangent,
+    ]),
+  });
+}
+
+function raycastInspectableStructure(target, ray) {
+  const interval = rayBoundsInterval(ray, target.worldBounds);
+  if (!interval || interval.exit < 0) return null;
+  const entry = Math.max(0, interval.enter);
+  const epsilon = 1e-5;
+  const start = addScaledVector(ray.origin, ray.direction, entry + epsilon);
+  let voxelX = Math.floor(start[0]);
+  let voxelY = Math.floor(start[1]);
+  let voxelZ = Math.floor(start[2]);
+  const stepX = Math.sign(ray.direction[0]);
+  const stepY = Math.sign(ray.direction[1]);
+  const stepZ = Math.sign(ray.direction[2]);
+  const deltaX = stepX ? Math.abs(1 / ray.direction[0]) : Infinity;
+  const deltaY = stepY ? Math.abs(1 / ray.direction[1]) : Infinity;
+  const deltaZ = stepZ ? Math.abs(1 / ray.direction[2]) : Infinity;
+  let nextX = nextVoxelBoundaryDistance(ray.origin[0], ray.direction[0], voxelX, stepX);
+  let nextY = nextVoxelBoundaryDistance(ray.origin[1], ray.direction[1], voxelY, stepY);
+  let nextZ = nextVoxelBoundaryDistance(ray.origin[2], ray.direction[2], voxelZ, stepZ);
+  let distance = entry;
+
+  for (let steps = 0; steps < 256 && distance <= interval.exit + epsilon; steps += 1) {
+    if (target.hasWorldVoxel(voxelX, voxelY, voxelZ)) return distance;
+    distance = Math.min(nextX, nextY, nextZ);
+    if (!Number.isFinite(distance)) break;
+    if (nextX <= distance + epsilon) {
+      voxelX += stepX;
+      nextX += deltaX;
+    }
+    if (nextY <= distance + epsilon) {
+      voxelY += stepY;
+      nextY += deltaY;
+    }
+    if (nextZ <= distance + epsilon) {
+      voxelZ += stepZ;
+      nextZ += deltaZ;
+    }
+  }
+  return null;
+}
+
+function rayBoundsInterval(ray, bounds) {
+  let enter = -Infinity;
+  let exit = Infinity;
+  const minimum = [bounds.minX, bounds.minY, bounds.minZ];
+  const maximum = [bounds.maxX, bounds.maxY, bounds.maxZ];
+  for (let axis = 0; axis < 3; axis += 1) {
+    const origin = ray.origin[axis];
+    const direction = ray.direction[axis];
+    if (Math.abs(direction) < 1e-8) {
+      if (origin < minimum[axis] || origin > maximum[axis]) return null;
+      continue;
+    }
+    const first = (minimum[axis] - origin) / direction;
+    const second = (maximum[axis] - origin) / direction;
+    enter = Math.max(enter, Math.min(first, second));
+    exit = Math.min(exit, Math.max(first, second));
+    if (exit < enter) return null;
+  }
+  return { enter, exit };
+}
+
+function nextVoxelBoundaryDistance(origin, direction, voxel, step) {
+  if (!step) return Infinity;
+  const boundary = step > 0 ? voxel + 1 : voxel;
+  return (boundary - origin) / direction;
+}
+
+function addScaledVector(origin, direction, amount) {
+  return [
+    origin[0] + direction[0] * amount,
+    origin[1] + direction[1] * amount,
+    origin[2] + direction[2] * amount,
+  ];
+}
+
+function worldVoxelKey(x, y, z) {
+  return `${x},${y},${z}`;
+}
+
+function projectWorldPoint(point, pose, viewport) {
+  const forward = normalizeVector(subtractVector(pose.target, pose.eye));
+  const right = normalizeVector(crossVector(forward, [0, 1, 0]));
+  const up = crossVector(right, forward);
+  const relative = subtractVector(point, pose.eye);
+  const depth = dotVector(relative, forward);
+  if (depth <= 0.1) return null;
+  const tangent = Math.tan((pose.fov * Math.PI) / 360);
+  const aspect = Math.max(0.25, viewport.width / Math.max(1, viewport.height));
+  const normalizedX = dotVector(relative, right) / (depth * tangent * aspect);
+  const normalizedY = dotVector(relative, up) / (depth * tangent);
+  return Object.freeze({
+    x: viewport.left + (normalizedX + 1) * 0.5 * viewport.width,
+    y: viewport.top + (1 - normalizedY) * 0.5 * viewport.height,
+    depth,
+  });
+}
+
+function subtractVector(left, right) {
+  return [left[0] - right[0], left[1] - right[1], left[2] - right[2]];
+}
+
+function normalizeVector(vector) {
+  const length = Math.hypot(vector[0], vector[1], vector[2]) || 1;
+  return [vector[0] / length, vector[1] / length, vector[2] / length];
+}
+
+function crossVector(left, right) {
+  return [
+    left[1] * right[2] - left[2] * right[1],
+    left[2] * right[0] - left[0] * right[2],
+    left[0] * right[1] - left[1] * right[0],
+  ];
+}
+
+function dotVector(left, right) {
+  return left[0] * right[0] + left[1] * right[1] + left[2] * right[2];
+}
+
+function pointInsideRect(x, y, rect) {
+  return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+}
+
+function pointerDistanceAxis(center, extent) {
+  return Math.abs(center) / Math.max(1, extent);
+}
+
+function isBuildingInspectionPointerTarget(target) {
+  if (!(target instanceof Element)) return true;
+  return !target.closest("a, button, input, select, textarea, [contenteditable], .chapter-card, .chapter-nav, .site-header, .site-footer");
 }
 
 function terrainReadinessProbe(chunk) {

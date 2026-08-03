@@ -200,5 +200,17 @@
       "miner": "矿工",
       "enterWorld": "进入世界"
     }
+  },
+  "buildingInspector": {
+    "aria": "建筑 NCM 存储表示",
+    "eyebrow": "NCM3 建筑蓝图",
+    "state": "全链上存储表示",
+    "detail": "这段确定性的 NCM3 payload 就是全链上存储表示；Chunk.js 会在本地展开并渲染成眼前的建筑。",
+    "rawPayload": "NCM3 原始 PAYLOAD",
+    "expandedVoxels": "展开后体素",
+    "modelSize": "模型尺寸（体素）",
+    "expansionDensity": "展开密度",
+    "fullCode": "完整 NCM3 代码",
+    "codeLength": "{count} 个字符"
   }
 }

@@ -3,6 +3,7 @@ import "./style.css";
 import { initI18n } from "../src/i18n.js";
 import { mountSiteHeader } from "../src/site-header.js";
 import { finishSiteLoading, setSiteLoadingProgress } from "../src/site-ui.js";
+import { createHomeBuildingInspector } from "./home-building-inspector.js";
 import { createHomeWorldScene, HOME_WORLD_SECTION_VIEWS } from "./chunkjs-world-scene.js";
 
 const container = document.querySelector("#scrollContainer");
@@ -11,20 +12,26 @@ const dots = [...document.querySelectorAll(".side-dot")];
 const header = document.querySelector("#siteHeader");
 const chapterCurrent = document.querySelector("#chapterCurrent");
 const homeWorldCanvas = document.querySelector("#homeWorldCanvas");
+const homeBuildingInspectorRoot = document.querySelector("#homeBuildingInspector");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 let activeSectionIndex = 0;
 let homeWorldScene = null;
+let homeBuildingInspector = null;
 
 initHome();
 
 async function initHome() {
   setSiteLoadingProgress(32);
-  homeWorldScene = createHomeWorldScene(homeWorldCanvas);
+  homeBuildingInspector = createHomeBuildingInspector(homeBuildingInspectorRoot);
+  homeWorldScene = createHomeWorldScene(homeWorldCanvas, {
+    onBuildingInspect: (detail) => homeBuildingInspector?.update(detail),
+  });
   homeWorldScene.focus(HOME_WORLD_SECTION_VIEWS[activeSectionIndex], { immediate: true });
 
   await mountSiteHeader(header);
   await initI18n();
+  homeBuildingInspector.refresh();
   setSiteLoadingProgress(58);
 
   setupSectionObserver();
@@ -145,4 +152,7 @@ function delay(milliseconds) {
   return new Promise((resolve) => window.setTimeout(resolve, milliseconds));
 }
 
-window.addEventListener("pagehide", () => homeWorldScene?.destroy(), { once: true });
+window.addEventListener("pagehide", () => {
+  homeWorldScene?.destroy();
+  homeBuildingInspector?.destroy();
+}, { once: true });

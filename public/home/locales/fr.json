@@ -2,8 +2,8 @@
   "_meta": {
     "language": "fr",
     "label": "French",
-    "version": "home-locale-fr-5b2b3d784dede98b",
-    "contentHash": "5b2b3d784dede98b"
+    "version": "home-locale-fr-5ac1bbe8521e2f3c",
+    "contentHash": "5ac1bbe8521e2f3c"
   },
   "common": {
     "language": "Langue",
@@ -220,5 +220,17 @@
     "whitepaper": "Whitepaper",
     "fairness": "Équité",
     "github": "GitHub"
+  },
+  "buildingInspector": {
+    "aria": "Représentation de stockage NCM du bâtiment",
+    "eyebrow": "PLAN DE BÂTIMENT NCM3",
+    "state": "REPRÉSENTATION DE STOCKAGE ON-CHAIN",
+    "detail": "Cette charge NCM3 déterministe est la représentation de stockage on-chain ; Chunk.js la déploie localement en bâtiment rendu.",
+    "rawPayload": "CHARGE BRUTE NCM3",
+    "expandedVoxels": "VOXELS DÉPLOYÉS",
+    "modelSize": "TAILLE DU MODÈLE (VOXELS)",
+    "expansionDensity": "DENSITÉ DE DÉPLOIEMENT",
+    "fullCode": "CODE NCM3 COMPLET",
+    "codeLength": "{count} CARACTÈRES"
   }
 }

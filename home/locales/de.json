@@ -200,5 +200,17 @@
       "miner": "Miner",
       "enterWorld": "Welt betreten"
     }
+  },
+  "buildingInspector": {
+    "aria": "NCM-Speicherdarstellung des Gebäudes",
+    "eyebrow": "NCM3-GEBÄUDEBAUPLAN",
+    "state": "ON-CHAIN-SPEICHERDARSTELLUNG",
+    "detail": "Diese deterministische NCM3-Nutzlast ist die On-Chain-Speicherdarstellung; Chunk.js entfaltet sie lokal zum gerenderten Gebäude.",
+    "rawPayload": "NCM3-ROHNUTZLAST",
+    "expandedVoxels": "ENTFALTETE VOXEL",
+    "modelSize": "MODELLGRÖSSE (VOXEL)",
+    "expansionDensity": "ENTFALTUNGSDICHTE",
+    "fullCode": "VOLLSTÄNDIGER NCM3-CODE",
+    "codeLength": "{count} ZEICHEN"
   }
 }

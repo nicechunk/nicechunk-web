@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ko",
     "label": "Korean",
-    "version": "home-locale-ko-1bcaedec155e5b29",
-    "contentHash": "1bcaedec155e5b29"
+    "version": "home-locale-ko-4e43a7e8d85b89ee",
+    "contentHash": "4e43a7e8d85b89ee"
   },
   "common": {
     "language": "언어",
@@ -220,5 +220,17 @@
     "whitepaper": "백서",
     "fairness": "공정성",
     "github": "GitHub"
+  },
+  "buildingInspector": {
+    "aria": "건물 NCM 저장 표현",
+    "eyebrow": "NCM3 건물 설계도",
+    "state": "온체인 저장 표현",
+    "detail": "이 결정론적 NCM3 페이로드가 온체인 저장 표현이며, Chunk.js가 로컬에서 렌더링된 건물로 확장합니다.",
+    "rawPayload": "NCM3 원본 페이로드",
+    "expandedVoxels": "확장된 복셀",
+    "modelSize": "모델 크기 (복셀)",
+    "expansionDensity": "확장 밀도",
+    "fullCode": "전체 NCM3 코드",
+    "codeLength": "{count}자"
   }
 }

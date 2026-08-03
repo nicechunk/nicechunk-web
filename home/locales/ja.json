@@ -200,5 +200,17 @@
       "miner": "マイナー",
       "enterWorld": "ワールドへ入る"
     }
+  },
+  "buildingInspector": {
+    "aria": "建物の NCM ストレージ表現",
+    "eyebrow": "NCM3 建物設計図",
+    "state": "オンチェーン保存表現",
+    "detail": "この決定論的 NCM3 ペイロードがオンチェーン保存表現です。Chunk.js がローカルで展開し、建物として描画します。",
+    "rawPayload": "NCM3 生ペイロード",
+    "expandedVoxels": "展開後ボクセル",
+    "modelSize": "モデル寸法（ボクセル）",
+    "expansionDensity": "展開密度",
+    "fullCode": "完全な NCM3 コード",
+    "codeLength": "{count} 文字"
   }
 }

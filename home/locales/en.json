@@ -200,5 +200,17 @@
       "miner": "Miner",
       "enterWorld": "Enter World"
     }
+  },
+  "buildingInspector": {
+    "aria": "NCM building storage representation",
+    "eyebrow": "NCM3 BUILDING BLUEPRINT",
+    "state": "CHAIN-STORAGE REPRESENTATION",
+    "detail": "This deterministic NCM3 payload is the chain-storage representation; Chunk.js expands it locally into the rendered building.",
+    "rawPayload": "NCM3 RAW PAYLOAD",
+    "expandedVoxels": "EXPANDED VOXELS",
+    "modelSize": "MODEL SIZE (VOXELS)",
+    "expansionDensity": "EXPANSION DENSITY",
+    "fullCode": "FULL NCM3 CODE",
+    "codeLength": "{count} CHARACTERS"
   }
 }

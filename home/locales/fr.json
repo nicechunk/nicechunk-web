@@ -200,5 +200,17 @@
       "miner": "Mineur",
       "enterWorld": "Entrer dans le monde"
     }
+  },
+  "buildingInspector": {
+    "aria": "Représentation de stockage NCM du bâtiment",
+    "eyebrow": "PLAN DE BÂTIMENT NCM3",
+    "state": "REPRÉSENTATION DE STOCKAGE ON-CHAIN",
+    "detail": "Cette charge NCM3 déterministe est la représentation de stockage on-chain ; Chunk.js la déploie localement en bâtiment rendu.",
+    "rawPayload": "CHARGE BRUTE NCM3",
+    "expandedVoxels": "VOXELS DÉPLOYÉS",
+    "modelSize": "TAILLE DU MODÈLE (VOXELS)",
+    "expansionDensity": "DENSITÉ DE DÉPLOIEMENT",
+    "fullCode": "CODE NCM3 COMPLET",
+    "codeLength": "{count} CARACTÈRES"
   }
 }

@@ -200,5 +200,17 @@
       "miner": "마이너",
       "enterWorld": "월드 입장"
     }
+  },
+  "buildingInspector": {
+    "aria": "건물 NCM 저장 표현",
+    "eyebrow": "NCM3 건물 설계도",
+    "state": "온체인 저장 표현",
+    "detail": "이 결정론적 NCM3 페이로드가 온체인 저장 표현이며, Chunk.js가 로컬에서 렌더링된 건물로 확장합니다.",
+    "rawPayload": "NCM3 원본 페이로드",
+    "expandedVoxels": "확장된 복셀",
+    "modelSize": "모델 크기 (복셀)",
+    "expansionDensity": "확장 밀도",
+    "fullCode": "전체 NCM3 코드",
+    "codeLength": "{count}자"
   }
 }

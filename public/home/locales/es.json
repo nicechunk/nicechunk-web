@@ -2,8 +2,8 @@
   "_meta": {
     "language": "es",
     "label": "Spanish",
-    "version": "home-locale-es-2f378a4833870e4b",
-    "contentHash": "2f378a4833870e4b"
+    "version": "home-locale-es-e3bfa19b52ceb260",
+    "contentHash": "e3bfa19b52ceb260"
   },
   "common": {
     "language": "Idioma",
@@ -220,5 +220,17 @@
     "whitepaper": "Whitepaper",
     "fairness": "Equidad",
     "github": "GitHub"
+  },
+  "buildingInspector": {
+    "aria": "Representación de almacenamiento NCM del edificio",
+    "eyebrow": "PLANO DE EDIFICIO NCM3",
+    "state": "REPRESENTACIÓN DE ALMACENAMIENTO EN CADENA",
+    "detail": "Esta carga NCM3 determinista es la representación de almacenamiento en cadena; Chunk.js la expande localmente en el edificio renderizado.",
+    "rawPayload": "CARGA BRUTA NCM3",
+    "expandedVoxels": "VÓXELES EXPANDIDOS",
+    "modelSize": "TAMAÑO DEL MODELO (VÓXELES)",
+    "expansionDensity": "DENSIDAD DE EXPANSIÓN",
+    "fullCode": "CÓDIGO NCM3 COMPLETO",
+    "codeLength": "{count} CARACTERES"
   }
 }

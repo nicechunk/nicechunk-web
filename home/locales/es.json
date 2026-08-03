@@ -200,5 +200,17 @@
       "miner": "Miner",
       "enterWorld": "Entrar al mundo"
     }
+  },
+  "buildingInspector": {
+    "aria": "Representación de almacenamiento NCM del edificio",
+    "eyebrow": "PLANO DE EDIFICIO NCM3",
+    "state": "REPRESENTACIÓN DE ALMACENAMIENTO EN CADENA",
+    "detail": "Esta carga NCM3 determinista es la representación de almacenamiento en cadena; Chunk.js la expande localmente en el edificio renderizado.",
+    "rawPayload": "CARGA BRUTA NCM3",
+    "expandedVoxels": "VÓXELES EXPANDIDOS",
+    "modelSize": "TAMAÑO DEL MODELO (VÓXELES)",
+    "expansionDensity": "DENSIDAD DE EXPANSIÓN",
+    "fullCode": "CÓDIGO NCM3 COMPLETO",
+    "codeLength": "{count} CARACTERES"
   }
 }

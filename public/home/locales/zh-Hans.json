@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hans",
     "label": "Simplified Chinese",
-    "version": "home-locale-zh-Hans-861af45b85cfbffd",
-    "contentHash": "861af45b85cfbffd"
+    "version": "home-locale-zh-Hans-3e3b6900b7bc3d65",
+    "contentHash": "3e3b6900b7bc3d65"
   },
   "common": {
     "language": "语言",
@@ -220,5 +220,17 @@
     "whitepaper": "白皮书",
     "fairness": "公平模型",
     "github": "GitHub"
+  },
+  "buildingInspector": {
+    "aria": "建筑 NCM 存储表示",
+    "eyebrow": "NCM3 建筑蓝图",
+    "state": "全链上存储表示",
+    "detail": "这段确定性的 NCM3 payload 就是全链上存储表示；Chunk.js 会在本地展开并渲染成眼前的建筑。",
+    "rawPayload": "NCM3 原始 PAYLOAD",
+    "expandedVoxels": "展开后体素",
+    "modelSize": "模型尺寸（体素）",
+    "expansionDensity": "展开密度",
+    "fullCode": "完整 NCM3 代码",
+    "codeLength": "{count} 个字符"
   }
 }

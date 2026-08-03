@@ -69,6 +69,56 @@
       <div class="home-world-vignette"></div>
     </div>
 
+    <div class="home-building-inspector" id="homeBuildingInspector" data-active="false" data-side="right" aria-hidden="true">
+      <svg class="ncm-inspector-connector" aria-hidden="true" preserveAspectRatio="none">
+        <path id="ncmInspectorConnectorShadow" class="ncm-connector-shadow" pathLength="1"></path>
+        <path id="ncmInspectorConnector" class="ncm-connector-line" pathLength="1"></path>
+        <circle id="ncmInspectorAnchor" class="ncm-connector-anchor" r="5"></circle>
+        <rect id="ncmInspectorTerminal" class="ncm-connector-terminal" width="5" height="5"></rect>
+      </svg>
+      <aside class="ncm-inspector-panel" aria-label="NCM building storage representation" data-home-i18n-aria-label="buildingInspector.aria">
+        <div class="ncm-inspector-surface"></div>
+        <span class="ncm-frame ncm-frame-top"></span>
+        <span class="ncm-frame ncm-frame-right"></span>
+        <span class="ncm-frame ncm-frame-bottom"></span>
+        <span class="ncm-frame ncm-frame-left"></span>
+        <div class="ncm-inspector-content">
+          <header class="ncm-inspector-header">
+            <div>
+              <p class="ncm-inspector-eyebrow" data-home-i18n="buildingInspector.eyebrow">NCM3 BUILDING BLUEPRINT</p>
+              <h2 id="ncmInspectorTitle">NCM3</h2>
+              <code id="ncmInspectorIdentity">BUILDING</code>
+            </div>
+            <p class="ncm-inspector-state"><i></i><span data-home-i18n="buildingInspector.state">CHAIN-STORAGE REPRESENTATION</span></p>
+          </header>
+          <p class="ncm-inspector-detail" data-home-i18n="buildingInspector.detail">This deterministic NCM3 payload is the chain-storage representation; Chunk.js expands it locally into the rendered building.</p>
+          <dl class="ncm-inspector-metrics">
+            <div>
+              <dt data-home-i18n="buildingInspector.rawPayload">NCM3 RAW PAYLOAD</dt>
+              <dd id="ncmInspectorPayload">0 B</dd>
+            </div>
+            <div>
+              <dt data-home-i18n="buildingInspector.expandedVoxels">EXPANDED VOXELS</dt>
+              <dd id="ncmInspectorVoxels">0</dd>
+            </div>
+            <div>
+              <dt data-home-i18n="buildingInspector.modelSize">MODEL SIZE (VOXELS)</dt>
+              <dd id="ncmInspectorModelSize">0 × 0 × 0</dd>
+            </div>
+            <div>
+              <dt data-home-i18n="buildingInspector.expansionDensity">EXPANSION DENSITY</dt>
+              <dd id="ncmInspectorExpansion">0 VOX/B</dd>
+            </div>
+          </dl>
+          <div class="ncm-inspector-code-heading">
+            <span data-home-i18n="buildingInspector.fullCode">FULL NCM3 CODE</span>
+            <span id="ncmInspectorCodeLength">0 CHARACTERS</span>
+          </div>
+          <pre class="ncm-inspector-code"><code id="ncmInspectorCode">NCM3:</code></pre>
+        </div>
+      </aside>
+    </div>
+
     <nav class="chapter-nav" aria-label="Section navigation" data-home-i18n-aria-label="sideNav.aria">
       <p class="chapter-counter" aria-hidden="true">
         <strong id="chapterCurrent">01</strong>

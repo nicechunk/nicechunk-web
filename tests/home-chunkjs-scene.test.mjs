@@ -8,9 +8,10 @@ import {
   unpackHomeWorldTerrainChunk,
 } from "../home/home-world-terrain.js";
 
-const [html, home, scene, layout, terrainModule, generator, style, siteUi, siteHeaderCss, siteHeader, assetManifestSource, terrainBytes, compressedTerrainBytes] = await Promise.all([
+const [html, home, inspector, scene, layout, terrainModule, generator, style, siteUi, siteHeaderCss, siteHeader, assetManifestSource, terrainBytes, compressedTerrainBytes] = await Promise.all([
   readFile(new URL("../index.html", import.meta.url), "utf8"),
   readFile(new URL("../home/home.js", import.meta.url), "utf8"),
+  readFile(new URL("../home/home-building-inspector.js", import.meta.url), "utf8"),
   readFile(new URL("../home/chunkjs-world-scene.js", import.meta.url), "utf8"),
   readFile(new URL("../home/home-world-layout.js", import.meta.url), "utf8"),
   readFile(new URL("../home/home-world-terrain.js", import.meta.url), "utf8"),
@@ -24,8 +25,16 @@ const [html, home, scene, layout, terrainModule, generator, style, siteUi, siteH
   readFile(new URL("../public/media/home-world-terrain-v1.bin.gz", import.meta.url)),
 ]);
 const assetManifest = JSON.parse(assetManifestSource);
+const homeLocaleCodes = ["en", "es", "fr", "de", "ja", "ru", "ko", "zh-Hant", "zh-Hans"];
+const homeLocales = await Promise.all(homeLocaleCodes.map(async (language) => ({
+  language,
+  source: JSON.parse(await readFile(new URL(`../home/locales/${language}.json`, import.meta.url), "utf8")),
+  public: JSON.parse(await readFile(new URL(`../public/home/locales/${language}.json`, import.meta.url), "utf8")),
+})));
 
 assert.match(html, /id="homeWorldCanvas"/u);
+assert.match(html, /id="homeBuildingInspector"/u);
+assert.equal([...html.matchAll(/pathLength="1"/gu)].length, 2);
 assert.doesNotMatch(html, /voxelShader/u);
 assert.doesNotMatch(html, /<video\b|nck-hero-logo-v0149\.(?:png|webm)/u);
 assert.doesNotMatch(assetManifestSource, /nck-hero-logo-v0149\.(?:png|webm)/u);
@@ -43,6 +52,8 @@ assert.match(style, /\.chapter-copy-line \{[\s\S]*?box-decoration-break: clone;/
 assert.match(style, /\.chapter-card \{[\s\S]*?background: transparent;[\s\S]*?backdrop-filter: none;/u);
 assert.match(style, /\.side-dot \{[\s\S]*?background: transparent;[\s\S]*?border: 0;/u);
 assert.doesNotMatch(style, /transition:\s*all/u);
+assert.match(style, /@media \(hover: none\), \(pointer: coarse\), \(max-width: 900px\)/u);
+assert.match(style, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.ncm-connector-line/u);
 for (const viewport of ["desktop", "mobile"]) {
   const previewPath = `home-world-preview-${viewport}.webp`;
   assert.ok(html.includes(`/media/${previewPath}`), `Missing ${viewport} preview preload.`);
@@ -70,10 +81,12 @@ for (const [path, bytes] of [
 assert.doesNotMatch(home, /setupShader|experimental-webgl/u);
 const initHome = home.match(/async function initHome\(\) \{[\s\S]*?\n\}/u)?.[0] || "";
 assert.ok(
-  initHome.indexOf("homeWorldScene = createHomeWorldScene(homeWorldCanvas)") < initHome.indexOf("await "),
+  initHome.indexOf("homeWorldScene = createHomeWorldScene(homeWorldCanvas, {") < initHome.indexOf("await "),
   "The Chunk.js scene must start before async navigation and locale initialization.",
 );
-assert.equal([...home.matchAll(/createHomeWorldScene\(homeWorldCanvas\)/gu)].length, 1);
+assert.equal([...home.matchAll(/createHomeWorldScene\(homeWorldCanvas, \{/gu)].length, 1);
+assert.equal([...home.matchAll(/createHomeBuildingInspector\(homeBuildingInspectorRoot\)/gu)].length, 1);
+assert.match(home, /onBuildingInspect: \(detail\) => homeBuildingInspector\?\.update\(detail\)/u);
 assert.match(home, /HOME_WORLD_SECTION_VIEWS\[activeSectionIndex\]/u);
 assert.match(home, /visibility = new Map/u);
 assert.match(home, /ratio < 0\.15/u);
@@ -83,6 +96,36 @@ assert.match(scene, /CHUNK_WORKER_BUNDLE = "chunk\/chunk-build-worker\.bundle\.j
 assert.equal([...scene.matchAll(/new runtime\.ChunkManager\(/gu)].length, 1);
 assert.match(scene, /return import\(\/\* @vite-ignore \*\/ runtimeAssetUrl\(root, CHUNK_RUNTIME_BUNDLE\)\)/u);
 assert.doesNotMatch(scene, /load\("(?:construction|renderer|world)\//u);
+assert.match(scene, /payloadBytes: building\.payloadBytes/u);
+assert.match(scene, /voxelCount: building\.voxels\.size/u);
+assert.doesNotMatch(scene, /JSON\.stringify\(spec\.definition\)|JSON\.stringify\(target/u);
+assert.match(scene, /sceneInspectableBuildings = structureInspectables\.map/u);
+assert.match(scene, /raycastInspectableStructure\(projection\.target, pointerRay\)/u);
+assert.match(scene, /hasWorldVoxel: \(x, y, z\) => occupiedVoxels\.has/u);
+assert.match(scene, /anchor: visibleProjectionAnchor\(topCenter, center, rect, viewport\)/u);
+assert.equal([...scene.matchAll(/inspectables\.push\(createInspectableStructure/gu)].length, 2);
+assert.match(scene, /projectWorldPoint\(corner, pose, viewport\)/u);
+assert.match(scene, /\(hover: hover\) and \(pointer: fine\)/u);
+
+assert.match(inspector, /const INSPECTOR_TIMING = Object\.freeze/u);
+assert.match(inspector, /target\.ncmCode/u);
+assert.match(inspector, /target\.voxelCount \/ Math\.max\(1, target\.payloadBytes\)/u);
+assert.match(inspector, /root\.dataset\.active = "false"/u);
+assert.doesNotMatch(inspector, /transition:\s*all/u);
+
+for (const { language, source, public: publicLocale } of homeLocales) {
+  assert.deepEqual(publicLocale.buildingInspector, source.buildingInspector, `Public ${language} inspector copy is stale.`);
+  const { _meta: meta, ...publicBody } = publicLocale;
+  const contentHash = createHash("sha256").update(JSON.stringify(publicBody)).digest("hex").slice(0, 16);
+  assert.equal(meta.contentHash, contentHash, `Public ${language} locale hash is stale.`);
+  assert.equal(meta.version, `home-locale-${language}-${contentHash}`, `Public ${language} locale version is stale.`);
+  for (const dictionary of [source, publicLocale]) {
+    assert.equal(typeof dictionary.buildingInspector?.aria, "string", `Missing ${language} building inspector aria label.`);
+    assert.equal(typeof dictionary.buildingInspector?.detail, "string", `Missing ${language} building inspector detail.`);
+    assert.equal(typeof dictionary.buildingInspector?.fullCode, "string", `Missing ${language} building inspector code label.`);
+    assert.match(dictionary.buildingInspector.codeLength, /\{count\}/u, `Missing ${language} code-length token.`);
+  }
+}
 
 for (const modelPath of [
   "/media/vox/chr_peasant_guy_blackhair.ncm",

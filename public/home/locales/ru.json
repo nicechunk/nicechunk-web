@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ru",
     "label": "Russian",
-    "version": "home-locale-ru-11aa4dbffd59e81d",
-    "contentHash": "11aa4dbffd59e81d"
+    "version": "home-locale-ru-218ecfd281d9bde8",
+    "contentHash": "218ecfd281d9bde8"
   },
   "common": {
     "language": "Язык",
@@ -220,5 +220,17 @@
     "whitepaper": "Технический документ",
     "fairness": "Справедливость",
     "github": "GitHub"
+  },
+  "buildingInspector": {
+    "aria": "NCM-представление хранения здания",
+    "eyebrow": "ЧЕРТЁЖ ЗДАНИЯ NCM3",
+    "state": "ПРЕДСТАВЛЕНИЕ ДЛЯ ON-CHAIN ХРАНЕНИЯ",
+    "detail": "Эта детерминированная нагрузка NCM3 является представлением для on-chain хранения; Chunk.js локально разворачивает её в отображаемое здание.",
+    "rawPayload": "СЫРАЯ НАГРУЗКА NCM3",
+    "expandedVoxels": "РАЗВЁРНУТЫЕ ВОКСЕЛИ",
+    "modelSize": "РАЗМЕР МОДЕЛИ (ВОКСЕЛИ)",
+    "expansionDensity": "ПЛОТНОСТЬ РАЗВЁРТЫВАНИЯ",
+    "fullCode": "ПОЛНЫЙ КОД NCM3",
+    "codeLength": "{count} СИМВОЛОВ"
   }
 }

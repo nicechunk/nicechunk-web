@@ -2,8 +2,8 @@
   "_meta": {
     "language": "en",
     "label": "English",
-    "version": "home-locale-en-618c1ad938a8db27",
-    "contentHash": "618c1ad938a8db27"
+    "version": "home-locale-en-a54eb45f85657d6a",
+    "contentHash": "a54eb45f85657d6a"
   },
   "common": {
     "language": "Language",
@@ -220,5 +220,17 @@
     "whitepaper": "Whitepaper",
     "fairness": "Fairness",
     "github": "GitHub"
+  },
+  "buildingInspector": {
+    "aria": "NCM building storage representation",
+    "eyebrow": "NCM3 BUILDING BLUEPRINT",
+    "state": "CHAIN-STORAGE REPRESENTATION",
+    "detail": "This deterministic NCM3 payload is the chain-storage representation; Chunk.js expands it locally into the rendered building.",
+    "rawPayload": "NCM3 RAW PAYLOAD",
+    "expandedVoxels": "EXPANDED VOXELS",
+    "modelSize": "MODEL SIZE (VOXELS)",
+    "expansionDensity": "EXPANSION DENSITY",
+    "fullCode": "FULL NCM3 CODE",
+    "codeLength": "{count} CHARACTERS"
   }
 }

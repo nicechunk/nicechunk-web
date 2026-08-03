@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-03T04:26:02.485Z",
+  "generatedAt": "2026-08-03T07:25:26.493Z",
   "assetRoots": [
     "public/media",
     "p_d"
@@ -191,8 +191,8 @@
     {
       "path": "public/media/home-world-preview-desktop.webp",
       "mediaType": "application/octet-stream",
-      "bytes": 130478,
-      "sha256": "ea32848ae65e5fe9b707915ec8c80de31d7b5e0744df722c6af03bc565154f0e",
+      "bytes": 7694,
+      "sha256": "8faf92bb5f5fc15cf9a6283d7b157eeb81c195e7fb7d9a75d4555c6855c9decb",
       "dimensions": null,
       "surface": "general-media",
       "sourceStatus": "project-media",
@@ -244,11 +244,11 @@
     {
       "path": "public/media/nck.png",
       "mediaType": "image/png",
-      "bytes": 45366,
-      "sha256": "445d37eb18c6121f525fae3618e6900f877161b61af45b8432544a35b2a44607",
+      "bytes": 6348,
+      "sha256": "e9818c1a2a50d9b6e8fcd0311f56bdf8f147d7003b9c70630c7015b49620a715",
       "dimensions": {
-        "width": 384,
-        "height": 384
+        "width": 96,
+        "height": 96
       },
       "surface": "brand",
       "sourceStatus": "project-brand",

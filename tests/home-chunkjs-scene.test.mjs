@@ -51,18 +51,36 @@ for (const viewport of ["desktop", "mobile"]) {
   await access(new URL(`../public/media/${previewPath}`, import.meta.url));
 }
 
+const [brandLogoBytes, desktopPreviewBytes] = await Promise.all([
+  readFile(new URL("../public/media/nck.png", import.meta.url)),
+  readFile(new URL("../public/media/home-world-preview-desktop.webp", import.meta.url)),
+]);
+assert.ok(brandLogoBytes.byteLength <= 7_000, `Brand logo exceeds its 7 KB budget: ${brandLogoBytes.byteLength} bytes.`);
+assert.ok(desktopPreviewBytes.byteLength <= 8_192, `Desktop preview exceeds its 8 KiB budget: ${desktopPreviewBytes.byteLength} bytes.`);
+for (const [path, bytes] of [
+  ["public/media/nck.png", brandLogoBytes],
+  ["public/media/home-world-preview-desktop.webp", desktopPreviewBytes],
+]) {
+  const asset = assetManifest.assets.find((entry) => entry.path === path);
+  assert.ok(asset, `Missing optimized asset manifest entry: ${path}`);
+  assert.equal(asset.bytes, bytes.byteLength);
+  assert.equal(asset.sha256, createHash("sha256").update(bytes).digest("hex"));
+}
+
 assert.doesNotMatch(home, /setupShader|experimental-webgl/u);
 const initHome = home.match(/async function initHome\(\) \{[\s\S]*?\n\}/u)?.[0] || "";
 assert.ok(
   initHome.indexOf("homeWorldScene = createHomeWorldScene(homeWorldCanvas)") < initHome.indexOf("await "),
   "The Chunk.js scene must start before async navigation and locale initialization.",
 );
+assert.equal([...home.matchAll(/createHomeWorldScene\(homeWorldCanvas\)/gu)].length, 1);
 assert.match(home, /HOME_WORLD_SECTION_VIEWS\[activeSectionIndex\]/u);
 assert.match(home, /visibility = new Map/u);
 assert.match(home, /ratio < 0\.15/u);
 
 assert.match(scene, /CHUNK_RUNTIME_BUNDLE = "chunk\/browser-runtime\.js"/u);
 assert.match(scene, /CHUNK_WORKER_BUNDLE = "chunk\/chunk-build-worker\.bundle\.js"/u);
+assert.equal([...scene.matchAll(/new runtime\.ChunkManager\(/gu)].length, 1);
 assert.match(scene, /return import\(\/\* @vite-ignore \*\/ runtimeAssetUrl\(root, CHUNK_RUNTIME_BUNDLE\)\)/u);
 assert.doesNotMatch(scene, /load\("(?:construction|renderer|world)\//u);
 

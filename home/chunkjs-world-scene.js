@@ -29,7 +29,7 @@ const WINDMILL_FRAME_MS = 1_000 / 12;
 const WINDMILL_VERTEX_PACK_SCALE = 64;
 const BUILDING_INSPECTOR_MIN_VIEWPORT = 901;
 const BUILDING_INSPECTOR_MIN_TARGET_PX = 30;
-const BUILDING_OUTLINE_MASK_SCALE = 0.65;
+const BUILDING_OUTLINE_MASK_SCALE = 0.5;
 const BUILDING_OUTLINE_MASK_MAX_SIZE = 640;
 const BUILDING_OUTLINE_MASK_ALPHA_THRESHOLD = 72;
 const BUILDING_OUTLINE_SIMPLIFY_TOLERANCE = 1.15;
@@ -802,10 +802,14 @@ function createInspectableStructure(building, placements, spec) {
       occupiedVoxels.add(worldVoxelKey(voxel.x, voxel.y, voxel.z));
     }
   }
-  const outlineGroups = components.map(({ placement, rotationPivot = null }) => Object.freeze({
-    faces: structureSurfaceFaces(placement.worldVoxels.values()),
-    rotationPivot,
-  }));
+  const outlineGroups = components.map(({ placement, rotationPivot = null }) => {
+    const surface = structureSurfaceProjectionMesh(placement.worldVoxels.values());
+    return Object.freeze({
+      faces: surface.faces,
+      points: surface.points,
+      rotationPivot,
+    });
+  });
   return Object.freeze({
     id: spec.id,
     titles: Object.freeze({ ...spec.definition.titles }),
@@ -830,10 +834,22 @@ const STRUCTURE_FACE_DEFINITIONS = Object.freeze([
   Object.freeze({ neighbor: [0, 0, 1], normal: [0, 0, 1], corners: [[0, 0, 1], [0, 1, 1], [1, 1, 1], [1, 0, 1]] }),
 ]);
 
-function structureSurfaceFaces(voxels) {
+function structureSurfaceProjectionMesh(voxels) {
   const voxelList = Array.from(voxels, (voxel) => Object.freeze({ x: voxel.x, y: voxel.y, z: voxel.z }));
   const occupied = new Set(voxelList.map((voxel) => worldVoxelKey(voxel.x, voxel.y, voxel.z)));
+  const faceGroups = new Map();
+  const pointIndexes = new Map();
+  const points = [];
   const faces = [];
+  const pointIndex = (x, y, z) => {
+    const key = worldVoxelKey(x, y, z);
+    const existing = pointIndexes.get(key);
+    if (existing !== undefined) return existing;
+    const index = points.length;
+    points.push(Object.freeze([x, y, z]));
+    pointIndexes.set(key, index);
+    return index;
+  };
   for (const voxel of voxelList) {
     for (const face of STRUCTURE_FACE_DEFINITIONS) {
       if (occupied.has(worldVoxelKey(
@@ -841,18 +857,115 @@ function structureSurfaceFaces(voxels) {
         voxel.y + face.neighbor[1],
         voxel.z + face.neighbor[2],
       ))) continue;
-      const corners = face.corners.map((corner) => Object.freeze([
-        voxel.x + corner[0],
-        voxel.y + corner[1],
-        voxel.z + corner[2],
-      ]));
+      const cell = structureSurfaceFaceCell(voxel, face.normal);
+      const key = `${cell.axis}:${cell.sign}:${cell.plane}`;
+      let group = faceGroups.get(key);
+      if (!group) {
+        group = { ...cell, cells: new Set() };
+        faceGroups.set(key, group);
+      }
+      group.cells.add(`${cell.u},${cell.v}`);
+    }
+  }
+  for (const group of faceGroups.values()) {
+    for (const rectangle of mergeStructureSurfaceCells(group.cells)) {
+      const corners = structureSurfaceRectangleCorners(group, rectangle);
       faces.push(Object.freeze({
-        corners: Object.freeze(corners),
-        normal: face.normal,
+        pointIndexes: Object.freeze(corners.map((corner) => pointIndex(...corner))),
+        normal: group.normal,
       }));
     }
   }
-  return Object.freeze(faces);
+  return Object.freeze({
+    faces: Object.freeze(faces),
+    points: Object.freeze(points),
+  });
+}
+
+function structureSurfaceFaceCell(voxel, normal) {
+  if (normal[0]) {
+    return {
+      axis: "x",
+      sign: normal[0],
+      plane: voxel.x + (normal[0] > 0 ? 1 : 0),
+      u: voxel.y,
+      v: voxel.z,
+      normal,
+    };
+  }
+  if (normal[1]) {
+    return {
+      axis: "y",
+      sign: normal[1],
+      plane: voxel.y + (normal[1] > 0 ? 1 : 0),
+      u: voxel.x,
+      v: voxel.z,
+      normal,
+    };
+  }
+  return {
+    axis: "z",
+    sign: normal[2],
+    plane: voxel.z + (normal[2] > 0 ? 1 : 0),
+    u: voxel.x,
+    v: voxel.y,
+    normal,
+  };
+}
+
+function mergeStructureSurfaceCells(cellKeys) {
+  const remaining = new Set(cellKeys);
+  const cells = [...cellKeys]
+    .map((key) => key.split(",").map(Number))
+    .sort((left, right) => left[1] - right[1] || left[0] - right[0]);
+  const rectangles = [];
+  for (const [startU, startV] of cells) {
+    if (!remaining.has(`${startU},${startV}`)) continue;
+    let width = 1;
+    while (remaining.has(`${startU + width},${startV}`)) width += 1;
+    let height = 1;
+    while (true) {
+      const nextV = startV + height;
+      let complete = true;
+      for (let offset = 0; offset < width; offset += 1) {
+        if (!remaining.has(`${startU + offset},${nextV}`)) {
+          complete = false;
+          break;
+        }
+      }
+      if (!complete) break;
+      height += 1;
+    }
+    for (let offsetV = 0; offsetV < height; offsetV += 1) {
+      for (let offsetU = 0; offsetU < width; offsetU += 1) {
+        remaining.delete(`${startU + offsetU},${startV + offsetV}`);
+      }
+    }
+    rectangles.push(Object.freeze({
+      minU: startU,
+      minV: startV,
+      maxU: startU + width,
+      maxV: startV + height,
+    }));
+  }
+  return rectangles;
+}
+
+function structureSurfaceRectangleCorners(group, rectangle) {
+  const { minU, minV, maxU, maxV } = rectangle;
+  if (group.axis === "x") {
+    return group.sign < 0
+      ? [[group.plane, minU, minV], [group.plane, maxU, minV], [group.plane, maxU, maxV], [group.plane, minU, maxV]]
+      : [[group.plane, minU, minV], [group.plane, minU, maxV], [group.plane, maxU, maxV], [group.plane, maxU, minV]];
+  }
+  if (group.axis === "y") {
+    return group.sign < 0
+      ? [[minU, group.plane, minV], [minU, group.plane, maxV], [maxU, group.plane, maxV], [maxU, group.plane, minV]]
+      : [[minU, group.plane, minV], [maxU, group.plane, minV], [maxU, group.plane, maxV], [minU, group.plane, maxV]];
+  }
+  return group.sign < 0
+    ? [[minU, minV, group.plane], [maxU, minV, group.plane], [maxU, maxV, group.plane], [minU, maxV, group.plane]]
+    : [[minU, minV, group.plane], [minU, maxV, group.plane], [maxU, maxV, group.plane], [maxU, minV, group.plane]];
 }
 
 function worldVoxelBounds(placements) {
@@ -1388,30 +1501,37 @@ function projectInspectableModelOutline(target, pose, viewport, animationAngle =
   const cacheKey = projectedOutlineCacheKey(target, pose, viewport, animationAngle);
   const cached = buildingOutlineCache.get(target);
   if (cached?.key === cacheKey) return cached.outline;
-  const now = globalThis.performance?.now?.() ?? Date.now();
-  if (cached && now - cached.updatedAt < WINDMILL_FRAME_MS) return cached.outline;
 
+  const projector = createWorldPointProjector(pose, viewport);
   const projectedFaces = [];
   for (const group of target.outlineGroups || []) {
     const angle = group.rotationPivot ? animationAngle : 0;
+    const worldPoints = group.points.map((point) => (
+      rotateStructureOutlinePoint(point, group.rotationPivot, angle)
+    ));
+    const projectedPoints = new Array(worldPoints.length);
     for (const face of group.faces) {
-      const corners = face.corners.map((corner) => (
-        rotateStructureOutlinePoint(corner, group.rotationPivot, angle)
-      ));
-      const center = corners.reduce((sum, corner) => [
-        sum[0] + corner[0] * 0.25,
-        sum[1] + corner[1] * 0.25,
-        sum[2] + corner[2] * 0.25,
-      ], [0, 0, 0]);
+      const corners = face.pointIndexes.map((index) => worldPoints[index]);
+      const centerX = (corners[0][0] + corners[1][0] + corners[2][0] + corners[3][0]) * 0.25;
+      const centerY = (corners[0][1] + corners[1][1] + corners[2][1] + corners[3][1]) * 0.25;
+      const centerZ = (corners[0][2] + corners[1][2] + corners[2][2] + corners[3][2]) * 0.25;
       const normal = rotateStructureOutlineNormal(face.normal, angle);
-      if (dotVector(normal, subtractVector(pose.eye, center)) <= 0.0001) continue;
-      const projected = corners.map((corner) => projectWorldPoint(corner, pose, viewport));
+      const facing = normal[0] * (pose.eye[0] - centerX)
+        + normal[1] * (pose.eye[1] - centerY)
+        + normal[2] * (pose.eye[2] - centerZ);
+      if (facing <= 0.0001) continue;
+      const projected = face.pointIndexes.map((index) => {
+        if (projectedPoints[index] === undefined) {
+          projectedPoints[index] = projectWorldPointWithProjector(worldPoints[index], projector);
+        }
+        return projectedPoints[index];
+      });
       if (projected.some((corner) => !corner) || !projectedPolygonIntersectsViewport(projected, viewport)) continue;
       projectedFaces.push(projected);
     }
   }
   const outline = rasterizeInspectableSilhouette(projectedFaces, viewport);
-  buildingOutlineCache.set(target, Object.freeze({ key: cacheKey, updatedAt: now, outline }));
+  buildingOutlineCache.set(target, Object.freeze({ key: cacheKey, outline }));
   return outline;
 }
 
@@ -1421,11 +1541,11 @@ function projectedOutlineCacheKey(target, pose, viewport, animationAngle) {
     ? Math.round((((animationAngle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2)) * 512 / (Math.PI * 2))
     : 0;
   return [
-    ...pose.eye.map((value) => Number(value).toFixed(2)),
-    ...pose.target.map((value) => Number(value).toFixed(2)),
-    Number(pose.fov).toFixed(2),
-    Number(viewport.left).toFixed(1),
-    Number(viewport.top).toFixed(1),
+    ...pose.eye.map((value) => Number(value).toFixed(4)),
+    ...pose.target.map((value) => Number(value).toFixed(4)),
+    Number(pose.fov).toFixed(4),
+    Number(viewport.left).toFixed(2),
+    Number(viewport.top).toFixed(2),
     Math.round(viewport.width),
     Math.round(viewport.height),
     angleStep,
@@ -1434,12 +1554,23 @@ function projectedOutlineCacheKey(target, pose, viewport, animationAngle) {
 
 function rasterizeInspectableSilhouette(projectedFaces, viewport) {
   if (!projectedFaces.length || typeof document === "undefined") return null;
-  const points = projectedFaces.flat();
+  let projectedLeft = Infinity;
+  let projectedTop = Infinity;
+  let projectedRight = -Infinity;
+  let projectedBottom = -Infinity;
+  for (const face of projectedFaces) {
+    for (const point of face) {
+      projectedLeft = Math.min(projectedLeft, point.x);
+      projectedTop = Math.min(projectedTop, point.y);
+      projectedRight = Math.max(projectedRight, point.x);
+      projectedBottom = Math.max(projectedBottom, point.y);
+    }
+  }
   const margin = 3;
-  const left = Math.max(viewport.left - margin, Math.min(...points.map((point) => point.x)) - margin);
-  const top = Math.max(viewport.top - margin, Math.min(...points.map((point) => point.y)) - margin);
-  const right = Math.min(viewport.right + margin, Math.max(...points.map((point) => point.x)) + margin);
-  const bottom = Math.min(viewport.bottom + margin, Math.max(...points.map((point) => point.y)) + margin);
+  const left = Math.max(viewport.left - margin, projectedLeft - margin);
+  const top = Math.max(viewport.top - margin, projectedTop - margin);
+  const right = Math.min(viewport.right + margin, projectedRight + margin);
+  const bottom = Math.min(viewport.bottom + margin, projectedBottom + margin);
   const width = right - left;
   const height = bottom - top;
   if (width <= 0 || height <= 0) return null;
@@ -1461,9 +1592,6 @@ function rasterizeInspectableSilhouette(projectedFaces, viewport) {
   context.clearRect(0, 0, canvasWidth, canvasHeight);
   context.setTransform(scale, 0, 0, scale, padding - left * scale, padding - top * scale);
   context.fillStyle = "#fff";
-  context.strokeStyle = "#fff";
-  context.lineWidth = 0.9 / scale;
-  context.lineJoin = "round";
   context.beginPath();
   for (const face of projectedFaces) {
     context.moveTo(face[0].x, face[0].y);
@@ -1471,7 +1599,6 @@ function rasterizeInspectableSilhouette(projectedFaces, viewport) {
     context.closePath();
   }
   context.fill();
-  context.stroke();
   context.setTransform(1, 0, 0, 1, 0, 0);
 
   const image = context.getImageData(0, 0, canvasWidth, canvasHeight);
@@ -1807,21 +1934,41 @@ function worldVoxelKey(x, y, z) {
 }
 
 function projectWorldPoint(point, pose, viewport) {
+  return projectWorldPointWithProjector(point, createWorldPointProjector(pose, viewport));
+}
+
+function createWorldPointProjector(pose, viewport) {
   const forward = normalizeVector(subtractVector(pose.target, pose.eye));
   const right = normalizeVector(crossVector(forward, [0, 1, 0]));
   const up = crossVector(right, forward);
-  const relative = subtractVector(point, pose.eye);
-  const depth = dotVector(relative, forward);
-  if (depth <= 0.1) return null;
   const tangent = Math.tan((pose.fov * Math.PI) / 360);
   const aspect = Math.max(0.25, viewport.width / Math.max(1, viewport.height));
-  const normalizedX = dotVector(relative, right) / (depth * tangent * aspect);
-  const normalizedY = dotVector(relative, up) / (depth * tangent);
-  return Object.freeze({
-    x: viewport.left + (normalizedX + 1) * 0.5 * viewport.width,
-    y: viewport.top + (1 - normalizedY) * 0.5 * viewport.height,
+  return Object.freeze({ pose, viewport, forward, right, up, tangent, aspect });
+}
+
+function projectWorldPointWithProjector(point, projector) {
+  const deltaX = point[0] - projector.pose.eye[0];
+  const deltaY = point[1] - projector.pose.eye[1];
+  const deltaZ = point[2] - projector.pose.eye[2];
+  const depth = deltaX * projector.forward[0]
+    + deltaY * projector.forward[1]
+    + deltaZ * projector.forward[2];
+  if (depth <= 0.1) return null;
+  const normalizedX = (
+    deltaX * projector.right[0]
+    + deltaY * projector.right[1]
+    + deltaZ * projector.right[2]
+  ) / (depth * projector.tangent * projector.aspect);
+  const normalizedY = (
+    deltaX * projector.up[0]
+    + deltaY * projector.up[1]
+    + deltaZ * projector.up[2]
+  ) / (depth * projector.tangent);
+  return {
+    x: projector.viewport.left + (normalizedX + 1) * 0.5 * projector.viewport.width,
+    y: projector.viewport.top + (1 - normalizedY) * 0.5 * projector.viewport.height,
     depth,
-  });
+  };
 }
 
 function subtractVector(left, right) {

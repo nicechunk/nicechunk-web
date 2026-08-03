@@ -106,7 +106,7 @@ assert.match(scene, /raycastInspectableStructure\(projection\.target, pointerRay
 assert.match(scene, /hasWorldVoxel: \(x, y, z\) => occupiedVoxels\.has/u);
 assert.match(scene, /anchor: visibleProjectionAnchor\(topCenter, center, rect, viewport\)/u);
 assert.match(scene, /outlineGroups: Object\.freeze\(outlineGroups\)/u);
-assert.match(scene, /structureSurfaceFaces\(placement\.worldVoxels\.values\(\)\)/u);
+assert.match(scene, /structureSurfaceProjectionMesh\(placement\.worldVoxels\.values\(\)\)/u);
 assert.match(scene, /projectInspectableModelOutline/u);
 assert.match(scene, /rasterizeInspectableSilhouette\(projectedFaces, viewport\)/u);
 assert.match(scene, /traceStructureMaskContours\(image\.data, canvasWidth, canvasHeight\)/u);
@@ -114,6 +114,13 @@ assert.match(scene, /simplifyClosedContour\(contour, BUILDING_OUTLINE_SIMPLIFY_T
 assert.match(scene, /windmillRotor\?\.currentAngle\?\.\(\)/u);
 assert.doesNotMatch(scene, /convexHull2d/u);
 assert.doesNotMatch(scene, /structureFeatureEdges|group\.edges/u);
+assert.doesNotMatch(scene, /cached\.updatedAt|now - cached\.updatedAt|alignCachedOutlineToProjection/u);
+assert.match(scene, /pose\.eye\.map\(\(value\) => Number\(value\)\.toFixed\(4\)\)/u);
+assert.match(scene, /const projector = createWorldPointProjector\(pose, viewport\)/u);
+assert.match(scene, /projectWorldPointWithProjector\(worldPoints\[index\], projector\)/u);
+assert.match(scene, /points: Object\.freeze\(points\)/u);
+assert.match(scene, /mergeStructureSurfaceCells\(group\.cells\)/u);
+assert.match(scene, /structureSurfaceRectangleCorners\(group, rectangle\)/u);
 assert.equal([...scene.matchAll(/inspectables\.push\(createInspectableStructure/gu)].length, 2);
 assert.match(scene, /projectWorldPoint\(corner, pose, viewport\)/u);
 assert.match(scene, /\(hover: hover\) and \(pointer: fine\)/u);
@@ -127,9 +134,12 @@ assert.match(inspector, /buildingOutline\.setAttribute\("d", path\)/u);
 assert.doesNotMatch(inspector, /setAttribute\("points"/u);
 assert.match(inspector, /detail\.bounds\.right \+ PANEL_GAP_PX/u);
 assert.doesNotMatch(inspector, /transition:\s*all/u);
-assert.match(style, /\.ncm-building-outline \{[\s\S]*?stroke-dasharray: 7 6;/u);
-assert.match(style, /@keyframes ncm-building-outline-breathe/u);
-assert.match(style, /font: 600 10px\/1\.5/u);
+assert.match(style, /\.ncm-building-outline \{[\s\S]*?stroke: var\(--ncm-inspector-white\);/u);
+assert.match(style, /stroke-dasharray: 10 7;/u);
+assert.match(style, /@keyframes ncm-building-outline-dash/u);
+assert.match(style, /@keyframes ncm-building-outline-ink-pulse/u);
+assert.doesNotMatch(style, /@keyframes ncm-building-outline[^}]+transform: scale/isu);
+assert.match(style, /font: 650 11px\/1\.52/u);
 
 for (const { language, source, public: publicLocale } of homeLocales) {
   assert.deepEqual(publicLocale.buildingInspector, source.buildingInspector, `Public ${language} inspector copy is stale.`);

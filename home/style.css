@@ -11,6 +11,8 @@
   --home-header-height: 76px;
   --ncm-inspector-cyan: #8ee3ff;
   --ncm-inspector-green: #b9f47d;
+  --ncm-inspector-white: #fffdf4;
+  --ncm-inspector-ink: #07111d;
   --ncm-inspector-enter: cubic-bezier(0.16, 1, 0.3, 1);
   --ncm-inspector-exit: cubic-bezier(0.4, 0, 1, 1);
   color: var(--home-text);
@@ -130,25 +132,21 @@ html[data-home-chapter="market"] .home-world-vignette {
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
   opacity: 0;
-  transform: scale(0.985);
-  transform-box: fill-box;
-  transform-origin: center;
-  transition:
-    opacity 100ms var(--ncm-inspector-exit) 260ms,
-    transform 150ms var(--ncm-inspector-exit) 260ms;
+  stroke-dasharray: 10 7;
+  transition: opacity 100ms var(--ncm-inspector-exit) 260ms;
 }
 
 .ncm-building-outline-shadow {
-  stroke: rgba(1, 7, 9, 0.72);
-  stroke-width: 4px;
-  stroke-dasharray: 7 6;
+  stroke: rgba(4, 10, 19, 0.92);
+  stroke-width: 5.6px;
 }
 
 .ncm-building-outline {
-  stroke: var(--ncm-inspector-cyan);
-  stroke-width: 1.35px;
-  stroke-dasharray: 7 6;
-  filter: drop-shadow(0 0 5px rgba(142, 227, 255, 0.5));
+  stroke: var(--ncm-inspector-white);
+  stroke-width: 2.15px;
+  filter:
+    drop-shadow(0 0 1px rgba(255, 255, 255, 0.98))
+    drop-shadow(0 0 6px rgba(108, 210, 255, 0.52));
 }
 
 .ncm-connector-shadow,
@@ -168,9 +166,11 @@ html[data-home-chapter="market"] .home-world-vignette {
 }
 
 .ncm-connector-line {
-  stroke: var(--ncm-inspector-cyan);
-  stroke-width: 1px;
-  filter: drop-shadow(0 0 4px rgba(142, 227, 255, 0.34));
+  stroke: var(--ncm-inspector-white);
+  stroke-width: 1.5px;
+  filter:
+    drop-shadow(0 0 1px rgba(255, 255, 255, 0.9))
+    drop-shadow(0 0 4px rgba(142, 227, 255, 0.4));
 }
 
 .ncm-connector-anchor,
@@ -199,6 +199,8 @@ html[data-home-chapter="market"] .home-world-vignette {
   width: min(470px, calc(100vw - 36px));
   min-height: 320px;
   color: var(--home-text);
+  clip-path: polygon(0 0, calc(100% - 19px) 0, 100% 19px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+  filter: drop-shadow(8px 10px 0 rgba(2, 7, 14, 0.52));
   transform: translate3d(var(--ncm-inspector-x, 24px), var(--ncm-inspector-y, 96px), 0);
   will-change: transform;
 }
@@ -208,13 +210,13 @@ html[data-home-chapter="market"] .home-world-vignette {
   z-index: -1;
   inset: 0;
   background:
-    linear-gradient(rgba(142, 227, 255, 0.04) 1px, transparent 1px) 0 0 / 100% 24px,
-    linear-gradient(90deg, rgba(142, 227, 255, 0.032) 1px, transparent 1px) 0 0 / 24px 100%,
-    linear-gradient(135deg, rgba(8, 20, 22, 0.62), rgba(4, 11, 13, 0.5));
+    linear-gradient(112deg, rgba(255, 253, 244, 0.08) 0 1px, transparent 1px 58%) 0 0 / 29px 100%,
+    linear-gradient(135deg, rgba(10, 26, 42, 0.76), rgba(5, 14, 25, 0.64));
   box-shadow:
-    0 20px 54px rgba(0, 0, 0, 0.2),
-    inset 0 0 0 1px rgba(142, 227, 255, 0.05);
-  backdrop-filter: blur(10px) saturate(0.88);
+    inset 0 0 0 2px rgba(255, 253, 244, 0.9),
+    inset 6px 0 0 rgba(185, 244, 125, 0.88),
+    inset -1px 0 0 rgba(142, 227, 255, 0.34);
+  backdrop-filter: blur(9px) saturate(0.82);
   clip-path: inset(0 100% 0 0);
   transition: clip-path 100ms var(--ncm-inspector-exit) 140ms;
 }
@@ -223,11 +225,32 @@ html[data-home-chapter="market"] .home-world-vignette {
   clip-path: inset(0 0 0 100%);
 }
 
+.ncm-inspector-surface::before,
 .ncm-inspector-surface::after {
   content: "";
   position: absolute;
+  pointer-events: none;
+}
+
+.ncm-inspector-surface::before {
+  top: 0;
+  right: 0;
+  width: 42%;
+  height: 44%;
+  background: radial-gradient(circle, rgba(255, 253, 244, 0.23) 0 1px, transparent 1.3px) 0 0 / 8px 8px;
+  opacity: 0.42;
+  -webkit-mask-image: linear-gradient(135deg, #000, transparent 74%);
+  mask-image: linear-gradient(135deg, #000, transparent 74%);
+}
+
+.ncm-inspector-surface::after {
   inset: 0;
-  background: linear-gradient(115deg, transparent 32%, rgba(185, 244, 125, 0.055) 49%, transparent 64%);
+  background: repeating-linear-gradient(
+    111deg,
+    transparent 0 18px,
+    rgba(255, 253, 244, 0.12) 19px,
+    transparent 21px 36px
+  );
   opacity: 0;
   transform: translateX(-42%);
   transition:
@@ -238,15 +261,17 @@ html[data-home-chapter="market"] .home-world-vignette {
 .ncm-frame {
   position: absolute;
   display: block;
-  background: var(--ncm-inspector-cyan);
-  box-shadow: 0 0 7px rgba(142, 227, 255, 0.26);
+  background: var(--ncm-inspector-white);
+  box-shadow:
+    2px 2px 0 rgba(7, 17, 29, 0.9),
+    0 0 6px rgba(142, 227, 255, 0.28);
 }
 
 .ncm-frame-top,
 .ncm-frame-bottom {
   right: 0;
   left: 0;
-  height: 1px;
+  height: 2px;
   transform: scaleX(0);
 }
 
@@ -254,7 +279,7 @@ html[data-home-chapter="market"] .home-world-vignette {
 .ncm-frame-right {
   top: 0;
   bottom: 0;
-  width: 1px;
+  width: 2px;
   transform: scaleY(0);
 }
 
@@ -300,7 +325,7 @@ html[data-home-chapter="market"] .home-world-vignette {
 
 .ncm-inspector-content {
   position: relative;
-  padding: 20px 21px 19px;
+  padding: 21px 23px 20px 26px;
 }
 
 .ncm-inspector-header,
@@ -321,7 +346,7 @@ html[data-home-chapter="market"] .home-world-vignette {
   gap: 18px;
   align-items: start;
   padding-bottom: 12px;
-  border-bottom: 1px solid rgba(142, 227, 255, 0.16);
+  border-bottom: 2px solid rgba(255, 253, 244, 0.76);
   transition-delay: 35ms;
 }
 
@@ -336,26 +361,34 @@ html[data-home-chapter="market"] .home-world-vignette {
 }
 
 .ncm-inspector-eyebrow {
-  color: var(--ncm-inspector-green);
-  font-size: 10px;
+  display: inline-block;
+  padding: 3px 8px 3px 7px;
+  color: var(--ncm-inspector-ink);
+  background: var(--ncm-inspector-green);
+  box-shadow: 3px 3px 0 rgba(7, 17, 29, 0.9);
+  font-size: 11px;
   font-weight: 900;
   letter-spacing: 0.16em;
   line-height: 1.4;
+  transform: skewX(-7deg);
 }
 
 .ncm-inspector-header h2 {
-  margin: 4px 0 2px;
-  color: #fff;
-  font-size: 21px;
+  margin: 8px 0 3px;
+  color: var(--ncm-inspector-white);
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: 24px;
   font-weight: 900;
-  letter-spacing: -0.035em;
-  line-height: 1.08;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.56);
+  letter-spacing: 0.005em;
+  line-height: 1.02;
+  text-shadow:
+    3px 3px 0 rgba(16, 83, 111, 0.7),
+    0 5px 12px rgba(0, 0, 0, 0.42);
 }
 
 .ncm-inspector-header code {
-  color: rgba(203, 231, 238, 0.65);
-  font-size: 10px;
+  color: rgba(226, 242, 246, 0.78);
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.12em;
 }
@@ -364,8 +397,11 @@ html[data-home-chapter="market"] .home-world-vignette {
   display: flex;
   align-items: center;
   gap: 6px;
-  max-width: 150px;
-  color: rgba(226, 247, 252, 0.72);
+  max-width: 154px;
+  padding: 6px 8px;
+  color: var(--ncm-inspector-white);
+  background: rgba(7, 17, 29, 0.72);
+  border: 1px solid rgba(255, 253, 244, 0.7);
   font-size: 10px;
   font-weight: 900;
   letter-spacing: 0.1em;
@@ -378,13 +414,16 @@ html[data-home-chapter="market"] .home-world-vignette {
   width: 7px;
   height: 7px;
   background: var(--ncm-inspector-green);
-  box-shadow: 0 0 8px rgba(185, 244, 125, 0.46);
+  border: 1px solid var(--ncm-inspector-ink);
+  box-shadow:
+    2px 2px 0 rgba(7, 17, 29, 0.95),
+    0 0 8px rgba(185, 244, 125, 0.5);
 }
 
 .ncm-inspector-detail {
-  margin-top: 10px;
-  color: rgba(229, 240, 238, 0.7);
-  font-size: 12px;
+  margin-top: 12px;
+  color: rgba(241, 247, 245, 0.86);
+  font-size: 13px;
   font-weight: 650;
   line-height: 1.5;
   transition-delay: 20ms;
@@ -393,16 +432,18 @@ html[data-home-chapter="market"] .home-world-vignette {
 .ncm-inspector-metrics {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
-  margin: 12px 0 0;
-  padding: 1px;
-  background: rgba(142, 227, 255, 0.12);
+  gap: 6px;
+  margin: 14px 0 0;
+  padding: 0;
+  background: transparent;
 }
 
 .ncm-inspector-metrics > div {
   min-width: 0;
-  padding: 10px 11px;
-  background: rgba(3, 10, 12, 0.56);
+  padding: 10px 11px 11px;
+  background: rgba(4, 12, 22, 0.72);
+  border: 1px solid rgba(255, 253, 244, 0.24);
+  clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 0 100%);
 }
 
 .ncm-inspector-metrics > div:nth-child(1) {
@@ -423,8 +464,8 @@ html[data-home-chapter="market"] .home-world-vignette {
 
 .ncm-inspector-metrics dt {
   overflow: hidden;
-  color: rgba(177, 210, 217, 0.58);
-  font-size: 10px;
+  color: rgba(209, 228, 234, 0.72);
+  font-size: 11px;
   font-weight: 850;
   letter-spacing: 0.09em;
   line-height: 1.3;
@@ -435,8 +476,8 @@ html[data-home-chapter="market"] .home-world-vignette {
 .ncm-inspector-metrics dd {
   margin-top: 3px;
   overflow: hidden;
-  color: var(--ncm-inspector-green);
-  font-size: 14px;
+  color: var(--ncm-inspector-white);
+  font-size: 15px;
   font-weight: 900;
   letter-spacing: 0.02em;
   line-height: 1.2;
@@ -448,28 +489,31 @@ html[data-home-chapter="market"] .home-world-vignette {
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  margin-top: 11px;
-  color: rgba(142, 227, 255, 0.78);
-  font-size: 10px;
+  margin-top: 13px;
+  color: var(--ncm-inspector-white);
+  font-size: 11px;
   font-weight: 900;
   letter-spacing: 0.12em;
   line-height: 1.4;
 }
 
 .ncm-inspector-code-heading span:last-child {
-  color: rgba(200, 220, 223, 0.48);
+  color: rgba(202, 226, 232, 0.66);
   text-align: right;
 }
 
 .ncm-inspector-code {
   max-width: 100%;
-  margin: 5px 0 0;
-  padding: 10px 11px;
+  margin: 7px 0 0;
+  padding: 11px 12px;
   overflow: hidden;
-  color: rgba(207, 239, 246, 0.66);
-  background: rgba(2, 8, 10, 0.52);
-  border-left: 1px solid rgba(185, 244, 125, 0.5);
-  font: 600 10px/1.5 "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
+  color: rgba(228, 242, 245, 0.82);
+  background:
+    linear-gradient(90deg, rgba(185, 244, 125, 0.08), transparent 26%),
+    rgba(2, 8, 16, 0.74);
+  border: 1px solid rgba(255, 253, 244, 0.22);
+  border-left: 4px solid var(--ncm-inspector-white);
+  font: 650 11px/1.52 "JetBrains Mono", "IBM Plex Mono", ui-monospace, monospace;
   letter-spacing: 0.005em;
   overflow-wrap: anywhere;
   text-shadow: 0 1px 5px rgba(0, 0, 0, 0.68);
@@ -488,27 +532,42 @@ html[data-home-chapter="market"] .home-world-vignette {
 .home-building-inspector[data-active="true"] .ncm-building-outline-shadow,
 .home-building-inspector[data-active="true"] .ncm-building-outline {
   opacity: 1;
-  transform: scale(1);
-  transition-duration: 200ms;
+  transition-duration: 150ms;
   transition-delay: 0ms;
   transition-timing-function: var(--ncm-inspector-enter);
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  .home-building-inspector[data-active="true"] .ncm-building-outline-shadow {
+    animation: ncm-building-outline-dash 1.35s steps(8, end) infinite;
+  }
+
   .home-building-inspector[data-active="true"] .ncm-building-outline {
-    animation: ncm-building-outline-breathe 1.8s ease-in-out 200ms infinite;
+    animation:
+      ncm-building-outline-dash 1.35s steps(8, end) infinite,
+      ncm-building-outline-ink-pulse 1.35s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   }
 }
 
-@keyframes ncm-building-outline-breathe {
+@keyframes ncm-building-outline-dash {
+  to {
+    stroke-dashoffset: -34;
+  }
+}
+
+@keyframes ncm-building-outline-ink-pulse {
   0%, 100% {
-    opacity: 0.68;
-    transform: scale(1);
+    opacity: 0.76;
+    filter:
+      drop-shadow(0 0 1px rgba(255, 255, 255, 0.94))
+      drop-shadow(0 0 4px rgba(108, 210, 255, 0.4));
   }
 
   50% {
     opacity: 1;
-    transform: scale(1.012);
+    filter:
+      drop-shadow(0 0 2px rgba(255, 255, 255, 1))
+      drop-shadow(0 0 8px rgba(108, 210, 255, 0.66));
   }
 }
 
@@ -1648,7 +1707,10 @@ html[data-i18n-scope="home"] .site-header.scrolled {
   .ncm-connector-line,
   .ncm-connector-anchor,
   .ncm-connector-terminal,
+  .ncm-building-outline-shadow,
+  .ncm-building-outline,
   .ncm-inspector-surface,
+  .ncm-inspector-surface::before,
   .ncm-inspector-surface::after,
   .ncm-frame,
   .ncm-inspector-header,
@@ -1657,5 +1719,10 @@ html[data-i18n-scope="home"] .site-header.scrolled {
   .ncm-inspector-code-heading,
   .ncm-inspector-code {
     transition: none;
+  }
+
+  .ncm-building-outline-shadow,
+  .ncm-building-outline {
+    animation: none;
   }
 }

@@ -2456,3 +2456,365 @@ html[data-i18n-scope="home"] .site-header.scrolled {
     transition: none;
   }
 }
+
+/* Shonen Chronicle: scene-first anime field-guide treatment from the Stitch pass. */
+:root {
+  --home-anime-ink: #11191c;
+  --home-anime-paper: #fffdf4;
+  --home-anime-cel: rgba(9, 20, 24, 0.92);
+}
+
+.home-world-vignette::before,
+.home-world-vignette::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.home-world-vignette::before {
+  bottom: 0;
+  left: 0;
+  width: min(34vw, 480px);
+  height: min(34vh, 270px);
+  background: radial-gradient(circle, rgba(7, 15, 18, 0.7) 0 1px, transparent 1.35px) 0 0 / 7px 7px;
+  opacity: 0.13;
+  -webkit-mask-image: linear-gradient(36deg, #000 0%, rgba(0, 0, 0, 0.72) 36%, transparent 78%);
+  mask-image: linear-gradient(36deg, #000 0%, rgba(0, 0, 0, 0.72) 36%, transparent 78%);
+}
+
+.home-world-vignette::after {
+  top: var(--nc-site-topbar-px, var(--home-header-height));
+  right: 0;
+  width: min(27vw, 390px);
+  height: min(25vh, 210px);
+  background: repeating-linear-gradient(154deg, transparent 0 17px, rgba(255, 253, 244, 0.34) 18px 19px, transparent 20px 30px);
+  opacity: 0.12;
+  -webkit-mask-image: linear-gradient(225deg, #000, transparent 76%);
+  mask-image: linear-gradient(225deg, #000, transparent 76%);
+}
+
+html[data-i18n-scope="home"] .site-header {
+  border-bottom: 2px solid rgba(255, 253, 244, 0.16);
+  box-shadow: 0 3px 0 rgba(4, 9, 11, 0.44);
+}
+
+html[data-i18n-scope="home"] .site-header .site-nav a {
+  border-radius: 0;
+  clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px);
+  transition:
+    opacity 140ms ease,
+    transform 140ms cubic-bezier(0.2, 0.86, 0.22, 1);
+}
+
+html[data-i18n-scope="home"] .site-header .site-nav a:hover {
+  transform: translateY(-1px);
+}
+
+html[data-i18n-scope="home"] .site-header .site-nav a[aria-current="page"] {
+  color: #0a1404;
+  background: var(--home-green);
+  border-color: var(--home-anime-ink);
+  box-shadow:
+    inset 0 0 0 1px var(--home-anime-ink),
+    3px 3px 0 rgba(4, 9, 11, 0.78);
+  text-shadow: none;
+}
+
+html[data-i18n-scope="home"] .site-header .site-nav [data-site-nav-key="enterWorld"] {
+  border-color: rgba(255, 253, 244, 0.52);
+  box-shadow: 3px 3px 0 rgba(4, 9, 11, 0.76);
+}
+
+.chapter-card h1,
+.chapter-card h2 {
+  position: relative;
+  isolation: isolate;
+  color: var(--home-anime-paper);
+  paint-order: stroke fill;
+  -webkit-text-stroke: 1px rgba(6, 12, 15, 0.96);
+  text-shadow:
+    3px 3px 0 var(--home-anime-ink),
+    5px 5px 0 rgba(121, 209, 255, 0.2),
+    0 8px 18px rgba(0, 0, 0, 0.34);
+}
+
+.chapter-card h1::after,
+.chapter-card h2::after {
+  content: "";
+  display: block;
+  width: min(74%, 310px);
+  height: 5px;
+  margin: 8px 0 0 5px;
+  background: var(--home-green);
+  border: 1px solid var(--home-anime-ink);
+  box-shadow: 3px 3px 0 rgba(4, 9, 11, 0.7);
+  transform: rotate(-1.5deg) skewX(-18deg);
+}
+
+.chapter-card h2::after {
+  width: min(58%, 230px);
+  height: 4px;
+  background: var(--home-cyan);
+}
+
+.chapter-copy-line {
+  background: linear-gradient(90deg, rgba(5, 12, 15, 0.7) 0%, rgba(5, 12, 15, 0.58) 84%, rgba(5, 12, 15, 0.16) 100%);
+  box-shadow: 3px 0 0 rgba(255, 253, 244, 0.1) inset;
+}
+
+.chapter-card > p:not(.eyebrow) .chapter-copy-line,
+.roadmap-copy > p:not(.eyebrow) .chapter-copy-line {
+  background: rgba(5, 12, 15, 0.68);
+  box-shadow:
+    2px 0 0 rgba(255, 253, 244, 0.18) inset,
+    2px 2px 0 rgba(4, 9, 11, 0.38);
+}
+
+.eyebrow {
+  position: relative;
+  padding: 6px 14px 6px 16px;
+  color: var(--home-anime-ink);
+  background: var(--home-green);
+  border: 0;
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 8px);
+  filter: drop-shadow(3px 3px 0 rgba(4, 9, 11, 0.8));
+  text-shadow: none;
+}
+
+.eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 8px;
+  background: currentColor;
+  border: 1px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.eyebrow.blue {
+  color: var(--home-anime-ink);
+  background: var(--home-cyan);
+}
+
+.primary-action,
+.secondary-action {
+  position: relative;
+  gap: 10px;
+  border: 0;
+  clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 9px 100%, 0 calc(100% - 9px));
+  box-shadow: inset 0 0 0 2px var(--home-anime-ink);
+  filter: drop-shadow(4px 4px 0 rgba(4, 9, 11, 0.82));
+  transition:
+    opacity 140ms ease,
+    transform 140ms cubic-bezier(0.2, 0.86, 0.22, 1);
+}
+
+.primary-action::before,
+.secondary-action::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.primary-action:hover,
+.primary-action:focus-visible,
+.secondary-action:hover,
+.secondary-action:focus-visible {
+  transform: translate(-2px, -2px);
+}
+
+.primary-action:active,
+.secondary-action:active {
+  filter: none;
+  transform: translate(4px, 4px);
+}
+
+.chapter-telemetry {
+  gap: 7px 13px;
+}
+
+.chapter-telemetry li {
+  padding: 4px 8px 4px 19px;
+  color: rgba(255, 253, 244, 0.9);
+  background: rgba(5, 12, 15, 0.7);
+  border: 1px solid rgba(255, 253, 244, 0.26);
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 0 100%);
+  box-shadow: 2px 2px 0 rgba(4, 9, 11, 0.62);
+}
+
+.chapter-telemetry li::before {
+  left: 8px;
+  width: 5px;
+  height: 5px;
+  background: var(--home-green);
+  border: 1px solid var(--home-anime-ink);
+  box-shadow: none;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.chapter-counter strong {
+  color: var(--home-green);
+  font-family: "Archivo Narrow", "DIN Condensed", sans-serif;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  paint-order: stroke fill;
+  -webkit-text-stroke: 1px var(--home-anime-ink);
+  text-shadow: 2px 2px 0 rgba(255, 253, 244, 0.22);
+}
+
+.chapter-counter i {
+  height: 2px;
+  background: repeating-linear-gradient(90deg, rgba(255, 253, 244, 0.74) 0 8px, transparent 8px 12px);
+}
+
+.chapter-nav-list::before {
+  background: repeating-linear-gradient(180deg, rgba(255, 253, 244, 0.46) 0 8px, transparent 8px 13px);
+}
+
+.side-dot::after {
+  border: 1px solid rgba(4, 9, 11, 0.6);
+}
+
+.side-dot.active span {
+  color: var(--home-anime-paper);
+  text-shadow:
+    2px 2px 0 var(--home-anime-ink),
+    0 3px 8px rgba(0, 0, 0, 0.46);
+}
+
+.side-dot.active::after {
+  width: 15px;
+  height: 3px;
+  border: 0;
+  box-shadow: 2px 2px 0 var(--home-anime-ink);
+  transform: rotate(-14deg);
+}
+
+.home-scroll-cue {
+  gap: 5px;
+  border-radius: 0;
+}
+
+.home-scroll-cue-motion {
+  filter: drop-shadow(2px 2px 0 rgba(4, 9, 11, 0.68));
+}
+
+.home-scroll-cue-mouse {
+  border: 2px solid currentColor;
+  border-radius: 2px 2px 7px 7px;
+}
+
+.home-scroll-cue-label {
+  padding: 4px 8px;
+  color: var(--home-anime-paper);
+  background: rgba(5, 12, 15, 0.72);
+  border: 1px solid rgba(255, 253, 244, 0.7);
+  clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px);
+  box-shadow: 2px 2px 0 rgba(4, 9, 11, 0.68);
+}
+
+.guardian-chat-bubble {
+  background:
+    radial-gradient(circle, rgba(17, 25, 28, 0.08) 0 0.8px, transparent 1px) 0 0 / 5px 5px,
+    rgba(255, 254, 247, 0.97);
+  border-radius: 4px;
+  box-shadow:
+    3px 3px 0 rgba(10, 17, 21, 0.88),
+    0 10px 22px rgba(3, 8, 11, 0.28);
+}
+
+.ncm-inspector-surface {
+  background:
+    radial-gradient(circle, rgba(255, 253, 244, 0.14) 0 1px, transparent 1.35px) 0 0 / 7px 7px,
+    linear-gradient(135deg, rgba(10, 26, 42, 0.8), rgba(5, 14, 25, 0.68));
+  backdrop-filter: blur(6px) saturate(0.86);
+}
+
+@media (max-width: 900px) {
+  .home-world-vignette::before {
+    width: 72vw;
+    height: 24vh;
+    opacity: 0.1;
+  }
+
+  .home-world-vignette::after {
+    width: 48vw;
+    height: 18vh;
+    opacity: 0.08;
+  }
+
+  html[data-i18n-scope="home"] .site-header .site-menu-toggle,
+  html[data-i18n-scope="home"] .site-header .site-menu-close {
+    border: 2px solid rgba(255, 253, 244, 0.5);
+    border-radius: 0;
+    clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+    box-shadow: 3px 3px 0 rgba(4, 9, 11, 0.76);
+  }
+
+  html[data-i18n-scope="home"] .site-header .site-menu-toggle span,
+  html[data-i18n-scope="home"] .site-header .site-menu-close span {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .chapter-card h1,
+  .chapter-card h2 {
+    -webkit-text-stroke-width: 0.8px;
+    text-shadow:
+      2px 2px 0 var(--home-anime-ink),
+      4px 4px 0 rgba(121, 209, 255, 0.18),
+      0 7px 16px rgba(0, 0, 0, 0.32);
+  }
+
+  .chapter-card h1::after,
+  .chapter-card h2::after {
+    height: 4px;
+    margin-top: 6px;
+  }
+
+  .eyebrow {
+    padding: 5px 10px 5px 12px;
+    filter: drop-shadow(2px 2px 0 rgba(4, 9, 11, 0.8));
+  }
+
+  .chapter-nav {
+    gap: 4px;
+  }
+
+  .chapter-counter {
+    grid-template-columns: auto 11px auto;
+    gap: 4px;
+  }
+
+  .chapter-counter strong {
+    font-size: 15px;
+  }
+
+  .chapter-nav-list::before {
+    background: repeating-linear-gradient(90deg, rgba(255, 253, 244, 0.42) 0 8px, transparent 8px 13px);
+  }
+
+  .side-dot.active::after {
+    transform: translateX(-50%) rotate(-14deg);
+  }
+
+  .chapter-telemetry li {
+    padding: 3px 7px 3px 17px;
+  }
+
+  .home-scroll-cue-label {
+    padding: 3px 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-i18n-scope="home"] .site-header .site-nav a,
+  .primary-action,
+  .secondary-action {
+    transition: none;
+  }
+}

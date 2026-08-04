@@ -228,6 +228,8 @@ assert.match(inspector, /const INSPECTOR_TIMING = Object\.freeze/u);
 assert.match(inspector, /target\.ncmCode/u);
 assert.match(inspector, /target\.voxelCount \/ Math\.max\(1, target\.payloadBytes\)/u);
 assert.match(inspector, /root\.dataset\.active = "false"/u);
+assert.match(inspector, /root\.setAttribute\("aria-hidden", "false"\)/u);
+assert.equal([...inspector.matchAll(/root\.setAttribute\("aria-hidden", "true"\)/gu)].length, 2);
 assert.match(inspector, /updateBuildingOutline\(detail\.outline\)/u);
 assert.match(inspector, /buildingOutline\.setAttribute\("d", path\)/u);
 assert.doesNotMatch(inspector, /setAttribute\("points"/u);

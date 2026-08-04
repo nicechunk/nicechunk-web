@@ -64,6 +64,7 @@ export function createHomeBuildingInspector(root) {
     updateBuildingOutline(detail.outline);
     updateConnector(detail, currentLayout);
     root.dataset.active = "true";
+    root.setAttribute("aria-hidden", "false");
     document.documentElement.classList.add("home-building-hover");
   }
 
@@ -71,6 +72,7 @@ export function createHomeBuildingInspector(root) {
     if (!currentDetail && root.dataset.active !== "true") return;
     currentDetail = null;
     root.dataset.active = "false";
+    root.setAttribute("aria-hidden", "true");
     document.documentElement.classList.remove("home-building-hover");
     if (closeTimer) window.clearTimeout(closeTimer);
     closeTimer = window.setTimeout(() => {
@@ -226,6 +228,8 @@ export function createHomeBuildingInspector(root) {
       if (closeTimer) window.clearTimeout(closeTimer);
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("nicechunk:languagechange", handleLanguageChange);
+      root.dataset.active = "false";
+      root.setAttribute("aria-hidden", "true");
       document.documentElement.classList.remove("home-building-hover");
     },
   });

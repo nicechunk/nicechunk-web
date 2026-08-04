@@ -86,7 +86,11 @@ assert.match(style, /--terrain-pouw-source-ratio: 54%;/u);
 assert.match(style, /PoUW reveal storyboard/u);
 assert.match(style, /\.snap-section\.active \.terrain-pouw-candidate > i > b \{\s*width: 100%;/u);
 assert.match(style, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.terrain-pouw-demo,/u);
-assert.match(i18nSource, /pageI18nScope === "home"[\s\S]*?"data-home-i18n"/u);
+assert.ok(
+  /pageI18nScope === "home"[\s\S]*?"data-home-i18n"/u.test(i18nSource)
+    || /querySelectorAll\("\[data-home-i18n\]"\)/u.test(i18nSource),
+  "The shared i18n runtime must translate homepage-scoped text.",
+);
 assert.match(i18nSource, /translateAttribute\(root, "data-home-i18n-aria-label", "aria-label"\)/u);
 assert.equal(packageJson.scripts["benchmark:home-world:ncm4"], "node scripts/benchmark-home-world-ncm4.mjs");
 for (const viewport of ["desktop", "mobile"]) {

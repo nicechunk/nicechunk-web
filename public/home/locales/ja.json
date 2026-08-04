@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ja",
     "label": "Japanese",
-    "version": "home-locale-ja-9da797057f223cb6",
-    "contentHash": "9da797057f223cb6"
+    "version": "home-locale-ja-a92ca4b3d1fd04d3",
+    "contentHash": "a92ca4b3d1fd04d3"
   },
   "common": {
     "language": "言語",
@@ -191,7 +191,21 @@
       "title": "Guardian ノード",
       "body": "リアルタイム中継、決済ではない"
     },
-    "guardianConsole": "Guardian コンソールを開く"
+    "guardianConsole": "Guardian コンソールを開く",
+    "chat": {
+      "pair0": {
+        "boy": "やあ！👋",
+        "girl": "こんにちは！😊"
+      },
+      "pair1": {
+        "boy": "Chunk 接続中？⛏️",
+        "girl": "同期完了！✅"
+      },
+      "pair2": {
+        "boy": "建築する？🧱",
+        "girl": "行こう！✨"
+      }
+    }
   },
   "rules": {
     "eyebrow": "明示された信頼境界",

@@ -2,8 +2,8 @@
   "_meta": {
     "language": "en",
     "label": "English",
-    "version": "home-locale-en-6b9644f3738d48b4",
-    "contentHash": "6b9644f3738d48b4"
+    "version": "home-locale-en-ef8790f331cdfdb2",
+    "contentHash": "ef8790f331cdfdb2"
   },
   "common": {
     "language": "Language",
@@ -191,7 +191,21 @@
       "title": "Guardian Node",
       "body": "Realtime relay, not settlement"
     },
-    "guardianConsole": "Open Guardian Console"
+    "guardianConsole": "Open Guardian Console",
+    "chat": {
+      "pair0": {
+        "boy": "Hi! 👋",
+        "girl": "Hello! 😊"
+      },
+      "pair1": {
+        "boy": "Chunk online? ⛏️",
+        "girl": "All synced! ✅"
+      },
+      "pair2": {
+        "boy": "Ready to build? 🧱",
+        "girl": "Let's go! ✨"
+      }
+    }
   },
   "rules": {
     "eyebrow": "Explicit Trust Boundary",

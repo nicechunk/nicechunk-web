@@ -2,8 +2,8 @@
   "_meta": {
     "language": "fr",
     "label": "French",
-    "version": "home-locale-fr-315226d49f91de37",
-    "contentHash": "315226d49f91de37"
+    "version": "home-locale-fr-57eebfc89b78e1aa",
+    "contentHash": "57eebfc89b78e1aa"
   },
   "common": {
     "language": "Langue",
@@ -191,7 +191,21 @@
       "title": "Nœud Guardian",
       "body": "Relais en temps réel, pas règlement"
     },
-    "guardianConsole": "Ouvrir la console Guardian"
+    "guardianConsole": "Ouvrir la console Guardian",
+    "chat": {
+      "pair0": {
+        "boy": "Salut ! 👋",
+        "girl": "Bonjour ! 😊"
+      },
+      "pair1": {
+        "boy": "Chunk en ligne ? ⛏️",
+        "girl": "Tout est synchronisé ! ✅"
+      },
+      "pair2": {
+        "boy": "Prêt à construire ? 🧱",
+        "girl": "C'est parti ! ✨"
+      }
+    }
   },
   "rules": {
     "eyebrow": "Limite de confiance explicite",

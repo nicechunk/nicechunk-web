@@ -129,7 +129,21 @@
       "title": "Guardian Node",
       "body": "Realtime relay, not settlement"
     },
-    "guardianConsole": "Open Guardian Console"
+    "guardianConsole": "Open Guardian Console",
+    "chat": {
+      "pair0": {
+        "boy": "Hi! 👋",
+        "girl": "Hello! 😊"
+      },
+      "pair1": {
+        "boy": "Chunk online? ⛏️",
+        "girl": "All synced! ✅"
+      },
+      "pair2": {
+        "boy": "Ready to build? 🧱",
+        "girl": "Let's go! ✨"
+      }
+    }
   },
   "rules": {
     "eyebrow": "Explicit Trust Boundary",

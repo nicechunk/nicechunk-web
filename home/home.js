@@ -1,6 +1,6 @@
 import "../src/site-header.css";
 import "./style.css";
-import { initI18n } from "../src/i18n.js";
+import { initI18n, t } from "../src/i18n.js";
 import { mountSiteHeader } from "../src/site-header.js";
 import { finishSiteLoading, setSiteLoadingProgress } from "../src/site-ui.js";
 import { createHomeBuildingInspector } from "./home-building-inspector.js";
@@ -13,6 +13,11 @@ const header = document.querySelector("#siteHeader");
 const chapterCurrent = document.querySelector("#chapterCurrent");
 const homeWorldCanvas = document.querySelector("#homeWorldCanvas");
 const homeBuildingInspectorRoot = document.querySelector("#homeBuildingInspector");
+const guardianChatLayer = document.querySelector("#guardianChatLayer");
+const guardianChatBubbles = Object.freeze({
+  boy: createGuardianChatBubbleController("boy"),
+  girl: createGuardianChatBubbleController("girl"),
+});
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 let activeSectionIndex = 0;
@@ -26,6 +31,7 @@ async function initHome() {
   homeBuildingInspector = createHomeBuildingInspector(homeBuildingInspectorRoot);
   homeWorldScene = createHomeWorldScene(homeWorldCanvas, {
     onBuildingInspect: (detail) => homeBuildingInspector?.update(detail),
+    onGuardianChat: updateGuardianChat,
   });
   homeWorldScene.focus(HOME_WORLD_SECTION_VIEWS[activeSectionIndex], { immediate: true });
 
@@ -150,6 +156,38 @@ function isEditableTarget(target) {
 
 function delay(milliseconds) {
   return new Promise((resolve) => window.setTimeout(resolve, milliseconds));
+}
+
+function createGuardianChatBubbleController(actor) {
+  const root = document.querySelector(`#guardianChat${actor[0].toUpperCase()}${actor.slice(1)}`);
+  return Object.freeze({
+    root,
+    copy: root?.querySelector(".guardian-chat-copy") || null,
+  });
+}
+
+function updateGuardianChat(detail) {
+  if (!guardianChatLayer) return;
+  const active = Boolean(detail);
+  guardianChatLayer.dataset.active = String(active);
+  if (!active) return;
+
+  guardianChatLayer.dataset.pair = String(detail.pairIndex);
+  guardianChatLayer.dataset.turn = detail.turn;
+  guardianChatLayer.dataset.gesture = detail.gesture;
+  for (const actor of ["boy", "girl"]) {
+    const bubble = guardianChatBubbles[actor];
+    const anchor = detail[actor];
+    if (!bubble?.root || !bubble.copy || !anchor) continue;
+    bubble.root.style.setProperty("--guardian-chat-x", `${anchor.x.toFixed(1)}px`);
+    bubble.root.style.setProperty("--guardian-chat-y", `${anchor.y.toFixed(1)}px`);
+    bubble.root.dataset.speaking = String(detail.turn === actor);
+    const key = `watchers.chat.pair${detail.pairIndex}.${actor}`;
+    if (bubble.copy.dataset.homeI18n !== key) {
+      bubble.copy.dataset.homeI18n = key;
+      bubble.copy.textContent = t(key);
+    }
+  }
 }
 
 window.addEventListener("pagehide", () => {

@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hans",
     "label": "Simplified Chinese",
-    "version": "home-locale-zh-Hans-c6c5e153498f4f9c",
-    "contentHash": "c6c5e153498f4f9c"
+    "version": "home-locale-zh-Hans-5fde85bd8222d1bb",
+    "contentHash": "5fde85bd8222d1bb"
   },
   "common": {
     "language": "语言",
@@ -191,7 +191,21 @@
       "title": "守护者节点",
       "body": "实时中继，不负责结算"
     },
-    "guardianConsole": "打开守护者控制台"
+    "guardianConsole": "打开守护者控制台",
+    "chat": {
+      "pair0": {
+        "boy": "嗨！👋",
+        "girl": "你好！😊"
+      },
+      "pair1": {
+        "boy": "区块已连接？⛏️",
+        "girl": "全部同步完成！✅"
+      },
+      "pair2": {
+        "boy": "准备建造？🧱",
+        "girl": "出发！✨"
+      }
+    }
   },
   "rules": {
     "eyebrow": "明确的信任边界",

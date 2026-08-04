@@ -2,8 +2,8 @@
   "_meta": {
     "language": "es",
     "label": "Spanish",
-    "version": "home-locale-es-1edf000cc768ed24",
-    "contentHash": "1edf000cc768ed24"
+    "version": "home-locale-es-6628aeecfc5e80eb",
+    "contentHash": "6628aeecfc5e80eb"
   },
   "common": {
     "language": "Idioma",
@@ -191,7 +191,21 @@
       "title": "Nodo Guardian",
       "body": "Relé en tiempo real, no liquidación"
     },
-    "guardianConsole": "Abrir consola Guardian"
+    "guardianConsole": "Abrir consola Guardian",
+    "chat": {
+      "pair0": {
+        "boy": "¡Hola! 👋",
+        "girl": "¡Buenas! 😊"
+      },
+      "pair1": {
+        "boy": "¿Chunk conectado? ⛏️",
+        "girl": "¡Todo sincronizado! ✅"
+      },
+      "pair2": {
+        "boy": "¿Listos para construir? 🧱",
+        "girl": "¡Vamos! ✨"
+      }
+    }
   },
   "rules": {
     "eyebrow": "Límite de confianza explícito",

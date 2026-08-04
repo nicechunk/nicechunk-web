@@ -2,8 +2,8 @@
   "_meta": {
     "language": "de",
     "label": "German",
-    "version": "home-locale-de-91f32d55477a74bf",
-    "contentHash": "91f32d55477a74bf"
+    "version": "home-locale-de-0396e6a2e3f17d21",
+    "contentHash": "0396e6a2e3f17d21"
   },
   "common": {
     "language": "Sprache",
@@ -191,7 +191,21 @@
       "title": "Guardian-Knoten",
       "body": "Echtzeit-Relay, keine Abwicklung"
     },
-    "guardianConsole": "Guardian-Konsole öffnen"
+    "guardianConsole": "Guardian-Konsole öffnen",
+    "chat": {
+      "pair0": {
+        "boy": "Hallo! 👋",
+        "girl": "Hi! 😊"
+      },
+      "pair1": {
+        "boy": "Chunk online? ⛏️",
+        "girl": "Alles synchronisiert! ✅"
+      },
+      "pair2": {
+        "boy": "Bereit zum Bauen? 🧱",
+        "girl": "Los geht's! ✨"
+      }
+    }
   },
   "rules": {
     "eyebrow": "Explizite Vertrauensgrenze",

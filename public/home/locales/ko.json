@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ko",
     "label": "Korean",
-    "version": "home-locale-ko-90cf49db04f3e22a",
-    "contentHash": "90cf49db04f3e22a"
+    "version": "home-locale-ko-63c237c84fac39b4",
+    "contentHash": "63c237c84fac39b4"
   },
   "common": {
     "language": "언어",
@@ -191,7 +191,21 @@
       "title": "Guardian 노드",
       "body": "실시간 중계, 결제 아님"
     },
-    "guardianConsole": "Guardian 콘솔 열기"
+    "guardianConsole": "Guardian 콘솔 열기",
+    "chat": {
+      "pair0": {
+        "boy": "안녕! 👋",
+        "girl": "반가워! 😊"
+      },
+      "pair1": {
+        "boy": "청크 연결됐어? ⛏️",
+        "girl": "모두 동기화됐어! ✅"
+      },
+      "pair2": {
+        "boy": "건설할 준비됐어? 🧱",
+        "girl": "가자! ✨"
+      }
+    }
   },
   "rules": {
     "eyebrow": "명시적 신뢰 경계",

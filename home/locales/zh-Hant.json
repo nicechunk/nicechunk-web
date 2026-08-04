@@ -129,7 +129,21 @@
       "title": "Guardian 節點",
       "body": "即時中繼，不負責結算"
     },
-    "guardianConsole": "開啟 Guardian 控制台"
+    "guardianConsole": "開啟 Guardian 控制台",
+    "chat": {
+      "pair0": {
+        "boy": "嗨！👋",
+        "girl": "你好！😊"
+      },
+      "pair1": {
+        "boy": "區塊已連線？⛏️",
+        "girl": "全部同步完成！✅"
+      },
+      "pair2": {
+        "boy": "準備建造？🧱",
+        "girl": "出發！✨"
+      }
+    }
   },
   "rules": {
     "eyebrow": "明確的信任邊界",

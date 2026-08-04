@@ -67,6 +67,14 @@
       <div class="home-world-static"></div>
       <canvas id="homeWorldCanvas" data-scene-ready="false" data-scene-renderer="chunk.js-webgl2"></canvas>
       <div class="home-world-vignette"></div>
+      <div class="guardian-chat-layer" id="guardianChatLayer" data-active="false">
+        <div class="guardian-chat-bubble guardian-chat-bubble-boy" id="guardianChatBoy" data-speaking="true">
+          <span class="guardian-chat-copy" data-home-i18n="watchers.chat.pair0.boy">Hi! 👋</span>
+        </div>
+        <div class="guardian-chat-bubble guardian-chat-bubble-girl" id="guardianChatGirl" data-speaking="false">
+          <span class="guardian-chat-copy" data-home-i18n="watchers.chat.pair0.girl">Hello! 😊</span>
+        </div>
+      </div>
     </div>
 
     <div class="home-building-inspector" id="homeBuildingInspector" data-active="false" data-side="right" aria-hidden="true">

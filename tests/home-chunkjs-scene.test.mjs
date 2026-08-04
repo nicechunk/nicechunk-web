@@ -51,6 +51,10 @@ const homeLocales = await Promise.all(homeLocaleCodes.map(async (language) => ({
 
 assert.match(html, /id="homeWorldCanvas"/u);
 assert.match(html, /id="homeBuildingInspector"/u);
+assert.match(html, /id="guardianChatLayer" data-active="false"/u);
+assert.match(html, /id="guardianChatBoy" data-speaking="true"/u);
+assert.match(html, /id="guardianChatGirl" data-speaking="false"/u);
+assert.equal([...html.matchAll(/data-home-i18n="watchers\.chat\.pair0\.(?:boy|girl)"/gu)].length, 2);
 assert.match(html, /id="ncmInspectorBuildingOutline"/u);
 assert.match(html, /id="ncmInspectorBuildingOutlineShadow"/u);
 assert.equal([...html.matchAll(/pathLength="1"/gu)].length, 2);
@@ -86,6 +90,10 @@ assert.match(style, /--terrain-pouw-source-ratio: 54%;/u);
 assert.match(style, /PoUW reveal storyboard/u);
 assert.match(style, /\.snap-section\.active \.terrain-pouw-candidate > i > b \{\s*width: 100%;/u);
 assert.match(style, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.terrain-pouw-demo,/u);
+assert.match(style, /\.guardian-chat-layer\[data-active="true"\]/u);
+assert.match(style, /\.guardian-chat-bubble-boy \{[\s\S]*?--guardian-chat-tail-x: 84%;/u);
+assert.match(style, /\.guardian-chat-bubble-girl \{[\s\S]*?--guardian-chat-tail-x: 16%;/u);
+assert.match(style, /@keyframes guardian-chat-talk/u);
 assert.ok(
   /pageI18nScope === "home"[\s\S]*?"data-home-i18n"/u.test(i18nSource)
     || /querySelectorAll\("\[data-home-i18n\]"\)/u.test(i18nSource),
@@ -126,6 +134,9 @@ assert.ok(
 assert.equal([...home.matchAll(/createHomeWorldScene\(homeWorldCanvas, \{/gu)].length, 1);
 assert.equal([...home.matchAll(/createHomeBuildingInspector\(homeBuildingInspectorRoot\)/gu)].length, 1);
 assert.match(home, /onBuildingInspect: \(detail\) => homeBuildingInspector\?\.update\(detail\)/u);
+assert.match(home, /onGuardianChat: updateGuardianChat/u);
+assert.match(home, /watchers\.chat\.pair\$\{detail\.pairIndex\}\.\$\{actor\}/u);
+assert.match(home, /bubble\.copy\.textContent = t\(key\)/u);
 assert.match(home, /HOME_WORLD_SECTION_VIEWS\[activeSectionIndex\]/u);
 assert.match(home, /visibility = new Map/u);
 assert.match(home, /ratio < 0\.15/u);
@@ -168,6 +179,17 @@ assert.match(scene, /setCameraTransitioning\(cameraTransitionActive\(timestamp\)
 assert.match(scene, /const enabled = !cameraTransitioning/u);
 assert.match(scene, /canvas\.dataset\.sceneCameraTransitioning = String\(active\)/u);
 assert.match(scene, /\.terrain-pouw-demo/u);
+assert.match(scene, /const GUARDIAN_DIALOGUE_PAIR_COUNT = 3;/u);
+assert.match(scene, /updateGuardianChat\(cameraPose, timestamp\)/u);
+assert.match(scene, /projectAvatarChatAnchor\(boy, cameraPose, viewport\)/u);
+assert.match(scene, /options\.onGuardianChat\?\.\(detail\)/u);
+assert.match(scene, /guardianActorGesture\(guardianDialogue, "boy"/u);
+assert.match(scene, /guardianActorGesture\(guardianDialogue, "girl"/u);
+assert.match(scene, /pairElapsed < GUARDIAN_DIALOGUE_PAIR_MS \* 0\.5 \? "boy" : "girl"/u);
+assert.match(scene, /equipment: boyGuardianGesture[\s\S]*?\{ rightHand: "empty" \}/u);
+assert.doesNotMatch(scene, /avatarRelayOverlay/u);
+const guardianOverlayBlock = scene.match(/function overlaysForView\(timestamp\) \{[\s\S]*?\n  \}\n\n  function surfaceYAt/u)?.[0] || "";
+assert.doesNotMatch(guardianOverlayBlock, /focusView === "guardian"/u);
 
 assert.match(inspector, /const INSPECTOR_TIMING = Object\.freeze/u);
 assert.match(inspector, /target\.ncmCode/u);
@@ -188,6 +210,7 @@ assert.match(style, /font: 650 11px\/1\.52/u);
 for (const { language, source, public: publicLocale } of homeLocales) {
   assert.deepEqual(publicLocale.buildingInspector, source.buildingInspector, `Public ${language} inspector copy is stale.`);
   assert.deepEqual(publicLocale.terrainPouw, source.terrainPouw, `Public ${language} terrain PoUW copy is stale.`);
+  assert.deepEqual(publicLocale.watchers.chat, source.watchers.chat, `Public ${language} Guardian chat copy is stale.`);
   const { _meta: meta, ...publicBody } = publicLocale;
   const contentHash = createHash("sha256").update(JSON.stringify(publicBody)).digest("hex").slice(0, 16);
   assert.equal(meta.contentHash, contentHash, `Public ${language} locale hash is stale.`);
@@ -200,6 +223,13 @@ for (const { language, source, public: publicLocale } of homeLocales) {
     for (const key of ["aria", "eyebrow", "title", "source", "candidate", "proof", "exact", "decision", "retained", "larger", "summary", "caveat", "report", "bundle", "miner"]) {
       assert.equal(typeof dictionary.terrainPouw?.[key], "string", `Missing ${language} terrain PoUW ${key} copy.`);
       assert.ok(dictionary.terrainPouw[key].trim().length > 0, `Empty ${language} terrain PoUW ${key} copy.`);
+    }
+    for (const pair of ["pair0", "pair1", "pair2"]) {
+      for (const actor of ["boy", "girl"]) {
+        const line = dictionary.watchers?.chat?.[pair]?.[actor];
+        assert.equal(typeof line, "string", `Missing ${language} ${pair} ${actor} Guardian chat line.`);
+        assert.match(line, /[\p{Extended_Pictographic}\u2705]/u, `Missing ${language} ${pair} ${actor} chat Emoji.`);
+      }
     }
   }
 }

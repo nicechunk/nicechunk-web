@@ -129,7 +129,21 @@
       "title": "Guardian-Knoten",
       "body": "Echtzeit-Relay, keine Abwicklung"
     },
-    "guardianConsole": "Guardian-Konsole öffnen"
+    "guardianConsole": "Guardian-Konsole öffnen",
+    "chat": {
+      "pair0": {
+        "boy": "Hallo! 👋",
+        "girl": "Hi! 😊"
+      },
+      "pair1": {
+        "boy": "Chunk online? ⛏️",
+        "girl": "Alles synchronisiert! ✅"
+      },
+      "pair2": {
+        "boy": "Bereit zum Bauen? 🧱",
+        "girl": "Los geht's! ✨"
+      }
+    }
   },
   "rules": {
     "eyebrow": "Explizite Vertrauensgrenze",

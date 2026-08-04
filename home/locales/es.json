@@ -129,7 +129,21 @@
       "title": "Nodo Guardian",
       "body": "Relé en tiempo real, no liquidación"
     },
-    "guardianConsole": "Abrir consola Guardian"
+    "guardianConsole": "Abrir consola Guardian",
+    "chat": {
+      "pair0": {
+        "boy": "¡Hola! 👋",
+        "girl": "¡Buenas! 😊"
+      },
+      "pair1": {
+        "boy": "¿Chunk conectado? ⛏️",
+        "girl": "¡Todo sincronizado! ✅"
+      },
+      "pair2": {
+        "boy": "¿Listos para construir? 🧱",
+        "girl": "¡Vamos! ✨"
+      }
+    }
   },
   "rules": {
     "eyebrow": "Límite de confianza explícito",

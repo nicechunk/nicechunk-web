@@ -101,6 +101,116 @@ img {
   transition: background 360ms ease;
 }
 
+.guardian-chat-layer {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 160ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 160ms;
+}
+
+.guardian-chat-layer[data-active="true"] {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
+}
+
+.home-camera-transitioning .guardian-chat-layer {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.guardian-chat-bubble {
+  --guardian-chat-shift-x: -50%;
+  --guardian-chat-tail-x: 50%;
+  --guardian-chat-origin-x: 50%;
+  position: absolute;
+  top: var(--guardian-chat-y, 45%);
+  left: var(--guardian-chat-x, 50%);
+  display: grid;
+  place-items: center;
+  width: max-content;
+  min-width: 74px;
+  max-width: min(220px, 30vw);
+  min-height: 42px;
+  padding: 9px 13px 10px;
+  color: #182029;
+  background: rgba(255, 254, 247, 0.96);
+  border: 2px solid rgba(19, 29, 36, 0.9);
+  border-radius: 18px;
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.72) inset,
+    0 4px 0 rgba(10, 17, 21, 0.34),
+    0 10px 24px rgba(3, 8, 11, 0.34);
+  opacity: 0.82;
+  transform: translate(var(--guardian-chat-shift-x), calc(-100% - 9px)) scale(0.94);
+  transform-origin: var(--guardian-chat-origin-x) 100%;
+  transition:
+    opacity 150ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 150ms ease;
+  will-change: left, top, transform;
+}
+
+.guardian-chat-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: var(--guardian-chat-tail-x);
+  width: 13px;
+  height: 13px;
+  background: inherit;
+  border-right: 2px solid rgba(19, 29, 36, 0.9);
+  border-bottom: 2px solid rgba(19, 29, 36, 0.9);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.guardian-chat-bubble-boy {
+  --guardian-chat-shift-x: -88%;
+  --guardian-chat-tail-x: 84%;
+  --guardian-chat-origin-x: 84%;
+}
+
+.guardian-chat-bubble-girl {
+  --guardian-chat-shift-x: -12%;
+  --guardian-chat-tail-x: 16%;
+  --guardian-chat-origin-x: 16%;
+}
+
+.guardian-chat-bubble[data-speaking="true"] {
+  background: #fffef7;
+  opacity: 1;
+  animation: guardian-chat-talk 1.35s ease-in-out infinite;
+}
+
+.guardian-chat-copy {
+  position: relative;
+  z-index: 1;
+  overflow-wrap: anywhere;
+  font-family: "Archivo Narrow", "DIN Condensed", sans-serif;
+  font-size: clamp(13px, 1.05vw, 16px);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  line-height: 1.18;
+  text-align: center;
+  text-wrap: balance;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.78);
+}
+
+@keyframes guardian-chat-talk {
+  0%,
+  100% {
+    transform: translate(var(--guardian-chat-shift-x), calc(-100% - 9px)) scale(1);
+  }
+  50% {
+    transform: translate(var(--guardian-chat-shift-x), calc(-100% - 12px)) scale(1.025);
+  }
+}
+
 html[data-home-chapter="market"] .home-world-vignette {
   background:
     linear-gradient(90deg, rgba(4, 9, 11, 0.08) 15%, transparent 48%, rgba(4, 9, 11, 0.42)),
@@ -1690,6 +1800,24 @@ html[data-i18n-scope="home"] .site-header.scrolled {
       linear-gradient(90deg, rgba(4, 9, 11, 0.08), transparent 52%, rgba(4, 9, 11, 0.08));
   }
 
+  .guardian-chat-bubble {
+    min-width: 60px;
+    max-width: min(150px, 42vw);
+    min-height: 36px;
+    padding: 7px 10px 8px;
+    border-width: 1.5px;
+    border-radius: 15px;
+  }
+
+  .guardian-chat-bubble::after {
+    border-right-width: 1.5px;
+    border-bottom-width: 1.5px;
+  }
+
+  .guardian-chat-copy {
+    font-size: 11px;
+  }
+
   .snap-section {
     min-height: 100svh;
     padding:
@@ -2089,6 +2217,16 @@ html[data-i18n-scope="home"] .site-header.scrolled {
   .ncm-inspector-code-heading,
   .ncm-inspector-code {
     transition: none;
+  }
+
+  .guardian-chat-layer,
+  .guardian-chat-bubble {
+    transition: none;
+  }
+
+  .guardian-chat-bubble[data-speaking="true"] {
+    animation: none;
+    transform: translate(var(--guardian-chat-shift-x), calc(-100% - 9px)) scale(1);
   }
 
   .terrain-pouw-demo,

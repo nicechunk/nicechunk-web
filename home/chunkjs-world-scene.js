@@ -32,6 +32,9 @@ const SECTION_VIEWS = Object.freeze(["arrival", "world", "market", "guardian", "
 const CAMERA_TRANSITION_MS = 1_180;
 const WINDMILL_ROTATION_MS = 42_000;
 const WINDMILL_FRAME_MS = 1_000 / 12;
+const GUARDIAN_DIALOGUE_PAIR_COUNT = 3;
+const GUARDIAN_DIALOGUE_PAIR_MS = 5_400;
+const GUARDIAN_CHAT_HEAD_CLEARANCE = 0.72;
 const WINDMILL_VERTEX_PACK_SCALE = 64;
 const BUILDING_INSPECTOR_MIN_VIEWPORT = 901;
 const BUILDING_INSPECTOR_MIN_TARGET_PX = 30;
@@ -157,6 +160,7 @@ export function createHomeWorldScene(canvas, options = {}) {
   let pointerClientY = -1;
   let pointerInspectionEligible = false;
   let inspectedBuildingId = "";
+  let guardianChatVisible = false;
   let transitionStart = startedAt;
   let cameraTransitioning = false;
   let focusStartedAt = startedAt;
@@ -199,6 +203,7 @@ export function createHomeWorldScene(canvas, options = {}) {
     cameraStart = resolveCameraPose(timestamp, false);
     focusView = view;
     focusStartedAt = timestamp;
+    if (view !== "guardian") emitGuardianChat(null);
     cameraTarget = cameraPoseForView(view, canvasAspect(canvas));
     transitionStart = immediate || reducedMotion.matches ? timestamp - CAMERA_TRANSITION_MS : timestamp;
     setCameraTransitioning(cameraTransitionActive(timestamp));
@@ -262,6 +267,7 @@ export function createHomeWorldScene(canvas, options = {}) {
     });
     const renderStats = renderer.render(camera, visibleChunks, avatars, overlaysForView(timestamp));
     updateBuildingInspection(cameraPose);
+    updateGuardianChat(cameraPose, timestamp);
     const readiness = cameraReadiness(camera);
     lastStats = Object.freeze({
       backend: "chunk.js-webgl2",
@@ -338,6 +344,15 @@ export function createHomeWorldScene(canvas, options = {}) {
       boyPose = focusedIdlePose(ACTOR_SITES.guardianBoy, ACTOR_SITES.guardianGirl, focusElapsed);
       girlPose = focusedIdlePose(ACTOR_SITES.guardianGirl, ACTOR_SITES.guardianBoy, focusElapsed);
     }
+    const guardianDialogue = focusView === "guardian"
+      ? guardianDialogueState(focusElapsed, reducedMotion.matches)
+      : null;
+    const boyGuardianGesture = guardianDialogue
+      ? guardianActorGesture(guardianDialogue, "boy", focusElapsed, reducedMotion.matches)
+      : null;
+    const girlGuardianGesture = guardianDialogue
+      ? guardianActorGesture(guardianDialogue, "girl", focusElapsed, reducedMotion.matches)
+      : null;
     const miningActive = boyPose.phase === "mine";
     const forgingActive = boyPose.phase === "forge";
     const miningProgress = miningActive ? boyPose.progress : 0;
@@ -345,12 +360,15 @@ export function createHomeWorldScene(canvas, options = {}) {
 
     if (boy) {
       positionAvatarAt(runtime, worldConfig, chunks, structureWalkSurfaces, boy, boyPose);
+      applyGuardianGesture(boy, boyGuardianGesture);
       boy.animation = {
         moving: boyPose.phase === "walk" && !reducedMotion.matches,
-        miningProgress: forgingActive ? forgingProgress : miningProgress,
-        miningAimPitch: forgingActive ? -0.34 : miningAimPitchFor(boy),
+        miningProgress: boyGuardianGesture?.armProgress ?? (forgingActive ? forgingProgress : miningProgress),
+        miningAimPitch: boyGuardianGesture?.armPitch ?? (forgingActive ? -0.34 : miningAimPitchFor(boy)),
         timeMs: timestamp,
-        equipment: forgingActive
+        equipment: boyGuardianGesture
+          ? { rightHand: "empty" }
+          : forgingActive
           ? {
               rightHand: "forged_pickaxe",
               forged: true,
@@ -362,9 +380,13 @@ export function createHomeWorldScene(canvas, options = {}) {
     }
     if (girl) {
       positionAvatarAt(runtime, worldConfig, chunks, structureWalkSurfaces, girl, girlPose);
+      applyGuardianGesture(girl, girlGuardianGesture);
       girl.animation = {
         moving: girlPose.phase === "walk" && !reducedMotion.matches,
+        miningProgress: girlGuardianGesture?.armProgress ?? 0,
+        miningAimPitch: girlGuardianGesture?.armPitch ?? 0,
         timeMs: timestamp,
+        equipment: { rightHand: "empty" },
       };
       exposeActorState(canvas, "girl", girl, girlPose);
     }
@@ -438,29 +460,6 @@ export function createHomeWorldScene(canvas, options = {}) {
           : [0.4, 0.82, 1, 0.46],
       }));
       return flow;
-    }
-    if (focusView === "guardian") {
-      const [boy, girl] = avatars;
-      if (!boy || !girl) return [];
-      const minX = Math.min(boy.worldX, girl.worldX);
-      const minZ = Math.min(boy.worldZ, girl.worldZ);
-      return [
-        avatarRelayOverlay(boy, pulse),
-        avatarRelayOverlay(girl, pulse),
-        {
-          shape: "foundation",
-          worldX: minX,
-          worldY: Math.min(boy.worldY, girl.worldY) + 0.04,
-          worldZ: minZ,
-          width: Math.max(1, Math.abs(girl.worldX - boy.worldX) + 1),
-          depth: Math.max(1, Math.abs(girl.worldZ - boy.worldZ) + 1),
-          preview: false,
-          grid: false,
-          fillColor: [0.12, 0.72, 1, 0.016],
-          edgeColor: [0.32, 0.88, 1, pulse * 0.5],
-          glowColor: [0.2, 0.78, 1, pulse * 0.2],
-        },
-      ];
     }
     if (focusView === "roadmap") {
       return [
@@ -558,6 +557,71 @@ export function createHomeWorldScene(canvas, options = {}) {
     options.onBuildingInspect?.(null);
   }
 
+  function updateGuardianChat(cameraPose, timestamp) {
+    if (typeof options.onGuardianChat !== "function") return;
+    if (focusView !== "guardian" || cameraTransitioning || canvas.dataset.sceneReady !== "true") {
+      emitGuardianChat(null);
+      return;
+    }
+    const boy = avatars.find((avatar) => avatar.role === "villager-boy");
+    const girl = avatars.find((avatar) => avatar.role === "villager-girl");
+    if (!boy || !girl) {
+      emitGuardianChat(null);
+      return;
+    }
+
+    const viewport = canvas.getBoundingClientRect();
+    const boyAnchor = projectAvatarChatAnchor(boy, cameraPose, viewport);
+    const girlAnchor = projectAvatarChatAnchor(girl, cameraPose, viewport);
+    if (!boyAnchor || !girlAnchor) {
+      emitGuardianChat(null);
+      return;
+    }
+
+    const dialogue = guardianDialogueState(Math.max(0, timestamp - focusStartedAt), reducedMotion.matches);
+    canvas.dataset.sceneGuardianDialoguePair = String(dialogue.pairIndex);
+    canvas.dataset.sceneGuardianDialogueTurn = dialogue.turn;
+    canvas.dataset.sceneGuardianGesture = dialogue.gesture;
+    emitGuardianChat({
+      pairIndex: dialogue.pairIndex,
+      turn: dialogue.turn,
+      gesture: dialogue.gesture,
+      boy: boyAnchor,
+      girl: girlAnchor,
+    });
+  }
+
+  function projectAvatarChatAnchor(avatar, cameraPose, viewport) {
+    const anchor = projectWorldPoint([
+      avatar.worldX + avatar.localOffsetX,
+      avatar.worldY + (avatar.localOffsetY || 0) + AVATAR_HEIGHT_BLOCKS + GUARDIAN_CHAT_HEAD_CLEARANCE,
+      avatar.worldZ + avatar.localOffsetZ,
+    ], cameraPose, viewport);
+    if (!anchor) return null;
+    const margin = 56;
+    if (
+      anchor.x < viewport.left - margin
+      || anchor.x > viewport.right + margin
+      || anchor.y < viewport.top - margin
+      || anchor.y > viewport.bottom + margin
+    ) return null;
+    return { x: anchor.x, y: anchor.y, depth: anchor.depth };
+  }
+
+  function emitGuardianChat(detail) {
+    if (detail) {
+      guardianChatVisible = true;
+      options.onGuardianChat?.(detail);
+      return;
+    }
+    if (!guardianChatVisible) return;
+    guardianChatVisible = false;
+    delete canvas.dataset.sceneGuardianDialoguePair;
+    delete canvas.dataset.sceneGuardianDialogueTurn;
+    delete canvas.dataset.sceneGuardianGesture;
+    options.onGuardianChat?.(null);
+  }
+
   function markReady() {
     startedAt = performance.now();
     lastMiningBurst = -1;
@@ -581,6 +645,7 @@ export function createHomeWorldScene(canvas, options = {}) {
     canvas.dataset.sceneEconomyResourceClusters = String(SCENE_RESOURCE_CLUSTERS.length - 1);
     canvas.dataset.sceneMiningTarget = `${MINING_TARGET.x},${MINING_TARGET.y},${MINING_TARGET.z}`;
     canvas.dataset.sceneActionModes = "terrain-delta,material-flow,guardian-relay,building-progress";
+    canvas.dataset.sceneGuardianDialoguePairs = String(GUARDIAN_DIALOGUE_PAIR_COUNT);
     canvas.dataset.sceneWindmillRotationMs = String(WINDMILL_ROTATION_MS);
     canvas.dataset.sceneWindmillAngle ||= "0.00000";
     canvas.dataset.sceneWindmillRotating = String(!reducedMotion.matches);
@@ -692,6 +757,7 @@ export function createHomeWorldScene(canvas, options = {}) {
 
   function handleUnavailable(error) {
     emitBuildingInspection(null);
+    emitGuardianChat(null);
     setCameraTransitioning(false);
     renderer?.dispose();
     chunks?.dispose();
@@ -714,6 +780,7 @@ export function createHomeWorldScene(canvas, options = {}) {
   const handleVisibility = () => {
     if (document.hidden) {
       emitBuildingInspection(null);
+      emitGuardianChat(null);
       setCameraTransitioning(false);
       if (animationFrame) cancelAnimationFrame(animationFrame);
       animationFrame = 0;
@@ -776,6 +843,7 @@ export function createHomeWorldScene(canvas, options = {}) {
       settle("destroyed");
       if (animationFrame) cancelAnimationFrame(animationFrame);
       emitBuildingInspection(null);
+      emitGuardianChat(null);
       resizeObserver?.disconnect();
       cleanups.forEach((cleanup) => cleanup());
       renderer?.dispose();
@@ -1480,18 +1548,43 @@ function focusedIdlePose(site, lookAt, elapsedMs) {
   };
 }
 
-function avatarRelayOverlay(avatar, pulse) {
+function guardianDialogueState(elapsedMs, reducedMotion) {
+  const safeElapsed = reducedMotion ? 0 : Math.max(0, Number(elapsedMs) || 0);
+  const pairElapsed = safeElapsed % GUARDIAN_DIALOGUE_PAIR_MS;
+  const pairIndex = reducedMotion
+    ? 0
+    : Math.floor(safeElapsed / GUARDIAN_DIALOGUE_PAIR_MS) % GUARDIAN_DIALOGUE_PAIR_COUNT;
   return {
-    worldX: avatar.worldX + avatar.localOffsetX - 0.6,
-    worldY: avatar.worldY,
-    worldZ: avatar.worldZ + avatar.localOffsetZ - 0.6,
-    sizeX: 1.2,
-    sizeY: AVATAR_HEIGHT_BLOCKS,
-    sizeZ: 1.2,
-    expand: 0.03,
-    fillColor: [0.12, 0.72, 1, 0.025],
-    lineColor: [0.32, 0.88, 1, pulse * 0.72],
+    pairIndex,
+    turn: pairElapsed < GUARDIAN_DIALOGUE_PAIR_MS * 0.5 ? "boy" : "girl",
+    gesture: ["wave", "confirm", "cheer"][pairIndex],
   };
+}
+
+function guardianActorGesture(dialogue, actor, elapsedMs, reducedMotion) {
+  if (!dialogue) return null;
+  const speaking = dialogue.turn === actor;
+  if (reducedMotion) return { armProgress: 0, armPitch: 0, bob: 0, yawOffset: 0 };
+
+  const time = Math.max(0, Number(elapsedMs) || 0);
+  const wave = (Math.sin(time * 0.009 + (actor === "girl" ? Math.PI : 0)) + 1) * 0.5;
+  const cheer = dialogue.gesture === "cheer";
+  const armProgress = speaking || cheer
+    ? 0.105 + wave * (cheer ? 0.07 : 0.045)
+    : 0;
+  const bobStrength = cheer ? 0.045 : speaking ? 0.022 : 0.008;
+  return {
+    armProgress,
+    armPitch: cheer ? 0.16 : 0.08,
+    bob: Math.sin(time * (cheer ? 0.011 : 0.006) + (actor === "girl" ? 0.7 : 0)) * bobStrength,
+    yawOffset: speaking ? Math.sin(time * 0.004) * 0.035 : 0,
+  };
+}
+
+function applyGuardianGesture(avatar, gesture) {
+  if (!avatar || !gesture) return;
+  avatar.localOffsetY = gesture.bob;
+  avatar.yaw += gesture.yawOffset;
 }
 
 function buildingProgressOverlay(worldX, worldZ, width, depth, pulse) {
@@ -1673,6 +1766,7 @@ function positionAvatarAt(runtime, worldConfig, chunks, structureWalkSurfaces, a
   avatar.worldY = worldY;
   avatar.worldZ = worldZ;
   avatar.localOffsetX = actualX - worldX;
+  avatar.localOffsetY = 0;
   avatar.localOffsetZ = actualZ - worldZ;
   avatar.yaw = pose.yaw;
   avatar.shadowWorldY = worldY;

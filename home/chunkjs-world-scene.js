@@ -48,7 +48,7 @@ const BUILDING_OUTLINE_SIMPLIFY_TOLERANCE = 0.6;
 const AVATAR_HEIGHT_BLOCKS = 1.75 / 0.4;
 const AVATAR_VISUAL_SCALE = AVATAR_HEIGHT_BLOCKS / 2.52;
 const FORGE_WORLD_UNITS_PER_METER = 1 / 0.4;
-const HOMEPAGE_HAMMER_GRIP_AXIS = 1;
+const HOMEPAGE_HAMMER_GRIP_ROLL_QUARTER_TURNS = 1;
 const buildingOutlineCache = new WeakMap();
 let buildingOutlineMaskCanvas = null;
 const ACTOR_ROUTES = Object.freeze({
@@ -1645,9 +1645,7 @@ async function createInitialSceneMeshes(runtime) {
 async function createDeferredSceneAssets(runtime, runtimeRoot, boyCode) {
   const forgeModule = await loadForgeRuntime(runtimeRoot);
   const forgeCache = new forgeModule.ForgeRuntimeCache({ maxEntries: 4, maxBytes: 2 * 1024 * 1024 });
-  const hammerRuntime = orientHomepageHammerGrip(
-    restoreItemRuntime(forgeCache, ironBlacksmithHammerDefinition),
-  );
+  const hammerRuntime = restoreItemRuntime(forgeCache, ironBlacksmithHammerDefinition);
   const workbenchRuntime = restoreItemRuntime(forgeCache, timberWorkbenchDefinition);
   const forgedToolRuntime = restoreItemRuntime(forgeCache, ironDeepRockPickaxeDefinition);
   return {
@@ -1658,6 +1656,7 @@ async function createDeferredSceneAssets(runtime, runtimeRoot, boyCode) {
       attachForgedPickaxe: true,
       forgeRuntime: hammerRuntime,
       forgeMetersToWorldUnits: FORGE_WORLD_UNITS_PER_METER,
+      forgeGripRollQuarterTurns: HOMEPAGE_HAMMER_GRIP_ROLL_QUARTER_TURNS,
     }),
     workbenchMesh: forgeRuntimeToSceneMesh(workbenchRuntime, {
       name: "economy-workbench",
@@ -1679,19 +1678,6 @@ function restoreItemRuntime(cache, definition) {
   return cache.restore(definition.forge.code, {
     expectedDesignHash: definition.forge.designHash,
     requireCanonical: true,
-  });
-}
-
-function orientHomepageHammerGrip(runtime) {
-  if (!runtime?.grip?.offsetQ) throw new Error("The homepage hammer grip is unavailable.");
-  return Object.freeze({
-    ...runtime,
-    grip: Object.freeze({
-      ...runtime.grip,
-      axis: HOMEPAGE_HAMMER_GRIP_AXIS,
-      sign: 1,
-      rotation: 1,
-    }),
   });
 }
 

@@ -2,7 +2,7 @@ import "../src/site-header.css";
 import "./style.css";
 import { initI18n, t } from "../src/i18n.js";
 import { mountSiteHeader } from "../src/site-header.js";
-import { finishSiteLoading, setSiteLoadingProgress } from "../src/site-ui.js";
+import { claimSiteLoading, finishSiteLoading, setSiteLoadingProgress } from "../src/site-ui.js";
 import { createHomeBuildingInspector } from "./home-building-inspector.js";
 import { createHomeWorldScene, HOME_WORLD_SECTION_VIEWS } from "./chunkjs-world-scene.js";
 
@@ -19,6 +19,10 @@ const guardianChatBubbles = Object.freeze({
   girl: createGuardianChatBubbleController("girl"),
 });
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const HOME_WORLD_READY_TIMEOUT_MS = 12_000;
+const HOME_WORLD_VISUAL_HANDOFF_TIMEOUT_MS = 1_200;
+
+claimSiteLoading();
 
 let activeSectionIndex = 0;
 let homeWorldScene = null;
@@ -46,7 +50,11 @@ async function initHome() {
   setActiveSection(activeSectionIndex, { force: true, immediate: true });
 
   setSiteLoadingProgress(82);
-  await Promise.race([homeWorldScene.ready, delay(1_800)]);
+  const sceneResult = await waitForHomeWorldScene(homeWorldScene);
+  if (sceneResult?.status === "ready") {
+    setSiteLoadingProgress(96);
+    await waitForHomeWorldVisualHandoff(homeWorldCanvas);
+  }
   finishSiteLoading();
 }
 
@@ -154,8 +162,48 @@ function isEditableTarget(target) {
   return target.isContentEditable || tagName === "input" || tagName === "textarea" || tagName === "select";
 }
 
-function delay(milliseconds) {
-  return new Promise((resolve) => window.setTimeout(resolve, milliseconds));
+function waitForHomeWorldScene(scene) {
+  return new Promise((resolve) => {
+    let settled = false;
+    const finish = (result) => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(timeout);
+      resolve(result);
+    };
+    const timeout = window.setTimeout(
+      () => finish({ status: "timeout" }),
+      HOME_WORLD_READY_TIMEOUT_MS,
+    );
+    scene.ready.then(finish, (error) => finish({ status: "unavailable", detail: error }));
+  });
+}
+
+function waitForHomeWorldVisualHandoff(canvas) {
+  if (!canvas || canvas.dataset.sceneVisualHandoff === "ready") return Promise.resolve("ready");
+  return new Promise((resolve) => {
+    let animationFrame = 0;
+    let settled = false;
+    const finish = (status) => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(timeout);
+      if (animationFrame) cancelAnimationFrame(animationFrame);
+      resolve(status);
+    };
+    const probe = () => {
+      if (canvas.dataset.sceneVisualHandoff === "ready") {
+        finish("ready");
+        return;
+      }
+      animationFrame = requestAnimationFrame(probe);
+    };
+    const timeout = window.setTimeout(
+      () => finish("timeout"),
+      HOME_WORLD_VISUAL_HANDOFF_TIMEOUT_MS,
+    );
+    probe();
+  });
 }
 
 function createGuardianChatBubbleController(actor) {

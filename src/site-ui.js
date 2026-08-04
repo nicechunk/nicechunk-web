@@ -1,5 +1,6 @@
 const loadingState = {
   active: false,
+  autoFinish: true,
   value: 0,
   timer: 0,
 };
@@ -24,6 +25,10 @@ export function setSiteLoadingProgress(value) {
   ensureProgressBar();
   loadingState.value = Math.max(loadingState.value, Math.min(96, Number(value) || 0));
   updateProgressBar();
+}
+
+export function claimSiteLoading() {
+  loadingState.autoFinish = false;
 }
 
 export function finishSiteLoading() {
@@ -58,7 +63,7 @@ function installSiteUi() {
   window.addEventListener("load", () => {
     updateHeaderMetrics();
     window.setTimeout(() => {
-      if (loadingState.active) finishSiteLoading();
+      if (loadingState.active && loadingState.autoFinish) finishSiteLoading();
     }, 900);
   });
 }

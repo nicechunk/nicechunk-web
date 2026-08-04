@@ -145,7 +145,16 @@ assert.ok(
   initHome.indexOf("homeWorldScene = createHomeWorldScene(homeWorldCanvas, {") < initHome.indexOf("await "),
   "The Chunk.js scene must start before async navigation and locale initialization.",
 );
+assert.match(home, /import \{ claimSiteLoading, finishSiteLoading, setSiteLoadingProgress \} from "\.\.\/src\/site-ui\.js";/u);
+assert.match(home, /claimSiteLoading\(\);/u);
+assert.match(siteUi, /export function claimSiteLoading\(\) \{[\s\S]*?loadingState\.autoFinish = false;/u);
+assert.match(siteUi, /if \(loadingState\.active && loadingState\.autoFinish\) finishSiteLoading\(\);/u);
 assert.equal([...home.matchAll(/createHomeWorldScene\(homeWorldCanvas, \{/gu)].length, 1);
+assert.match(home, /const HOME_WORLD_READY_TIMEOUT_MS = 12_000;/u);
+assert.match(home, /const HOME_WORLD_VISUAL_HANDOFF_TIMEOUT_MS = 1_200;/u);
+assert.match(home, /const sceneResult = await waitForHomeWorldScene\(homeWorldScene\);/u);
+assert.match(home, /await waitForHomeWorldVisualHandoff\(homeWorldCanvas\);/u);
+assert.doesNotMatch(home, /Promise\.race\(\[homeWorldScene\.ready, delay\(1_800\)\]\)/u);
 assert.equal([...home.matchAll(/createHomeBuildingInspector\(homeBuildingInspectorRoot\)/gu)].length, 1);
 assert.match(home, /onBuildingInspect: \(detail\) => homeBuildingInspector\?\.update\(detail\)/u);
 assert.match(home, /onGuardianChat: updateGuardianChat/u);
@@ -168,8 +177,9 @@ assert.match(scene, /building\.payloadBytes !== encoded\.payloadBytes/u);
 assert.match(scene, /building\.materials\.join\(","\) !== encoded\.materials\.join\(","\)/u);
 assert.doesNotMatch(scene, /parseNcm3Building\(spec\.definition\.ncm\.code/u);
 assert.doesNotMatch(scene, /JSON\.stringify\(spec\.definition\)|JSON\.stringify\(target/u);
-assert.match(scene, /const HOMEPAGE_HAMMER_GRIP_AXIS = 1;/u);
-assert.match(scene, /function orientHomepageHammerGrip\(runtime\)[\s\S]*?axis: HOMEPAGE_HAMMER_GRIP_AXIS,[\s\S]*?sign: 1,[\s\S]*?rotation: 1,/u);
+assert.match(scene, /const HOMEPAGE_HAMMER_GRIP_ROLL_QUARTER_TURNS = 1;/u);
+assert.match(scene, /forgeGripRollQuarterTurns: HOMEPAGE_HAMMER_GRIP_ROLL_QUARTER_TURNS,/u);
+assert.doesNotMatch(scene, /orientHomepageHammerGrip|HOMEPAGE_HAMMER_GRIP_AXIS/u);
 assert.match(scene, /sceneInspectableBuildings = structureInspectables\.map/u);
 assert.match(scene, /raycastInspectableStructure\(projection\.target, pointerRay\)/u);
 assert.match(scene, /hasWorldVoxel: \(x, y, z\) => ensureInteractionGeometry\(\)\.occupiedVoxels\.has/u);

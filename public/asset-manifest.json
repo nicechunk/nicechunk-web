@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-03T07:25:26.493Z",
+  "generatedAt": "2026-08-04T04:37:55.938Z",
   "assetRoots": [
     "public/media",
     "p_d"
@@ -191,8 +191,8 @@
     {
       "path": "public/media/home-world-preview-desktop.webp",
       "mediaType": "application/octet-stream",
-      "bytes": 7694,
-      "sha256": "8faf92bb5f5fc15cf9a6283d7b157eeb81c195e7fb7d9a75d4555c6855c9decb",
+      "bytes": 8084,
+      "sha256": "9acb419f0621d7694089d50f65b85975110cf4d6b013ababa5af90429d51353b",
       "dimensions": null,
       "surface": "general-media",
       "sourceStatus": "project-media",
@@ -201,8 +201,8 @@
     {
       "path": "public/media/home-world-preview-mobile.webp",
       "mediaType": "application/octet-stream",
-      "bytes": 44014,
-      "sha256": "d6fcf1b2a45cdef210668147e711639eb9674417121934543ebf857fec9fe5bb",
+      "bytes": 8766,
+      "sha256": "de4d7b8072256213581cba9fe4390c3fd964decd19a2afcd947acffbd9b5855d",
       "dimensions": null,
       "surface": "general-media",
       "sourceStatus": "project-media",
@@ -214,8 +214,8 @@
       "surface": "general-media",
       "sourceStatus": "generated-research",
       "canonical": false,
-      "bytes": 121046,
-      "sha256": "9b7bf63a6799788455493c0b12fe11151372ed0c4941e28549f106354aabe7b6",
+      "bytes": 121068,
+      "sha256": "56e324a7b04bb17b581ddef1b6acc327757a985c814fdf763eefdaf0b50dc101",
       "dimensions": null
     },
     {
@@ -224,15 +224,15 @@
       "surface": "general-media",
       "sourceStatus": "generated-research",
       "canonical": false,
-      "bytes": 632654,
-      "sha256": "b0200dd4a683e73e51e3456260d025cfbb4b2d97d0e531c8ffe71700e28152df",
+      "bytes": 639577,
+      "sha256": "aef2778da3efcc2361fe9987a8784ad596165c01cd491fe9f8ccf2b1cb7d503d",
       "dimensions": null
     },
     {
       "path": "public/media/home-world-terrain-v1.bin",
       "mediaType": "application/octet-stream",
-      "bytes": 340696,
-      "sha256": "1037d9ae37ea8fb04057b0073dc221816762b60b12eaa747ec55ee2773ceaca0",
+      "bytes": 343165,
+      "sha256": "ccf05f358a01bde27d0bf35eca46123b1df3ae29c6c6fcfad8f0e947a555cf73",
       "dimensions": null,
       "surface": "general-media",
       "sourceStatus": "project-media",
@@ -241,8 +241,8 @@
     {
       "path": "public/media/home-world-terrain-v1.bin.gz",
       "mediaType": "application/octet-stream",
-      "bytes": 12201,
-      "sha256": "88a0334bad71790b348a47109723b9e457db05bd437ecda84d815f63ac735761",
+      "bytes": 12884,
+      "sha256": "2dbb97ed5c706818019780333f307537c981c40566da0d4df767ca6151d3511a",
       "dimensions": null,
       "surface": "general-media",
       "sourceStatus": "project-media",

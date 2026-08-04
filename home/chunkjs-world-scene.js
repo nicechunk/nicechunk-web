@@ -1,5 +1,5 @@
 import cottageDefinition from "../build_ncm/buildings/coastal/seaside-cottage.json";
-import noticeBoardDefinition from "../build_ncm/buildings/civic/covered-village-notice-board.json";
+import villageGatewayDefinition from "../build_ncm/buildings/wayfinding/stone-timber-village-gateway.json";
 import hollowCottageDefinition from "../build_ncm/buildings/residential/hollow-cottage.json";
 import footbridgeDefinition from "../build_ncm/buildings/transport/stone-timber-footbridge.json";
 import windmillDefinition from "../build_ncm/buildings/agriculture/stone-timber-tower-windmill.json";
@@ -40,8 +40,9 @@ let buildingOutlineMaskCanvas = null;
 const ACTOR_ROUTES = Object.freeze({
   boy: createRoute([
     routeStop("idle", ACTOR_SITES.boy, 4_000),
-    routeWalk(ACTOR_SITES.boy, { x: 2506, z: 1750 }, 9_000),
-    routeWalk({ x: 2506, z: 1750 }, ACTOR_SITES.bridgeEast, 9_000),
+    routeWalk(ACTOR_SITES.boy, { x: 2516, z: 1747 }, 8_400),
+    routeWalk({ x: 2516, z: 1747 }, { x: 2516, z: 1727 }, 4_800),
+    routeWalk({ x: 2516, z: 1727 }, ACTOR_SITES.bridgeEast, 8_200),
     routeWalk(ACTOR_SITES.bridgeEast, ACTOR_SITES.bridgeWest, 8_400),
     routeWalk(ACTOR_SITES.bridgeWest, { x: 2408, z: 1678 }, 7_000),
     routeWalk({ x: 2408, z: 1678 }, ACTOR_SITES.boyMine, 7_200),
@@ -49,25 +50,28 @@ const ACTOR_ROUTES = Object.freeze({
     routeWalk(ACTOR_SITES.boyMine, { x: 2408, z: 1678 }, 7_200),
     routeWalk({ x: 2408, z: 1678 }, ACTOR_SITES.bridgeWest, 7_000),
     routeWalk(ACTOR_SITES.bridgeWest, ACTOR_SITES.bridgeEast, 8_400),
-    routeWalk(ACTOR_SITES.bridgeEast, { x: 2506, z: 1750 }, 9_000),
-    routeWalk({ x: 2506, z: 1750 }, ACTOR_SITES.boy, 9_000),
+    routeWalk(ACTOR_SITES.bridgeEast, { x: 2516, z: 1727 }, 8_200),
+    routeWalk({ x: 2516, z: 1727 }, { x: 2516, z: 1747 }, 4_800),
+    routeWalk({ x: 2516, z: 1747 }, ACTOR_SITES.boy, 8_400),
   ]),
   girl: createRoute([
     routeStop("idle", ACTOR_SITES.girl, 4_400),
-    routeWalk(ACTOR_SITES.girl, { x: 2516, z: 1748 }, 9_000),
-    routeWalk({ x: 2516, z: 1748 }, ACTOR_SITES.bridgeEast, 9_000),
+    routeWalk(ACTOR_SITES.girl, { x: 2516, z: 1747 }, 8_400),
+    routeWalk({ x: 2516, z: 1747 }, { x: 2516, z: 1727 }, 4_800),
+    routeWalk({ x: 2516, z: 1727 }, ACTOR_SITES.bridgeEast, 8_200),
     routeWalk(ACTOR_SITES.bridgeEast, ACTOR_SITES.bridgeWest, 8_400),
     routeWalk(ACTOR_SITES.bridgeWest, ACTOR_SITES.girlCottage, 8_200),
     routeStop("idle", ACTOR_SITES.girlCottage, 3_600, { yaw: 1.48 }),
     routeWalk(ACTOR_SITES.girlCottage, ACTOR_SITES.bridgeWest, 8_200),
     routeWalk(ACTOR_SITES.bridgeWest, ACTOR_SITES.bridgeEast, 8_400),
-    routeWalk(ACTOR_SITES.bridgeEast, { x: 2516, z: 1748 }, 9_000),
-    routeWalk({ x: 2516, z: 1748 }, ACTOR_SITES.girl, 9_000),
+    routeWalk(ACTOR_SITES.bridgeEast, { x: 2516, z: 1727 }, 8_200),
+    routeWalk({ x: 2516, z: 1727 }, { x: 2516, z: 1747 }, 4_800),
+    routeWalk({ x: 2516, z: 1747 }, ACTOR_SITES.girl, 8_400),
   ]),
 });
 const STRUCTURE_DEFINITIONS = Object.freeze({
   cottage: cottageDefinition,
-  noticeBoard: noticeBoardDefinition,
+  villageGateway: villageGatewayDefinition,
   hollowCottage: hollowCottageDefinition,
   footbridge: footbridgeDefinition,
   windmill: windmillDefinition,
@@ -79,9 +83,9 @@ const STRUCTURE_SPECS = Object.freeze(STRUCTURE_LAYOUT.map((spec) => Object.free
 
 const CAMERA_PRESETS = Object.freeze({
   arrival: Object.freeze({
-    eye: [2548, 117, 1780],
-    target: [2465, 101, 1710],
-    fov: 43,
+    eye: [2510, 130, 1790],
+    target: [2470, 100, 1697],
+    fov: 51,
   }),
   world: Object.freeze({
     eye: [2444, 112, 1705],
@@ -534,7 +538,7 @@ export function createHomeWorldScene(canvas, options = {}) {
     updateActors(startedAt);
     canvas.dataset.sceneReady = "true";
     canvas.dataset.sceneRenderer = "chunk.js-webgl2";
-    canvas.dataset.sceneTerrainProfile = "two-landmasses-river-bay";
+    canvas.dataset.sceneTerrainProfile = "stitch-village-river-estuary-dry-paths";
     canvas.dataset.sceneMapBounds = "240x240";
     canvas.dataset.sceneSeed = runtime.MAINNET_WORLD_SEED;
     canvas.dataset.sceneGeneration = String(runtime.DEFAULT_GENERATION_VERSION);
@@ -1165,7 +1169,11 @@ function localVoxelKey(x, y, z) {
 function addStructureWalkSurfaces(placement, spec, walkSurfaces) {
   const corridor = spec.walkCorridor;
   for (const voxel of placement.worldVoxels.values()) {
-    if (corridor && (voxel.localZ < corridor.minLocalZ || voxel.localZ > corridor.maxLocalZ)) continue;
+    if (corridor && Number.isFinite(corridor.minLocalX) && voxel.localX < corridor.minLocalX) continue;
+    if (corridor && Number.isFinite(corridor.maxLocalX) && voxel.localX > corridor.maxLocalX) continue;
+    if (corridor && Number.isFinite(corridor.minLocalZ) && voxel.localZ < corridor.minLocalZ) continue;
+    if (corridor && Number.isFinite(corridor.maxLocalZ) && voxel.localZ > corridor.maxLocalZ) continue;
+    if (corridor && Number.isFinite(corridor.maxLocalY) && voxel.localY > corridor.maxLocalY) continue;
     const key = `${voxel.x},${voxel.z}`;
     walkSurfaces.set(key, Math.max(walkSurfaces.get(key) ?? -Infinity, voxel.y));
   }
@@ -1424,8 +1432,8 @@ function cameraPoseForView(view, aspect) {
   const target = [...source.target];
   let eye;
   if (mobile && view === "arrival") {
-    target.splice(0, 3, 2503, 101, 1723);
-    eye = [2558, 116, 1781];
+    target.splice(0, 3, 2490, 100, 1703);
+    eye = [2516, 136, 1797];
   } else {
     const distanceScale = mobile ? 1.08 : 1;
     eye = target.map((value, index) => value + (source.eye[index] - source.target[index]) * distanceScale);

@@ -10,8 +10,10 @@ import {
   MINING_TARGET,
   PRESENTATION_GROUND_Y,
   PRESENTATION_LANDMASSES,
+  PRESENTATION_PATHS,
   PRESENTATION_PLANTS,
   PRESENTATION_RELIEF,
+  PRESENTATION_RIVER,
   PRESENTATION_TREES,
   PRESENTATION_WATER_BED_Y,
   PRESENTATION_WATER_Y,
@@ -93,6 +95,7 @@ console.log(JSON.stringify({
 function createPresentationDeltas({ BLOCK_ID: blocks, definitions: structureDefinitions, parseNcm3Building, terrainSurfaceHeight }) {
   const deltas = new Map();
   const surfaceHeights = new Map();
+  const plantableSurfaces = new Set();
   const surfaceKey = (worldX, worldZ) => `${worldX},${worldZ}`;
   const put = (worldX, worldY, worldZ, blockId) => {
     if (worldX < COASTAL_STAGE_BOUNDS.minX || worldX > COASTAL_STAGE_BOUNDS.maxX
@@ -101,7 +104,9 @@ function createPresentationDeltas({ BLOCK_ID: blocks, definitions: structureDefi
   };
   const addWaterColumn = (x, z) => {
     const sourceY = terrainSurfaceHeight(x, z);
-    surfaceHeights.set(surfaceKey(x, z), PRESENTATION_WATER_BED_Y);
+    const key = surfaceKey(x, z);
+    surfaceHeights.set(key, PRESENTATION_WATER_BED_Y);
+    plantableSurfaces.delete(key);
     put(x, PRESENTATION_WATER_BED_Y, z, blocks.sand);
     for (let y = PRESENTATION_WATER_BED_Y + 1; y <= PRESENTATION_WATER_Y; y += 1) put(x, y, z, blocks.water);
     for (let y = PRESENTATION_WATER_Y + 1; y <= Math.max(PRESENTATION_WATER_Y + 1, sourceY + 8); y += 1) {
@@ -110,7 +115,10 @@ function createPresentationDeltas({ BLOCK_ID: blocks, definitions: structureDefi
   };
   const addLandColumn = (x, z, targetY, topBlockId, clearDecorations = true) => {
     const sourceY = terrainSurfaceHeight(x, z);
-    surfaceHeights.set(surfaceKey(x, z), targetY);
+    const key = surfaceKey(x, z);
+    surfaceHeights.set(key, targetY);
+    if (topBlockId === blocks.grass || topBlockId === blocks.dryDirt) plantableSurfaces.add(key);
+    else plantableSurfaces.delete(key);
     for (let y = Math.min(sourceY + 1, targetY); y < targetY; y += 1) put(x, y, z, blocks.dirt);
     put(x, targetY, z, topBlockId);
     const clearTop = clearDecorations ? sourceY + 8 : Math.max(sourceY, targetY);
@@ -129,12 +137,15 @@ function createPresentationDeltas({ BLOCK_ID: blocks, definitions: structureDefi
       }
       const shoreDistance = Math.min(-landDistance, riverDistance, bayDistance, edgeDistance);
       if (shoreDistance <= 4.25) addLandColumn(x, z, PRESENTATION_WATER_Y + 1, blocks.sand);
-      else addLandColumn(
-        x,
-        z,
-        PRESENTATION_GROUND_Y + presentationReliefRise(x, z, shoreDistance),
-        blocks.grass,
-      );
+      else {
+        const pathDistance = presentationPathDistance(x, z);
+        addLandColumn(
+          x,
+          z,
+          PRESENTATION_GROUND_Y + presentationReliefRise(x, z, shoreDistance),
+          pathDistance <= 0 ? blocks.dryDirt : blocks.grass,
+        );
+      }
     }
   }
 
@@ -158,7 +169,9 @@ function createPresentationDeltas({ BLOCK_ID: blocks, definitions: structureDefi
   const miningSurfaceY = surfaceHeights.get(surfaceKey(MINING_TARGET.x, MINING_TARGET.z)) ?? PRESENTATION_GROUND_Y;
   put(MINING_TARGET.x, miningSurfaceY, MINING_TARGET.z, blocks.coal);
   for (const tree of PRESENTATION_TREES) {
-    const treeSurfaceY = surfaceHeights.get(surfaceKey(tree.x, tree.z)) ?? PRESENTATION_GROUND_Y;
+    const key = surfaceKey(tree.x, tree.z);
+    if (!plantableSurfaces.has(key)) throw new Error(`Homepage tree ${key} is not rooted on grass or dry dirt.`);
+    const treeSurfaceY = surfaceHeights.get(key) ?? PRESENTATION_GROUND_Y;
     const crownY = treeSurfaceY + tree.height;
     for (let dy = -2; dy <= 2; dy += 1) {
       for (let dz = -2; dz <= 2; dz += 1) {
@@ -172,7 +185,11 @@ function createPresentationDeltas({ BLOCK_ID: blocks, definitions: structureDefi
     for (let y = treeSurfaceY + 1; y <= crownY + 1; y += 1) put(tree.x, y, tree.z, blocks.trunk);
   }
   for (const plant of PRESENTATION_PLANTS) {
-    const plantSurfaceY = surfaceHeights.get(surfaceKey(plant.x, plant.z)) ?? PRESENTATION_GROUND_Y;
+    const key = surfaceKey(plant.x, plant.z);
+    if (!plantableSurfaces.has(key)) throw new Error(`Homepage plant ${key} is not rooted on grass or dry dirt.`);
+    const plantSurfaceY = surfaceHeights.get(key) ?? PRESENTATION_GROUND_Y;
+    const existing = deltas.get(`${plant.x},${plantSurfaceY + 1},${plant.z}`);
+    if (existing && existing.blockId !== blocks.air) throw new Error(`Homepage plant ${key} overlaps another scene feature.`);
     put(plant.x, plantSurfaceY + 1, plant.z, blocks[plant.block]);
   }
   return Array.from(deltas.values());
@@ -282,14 +299,40 @@ function splitRuns(values) {
 }
 
 function presentationRiverDistance(x, z) {
-  const amount = clamp(
-    (z - COASTAL_STAGE_BOUNDS.minZ) / (COASTAL_STAGE_BOUNDS.maxZ - COASTAL_STAGE_BOUNDS.minZ),
-    0,
-    1,
-  );
-  const centerX = 2446 + Math.sin(amount * Math.PI * 2) * 4;
-  const halfWidth = 8.5 + Math.sin(amount * Math.PI) * 1.5;
+  const points = PRESENTATION_RIVER.centerline;
+  let segment = points.length - 2;
+  for (let index = 0; index < points.length - 1; index += 1) {
+    if (z <= points[index + 1].z) {
+      segment = index;
+      break;
+    }
+  }
+  const from = points[segment];
+  const to = points[segment + 1];
+  const amount = smoothstep(0, 1, clamp((z - from.z) / Math.max(1, to.z - from.z), 0, 1));
+  const centerX = from.x + (to.x - from.x) * amount;
+  const halfWidth = from.halfWidth + (to.halfWidth - from.halfWidth) * amount;
   return Math.abs(x - centerX) - halfWidth;
+}
+
+function presentationPathDistance(x, z) {
+  let distance = Infinity;
+  for (const path of PRESENTATION_PATHS) {
+    for (let index = 0; index < path.points.length - 1; index += 1) {
+      distance = Math.min(distance, pointToSegmentDistance(x, z, path.points[index], path.points[index + 1]) - path.halfWidth);
+    }
+  }
+  return distance;
+}
+
+function pointToSegmentDistance(x, z, from, to) {
+  const dx = to.x - from.x;
+  const dz = to.z - from.z;
+  const lengthSquared = dx * dx + dz * dz;
+  const amount = lengthSquared > 0
+    ? clamp(((x - from.x) * dx + (z - from.z) * dz) / lengthSquared, 0, 1)
+    : 0;
+  return Math.hypot(x - (from.x + dx * amount), z - (from.z + dz * amount));
 }
 
 function presentationEdgeDistance(x, z) {
@@ -334,8 +377,10 @@ function layoutFingerprint(worldGenerator, definitions) {
     waterY: PRESENTATION_WATER_Y,
     waterBedY: PRESENTATION_WATER_BED_Y,
     landmasses: PRESENTATION_LANDMASSES,
+    river: PRESENTATION_RIVER,
     relief: PRESENTATION_RELIEF,
     bay: WESTERN_BAY,
+    paths: PRESENTATION_PATHS,
     miningTarget: MINING_TARGET,
     trees: PRESENTATION_TREES,
     plants: PRESENTATION_PLANTS,

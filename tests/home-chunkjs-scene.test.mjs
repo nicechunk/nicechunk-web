@@ -7,6 +7,12 @@ import {
   decodeHomeWorldTerrain,
   unpackHomeWorldTerrainChunk,
 } from "../home/home-world-terrain.js";
+import {
+  PRESENTATION_PATHS,
+  PRESENTATION_PLANTS,
+  PRESENTATION_TREES,
+  STRUCTURE_LAYOUT,
+} from "../home/home-world-layout.js";
 
 const [html, home, inspector, scene, layout, terrainModule, generator, ncm4Benchmark, style, i18nSource, siteUi, siteHeaderCss, siteHeader, packageSource, assetManifestSource, terrainBytes, compressedTerrainBytes, ncm4ReportSource, ncm4BundleBytes] = await Promise.all([
   readFile(new URL("../index.html", import.meta.url), "utf8"),
@@ -57,8 +63,8 @@ for (const extension of ["png", "webm"]) {
 assert.match(html, /<div class="hero-world-stage" aria-hidden="true"><\/div>/u);
 assert.match(html, /class="chapter-layout chapter-layout-world"/u);
 assert.match(html, /class="terrain-pouw-demo"/u);
-assert.match(html, /data-source-bytes="340696"/u);
-assert.match(html, /data-candidate-bytes="630844"/u);
+assert.match(html, /data-source-bytes="343165"/u);
+assert.match(html, /data-candidate-bytes="637767"/u);
 assert.match(html, /data-exact-chunks="225"/u);
 assert.match(html, /data-mismatch-count="0"/u);
 assert.match(html, /href="\/media\/home-world-terrain-ncm4-v1-report\.json"/u);
@@ -199,7 +205,7 @@ for (const modelPath of [
 
 for (const buildingPath of [
   "seaside-cottage.json",
-  "covered-village-notice-board.json",
+  "stone-timber-village-gateway.json",
   "hollow-cottage.json",
   "stone-timber-footbridge.json",
   "stone-timber-tower-windmill.json",
@@ -222,7 +228,7 @@ assert.match(layout, /MOBILE_TERRAIN_VIEW_DISTANCE = 6/u);
 assert.match(layout, /DESKTOP_TERRAIN_VIEW_DISTANCE = 7/u);
 assert.match(layout, /COASTAL_STAGE_BOUNDS = Object\.freeze\(\{ minX: 2320, maxX: 2559, minZ: 1600, maxZ: 1839 \}\)/u);
 assert.match(layout, /COASTAL_WATER_MARGIN = 18/u);
-assert.match(scene, /sceneTerrainProfile = "two-landmasses-river-bay"/u);
+assert.match(scene, /sceneTerrainProfile = "stitch-village-river-estuary-dry-paths"/u);
 assert.match(scene, /sceneMapBounds = "240x240"/u);
 assert.match(scene, /sceneActorBehavior = "waypoint-walk-bridge-idle-mine-loop"/u);
 assert.match(scene, /WINDMILL_ROTATION_MS = 42_000/u);
@@ -232,6 +238,11 @@ assert.match(scene, /function rotatedRotorMesh\(chunk, sourceVertices, pivot, an
 assert.match(scene, /sceneWindmillRotating = String\(!reducedMotion\.matches\)/u);
 assert.match(layout, /id: "coastal-cottage"[\s\S]*?surfaceY: PRESENTATION_WATER_BED_Y[\s\S]*?siteMode: "water"/u);
 assert.match(layout, /id: "river-footbridge"[\s\S]*?siteMode: "bridge"[\s\S]*?walkable: true/u);
+assert.match(layout, /id: "village-gateway"[\s\S]*?quarterTurns: 0[\s\S]*?walkable: true/u);
+assert.match(layout, /PRESENTATION_PATHS = Object\.freeze/u);
+assert.match(layout, /id: "village-spine"[\s\S]*?halfWidth: 3\.25/u);
+assert.match(generator, /pathDistance <= 0 \? blocks\.dryDirt : blocks\.grass/u);
+assert.match(generator, /Homepage plant \$\{key\} overlaps another scene feature/u);
 assert.match(layout, /id: "tower-windmill"[\s\S]*?quarterTurns: 2/u);
 assert.match(scene, /routeWalk\(ACTOR_SITES\.bridgeEast, ACTOR_SITES\.bridgeWest/u);
 assert.match(scene, /routeWalk\(ACTOR_SITES\.bridgeWest, ACTOR_SITES\.bridgeEast/u);
@@ -277,11 +288,55 @@ assert.equal(terrain.chunkSize, 16);
 assert.equal(terrain.width, 15);
 assert.equal(terrain.depth, 15);
 assert.equal(terrain.chunks.size, 225);
-assert.equal(terrain.runCount, 155_921);
-assert.equal(terrain.deltaCount, 621_618);
-assert.equal(terrain.fingerprint, "59beb5ad830be97321f01490e42b9f81");
+assert.equal(terrain.runCount, 157_155);
+assert.equal(terrain.deltaCount, 619_587);
+assert.equal(terrain.fingerprint, "c4cfa2f062541a14b844d94f595f5009");
 assert.deepEqual(gunzipSync(compressedTerrainBytes), terrainBytes);
 assert.ok(compressedTerrainBytes.byteLength < terrainBytes.byteLength / 20);
+assert.equal(PRESENTATION_PATHS.length, 4);
+assert.equal(PRESENTATION_PLANTS.length, 50);
+assert.equal(PRESENTATION_TREES.length, 6);
+const gateway = STRUCTURE_LAYOUT.find((structure) => structure.id === "village-gateway");
+assert.deepEqual(
+  { minX: gateway?.minX, minZ: gateway?.minZ, quarterTurns: gateway?.quarterTurns, walkable: gateway?.walkable },
+  { minX: 2504, minZ: 1730, quarterTurns: 0, walkable: true },
+);
+
+const unpackedTerrainChunks = new Map();
+const explicitColumn = (worldX, worldZ) => {
+  const chunkKey = `${Math.floor(worldX / 16)},${Math.floor(worldZ / 16)}`;
+  let packed = unpackedTerrainChunks.get(chunkKey);
+  if (!packed) {
+    packed = unpackHomeWorldTerrainChunk(terrain, Math.floor(worldX / 16), Math.floor(worldZ / 16));
+    unpackedTerrainChunks.set(chunkKey, packed);
+  }
+  const column = [];
+  for (let offset = 0; offset < packed.length; offset += 4) {
+    if (packed[offset] === worldX && packed[offset + 2] === worldZ) column.push([packed[offset + 1], packed[offset + 3]]);
+  }
+  return column.sort((left, right) => left[0] - right[0]);
+};
+const topSolid = (worldX, worldZ) => explicitColumn(worldX, worldZ).findLast((entry) => entry[1] !== 0);
+
+for (const [worldX, worldZ] of [[2516, 1790], [2508, 1712], [2472, 1704], [2415, 1702], [2512, 1670]]) {
+  assert.equal(topSolid(worldX, worldZ)?.[1], 9, `Homepage dry-dirt path is missing at ${worldX},${worldZ}.`);
+}
+for (const [worldX, worldZ] of [[2446, 1700], [2432, 1784], [2415, 1838]]) {
+  assert.equal(topSolid(worldX, worldZ)?.[1], 17, `Homepage river or estuary is missing at ${worldX},${worldZ}.`);
+}
+const plantBlockIds = { grassPlant: 28, flowerWhite: 49, flowerYellow: 50, flowerRed: 51, flowerBlue: 52, flowerPink: 53 };
+for (const plant of PRESENTATION_PLANTS) {
+  const column = explicitColumn(plant.x, plant.z);
+  const decorationIndex = column.findLastIndex((entry) => entry[1] === plantBlockIds[plant.block]);
+  assert.notEqual(decorationIndex, -1, `Homepage plant is missing at ${plant.x},${plant.z}.`);
+  assert.ok([1, 9].includes(column[decorationIndex - 1]?.[1]), `Homepage plant is not rooted on grass or dry dirt at ${plant.x},${plant.z}.`);
+}
+for (const tree of PRESENTATION_TREES) {
+  const column = explicitColumn(tree.x, tree.z);
+  const trunkIndex = column.findIndex((entry) => entry[1] === 22);
+  assert.notEqual(trunkIndex, -1, `Homepage tree trunk is missing at ${tree.x},${tree.z}.`);
+  assert.ok([1, 9].includes(column[trunkIndex - 1]?.[1]), `Homepage tree is not rooted on grass or dry dirt at ${tree.x},${tree.z}.`);
+}
 
 assert.equal(ncm4Report.schema, "nicechunk.home.terrain-ncm4-research.v1");
 assert.equal(ncm4Report.source.format, "NCHT-v1");
@@ -295,11 +350,11 @@ assert.equal(ncm4Report.source.runs, terrain.runCount);
 assert.equal(ncm4Report.projection.format, "NCM4B-v1");
 assert.equal(ncm4Report.projection.ncm4Format, "ncm4-pouw-v1");
 assert.equal(ncm4Report.projection.profile, "building");
-assert.equal(ncm4Report.projection.genericNcm3Bytes, 1_248_718);
-assert.equal(ncm4Report.projection.ncm4RecordBytes, 630_844);
-assert.equal(ncm4Report.projection.bundleBytes, 632_654);
-assert.equal(ncm4Report.projection.ncm4SavedPercentAgainstNcm3, 49.4807);
-assert.equal(ncm4Report.projection.ncm4LargerPercentAgainstNcht, 85.1633);
+assert.equal(ncm4Report.projection.genericNcm3Bytes, 1_258_590);
+assert.equal(ncm4Report.projection.ncm4RecordBytes, 637_767);
+assert.equal(ncm4Report.projection.bundleBytes, 639_577);
+assert.equal(ncm4Report.projection.ncm4SavedPercentAgainstNcm3, 49.3269);
+assert.equal(ncm4Report.projection.ncm4LargerPercentAgainstNcht, 85.8485);
 assert.equal(ncm4Report.projection.exactChunks, 225);
 assert.equal(ncm4Report.projection.chunkCount, 225);
 assert.equal(ncm4Report.projection.mismatchCount, 0);
@@ -310,14 +365,14 @@ assert.equal(ncm4Report.chunks.length, 225);
 assert.ok(ncm4Report.chunks.every((chunk) => chunk.exact && chunk.mismatchCount === 0 && chunk.acceptedAgainstNcm3));
 assert.equal(ncm4Report.chunks.reduce((total, chunk) => total + chunk.deltaCount, 0), terrain.deltaCount);
 assert.equal(ncm4Report.chunks.reduce((total, chunk) => total + chunk.runCount, 0), terrain.runCount);
-assert.equal(ncm4Report.chunks.reduce((total, chunk) => total + chunk.ncm4Bytes, 0), 630_844);
+assert.equal(ncm4Report.chunks.reduce((total, chunk) => total + chunk.ncm4Bytes, 0), 637_767);
 assert.equal(ncm4BundleBytes.byteLength, ncm4Report.projection.bundleBytes);
 assert.equal(createHash("sha256").update(ncm4BundleBytes).digest("hex"), ncm4Report.projection.bundleSha256);
 assert.equal(ncm4BundleBytes.subarray(0, 4).toString("ascii"), "NC4B");
 assert.equal(ncm4BundleBytes[4], 1);
 assert.equal(ncm4BundleBytes.readUInt16LE(5), 225);
 assert.equal(ncm4BundleBytes.readInt16LE(7), 85);
-assert.equal(ncm4BundleBytes[9], 30);
+assert.equal(ncm4BundleBytes[9], 29);
 let ncm4BundleOffset = 10;
 for (const proof of ncm4Report.chunks) {
   assert.equal(ncm4BundleBytes.readInt16LE(ncm4BundleOffset), proof.chunkX);
@@ -333,7 +388,7 @@ for (const [worldX, worldZ, expectedY] of [
   [2400, 1642, 101],
   [2396, 1787, 100],
   [2522, 1784, 101],
-  [2432, 1712, 99],
+  [2432, 1712, 97],
 ]) {
   const packed = unpackHomeWorldTerrainChunk(terrain, Math.floor(worldX / 16), Math.floor(worldZ / 16));
   let topY = -Infinity;

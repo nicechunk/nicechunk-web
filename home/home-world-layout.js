@@ -5,26 +5,77 @@ export const PRESENTATION_GROUND_Y = 99;
 export const PRESENTATION_WATER_Y = 96;
 export const PRESENTATION_WATER_BED_Y = 93;
 export const COASTAL_WATER_MARGIN = 18;
-export const MINING_TARGET = Object.freeze({ x: 2385, z: 1644 });
+export const MINING_TARGET = Object.freeze({ x: 2385, y: 102, z: 1644, material: "coal" });
 
 export const ACTOR_SITES = Object.freeze({
   boy: Object.freeze({ x: 2526, z: 1788, yaw: -2.35 }),
-  boyMine: Object.freeze({ x: 2388, z: 1648, yaw: -2.36 }),
+  boyMine: Object.freeze({ x: 2386, z: 1646, yaw: -2.68 }),
   girl: Object.freeze({ x: 2535, z: 1768, yaw: -2.42 }),
-  girlCottage: Object.freeze({ x: 2399, z: 1703, yaw: 1.48 }),
-  economyBoy: Object.freeze({ x: 2484, z: 1725, yaw: -1.42 }),
-  economyGirl: Object.freeze({ x: 2492, z: 1725, yaw: 1.42 }),
+  girlCottage: Object.freeze({ x: 2409, z: 1697, yaw: -1.57 }),
+  economyBoy: Object.freeze({ x: 2524, z: 1745, yaw: -2.5 }),
+  economyGirl: Object.freeze({ x: 2511, z: 1724, yaw: 2.7 }),
   guardianBoy: Object.freeze({ x: 2514, z: 1657, yaw: -1.57 }),
   guardianGirl: Object.freeze({ x: 2524, z: 1657, yaw: 1.57 }),
   bridgeEast: Object.freeze({ x: 2464, z: 1700 }),
   bridgeWest: Object.freeze({ x: 2428, z: 1700 }),
 });
 
+export const ECONOMY_FORGE_SITE = Object.freeze({
+  bench: Object.freeze({ x: 2525.5, y: 100, z: 1747, yaw: 0.785398 }),
+  tool: Object.freeze({ x: 2525.5, y: 103.04, z: 1747, yaw: 0.785398 }),
+  strike: Object.freeze({ x: 2525.5, y: 103.28, z: 1747 }),
+});
+
 export const ECONOMY_FLOW_SITES = Object.freeze([
-  Object.freeze({ x: 2478, z: 1722 }),
-  Object.freeze({ x: 2483, z: 1722 }),
-  Object.freeze({ x: 2488, z: 1722 }),
-  Object.freeze({ x: 2493, z: 1722 }),
+  Object.freeze({ x: 2518, z: 1749 }),
+  Object.freeze({ x: 2519, z: 1754 }),
+  Object.freeze({ x: 2523, z: 1756 }),
+  Object.freeze({ x: 2525, z: 1748 }),
+]);
+
+export const SCENE_RESOURCE_CLUSTERS = Object.freeze([
+  Object.freeze({
+    id: "mining-coal-outcrop",
+    voxels: Object.freeze([
+      Object.freeze({ x: 2385, y: 101, z: 1644, material: "coal" }),
+      Object.freeze({ x: 2385, y: 102, z: 1644, material: "coal" }),
+      Object.freeze({ x: 2384, y: 101, z: 1644, material: "basalt" }),
+      Object.freeze({ x: 2385, y: 101, z: 1645, material: "basalt" }),
+    ]),
+  }),
+  Object.freeze({
+    id: "economy-basalt",
+    voxels: Object.freeze([
+      Object.freeze({ x: 2518, y: 101, z: 1748, material: "basalt" }),
+      Object.freeze({ x: 2519, y: 101, z: 1748, material: "basalt" }),
+      Object.freeze({ x: 2518, y: 101, z: 1749, material: "basalt" }),
+      Object.freeze({ x: 2518, y: 102, z: 1748, material: "basalt" }),
+    ]),
+  }),
+  Object.freeze({
+    id: "economy-coal",
+    voxels: Object.freeze([
+      Object.freeze({ x: 2518, y: 101, z: 1754, material: "coal" }),
+      Object.freeze({ x: 2519, y: 101, z: 1754, material: "coal" }),
+      Object.freeze({ x: 2519, y: 101, z: 1755, material: "coal" }),
+    ]),
+  }),
+  Object.freeze({
+    id: "economy-stone-gravel",
+    voxels: Object.freeze([
+      Object.freeze({ x: 2523, y: 101, z: 1756, material: "stone" }),
+      Object.freeze({ x: 2524, y: 101, z: 1756, material: "gravel" }),
+      Object.freeze({ x: 2523, y: 101, z: 1757, material: "gravel" }),
+    ]),
+  }),
+  Object.freeze({
+    id: "economy-timber",
+    voxels: Object.freeze([
+      Object.freeze({ x: 2531, y: 101, z: 1753, material: "trunk" }),
+      Object.freeze({ x: 2532, y: 101, z: 1753, material: "trunk" }),
+      Object.freeze({ x: 2531, y: 101, z: 1754, material: "woodenPlank" }),
+    ]),
+  }),
 ]);
 
 export const PRESENTATION_LANDMASSES = Object.freeze([
@@ -85,7 +136,7 @@ export const PRESENTATION_PATHS = Object.freeze([
     points: Object.freeze([
       Object.freeze({ x: 2428, z: 1700 }),
       Object.freeze({ x: 2412, z: 1702 }),
-      Object.freeze({ x: 2397, z: 1704 }),
+      Object.freeze({ x: 2408, z: 1697 }),
     ]),
   }),
   Object.freeze({
@@ -107,7 +158,7 @@ export const STRUCTURE_LAYOUT = Object.freeze([
     minX: 2370,
     minZ: 1681,
     surfaceY: PRESENTATION_WATER_BED_Y,
-    quarterTurns: 1,
+    quarterTurns: 0,
     siteMode: "water",
   }),
   Object.freeze({
@@ -162,7 +213,7 @@ export const PRESENTATION_TREES = Object.freeze([
   Object.freeze({ x: 2508, z: 1791, height: 6 }),
 ]);
 
-export const PRESENTATION_PLANTS = Object.freeze([
+const AMBIENT_PLANTS = Object.freeze([
   Object.freeze({ x: 2499, z: 1732, block: "grassPlant" }),
   Object.freeze({ x: 2497, z: 1735, block: "flowerYellow" }),
   Object.freeze({ x: 2499, z: 1738, block: "flowerWhite" }),
@@ -213,4 +264,76 @@ export const PRESENTATION_PLANTS = Object.freeze([
   Object.freeze({ x: 2526, z: 1718, block: "flowerYellow" }),
   Object.freeze({ x: 2505, z: 1789, block: "grassPlant" }),
   Object.freeze({ x: 2522, z: 1795, block: "flowerRed" }),
+]);
+
+const ROADSIDE_FLOWER_BLOCKS = Object.freeze([
+  "flowerYellow",
+  "flowerWhite",
+  "flowerRed",
+  "flowerBlue",
+  "flowerPink",
+]);
+
+const ROADSIDE_FLOWER_CLEARINGS = Object.freeze([
+  Object.freeze({ minX: 2507, maxX: 2525, minZ: 1810, maxZ: 1840 }),
+  Object.freeze({ minX: 2368, maxX: 2410, minZ: 1678, maxZ: 1715 }),
+  Object.freeze({ minX: 2428, maxX: 2464, minZ: 1691, maxZ: 1709 }),
+  Object.freeze({ minX: 2501, maxX: 2531, minZ: 1727, maxZ: 1745 }),
+  Object.freeze({ minX: 2485, maxX: 2514, minZ: 1679, maxZ: 1702 }),
+  Object.freeze({ minX: 2507, maxX: 2543, minZ: 1621, maxZ: 1652 }),
+]);
+
+function createRoadsideFlowers() {
+  const occupied = new Set(AMBIENT_PLANTS.map(({ x, z }) => `${x},${z}`));
+  const flowers = [];
+  let flowerIndex = 0;
+  const addFlower = (x, z) => {
+    const key = `${x},${z}`;
+    const inClearing = ROADSIDE_FLOWER_CLEARINGS.some((bounds) => (
+      x >= bounds.minX && x <= bounds.maxX && z >= bounds.minZ && z <= bounds.maxZ
+    ));
+    const nearTree = PRESENTATION_TREES.some((tree) => Math.hypot(x - tree.x, z - tree.z) < 4);
+    if (occupied.has(key) || inClearing || nearTree) return;
+    occupied.add(key);
+    flowers.push(Object.freeze({ x, z, block: ROADSIDE_FLOWER_BLOCKS[flowerIndex % ROADSIDE_FLOWER_BLOCKS.length] }));
+    flowerIndex += 1;
+  };
+
+  PRESENTATION_PATHS.forEach((path, pathIndex) => {
+    path.points.slice(0, -1).forEach((from, segmentIndex) => {
+      const to = path.points[segmentIndex + 1];
+      const dx = to.x - from.x;
+      const dz = to.z - from.z;
+      const length = Math.hypot(dx, dz);
+      const tangentX = dx / length;
+      const tangentZ = dz / length;
+      const normalX = -tangentZ;
+      const normalZ = tangentX;
+      let sampleIndex = 0;
+      for (let distance = 2.75; distance <= length - 2.75; distance += 3.75) {
+        const alongJitter = ((sampleIndex + pathIndex) % 3 - 1) * 0.55;
+        for (const side of [-1, 1]) {
+          const sideIndex = side > 0 ? 1 : 0;
+          const edgeJitter = ((sampleIndex + pathIndex + sideIndex) % 2) * 0.35;
+          const offset = side * (path.halfWidth + 1.35 + edgeJitter);
+          const x = Math.round(from.x + tangentX * (distance + alongJitter) + normalX * offset);
+          const z = Math.round(from.z + tangentZ * (distance + alongJitter) + normalZ * offset);
+          addFlower(x, z);
+          if ((sampleIndex + pathIndex + sideIndex) % 3 === 0) {
+            addFlower(
+              Math.round(from.x + tangentX * (distance + alongJitter + 0.7) + normalX * (offset + side * 1.8)),
+              Math.round(from.z + tangentZ * (distance + alongJitter + 0.7) + normalZ * (offset + side * 1.8)),
+            );
+          }
+        }
+        sampleIndex += 1;
+      }
+    });
+  });
+  return flowers;
+}
+
+export const PRESENTATION_PLANTS = Object.freeze([
+  ...AMBIENT_PLANTS,
+  ...createRoadsideFlowers(),
 ]);

@@ -8,9 +8,13 @@ import {
   unpackHomeWorldTerrainChunk,
 } from "../home/home-world-terrain.js";
 import {
+  ACTOR_SITES,
+  ECONOMY_FORGE_SITE,
+  MINING_TARGET,
   PRESENTATION_PATHS,
   PRESENTATION_PLANTS,
   PRESENTATION_TREES,
+  SCENE_RESOURCE_CLUSTERS,
   STRUCTURE_LAYOUT,
 } from "../home/home-world-layout.js";
 
@@ -63,8 +67,8 @@ for (const extension of ["png", "webm"]) {
 assert.match(html, /<div class="hero-world-stage" aria-hidden="true"><\/div>/u);
 assert.match(html, /class="chapter-layout chapter-layout-world"/u);
 assert.match(html, /class="terrain-pouw-demo"/u);
-assert.match(html, /data-source-bytes="343165"/u);
-assert.match(html, /data-candidate-bytes="637767"/u);
+assert.match(html, /data-source-bytes="343391"/u);
+assert.match(html, /data-candidate-bytes="639881"/u);
 assert.match(html, /data-exact-chunks="225"/u);
 assert.match(html, /data-mismatch-count="0"/u);
 assert.match(html, /href="\/media\/home-world-terrain-ncm4-v1-report\.json"/u);
@@ -223,6 +227,22 @@ for (const view of ["arrival", "world", "market", "guardian", "roadmap"]) {
 
 assert.match(scene, /renderer\.uploadAvatarMesh\("villager-boy", boyMesh\)/u);
 assert.match(scene, /renderer\.uploadAvatarMesh\("villager-girl", girlMesh\)/u);
+assert.match(scene, /renderer\.uploadAvatarMesh\("economy-workbench", workbenchMesh\)/u);
+assert.match(scene, /renderer\.uploadAvatarMesh\("economy-forged-tool", forgedToolMesh\)/u);
+for (const forgeAssetPath of [
+  "timber-workbench.json",
+  "iron-blacksmith-hammer.json",
+  "iron-deep-rock-pickaxe.json",
+]) {
+  assert.ok(scene.includes(forgeAssetPath), `Missing canonical forge asset: ${forgeAssetPath}`);
+}
+assert.match(scene, /FORGE_RUNTIME_MODULE = "forge\/forge-runtime-cache\.js"/u);
+assert.match(scene, /new forgeModule\.ForgeRuntimeCache/u);
+assert.match(scene, /cache\.restore\(definition\.forge\.code/u);
+assert.match(scene, /expectedDesignHash: definition\.forge\.designHash/u);
+assert.match(scene, /requireCanonical: true/u);
+assert.match(scene, /createSceneProp\("economy-workbench", ECONOMY_FORGE_SITE\.bench/u);
+assert.match(scene, /createSceneProp\("economy-forged-tool", ECONOMY_FORGE_SITE\.tool/u);
 assert.match(layout, /WORLD_CENTER = Object\.freeze\(\{ x: 2432, y: 100, z: 1712 \}\)/u);
 assert.match(layout, /MOBILE_TERRAIN_VIEW_DISTANCE = 6/u);
 assert.match(layout, /DESKTOP_TERRAIN_VIEW_DISTANCE = 7/u);
@@ -230,13 +250,23 @@ assert.match(layout, /COASTAL_STAGE_BOUNDS = Object\.freeze\(\{ minX: 2320, maxX
 assert.match(layout, /COASTAL_WATER_MARGIN = 18/u);
 assert.match(scene, /sceneTerrainProfile = "stitch-village-river-estuary-dry-paths"/u);
 assert.match(scene, /sceneMapBounds = "240x240"/u);
-assert.match(scene, /sceneActorBehavior = "waypoint-walk-bridge-idle-mine-loop"/u);
+assert.match(scene, /sceneActorBehavior = "waypoint-walk-bridge-idle-mine-forge-loop"/u);
+assert.match(scene, /focusedForgingPose\(focusElapsed, reducedMotion\.matches\)/u);
+assert.match(scene, /forgingActive \? forgingProgress : miningProgress/u);
+assert.match(scene, /designHash: ironBlacksmithHammerDefinition\.forge\.designHash/u);
+assert.match(scene, /renderer\.emitVoxelParticles\("break", \{/u);
+assert.match(scene, /worldX: ECONOMY_FORGE_SITE\.strike\.x/u);
+assert.match(scene, /sceneEconomyResourceClusters = String\(SCENE_RESOURCE_CLUSTERS\.length - 1\)/u);
+assert.match(scene, /createResourceClusterChunks\(runtime, revision\)/u);
 assert.match(scene, /WINDMILL_ROTATION_MS = 42_000/u);
 assert.match(scene, /splitWindmillBuilding\(building, spec\.definition\)/u);
 assert.match(scene, /sceneAnimatedPart = "windmill-rotor"/u);
 assert.match(scene, /function rotatedRotorMesh\(chunk, sourceVertices, pivot, angle\)/u);
 assert.match(scene, /sceneWindmillRotating = String\(!reducedMotion\.matches\)/u);
 assert.match(layout, /id: "coastal-cottage"[\s\S]*?surfaceY: PRESENTATION_WATER_BED_Y[\s\S]*?siteMode: "water"/u);
+assert.match(layout, /id: "coastal-cottage"[\s\S]*?quarterTurns: 0[\s\S]*?siteMode: "water"/u);
+assert.match(layout, /id: "west-bridge-approach"[\s\S]*?Object\.freeze\(\{ x: 2408, z: 1697 \}\)/u);
+assert.match(layout, /girlCottage: Object\.freeze\(\{ x: 2409, z: 1697, yaw: -1\.57 \}\)/u);
 assert.match(layout, /id: "river-footbridge"[\s\S]*?siteMode: "bridge"[\s\S]*?walkable: true/u);
 assert.match(layout, /id: "village-gateway"[\s\S]*?quarterTurns: 0[\s\S]*?walkable: true/u);
 assert.match(layout, /PRESENTATION_PATHS = Object\.freeze/u);
@@ -250,6 +280,9 @@ assert.match(scene, /const activeStructureChunks = structureChunks;/u);
 assert.doesNotMatch(scene, /STRUCTURES_BY_VIEW|structureChunksForView/u);
 assert.match(scene, /const ACTOR_ROUTES = Object\.freeze\(/u);
 assert.match(scene, /routeStop\("mine", ACTOR_SITES\.boyMine/u);
+assert.match(scene, /yaw: headingYaw\(ACTOR_SITES\.boyMine, MINING_TARGET\)/u);
+assert.match(scene, /miningAimPitchFor\(boy\)/u);
+assert.match(scene, /MINING_TARGET\.y \+ 0\.5 - shoulderY/u);
 assert.match(scene, /const cycleTime = safeElapsed % route\.durationMs/u);
 assert.match(scene, /staticRoutePose\(ACTOR_ROUTES\.boy\)/u);
 assert.match(scene, /positionAvatarAt\(runtime, worldConfig, chunks, structureWalkSurfaces, boy, boyPose\)/u);
@@ -288,19 +321,67 @@ assert.equal(terrain.chunkSize, 16);
 assert.equal(terrain.width, 15);
 assert.equal(terrain.depth, 15);
 assert.equal(terrain.chunks.size, 225);
-assert.equal(terrain.runCount, 157_155);
-assert.equal(terrain.deltaCount, 619_587);
-assert.equal(terrain.fingerprint, "c4cfa2f062541a14b844d94f595f5009");
+assert.equal(terrain.runCount, 157_268);
+assert.equal(terrain.deltaCount, 620_222);
+assert.equal(terrain.fingerprint, "aaa1576395cea2524dba36ac486fbf1d");
 assert.deepEqual(gunzipSync(compressedTerrainBytes), terrainBytes);
 assert.ok(compressedTerrainBytes.byteLength < terrainBytes.byteLength / 20);
 assert.equal(PRESENTATION_PATHS.length, 4);
-assert.equal(PRESENTATION_PLANTS.length, 50);
+assert.equal(PRESENTATION_PLANTS.length, 157);
+assert.equal(PRESENTATION_PLANTS.filter((plant) => plant.block.startsWith("flower")).length, 135);
 assert.equal(PRESENTATION_TREES.length, 6);
+assert.deepEqual(MINING_TARGET, { x: 2385, y: 102, z: 1644, material: "coal" });
+assert.deepEqual(ACTOR_SITES.boyMine, { x: 2386, z: 1646, yaw: -2.68 });
+assert.deepEqual(ACTOR_SITES.economyBoy, { x: 2524, z: 1745, yaw: -2.5 });
+assert.deepEqual(ECONOMY_FORGE_SITE, {
+  bench: { x: 2525.5, y: 100, z: 1747, yaw: 0.785398 },
+  tool: { x: 2525.5, y: 103.04, z: 1747, yaw: 0.785398 },
+  strike: { x: 2525.5, y: 103.28, z: 1747 },
+});
+assert.equal(SCENE_RESOURCE_CLUSTERS.length, 5);
+assert.equal(SCENE_RESOURCE_CLUSTERS.filter((cluster) => cluster.id.startsWith("economy-")).length, 4);
+assert.ok(SCENE_RESOURCE_CLUSTERS.some((cluster) => cluster.id === "mining-coal-outcrop"
+  && cluster.voxels.some((voxel) => voxel.x === MINING_TARGET.x
+    && voxel.y === MINING_TARGET.y
+    && voxel.z === MINING_TARGET.z
+    && voxel.material === MINING_TARGET.material)));
+assert.ok(Math.hypot(
+  ACTOR_SITES.economyBoy.x + 0.5 - ECONOMY_FORGE_SITE.bench.x,
+  ACTOR_SITES.economyBoy.z + 0.5 - ECONOMY_FORGE_SITE.bench.z,
+) < 2, "The economy actor must stand within hammering distance of the workbench.");
+const distanceToSegment = (point, from, to) => {
+  const dx = to.x - from.x;
+  const dz = to.z - from.z;
+  const lengthSquared = dx * dx + dz * dz;
+  const amount = lengthSquared > 0
+    ? Math.max(0, Math.min(1, ((point.x - from.x) * dx + (point.z - from.z) * dz) / lengthSquared))
+    : 0;
+  return Math.hypot(point.x - (from.x + dx * amount), point.z - (from.z + dz * amount));
+};
+for (const path of PRESENTATION_PATHS) {
+  const length = path.points.slice(0, -1).reduce((total, from, index) => (
+    total + Math.hypot(path.points[index + 1].x - from.x, path.points[index + 1].z - from.z)
+  ), 0);
+  const roadsideFlowers = PRESENTATION_PLANTS.filter((plant) => {
+    if (!plant.block.startsWith("flower")) return false;
+    const distance = Math.min(...path.points.slice(0, -1).map((from, index) => (
+      distanceToSegment(plant, from, path.points[index + 1])
+    )));
+    return distance >= path.halfWidth + 0.5 && distance <= path.halfWidth + 4.2;
+  });
+  assert.ok(roadsideFlowers.length >= Math.floor(length / 4), `${path.id} does not have a continuous roadside flower band.`);
+}
 const gateway = STRUCTURE_LAYOUT.find((structure) => structure.id === "village-gateway");
+const coastalCottage = STRUCTURE_LAYOUT.find((structure) => structure.id === "coastal-cottage");
 assert.deepEqual(
   { minX: gateway?.minX, minZ: gateway?.minZ, quarterTurns: gateway?.quarterTurns, walkable: gateway?.walkable },
   { minX: 2504, minZ: 1730, quarterTurns: 0, walkable: true },
 );
+assert.deepEqual(
+  { minX: coastalCottage?.minX, minZ: coastalCottage?.minZ, quarterTurns: coastalCottage?.quarterTurns, siteMode: coastalCottage?.siteMode },
+  { minX: 2370, minZ: 1681, quarterTurns: 0, siteMode: "water" },
+);
+assert.deepEqual(PRESENTATION_PATHS.find((path) => path.id === "west-bridge-approach")?.points.at(-1), { x: 2408, z: 1697 });
 
 const unpackedTerrainChunks = new Map();
 const explicitColumn = (worldX, worldZ) => {
@@ -318,7 +399,7 @@ const explicitColumn = (worldX, worldZ) => {
 };
 const topSolid = (worldX, worldZ) => explicitColumn(worldX, worldZ).findLast((entry) => entry[1] !== 0);
 
-for (const [worldX, worldZ] of [[2516, 1790], [2508, 1712], [2472, 1704], [2415, 1702], [2512, 1670]]) {
+for (const [worldX, worldZ] of [[2516, 1790], [2508, 1712], [2472, 1704], [2415, 1702], [2408, 1697], [2512, 1670]]) {
   assert.equal(topSolid(worldX, worldZ)?.[1], 9, `Homepage dry-dirt path is missing at ${worldX},${worldZ}.`);
 }
 for (const [worldX, worldZ] of [[2446, 1700], [2432, 1784], [2415, 1838]]) {
@@ -350,11 +431,11 @@ assert.equal(ncm4Report.source.runs, terrain.runCount);
 assert.equal(ncm4Report.projection.format, "NCM4B-v1");
 assert.equal(ncm4Report.projection.ncm4Format, "ncm4-pouw-v1");
 assert.equal(ncm4Report.projection.profile, "building");
-assert.equal(ncm4Report.projection.genericNcm3Bytes, 1_258_590);
-assert.equal(ncm4Report.projection.ncm4RecordBytes, 637_767);
-assert.equal(ncm4Report.projection.bundleBytes, 639_577);
-assert.equal(ncm4Report.projection.ncm4SavedPercentAgainstNcm3, 49.3269);
-assert.equal(ncm4Report.projection.ncm4LargerPercentAgainstNcht, 85.8485);
+assert.equal(ncm4Report.projection.genericNcm3Bytes, 1_259_494);
+assert.equal(ncm4Report.projection.ncm4RecordBytes, 639_881);
+assert.equal(ncm4Report.projection.bundleBytes, 641_691);
+assert.equal(ncm4Report.projection.ncm4SavedPercentAgainstNcm3, 49.1954);
+assert.equal(ncm4Report.projection.ncm4LargerPercentAgainstNcht, 86.3418);
 assert.equal(ncm4Report.projection.exactChunks, 225);
 assert.equal(ncm4Report.projection.chunkCount, 225);
 assert.equal(ncm4Report.projection.mismatchCount, 0);
@@ -365,7 +446,7 @@ assert.equal(ncm4Report.chunks.length, 225);
 assert.ok(ncm4Report.chunks.every((chunk) => chunk.exact && chunk.mismatchCount === 0 && chunk.acceptedAgainstNcm3));
 assert.equal(ncm4Report.chunks.reduce((total, chunk) => total + chunk.deltaCount, 0), terrain.deltaCount);
 assert.equal(ncm4Report.chunks.reduce((total, chunk) => total + chunk.runCount, 0), terrain.runCount);
-assert.equal(ncm4Report.chunks.reduce((total, chunk) => total + chunk.ncm4Bytes, 0), 637_767);
+assert.equal(ncm4Report.chunks.reduce((total, chunk) => total + chunk.ncm4Bytes, 0), 639_881);
 assert.equal(ncm4BundleBytes.byteLength, ncm4Report.projection.bundleBytes);
 assert.equal(createHash("sha256").update(ncm4BundleBytes).digest("hex"), ncm4Report.projection.bundleSha256);
 assert.equal(ncm4BundleBytes.subarray(0, 4).toString("ascii"), "NC4B");
@@ -407,6 +488,10 @@ for (const view of ["arrival", "world", "market", "guardian", "roadmap"]) {
   const distance = Math.hypot(...eye.map((value, index) => value - target[index]));
   assert.ok(distance < 112, `${view} camera is too far from its subject (${distance.toFixed(2)}).`);
 }
+assert.match(scene, /arrival: Object\.freeze\(\{\s*eye: \[2460, 134, 1757\],\s*target: \[2494, 103, 1662\],\s*fov: 52,/u);
+assert.match(scene, /market: Object\.freeze\(\{\s*eye: \[2555, 112, 1769\],\s*target: \[2528, 103, 1740\],\s*fov: 38,/u);
+assert.match(scene, /mobile && view === "arrival"[\s\S]*?target\.splice\(0, 3, 2524, 110, 1645\);[\s\S]*?eye = \[2560, 145, 1768\];/u);
+assert.match(scene, /mobile && view === "market"[\s\S]*?target\.splice\(0, 3, 2525, 102\.5, 1746\);[\s\S]*?eye = \[2555, 112\.5, 1778\];/u);
 assert.match(scene, /const distanceScale = mobile \? 1\.08 : 1/u);
 assert.match(scene, /fov: source\.fov \+ \(mobile \? 2 : 0\)/u);
 

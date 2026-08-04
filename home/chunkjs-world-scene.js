@@ -3,14 +3,19 @@ import villageGatewayDefinition from "../build_ncm/buildings/wayfinding/stone-ti
 import hollowCottageDefinition from "../build_ncm/buildings/residential/hollow-cottage.json";
 import footbridgeDefinition from "../build_ncm/buildings/transport/stone-timber-footbridge.json";
 import windmillDefinition from "../build_ncm/buildings/agriculture/stone-timber-tower-windmill.json";
+import timberWorkbenchDefinition from "../item_ncm/json/furniture/timber-workbench.json";
+import ironDeepRockPickaxeDefinition from "../item_ncm/json/mining-tools/iron-deep-rock-pickaxe.json";
+import ironBlacksmithHammerDefinition from "../item_ncm/json/workshop/iron-blacksmith-hammer.json";
 import {
   ACTOR_SITES,
   DESKTOP_TERRAIN_VIEW_DISTANCE,
+  ECONOMY_FORGE_SITE,
   ECONOMY_FLOW_SITES,
   MINING_TARGET,
   MOBILE_TERRAIN_VIEW_DISTANCE,
   PRESENTATION_GROUND_Y,
   PRESENTATION_WATER_BED_Y,
+  SCENE_RESOURCE_CLUSTERS,
   STRUCTURE_LAYOUT,
   WORLD_CENTER,
 } from "./home-world-layout.js";
@@ -22,6 +27,7 @@ import {
 const DEFAULT_RUNTIME_ROOT = "/chunk.js";
 const CHUNK_RUNTIME_BUNDLE = "chunk/browser-runtime.js";
 const CHUNK_WORKER_BUNDLE = "chunk/chunk-build-worker.bundle.js";
+const FORGE_RUNTIME_MODULE = "forge/forge-runtime-cache.js";
 const SECTION_VIEWS = Object.freeze(["arrival", "world", "market", "guardian", "roadmap"]);
 const CAMERA_TRANSITION_MS = 1_180;
 const WINDMILL_ROTATION_MS = 42_000;
@@ -35,6 +41,7 @@ const BUILDING_OUTLINE_MASK_ALPHA_THRESHOLD = 128;
 const BUILDING_OUTLINE_SIMPLIFY_TOLERANCE = 0.6;
 const AVATAR_HEIGHT_BLOCKS = 1.75 / 0.4;
 const AVATAR_VISUAL_SCALE = AVATAR_HEIGHT_BLOCKS / 2.52;
+const FORGE_WORLD_UNITS_PER_METER = 1 / 0.4;
 const buildingOutlineCache = new WeakMap();
 let buildingOutlineMaskCanvas = null;
 const ACTOR_ROUTES = Object.freeze({
@@ -61,7 +68,7 @@ const ACTOR_ROUTES = Object.freeze({
     routeWalk({ x: 2516, z: 1727 }, ACTOR_SITES.bridgeEast, 8_200),
     routeWalk(ACTOR_SITES.bridgeEast, ACTOR_SITES.bridgeWest, 8_400),
     routeWalk(ACTOR_SITES.bridgeWest, ACTOR_SITES.girlCottage, 8_200),
-    routeStop("idle", ACTOR_SITES.girlCottage, 3_600, { yaw: 1.48 }),
+    routeStop("idle", ACTOR_SITES.girlCottage, 3_600, { yaw: -1.57 }),
     routeWalk(ACTOR_SITES.girlCottage, ACTOR_SITES.bridgeWest, 8_200),
     routeWalk(ACTOR_SITES.bridgeWest, ACTOR_SITES.bridgeEast, 8_400),
     routeWalk(ACTOR_SITES.bridgeEast, { x: 2516, z: 1727 }, 8_200),
@@ -83,9 +90,9 @@ const STRUCTURE_SPECS = Object.freeze(STRUCTURE_LAYOUT.map((spec) => Object.free
 
 const CAMERA_PRESETS = Object.freeze({
   arrival: Object.freeze({
-    eye: [2510, 130, 1790],
-    target: [2470, 100, 1697],
-    fov: 51,
+    eye: [2460, 134, 1757],
+    target: [2494, 103, 1662],
+    fov: 52,
   }),
   world: Object.freeze({
     eye: [2444, 112, 1705],
@@ -93,9 +100,9 @@ const CAMERA_PRESETS = Object.freeze({
     fov: 39,
   }),
   market: Object.freeze({
-    eye: [2543, 113, 1771],
-    target: [2488, 102, 1724],
-    fov: 39,
+    eye: [2555, 112, 1769],
+    target: [2528, 103, 1740],
+    fov: 38,
   }),
   guardian: Object.freeze({
     eye: [2570, 115, 1718],
@@ -156,6 +163,7 @@ export function createHomeWorldScene(canvas, options = {}) {
   let cameraStart = cameraPoseForView("arrival", canvasAspect(canvas));
   let cameraTarget = cameraStart;
   let lastMiningBurst = -1;
+  let lastForgeBurst = -1;
   const buildMetrics = { baseBuilds: 0, remeshBuilds: 0 };
   let resolveReady;
   const ready = new Promise((resolve) => {
@@ -324,23 +332,31 @@ export function createHomeWorldScene(canvas, options = {}) {
     if (focusView === "world") {
       boyPose = focusedMiningPose(focusElapsed, reducedMotion.matches);
     } else if (focusView === "market") {
-      boyPose = focusedIdlePose(ACTOR_SITES.economyBoy, ACTOR_SITES.economyGirl, focusElapsed);
+      boyPose = focusedForgingPose(focusElapsed, reducedMotion.matches);
       girlPose = focusedIdlePose(ACTOR_SITES.economyGirl, ACTOR_SITES.economyBoy, focusElapsed);
     } else if (focusView === "guardian") {
       boyPose = focusedIdlePose(ACTOR_SITES.guardianBoy, ACTOR_SITES.guardianGirl, focusElapsed);
       girlPose = focusedIdlePose(ACTOR_SITES.guardianGirl, ACTOR_SITES.guardianBoy, focusElapsed);
     }
     const miningActive = boyPose.phase === "mine";
+    const forgingActive = boyPose.phase === "forge";
     const miningProgress = miningActive ? boyPose.progress : 0;
+    const forgingProgress = forgingActive ? boyPose.progress : 0;
 
     if (boy) {
       positionAvatarAt(runtime, worldConfig, chunks, structureWalkSurfaces, boy, boyPose);
       boy.animation = {
         moving: boyPose.phase === "walk" && !reducedMotion.matches,
-        miningProgress,
-        miningAimPitch: -0.08,
+        miningProgress: forgingActive ? forgingProgress : miningProgress,
+        miningAimPitch: forgingActive ? -0.34 : miningAimPitchFor(boy),
         timeMs: timestamp,
-        equipment: { rightHand: "pickaxe" },
+        equipment: forgingActive
+          ? {
+              rightHand: "forged_pickaxe",
+              forged: true,
+              designHash: ironBlacksmithHammerDefinition.forge.designHash,
+            }
+          : { rightHand: "pickaxe" },
       };
       exposeActorState(canvas, "boy", boy, boyPose);
     }
@@ -357,13 +373,26 @@ export function createHomeWorldScene(canvas, options = {}) {
     if (miningActive && miningProgress > 0.58 && miningBurst !== lastMiningBurst) {
       lastMiningBurst = miningBurst;
       const targetY = miningTargetY();
-      const blockId = chunks.getBlockAtWorld(MINING_TARGET.x, targetY, MINING_TARGET.z);
+      const blockId = runtime.BLOCK_ID[MINING_TARGET.material] ?? runtime.BLOCK_ID.stone;
       renderer.emitVoxelParticles("fracture", {
         worldX: MINING_TARGET.x,
         worldY: targetY,
         worldZ: MINING_TARGET.z,
         blockId,
         maxPieces: lowPower ? 8 : 16,
+      });
+    }
+
+    const forgeBurst = `${boyPose.cycle}:${boyPose.segmentIndex}`;
+    if (forgingActive && forgingProgress > 0.78 && forgeBurst !== lastForgeBurst) {
+      lastForgeBurst = forgeBurst;
+      renderer.emitVoxelParticles("break", {
+        worldX: ECONOMY_FORGE_SITE.strike.x,
+        worldY: ECONOMY_FORGE_SITE.strike.y,
+        worldZ: ECONOMY_FORGE_SITE.strike.z,
+        normalY: 1,
+        color: [255, 170, 72],
+        count: lowPower ? 4 : 7,
       });
     }
   }
@@ -408,22 +437,7 @@ export function createHomeWorldScene(canvas, options = {}) {
           ? [0.76, 1, 0.42, 0.9]
           : [0.4, 0.82, 1, 0.46],
       }));
-      return [
-        {
-          shape: "foundation",
-          worldX: 2475,
-          worldY: surfaceYAt(2475, 1719) + 1.02,
-          worldZ: 1719,
-          width: 22,
-          depth: 9,
-          preview: true,
-          grid: false,
-          fillColor: [0.66, 0.92, 0.32, 0.018],
-          edgeColor: [0.76, 1, 0.42, pulse * 0.5],
-          glowColor: [0.5, 0.9, 0.24, pulse * 0.18],
-        },
-        ...flow,
-      ];
+      return flow;
     }
     if (focusView === "guardian") {
       const [boy, girl] = avatars;
@@ -463,8 +477,20 @@ export function createHomeWorldScene(canvas, options = {}) {
   }
 
   function miningTargetY() {
-    return chunks?.getOpaqueColumnTopAtWorld(MINING_TARGET.x, MINING_TARGET.z)
-      ?? runtime.terrainSurfaceHeight(worldConfig, MINING_TARGET.x, MINING_TARGET.z);
+    return Number.isFinite(MINING_TARGET.y)
+      ? MINING_TARGET.y
+      : chunks?.getOpaqueColumnTopAtWorld(MINING_TARGET.x, MINING_TARGET.z)
+        ?? runtime.terrainSurfaceHeight(worldConfig, MINING_TARGET.x, MINING_TARGET.z);
+  }
+
+  function miningAimPitchFor(avatar) {
+    if (!avatar || !Number.isFinite(MINING_TARGET.y)) return -0.08;
+    const horizontal = Math.max(0.25, Math.hypot(
+      MINING_TARGET.x + 0.5 - (avatar.worldX + avatar.localOffsetX),
+      MINING_TARGET.z + 0.5 - (avatar.worldZ + avatar.localOffsetZ),
+    ));
+    const shoulderY = avatar.worldY + AVATAR_HEIGHT_BLOCKS * 0.62;
+    return clamp(Math.atan2(MINING_TARGET.y + 0.5 - shoulderY, horizontal), -0.62, 0.34);
   }
 
   function updateBuildingInspection(cameraPose) {
@@ -535,6 +561,7 @@ export function createHomeWorldScene(canvas, options = {}) {
   function markReady() {
     startedAt = performance.now();
     lastMiningBurst = -1;
+    lastForgeBurst = -1;
     updateActors(startedAt);
     canvas.dataset.sceneReady = "true";
     canvas.dataset.sceneRenderer = "chunk.js-webgl2";
@@ -545,7 +572,14 @@ export function createHomeWorldScene(canvas, options = {}) {
     canvas.dataset.sceneAvatars = "NCM2:villager-boy,NCM2:villager-girl";
     canvas.dataset.sceneBuildings = STRUCTURE_SPECS.map((spec) => `NCM3:${spec.id}`).join(",");
     canvas.dataset.sceneInspectableBuildings = structureInspectables.map((target) => target.id).join(",");
-    canvas.dataset.sceneActorBehavior = "waypoint-walk-bridge-idle-mine-loop";
+    canvas.dataset.sceneActorBehavior = "waypoint-walk-bridge-idle-mine-forge-loop";
+    canvas.dataset.sceneEconomyForgeAssets = [
+      timberWorkbenchDefinition.key,
+      ironBlacksmithHammerDefinition.key,
+      ironDeepRockPickaxeDefinition.key,
+    ].join(",");
+    canvas.dataset.sceneEconomyResourceClusters = String(SCENE_RESOURCE_CLUSTERS.length - 1);
+    canvas.dataset.sceneMiningTarget = `${MINING_TARGET.x},${MINING_TARGET.y},${MINING_TARGET.z}`;
     canvas.dataset.sceneActionModes = "terrain-delta,material-flow,guardian-relay,building-progress";
     canvas.dataset.sceneWindmillRotationMs = String(WINDMILL_ROTATION_MS);
     canvas.dataset.sceneWindmillAngle ||= "0.00000";
@@ -602,7 +636,7 @@ export function createHomeWorldScene(canvas, options = {}) {
         directionX: 0.18,
         directionZ: -1,
       });
-      const villagerMeshes = createVillagerMeshes(runtime);
+      const sceneMeshes = createSceneMeshes(runtime, options.runtimeRoot || DEFAULT_RUNTIME_ROOT);
       const terrainResult = await applyHomeWorldTerrain(chunks, presentationTerrain, {
         yieldEvery: lowPower ? 4 : 8,
         onProgress: ({ appliedChunks, appliedDeltas }) => {
@@ -621,13 +655,27 @@ export function createHomeWorldScene(canvas, options = {}) {
       structureWalkSurfaces = structures.walkSurfaces;
       structureInspectables = structures.inspectables;
       windmillRotor = structures.windmillRotor;
-      const [boyMesh, girlMesh] = await villagerMeshes;
+      const {
+        boyMesh,
+        girlMesh,
+        workbenchMesh,
+        forgedToolMesh,
+      } = await sceneMeshes;
       if (destroyed) return;
       renderer.uploadAvatarMesh("villager-boy", boyMesh);
       renderer.uploadAvatarMesh("villager-girl", girlMesh);
+      renderer.uploadAvatarMesh("economy-workbench", workbenchMesh);
+      renderer.uploadAvatarMesh("economy-forged-tool", forgedToolMesh);
       avatars = [
         createAvatar(runtime, worldConfig, "villager-boy", ACTOR_SITES.boy, "villager-boy"),
         createAvatar(runtime, worldConfig, "villager-girl", ACTOR_SITES.girl, "villager-girl"),
+        createSceneProp("economy-workbench", ECONOMY_FORGE_SITE.bench, {
+          shadowCasterHeight: 2.98,
+          shadowRadiusX: 1.52,
+          shadowRadiusZ: 0.74,
+          shadowAlpha: 0.32,
+        }),
+        createSceneProp("economy-forged-tool", ECONOMY_FORGE_SITE.tool, { castShadow: false }),
       ];
 
       chunks.rebuildDirtyChunks(lowPower ? 8 : 14);
@@ -813,7 +861,72 @@ function createStructures(runtime) {
     inspectables.push(createInspectableStructure(building, [placement], spec));
     chunks.push(...placementChunks);
   }
+  const resourceChunks = createResourceClusterChunks(runtime, revision);
+  chunks.push(...resourceChunks);
   return { chunks, walkSurfaces, inspectables, windmillRotor };
+}
+
+function createResourceClusterChunks(runtime, firstRevision) {
+  const chunks = [];
+  let revision = firstRevision;
+  for (const cluster of SCENE_RESOURCE_CLUSTERS) {
+    const bounds = resourceClusterBounds(cluster.voxels);
+    const voxels = new Map();
+    for (const voxel of cluster.voxels) {
+      const local = {
+        x: voxel.x - bounds.minX,
+        y: voxel.y - bounds.minY,
+        z: voxel.z - bounds.minZ,
+        material: runtime.BLOCK_ID[voxel.material] ?? runtime.BLOCK_ID.stone,
+      };
+      voxels.set(localVoxelKey(local.x, local.y, local.z), local);
+    }
+    const building = Object.freeze({
+      id: cluster.id,
+      name: cluster.id,
+      format: "NCM3",
+      codeId: cluster.id,
+      size: Object.freeze({ x: bounds.width, y: bounds.height, z: bounds.depth }),
+      voxels,
+      voxelCount: voxels.size,
+    });
+    const foundation = {
+      id: `${cluster.id}-foundation`,
+      minX: bounds.minX,
+      minZ: bounds.minZ,
+      surfaceY: bounds.minY,
+      width: bounds.width,
+      depth: bounds.depth,
+    };
+    const placement = runtime.createBuildingPlacement(building, foundation, { placementId: cluster.id });
+    const clusterChunks = runtime.createBuildingChunkMeshes(placement, { chunkSize: 16, revision: revision++ });
+    clusterChunks.forEach((chunk) => {
+      chunk.sceneStructureId = cluster.id;
+      chunk.sceneResourceCluster = true;
+    });
+    chunks.push(...clusterChunks);
+  }
+  return chunks;
+}
+
+function resourceClusterBounds(voxels) {
+  const xs = voxels.map((voxel) => voxel.x);
+  const ys = voxels.map((voxel) => voxel.y);
+  const zs = voxels.map((voxel) => voxel.z);
+  const minX = Math.min(...xs);
+  const minY = Math.min(...ys);
+  const minZ = Math.min(...zs);
+  const maxX = Math.max(...xs);
+  const maxY = Math.max(...ys);
+  const maxZ = Math.max(...zs);
+  return Object.freeze({
+    minX,
+    minY,
+    minZ,
+    width: maxX - minX + 1,
+    height: maxY - minY + 1,
+    depth: maxZ - minZ + 1,
+  });
 }
 
 function createInspectableStructure(building, placements, spec) {
@@ -1179,22 +1292,139 @@ function addStructureWalkSurfaces(placement, spec, walkSurfaces) {
   }
 }
 
-async function createVillagerMeshes(runtime) {
-  const [boyCode, girlCode] = await Promise.all([
+async function createSceneMeshes(runtime, runtimeRoot) {
+  const [boyCode, girlCode, forgeModule] = await Promise.all([
     fetchNcm("/media/vox/chr_peasant_guy_blackhair.ncm"),
     fetchNcm("/media/vox/chr_peasant_girl_orangehair.ncm"),
+    loadForgeRuntime(runtimeRoot),
   ]);
+  const forgeCache = new forgeModule.ForgeRuntimeCache({ maxEntries: 4, maxBytes: 2 * 1024 * 1024 });
+  const hammerRuntime = restoreItemRuntime(forgeCache, ironBlacksmithHammerDefinition);
+  const workbenchRuntime = restoreItemRuntime(forgeCache, timberWorkbenchDefinition);
+  const forgedToolRuntime = restoreItemRuntime(forgeCache, ironDeepRockPickaxeDefinition);
   const boyMesh = runtime.createAvatarMeshFromNcm(boyCode, {
     scale: AVATAR_VISUAL_SCALE,
     name: "villager-boy",
     attachIronPickaxe: true,
-    attachForgedPickaxe: false,
+    attachForgedPickaxe: true,
+    forgeRuntime: hammerRuntime,
+    forgeMetersToWorldUnits: FORGE_WORLD_UNITS_PER_METER,
   });
   const girlMesh = runtime.createAvatarMeshFromNcm(girlCode, {
     scale: AVATAR_VISUAL_SCALE,
     name: "villager-girl",
   });
-  return [boyMesh, girlMesh];
+  return {
+    boyMesh,
+    girlMesh,
+    workbenchMesh: forgeRuntimeToSceneMesh(workbenchRuntime, {
+      name: "economy-workbench",
+      scale: FORGE_WORLD_UNITS_PER_METER,
+    }),
+    forgedToolMesh: forgeRuntimeToSceneMesh(forgedToolRuntime, {
+      name: "economy-forged-tool",
+      scale: FORGE_WORLD_UNITS_PER_METER,
+      rotation: { z: Math.PI / 2 },
+    }),
+  };
+}
+
+async function loadForgeRuntime(runtimeRoot) {
+  return import(/* @vite-ignore */ runtimeAssetUrl(runtimeRoot, FORGE_RUNTIME_MODULE));
+}
+
+function restoreItemRuntime(cache, definition) {
+  return cache.restore(definition.forge.code, {
+    expectedDesignHash: definition.forge.designHash,
+    requireCanonical: true,
+  });
+}
+
+function forgeRuntimeToSceneMesh(asset, {
+  name,
+  scale = 1,
+  rotation = {},
+} = {}) {
+  const source = asset?.mesh;
+  if (!source?.vertices || !source?.indices || !source.vertexCount) {
+    throw new Error(`The ${name || "forge"} runtime mesh is unavailable.`);
+  }
+  const sourceView = new DataView(source.vertices.buffer, source.vertices.byteOffset, source.vertices.byteLength);
+  const positions = new Array(source.vertexCount);
+  const normals = new Array(source.vertexCount);
+  const bounds = { minX: Infinity, minY: Infinity, minZ: Infinity, maxX: -Infinity, maxY: -Infinity, maxZ: -Infinity };
+  for (let index = 0; index < source.vertexCount; index += 1) {
+    const offset = index * source.vertexStrideBytes;
+    const position = rotateSceneVector([
+      sourceView.getInt16(offset, true) / source.positionScale * scale,
+      sourceView.getInt16(offset + 2, true) / source.positionScale * scale,
+      sourceView.getInt16(offset + 4, true) / source.positionScale * scale,
+    ], rotation);
+    const normal = rotateSceneVector([
+      sourceView.getInt8(offset + 6) / 127,
+      sourceView.getInt8(offset + 7) / 127,
+      sourceView.getInt8(offset + 8) / 127,
+    ], rotation);
+    positions[index] = position;
+    normals[index] = normal;
+    bounds.minX = Math.min(bounds.minX, position[0]);
+    bounds.minY = Math.min(bounds.minY, position[1]);
+    bounds.minZ = Math.min(bounds.minZ, position[2]);
+    bounds.maxX = Math.max(bounds.maxX, position[0]);
+    bounds.maxY = Math.max(bounds.maxY, position[1]);
+    bounds.maxZ = Math.max(bounds.maxZ, position[2]);
+  }
+  const centerX = (bounds.minX + bounds.maxX) * 0.5;
+  const centerZ = (bounds.minZ + bounds.maxZ) * 0.5;
+  const vertices = new Float32Array(source.vertexCount * 10);
+  for (let index = 0; index < source.vertexCount; index += 1) {
+    const sourceOffset = index * source.vertexStrideBytes;
+    const targetOffset = index * 10;
+    vertices[targetOffset] = positions[index][0] - centerX;
+    vertices[targetOffset + 1] = positions[index][1] - bounds.minY;
+    vertices[targetOffset + 2] = positions[index][2] - centerZ;
+    vertices[targetOffset + 3] = normals[index][0];
+    vertices[targetOffset + 4] = normals[index][1];
+    vertices[targetOffset + 5] = normals[index][2];
+    vertices[targetOffset + 6] = sourceView.getUint8(sourceOffset + 10) / 255;
+    vertices[targetOffset + 7] = sourceView.getUint8(sourceOffset + 11) / 255;
+    vertices[targetOffset + 8] = sourceView.getUint8(sourceOffset + 12) / 255;
+    vertices[targetOffset + 9] = sourceView.getUint8(sourceOffset + 13) / 255;
+  }
+  const indices = new source.indices.constructor(source.indices);
+  return Object.freeze({
+    name,
+    vertices,
+    indices,
+    vertexCount: source.vertexCount,
+    indexCount: indices.length,
+    triangleCount: indices.length / 3,
+    vertexStrideBytes: 40,
+    bounds: Object.freeze({
+      width: Math.max(bounds.maxX - bounds.minX, bounds.maxZ - bounds.minZ),
+      height: bounds.maxY - bounds.minY,
+    }),
+  });
+}
+
+function rotateSceneVector(vector, rotation) {
+  let [x, y, z] = vector;
+  if (rotation.x) {
+    const cosine = Math.cos(rotation.x);
+    const sine = Math.sin(rotation.x);
+    [y, z] = [y * cosine - z * sine, y * sine + z * cosine];
+  }
+  if (rotation.y) {
+    const cosine = Math.cos(rotation.y);
+    const sine = Math.sin(rotation.y);
+    [x, z] = [x * cosine + z * sine, -x * sine + z * cosine];
+  }
+  if (rotation.z) {
+    const cosine = Math.cos(rotation.z);
+    const sine = Math.sin(rotation.z);
+    [x, y] = [x * cosine - y * sine, x * sine + y * cosine];
+  }
+  return [x, y, z];
 }
 
 async function fetchNcm(url) {
@@ -1214,6 +1444,22 @@ function focusedMiningPose(elapsedMs, reducedMotion) {
     x: ACTOR_SITES.boyMine.x,
     z: ACTOR_SITES.boyMine.z,
     yaw: headingYaw(ACTOR_SITES.boyMine, MINING_TARGET),
+    progress: cycleProgress,
+    cycle,
+    segmentIndex: 0,
+    distance: 0,
+  };
+}
+
+function focusedForgingPose(elapsedMs, reducedMotion) {
+  const cycleDuration = 1_180;
+  const cycle = Math.floor(elapsedMs / cycleDuration);
+  const cycleProgress = reducedMotion ? 0.76 : (elapsedMs % cycleDuration) / cycleDuration;
+  return {
+    phase: "forge",
+    x: ACTOR_SITES.economyBoy.x,
+    z: ACTOR_SITES.economyBoy.z,
+    yaw: headingYaw(ACTOR_SITES.economyBoy, ECONOMY_FORGE_SITE.bench),
     progress: cycleProgress,
     cycle,
     segmentIndex: 0,
@@ -1393,6 +1639,26 @@ function createAvatar(runtime, worldConfig, role, site, meshId) {
   };
 }
 
+function createSceneProp(meshId, site, options = {}) {
+  const worldX = Math.floor(site.x);
+  const worldY = Math.floor(site.y);
+  const worldZ = Math.floor(site.z);
+  return {
+    id: meshId,
+    meshId,
+    role: meshId,
+    worldX,
+    worldY,
+    worldZ,
+    localOffsetX: site.x - worldX,
+    localOffsetY: site.y - worldY,
+    localOffsetZ: site.z - worldZ,
+    yaw: site.yaw || 0,
+    shadowWorldY: ECONOMY_FORGE_SITE.bench.y,
+    ...options,
+  };
+}
+
 function positionAvatarAt(runtime, worldConfig, chunks, structureWalkSurfaces, avatar, pose) {
   const actualX = pose.x + 0.5;
   const actualZ = pose.z + 0.5;
@@ -1432,8 +1698,11 @@ function cameraPoseForView(view, aspect) {
   const target = [...source.target];
   let eye;
   if (mobile && view === "arrival") {
-    target.splice(0, 3, 2490, 100, 1703);
-    eye = [2516, 136, 1797];
+    target.splice(0, 3, 2524, 110, 1645);
+    eye = [2560, 145, 1768];
+  } else if (mobile && view === "market") {
+    target.splice(0, 3, 2525, 102.5, 1746);
+    eye = [2555, 112.5, 1778];
   } else {
     const distanceScale = mobile ? 1.08 : 1;
     eye = target.map((value, index) => value + (source.eye[index] - source.target[index]) * distanceScale);

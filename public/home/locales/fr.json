@@ -2,8 +2,8 @@
   "_meta": {
     "language": "fr",
     "label": "French",
-    "version": "home-locale-fr-57eebfc89b78e1aa",
-    "contentHash": "57eebfc89b78e1aa"
+    "version": "home-locale-fr-5f176460e65deb86",
+    "contentHash": "5f176460e65deb86"
   },
   "common": {
     "language": "Langue",
@@ -92,6 +92,11 @@
     "economy": "Économie",
     "watchers": "Guardians",
     "roadmap": "Feuille de route"
+  },
+  "scrollCue": {
+    "aria": "Explorer le chapitre suivant",
+    "desktop": "Faites défiler pour explorer",
+    "mobile": "Balayez vers le haut pour explorer"
   },
   "hero": {
     "eyebrow": "Alpha jouable sur Devnet",

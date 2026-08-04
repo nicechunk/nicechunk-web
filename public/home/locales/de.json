@@ -2,8 +2,8 @@
   "_meta": {
     "language": "de",
     "label": "German",
-    "version": "home-locale-de-0396e6a2e3f17d21",
-    "contentHash": "0396e6a2e3f17d21"
+    "version": "home-locale-de-b387147bc3139fe7",
+    "contentHash": "b387147bc3139fe7"
   },
   "common": {
     "language": "Sprache",
@@ -92,6 +92,11 @@
     "economy": "Wirtschaft",
     "watchers": "Guardians",
     "roadmap": "Fahrplan"
+  },
+  "scrollCue": {
+    "aria": "Nächstes Kapitel erkunden",
+    "desktop": "Scrollen zum Entdecken",
+    "mobile": "Nach oben wischen"
   },
   "hero": {
     "eyebrow": "Spielbare Devnet-Alpha",

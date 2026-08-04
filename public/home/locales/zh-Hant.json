@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hant",
     "label": "Traditional Chinese",
-    "version": "home-locale-zh-Hant-2dc1379a5b10c919",
-    "contentHash": "2dc1379a5b10c919"
+    "version": "home-locale-zh-Hant-35ec0a08bbe768bf",
+    "contentHash": "35ec0a08bbe768bf"
   },
   "common": {
     "language": "語言",
@@ -92,6 +92,11 @@
     "economy": "經濟",
     "watchers": "Guardians",
     "roadmap": "路線圖"
+  },
+  "scrollCue": {
+    "aria": "探索下一章",
+    "desktop": "滾動探索",
+    "mobile": "向上滑動探索"
   },
   "hero": {
     "eyebrow": "Devnet 可玩 Alpha",

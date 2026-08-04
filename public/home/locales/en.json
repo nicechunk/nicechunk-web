@@ -2,8 +2,8 @@
   "_meta": {
     "language": "en",
     "label": "English",
-    "version": "home-locale-en-ef8790f331cdfdb2",
-    "contentHash": "ef8790f331cdfdb2"
+    "version": "home-locale-en-498ad638b7c7e872",
+    "contentHash": "498ad638b7c7e872"
   },
   "common": {
     "language": "Language",
@@ -92,6 +92,11 @@
     "economy": "Economy",
     "watchers": "Guardians",
     "roadmap": "Roadmap"
+  },
+  "scrollCue": {
+    "aria": "Explore the next chapter",
+    "desktop": "Scroll to explore",
+    "mobile": "Swipe up to explore"
   },
   "hero": {
     "eyebrow": "Playable Devnet Alpha",

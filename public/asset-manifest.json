@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-04T05:48:23.910Z",
+  "generatedAt": "2026-08-04T15:12:41.986Z",
   "assetRoots": [
     "public/media",
     "p_d"
@@ -191,8 +191,8 @@
     {
       "path": "public/media/home-world-preview-desktop.webp",
       "mediaType": "application/octet-stream",
-      "bytes": 7734,
-      "sha256": "cab7cbdc221a4a095c8b4ad22400e3fb12d9ed1cf25887a33e6d93c55ecfef19",
+      "bytes": 7544,
+      "sha256": "343405376208622caff617b68c8ed97b98a7706527337ac42111c91acaf9563a",
       "dimensions": null,
       "surface": "general-media",
       "sourceStatus": "project-media",
@@ -201,8 +201,8 @@
     {
       "path": "public/media/home-world-preview-mobile.webp",
       "mediaType": "application/octet-stream",
-      "bytes": 7842,
-      "sha256": "785b7fe7b13ed8ebb7191e5f7c1d14bbac85e04c2d7e3c53d426f6b3965f9b48",
+      "bytes": 5712,
+      "sha256": "eb8572f50aad624b94596f06265166eeedff534238d5059a646b38fb880aaeae",
       "dimensions": null,
       "surface": "general-media",
       "sourceStatus": "project-media",

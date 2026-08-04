@@ -31,6 +31,11 @@
     "watchers": "Guardians",
     "roadmap": "路線圖"
   },
+  "scrollCue": {
+    "aria": "探索下一章",
+    "desktop": "滾動探索",
+    "mobile": "向上滑動探索"
+  },
   "hero": {
     "eyebrow": "Devnet 可玩 Alpha",
     "title": "建造世界，驗證每次改變。",

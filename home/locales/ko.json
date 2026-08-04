@@ -31,6 +31,11 @@
     "watchers": "Guardians",
     "roadmap": "로드맵"
   },
+  "scrollCue": {
+    "aria": "다음 챕터 살펴보기",
+    "desktop": "스크롤하여 탐험",
+    "mobile": "위로 밀어 탐험"
+  },
   "hero": {
     "eyebrow": "플레이 가능한 Devnet 알파",
     "title": "세계를 만들고, 변화를 검증하세요.",

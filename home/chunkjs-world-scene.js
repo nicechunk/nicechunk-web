@@ -19,6 +19,7 @@ import {
   STRUCTURE_LAYOUT,
   WORLD_CENTER,
 } from "./home-world-layout.js";
+import { HOME_STRUCTURE_NCM_CODES } from "./home-world-structure-codes.js";
 import {
   applyHomeWorldTerrain,
   loadHomeWorldTerrain,
@@ -30,6 +31,8 @@ const CHUNK_WORKER_BUNDLE = "chunk/chunk-build-worker.bundle.js";
 const FORGE_RUNTIME_MODULE = "forge/forge-runtime-cache.js";
 const SECTION_VIEWS = Object.freeze(["arrival", "world", "market", "guardian", "roadmap"]);
 const CAMERA_TRANSITION_MS = 1_180;
+const DEFERRED_SCENE_ASSET_DELAY_MS = 600;
+const VISUAL_HANDOFF_PROBE_MS = 120;
 const WINDMILL_ROTATION_MS = 42_000;
 const WINDMILL_FRAME_MS = 1_000 / 12;
 const GUARDIAN_DIALOGUE_PAIR_COUNT = 3;
@@ -125,14 +128,16 @@ export function createHomeWorldScene(canvas, options = {}) {
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const inspectorHoverMedia = window.matchMedia("(hover: hover) and (pointer: fine)");
   const lowPower = Number(navigator.deviceMemory || 8) <= 4 || navigator.connection?.saveData === true;
-  const requestedFps = Number(options.maxFps) || (window.innerWidth < 700 ? 20 : 30);
+  const mobileViewport = window.innerWidth < 700;
+  const requestedFps = Number(options.maxFps) || (mobileViewport ? 20 : 30);
   const maxFps = Math.max(12, Math.min(lowPower ? 20 : 30, requestedFps));
-  const terrainViewDistance = lowPower || window.innerWidth < 700
+  const terrainViewDistance = lowPower || mobileViewport
     ? MOBILE_TERRAIN_VIEW_DISTANCE
     : DESKTOP_TERRAIN_VIEW_DISTANCE;
-  const terrainWorkerCount = lowPower || window.innerWidth < 700
+  const terrainWorkerCount = lowPower || mobileViewport
     ? 2
     : Math.max(1, Math.min(4, Math.trunc(Number(navigator.hardwareConcurrency) || 4)));
+  const sceneDpr = lowPower || mobileViewport ? 0.75 : 0.875;
   const renderViewDistance = terrainViewDistance + 3;
   const actorTimeScale = Math.max(0.25, Math.min(8, Number(options.actorTimeScale) || 1));
   const frameInterval = 1_000 / maxFps;
@@ -154,6 +159,7 @@ export function createHomeWorldScene(canvas, options = {}) {
   let initialized = false;
   let settled = false;
   let focusView = "arrival";
+  let initialTerrainView = "arrival";
   let pointerX = 0;
   let pointerY = 0;
   let pointerClientX = -1;
@@ -168,6 +174,12 @@ export function createHomeWorldScene(canvas, options = {}) {
   let cameraTarget = cameraStart;
   let lastMiningBurst = -1;
   let lastForgeBurst = -1;
+  let workerPoolExpanded = false;
+  let deferredSceneAssetsScheduled = false;
+  let deferredSceneAssetsPromise = null;
+  let initialBoyCode = "";
+  let backgroundTerrainTimer = 0;
+  let deferredTerrainPreparationStart = null;
   const buildMetrics = { baseBuilds: 0, remeshBuilds: 0 };
   let resolveReady;
   const ready = new Promise((resolve) => {
@@ -203,6 +215,12 @@ export function createHomeWorldScene(canvas, options = {}) {
     cameraStart = resolveCameraPose(timestamp, false);
     focusView = view;
     focusStartedAt = timestamp;
+    if (runtime && chunks) {
+      prioritizePendingTerrainBuilds(view);
+      if (canvas.dataset.sceneReady === "true" && chunks.buildQueue?.length) resumeTerrainBuildsForView();
+      else if (view !== initialTerrainView) startDeferredTerrainPreparation();
+    }
+    if (view === "market" && canvas.dataset.sceneReady === "true") void ensureDeferredSceneAssets();
     if (view !== "guardian") emitGuardianChat(null);
     cameraTarget = cameraPoseForView(view, canvasAspect(canvas));
     transitionStart = immediate || reducedMotion.matches ? timestamp - CAMERA_TRANSITION_MS : timestamp;
@@ -262,7 +280,7 @@ export function createHomeWorldScene(canvas, options = {}) {
     setCameraTransitioning(cameraTransitionActive(timestamp));
     const camera = cameraStateFromPose(runtime, cameraPose, canvasAspect(canvas));
     renderer.prepareChunksForRender(visibleChunks, {
-      maxUploads: lowPower ? 2 : 5,
+      maxUploads: lowPower || mobileViewport ? 4 : 8,
       cameraState: camera,
     });
     const renderStats = renderer.render(camera, visibleChunks, avatars, overlaysForView(timestamp));
@@ -316,7 +334,10 @@ export function createHomeWorldScene(canvas, options = {}) {
   }
 
   function recordBuildEvent(type) {
-    if (type === "chunk-build-done") buildMetrics.baseBuilds += 1;
+    if (type === "chunk-build-done") {
+      buildMetrics.baseBuilds += 1;
+      expandTerrainWorkerPool();
+    }
     else if (type === "chunk-remesh-done") buildMetrics.remeshBuilds += 1;
     else return;
     canvas.dataset.sceneBaseBuilds = String(buildMetrics.baseBuilds);
@@ -649,11 +670,223 @@ export function createHomeWorldScene(canvas, options = {}) {
     canvas.dataset.sceneWindmillRotationMs = String(WINDMILL_ROTATION_MS);
     canvas.dataset.sceneWindmillAngle ||= "0.00000";
     canvas.dataset.sceneWindmillRotating = String(!reducedMotion.matches);
+    pauseTerrainBuildsForTransition();
+    scheduleDeferredWorkAfterVisualHandoff();
     document.documentElement.classList.remove("home-world-fallback");
     document.documentElement.classList.add("home-world-ready");
     options.onReady?.(lastStats);
     window.dispatchEvent(new CustomEvent("nicechunk:homeworldready", { detail: lastStats }));
     settle("ready", lastStats);
+  }
+
+  function scheduleDeferredWorkAfterVisualHandoff() {
+    let probeTimer = 0;
+    let released = false;
+    canvas.dataset.sceneVisualHandoff = "waiting";
+    const cleanup = () => {
+      canvas.removeEventListener("transitionend", handleTransitionEnd);
+      if (probeTimer) window.clearTimeout(probeTimer);
+      probeTimer = 0;
+    };
+    const release = () => {
+      if (released || destroyed) return;
+      released = true;
+      cleanup();
+      canvas.dataset.sceneVisualHandoff = "ready";
+      startDeferredTerrainPreparation(VISUAL_HANDOFF_PROBE_MS);
+      scheduleDeferredSceneAssets();
+    };
+    const probe = () => {
+      probeTimer = 0;
+      const opacity = Number.parseFloat(window.getComputedStyle(canvas).opacity);
+      if (reducedMotion.matches || opacity >= 0.98) {
+        release();
+        return;
+      }
+      probeTimer = window.setTimeout(probe, VISUAL_HANDOFF_PROBE_MS);
+    };
+    function handleTransitionEnd(event) {
+      if (event.target === canvas && event.propertyName === "opacity") release();
+    }
+    canvas.addEventListener("transitionend", handleTransitionEnd);
+    probeTimer = window.setTimeout(probe, VISUAL_HANDOFF_PROBE_MS);
+    cleanups.push(cleanup);
+  }
+
+  function prioritizePendingTerrainBuilds(view = focusView) {
+    if (!runtime || !chunks?.buildQueue?.length) return 0;
+    const requiredIds = terrainPriorityIdsForView(view);
+    const pose = cameraPoseForView(view, canvasAspect(canvas));
+    const targetChunkX = Math.floor(pose.target[0] / 16);
+    const targetChunkZ = Math.floor(pose.target[2] / 16);
+    chunks.buildQueue.sort((left, right) => {
+      const requiredOrder = Number(!requiredIds.has(left.id)) - Number(!requiredIds.has(right.id));
+      if (requiredOrder) return requiredOrder;
+      const leftDistance = Math.hypot(left.chunkX - targetChunkX, left.chunkZ - targetChunkZ);
+      const rightDistance = Math.hypot(right.chunkX - targetChunkX, right.chunkZ - targetChunkZ);
+      return leftDistance - rightDistance || left.chunkZ - right.chunkZ || left.chunkX - right.chunkX;
+    });
+    chunks.buildQueueNeedsSort = false;
+    chunks.dispatchBuilds?.();
+    canvas.dataset.scenePriorityView = view;
+    canvas.dataset.scenePriorityChunks = String(requiredIds.size);
+    return requiredIds.size;
+  }
+
+  function terrainPriorityIdsForView(view = focusView) {
+    if (!runtime || !chunks) return new Set();
+    const aspect = canvasAspect(canvas);
+    const pose = cameraPoseForView(view, aspect);
+    const camera = cameraStateFromPose(runtime, pose, aspect);
+    const requiredIds = new Set();
+    for (const chunk of chunks.chunks.values()) {
+      if (runtime.chunkIntersectsCameraFrustum(terrainReadinessProbe(chunk), camera)) requiredIds.add(chunk.id);
+    }
+    for (const structure of structureChunks) {
+      if (runtime.chunkIntersectsCameraFrustum(structure, camera)) requiredIds.add(`${structure.chunkX},${structure.chunkZ}`);
+    }
+    return requiredIds;
+  }
+
+  function expandTerrainWorkerPool() {
+    if (workerPoolExpanded || !chunks) return;
+    workerPoolExpanded = true;
+    chunks.setBuildConcurrencyLimit(terrainWorkerCount);
+    canvas.dataset.sceneWorkerConcurrency = String(terrainWorkerCount);
+  }
+
+  function pauseTerrainBuildsForTransition() {
+    if (!chunks?.buildQueue?.length) return;
+    chunks.setBuildConcurrencyLimit(0);
+    canvas.dataset.sceneWorkerConcurrency = "0";
+    canvas.dataset.sceneTerrainBuildPhase = "transition";
+    backgroundTerrainTimer = window.setTimeout(() => {
+      backgroundTerrainTimer = 0;
+      if (destroyed || !chunks?.buildQueue?.length) return;
+      chunks.setBuildConcurrencyLimit(1);
+      canvas.dataset.sceneWorkerConcurrency = "1";
+      canvas.dataset.sceneTerrainBuildPhase = "background";
+    }, 900);
+    cleanups.push(() => window.clearTimeout(backgroundTerrainTimer));
+  }
+
+  function resumeTerrainBuildsForView() {
+    if (backgroundTerrainTimer) {
+      window.clearTimeout(backgroundTerrainTimer);
+      backgroundTerrainTimer = 0;
+    }
+    chunks.setBuildConcurrencyLimit(terrainWorkerCount);
+    canvas.dataset.sceneWorkerConcurrency = String(terrainWorkerCount);
+    canvas.dataset.sceneTerrainBuildPhase = "view-priority";
+  }
+
+  function scheduleDeferredSceneAssets() {
+    if (deferredSceneAssetsScheduled || deferredSceneAssetsPromise || destroyed) return;
+    deferredSceneAssetsScheduled = true;
+    const load = () => {
+      deferredSceneAssetsScheduled = false;
+      if (!destroyed) void ensureDeferredSceneAssets();
+    };
+    if (focusView === "market") {
+      queueMicrotask(load);
+    } else {
+      const delayHandle = window.setTimeout(() => {
+        if (typeof window.requestIdleCallback === "function") {
+          const idleHandle = window.requestIdleCallback(load, { timeout: 2_000 });
+          cleanups.push(() => window.cancelIdleCallback?.(idleHandle));
+        } else {
+          load();
+        }
+      }, DEFERRED_SCENE_ASSET_DELAY_MS);
+      cleanups.push(() => window.clearTimeout(delayHandle));
+    }
+  }
+
+  function ensureDeferredSceneAssets() {
+    if (deferredSceneAssetsPromise || destroyed || !runtime || !renderer || !initialBoyCode) {
+      return deferredSceneAssetsPromise;
+    }
+    canvas.dataset.sceneDeferredAssets = "loading";
+    deferredSceneAssetsPromise = createDeferredSceneAssets(
+      runtime,
+      options.runtimeRoot || DEFAULT_RUNTIME_ROOT,
+      initialBoyCode,
+    ).then(({ boyMesh, workbenchMesh, forgedToolMesh }) => {
+      if (destroyed || !renderer) return null;
+      renderer.uploadAvatarMesh("villager-boy", boyMesh);
+      renderer.uploadAvatarMesh("economy-workbench", workbenchMesh);
+      renderer.uploadAvatarMesh("economy-forged-tool", forgedToolMesh);
+      avatars = avatars.filter((avatar) => !["economy-workbench", "economy-forged-tool"].includes(avatar.meshId));
+      avatars.push(
+        createSceneProp("economy-workbench", ECONOMY_FORGE_SITE.bench, {
+          shadowCasterHeight: 2.98,
+          shadowRadiusX: 1.52,
+          shadowRadiusZ: 0.74,
+          shadowAlpha: 0.32,
+        }),
+        createSceneProp("economy-forged-tool", ECONOMY_FORGE_SITE.tool, { castShadow: false }),
+      );
+      canvas.dataset.sceneDeferredAssets = "ready";
+      renderFrame(performance.now(), true);
+      schedule();
+      return true;
+    }).catch((error) => {
+      canvas.dataset.sceneDeferredAssets = "unavailable";
+      console.warn("NiceChunk homepage deferred forge assets could not be loaded.", error);
+      return null;
+    });
+    return deferredSceneAssetsPromise;
+  }
+
+  function scheduleDeferredTerrainPreparation(presentationTerrain, deferredBuildTasks, initialTerrainResult) {
+    if (!deferredBuildTasks.length) {
+      canvas.dataset.sceneTerrainPreparation = "ready";
+      return;
+    }
+    const deferredIds = new Set(deferredBuildTasks.map((task) => task.id));
+    canvas.dataset.sceneTerrainPreparation = "queued";
+    deferredTerrainPreparationStart = (delayMs = 0) => {
+      canvas.dataset.sceneTerrainPreparation = "pending";
+      const handle = window.setTimeout(async () => {
+        try {
+          const deferredResult = await applyHomeWorldTerrain(chunks, presentationTerrain, {
+            includeChunkIds: deferredIds,
+            yieldEvery: lowPower ? 1 : 2,
+            onProgress: ({ appliedChunks, appliedDeltas }) => {
+              canvas.dataset.sceneTerrainPreparedChunks = String(initialTerrainResult.appliedChunks + appliedChunks);
+              canvas.dataset.sceneTerrainPreparedDeltas = String(initialTerrainResult.appliedDeltas + appliedDeltas);
+            },
+          });
+          if (destroyed || !chunks) return;
+          canvas.dataset.sceneTerrainPreparedChunks = String(initialTerrainResult.appliedChunks + deferredResult.appliedChunks);
+          canvas.dataset.sceneTerrainPreparedDeltas = String(initialTerrainResult.appliedDeltas + deferredResult.appliedDeltas);
+          canvas.dataset.sceneTerrainPreparation = "ready";
+          const liveTasks = deferredBuildTasks.filter((task) => chunks.chunks.has(task.id));
+          const sceneAlreadyReady = canvas.dataset.sceneReady === "true";
+          if (sceneAlreadyReady) chunks.setBuildConcurrencyLimit(0);
+          chunks.buildQueue.push(...liveTasks);
+          chunks.buildQueueNeedsSort = true;
+          prioritizePendingTerrainBuilds(focusView);
+          if (sceneAlreadyReady) {
+            chunks.setBuildConcurrencyLimit(1);
+            canvas.dataset.sceneWorkerConcurrency = "1";
+            canvas.dataset.sceneTerrainBuildPhase = "background";
+          }
+        } catch (error) {
+          canvas.dataset.sceneTerrainPreparation = "unavailable";
+          handleUnavailable(error);
+        }
+      }, Math.max(0, Math.trunc(delayMs)));
+      cleanups.push(() => window.clearTimeout(handle));
+    };
+    if (focusView !== initialTerrainView) startDeferredTerrainPreparation();
+  }
+
+  function startDeferredTerrainPreparation(delayMs = 0) {
+    const start = deferredTerrainPreparationStart;
+    if (!start) return;
+    deferredTerrainPreparationStart = null;
+    start(delayMs);
   }
 
   async function initialize() {
@@ -675,15 +908,17 @@ export function createHomeWorldScene(canvas, options = {}) {
       });
       renderer = new runtime.WebGL2VoxelRenderer(canvas, {
         viewDistance: renderViewDistance,
+        dpr: sceneDpr,
         textureTileSize: 32,
         textureSeed: runtime.MAINNET_WORLD_SEED,
         useRegionBatching: false,
-        maxChunkUploadsPerFrame: lowPower ? 2 : 5,
+        maxChunkUploadsPerFrame: lowPower || mobileViewport ? 4 : 8,
         maxMobileDpr: 1,
         maxDesktopDpr: lowPower ? 1 : 1.25,
         maxVoxelParticles: lowPower ? 48 : 96,
       });
       renderer.init();
+      canvas.dataset.sceneDpr = String(sceneDpr);
 
       chunks = new runtime.ChunkManager({
         worldSeed: runtime.MAINNET_WORLD_SEED,
@@ -701,8 +936,20 @@ export function createHomeWorldScene(canvas, options = {}) {
         directionX: 0.18,
         directionZ: -1,
       });
-      const sceneMeshes = createSceneMeshes(runtime, options.runtimeRoot || DEFAULT_RUNTIME_ROOT);
+      const sceneMeshes = createInitialSceneMeshes(runtime);
+      const structures = createStructures(runtime);
+      structureChunks = structures.chunks;
+      structureWalkSurfaces = structures.walkSurfaces;
+      structureInspectables = structures.inspectables;
+      windmillRotor = structures.windmillRotor;
+      initialTerrainView = focusView;
+      const initialPriorityIds = terrainPriorityIdsForView(focusView);
+      const deferredBuildTasks = chunks.buildQueue.filter((task) => !initialPriorityIds.has(task.id));
+      chunks.buildQueue = chunks.buildQueue.filter((task) => initialPriorityIds.has(task.id));
+      chunks.buildQueueNeedsSort = false;
+      prioritizePendingTerrainBuilds(focusView);
       const terrainResult = await applyHomeWorldTerrain(chunks, presentationTerrain, {
+        includeChunkIds: initialPriorityIds,
         yieldEvery: lowPower ? 4 : 8,
         onProgress: ({ appliedChunks, appliedDeltas }) => {
           canvas.dataset.sceneTerrainPreparedChunks = String(appliedChunks);
@@ -710,43 +957,32 @@ export function createHomeWorldScene(canvas, options = {}) {
         },
       });
       canvas.dataset.sceneTerrainTotalChunks = String(chunks.chunks.size);
-      canvas.dataset.sceneTerrainDeltas = String(terrainResult.appliedDeltas);
+      canvas.dataset.sceneTerrainDeltas = String(presentationTerrain.deltaCount);
       canvas.dataset.sceneTerrainFingerprint = presentationTerrain.fingerprint;
       canvas.dataset.sceneTerrainEncoding = presentationTerrain.transferEncoding;
       canvas.dataset.sceneTerrainTransferBytes = String(presentationTerrain.transferBytes);
-      chunks.setBuildConcurrencyLimit(terrainWorkerCount);
-      const structures = createStructures(runtime);
-      structureChunks = structures.chunks;
-      structureWalkSurfaces = structures.walkSurfaces;
-      structureInspectables = structures.inspectables;
-      windmillRotor = structures.windmillRotor;
+      chunks.setBuildConcurrencyLimit(1);
+      canvas.dataset.sceneWorkerConcurrency = "1";
+      canvas.dataset.sceneDeferredAssets = "pending";
       const {
+        boyCode,
         boyMesh,
         girlMesh,
-        workbenchMesh,
-        forgedToolMesh,
       } = await sceneMeshes;
       if (destroyed) return;
+      initialBoyCode = boyCode;
       renderer.uploadAvatarMesh("villager-boy", boyMesh);
       renderer.uploadAvatarMesh("villager-girl", girlMesh);
-      renderer.uploadAvatarMesh("economy-workbench", workbenchMesh);
-      renderer.uploadAvatarMesh("economy-forged-tool", forgedToolMesh);
       avatars = [
         createAvatar(runtime, worldConfig, "villager-boy", ACTOR_SITES.boy, "villager-boy"),
         createAvatar(runtime, worldConfig, "villager-girl", ACTOR_SITES.girl, "villager-girl"),
-        createSceneProp("economy-workbench", ECONOMY_FORGE_SITE.bench, {
-          shadowCasterHeight: 2.98,
-          shadowRadiusX: 1.52,
-          shadowRadiusZ: 0.74,
-          shadowAlpha: 0.32,
-        }),
-        createSceneProp("economy-forged-tool", ECONOMY_FORGE_SITE.tool, { castShadow: false }),
       ];
 
       chunks.rebuildDirtyChunks(lowPower ? 8 : 14);
       initialized = true;
       startedAt = performance.now();
       lastFrameTime = startedAt;
+      scheduleDeferredTerrainPreparation(presentationTerrain, deferredBuildTasks, terrainResult);
       focus(focusView, { immediate: true });
       renderFrame(startedAt, true);
       schedule();
@@ -872,10 +1108,15 @@ function createStructures(runtime) {
   let windmillRotor = null;
   let revision = 1;
   for (const spec of STRUCTURE_SPECS) {
-    const building = runtime.parseNcm3Building(spec.definition.ncm.code, {
+    const encoded = homeStructureNcmEntry(spec.definition);
+    const building = runtime.parseNcm3Building(encoded.code, {
       id: spec.id,
       name: spec.definition.titles.en,
     });
+    if (building.payloadBytes !== encoded.payloadBytes
+      || building.materials.join(",") !== encoded.materials.join(",")) {
+      throw new Error(`Homepage building ${spec.definition.key} NCM metadata is stale.`);
+    }
     const footprint = spec.quarterTurns % 2 === 0
       ? { width: building.size.x, depth: building.size.z }
       : { width: building.size.z, depth: building.size.x };
@@ -932,6 +1173,14 @@ function createStructures(runtime) {
   const resourceChunks = createResourceClusterChunks(runtime, revision);
   chunks.push(...resourceChunks);
   return { chunks, walkSurfaces, inspectables, windmillRotor };
+}
+
+function homeStructureNcmEntry(definition) {
+  const entry = HOME_STRUCTURE_NCM_CODES[definition.key];
+  if (!entry?.code?.startsWith("NCM3:") || entry.roofMaterialId !== 96) {
+    throw new Error(`Homepage building ${definition.key} has no materialized NCM3 code.`);
+  }
+  return entry;
 }
 
 function createResourceClusterChunks(runtime, firstRevision) {
@@ -1001,20 +1250,29 @@ function createInspectableStructure(building, placements, spec) {
   const components = placements.map((entry) => entry?.placement ? entry : { placement: entry });
   const placementList = components.map((entry) => entry.placement);
   const bounds = worldVoxelBounds(placementList);
-  const occupiedVoxels = new Set();
-  for (const placement of placementList) {
-    for (const voxel of placement.worldVoxels.values()) {
-      occupiedVoxels.add(worldVoxelKey(voxel.x, voxel.y, voxel.z));
+  let interactionGeometry = null;
+  const ensureInteractionGeometry = () => {
+    if (interactionGeometry) return interactionGeometry;
+    const occupiedVoxels = new Set();
+    for (const placement of placementList) {
+      for (const voxel of placement.worldVoxels.values()) {
+        occupiedVoxels.add(worldVoxelKey(voxel.x, voxel.y, voxel.z));
+      }
     }
-  }
-  const outlineGroups = components.map(({ placement, rotationPivot = null }) => {
-    const surface = structureSurfaceProjectionMesh(placement.worldVoxels.values());
-    return Object.freeze({
-      faces: surface.faces,
-      points: surface.points,
-      rotationPivot,
+    const outlineGroups = components.map(({ placement, rotationPivot = null }) => {
+      const surface = structureSurfaceProjectionMesh(placement.worldVoxels.values());
+      return Object.freeze({
+        faces: surface.faces,
+        points: surface.points,
+        rotationPivot,
+      });
     });
-  });
+    interactionGeometry = Object.freeze({
+      occupiedVoxels,
+      outlineGroups: Object.freeze(outlineGroups),
+    });
+    return interactionGeometry;
+  };
   return Object.freeze({
     id: spec.id,
     titles: Object.freeze({ ...spec.definition.titles }),
@@ -1025,8 +1283,10 @@ function createInspectableStructure(building, placements, spec) {
     modelSize: Object.freeze({ ...building.size }),
     worldBounds: bounds,
     corners: Object.freeze(buildingBoundsCorners(bounds)),
-    outlineGroups: Object.freeze(outlineGroups),
-    hasWorldVoxel: (x, y, z) => occupiedVoxels.has(worldVoxelKey(x, y, z)),
+    get outlineGroups() {
+      return ensureInteractionGeometry().outlineGroups;
+    },
+    hasWorldVoxel: (x, y, z) => ensureInteractionGeometry().occupiedVoxels.has(worldVoxelKey(x, y, z)),
   });
 }
 
@@ -1360,31 +1620,42 @@ function addStructureWalkSurfaces(placement, spec, walkSurfaces) {
   }
 }
 
-async function createSceneMeshes(runtime, runtimeRoot) {
-  const [boyCode, girlCode, forgeModule] = await Promise.all([
+async function createInitialSceneMeshes(runtime) {
+  const [boyCode, girlCode] = await Promise.all([
     fetchNcm("/media/vox/chr_peasant_guy_blackhair.ncm"),
     fetchNcm("/media/vox/chr_peasant_girl_orangehair.ncm"),
-    loadForgeRuntime(runtimeRoot),
   ]);
-  const forgeCache = new forgeModule.ForgeRuntimeCache({ maxEntries: 4, maxBytes: 2 * 1024 * 1024 });
-  const hammerRuntime = restoreItemRuntime(forgeCache, ironBlacksmithHammerDefinition);
-  const workbenchRuntime = restoreItemRuntime(forgeCache, timberWorkbenchDefinition);
-  const forgedToolRuntime = restoreItemRuntime(forgeCache, ironDeepRockPickaxeDefinition);
   const boyMesh = runtime.createAvatarMeshFromNcm(boyCode, {
     scale: AVATAR_VISUAL_SCALE,
     name: "villager-boy",
     attachIronPickaxe: true,
-    attachForgedPickaxe: true,
-    forgeRuntime: hammerRuntime,
-    forgeMetersToWorldUnits: FORGE_WORLD_UNITS_PER_METER,
   });
   const girlMesh = runtime.createAvatarMeshFromNcm(girlCode, {
     scale: AVATAR_VISUAL_SCALE,
     name: "villager-girl",
   });
   return {
+    boyCode,
     boyMesh,
     girlMesh,
+  };
+}
+
+async function createDeferredSceneAssets(runtime, runtimeRoot, boyCode) {
+  const forgeModule = await loadForgeRuntime(runtimeRoot);
+  const forgeCache = new forgeModule.ForgeRuntimeCache({ maxEntries: 4, maxBytes: 2 * 1024 * 1024 });
+  const hammerRuntime = restoreItemRuntime(forgeCache, ironBlacksmithHammerDefinition);
+  const workbenchRuntime = restoreItemRuntime(forgeCache, timberWorkbenchDefinition);
+  const forgedToolRuntime = restoreItemRuntime(forgeCache, ironDeepRockPickaxeDefinition);
+  return {
+    boyMesh: runtime.createAvatarMeshFromNcm(boyCode, {
+      scale: AVATAR_VISUAL_SCALE,
+      name: "villager-boy",
+      attachIronPickaxe: true,
+      attachForgedPickaxe: true,
+      forgeRuntime: hammerRuntime,
+      forgeMetersToWorldUnits: FORGE_WORLD_UNITS_PER_METER,
+    }),
     workbenchMesh: forgeRuntimeToSceneMesh(workbenchRuntime, {
       name: "economy-workbench",
       scale: FORGE_WORLD_UNITS_PER_METER,

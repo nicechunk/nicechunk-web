@@ -31,6 +31,11 @@
     "watchers": "Guardians",
     "roadmap": "Roadmap"
   },
+  "scrollCue": {
+    "aria": "Explore the next chapter",
+    "desktop": "Scroll to explore",
+    "mobile": "Swipe up to explore"
+  },
   "hero": {
     "eyebrow": "Playable Devnet Alpha",
     "title": "Build the world. Verify the change.",

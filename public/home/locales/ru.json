@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ru",
     "label": "Russian",
-    "version": "home-locale-ru-18237fc6874d242a",
-    "contentHash": "18237fc6874d242a"
+    "version": "home-locale-ru-46caeaff7727a9d1",
+    "contentHash": "46caeaff7727a9d1"
   },
   "common": {
     "language": "Язык",
@@ -92,6 +92,11 @@
     "economy": "Экономика",
     "watchers": "Guardians",
     "roadmap": "Дорожная карта"
+  },
+  "scrollCue": {
+    "aria": "Перейти к следующей главе",
+    "desktop": "Прокрутите для исследования",
+    "mobile": "Проведите вверх"
   },
   "hero": {
     "eyebrow": "Играбельная альфа в Devnet",

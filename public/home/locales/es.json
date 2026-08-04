@@ -2,8 +2,8 @@
   "_meta": {
     "language": "es",
     "label": "Spanish",
-    "version": "home-locale-es-6628aeecfc5e80eb",
-    "contentHash": "6628aeecfc5e80eb"
+    "version": "home-locale-es-5bf91b2496e70f20",
+    "contentHash": "5bf91b2496e70f20"
   },
   "common": {
     "language": "Idioma",
@@ -92,6 +92,11 @@
     "economy": "Economía",
     "watchers": "Guardians",
     "roadmap": "Hoja de ruta"
+  },
+  "scrollCue": {
+    "aria": "Explorar el siguiente capítulo",
+    "desktop": "Desplázate para explorar",
+    "mobile": "Desliza hacia arriba para explorar"
   },
   "hero": {
     "eyebrow": "Alpha jugable en Devnet",

@@ -31,6 +31,11 @@
     "watchers": "Guardians",
     "roadmap": "Hoja de ruta"
   },
+  "scrollCue": {
+    "aria": "Explorar el siguiente capítulo",
+    "desktop": "Desplázate para explorar",
+    "mobile": "Desliza hacia arriba para explorar"
+  },
   "hero": {
     "eyebrow": "Alpha jugable en Devnet",
     "title": "Construye el mundo. Verifica el cambio.",

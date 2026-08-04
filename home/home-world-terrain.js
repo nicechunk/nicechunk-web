@@ -169,9 +169,12 @@ export function unpackHomeWorldTerrainChunk(terrain, chunkX, chunkZ) {
 export async function applyHomeWorldTerrain(manager, terrain, {
   txId = "homepage-scene-presentation",
   yieldEvery = 8,
+  includeChunkIds = null,
   onProgress = null,
 } = {}) {
+  const included = includeChunkIds instanceof Set ? includeChunkIds : null;
   const chunks = Array.from(manager?.chunks?.values?.() ?? [])
+    .filter((chunk) => !included || included.has(chunk.id))
     .sort((a, b) => Math.max(Math.abs(a.chunkX - manager.centerChunkX), Math.abs(a.chunkZ - manager.centerChunkZ))
       - Math.max(Math.abs(b.chunkX - manager.centerChunkX), Math.abs(b.chunkZ - manager.centerChunkZ)));
   let appliedChunks = 0;

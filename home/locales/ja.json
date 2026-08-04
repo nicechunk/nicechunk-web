@@ -31,6 +31,11 @@
     "watchers": "Guardians",
     "roadmap": "ロードマップ"
   },
+  "scrollCue": {
+    "aria": "次の章を見る",
+    "desktop": "スクロールして探索",
+    "mobile": "上にスワイプして探索"
+  },
   "hero": {
     "eyebrow": "Devnet でプレイ可能な Alpha",
     "title": "世界を築く。変化を検証する。",

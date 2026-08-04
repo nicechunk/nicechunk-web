@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ko",
     "label": "Korean",
-    "version": "home-locale-ko-b48ba96e96e67955",
-    "contentHash": "b48ba96e96e67955"
+    "version": "home-locale-ko-b1aec2fbcccbf646",
+    "contentHash": "b1aec2fbcccbf646"
   },
   "common": {
     "language": "언어",
@@ -140,8 +140,8 @@
     "exact": "225/225 완전 일치 · 불일치 0",
     "decision": "POUW 결정",
     "retained": "NCHT V1 유지",
-    "larger": "NCM4P가 85.85% 더 큼",
-    "summary": "NCM4P는 범용 NCM3 투영을 49.33% 줄였지만, PoUW는 의미가 완전히 같고 알려진 최적 표현보다 작은 후보만 승인합니다.",
+    "larger": "NCM4P가 86.60% 더 큼",
+    "summary": "NCM4P는 범용 NCM3 투영을 49.13% 줄였지만, PoUW는 의미가 완전히 같고 알려진 최적 표현보다 작은 후보만 승인합니다.",
     "caveat": "가역적인 building-profile 연구 투영이며, 현재 terrain profile은 삭제 좌표만 표현합니다.",
     "report": "증명 보기",
     "bundle": "NCM4 번들",

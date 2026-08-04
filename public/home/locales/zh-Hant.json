@@ -2,8 +2,8 @@
   "_meta": {
     "language": "zh-Hant",
     "label": "Traditional Chinese",
-    "version": "home-locale-zh-Hant-35ec0a08bbe768bf",
-    "contentHash": "35ec0a08bbe768bf"
+    "version": "home-locale-zh-Hant-6759e4efc963ac2e",
+    "contentHash": "6759e4efc963ac2e"
   },
   "common": {
     "language": "語言",
@@ -140,8 +140,8 @@
     "exact": "225/225 完全一致 · 0 處差異",
     "decision": "POUW 決策",
     "retained": "保留 NCHT V1",
-    "larger": "NCM4P 大 85.85%",
-    "summary": "NCM4P 相比通用 NCM3 投影減少 49.33%，但 PoUW 只接受語義完全一致且小於目前最佳表達的候選。",
+    "larger": "NCM4P 大 86.60%",
+    "summary": "NCM4P 相比通用 NCM3 投影減少 49.13%，但 PoUW 只接受語義完全一致且小於目前最佳表達的候選。",
     "caveat": "可逆的 building-profile 研究投影；目前 terrain profile 仍只表達刪除座標。",
     "report": "查看證明",
     "bundle": "NCM4 稽核包",

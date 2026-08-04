@@ -2,8 +2,8 @@
   "_meta": {
     "language": "en",
     "label": "English",
-    "version": "home-locale-en-498ad638b7c7e872",
-    "contentHash": "498ad638b7c7e872"
+    "version": "home-locale-en-91713ea2eedae2df",
+    "contentHash": "91713ea2eedae2df"
   },
   "common": {
     "language": "Language",
@@ -140,8 +140,8 @@
     "exact": "225/225 EXACT · 0 MISMATCH",
     "decision": "POUW DECISION",
     "retained": "NCHT V1 RETAINED",
-    "larger": "NCM4P IS 85.85% LARGER",
-    "summary": "NCM4P cuts the generic NCM3 projection by 49.33%, but PoUW accepts only a candidate that is exact and smaller than the best known representation.",
+    "larger": "NCM4P IS 86.60% LARGER",
+    "summary": "NCM4P cuts the generic NCM3 projection by 49.13%, but PoUW accepts only a candidate that is exact and smaller than the best known representation.",
     "caveat": "Reversible building-profile research projection; the current terrain profile remains deletion-only.",
     "report": "Inspect Proof",
     "bundle": "NCM4 Bundle",

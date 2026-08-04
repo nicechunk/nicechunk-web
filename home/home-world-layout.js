@@ -273,6 +273,9 @@ const ROADSIDE_FLOWER_BLOCKS = Object.freeze([
   "flowerBlue",
   "flowerPink",
 ]);
+const ROADSIDE_FLOWER_SAMPLE_STEP = 1.7;
+const ROADSIDE_FLOWER_INNER_OFFSET = 0.9;
+const ROADSIDE_FLOWER_OUTER_OFFSET = 2.25;
 
 const ROADSIDE_FLOWER_CLEARINGS = Object.freeze([
   Object.freeze({ minX: 2507, maxX: 2525, minZ: 1810, maxZ: 1840 }),
@@ -310,19 +313,21 @@ function createRoadsideFlowers() {
       const normalX = -tangentZ;
       const normalZ = tangentX;
       let sampleIndex = 0;
-      for (let distance = 2.75; distance <= length - 2.75; distance += 3.75) {
-        const alongJitter = ((sampleIndex + pathIndex) % 3 - 1) * 0.55;
+      for (let distance = 1.4; distance <= length - 1.4; distance += ROADSIDE_FLOWER_SAMPLE_STEP) {
+        const alongJitter = ((sampleIndex + pathIndex) % 3 - 1) * 0.25;
         for (const side of [-1, 1]) {
           const sideIndex = side > 0 ? 1 : 0;
-          const edgeJitter = ((sampleIndex + pathIndex + sideIndex) % 2) * 0.35;
-          const offset = side * (path.halfWidth + 1.35 + edgeJitter);
+          const edgeJitter = ((sampleIndex + pathIndex + sideIndex) % 2) * 0.2;
+          const offset = side * (path.halfWidth + ROADSIDE_FLOWER_INNER_OFFSET + edgeJitter);
           const x = Math.round(from.x + tangentX * (distance + alongJitter) + normalX * offset);
           const z = Math.round(from.z + tangentZ * (distance + alongJitter) + normalZ * offset);
           addFlower(x, z);
-          if ((sampleIndex + pathIndex + sideIndex) % 3 === 0) {
+          if ((sampleIndex + pathIndex + sideIndex) % 2 === 0) {
             addFlower(
-              Math.round(from.x + tangentX * (distance + alongJitter + 0.7) + normalX * (offset + side * 1.8)),
-              Math.round(from.z + tangentZ * (distance + alongJitter + 0.7) + normalZ * (offset + side * 1.8)),
+              Math.round(from.x + tangentX * (distance + alongJitter + 0.55)
+                + normalX * side * (path.halfWidth + ROADSIDE_FLOWER_OUTER_OFFSET + edgeJitter)),
+              Math.round(from.z + tangentZ * (distance + alongJitter + 0.55)
+                + normalZ * side * (path.halfWidth + ROADSIDE_FLOWER_OUTER_OFFSET + edgeJitter)),
             );
           }
         }

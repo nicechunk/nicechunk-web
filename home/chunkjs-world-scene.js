@@ -35,6 +35,8 @@ const DEFERRED_SCENE_ASSET_DELAY_MS = 600;
 const VISUAL_HANDOFF_PROBE_MS = 120;
 const WINDMILL_ROTATION_MS = 42_000;
 const WINDMILL_FRAME_MS = 1_000 / 12;
+const MOBILE_SCENE_DPR = 1.15;
+const SCENE_DIAGNOSTICS_INTERVAL_MS = 250;
 const GUARDIAN_DIALOGUE_PAIR_COUNT = 3;
 const GUARDIAN_DIALOGUE_PAIR_MS = 5_400;
 const GUARDIAN_CHAT_HEAD_CLEARANCE = 0.72;
@@ -138,10 +140,11 @@ export function createHomeWorldScene(canvas, options = {}) {
   const terrainWorkerCount = lowPower || mobileViewport
     ? 2
     : Math.max(1, Math.min(4, Math.trunc(Number(navigator.hardwareConcurrency) || 4)));
-  const sceneDpr = lowPower || mobileViewport ? 0.75 : 0.875;
+  const sceneDpr = mobileViewport ? MOBILE_SCENE_DPR : lowPower ? 0.75 : 0.875;
   const renderViewDistance = terrainViewDistance + 3;
   const actorTimeScale = Math.max(0.25, Math.min(8, Number(options.actorTimeScale) || 1));
   const frameInterval = 1_000 / maxFps;
+  let sceneAspect = canvasAspect(canvas);
   const cleanups = [];
   let runtime = null;
   let worldConfig = null;
@@ -171,11 +174,15 @@ export function createHomeWorldScene(canvas, options = {}) {
   let transitionStart = startedAt;
   let cameraTransitioning = false;
   let focusStartedAt = startedAt;
-  let cameraStart = cameraPoseForView("arrival", canvasAspect(canvas));
+  let cameraStart = cameraPoseForView("arrival", sceneAspect);
   let cameraTarget = cameraStart;
   let lastMiningBurst = -1;
   let lastForgeBurst = -1;
   let workerPoolExpanded = false;
+  let renderChunkListDirty = true;
+  let cachedTerrainChunks = [];
+  let cachedVisibleChunks = [];
+  let lastDiagnosticsAt = -Infinity;
   let deferredSceneAssetsScheduled = false;
   let deferredSceneAssetsPromise = null;
   let initialBoyCode = "";
@@ -197,6 +204,12 @@ export function createHomeWorldScene(canvas, options = {}) {
     remeshBuilds: 0,
     requiredTerrainChunks: 0,
     maxFps,
+  });
+  let lastReadiness = Object.freeze({
+    ready: false,
+    requiredTerrainChunks: 0,
+    readyTerrainChunks: 0,
+    requiredStructureChunks: 0,
   });
 
   const settle = (status, detail = null) => {
@@ -223,7 +236,7 @@ export function createHomeWorldScene(canvas, options = {}) {
     }
     if (view === "market" && canvas.dataset.sceneReady === "true") void ensureDeferredSceneAssets();
     if (view !== "guardian") emitGuardianChat(null);
-    cameraTarget = cameraPoseForView(view, canvasAspect(canvas));
+    cameraTarget = cameraPoseForView(view, sceneAspect);
     transitionStart = immediate || reducedMotion.matches ? timestamp - CAMERA_TRANSITION_MS : timestamp;
     setCameraTransitioning(cameraTransitionActive(timestamp));
     canvas.dataset.sceneView = view;
@@ -269,17 +282,18 @@ export function createHomeWorldScene(canvas, options = {}) {
 
     const dt = Math.min(0.04, Math.max(0.001, (timestamp - lastFrameTime) / 1_000 || 0.016));
     lastFrameTime = timestamp;
-    chunks.rebuildDirtyChunks(lowPower ? 2.6 : 4.8);
-    updateActors(timestamp);
-    updateWindmillRotor(timestamp);
+    const rebuiltChunks = terrainBuildWorkPending()
+      ? chunks.rebuildDirtyChunks(lowPower ? 2.6 : 4.8)
+      : [];
+    if (rebuiltChunks.length) renderChunkListDirty = true;
+    let actorState = updateActors(timestamp);
+    let windmillState = updateWindmillRotor(timestamp);
     renderer.updateVoxelParticles(dt, (worldX, worldZ) => chunks.getOpaqueColumnTopAtWorld(worldX, worldZ) + 1);
 
-    const terrainChunks = [...chunks.chunks.values()].filter((chunk) => chunk.mesh);
-    const activeStructureChunks = structureChunks;
-    const visibleChunks = terrainChunks.concat(activeStructureChunks);
+    const { terrainChunks, visibleChunks } = renderChunkLists();
     const cameraPose = resolveCameraPose(timestamp);
     setCameraTransitioning(cameraTransitionActive(timestamp));
-    const camera = cameraStateFromPose(runtime, cameraPose, canvasAspect(canvas));
+    const camera = cameraStateFromPose(runtime, cameraPose, sceneAspect);
     renderer.prepareChunksForRender(visibleChunks, {
       maxUploads: lowPower || mobileViewport ? 4 : 8,
       cameraState: camera,
@@ -287,29 +301,69 @@ export function createHomeWorldScene(canvas, options = {}) {
     const renderStats = renderer.render(camera, visibleChunks, avatars, overlaysForView(timestamp));
     updateBuildingInspection(cameraPose);
     updateGuardianChat(cameraPose, timestamp);
-    const readiness = cameraReadiness(camera);
-    lastStats = Object.freeze({
-      backend: "chunk.js-webgl2",
-      terrainChunks: terrainChunks.length,
-      structureChunks: activeStructureChunks.length,
-      avatars: avatars.length,
-      drawCalls: renderStats.drawCalls || 0,
-      triangles: renderStats.triangles || 0,
-      baseBuilds: buildMetrics.baseBuilds,
-      remeshBuilds: buildMetrics.remeshBuilds,
-      requiredTerrainChunks: readiness.requiredTerrainChunks,
-      maxFps,
-    });
-    canvas.dataset.sceneTerrainChunks = String(lastStats.terrainChunks);
-    canvas.dataset.sceneStructureChunks = String(lastStats.structureChunks);
-    canvas.dataset.sceneDrawCalls = String(lastStats.drawCalls);
-    canvas.dataset.sceneTriangles = String(lastStats.triangles);
-    canvas.dataset.sceneRequiredTerrainChunks = String(readiness.requiredTerrainChunks);
-    canvas.dataset.sceneReadyTerrainChunks = String(readiness.readyTerrainChunks);
-    canvas.dataset.sceneRequiredStructureChunks = String(readiness.requiredStructureChunks);
-
-    if (canvas.dataset.sceneReady !== "true" && readiness.ready) markReady();
+    const readinessPending = canvas.dataset.sceneReady !== "true";
+    if (readinessPending) lastReadiness = Object.freeze(cameraReadiness(camera));
+    const becameReady = readinessPending && lastReadiness.ready;
+    const diagnosticsDue = force
+      || becameReady
+      || timestamp - lastDiagnosticsAt >= SCENE_DIAGNOSTICS_INTERVAL_MS;
+    if (diagnosticsDue) {
+      lastDiagnosticsAt = timestamp;
+      lastStats = Object.freeze({
+        backend: "chunk.js-webgl2",
+        terrainChunks: terrainChunks.length,
+        structureChunks: structureChunks.length,
+        avatars: avatars.length,
+        drawCalls: renderStats.drawCalls || 0,
+        triangles: renderStats.triangles || 0,
+        baseBuilds: buildMetrics.baseBuilds,
+        remeshBuilds: buildMetrics.remeshBuilds,
+        requiredTerrainChunks: lastReadiness.requiredTerrainChunks,
+        maxFps,
+      });
+    }
+    if (becameReady) {
+      const readyState = markReady();
+      actorState = readyState.actorState;
+      windmillState = readyState.windmillState;
+    }
+    if (diagnosticsDue) publishSceneDiagnostics(actorState, windmillState);
     schedule();
+  }
+
+  function terrainBuildWorkPending() {
+    return canvas.dataset.sceneReady !== "true"
+      || Boolean(chunks.completedBuilds?.length)
+      || Boolean(chunks.buildQueue?.length)
+      || Boolean(chunks.inFlightBuilds?.size);
+  }
+
+  function renderChunkLists() {
+    if (!renderChunkListDirty) {
+      return { terrainChunks: cachedTerrainChunks, visibleChunks: cachedVisibleChunks };
+    }
+    cachedTerrainChunks = [...chunks.chunks.values()].filter((chunk) => chunk.mesh);
+    cachedVisibleChunks = cachedTerrainChunks.concat(structureChunks);
+    renderChunkListDirty = false;
+    return { terrainChunks: cachedTerrainChunks, visibleChunks: cachedVisibleChunks };
+  }
+
+  function publishSceneDiagnostics(actorState, windmillState) {
+    setSceneData(canvas, "sceneTerrainChunks", lastStats.terrainChunks);
+    setSceneData(canvas, "sceneStructureChunks", lastStats.structureChunks);
+    setSceneData(canvas, "sceneDrawCalls", lastStats.drawCalls);
+    setSceneData(canvas, "sceneTriangles", lastStats.triangles);
+    setSceneData(canvas, "sceneBaseBuilds", lastStats.baseBuilds);
+    setSceneData(canvas, "sceneRemeshBuilds", lastStats.remeshBuilds);
+    setSceneData(canvas, "sceneRequiredTerrainChunks", lastReadiness.requiredTerrainChunks);
+    setSceneData(canvas, "sceneReadyTerrainChunks", lastReadiness.readyTerrainChunks);
+    setSceneData(canvas, "sceneRequiredStructureChunks", lastReadiness.requiredStructureChunks);
+    exposeActorState(canvas, "boy", actorState?.boy, actorState?.boyPose);
+    exposeActorState(canvas, "girl", actorState?.girl, actorState?.girlPose);
+    if (windmillState) {
+      setSceneData(canvas, "sceneWindmillAngle", windmillState.angle.toFixed(5));
+      setSceneData(canvas, "sceneWindmillRotating", windmillState.rotating);
+    }
   }
 
   function cameraReadiness(camera) {
@@ -341,8 +395,7 @@ export function createHomeWorldScene(canvas, options = {}) {
     }
     else if (type === "chunk-remesh-done") buildMetrics.remeshBuilds += 1;
     else return;
-    canvas.dataset.sceneBaseBuilds = String(buildMetrics.baseBuilds);
-    canvas.dataset.sceneRemeshBuilds = String(buildMetrics.remeshBuilds);
+    renderChunkListDirty = true;
   }
 
   function updateActors(timestamp) {
@@ -398,7 +451,6 @@ export function createHomeWorldScene(canvas, options = {}) {
             }
           : { rightHand: "pickaxe" },
       };
-      exposeActorState(canvas, "boy", boy, boyPose);
     }
     if (girl) {
       positionAvatarAt(runtime, worldConfig, chunks, structureWalkSurfaces, girl, girlPose);
@@ -410,7 +462,6 @@ export function createHomeWorldScene(canvas, options = {}) {
         timeMs: timestamp,
         equipment: { rightHand: "empty" },
       };
-      exposeActorState(canvas, "girl", girl, girlPose);
     }
 
     const miningBurst = `${boyPose.cycle}:${boyPose.segmentIndex}`;
@@ -439,18 +490,20 @@ export function createHomeWorldScene(canvas, options = {}) {
         count: lowPower ? 4 : 7,
       });
     }
+    return { boy, boyPose, girl, girlPose };
   }
 
   function updateWindmillRotor(timestamp) {
-    if (!windmillRotor) return;
+    if (!windmillRotor) return null;
     const rotating = canvas.dataset.sceneReady === "true" && !reducedMotion.matches;
     const angle = rotating
       ? (Math.max(0, timestamp - startedAt) % WINDMILL_ROTATION_MS) / WINDMILL_ROTATION_MS * Math.PI * 2
       : 0;
-    const updated = windmillRotor.update(angle, timestamp, rotating ? WINDMILL_FRAME_MS : 0);
-    if (!updated) return;
-    canvas.dataset.sceneWindmillAngle = angle.toFixed(5);
-    canvas.dataset.sceneWindmillRotating = String(rotating);
+    windmillRotor.update(angle, timestamp, rotating ? WINDMILL_FRAME_MS : 0);
+    return {
+      angle: windmillRotor.currentAngle?.() ?? angle,
+      rotating,
+    };
   }
 
   function overlaysForView(timestamp) {
@@ -601,9 +654,9 @@ export function createHomeWorldScene(canvas, options = {}) {
     }
 
     const dialogue = guardianDialogueState(Math.max(0, timestamp - focusStartedAt), reducedMotion.matches);
-    canvas.dataset.sceneGuardianDialoguePair = String(dialogue.pairIndex);
-    canvas.dataset.sceneGuardianDialogueTurn = dialogue.turn;
-    canvas.dataset.sceneGuardianGesture = dialogue.gesture;
+    setSceneData(canvas, "sceneGuardianDialoguePair", dialogue.pairIndex);
+    setSceneData(canvas, "sceneGuardianDialogueTurn", dialogue.turn);
+    setSceneData(canvas, "sceneGuardianGesture", dialogue.gesture);
     emitGuardianChat({
       pairIndex: dialogue.pairIndex,
       turn: dialogue.turn,
@@ -648,7 +701,7 @@ export function createHomeWorldScene(canvas, options = {}) {
     startedAt = performance.now();
     lastMiningBurst = -1;
     lastForgeBurst = -1;
-    updateActors(startedAt);
+    const actorState = updateActors(startedAt);
     canvas.dataset.sceneReady = "true";
     canvas.dataset.sceneRenderer = "chunk.js-webgl2";
     canvas.dataset.sceneTerrainProfile = "stitch-village-river-estuary-dry-paths";
@@ -671,6 +724,7 @@ export function createHomeWorldScene(canvas, options = {}) {
     canvas.dataset.sceneWindmillRotationMs = String(WINDMILL_ROTATION_MS);
     canvas.dataset.sceneWindmillAngle ||= "0.00000";
     canvas.dataset.sceneWindmillRotating = String(!reducedMotion.matches);
+    const windmillState = updateWindmillRotor(startedAt);
     pauseTerrainBuildsForTransition();
     scheduleDeferredWorkAfterVisualHandoff();
     document.documentElement.classList.remove("home-world-fallback");
@@ -678,6 +732,7 @@ export function createHomeWorldScene(canvas, options = {}) {
     options.onReady?.(lastStats);
     window.dispatchEvent(new CustomEvent("nicechunk:homeworldready", { detail: lastStats }));
     settle("ready", lastStats);
+    return { actorState, windmillState };
   }
 
   function scheduleDeferredWorkAfterVisualHandoff() {
@@ -717,7 +772,7 @@ export function createHomeWorldScene(canvas, options = {}) {
   function prioritizePendingTerrainBuilds(view = focusView) {
     if (!runtime || !chunks?.buildQueue?.length) return 0;
     const requiredIds = terrainPriorityIdsForView(view);
-    const pose = cameraPoseForView(view, canvasAspect(canvas));
+    const pose = cameraPoseForView(view, sceneAspect);
     const targetChunkX = Math.floor(pose.target[0] / 16);
     const targetChunkZ = Math.floor(pose.target[2] / 16);
     chunks.buildQueue.sort((left, right) => {
@@ -736,7 +791,7 @@ export function createHomeWorldScene(canvas, options = {}) {
 
   function terrainPriorityIdsForView(view = focusView) {
     if (!runtime || !chunks) return new Set();
-    const aspect = canvasAspect(canvas);
+    const aspect = sceneAspect;
     const pose = cameraPoseForView(view, aspect);
     const camera = cameraStateFromPose(runtime, pose, aspect);
     const requiredIds = new Set();
@@ -914,7 +969,7 @@ export function createHomeWorldScene(canvas, options = {}) {
         textureSeed: runtime.MAINNET_WORLD_SEED,
         useRegionBatching: false,
         maxChunkUploadsPerFrame: lowPower || mobileViewport ? 4 : 8,
-        maxMobileDpr: 1,
+        maxMobileDpr: MOBILE_SCENE_DPR,
         maxDesktopDpr: lowPower ? 1 : 1.25,
         maxVoxelParticles: lowPower ? 48 : 96,
       });
@@ -940,6 +995,7 @@ export function createHomeWorldScene(canvas, options = {}) {
       const sceneMeshes = createInitialSceneMeshes(runtime);
       const structures = createStructures(runtime);
       structureChunks = structures.chunks;
+      renderChunkListDirty = true;
       structureWalkSurfaces = structures.walkSurfaces;
       structureInspectables = structures.inspectables;
       windmillRotor = structures.windmillRotor;
@@ -1044,10 +1100,14 @@ export function createHomeWorldScene(canvas, options = {}) {
     emitBuildingInspection(null);
   };
 
-  resizeObserver = new ResizeObserver(() => {
+  resizeObserver = new ResizeObserver((entries) => {
     if (destroyed) return;
-    cameraTarget = cameraPoseForView(focusView, canvasAspect(canvas));
-    renderer?.resize();
+    const contentRect = entries[entries.length - 1]?.contentRect;
+    const width = Math.max(1, contentRect?.width || canvas.clientWidth || window.innerWidth || 1);
+    const height = Math.max(1, contentRect?.height || canvas.clientHeight || window.innerHeight || 1);
+    sceneAspect = Math.max(0.25, width / height);
+    cameraTarget = cameraPoseForView(focusView, sceneAspect);
+    renderer?.resize(width, height, sceneDpr);
     renderFrame(performance.now(), true);
   });
   resizeObserver.observe(canvas);
@@ -2046,17 +2106,23 @@ function positionAvatarAt(runtime, worldConfig, chunks, structureWalkSurfaces, a
 }
 
 function exposeActorState(canvas, actor, avatar, pose) {
+  if (!avatar || !pose) return;
   const prefix = `scene${actor[0].toUpperCase()}${actor.slice(1)}`;
-  canvas.dataset[`${prefix}Phase`] = pose.phase;
-  canvas.dataset[`${prefix}Cycle`] = String(pose.cycle);
-  canvas.dataset[`${prefix}Segment`] = String(pose.segmentIndex);
-  canvas.dataset[`${prefix}Distance`] = pose.distance.toFixed(2);
-  canvas.dataset[`${prefix}Yaw`] = avatar.yaw.toFixed(6);
-  canvas.dataset[`${prefix}Position`] = [
+  setSceneData(canvas, `${prefix}Phase`, pose.phase);
+  setSceneData(canvas, `${prefix}Cycle`, pose.cycle);
+  setSceneData(canvas, `${prefix}Segment`, pose.segmentIndex);
+  setSceneData(canvas, `${prefix}Distance`, pose.distance.toFixed(2));
+  setSceneData(canvas, `${prefix}Yaw`, avatar.yaw.toFixed(6));
+  setSceneData(canvas, `${prefix}Position`, [
     avatar.worldX + avatar.localOffsetX,
     avatar.worldY,
     avatar.worldZ + avatar.localOffsetZ,
-  ].map((value) => Number(value).toFixed(2)).join(",");
+  ].map((value) => Number(value).toFixed(2)).join(","));
+}
+
+function setSceneData(canvas, key, value) {
+  const nextValue = String(value);
+  if (canvas.dataset[key] !== nextValue) canvas.dataset[key] = nextValue;
 }
 
 function cameraPoseForView(view, aspect) {

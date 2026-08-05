@@ -248,5 +248,16 @@
     "expansionDensity": "ENTFALTUNGSDICHTE",
     "fullCode": "VOLLSTÄNDIGER NCM3-CODE",
     "codeLength": "{count} ZEICHEN"
+  },
+  "loading": {
+    "aria": "NiceChunk-3D-Welt wird aufgebaut",
+    "eyebrow": "Welt wird aufgebaut",
+    "initializing": "Chunk.js wird initialisiert",
+    "terrain": "Geländedaten werden geladen",
+    "meshing": "Sichtbare Chunks werden vernetzt",
+    "rendering": "Erstes Bild wird gerendert",
+    "ready": "Welt bereit",
+    "fallback": "Vorschau bereit",
+    "engine": "Chunk.js · Lokale Rekonstruktion"
   }
 }

@@ -54,6 +54,9 @@ const homeLocales = await Promise.all(homeLocaleCodes.map(async (language) => ({
 })));
 
 assert.match(html, /id="homeWorldCanvas"/u);
+assert.match(html, /id="homeWorldLoader"[\s\S]*?data-site-loading-progress/u);
+assert.match(html, /id="homeWorldLoadingStage"[\s\S]*?data-site-loading-stage/u);
+assert.equal([...html.matchAll(/class="home-loader-voxel"/gu)].length, 16);
 assert.match(html, /id="homeBuildingInspector"/u);
 assert.match(html, /id="homeScrollCue"[\s\S]*?data-scroll-target="1"/u);
 assert.equal([...html.matchAll(/data-home-i18n="scrollCue\.(?:desktop|mobile)"/gu)].length, 2);
@@ -96,6 +99,12 @@ assert.match(style, /--terrain-pouw-source-ratio: 54%;/u);
 assert.match(style, /PoUW reveal storyboard/u);
 assert.match(style, /\.snap-section\.active \.terrain-pouw-candidate > i > b \{\s*width: 100%;/u);
 assert.match(style, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.terrain-pouw-demo,/u);
+assert.match(style, /Homepage world-loader storyboard/u);
+assert.match(style, /@keyframes home-loader-voxel-rise/u);
+assert.match(style, /@keyframes home-loader-scan/u);
+assert.match(style, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.home-loader-voxel-grid i,/u);
+assert.match(style, /#section-1 \.world-copy > p:not\(\.eyebrow\),[\s\S]*?#section-1 \.world-readout \{\s*display: none;/u);
+assert.match(style, /#section-1 \.terrain-pouw-actions a:nth-child\(n \+ 2\) \{\s*display: none;/u);
 assert.match(style, /\.guardian-chat-layer\[data-active="true"\]/u);
 assert.match(style, /\.guardian-chat-bubble-boy \{[\s\S]*?--guardian-chat-tail-x: 84%;/u);
 assert.match(style, /\.guardian-chat-bubble-girl \{[\s\S]*?--guardian-chat-tail-x: 16%;/u);
@@ -145,15 +154,20 @@ assert.ok(
   initHome.indexOf("homeWorldScene = createHomeWorldScene(homeWorldCanvas, {") < initHome.indexOf("await "),
   "The Chunk.js scene must start before async navigation and locale initialization.",
 );
-assert.match(home, /import \{ claimSiteLoading, finishSiteLoading, setSiteLoadingProgress \} from "\.\.\/src\/site-ui\.js";/u);
+assert.match(home, /import \{[\s\S]*?claimSiteLoading,[\s\S]*?finishSiteLoading,[\s\S]*?setSiteLoadingProgress,[\s\S]*?setSiteLoadingStage,[\s\S]*?\} from "\.\.\/src\/site-ui\.js";/u);
 assert.match(home, /claimSiteLoading\(\);/u);
 assert.match(siteUi, /export function claimSiteLoading\(\) \{[\s\S]*?loadingState\.autoFinish = false;/u);
+assert.match(siteUi, /export function setSiteLoadingStage\(value\)/u);
+assert.match(siteUi, /querySelectorAll\("\[data-site-loading-progress\]"\)/u);
 assert.match(siteUi, /if \(loadingState\.active && loadingState\.autoFinish\) finishSiteLoading\(\);/u);
 assert.equal([...home.matchAll(/createHomeWorldScene\(homeWorldCanvas, \{/gu)].length, 1);
 assert.match(home, /const HOME_WORLD_READY_TIMEOUT_MS = 12_000;/u);
 assert.match(home, /const HOME_WORLD_VISUAL_HANDOFF_TIMEOUT_MS = 1_200;/u);
 assert.match(home, /const sceneResult = await waitForHomeWorldScene\(homeWorldScene\);/u);
 assert.match(home, /await waitForHomeWorldVisualHandoff\(homeWorldCanvas\);/u);
+for (const stage of ["terrain", "meshing", "rendering", "ready", "fallback"]) {
+  assert.match(home, new RegExp(`setSiteLoadingStage\\(t\\("loading\\.${stage}"\\)\\)`, "u"));
+}
 assert.doesNotMatch(home, /Promise\.race\(\[homeWorldScene\.ready, delay\(1_800\)\]\)/u);
 assert.equal([...home.matchAll(/createHomeBuildingInspector\(homeBuildingInspectorRoot\)/gu)].length, 1);
 assert.match(home, /onBuildingInspect: \(detail\) => homeBuildingInspector\?\.update\(detail\)/u);
@@ -264,6 +278,10 @@ for (const { language, source, public: publicLocale } of homeLocales) {
     assert.equal(typeof dictionary.scrollCue?.aria, "string", `Missing ${language} scroll-cue aria label.`);
     assert.equal(typeof dictionary.scrollCue?.desktop, "string", `Missing ${language} desktop scroll cue.`);
     assert.equal(typeof dictionary.scrollCue?.mobile, "string", `Missing ${language} mobile swipe cue.`);
+    for (const key of ["aria", "eyebrow", "initializing", "terrain", "meshing", "rendering", "ready", "fallback", "engine"]) {
+      assert.equal(typeof dictionary.loading?.[key], "string", `Missing ${language} homepage loading ${key} copy.`);
+      assert.ok(dictionary.loading[key].trim().length > 0, `Empty ${language} homepage loading ${key} copy.`);
+    }
     assert.match(dictionary.buildingInspector.codeLength, /\{count\}/u, `Missing ${language} code-length token.`);
     for (const key of ["aria", "eyebrow", "title", "source", "candidate", "proof", "exact", "decision", "retained", "larger", "summary", "caveat", "report", "bundle", "miner"]) {
       assert.equal(typeof dictionary.terrainPouw?.[key], "string", `Missing ${language} terrain PoUW ${key} copy.`);

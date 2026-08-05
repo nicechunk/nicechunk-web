@@ -248,5 +248,16 @@
     "expansionDensity": "ПЛОТНОСТЬ РАЗВЁРТЫВАНИЯ",
     "fullCode": "ПОЛНЫЙ КОД NCM3",
     "codeLength": "{count} СИМВОЛОВ"
+  },
+  "loading": {
+    "aria": "Создание 3D-мира NiceChunk",
+    "eyebrow": "Создание мира",
+    "initializing": "Инициализация Chunk.js",
+    "terrain": "Загрузка данных рельефа",
+    "meshing": "Создание сеток видимых чанков",
+    "rendering": "Отрисовка первого кадра",
+    "ready": "Мир готов",
+    "fallback": "Предпросмотр готов",
+    "engine": "Chunk.js · Локальная реконструкция"
   }
 }

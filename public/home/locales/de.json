@@ -2,8 +2,8 @@
   "_meta": {
     "language": "de",
     "label": "German",
-    "version": "home-locale-de-b151506c999f1dab",
-    "contentHash": "b151506c999f1dab"
+    "version": "home-locale-de-f959f76992912a9a",
+    "contentHash": "f959f76992912a9a"
   },
   "common": {
     "language": "Sprache",
@@ -268,5 +268,16 @@
     "expansionDensity": "ENTFALTUNGSDICHTE",
     "fullCode": "VOLLSTÄNDIGER NCM3-CODE",
     "codeLength": "{count} ZEICHEN"
+  },
+  "loading": {
+    "aria": "NiceChunk-3D-Welt wird aufgebaut",
+    "eyebrow": "Welt wird aufgebaut",
+    "initializing": "Chunk.js wird initialisiert",
+    "terrain": "Geländedaten werden geladen",
+    "meshing": "Sichtbare Chunks werden vernetzt",
+    "rendering": "Erstes Bild wird gerendert",
+    "ready": "Welt bereit",
+    "fallback": "Vorschau bereit",
+    "engine": "Chunk.js · Lokale Rekonstruktion"
   }
 }

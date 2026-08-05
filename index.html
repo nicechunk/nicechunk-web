@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-i18n-scope="home" data-home-chapter="arrival" data-i18n-build-version="__NICECHUNK_BUILD_VERSION__">
+<html class="site-loading" lang="en" data-i18n-scope="home" data-home-chapter="arrival" data-i18n-build-version="__NICECHUNK_BUILD_VERSION__">
   <head>
     <meta charset="UTF-8" />
     <script>
@@ -77,6 +77,38 @@
         </div>
         <div class="guardian-chat-bubble guardian-chat-bubble-girl" id="guardianChatGirl" data-speaking="false">
           <span class="guardian-chat-copy" data-home-i18n="watchers.chat.pair0.girl">Hello! 😊</span>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="home-world-loader"
+      id="homeWorldLoader"
+      role="progressbar"
+      aria-label="Building the NiceChunk 3D world"
+      aria-describedby="homeWorldLoadingStage"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="16"
+      aria-busy="true"
+      data-site-loading-progress
+      data-home-i18n-aria-label="loading.aria"
+    >
+      <div class="home-world-loader-heading">
+        <p data-home-i18n="loading.eyebrow">Building the world</p>
+        <strong data-site-loading-percent>16%</strong>
+      </div>
+      <div class="home-world-loader-body">
+        <div class="home-loader-voxel-grid" aria-hidden="true">
+          <i class="home-loader-voxel"></i><i class="home-loader-voxel"></i><i class="home-loader-voxel"></i><i class="home-loader-voxel"></i>
+          <i class="home-loader-voxel"></i><i class="home-loader-voxel"></i><i class="home-loader-voxel"></i><i class="home-loader-voxel"></i>
+          <i class="home-loader-voxel"></i><i class="home-loader-voxel"></i><i class="home-loader-voxel"></i><i class="home-loader-voxel"></i>
+          <i class="home-loader-voxel"></i><i class="home-loader-voxel"></i><i class="home-loader-voxel"></i><i class="home-loader-voxel"></i>
+        </div>
+        <div class="home-world-loader-status">
+          <p id="homeWorldLoadingStage" data-site-loading-stage data-home-i18n="loading.initializing">Initializing Chunk.js</p>
+          <div class="home-world-loader-track" aria-hidden="true"><i></i></div>
+          <small data-home-i18n="loading.engine">Chunk.js · Local reconstruction</small>
         </div>
       </div>
     </div>

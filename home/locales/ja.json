@@ -248,5 +248,16 @@
     "expansionDensity": "展開密度",
     "fullCode": "完全な NCM3 コード",
     "codeLength": "{count} 文字"
+  },
+  "loading": {
+    "aria": "NiceChunk 3Dワールドを構築中",
+    "eyebrow": "ワールドを構築中",
+    "initializing": "Chunk.jsを初期化中",
+    "terrain": "地形データを読み込み中",
+    "meshing": "表示チャンクをメッシュ化中",
+    "rendering": "最初のフレームを描画中",
+    "ready": "ワールド準備完了",
+    "fallback": "プレビュー準備完了",
+    "engine": "Chunk.js · ローカル再構築"
   }
 }

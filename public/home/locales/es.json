@@ -2,8 +2,8 @@
   "_meta": {
     "language": "es",
     "label": "Spanish",
-    "version": "home-locale-es-e404f14fc2de8b6b",
-    "contentHash": "e404f14fc2de8b6b"
+    "version": "home-locale-es-8953c42b9da1dac6",
+    "contentHash": "8953c42b9da1dac6"
   },
   "common": {
     "language": "Idioma",
@@ -268,5 +268,16 @@
     "expansionDensity": "DENSIDAD DE EXPANSIÓN",
     "fullCode": "CÓDIGO NCM3 COMPLETO",
     "codeLength": "{count} CARACTERES"
+  },
+  "loading": {
+    "aria": "Construyendo el mundo 3D de NiceChunk",
+    "eyebrow": "Construyendo el mundo",
+    "initializing": "Inicializando Chunk.js",
+    "terrain": "Cargando datos del terreno",
+    "meshing": "Generando mallas visibles",
+    "rendering": "Renderizando el primer fotograma",
+    "ready": "Mundo listo",
+    "fallback": "Vista previa lista",
+    "engine": "Chunk.js · Reconstrucción local"
   }
 }

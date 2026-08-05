@@ -248,5 +248,16 @@
     "expansionDensity": "EXPANSION DENSITY",
     "fullCode": "FULL NCM3 CODE",
     "codeLength": "{count} CHARACTERS"
+  },
+  "loading": {
+    "aria": "Building the NiceChunk 3D world",
+    "eyebrow": "Building the world",
+    "initializing": "Initializing Chunk.js",
+    "terrain": "Loading terrain data",
+    "meshing": "Meshing visible chunks",
+    "rendering": "Rendering first frame",
+    "ready": "World ready",
+    "fallback": "Preview ready",
+    "engine": "Chunk.js · Local reconstruction"
   }
 }

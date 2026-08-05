@@ -248,5 +248,16 @@
     "expansionDensity": "展開密度",
     "fullCode": "完整 NCM3 代碼",
     "codeLength": "{count} 個字元"
+  },
+  "loading": {
+    "aria": "正在建構 NiceChunk 3D 世界",
+    "eyebrow": "正在建構世界",
+    "initializing": "正在初始化 Chunk.js",
+    "terrain": "正在載入地形資料",
+    "meshing": "正在生成可見區塊網格",
+    "rendering": "正在渲染首幀",
+    "ready": "世界已就緒",
+    "fallback": "預覽已就緒",
+    "engine": "Chunk.js · 本地重建"
   }
 }

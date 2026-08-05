@@ -27,6 +27,11 @@ export function setSiteLoadingProgress(value) {
   updateProgressBar();
 }
 
+export function setSiteLoadingStage(value) {
+  const stage = document.querySelector("[data-site-loading-stage]");
+  if (stage && value) stage.textContent = String(value);
+}
+
 export function claimSiteLoading() {
   loadingState.autoFinish = false;
 }
@@ -39,7 +44,8 @@ export function finishSiteLoading() {
     loadingState.active = false;
     loadingState.value = 0;
     document.documentElement.classList.remove("site-loading", "site-route-loading");
-    updateProgressBar();
+    const fill = document.querySelector(".site-loading-bar span");
+    if (fill) fill.style.transform = "scaleX(0)";
     if (loadingState.timer) {
       window.clearInterval(loadingState.timer);
       loadingState.timer = 0;
@@ -656,9 +662,17 @@ function ensureProgressBar() {
 }
 
 function updateProgressBar() {
+  const clampedValue = Math.max(0, Math.min(100, loadingState.value));
   const fill = document.querySelector(".site-loading-bar span");
-  if (!fill) return;
-  fill.style.transform = `scaleX(${Math.max(0, Math.min(1, loadingState.value / 100))})`;
+  if (fill) fill.style.transform = `scaleX(${clampedValue / 100})`;
+  document.querySelectorAll("[data-site-loading-progress]").forEach((loader) => {
+    const roundedValue = Math.round(clampedValue);
+    loader.style.setProperty("--site-loading-ratio", String(clampedValue / 100));
+    loader.setAttribute("aria-valuenow", String(roundedValue));
+    loader.setAttribute("aria-busy", String(roundedValue < 100));
+    const percent = loader.querySelector("[data-site-loading-percent]");
+    if (percent) percent.textContent = `${roundedValue}%`;
+  });
 }
 
 installSiteUi();

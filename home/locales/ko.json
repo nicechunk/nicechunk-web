@@ -248,5 +248,16 @@
     "expansionDensity": "확장 밀도",
     "fullCode": "전체 NCM3 코드",
     "codeLength": "{count}자"
+  },
+  "loading": {
+    "aria": "NiceChunk 3D 월드 생성 중",
+    "eyebrow": "월드 생성 중",
+    "initializing": "Chunk.js 초기화 중",
+    "terrain": "지형 데이터 불러오는 중",
+    "meshing": "보이는 청크 메시 생성 중",
+    "rendering": "첫 프레임 렌더링 중",
+    "ready": "월드 준비 완료",
+    "fallback": "미리보기 준비 완료",
+    "engine": "Chunk.js · 로컬 재구성"
   }
 }

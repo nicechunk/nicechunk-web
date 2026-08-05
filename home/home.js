@@ -2,7 +2,12 @@ import "../src/site-header.css";
 import "./style.css";
 import { initI18n, t } from "../src/i18n.js";
 import { mountSiteHeader } from "../src/site-header.js";
-import { claimSiteLoading, finishSiteLoading, setSiteLoadingProgress } from "../src/site-ui.js";
+import {
+  claimSiteLoading,
+  finishSiteLoading,
+  setSiteLoadingProgress,
+  setSiteLoadingStage,
+} from "../src/site-ui.js";
 import { createHomeBuildingInspector } from "./home-building-inspector.js";
 import { createHomeWorldScene, HOME_WORLD_SECTION_VIEWS } from "./chunkjs-world-scene.js";
 
@@ -31,6 +36,7 @@ let homeBuildingInspector = null;
 initHome();
 
 async function initHome() {
+  setSiteLoadingStage("INITIALIZING CHUNK.JS");
   setSiteLoadingProgress(32);
   homeBuildingInspector = createHomeBuildingInspector(homeBuildingInspectorRoot);
   homeWorldScene = createHomeWorldScene(homeWorldCanvas, {
@@ -42,6 +48,7 @@ async function initHome() {
   await mountSiteHeader(header);
   await initI18n();
   homeBuildingInspector.refresh();
+  setSiteLoadingStage(t("loading.terrain"));
   setSiteLoadingProgress(58);
 
   setupSectionObserver();
@@ -49,11 +56,16 @@ async function initHome() {
   setupKeyboardPaging();
   setActiveSection(activeSectionIndex, { force: true, immediate: true });
 
+  setSiteLoadingStage(t("loading.meshing"));
   setSiteLoadingProgress(82);
   const sceneResult = await waitForHomeWorldScene(homeWorldScene);
   if (sceneResult?.status === "ready") {
+    setSiteLoadingStage(t("loading.rendering"));
     setSiteLoadingProgress(96);
     await waitForHomeWorldVisualHandoff(homeWorldCanvas);
+    setSiteLoadingStage(t("loading.ready"));
+  } else {
+    setSiteLoadingStage(t("loading.fallback"));
   }
   finishSiteLoading();
 }

@@ -248,5 +248,16 @@
     "expansionDensity": "DENSITÉ DE DÉPLOIEMENT",
     "fullCode": "CODE NCM3 COMPLET",
     "codeLength": "{count} CARACTÈRES"
+  },
+  "loading": {
+    "aria": "Construction du monde 3D NiceChunk",
+    "eyebrow": "Construction du monde",
+    "initializing": "Initialisation de Chunk.js",
+    "terrain": "Chargement du terrain",
+    "meshing": "Maillage des chunks visibles",
+    "rendering": "Rendu de la première image",
+    "ready": "Monde prêt",
+    "fallback": "Aperçu prêt",
+    "engine": "Chunk.js · Reconstruction locale"
   }
 }

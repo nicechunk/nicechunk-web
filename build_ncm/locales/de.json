@@ -47,6 +47,7 @@
   "library.category.transport": "VERKEHR",
   "library.category.mining": "BERGBAU",
   "library.category.agriculture": "LANDWIRTSCHAFT",
+  "library.category.construction": "BAUSTELLE",
   "library.footprint": "FUSSABDRUCK",
   "library.height": "HÖHE",
   "library.voxels": "VOXEL",

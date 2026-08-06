@@ -26,12 +26,16 @@ const guardianChatBubbles = Object.freeze({
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const HOME_WORLD_READY_TIMEOUT_MS = 30_000;
 const HOME_WORLD_VISUAL_HANDOFF_TIMEOUT_MS = 4_000;
+const PROGRAMMATIC_SCROLL_TIMEOUT_MS = 2_400;
+const PROGRAMMATIC_SCROLL_TARGET_RATIO = 0.55;
 
 claimSiteLoading();
 
 let activeSectionIndex = 0;
 let homeWorldScene = null;
 let homeBuildingInspector = null;
+let programmaticScrollTargetIndex = null;
+let programmaticScrollTimer = 0;
 
 initHome();
 
@@ -90,12 +94,20 @@ function setupSectionObserver() {
       const [mostVisible, ratio] = [...visibility.entries()]
         .sort((left, right) => right[1] - left[1])[0] || [];
       if (!mostVisible || ratio < 0.15) return;
+      if (programmaticScrollTargetIndex !== null) {
+        const targetSection = sections[programmaticScrollTargetIndex];
+        const targetRatio = visibility.get(targetSection) || 0;
+        if (mostVisible !== targetSection || targetRatio < PROGRAMMATIC_SCROLL_TARGET_RATIO) return;
+        finishProgrammaticScroll(programmaticScrollTargetIndex);
+      }
       setActiveSection(sections.indexOf(mostVisible));
     },
     { root: container, threshold: [0.15, 0.35, 0.55, 0.75] },
   );
 
   sections.forEach((section) => observer.observe(section));
+  container.addEventListener("wheel", cancelProgrammaticScroll, { passive: true });
+  container.addEventListener("touchstart", cancelProgrammaticScroll, { passive: true });
 }
 
 function setupNavigation() {
@@ -164,11 +176,58 @@ function scrollToSection(index) {
   const targetIndex = clampIndex(index);
   const target = sections[targetIndex];
   if (!target) return;
+  if (targetIndex === activeSectionIndex
+    && Math.abs(container.scrollTop - target.offsetTop) <= 1) {
+    finishProgrammaticScroll(targetIndex);
+    return;
+  }
+  beginProgrammaticScroll(targetIndex);
   setActiveSection(targetIndex);
   target.scrollIntoView({
     block: "start",
     behavior: reducedMotion.matches ? "auto" : "smooth",
   });
+}
+
+function beginProgrammaticScroll(targetIndex) {
+  window.clearTimeout(programmaticScrollTimer);
+  programmaticScrollTargetIndex = targetIndex;
+  document.documentElement.dataset.homeScrollTarget = String(targetIndex);
+  programmaticScrollTimer = window.setTimeout(() => {
+    finishProgrammaticScroll(targetIndex);
+  }, reducedMotion.matches ? 0 : PROGRAMMATIC_SCROLL_TIMEOUT_MS);
+}
+
+function finishProgrammaticScroll(targetIndex) {
+  if (programmaticScrollTargetIndex !== targetIndex) return;
+  window.clearTimeout(programmaticScrollTimer);
+  programmaticScrollTimer = 0;
+  programmaticScrollTargetIndex = null;
+  delete document.documentElement.dataset.homeScrollTarget;
+}
+
+function cancelProgrammaticScroll() {
+  if (programmaticScrollTargetIndex === null) return;
+  window.clearTimeout(programmaticScrollTimer);
+  programmaticScrollTimer = 0;
+  programmaticScrollTargetIndex = null;
+  delete document.documentElement.dataset.homeScrollTarget;
+  window.requestAnimationFrame(() => {
+    if (programmaticScrollTargetIndex !== null) return;
+    setActiveSection(nearestSectionIndex());
+  });
+}
+
+function nearestSectionIndex() {
+  let nearestIndex = activeSectionIndex;
+  let nearestDistance = Infinity;
+  sections.forEach((section, index) => {
+    const distance = Math.abs(section.offsetTop - container.scrollTop);
+    if (distance >= nearestDistance) return;
+    nearestIndex = index;
+    nearestDistance = distance;
+  });
+  return nearestIndex;
 }
 
 function clampIndex(index) {

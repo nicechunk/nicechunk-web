@@ -4,7 +4,7 @@ import {
   setupLanguageControls,
 } from "./i18n.js";
 
-const MOBILE_MEDIA_QUERY = "(max-width: 900px)";
+const MOBILE_MEDIA_QUERY = "(max-width: 1320px)";
 const HEADER_I18N_PREFIX = "siteHeader";
 
 export const SITE_HEADER_ROUTES = Object.freeze([

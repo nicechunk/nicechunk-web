@@ -2,8 +2,8 @@
   "_meta": {
     "language": "fr",
     "label": "French",
-    "version": "home-locale-fr-270c56891cf099d3",
-    "contentHash": "270c56891cf099d3"
+    "version": "home-locale-fr-5785cb67860ac9ea",
+    "contentHash": "5785cb67860ac9ea"
   },
   "common": {
     "language": "Langue",
@@ -140,8 +140,8 @@
     "exact": "225/225 EXACTS · 0 ÉCART",
     "decision": "DÉCISION POUW",
     "retained": "NCHT V1 CONSERVÉ",
-    "larger": "NCM4P EST 86,60 % PLUS GRAND",
-    "summary": "NCM4P réduit de 49,13 % la projection NCM3 générique, mais PoUW n'accepte qu'un candidat exact et plus petit que la meilleure représentation connue.",
+    "larger": "NCM4P EST 86,84 % PLUS GRAND",
+    "summary": "NCM4P réduit de 49,09 % la projection NCM3 générique, mais PoUW n'accepte qu'un candidat exact et plus petit que la meilleure représentation connue.",
     "caveat": "Projection de recherche réversible avec le profil building ; le profil terrain actuel ne représente encore que les suppressions.",
     "report": "Voir la preuve",
     "bundle": "Paquet NCM4",

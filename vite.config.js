@@ -43,10 +43,12 @@ function appendAssetVersion() {
   return {
     name: "append-asset-version",
     transformIndexHtml(html) {
-      const versionedHtml = html.replace(
-        /(src|href)="([^"]+\.(?:js|css))"/g,
-        (_match, attr, url) => `${attr}="${url}?v=${buildVersion}"`,
-      );
+      const versionedHtml = html
+        .replaceAll("__NICECHUNK_BUILD_VERSION__", buildVersion)
+        .replace(
+          /(src|href)="([^"]+\.(?:js|css))"/g,
+          (_match, attr, url) => `${attr}="${url}?v=${buildVersion}"`,
+        );
       return versionedHtml.replace(
         /(<link\s+rel="modulepreload"[^>]+href="[^"]+)\?v=[^"]+"/g,
         "$1\"",

@@ -2,8 +2,8 @@
   "_meta": {
     "language": "de",
     "label": "German",
-    "version": "home-locale-de-f959f76992912a9a",
-    "contentHash": "f959f76992912a9a"
+    "version": "home-locale-de-c9293179bde85375",
+    "contentHash": "c9293179bde85375"
   },
   "common": {
     "language": "Sprache",
@@ -140,8 +140,8 @@
     "exact": "225/225 EXAKT · 0 ABWEICHUNGEN",
     "decision": "POUW-ENTSCHEIDUNG",
     "retained": "NCHT V1 BEIBEHALTEN",
-    "larger": "NCM4P IST 86,60 % GRÖSSER",
-    "summary": "NCM4P verkleinert die generische NCM3-Projektion um 49,13 %, doch PoUW akzeptiert nur Kandidaten, die exakt und kleiner als die beste bekannte Darstellung sind.",
+    "larger": "NCM4P IST 86,84 % GRÖSSER",
+    "summary": "NCM4P verkleinert die generische NCM3-Projektion um 49,09 %, doch PoUW akzeptiert nur Kandidaten, die exakt und kleiner als die beste bekannte Darstellung sind.",
     "caveat": "Reversible Forschungsprojektion mit Building-Profil; das aktuelle Terrain-Profil bildet weiterhin nur Löschungen ab.",
     "report": "Nachweis prüfen",
     "bundle": "NCM4-Paket",

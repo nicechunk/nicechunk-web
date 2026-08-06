@@ -2,8 +2,8 @@
   "_meta": {
     "language": "ja",
     "label": "Japanese",
-    "version": "home-locale-ja-1697b37b28c55674",
-    "contentHash": "1697b37b28c55674"
+    "version": "home-locale-ja-67329c2bff7a168a",
+    "contentHash": "67329c2bff7a168a"
   },
   "common": {
     "language": "言語",
@@ -140,8 +140,8 @@
     "exact": "225/225 完全一致 · 差分 0",
     "decision": "POUW 判定",
     "retained": "NCHT V1 を維持",
-    "larger": "NCM4P は 86.60% 大きい",
-    "summary": "NCM4P は汎用 NCM3 投影を 49.13% 削減しましたが、PoUW が受理するのは意味が完全一致し、既知の最良表現より小さい候補だけです。",
+    "larger": "NCM4P は 86.84% 大きい",
+    "summary": "NCM4P は汎用 NCM3 投影を 49.09% 削減しましたが、PoUW が受理するのは意味が完全一致し、既知の最良表現より小さい候補だけです。",
     "caveat": "可逆な building-profile 研究投影です。現在の terrain profile は削除座標のみを表現します。",
     "report": "証明を見る",
     "bundle": "NCM4 バンドル",

@@ -214,8 +214,8 @@
       "surface": "general-media",
       "sourceStatus": "generated-research",
       "canonical": false,
-      "bytes": 121073,
-      "sha256": "fc27879991f512b20be7ac1ddf5c989b478d8c649de8d730d1406325cebf8f7e",
+      "bytes": 121074,
+      "sha256": "243f067237915d7a8c23151c4a1fc4e10397606be327ca4d129274245136a71a",
       "dimensions": null
     },
     {
@@ -224,15 +224,15 @@
       "surface": "general-media",
       "sourceStatus": "generated-research",
       "canonical": false,
-      "bytes": 643262,
-      "sha256": "ceba94809b84b49a61c12ecf89906ee2615995ce421e3edca9fde3e2763ac8ac",
+      "bytes": 647754,
+      "sha256": "7ebd9a3c4fec4115e1bbda40146808913ffb55d2d1326c5e37f781e1cb3c63dc",
       "dimensions": null
     },
     {
       "path": "public/media/home-world-terrain-v1.bin",
       "mediaType": "application/octet-stream",
-      "bytes": 343761,
-      "sha256": "dfbe5ca27f46ef4536cf203e73d31ddff8342e103b9e6fccb0a16ced9c4fa88e",
+      "bytes": 345719,
+      "sha256": "fd8e9d8d8a8020024eb61c45cd278b6ab340e0533f40a4dbcc68c362f83780b6",
       "dimensions": null,
       "surface": "general-media",
       "sourceStatus": "project-media",
@@ -241,8 +241,8 @@
     {
       "path": "public/media/home-world-terrain-v1.bin.gz",
       "mediaType": "application/octet-stream",
-      "bytes": 14014,
-      "sha256": "e813a2b17c590d9a0fa93db0a0e6ca417004612887ced8b6cdc05b8c188de523",
+      "bytes": 14107,
+      "sha256": "67659b74c58c13e34e8722562830c3a266873544f3d58d819bb53aacb3206b9c",
       "dimensions": null,
       "surface": "general-media",
       "sourceStatus": "project-media",

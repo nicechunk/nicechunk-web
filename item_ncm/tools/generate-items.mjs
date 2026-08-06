@@ -127,6 +127,7 @@ const COLORS = Object.freeze({
   carbon_steel: 0x899,
   clear_glass_panel: 0x9ce,
   copper_bloom: 0xb64,
+  fired_clay_brick: 0xa54,
   glass_ingot: 0x9cd,
   iron_bloom: 0x9a9,
   polished_stone_slab: 0xaab,
@@ -331,6 +332,18 @@ const ITEM_NAMES = Object.freeze({
     "Dorf-Wanduhr mit Kupferrand", "銅縁の村落壁掛け時計", "Деревенские настенные часы с медным ободом",
     "구리 테두리 마을 벽시계", "銅邊村莊掛鐘", "铜边村庄挂钟",
   ),
+  "iron-blacksmith-anvil": names(
+    "Iron Blacksmith Anvil", "Yunque de herrero de hierro", "Enclume de forgeron en fer", "Eiserner Schmiedeamboss",
+    "鉄製の鍛冶金床", "Железная кузнечная наковальня", "철제 대장장이 모루", "鐵製鍛造砧", "铁制锻造砧",
+  ),
+  "timber-market-display-stand": names(
+    "Timber Market Display Stand", "Expositor de mercado de madera", "Présentoir de marché en bois", "Marktauslage aus Holz",
+    "木製市場陳列台", "Деревянный рыночный прилавок", "목재 시장 진열대", "木製市集陳列臺", "木制集市陈列台",
+  ),
+  "brick-and-timber-pallet": names(
+    "Brick and Timber Pallet", "Palé de ladrillo y madera", "Palette de briques et de bois", "Ziegel-und-Holz-Palette",
+    "れんがと木材のパレット", "Поддон с кирпичом и брусом", "벽돌 및 목재 팔레트", "磚木材料托盤", "砖木材料托盘",
+  ),
 });
 
 const ITEM_SPECS = Object.freeze([
@@ -405,6 +418,14 @@ const ITEM_SPECS = Object.freeze([
     part("carbon_steel", [4, 14, 4], [0, 22, 0], { mask: chiselTip }),
     part("iron_bloom", [9, 4, 9], [0, -17, 0]),
   ], held([1])),
+  placeable("workshop", "iron-blacksmith-anvil", [
+    part("basalt_brick", [42, 8, 34], [0, 4, 0]),
+    part("iron_bloom", [26, 26, 22], [0, 21, 0]),
+    part("iron_bloom", [18, 12, 18], [0, 40, 0]),
+    part("iron_bloom", [66, 12, 26], [0, 52, 0]),
+    part("carbon_steel", [28, 10, 16], [43, 53, 0], { mask: chiselTip }),
+    part("carbon_steel", [14, 18, 24], [-40, 49, 0]),
+  ], { yaw: -0.82, pitch: 0.28 }),
 
   tool("weapons", "frontier-longsword", [
     part("wooden_stick", [5, 20, 8], [0, -30, 0], { grip: handGrip(3, 0) }),
@@ -590,6 +611,26 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+
+  placeable("commerce", "timber-market-display-stand", [
+    part("wooden_plank", [82, 6, 34], [0, 67, 0]),
+    ...[-34, 34].flatMap((x) => [-11, 11].map((z) => part("squared_timber", [6, 24, 6], [x, 12, z]))),
+    ...[-34, 34].flatMap((x) => [-11, 11].map((z) => part("squared_timber", [6, 34, 6], [x, 47, z]))),
+    part("wooden_plank", [70, 6, 28], [0, 27, 0]),
+    part("wooden_plank", [76, 32, 6], [0, 84, 20]),
+    part("wooden_stick", [72, 4, 4], [0, 72, -15]),
+    part("wooden_stick", [72, 4, 4], [0, 72, 15]),
+    part("copper_bloom", [12, 12, 4], [0, 86, 15]),
+  ], { yaw: -0.66, pitch: 0.27 }),
+
+  placeable("construction", "brick-and-timber-pallet", [
+    part("wooden_plank", [88, 6, 58], [0, 3, 0]),
+    ...[-20, 0, 20].map((z) => part("squared_timber", [80, 6, 8], [0, -3, z])),
+    ...[-27, 0, 27].flatMap((x) => [-14, 14].map((z) => part("fired_clay_brick", [22, 16, 22], [x, 14, z]))),
+    ...[-14, 14].flatMap((x) => [-14, 14].map((z) => part("fired_clay_brick", [22, 16, 22], [x, 30, z]))),
+    part("wooden_stick", [4, 42, 60], [-32, 21, 0]),
+    part("wooden_stick", [4, 42, 60], [32, 21, 0]),
+  ], { yaw: -0.76, pitch: 0.38 }),
 
   placeable("books-writing", "timber-bound-village-ledger", portraitBookParts([
     part("wooden_plank", [22, 1, 16], [0, 0, 0]),

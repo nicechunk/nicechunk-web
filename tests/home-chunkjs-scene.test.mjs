@@ -10,7 +10,9 @@ import {
 } from "../home/home-world-terrain.js";
 import {
   ACTOR_SITES,
+  CONSTRUCTION_SITE,
   ECONOMY_FORGE_SITE,
+  ECONOMY_MATERIAL_SITES,
   MINING_TARGET,
   PRESENTATION_PATHS,
   PRESENTATION_PLANTS,
@@ -23,11 +25,12 @@ import {
   HOME_STRUCTURE_ROOF_MATERIAL_ID,
 } from "../home/home-world-structure-codes.js";
 
-const [html, home, inspector, scene, layout, terrainModule, generator, ncm4Benchmark, style, i18nSource, siteUi, siteHeaderCss, siteHeader, packageSource, assetManifestSource, terrainBytes, compressedTerrainBytes, ncm4ReportSource, ncm4BundleBytes] = await Promise.all([
+const [html, home, inspector, scene, deferredAssets, layout, terrainModule, generator, ncm4Benchmark, style, i18nSource, siteUi, siteHeaderCss, siteHeader, packageSource, viteConfigSource, assetManifestSource, terrainBytes, compressedTerrainBytes, ncm4ReportSource, ncm4BundleBytes] = await Promise.all([
   readFile(new URL("../index.html", import.meta.url), "utf8"),
   readFile(new URL("../home/home.js", import.meta.url), "utf8"),
   readFile(new URL("../home/home-building-inspector.js", import.meta.url), "utf8"),
   readFile(new URL("../home/chunkjs-world-scene.js", import.meta.url), "utf8"),
+  readFile(new URL("../home/home-world-deferred-assets.js", import.meta.url), "utf8"),
   readFile(new URL("../home/home-world-layout.js", import.meta.url), "utf8"),
   readFile(new URL("../home/home-world-terrain.js", import.meta.url), "utf8"),
   readFile(new URL("../scripts/generate-home-world-terrain.mjs", import.meta.url), "utf8"),
@@ -38,6 +41,7 @@ const [html, home, inspector, scene, layout, terrainModule, generator, ncm4Bench
   readFile(new URL("../src/site-header.css", import.meta.url), "utf8"),
   readFile(new URL("../src/site-header.js", import.meta.url), "utf8"),
   readFile(new URL("../package.json", import.meta.url), "utf8"),
+  readFile(new URL("../vite.config.js", import.meta.url), "utf8"),
   readFile(new URL("../public/asset-manifest.json", import.meta.url), "utf8"),
   readFile(new URL("../public/media/home-world-terrain-v1.bin", import.meta.url)),
   readFile(new URL("../public/media/home-world-terrain-v1.bin.gz", import.meta.url)),
@@ -74,7 +78,10 @@ assert.doesNotMatch(html, /<video\b|nck-hero-logo-v0149\.(?:png|webm)/u);
 assert.doesNotMatch(assetManifestSource, /nck-hero-logo-v0149\.(?:png|webm)/u);
 assert.match(siteUi, /if \(!document\.querySelector\("\[data-site-footer-native\]"\)\) ensureUnifiedFooter\(\);/u);
 assert.match(siteHeader, /mergeClassNames\(header\.className, "site-header site-header-shared"\)/u);
+assert.match(siteHeader, /const MOBILE_MEDIA_QUERY = "\(max-width: 1320px\)";/u);
 assert.match(siteHeaderCss, /header\.site-header\.site-header-shared\[data-site-header-mounted="true"\] \{/u);
+assert.match(siteHeaderCss, /@media \(max-width: 1320px\) \{[\s\S]*?\.site-header \.site-menu-toggle/u);
+assert.match(siteHeaderCss, /@media \(min-width: 901px\) and \(max-width: 1320px\)[\s\S]*?html:not\(\[data-i18n-scope="home"\]\)/u);
 assert.doesNotMatch(siteHeaderCss, /^\s*\.site-header\s*\{/mu);
 for (const extension of ["png", "webm"]) {
   await assert.rejects(access(new URL(`../public/media/nck-hero-logo-v0149.${extension}`, import.meta.url)));
@@ -82,8 +89,8 @@ for (const extension of ["png", "webm"]) {
 assert.match(html, /<div class="hero-world-stage" aria-hidden="true"><\/div>/u);
 assert.match(html, /class="chapter-layout chapter-layout-world"/u);
 assert.match(html, /class="terrain-pouw-demo"/u);
-assert.match(html, /data-source-bytes="343761"/u);
-assert.match(html, /data-candidate-bytes="641452"/u);
+assert.match(html, /data-source-bytes="345719"/u);
+assert.match(html, /data-candidate-bytes="645944"/u);
 assert.match(html, /data-exact-chunks="225"/u);
 assert.match(html, /data-mismatch-count="0"/u);
 assert.match(html, /href="\/media\/home-world-terrain-ncm4-v1-report\.json"/u);
@@ -122,6 +129,7 @@ assert.ok(
 );
 assert.match(i18nSource, /translateAttribute\(root, "data-home-i18n-aria-label", "aria-label"\)/u);
 assert.equal(packageJson.scripts["benchmark:home-world:ncm4"], "node scripts/benchmark-home-world-ncm4.mjs");
+assert.match(viteConfigSource, /\.replaceAll\("__NICECHUNK_BUILD_VERSION__", buildVersion\)/u);
 for (const viewport of ["desktop", "mobile"]) {
   const previewPath = `home-world-preview-${viewport}.webp`;
   assert.ok(html.includes(`/media/${previewPath}`), `Missing ${viewport} preview preload.`);
@@ -129,7 +137,13 @@ for (const viewport of ["desktop", "mobile"]) {
   assert.ok(assetManifestSource.includes(`public/media/${previewPath}`), `Missing ${viewport} preview manifest entry.`);
   await access(new URL(`../public/media/${previewPath}`, import.meta.url));
 }
-assert.match(html, /rel="modulepreload" href="\/chunk\.js\/chunk\/browser-runtime\.js\?v=__NICECHUNK_BUILD_VERSION__"/u);
+assert.match(html, /home-world-preview-desktop\.webp" media="\(min-width: 901px\)"/u);
+assert.match(html, /home-world-preview-mobile\.webp" media="\(max-width: 900px\)"/u);
+assert.doesNotMatch(
+  html,
+  /rel="modulepreload"[^>]+href="\/chunk\.js\/chunk\/browser-runtime\.js/u,
+  "Vite bundles external Chunk.js modulepreloads and creates a duplicate runtime request.",
+);
 for (const preloadPath of [
   "/media/home-world-terrain-v1.bin.gz",
   "/media/vox/chr_peasant_guy_blackhair.ncm",
@@ -187,6 +201,14 @@ assert.match(home, /bubble\.copy\.textContent = t\(key\)/u);
 assert.match(home, /HOME_WORLD_SECTION_VIEWS\[activeSectionIndex\]/u);
 assert.match(home, /visibility = new Map/u);
 assert.match(home, /ratio < 0\.15/u);
+assert.match(home, /const PROGRAMMATIC_SCROLL_TARGET_RATIO = 0\.55;/u);
+assert.match(home, /beginProgrammaticScroll\(targetIndex\);\s*setActiveSection\(targetIndex\);/u);
+assert.match(home, /targetIndex === activeSectionIndex[\s\S]*?container\.scrollTop - target\.offsetTop/u);
+assert.match(home, /mostVisible !== targetSection \|\| targetRatio < PROGRAMMATIC_SCROLL_TARGET_RATIO/u);
+assert.match(home, /container\.addEventListener\("wheel", cancelProgrammaticScroll/u);
+assert.match(home, /container\.addEventListener\("touchstart", cancelProgrammaticScroll/u);
+assert.match(home, /requestAnimationFrame\(\(\) => \{\s*if \(programmaticScrollTargetIndex !== null\) return;\s*setActiveSection\(nearestSectionIndex\(\)\);/u);
+assert.match(home, /Math\.abs\(section\.offsetTop - container\.scrollTop\)/u);
 
 assert.match(scene, /CHUNK_RUNTIME_BUNDLE = "chunk\/browser-runtime\.js"/u);
 assert.match(scene, /CHUNK_WORKER_BUNDLE = "chunk\/chunk-build-worker\.bundle\.js"/u);
@@ -325,13 +347,16 @@ for (const buildingPath of [
   "hollow-cottage.json",
   "stone-timber-footbridge.json",
   "stone-timber-tower-windmill.json",
+  "covered-village-bloomery.json",
+  "covered-market-stall.json",
+  "timber-building-scaffold.json",
 ]) {
   assert.ok(layout.includes(buildingPath), `Missing canonical building: ${buildingPath}`);
 }
-assert.doesNotMatch(layout, /covered-market-stall\.json|timber-mine-headframe\.json/u);
+assert.doesNotMatch(layout, /timber-mine-headframe\.json/u);
 const structureLayout = layout.match(/export const STRUCTURE_LAYOUT = Object\.freeze\(\[[\s\S]*?\n\]\);/u)?.[0];
 assert.ok(structureLayout, "Missing fixed structure layout block.");
-assert.equal([...structureLayout.matchAll(/\bid: "/gu)].length, 5);
+assert.equal([...structureLayout.matchAll(/\bid: "/gu)].length, 8);
 assert.equal(HOME_STRUCTURE_ROOF_MATERIAL_ID, 96);
 assert.equal(Object.keys(HOME_STRUCTURE_NCM_CODES).length, STRUCTURE_LAYOUT.length);
 for (const spec of STRUCTURE_LAYOUT) {
@@ -365,33 +390,52 @@ for (const view of ["arrival", "world", "market", "guardian", "roadmap"]) {
 
 assert.match(scene, /renderer\.uploadAvatarMesh\("villager-boy", boyMesh\)/u);
 assert.match(scene, /renderer\.uploadAvatarMesh\("villager-girl", girlMesh\)/u);
-assert.match(scene, /renderer\.uploadAvatarMesh\("economy-workbench", workbenchMesh\)/u);
-assert.match(scene, /renderer\.uploadAvatarMesh\("economy-forged-tool", forgedToolMesh\)/u);
+assert.match(scene, /for \(const prop of props\) renderer\.uploadAvatarMesh\(prop\.id, prop\.mesh\)/u);
 const initialSceneMeshes = scene.match(/async function createInitialSceneMeshes\(runtime\) \{[\s\S]*?\n\}/u)?.[0] || "";
 const deferredSceneAssets = scene.match(/async function createDeferredSceneAssets\(runtime, runtimeRoot, boyCode\) \{[\s\S]*?\n\}/u)?.[0] || "";
 assert.match(initialSceneMeshes, /fetchNcm\("\/media\/vox\/chr_peasant_guy_blackhair\.ncm"\)/u);
-assert.doesNotMatch(initialSceneMeshes, /loadForgeRuntime|ForgeRuntimeCache|workbenchMesh|forgedToolMesh/u);
+assert.doesNotMatch(initialSceneMeshes, /loadForgeRuntime|ForgeRuntimeCache|home-world-deferred-assets|smeltingMaterial/u);
 assert.match(deferredSceneAssets, /loadForgeRuntime\(runtimeRoot\)/u);
-assert.match(deferredSceneAssets, /workbenchMesh: forgeRuntimeToSceneMesh/u);
-assert.match(deferredSceneAssets, /forgedToolMesh: forgeRuntimeToSceneMesh/u);
+assert.match(deferredSceneAssets, /loadSmeltingMaterialRuntime\(runtimeRoot\)/u);
+assert.match(deferredSceneAssets, /import\("\.\/home-world-deferred-assets\.js"\)/u);
+assert.match(deferredSceneAssets, /smeltingMaterialToSceneMesh/u);
 assert.match(scene, /scheduleDeferredSceneAssets\(\);/u);
 assert.match(scene, /requestIdleCallback\(load, \{ timeout: 2_000 \}\)/u);
 assert.match(scene, /sceneDeferredAssets = "unavailable"/u);
 assert.match(scene, /deferred forge assets could not be loaded/u);
 for (const forgeAssetPath of [
   "timber-workbench.json",
+  "storage-shelf.json",
+  "iron-blacksmith-anvil.json",
+  "timber-market-display-stand.json",
+  "brick-and-timber-pallet.json",
   "iron-blacksmith-hammer.json",
   "iron-deep-rock-pickaxe.json",
 ]) {
-  assert.ok(scene.includes(forgeAssetPath), `Missing canonical forge asset: ${forgeAssetPath}`);
+  assert.ok(deferredAssets.includes(forgeAssetPath), `Missing canonical deferred forge asset: ${forgeAssetPath}`);
 }
 assert.match(scene, /FORGE_RUNTIME_MODULE = "forge\/forge-runtime-cache\.js"/u);
+assert.match(scene, /SMELTING_MATERIAL_MODULE = "renderer\/smelting-material-models\.js"/u);
 assert.match(scene, /new forgeModule\.ForgeRuntimeCache/u);
 assert.match(scene, /cache\.restore\(definition\.forge\.code/u);
 assert.match(scene, /expectedDesignHash: definition\.forge\.designHash/u);
 assert.match(scene, /requireCanonical: true/u);
-assert.match(scene, /createSceneProp\("economy-workbench", ECONOMY_FORGE_SITE\.bench/u);
-assert.match(scene, /createSceneProp\("economy-forged-tool", ECONOMY_FORGE_SITE\.tool/u);
+for (const propId of [
+  "economy-anvil",
+  "economy-workbench",
+  "economy-forged-tool",
+  "economy-storage-shelf",
+  "economy-market-display",
+  "construction-material-pallet",
+  "economy-copper-bloom",
+  "economy-wooden-plank",
+  "economy-wooden-stick",
+  "economy-basalt-brick",
+]) {
+  assert.ok(scene.includes(`\"${propId}\"`), `Missing deferred scene prop: ${propId}`);
+}
+assert.match(scene, /createSmeltingMaterialPreviewMesh\(\{ materialId \}\)/u);
+assert.match(scene, /vertex\.color\[3\] \/ 255/u);
 assert.match(layout, /WORLD_CENTER = Object\.freeze\(\{ x: 2432, y: 100, z: 1712 \}\)/u);
 assert.match(layout, /MOBILE_TERRAIN_VIEW_DISTANCE = 6/u);
 assert.match(layout, /DESKTOP_TERRAIN_VIEW_DISTANCE = 7/u);
@@ -399,13 +443,14 @@ assert.match(layout, /COASTAL_STAGE_BOUNDS = Object\.freeze\(\{ minX: 2320, maxX
 assert.match(layout, /COASTAL_WATER_MARGIN = 18/u);
 assert.match(scene, /sceneTerrainProfile = "stitch-village-river-estuary-dry-paths"/u);
 assert.match(scene, /sceneMapBounds = "240x240"/u);
-assert.match(scene, /sceneActorBehavior = "waypoint-walk-bridge-idle-mine-forge-loop"/u);
+assert.match(scene, /sceneActorBehavior = "waypoint-walk-bridge-idle-mine-forge-build-loop"/u);
 assert.match(scene, /focusedForgingPose\(focusElapsed, reducedMotion\.matches\)/u);
-assert.match(scene, /forgingActive \? forgingProgress : miningProgress/u);
-assert.match(scene, /designHash: ironBlacksmithHammerDefinition\.forge\.designHash/u);
+assert.match(scene, /focusedBuildingPose\(focusElapsed, reducedMotion\.matches\)/u);
+assert.match(scene, /craftingActive \? \(forgingProgress \|\| buildingProgress\) : miningProgress/u);
+assert.match(scene, /designHash: deferredHammerDesignHash/u);
 assert.match(scene, /renderer\.emitVoxelParticles\("break", \{/u);
 assert.match(scene, /worldX: ECONOMY_FORGE_SITE\.strike\.x/u);
-assert.match(scene, /sceneEconomyResourceClusters = String\(SCENE_RESOURCE_CLUSTERS\.length - 1\)/u);
+assert.match(scene, /sceneEconomyResourceClusters = String\(Object\.keys\(ECONOMY_MATERIAL_SITES\)\.length\)/u);
 assert.match(scene, /createResourceClusterChunks\(runtime, revision\)/u);
 assert.match(scene, /WINDMILL_ROTATION_MS = 42_000/u);
 assert.match(scene, /splitWindmillBuilding\(building, spec\.definition\)/u);
@@ -423,6 +468,10 @@ assert.match(layout, /id: "village-spine"[\s\S]*?halfWidth: 3\.25/u);
 assert.match(generator, /pathDistance <= 0 \? blocks\.dryDirt : blocks\.grass/u);
 assert.match(generator, /Homepage plant \$\{key\} overlaps another scene feature/u);
 assert.match(layout, /id: "tower-windmill"[\s\S]*?quarterTurns: 2/u);
+assert.match(layout, /id: "village-bloomery"[\s\S]*?minX: 2477[\s\S]*?minZ: 1762/u);
+assert.match(layout, /id: "village-market-stall"[\s\S]*?minX: 2520[\s\S]*?minZ: 1762/u);
+assert.match(layout, /id: "construction-scaffold"[\s\S]*?minX: 2503[\s\S]*?minZ: 1800/u);
+assert.match(scene, /CONSTRUCTION_SITE\.overlay\.width/u);
 assert.match(scene, /routeWalk\(ACTOR_SITES\.bridgeEast, ACTOR_SITES\.bridgeWest/u);
 assert.match(scene, /routeWalk\(ACTOR_SITES\.bridgeWest, ACTOR_SITES\.bridgeEast/u);
 assert.match(scene, /cachedVisibleChunks = cachedTerrainChunks\.concat\(structureChunks\);/u);
@@ -463,6 +512,10 @@ assert.match(scene, /includeChunkIds: initialPriorityIds/u);
 assert.match(scene, /chunks\.setBuildConcurrencyLimit\(1\);/u);
 assert.match(scene, /function scheduleDeferredTerrainPreparation\(presentationTerrain, deferredBuildTasks, initialTerrainResult\)/u);
 assert.match(scene, /includeChunkIds: deferredIds/u);
+assert.match(scene, /priorityChunkIds: deferredTerrainPriorityIds/u);
+assert.match(scene, /onProgress: \(\{ chunkId, appliedChunks, appliedDeltas \}\)/u);
+assert.match(scene, /chunks\.buildQueue\.push\(task\);\s*chunks\.buildQueueNeedsSort = true;\s*prioritizePendingTerrainBuilds\(focusView\);/u);
+assert.match(scene, /function updateDeferredTerrainPriority\(view = focusView\)/u);
 assert.match(scene, /chunks\.buildQueue\.push\(\.\.\.liveTasks\)/u);
 assert.match(scene, /sceneTerrainPreparation = "ready"/u);
 assert.match(scene, /scheduleDeferredTerrainPreparation\(presentationTerrain, deferredBuildTasks, terrainResult\);\s*focus\(focusView, \{ immediate: true \}\);\s*renderFrame\(startedAt, true\);/u);
@@ -480,6 +533,13 @@ assert.match(scene, /\}, 900\);/u);
 assert.match(scene, /sceneTerrainBuildPhase = "background"/u);
 assert.match(scene, /function resumeTerrainBuildsForView\(\)/u);
 assert.match(scene, /sceneTerrainBuildPhase = "view-priority"/u);
+assert.match(scene, /const CAMERA_TARGET_WAIT_TIMEOUT_MS = 3_000;/u);
+assert.match(scene, /cameraTransitionWaiting \|\| timestamp - transitionStart < CAMERA_TRANSITION_MS/u);
+assert.match(scene, /renderer\.prepareChunksForRender\(visibleChunks, \{ maxUploads, cameraState: targetCamera \}\);/u);
+assert.match(scene, /function updateCameraTransitionGate\(timestamp, targetCamera\)/u);
+assert.match(scene, /sceneCameraWaitResult = readiness\.ready \? "ready" : "timeout"/u);
+assert.match(scene, /setSceneData\(canvas, "sceneCameraEye", formatSceneVector\(cameraPose\.eye\)\)/u);
+assert.match(scene, /setSceneData\(canvas, "sceneCameraTargetEye", formatSceneVector\(cameraTarget\.eye\)\)/u);
 assert.match(scene, /runtime\.chunkIntersectsCameraFrustum\(terrainReadinessProbe\(chunk\), camera\)/u);
 assert.match(scene, /gpuMeshReady\(chunks\.chunks\.get\(id\)\)/u);
 assert.match(scene, /const becameReady = readinessPending && lastReadiness\.ready;/u);
@@ -490,10 +550,13 @@ assert.equal(Math.floor(844 * mobileSceneDpr), 970);
 assert.match(scene, /const sceneDpr = mobileViewport \? MOBILE_SCENE_DPR : lowPower \? 0\.75 : 0\.875;/u);
 assert.match(scene, /maxMobileDpr: MOBILE_SCENE_DPR/u);
 assert.match(scene, /sceneAspect = Math\.max\(0\.25, width \/ height\);/u);
-assert.match(scene, /maxUploads: lowPower \|\| mobileViewport \? 4 : 8/u);
+assert.match(scene, /const maxUploads = lowPower \|\| mobileViewport \? 4 : 8;/u);
 assert.doesNotMatch(scene, /terrainChunks\.length >=|expectedTerrainChunks|createPresentationDeltas|presentationBoundsForView/u);
 assert.match(terrainModule, /new Int32Array\(entry\.deltaCount \* 4\)/u);
 assert.match(terrainModule, /includeChunkIds = null/u);
+assert.match(terrainModule, /priorityChunkIds = null/u);
+assert.match(terrainModule, /if \(prioritized && appliedChunks > 0\) chunks\.sort\(compareChunks\);/u);
+assert.match(terrainModule, /onProgress\?\.\(\{ chunkId: chunk\.id, appliedChunks, appliedDeltas, totalChunks \}\)/u);
 assert.match(terrainModule, /filter\(\(chunk\) => !included \|\| included\.has\(chunk\.id\)\)/u);
 assert.match(terrainModule, /new DecompressionStream\("gzip"\)/u);
 assert.match(terrainModule, /withTransferMetadata\(decodeHomeWorldTerrain\(bytes\), "identity"/u);
@@ -514,34 +577,38 @@ assert.equal(terrain.chunkSize, 16);
 assert.equal(terrain.width, 15);
 assert.equal(terrain.depth, 15);
 assert.equal(terrain.chunks.size, 225);
-assert.equal(terrain.runCount, 157_453);
-assert.equal(terrain.deltaCount, 620_284);
-assert.equal(terrain.fingerprint, "11c9dfc1520430a0c64abc7a0d6dd624");
+assert.equal(terrain.runCount, 158_432);
+assert.equal(terrain.deltaCount, 623_314);
+assert.equal(terrain.fingerprint, "633ddc2887804cf2af5c7fc44d55f9a0");
 assert.deepEqual(gunzipSync(compressedTerrainBytes), terrainBytes);
 assert.ok(compressedTerrainBytes.byteLength < terrainBytes.byteLength / 20);
-assert.equal(PRESENTATION_PATHS.length, 4);
-assert.equal(PRESENTATION_PLANTS.length, 345);
-assert.equal(PRESENTATION_PLANTS.filter((plant) => plant.block.startsWith("flower")).length, 323);
+assert.equal(PRESENTATION_PATHS.length, 6);
+assert.equal(PRESENTATION_PLANTS.length, 311);
+assert.equal(PRESENTATION_PLANTS.filter((plant) => plant.block.startsWith("flower")).length, 289);
 assert.equal(PRESENTATION_TREES.length, 6);
 assert.deepEqual(MINING_TARGET, { x: 2385, y: 102, z: 1644, material: "coal" });
 assert.deepEqual(ACTOR_SITES.boyMine, { x: 2386, z: 1646, yaw: -2.68 });
-assert.deepEqual(ACTOR_SITES.economyBoy, { x: 2524, z: 1745, yaw: -2.5 });
+assert.deepEqual(ACTOR_SITES.economyBoy, { x: 2508, z: 1775, yaw: 0 });
 assert.deepEqual(ECONOMY_FORGE_SITE, {
-  bench: { x: 2525.5, y: 100, z: 1747, yaw: 0.785398 },
-  tool: { x: 2525.5, y: 103.04, z: 1747, yaw: 0.785398 },
-  strike: { x: 2525.5, y: 103.28, z: 1747 },
+  anvil: { x: 2508.5, y: 100, z: 1773, yaw: 0 },
+  bench: { x: 2501.5, y: 100, z: 1771, yaw: 0 },
+  tool: { x: 2508.5, y: 102.34, z: 1773, yaw: 1.570796 },
+  strike: { x: 2508.5, y: 102.58, z: 1773 },
+  shelf: { x: 2500, y: 100, z: 1777, yaw: 0 },
+  marketDisplay: { x: 2526.5, y: 100, z: 1775, yaw: 0 },
 });
-assert.equal(SCENE_RESOURCE_CLUSTERS.length, 5);
-assert.equal(SCENE_RESOURCE_CLUSTERS.filter((cluster) => cluster.id.startsWith("economy-")).length, 4);
+assert.equal(Object.keys(ECONOMY_MATERIAL_SITES).length, 4);
+assert.equal(SCENE_RESOURCE_CLUSTERS.length, 1);
+assert.equal(SCENE_RESOURCE_CLUSTERS.filter((cluster) => cluster.id.startsWith("economy-")).length, 0);
 assert.ok(SCENE_RESOURCE_CLUSTERS.some((cluster) => cluster.id === "mining-coal-outcrop"
   && cluster.voxels.some((voxel) => voxel.x === MINING_TARGET.x
     && voxel.y === MINING_TARGET.y
     && voxel.z === MINING_TARGET.z
     && voxel.material === MINING_TARGET.material)));
 assert.ok(Math.hypot(
-  ACTOR_SITES.economyBoy.x + 0.5 - ECONOMY_FORGE_SITE.bench.x,
-  ACTOR_SITES.economyBoy.z + 0.5 - ECONOMY_FORGE_SITE.bench.z,
-) < 2, "The economy actor must stand within hammering distance of the workbench.");
+  ACTOR_SITES.economyBoy.x + 0.5 - ECONOMY_FORGE_SITE.anvil.x,
+  ACTOR_SITES.economyBoy.z + 0.5 - ECONOMY_FORGE_SITE.anvil.z,
+) < 3, "The economy actor must stand within hammering distance of the anvil.");
 const distanceToSegment = (point, from, to) => {
   const dx = to.x - from.x;
   const dz = to.z - from.z;
@@ -562,7 +629,9 @@ for (const path of PRESENTATION_PATHS) {
     )));
     return distance >= path.halfWidth + 0.5 && distance <= path.halfWidth + 4.2;
   });
-  assert.ok(roadsideFlowers.length >= Math.floor(length * 0.8), `${path.id} does not have a dense roadside flower band.`);
+  if (path.id !== "production-courtyard") {
+    assert.ok(roadsideFlowers.length >= Math.floor(length * 0.8), `${path.id} does not have a dense roadside flower band.`);
+  }
 }
 const gateway = STRUCTURE_LAYOUT.find((structure) => structure.id === "village-gateway");
 const coastalCottage = STRUCTURE_LAYOUT.find((structure) => structure.id === "coastal-cottage");
@@ -575,6 +644,7 @@ assert.deepEqual(
   { minX: 2370, minZ: 1681, quarterTurns: 0, siteMode: "water" },
 );
 assert.deepEqual(PRESENTATION_PATHS.find((path) => path.id === "west-bridge-approach")?.points.at(-1), { x: 2408, z: 1697 });
+assert.deepEqual(CONSTRUCTION_SITE.overlay, { x: 2503, z: 1800, width: 21, depth: 19 });
 
 const unpackedTerrainChunks = new Map();
 const explicitColumn = (worldX, worldZ) => {
@@ -592,7 +662,7 @@ const explicitColumn = (worldX, worldZ) => {
 };
 const topSolid = (worldX, worldZ) => explicitColumn(worldX, worldZ).findLast((entry) => entry[1] !== 0);
 
-for (const [worldX, worldZ] of [[2516, 1790], [2508, 1712], [2472, 1704], [2415, 1702], [2408, 1697], [2512, 1670]]) {
+for (const [worldX, worldZ] of [[2508, 1790], [2508, 1773], [2499, 1807], [2508, 1712], [2472, 1704], [2415, 1702], [2408, 1697], [2512, 1670]]) {
   assert.equal(topSolid(worldX, worldZ)?.[1], 9, `Homepage dry-dirt path is missing at ${worldX},${worldZ}.`);
 }
 for (const [worldX, worldZ] of [[2446, 1700], [2432, 1784], [2415, 1838]]) {
@@ -624,11 +694,11 @@ assert.equal(ncm4Report.source.runs, terrain.runCount);
 assert.equal(ncm4Report.projection.format, "NCM4B-v1");
 assert.equal(ncm4Report.projection.ncm4Format, "ncm4-pouw-v1");
 assert.equal(ncm4Report.projection.profile, "building");
-assert.equal(ncm4Report.projection.genericNcm3Bytes, 1_260_974);
-assert.equal(ncm4Report.projection.ncm4RecordBytes, 641_452);
-assert.equal(ncm4Report.projection.bundleBytes, 643_262);
-assert.equal(ncm4Report.projection.ncm4SavedPercentAgainstNcm3, 49.1304);
-assert.equal(ncm4Report.projection.ncm4LargerPercentAgainstNcht, 86.5982);
+assert.equal(ncm4Report.projection.genericNcm3Bytes, 1_268_806);
+assert.equal(ncm4Report.projection.ncm4RecordBytes, 645_944);
+assert.equal(ncm4Report.projection.bundleBytes, 647_754);
+assert.equal(ncm4Report.projection.ncm4SavedPercentAgainstNcm3, 49.0904);
+assert.equal(ncm4Report.projection.ncm4LargerPercentAgainstNcht, 86.8408);
 assert.equal(ncm4Report.projection.exactChunks, 225);
 assert.equal(ncm4Report.projection.chunkCount, 225);
 assert.equal(ncm4Report.projection.mismatchCount, 0);
@@ -639,7 +709,7 @@ assert.equal(ncm4Report.chunks.length, 225);
 assert.ok(ncm4Report.chunks.every((chunk) => chunk.exact && chunk.mismatchCount === 0 && chunk.acceptedAgainstNcm3));
 assert.equal(ncm4Report.chunks.reduce((total, chunk) => total + chunk.deltaCount, 0), terrain.deltaCount);
 assert.equal(ncm4Report.chunks.reduce((total, chunk) => total + chunk.runCount, 0), terrain.runCount);
-assert.equal(ncm4Report.chunks.reduce((total, chunk) => total + chunk.ncm4Bytes, 0), 641_452);
+assert.equal(ncm4Report.chunks.reduce((total, chunk) => total + chunk.ncm4Bytes, 0), 645_944);
 assert.equal(ncm4BundleBytes.byteLength, ncm4Report.projection.bundleBytes);
 assert.equal(createHash("sha256").update(ncm4BundleBytes).digest("hex"), ncm4Report.projection.bundleSha256);
 assert.equal(ncm4BundleBytes.subarray(0, 4).toString("ascii"), "NC4B");
@@ -682,9 +752,9 @@ for (const view of ["arrival", "world", "market", "guardian", "roadmap"]) {
   assert.ok(distance < 112, `${view} camera is too far from its subject (${distance.toFixed(2)}).`);
 }
 assert.match(scene, /arrival: Object\.freeze\(\{\s*eye: \[2460, 134, 1757\],\s*target: \[2494, 103, 1662\],\s*fov: 52,/u);
-assert.match(scene, /market: Object\.freeze\(\{\s*eye: \[2555, 112, 1769\],\s*target: \[2528, 103, 1740\],\s*fov: 38,/u);
+assert.match(scene, /market: Object\.freeze\(\{\s*eye: \[2555, 118, 1808\],\s*target: \[2508, 103, 1771\],\s*fov: 42,/u);
 assert.match(scene, /mobile && view === "arrival"[\s\S]*?target\.splice\(0, 3, 2524, 110, 1645\);[\s\S]*?eye = \[2560, 145, 1768\];/u);
-assert.match(scene, /mobile && view === "market"[\s\S]*?target\.splice\(0, 3, 2525, 102\.5, 1746\);[\s\S]*?eye = \[2555, 112\.5, 1778\];/u);
+assert.match(scene, /mobile && view === "market"[\s\S]*?target\.splice\(0, 3, 2508, 103, 1771\);[\s\S]*?eye = \[2558, 122, 1816\];/u);
 assert.match(scene, /const distanceScale = mobile \? 1\.08 : 1/u);
 assert.match(scene, /fov: source\.fov \+ \(mobile \? 2 : 0\)/u);
 

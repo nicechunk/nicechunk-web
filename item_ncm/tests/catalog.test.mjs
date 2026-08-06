@@ -97,7 +97,7 @@ const wallClockLayouts = new Map([
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
-assert.equal(catalog.items.length, 40);
+assert.equal(catalog.items.length, 43);
 assert.equal(new Set(catalog.items).size, catalog.items.length);
 
 const listedFiles = new Set(catalog.items);
@@ -290,18 +290,20 @@ for (const file of catalog.items) {
 assert.deepEqual([...categories], [
   ["mining-tools", 4],
   ["forestry-farming", 4],
-  ["workshop", 3],
+  ["workshop", 4],
   ["weapons", 3],
   ["building-fittings", 3],
   ["lighting", 4],
   ["furniture", 5],
   ["containers", 3],
   ["cooking", 2],
+  ["commerce", 1],
+  ["construction", 1],
   ["books-writing", 7],
   ["interior-decor", 2],
 ]);
 assert.equal(tools, 15);
-assert.equal(placeables, 25);
+assert.equal(placeables, 28);
 assert.equal(conceptReferences, 16);
 assert.equal(bookGeometryCount, 7);
 assert.equal(framedTextileGeometryCount, 1);
@@ -311,7 +313,7 @@ assert.equal(publicBenchGeometryCount, 1);
 assert.equal(wallClockGeometryCount, 1);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
-console.log("item_ncm catalog tests passed: 40 canonical NCF1 items across 11 categories");
+console.log("item_ncm catalog tests passed: 43 canonical NCF1 items across 13 categories");
 
 function json(file) {
   return JSON.parse(readFileSync(file, "utf8"));

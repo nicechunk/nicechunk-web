@@ -182,16 +182,34 @@ export async function applyHomeWorldTerrain(manager, terrain, {
   txId = "homepage-scene-presentation",
   yieldEvery = 8,
   includeChunkIds = null,
+  priorityChunkIds = null,
   onProgress = null,
 } = {}) {
   const included = includeChunkIds instanceof Set ? includeChunkIds : null;
+  const prioritized = priorityChunkIds instanceof Set ? priorityChunkIds : null;
+  const distanceFromCenter = (chunk) => Math.max(
+    Math.abs(chunk.chunkX - manager.centerChunkX),
+    Math.abs(chunk.chunkZ - manager.centerChunkZ),
+  );
+  const compareChunks = (left, right) => {
+    const priorityOrder = prioritized
+      ? Number(!prioritized.has(left.id)) - Number(!prioritized.has(right.id))
+      : 0;
+    return priorityOrder
+      || distanceFromCenter(left) - distanceFromCenter(right)
+      || left.chunkZ - right.chunkZ
+      || left.chunkX - right.chunkX;
+  };
   const chunks = Array.from(manager?.chunks?.values?.() ?? [])
     .filter((chunk) => !included || included.has(chunk.id))
-    .sort((a, b) => Math.max(Math.abs(a.chunkX - manager.centerChunkX), Math.abs(a.chunkZ - manager.centerChunkZ))
-      - Math.max(Math.abs(b.chunkX - manager.centerChunkX), Math.abs(b.chunkZ - manager.centerChunkZ)));
+    .sort(compareChunks);
+  const totalChunks = chunks.length;
   let appliedChunks = 0;
   let appliedDeltas = 0;
-  for (const chunk of chunks) {
+  while (chunks.length) {
+    // A section change mutates the shared priority set between yields.
+    if (prioritized && appliedChunks > 0) chunks.sort(compareChunks);
+    const chunk = chunks.shift();
     const packed = unpackHomeWorldTerrainChunk(terrain, chunk.chunkX, chunk.chunkZ);
     if (!packed) throw new Error(`Homepage terrain is missing chunk ${chunk.id}.`);
     const result = chunk.applyPendingDelta(packed, txId);
@@ -200,8 +218,8 @@ export async function applyHomeWorldTerrain(manager, terrain, {
     }
     appliedChunks += 1;
     appliedDeltas += result.accepted;
-    onProgress?.({ appliedChunks, appliedDeltas, totalChunks: chunks.length });
-    if (yieldEvery > 0 && appliedChunks < chunks.length && appliedChunks % yieldEvery === 0) await yieldMainThread();
+    onProgress?.({ chunkId: chunk.id, appliedChunks, appliedDeltas, totalChunks });
+    if (yieldEvery > 0 && appliedChunks < totalChunks && appliedChunks % yieldEvery === 0) await yieldMainThread();
   }
   return Object.freeze({ appliedChunks, appliedDeltas });
 }

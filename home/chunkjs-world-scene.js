@@ -3,14 +3,16 @@ import villageGatewayDefinition from "../build_ncm/buildings/wayfinding/stone-ti
 import hollowCottageDefinition from "../build_ncm/buildings/residential/hollow-cottage.json";
 import footbridgeDefinition from "../build_ncm/buildings/transport/stone-timber-footbridge.json";
 import windmillDefinition from "../build_ncm/buildings/agriculture/stone-timber-tower-windmill.json";
-import timberWorkbenchDefinition from "../item_ncm/json/furniture/timber-workbench.json";
-import ironDeepRockPickaxeDefinition from "../item_ncm/json/mining-tools/iron-deep-rock-pickaxe.json";
-import ironBlacksmithHammerDefinition from "../item_ncm/json/workshop/iron-blacksmith-hammer.json";
+import bloomeryDefinition from "../build_ncm/buildings/industrial/covered-village-bloomery.json";
+import marketStallDefinition from "../build_ncm/buildings/commerce/covered-market-stall.json";
+import scaffoldDefinition from "../build_ncm/buildings/construction/timber-building-scaffold.json";
 import {
   ACTOR_SITES,
+  CONSTRUCTION_SITE,
   DESKTOP_TERRAIN_VIEW_DISTANCE,
   ECONOMY_FORGE_SITE,
   ECONOMY_FLOW_SITES,
+  ECONOMY_MATERIAL_SITES,
   MINING_TARGET,
   MOBILE_TERRAIN_VIEW_DISTANCE,
   PRESENTATION_GROUND_Y,
@@ -30,8 +32,10 @@ const DEFAULT_RUNTIME_ROOT = "/chunk.js";
 const CHUNK_RUNTIME_BUNDLE = "chunk/browser-runtime.js";
 const CHUNK_WORKER_BUNDLE = "chunk/chunk-build-worker.bundle.js";
 const FORGE_RUNTIME_MODULE = "forge/forge-runtime-cache.js";
+const SMELTING_MATERIAL_MODULE = "renderer/smelting-material-models.js";
 const SECTION_VIEWS = Object.freeze(["arrival", "world", "market", "guardian", "roadmap"]);
 const CAMERA_TRANSITION_MS = 1_180;
+const CAMERA_TARGET_WAIT_TIMEOUT_MS = 3_000;
 const DEFERRED_SCENE_ASSET_DELAY_MS = 600;
 const VISUAL_HANDOFF_PROBE_MS = 120;
 const WINDMILL_ROTATION_MS = 42_000;
@@ -51,14 +55,29 @@ const BUILDING_OUTLINE_SIMPLIFY_TOLERANCE = 0.6;
 const AVATAR_HEIGHT_BLOCKS = 1.75 / 0.4;
 const AVATAR_VISUAL_SCALE = AVATAR_HEIGHT_BLOCKS / 2.52;
 const FORGE_WORLD_UNITS_PER_METER = 1 / 0.4;
+const SMELTING_MATERIAL_WORLD_SCALE = 1.2;
 const HOMEPAGE_HAMMER_GRIP_ROLL_QUARTER_TURNS = 1;
+const DEFERRED_SCENE_ASSET_KEYS = Object.freeze([
+  "timber-workbench",
+  "storage-shelf",
+  "iron-blacksmith-anvil",
+  "timber-market-display-stand",
+  "brick-and-timber-pallet",
+  "iron-blacksmith-hammer",
+  "iron-deep-rock-pickaxe",
+  "copper_bloom",
+  "wooden_plank",
+  "wooden_stick",
+  "basalt_brick",
+]);
 const buildingOutlineCache = new WeakMap();
 let buildingOutlineMaskCanvas = null;
 const ACTOR_ROUTES = Object.freeze({
   boy: createRoute([
     routeStop("idle", ACTOR_SITES.boy, 4_000),
-    routeWalk(ACTOR_SITES.boy, { x: 2516, z: 1747 }, 8_400),
-    routeWalk({ x: 2516, z: 1747 }, { x: 2516, z: 1727 }, 4_800),
+    routeWalk(ACTOR_SITES.boy, { x: 2508, z: 1773 }, 3_600),
+    routeWalk({ x: 2508, z: 1773 }, { x: 2516, z: 1740 }, 7_200),
+    routeWalk({ x: 2516, z: 1740 }, { x: 2516, z: 1727 }, 3_200),
     routeWalk({ x: 2516, z: 1727 }, ACTOR_SITES.bridgeEast, 8_200),
     routeWalk(ACTOR_SITES.bridgeEast, ACTOR_SITES.bridgeWest, 8_400),
     routeWalk(ACTOR_SITES.bridgeWest, { x: 2408, z: 1678 }, 7_000),
@@ -68,13 +87,15 @@ const ACTOR_ROUTES = Object.freeze({
     routeWalk({ x: 2408, z: 1678 }, ACTOR_SITES.bridgeWest, 7_000),
     routeWalk(ACTOR_SITES.bridgeWest, ACTOR_SITES.bridgeEast, 8_400),
     routeWalk(ACTOR_SITES.bridgeEast, { x: 2516, z: 1727 }, 8_200),
-    routeWalk({ x: 2516, z: 1727 }, { x: 2516, z: 1747 }, 4_800),
-    routeWalk({ x: 2516, z: 1747 }, ACTOR_SITES.boy, 8_400),
+    routeWalk({ x: 2516, z: 1727 }, { x: 2516, z: 1740 }, 3_200),
+    routeWalk({ x: 2516, z: 1740 }, { x: 2508, z: 1773 }, 7_200),
+    routeWalk({ x: 2508, z: 1773 }, ACTOR_SITES.boy, 3_600),
   ]),
   girl: createRoute([
     routeStop("idle", ACTOR_SITES.girl, 4_400),
-    routeWalk(ACTOR_SITES.girl, { x: 2516, z: 1747 }, 8_400),
-    routeWalk({ x: 2516, z: 1747 }, { x: 2516, z: 1727 }, 4_800),
+    routeWalk(ACTOR_SITES.girl, { x: 2508, z: 1773 }, 3_600),
+    routeWalk({ x: 2508, z: 1773 }, { x: 2516, z: 1740 }, 7_200),
+    routeWalk({ x: 2516, z: 1740 }, { x: 2516, z: 1727 }, 3_200),
     routeWalk({ x: 2516, z: 1727 }, ACTOR_SITES.bridgeEast, 8_200),
     routeWalk(ACTOR_SITES.bridgeEast, ACTOR_SITES.bridgeWest, 8_400),
     routeWalk(ACTOR_SITES.bridgeWest, ACTOR_SITES.girlCottage, 8_200),
@@ -82,8 +103,9 @@ const ACTOR_ROUTES = Object.freeze({
     routeWalk(ACTOR_SITES.girlCottage, ACTOR_SITES.bridgeWest, 8_200),
     routeWalk(ACTOR_SITES.bridgeWest, ACTOR_SITES.bridgeEast, 8_400),
     routeWalk(ACTOR_SITES.bridgeEast, { x: 2516, z: 1727 }, 8_200),
-    routeWalk({ x: 2516, z: 1727 }, { x: 2516, z: 1747 }, 4_800),
-    routeWalk({ x: 2516, z: 1747 }, ACTOR_SITES.girl, 8_400),
+    routeWalk({ x: 2516, z: 1727 }, { x: 2516, z: 1740 }, 3_200),
+    routeWalk({ x: 2516, z: 1740 }, { x: 2508, z: 1773 }, 7_200),
+    routeWalk({ x: 2508, z: 1773 }, ACTOR_SITES.girl, 3_600),
   ]),
 });
 const STRUCTURE_DEFINITIONS = Object.freeze({
@@ -92,6 +114,9 @@ const STRUCTURE_DEFINITIONS = Object.freeze({
   hollowCottage: hollowCottageDefinition,
   footbridge: footbridgeDefinition,
   windmill: windmillDefinition,
+  bloomery: bloomeryDefinition,
+  marketStall: marketStallDefinition,
+  scaffold: scaffoldDefinition,
 });
 const STRUCTURE_SPECS = Object.freeze(STRUCTURE_LAYOUT.map((spec) => Object.freeze({
   ...spec,
@@ -105,24 +130,24 @@ const CAMERA_PRESETS = Object.freeze({
     fov: 52,
   }),
   world: Object.freeze({
-    eye: [2444, 112, 1705],
-    target: [2388, 101, 1647],
-    fov: 39,
+    eye: [2427, 110, 1684],
+    target: [2386, 102, 1645],
+    fov: 36,
   }),
   market: Object.freeze({
-    eye: [2555, 112, 1769],
-    target: [2528, 103, 1740],
-    fov: 38,
+    eye: [2555, 118, 1808],
+    target: [2508, 103, 1771],
+    fov: 42,
   }),
   guardian: Object.freeze({
-    eye: [2570, 115, 1718],
-    target: [2519, 103, 1657],
-    fov: 39,
+    eye: [2504, 110, 1734],
+    target: [2476, 103, 1706],
+    fov: 38,
   }),
   roadmap: Object.freeze({
-    eye: [2570, 134, 1708],
-    target: [2525, 117, 1646],
-    fov: 41,
+    eye: [2565, 121, 1843],
+    target: [2513, 105, 1808],
+    fov: 42,
   }),
 });
 
@@ -174,11 +199,15 @@ export function createHomeWorldScene(canvas, options = {}) {
   let guardianChatVisible = false;
   let transitionStart = startedAt;
   let cameraTransitioning = false;
+  let cameraTransitionWaiting = false;
+  let cameraTransitionWaitStartedAt = 0;
   let focusStartedAt = startedAt;
   let cameraStart = cameraPoseForView("arrival", sceneAspect);
   let cameraTarget = cameraStart;
   let lastMiningBurst = -1;
   let lastForgeBurst = -1;
+  let lastBuildBurst = -1;
+  let deferredHammerDesignHash = null;
   let workerPoolExpanded = false;
   let renderChunkListDirty = true;
   let cachedTerrainChunks = [];
@@ -189,6 +218,7 @@ export function createHomeWorldScene(canvas, options = {}) {
   let initialBoyCode = "";
   let backgroundTerrainTimer = 0;
   let deferredTerrainPreparationStart = null;
+  const deferredTerrainPriorityIds = new Set();
   let presentedFrameCount = 0;
   const buildMetrics = { baseBuilds: 0, remeshBuilds: 0 };
   let resolveReady;
@@ -233,12 +263,22 @@ export function createHomeWorldScene(canvas, options = {}) {
     focusStartedAt = timestamp;
     if (runtime && chunks) {
       prioritizePendingTerrainBuilds(view);
+      updateDeferredTerrainPriority(view);
       if (canvas.dataset.sceneReady === "true" && chunks.buildQueue?.length) resumeTerrainBuildsForView();
       else if (view !== initialTerrainView) startDeferredTerrainPreparation();
     }
     if (view === "market" && canvas.dataset.sceneReady === "true") void ensureDeferredSceneAssets();
     if (view !== "guardian") emitGuardianChat(null);
     cameraTarget = cameraPoseForView(view, sceneAspect);
+    const waitForTarget = !immediate
+      && !reducedMotion.matches
+      && canvas.dataset.sceneReady === "true"
+      && runtime
+      && chunks
+      && !cameraReadiness(cameraStateFromPose(runtime, cameraTarget, sceneAspect)).ready;
+    cameraTransitionWaiting = Boolean(waitForTarget);
+    cameraTransitionWaitStartedAt = waitForTarget ? timestamp : 0;
+    canvas.dataset.sceneCameraWaiting = String(waitForTarget);
     transitionStart = immediate || reducedMotion.matches ? timestamp - CAMERA_TRANSITION_MS : timestamp;
     setCameraTransitioning(cameraTransitionActive(timestamp));
     canvas.dataset.sceneView = view;
@@ -249,12 +289,14 @@ export function createHomeWorldScene(canvas, options = {}) {
 
   const resolveCameraPose = (timestamp, includeParallax = true) => {
     const elapsed = Math.max(0, timestamp - transitionStart);
-    const amount = smoothstep(Math.min(1, elapsed / CAMERA_TRANSITION_MS));
-    const pose = {
-      eye: mixVector(cameraStart.eye, cameraTarget.eye, amount),
-      target: mixVector(cameraStart.target, cameraTarget.target, amount),
-      fov: mix(cameraStart.fov, cameraTarget.fov, amount),
-    };
+    const amount = cameraTransitionWaiting ? 0 : smoothstep(Math.min(1, elapsed / CAMERA_TRANSITION_MS));
+    const pose = amount === 0
+      ? { eye: [...cameraStart.eye], target: [...cameraStart.target], fov: cameraStart.fov }
+      : {
+          eye: mixVector(cameraStart.eye, cameraTarget.eye, amount),
+          target: mixVector(cameraStart.target, cameraTarget.target, amount),
+          fov: mix(cameraStart.fov, cameraTarget.fov, amount),
+        };
     if (!includeParallax || reducedMotion.matches) return pose;
     pose.eye[0] += pointerX * 1.25;
     pose.eye[1] -= pointerY * 0.48;
@@ -263,7 +305,8 @@ export function createHomeWorldScene(canvas, options = {}) {
   };
 
   const cameraTransitionActive = (timestamp) => (
-    !reducedMotion.matches && timestamp - transitionStart < CAMERA_TRANSITION_MS
+    !reducedMotion.matches
+    && (cameraTransitionWaiting || timestamp - transitionStart < CAMERA_TRANSITION_MS)
   );
 
   const setCameraTransitioning = (active) => {
@@ -293,11 +336,17 @@ export function createHomeWorldScene(canvas, options = {}) {
     renderer.updateVoxelParticles(dt, (worldX, worldZ) => chunks.getOpaqueColumnTopAtWorld(worldX, worldZ) + 1);
 
     const { terrainChunks, visibleChunks } = renderChunkLists();
+    const maxUploads = lowPower || mobileViewport ? 4 : 8;
+    if (cameraTransitionWaiting) {
+      const targetCamera = cameraStateFromPose(runtime, cameraTarget, sceneAspect);
+      renderer.prepareChunksForRender(visibleChunks, { maxUploads, cameraState: targetCamera });
+      updateCameraTransitionGate(timestamp, targetCamera);
+    }
     const cameraPose = resolveCameraPose(timestamp);
     setCameraTransitioning(cameraTransitionActive(timestamp));
     const camera = cameraStateFromPose(runtime, cameraPose, sceneAspect);
     renderer.prepareChunksForRender(visibleChunks, {
-      maxUploads: lowPower || mobileViewport ? 4 : 8,
+      maxUploads,
       cameraState: camera,
     });
     const renderStats = renderer.render(camera, visibleChunks, avatars, overlaysForView(timestamp));
@@ -334,7 +383,7 @@ export function createHomeWorldScene(canvas, options = {}) {
       actorState = readyState.actorState;
       windmillState = readyState.windmillState;
     }
-    if (diagnosticsDue) publishSceneDiagnostics(actorState, windmillState);
+    if (diagnosticsDue) publishSceneDiagnostics(actorState, windmillState, cameraPose);
     schedule();
   }
 
@@ -355,7 +404,7 @@ export function createHomeWorldScene(canvas, options = {}) {
     return { terrainChunks: cachedTerrainChunks, visibleChunks: cachedVisibleChunks };
   }
 
-  function publishSceneDiagnostics(actorState, windmillState) {
+  function publishSceneDiagnostics(actorState, windmillState, cameraPose) {
     setSceneData(canvas, "sceneTerrainChunks", lastStats.terrainChunks);
     setSceneData(canvas, "sceneStructureChunks", lastStats.structureChunks);
     setSceneData(canvas, "sceneDrawCalls", lastStats.drawCalls);
@@ -365,6 +414,10 @@ export function createHomeWorldScene(canvas, options = {}) {
     setSceneData(canvas, "sceneRequiredTerrainChunks", lastReadiness.requiredTerrainChunks);
     setSceneData(canvas, "sceneReadyTerrainChunks", lastReadiness.readyTerrainChunks);
     setSceneData(canvas, "sceneRequiredStructureChunks", lastReadiness.requiredStructureChunks);
+    setSceneData(canvas, "sceneCameraEye", formatSceneVector(cameraPose.eye));
+    setSceneData(canvas, "sceneCameraTarget", formatSceneVector(cameraPose.target));
+    setSceneData(canvas, "sceneCameraTargetEye", formatSceneVector(cameraTarget.eye));
+    setSceneData(canvas, "sceneCameraTargetPoint", formatSceneVector(cameraTarget.target));
     exposeActorState(canvas, "boy", actorState?.boy, actorState?.boyPose);
     exposeActorState(canvas, "girl", actorState?.girl, actorState?.girlPose);
     if (windmillState) {
@@ -393,6 +446,20 @@ export function createHomeWorldScene(canvas, options = {}) {
       readyTerrainChunks,
       requiredStructureChunks: requiredStructures.length,
     };
+  }
+
+  function updateCameraTransitionGate(timestamp, targetCamera) {
+    if (!cameraTransitionWaiting) return;
+    const readiness = cameraReadiness(targetCamera);
+    canvas.dataset.sceneCameraTargetRequiredChunks = String(readiness.requiredTerrainChunks);
+    canvas.dataset.sceneCameraTargetReadyChunks = String(readiness.readyTerrainChunks);
+    const timedOut = timestamp - cameraTransitionWaitStartedAt >= CAMERA_TARGET_WAIT_TIMEOUT_MS;
+    if (!readiness.ready && !timedOut) return;
+    cameraTransitionWaiting = false;
+    cameraTransitionWaitStartedAt = 0;
+    transitionStart = timestamp;
+    canvas.dataset.sceneCameraWaiting = "false";
+    canvas.dataset.sceneCameraWaitResult = readiness.ready ? "ready" : "timeout";
   }
 
   function recordBuildEvent(type) {
@@ -425,6 +492,9 @@ export function createHomeWorldScene(canvas, options = {}) {
     } else if (focusView === "guardian") {
       boyPose = focusedIdlePose(ACTOR_SITES.guardianBoy, ACTOR_SITES.guardianGirl, focusElapsed);
       girlPose = focusedIdlePose(ACTOR_SITES.guardianGirl, ACTOR_SITES.guardianBoy, focusElapsed);
+    } else if (focusView === "roadmap") {
+      boyPose = focusedBuildingPose(focusElapsed, reducedMotion.matches);
+      girlPose = focusedIdlePose(ACTOR_SITES.constructionGirl, ACTOR_SITES.constructionBoy, focusElapsed);
     }
     const guardianDialogue = focusView === "guardian"
       ? guardianDialogueState(focusElapsed, reducedMotion.matches)
@@ -437,26 +507,31 @@ export function createHomeWorldScene(canvas, options = {}) {
       : null;
     const miningActive = boyPose.phase === "mine";
     const forgingActive = boyPose.phase === "forge";
+    const buildingActive = boyPose.phase === "build";
+    const craftingActive = forgingActive || buildingActive;
     const miningProgress = miningActive ? boyPose.progress : 0;
     const forgingProgress = forgingActive ? boyPose.progress : 0;
+    const buildingProgress = buildingActive ? boyPose.progress : 0;
 
     if (boy) {
       positionAvatarAt(runtime, worldConfig, chunks, structureWalkSurfaces, boy, boyPose);
       applyGuardianGesture(boy, boyGuardianGesture);
       boy.animation = {
         moving: boyPose.phase === "walk" && !reducedMotion.matches,
-        miningProgress: boyGuardianGesture?.armProgress ?? (forgingActive ? forgingProgress : miningProgress),
-        miningAimPitch: boyGuardianGesture?.armPitch ?? (forgingActive ? -0.34 : miningAimPitchFor(boy)),
+        miningProgress: boyGuardianGesture?.armProgress ?? (craftingActive ? (forgingProgress || buildingProgress) : miningProgress),
+        miningAimPitch: boyGuardianGesture?.armPitch ?? (craftingActive ? -0.34 : miningAimPitchFor(boy)),
         timeMs: timestamp,
         equipment: boyGuardianGesture
           ? { rightHand: "empty" }
-          : forgingActive
+          : craftingActive && deferredHammerDesignHash != null
           ? {
               rightHand: "forged_pickaxe",
               forged: true,
-              designHash: ironBlacksmithHammerDefinition.forge.designHash,
+              designHash: deferredHammerDesignHash,
             }
-          : { rightHand: "pickaxe" },
+          : craftingActive
+            ? { rightHand: "empty" }
+            : { rightHand: "pickaxe" },
       };
     }
     if (girl) {
@@ -495,6 +570,18 @@ export function createHomeWorldScene(canvas, options = {}) {
         normalY: 1,
         color: [255, 170, 72],
         count: lowPower ? 4 : 7,
+      });
+    }
+    const buildBurst = `${boyPose.cycle}:${boyPose.segmentIndex}`;
+    if (buildingActive && buildingProgress > 0.7 && buildBurst !== lastBuildBurst) {
+      lastBuildBurst = buildBurst;
+      renderer.emitVoxelParticles("break", {
+        worldX: CONSTRUCTION_SITE.strike.x,
+        worldY: CONSTRUCTION_SITE.strike.y,
+        worldZ: CONSTRUCTION_SITE.strike.z,
+        normalY: 1,
+        color: [186, 133, 74],
+        count: lowPower ? 3 : 6,
       });
     }
     return { boy, boyPose, girl, girlPose };
@@ -544,10 +631,13 @@ export function createHomeWorldScene(canvas, options = {}) {
       return flow;
     }
     if (focusView === "roadmap") {
-      return [
-        buildingProgressOverlay(2431, 1694, 42, 13, pulse),
-        buildingProgressOverlay(2510, 1624, 28, 26, pulse * 0.86),
-      ];
+      return [buildingProgressOverlay(
+        CONSTRUCTION_SITE.overlay.x,
+        CONSTRUCTION_SITE.overlay.z,
+        CONSTRUCTION_SITE.overlay.width,
+        CONSTRUCTION_SITE.overlay.depth,
+        pulse,
+      )];
     }
     return [];
   }
@@ -708,6 +798,7 @@ export function createHomeWorldScene(canvas, options = {}) {
     startedAt = performance.now();
     lastMiningBurst = -1;
     lastForgeBurst = -1;
+    lastBuildBurst = -1;
     const actorState = updateActors(startedAt);
     canvas.dataset.sceneReady = "true";
     canvas.dataset.sceneRenderer = "chunk.js-webgl2";
@@ -718,13 +809,9 @@ export function createHomeWorldScene(canvas, options = {}) {
     canvas.dataset.sceneAvatars = "NCM2:villager-boy,NCM2:villager-girl";
     canvas.dataset.sceneBuildings = STRUCTURE_SPECS.map((spec) => `NCM3:${spec.id}`).join(",");
     canvas.dataset.sceneInspectableBuildings = structureInspectables.map((target) => target.id).join(",");
-    canvas.dataset.sceneActorBehavior = "waypoint-walk-bridge-idle-mine-forge-loop";
-    canvas.dataset.sceneEconomyForgeAssets = [
-      timberWorkbenchDefinition.key,
-      ironBlacksmithHammerDefinition.key,
-      ironDeepRockPickaxeDefinition.key,
-    ].join(",");
-    canvas.dataset.sceneEconomyResourceClusters = String(SCENE_RESOURCE_CLUSTERS.length - 1);
+    canvas.dataset.sceneActorBehavior = "waypoint-walk-bridge-idle-mine-forge-build-loop";
+    canvas.dataset.sceneEconomyForgeAssets = DEFERRED_SCENE_ASSET_KEYS.join(",");
+    canvas.dataset.sceneEconomyResourceClusters = String(Object.keys(ECONOMY_MATERIAL_SITES).length);
     canvas.dataset.sceneMiningTarget = `${MINING_TARGET.x},${MINING_TARGET.y},${MINING_TARGET.z}`;
     canvas.dataset.sceneActionModes = "terrain-delta,material-flow,guardian-relay,building-progress";
     canvas.dataset.sceneGuardianDialoguePairs = String(GUARDIAN_DIALOGUE_PAIR_COUNT);
@@ -811,6 +898,19 @@ export function createHomeWorldScene(canvas, options = {}) {
     return requiredIds;
   }
 
+  function updateDeferredTerrainPriority(view = focusView) {
+    if (!runtime || !chunks) return;
+    const currentIndex = SECTION_VIEWS.indexOf(view);
+    const priorityView = view === initialTerrainView
+      ? SECTION_VIEWS[Math.min(SECTION_VIEWS.length - 1, currentIndex + 1)]
+      : view;
+    const requiredIds = terrainPriorityIdsForView(priorityView);
+    deferredTerrainPriorityIds.clear();
+    for (const id of requiredIds) deferredTerrainPriorityIds.add(id);
+    canvas.dataset.sceneDeferredTerrainPriorityView = priorityView;
+    canvas.dataset.sceneDeferredTerrainPriorityChunks = String(requiredIds.size);
+  }
+
   function expandTerrainWorkerPool() {
     if (workerPoolExpanded || !chunks) return;
     workerPoolExpanded = true;
@@ -874,21 +974,16 @@ export function createHomeWorldScene(canvas, options = {}) {
       runtime,
       options.runtimeRoot || DEFAULT_RUNTIME_ROOT,
       initialBoyCode,
-    ).then(({ boyMesh, workbenchMesh, forgedToolMesh }) => {
+    ).then(({ boyMesh, hammerDesignHash, props }) => {
       if (destroyed || !renderer) return null;
+      deferredHammerDesignHash = hammerDesignHash;
       renderer.uploadAvatarMesh("villager-boy", boyMesh);
-      renderer.uploadAvatarMesh("economy-workbench", workbenchMesh);
-      renderer.uploadAvatarMesh("economy-forged-tool", forgedToolMesh);
-      avatars = avatars.filter((avatar) => !["economy-workbench", "economy-forged-tool"].includes(avatar.meshId));
-      avatars.push(
-        createSceneProp("economy-workbench", ECONOMY_FORGE_SITE.bench, {
-          shadowCasterHeight: 2.98,
-          shadowRadiusX: 1.52,
-          shadowRadiusZ: 0.74,
-          shadowAlpha: 0.32,
-        }),
-        createSceneProp("economy-forged-tool", ECONOMY_FORGE_SITE.tool, { castShadow: false }),
-      );
+      const propIds = new Set(props.map((prop) => prop.id));
+      for (const prop of props) renderer.uploadAvatarMesh(prop.id, prop.mesh);
+      avatars = avatars.filter((avatar) => !propIds.has(avatar.meshId));
+      avatars.push(...props.map((prop) => createSceneProp(prop.id, prop.site, prop.options)));
+      canvas.dataset.sceneDeferredPropCount = String(props.length);
+      canvas.dataset.sceneEconomyMaterialModels = "copper_bloom,wooden_plank,wooden_stick,basalt_brick";
       canvas.dataset.sceneDeferredAssets = "ready";
       renderFrame(performance.now(), true);
       schedule();
@@ -907,6 +1002,8 @@ export function createHomeWorldScene(canvas, options = {}) {
       return;
     }
     const deferredIds = new Set(deferredBuildTasks.map((task) => task.id));
+    const deferredBuildTaskById = new Map(deferredBuildTasks.map((task) => [task.id, task]));
+    const enqueuedBuildIds = new Set();
     canvas.dataset.sceneTerrainPreparation = "queued";
     deferredTerrainPreparationStart = (delayMs = 0) => {
       canvas.dataset.sceneTerrainPreparation = "pending";
@@ -914,27 +1011,37 @@ export function createHomeWorldScene(canvas, options = {}) {
         try {
           const deferredResult = await applyHomeWorldTerrain(chunks, presentationTerrain, {
             includeChunkIds: deferredIds,
+            priorityChunkIds: deferredTerrainPriorityIds,
             yieldEvery: lowPower ? 1 : 2,
-            onProgress: ({ appliedChunks, appliedDeltas }) => {
+            onProgress: ({ chunkId, appliedChunks, appliedDeltas }) => {
               canvas.dataset.sceneTerrainPreparedChunks = String(initialTerrainResult.appliedChunks + appliedChunks);
               canvas.dataset.sceneTerrainPreparedDeltas = String(initialTerrainResult.appliedDeltas + appliedDeltas);
+              const task = deferredBuildTaskById.get(chunkId);
+              if (!task || enqueuedBuildIds.has(chunkId) || !chunks?.chunks.has(chunkId)) return;
+              enqueuedBuildIds.add(chunkId);
+              chunks.buildQueue.push(task);
+              chunks.buildQueueNeedsSort = true;
+              prioritizePendingTerrainBuilds(focusView);
             },
           });
           if (destroyed || !chunks) return;
           canvas.dataset.sceneTerrainPreparedChunks = String(initialTerrainResult.appliedChunks + deferredResult.appliedChunks);
           canvas.dataset.sceneTerrainPreparedDeltas = String(initialTerrainResult.appliedDeltas + deferredResult.appliedDeltas);
           canvas.dataset.sceneTerrainPreparation = "ready";
-          const liveTasks = deferredBuildTasks.filter((task) => chunks.chunks.has(task.id));
+          const liveTasks = deferredBuildTasks.filter((task) => (
+            !enqueuedBuildIds.has(task.id) && chunks.chunks.has(task.id)
+          ));
           const sceneAlreadyReady = canvas.dataset.sceneReady === "true";
-          if (sceneAlreadyReady) chunks.setBuildConcurrencyLimit(0);
           chunks.buildQueue.push(...liveTasks);
           chunks.buildQueueNeedsSort = true;
-          prioritizePendingTerrainBuilds(focusView);
           if (sceneAlreadyReady) {
-            chunks.setBuildConcurrencyLimit(1);
-            canvas.dataset.sceneWorkerConcurrency = "1";
-            canvas.dataset.sceneTerrainBuildPhase = "background";
+            const priorityViewActive = focusView !== initialTerrainView;
+            const concurrency = priorityViewActive ? terrainWorkerCount : 1;
+            chunks.setBuildConcurrencyLimit(concurrency);
+            canvas.dataset.sceneWorkerConcurrency = String(concurrency);
+            canvas.dataset.sceneTerrainBuildPhase = priorityViewActive ? "view-priority" : "background";
           }
+          prioritizePendingTerrainBuilds(focusView);
         } catch (error) {
           canvas.dataset.sceneTerrainPreparation = "unavailable";
           handleUnavailable(error);
@@ -1716,11 +1823,33 @@ async function createInitialSceneMeshes(runtime) {
 }
 
 async function createDeferredSceneAssets(runtime, runtimeRoot, boyCode) {
-  const forgeModule = await loadForgeRuntime(runtimeRoot);
-  const forgeCache = new forgeModule.ForgeRuntimeCache({ maxEntries: 4, maxBytes: 2 * 1024 * 1024 });
-  const hammerRuntime = restoreItemRuntime(forgeCache, ironBlacksmithHammerDefinition);
-  const workbenchRuntime = restoreItemRuntime(forgeCache, timberWorkbenchDefinition);
-  const forgedToolRuntime = restoreItemRuntime(forgeCache, ironDeepRockPickaxeDefinition);
+  const [forgeModule, materialModule, deferredAssets] = await Promise.all([
+    loadForgeRuntime(runtimeRoot),
+    loadSmeltingMaterialRuntime(runtimeRoot),
+    import("./home-world-deferred-assets.js"),
+  ]);
+  const definitions = deferredAssets.HOME_DEFERRED_ITEM_DEFINITIONS;
+  const forgeCache = new forgeModule.ForgeRuntimeCache({ maxEntries: 8, maxBytes: 3 * 1024 * 1024 });
+  const hammerRuntime = restoreItemRuntime(forgeCache, definitions.hammer);
+  const prop = (id, definition, site, options = {}, meshOptions = {}) => Object.freeze({
+    id,
+    site,
+    options: Object.freeze(options),
+    mesh: forgeRuntimeToSceneMesh(restoreItemRuntime(forgeCache, definition), {
+      name: id,
+      scale: FORGE_WORLD_UNITS_PER_METER,
+      ...meshOptions,
+    }),
+  });
+  const materialProp = (id, materialId, site, options = {}, meshOptions = {}) => Object.freeze({
+    id,
+    site,
+    options: Object.freeze(options),
+    mesh: smeltingMaterialToSceneMesh(
+      materialModule.createSmeltingMaterialPreviewMesh({ materialId }),
+      { name: id, scale: SMELTING_MATERIAL_WORLD_SCALE, ...meshOptions },
+    ),
+  });
   return {
     boyMesh: runtime.createAvatarMeshFromNcm(boyCode, {
       scale: AVATAR_VISUAL_SCALE,
@@ -1731,20 +1860,55 @@ async function createDeferredSceneAssets(runtime, runtimeRoot, boyCode) {
       forgeMetersToWorldUnits: FORGE_WORLD_UNITS_PER_METER,
       forgeGripRollQuarterTurns: HOMEPAGE_HAMMER_GRIP_ROLL_QUARTER_TURNS,
     }),
-    workbenchMesh: forgeRuntimeToSceneMesh(workbenchRuntime, {
-      name: "economy-workbench",
-      scale: FORGE_WORLD_UNITS_PER_METER,
-    }),
-    forgedToolMesh: forgeRuntimeToSceneMesh(forgedToolRuntime, {
-      name: "economy-forged-tool",
-      scale: FORGE_WORLD_UNITS_PER_METER,
-      rotation: { z: Math.PI / 2 },
-    }),
+    hammerDesignHash: definitions.hammer.forge.designHash,
+    props: Object.freeze([
+      prop("economy-anvil", definitions.anvil, ECONOMY_FORGE_SITE.anvil, {
+        shadowCasterHeight: 2.3,
+        shadowRadiusX: 1.9,
+        shadowRadiusZ: 0.8,
+        shadowAlpha: 0.34,
+      }),
+      prop("economy-workbench", definitions.workbench, ECONOMY_FORGE_SITE.bench, {
+        shadowCasterHeight: 2.98,
+        shadowRadiusX: 1.52,
+        shadowRadiusZ: 0.74,
+        shadowAlpha: 0.32,
+      }),
+      prop("economy-forged-tool", definitions.pickaxe, ECONOMY_FORGE_SITE.tool, { castShadow: false }, {
+        rotation: { z: Math.PI / 2 },
+      }),
+      prop("economy-storage-shelf", definitions.shelf, ECONOMY_FORGE_SITE.shelf, {
+        shadowCasterHeight: 3.12,
+        shadowRadiusX: 1.2,
+        shadowRadiusZ: 0.58,
+        shadowAlpha: 0.3,
+      }),
+      prop("economy-market-display", definitions.marketDisplay, ECONOMY_FORGE_SITE.marketDisplay, {
+        shadowCasterHeight: 3.9,
+        shadowRadiusX: 1.58,
+        shadowRadiusZ: 0.82,
+        shadowAlpha: 0.3,
+      }),
+      prop("construction-material-pallet", definitions.pallet, CONSTRUCTION_SITE.pallet, {
+        shadowCasterHeight: 1.9,
+        shadowRadiusX: 1.7,
+        shadowRadiusZ: 1.1,
+        shadowAlpha: 0.3,
+      }),
+      materialProp("economy-copper-bloom", "copper_bloom", ECONOMY_MATERIAL_SITES.copperBloom, { castShadow: false }),
+      materialProp("economy-wooden-plank", "wooden_plank", ECONOMY_MATERIAL_SITES.woodenPlank, { castShadow: false }),
+      materialProp("economy-wooden-stick", "wooden_stick", ECONOMY_MATERIAL_SITES.woodenStick, { castShadow: false }),
+      materialProp("economy-basalt-brick", "basalt_brick", ECONOMY_MATERIAL_SITES.basaltBrick, { castShadow: false }),
+    ]),
   };
 }
 
 async function loadForgeRuntime(runtimeRoot) {
   return import(/* @vite-ignore */ runtimeAssetUrl(runtimeRoot, FORGE_RUNTIME_MODULE));
+}
+
+async function loadSmeltingMaterialRuntime(runtimeRoot) {
+  return import(/* @vite-ignore */ runtimeAssetUrl(runtimeRoot, SMELTING_MATERIAL_MODULE));
 }
 
 function restoreItemRuntime(cache, definition) {
@@ -1821,6 +1985,64 @@ function forgeRuntimeToSceneMesh(asset, {
   });
 }
 
+function smeltingMaterialToSceneMesh(source, {
+  name,
+  scale = 1,
+  rotation = {},
+} = {}) {
+  if (!Array.isArray(source?.vertices) || !Array.isArray(source?.indices) || !source.vertexCount) {
+    throw new Error(`The ${name || "smelting material"} mesh is unavailable.`);
+  }
+  const positions = new Array(source.vertexCount);
+  const normals = new Array(source.vertexCount);
+  const bounds = { minX: Infinity, minY: Infinity, minZ: Infinity, maxX: -Infinity, maxY: -Infinity, maxZ: -Infinity };
+  for (let index = 0; index < source.vertexCount; index += 1) {
+    const vertex = source.vertices[index];
+    const position = rotateSceneVector(vertex.p.map((value) => value * scale), rotation);
+    const normal = rotateSceneVector(vertex.n.map((value) => Math.abs(value) > 1 ? value / 127 : value), rotation);
+    positions[index] = position;
+    normals[index] = normal;
+    bounds.minX = Math.min(bounds.minX, position[0]);
+    bounds.minY = Math.min(bounds.minY, position[1]);
+    bounds.minZ = Math.min(bounds.minZ, position[2]);
+    bounds.maxX = Math.max(bounds.maxX, position[0]);
+    bounds.maxY = Math.max(bounds.maxY, position[1]);
+    bounds.maxZ = Math.max(bounds.maxZ, position[2]);
+  }
+  const centerX = (bounds.minX + bounds.maxX) * 0.5;
+  const centerZ = (bounds.minZ + bounds.maxZ) * 0.5;
+  const vertices = new Float32Array(source.vertexCount * 10);
+  for (let index = 0; index < source.vertexCount; index += 1) {
+    const vertex = source.vertices[index];
+    const offset = index * 10;
+    vertices[offset] = positions[index][0] - centerX;
+    vertices[offset + 1] = positions[index][1] - bounds.minY;
+    vertices[offset + 2] = positions[index][2] - centerZ;
+    vertices[offset + 3] = normals[index][0];
+    vertices[offset + 4] = normals[index][1];
+    vertices[offset + 5] = normals[index][2];
+    vertices[offset + 6] = vertex.color[0] / 255;
+    vertices[offset + 7] = vertex.color[1] / 255;
+    vertices[offset + 8] = vertex.color[2] / 255;
+    vertices[offset + 9] = vertex.color[3] / 255;
+  }
+  const IndexArray = source.vertexCount > 65_535 ? Uint32Array : Uint16Array;
+  const indices = new IndexArray(source.indices);
+  return Object.freeze({
+    name,
+    vertices,
+    indices,
+    vertexCount: source.vertexCount,
+    indexCount: indices.length,
+    triangleCount: indices.length / 3,
+    vertexStrideBytes: 40,
+    bounds: Object.freeze({
+      width: Math.max(bounds.maxX - bounds.minX, bounds.maxZ - bounds.minZ),
+      height: bounds.maxY - bounds.minY,
+    }),
+  });
+}
+
 function rotateSceneVector(vector, rotation) {
   let [x, y, z] = vector;
   if (rotation.x) {
@@ -1876,7 +2098,23 @@ function focusedForgingPose(elapsedMs, reducedMotion) {
     phase: "forge",
     x: ACTOR_SITES.economyBoy.x,
     z: ACTOR_SITES.economyBoy.z,
-    yaw: headingYaw(ACTOR_SITES.economyBoy, ECONOMY_FORGE_SITE.bench),
+    yaw: headingYaw(ACTOR_SITES.economyBoy, ECONOMY_FORGE_SITE.anvil),
+    progress: cycleProgress,
+    cycle,
+    segmentIndex: 0,
+    distance: 0,
+  };
+}
+
+function focusedBuildingPose(elapsedMs, reducedMotion) {
+  const cycleDuration = 1_260;
+  const cycle = Math.floor(elapsedMs / cycleDuration);
+  const cycleProgress = reducedMotion ? 0.72 : (elapsedMs % cycleDuration) / cycleDuration;
+  return {
+    phase: "build",
+    x: ACTOR_SITES.constructionBoy.x,
+    z: ACTOR_SITES.constructionBoy.z,
+    yaw: headingYaw(ACTOR_SITES.constructionBoy, CONSTRUCTION_SITE.strike),
     progress: cycleProgress,
     cycle,
     segmentIndex: 0,
@@ -2096,7 +2334,7 @@ function createSceneProp(meshId, site, options = {}) {
     localOffsetY: site.y - worldY,
     localOffsetZ: site.z - worldZ,
     yaw: site.yaw || 0,
-    shadowWorldY: ECONOMY_FORGE_SITE.bench.y,
+    shadowWorldY: site.y,
     ...options,
   };
 }
@@ -2141,6 +2379,10 @@ function setSceneData(canvas, key, value) {
   if (canvas.dataset[key] !== nextValue) canvas.dataset[key] = nextValue;
 }
 
+function formatSceneVector(vector) {
+  return vector.map((value) => Number(value).toFixed(2)).join(",");
+}
+
 function cameraPoseForView(view, aspect) {
   const source = CAMERA_PRESETS[view] || CAMERA_PRESETS.arrival;
   const mobile = aspect < 0.78;
@@ -2150,8 +2392,8 @@ function cameraPoseForView(view, aspect) {
     target.splice(0, 3, 2524, 110, 1645);
     eye = [2560, 145, 1768];
   } else if (mobile && view === "market") {
-    target.splice(0, 3, 2525, 102.5, 1746);
-    eye = [2555, 112.5, 1778];
+    target.splice(0, 3, 2508, 103, 1771);
+    eye = [2558, 122, 1816];
   } else {
     const distanceScale = mobile ? 1.08 : 1;
     eye = target.map((value, index) => value + (source.eye[index] - source.target[index]) * distanceScale);

@@ -1,0 +1,165 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "iron-blacksmith-anvil",
+  "category": "workshop",
+  "interaction": "placeable",
+  "names": {
+    "en": "Iron Blacksmith Anvil",
+    "es": "Yunque de herrero de hierro",
+    "fr": "Enclume de forgeron en fer",
+    "de": "Eiserner Schmiedeamboss",
+    "ja": "鉄製の鍛冶金床",
+    "ru": "Железная кузнечная наковальня",
+    "ko": "철제 대장장이 모루",
+    "zh-Hant": "鐵製鍛造砧",
+    "zh-Hans": "铁制锻造砧"
+  },
+  "descriptions": {
+    "en": "Iron Blacksmith Anvil is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Yunque de herrero de hierro es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Enclume de forgeron en fer est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Eiserner Schmiedeamboss ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "鉄製の鍛冶金床は、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Железная кузнечная наковальня — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "철제 대장장이 모루은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "鐵製鍛造砧是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "铁制锻造砧是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 1.625,
+    "height": 0.9063,
+    "depth": 0.5313,
+    "sizeQ": [
+      104,
+      58,
+      34
+    ]
+  },
+  "preview": {
+    "yaw": -0.82,
+    "pitch": 0.28
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.___41LrwvdTxsZacpkGQzQqCCIAACAAQABNSNDQsAAFQAIAAmpEgwSAAFAAEAATUoQYNAADQACAAImRwKEAVhqACoAB1CACNboCNaJDkCJEMZhEMYSFTCSGLXaGLWbHCCbIKVTIKUkIxCkKJTMKJSsShKjUxIaXBGRZREIbhCAAImQ4SGHsBiABAAA",
+    "rawBytes": 139,
+    "sha256": "4579bb39a4ac3390e6162de1d6291e767deaedfe16eafe09620008e8b018ac51",
+    "designHash": 3471191356,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 139,
+    "savedBytes": 0,
+    "sourceComponentCount": 6,
+    "decodedComponentCount": 6,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "basalt_brick",
+        "itemCode": 1042,
+        "inputVolumeMm3": 43579102,
+        "usedVolumeMm3": 43579102,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 56732178,
+        "usedVolumeMm3": 56732178,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 14831543,
+        "usedVolumeMm3": 14831543,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 78552246,
+        "usedVolumeMm3": 78552246,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "carbon_steel",
+        "itemCode": 1019,
+        "inputVolumeMm3": 17089844,
+        "usedVolumeMm3": 6277901,
+        "unusedVolumeMm3": 10811943
+      },
+      {
+        "index": 5,
+        "materialId": "carbon_steel",
+        "itemCode": 1019,
+        "inputVolumeMm3": 23071289,
+        "usedVolumeMm3": 23071289,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 223019008,
+      "requiredEffectiveDurability": 57991,
+      "outputMassGrams": 327675,
+      "materialScore": 68
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 272,
+      "triangleCount": 136,
+      "meshByteLength": 5168
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "basalt_brick",
+      "itemCode": 1042,
+      "componentCount": 1,
+      "inputVolumeMm3": 43579102,
+      "usedVolumeMm3": 43579102,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 31250,
+      "equivalentInputUnits": 1395
+    },
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 3,
+      "inputVolumeMm3": 150115967,
+      "usedVolumeMm3": 150115967,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 601
+    },
+    {
+      "materialId": "carbon_steel",
+      "itemCode": 1019,
+      "componentCount": 2,
+      "inputVolumeMm3": 40161133,
+      "usedVolumeMm3": 29349190,
+      "unusedVolumeMm3": 10811943,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 161
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "chainMinted": false
+  }
+}

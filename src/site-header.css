@@ -602,15 +602,11 @@ header.site-header.site-header-shared[data-site-header-mounted="true"] {
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1320px) {
   html,
   body {
     max-width: 100%;
     overflow-x: clip;
-  }
-
-  html[data-i18n-scope="home"] .side-nav {
-    display: none !important;
   }
 
   .site-header [data-i18n-language-menu]:not([data-i18n-ready]):empty {
@@ -929,6 +925,19 @@ header.site-header.site-header-shared[data-site-header-mounted="true"] {
   ) {
     min-height: 44px;
     padding: 8px 10px;
+  }
+
+}
+
+@media (min-width: 901px) and (max-width: 1320px) {
+  html:not([data-i18n-scope="home"]) header.site-header.site-header-shared[data-site-header-mounted="true"] {
+    position: relative;
+  }
+}
+
+@media (max-width: 900px) {
+  html[data-i18n-scope="home"] .side-nav {
+    display: none !important;
   }
 
   /* Production pages can load this file as a cache-busted mobile hotfix. */

@@ -1303,6 +1303,12 @@ html[data-i18n-scope="home"] .site-header.scrolled {
   padding-bottom: 0;
 }
 
+@media (min-width: 1181px) {
+  .chapter-card.economy-copy {
+    width: min(520px, 42vw);
+  }
+}
+
 
 .chapter-card {
   position: relative;
@@ -2771,6 +2777,22 @@ html[data-i18n-scope="home"] .site-header.scrolled {
 
   #section-4 .chapter-card {
     margin-bottom: 44px;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1320px) {
+  html[data-i18n-scope="home"] .site-header .site-menu-toggle,
+  html[data-i18n-scope="home"] .site-header .site-menu-close {
+    border: 2px solid rgba(255, 253, 244, 0.5);
+    border-radius: 0;
+    clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+    box-shadow: 3px 3px 0 rgba(4, 9, 11, 0.76);
+  }
+
+  html[data-i18n-scope="home"] .site-header .site-menu-toggle span,
+  html[data-i18n-scope="home"] .site-header .site-menu-close span {
+    border-radius: 0;
+    box-shadow: none;
   }
 }
 

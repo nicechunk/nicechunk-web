@@ -1,0 +1,255 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "brick-and-timber-pallet",
+  "category": "construction",
+  "interaction": "placeable",
+  "names": {
+    "en": "Brick and Timber Pallet",
+    "es": "Palé de ladrillo y madera",
+    "fr": "Palette de briques et de bois",
+    "de": "Ziegel-und-Holz-Palette",
+    "ja": "れんがと木材のパレット",
+    "ru": "Поддон с кирпичом и брусом",
+    "ko": "벽돌 및 목재 팔레트",
+    "zh-Hant": "磚木材料托盤",
+    "zh-Hans": "砖木材料托盘"
+  },
+  "descriptions": {
+    "en": "Brick and Timber Pallet is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Palé de ladrillo y madera es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Palette de briques et de bois est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Ziegel-und-Holz-Palette ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "れんがと木材のパレットは、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Поддон с кирпичом и брусом — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "벽돌 및 목재 팔레트은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "磚木材料托盤是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "砖木材料托盘是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 1.375,
+    "height": 0.75,
+    "depth": 0.9375,
+    "sizeQ": [
+      88,
+      48,
+      60
+    ]
+  },
+  "preview": {
+    "yaw": -0.76,
+    "pitch": 0.38
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.___5_GlrbFohwwDMAkQinVYBjoAABgAQARDKoAwQAD_fsIAIhlUAYIAB_oAEAEQyqAMEAA_0FCABKVBYQFnygd-RAAlKgsICz5QOA4gASlQWEBYAAHfkQAJSoLCAsAADgOIAEpUFhAWA2B35EACUqCwgLAbA4DiABKVBYQFn5A9-RAAlKgsICz8geA4gASlQWEBYBwPfkQAJSoLCAsA4HgOIAJBCo8fACoAEAEghUeAgBUACAAA",
+    "rawBytes": 182,
+    "sha256": "2c7ca93d25392af475174ffca1ffd314c2d6be0a96c6fd606a40ff405d92eb43",
+    "designHash": 306273036,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 182,
+    "savedBytes": 0,
+    "sourceComponentCount": 16,
+    "decodedComponentCount": 16,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 116821289,
+        "usedVolumeMm3": 116821289,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 14648438,
+        "usedVolumeMm3": 14648438,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 14648438,
+        "usedVolumeMm3": 14648438,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 14648438,
+        "usedVolumeMm3": 14648438,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "fired_clay_brick",
+        "itemCode": 1038,
+        "inputVolumeMm3": 29541016,
+        "usedVolumeMm3": 29541016,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "fired_clay_brick",
+        "itemCode": 1038,
+        "inputVolumeMm3": 29541016,
+        "usedVolumeMm3": 29541016,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "fired_clay_brick",
+        "itemCode": 1038,
+        "inputVolumeMm3": 29541016,
+        "usedVolumeMm3": 29541016,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 7,
+        "materialId": "fired_clay_brick",
+        "itemCode": 1038,
+        "inputVolumeMm3": 29541016,
+        "usedVolumeMm3": 29541016,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 8,
+        "materialId": "fired_clay_brick",
+        "itemCode": 1038,
+        "inputVolumeMm3": 29541016,
+        "usedVolumeMm3": 29541016,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 9,
+        "materialId": "fired_clay_brick",
+        "itemCode": 1038,
+        "inputVolumeMm3": 29541016,
+        "usedVolumeMm3": 29541016,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 10,
+        "materialId": "fired_clay_brick",
+        "itemCode": 1038,
+        "inputVolumeMm3": 29541016,
+        "usedVolumeMm3": 29541016,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 11,
+        "materialId": "fired_clay_brick",
+        "itemCode": 1038,
+        "inputVolumeMm3": 29541016,
+        "usedVolumeMm3": 29541016,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 12,
+        "materialId": "fired_clay_brick",
+        "itemCode": 1038,
+        "inputVolumeMm3": 29541016,
+        "usedVolumeMm3": 29541016,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 13,
+        "materialId": "fired_clay_brick",
+        "itemCode": 1038,
+        "inputVolumeMm3": 29541016,
+        "usedVolumeMm3": 29541016,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 14,
+        "materialId": "wooden_stick",
+        "itemCode": 1032,
+        "inputVolumeMm3": 38452148,
+        "usedVolumeMm3": 38452148,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 15,
+        "materialId": "wooden_stick",
+        "itemCode": 1032,
+        "inputVolumeMm3": 38452148,
+        "usedVolumeMm3": 38452148,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 533069824,
+      "requiredEffectiveDurability": 62550,
+      "outputMassGrams": 327675,
+      "materialScore": 51
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 384,
+      "triangleCount": 192,
+      "meshByteLength": 7296
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "wooden_plank",
+      "itemCode": 1031,
+      "componentCount": 1,
+      "inputVolumeMm3": 116821289,
+      "usedVolumeMm3": 116821289,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 5842
+    },
+    {
+      "materialId": "squared_timber",
+      "itemCode": 1033,
+      "componentCount": 3,
+      "inputVolumeMm3": 43945314,
+      "usedVolumeMm3": 43945314,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 48400,
+      "equivalentInputUnits": 908
+    },
+    {
+      "materialId": "fired_clay_brick",
+      "itemCode": 1038,
+      "componentCount": 10,
+      "inputVolumeMm3": 295410160,
+      "usedVolumeMm3": 295410160,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 31250,
+      "equivalentInputUnits": 9454
+    },
+    {
+      "materialId": "wooden_stick",
+      "itemCode": 1032,
+      "componentCount": 2,
+      "inputVolumeMm3": 76904296,
+      "usedVolumeMm3": 76904296,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 4900,
+      "equivalentInputUnits": 15695
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "chainMinted": false
+  }
+}

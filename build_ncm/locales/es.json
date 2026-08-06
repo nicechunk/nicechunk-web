@@ -47,6 +47,7 @@
   "library.category.transport": "TRANSPORTE",
   "library.category.mining": "MINERÍA",
   "library.category.agriculture": "AGRICULTURA",
+  "library.category.construction": "CONSTRUCCIÓN",
   "library.footprint": "HUELLA",
   "library.height": "ALTURA",
   "library.voxels": "VÓXELES",

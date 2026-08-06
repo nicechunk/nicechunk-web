@@ -1,6 +1,6 @@
 import "../src/site-header.css";
 import "./style.css";
-import { initI18n, t } from "../src/i18n.js";
+import { t } from "../src/i18n.js";
 import { mountSiteHeader } from "../src/site-header.js";
 import {
   claimSiteLoading,
@@ -34,6 +34,8 @@ claimSiteLoading();
 let activeSectionIndex = 0;
 let homeWorldScene = null;
 let homeBuildingInspector = null;
+let homeWorldPresentationPromise = null;
+let homeWorldHandoffObserver = null;
 let programmaticScrollTargetIndex = null;
 let programmaticScrollTimer = 0;
 
@@ -50,7 +52,6 @@ async function initHome() {
   homeWorldScene.focus(HOME_WORLD_SECTION_VIEWS[activeSectionIndex], { immediate: true });
 
   await mountSiteHeader(header);
-  await initI18n();
   homeBuildingInspector.refresh();
   setSiteLoadingStage(t("loading.terrain"));
   setSiteLoadingProgress(58);
@@ -64,21 +65,68 @@ async function initHome() {
   setSiteLoadingProgress(82);
   const sceneResult = await waitForHomeWorldScene(homeWorldScene);
   if (sceneResult?.status === "ready") {
-    setSiteLoadingStage(t("loading.rendering"));
-    setSiteLoadingProgress(96);
-    const handoffResult = await waitForHomeWorldVisualHandoff(homeWorldCanvas);
-    if (handoffResult === "ready") {
-      document.documentElement.classList.add("home-world-presented");
-      setSiteLoadingStage(t("loading.ready"));
-    } else {
-      document.documentElement.classList.remove("home-world-presented");
-      setSiteLoadingStage(t("loading.fallback"));
-    }
+    await presentHomeWorld({ updateLoading: true });
   } else {
     document.documentElement.classList.remove("home-world-presented");
     setSiteLoadingStage(t("loading.fallback"));
+    watchForLateHomeWorldReady(homeWorldScene);
   }
   finishSiteLoading();
+}
+
+function presentHomeWorld({ updateLoading = false } = {}) {
+  if (homeWorldPresentationPromise) return homeWorldPresentationPromise;
+  homeWorldPresentationPromise = (async () => {
+    if (updateLoading) {
+      setSiteLoadingStage(t("loading.rendering"));
+      setSiteLoadingProgress(96);
+    }
+    const handoffResult = await waitForHomeWorldVisualHandoff(homeWorldCanvas);
+    if (handoffResult !== "ready") {
+      if (updateLoading) setSiteLoadingStage(t("loading.fallback"));
+      watchForLateHomeWorldHandoff(homeWorldCanvas);
+      return false;
+    }
+    return completeHomeWorldPresentation({ updateLoading });
+  })().finally(() => {
+    homeWorldPresentationPromise = null;
+  });
+  return homeWorldPresentationPromise;
+}
+
+function completeHomeWorldPresentation({ updateLoading = false } = {}) {
+  stopWatchingHomeWorldHandoff();
+  document.documentElement.classList.add("home-world-presented");
+  if (updateLoading) setSiteLoadingStage(t("loading.ready"));
+  return true;
+}
+
+function watchForLateHomeWorldReady(scene) {
+  scene?.ready.then((lateResult) => {
+    if (lateResult?.status !== "ready") return;
+    void presentHomeWorld();
+  });
+}
+
+function watchForLateHomeWorldHandoff(canvas) {
+  if (!canvas) return;
+  const completeIfReady = () => {
+    if (canvas.dataset.sceneVisualHandoff !== "ready") return false;
+    completeHomeWorldPresentation();
+    return true;
+  };
+  if (completeIfReady() || homeWorldHandoffObserver) return;
+  homeWorldHandoffObserver = new MutationObserver(completeIfReady);
+  homeWorldHandoffObserver.observe(canvas, {
+    attributes: true,
+    attributeFilter: ["data-scene-visual-handoff"],
+  });
+  completeIfReady();
+}
+
+function stopWatchingHomeWorldHandoff() {
+  homeWorldHandoffObserver?.disconnect();
+  homeWorldHandoffObserver = null;
 }
 
 function setupSectionObserver() {
@@ -317,6 +365,7 @@ function updateGuardianChat(detail) {
 }
 
 window.addEventListener("pagehide", () => {
+  stopWatchingHomeWorldHandoff();
   homeWorldScene?.destroy();
   homeBuildingInspector?.destroy();
 }, { once: true });

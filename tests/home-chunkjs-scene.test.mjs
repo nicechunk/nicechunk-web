@@ -139,11 +139,10 @@ for (const viewport of ["desktop", "mobile"]) {
 }
 assert.match(html, /home-world-preview-desktop\.webp" media="\(min-width: 901px\)"/u);
 assert.match(html, /home-world-preview-mobile\.webp" media="\(max-width: 900px\)"/u);
-assert.doesNotMatch(
-  html,
-  /rel="modulepreload"[^>]+href="\/chunk\.js\/chunk\/browser-runtime\.js/u,
-  "Vite bundles external Chunk.js modulepreloads and creates a duplicate runtime request.",
-);
+assert.match(html, /rel: "modulepreload", href: `\/chunk\.js\/chunk\/browser-runtime\.js\$\{versionSuffix\}`/u);
+assert.match(html, /rel: "preload", as: "fetch", type: "application\/javascript", href: `\/chunk\.js\/chunk\/chunk-build-worker\.bundle\.js\$\{versionSuffix\}`/u);
+assert.match(html, /Object\.assign\(link, warmup, \{ crossOrigin: "anonymous", fetchPriority: "high" \}\)/u);
+assert.doesNotMatch(html, /<link rel="modulepreload"[^>]+browser-runtime/u);
 for (const preloadPath of [
   "/media/home-world-terrain-v1.bin.gz",
   "/media/vox/chr_peasant_guy_blackhair.ncm",
@@ -187,8 +186,13 @@ assert.equal([...home.matchAll(/createHomeWorldScene\(homeWorldCanvas, \{/gu)].l
 assert.match(home, /const HOME_WORLD_READY_TIMEOUT_MS = 30_000;/u);
 assert.match(home, /const HOME_WORLD_VISUAL_HANDOFF_TIMEOUT_MS = 4_000;/u);
 assert.match(home, /const sceneResult = await waitForHomeWorldScene\(homeWorldScene\);/u);
-assert.match(home, /const handoffResult = await waitForHomeWorldVisualHandoff\(homeWorldCanvas\);/u);
-assert.match(home, /handoffResult === "ready"[\s\S]*?classList\.add\("home-world-presented"\)/u);
+assert.match(home, /function presentHomeWorld\([\s\S]*?waitForHomeWorldVisualHandoff\(homeWorldCanvas\)[\s\S]*?completeHomeWorldPresentation\(\{ updateLoading \}\)/u);
+assert.match(home, /function completeHomeWorldPresentation\([\s\S]*?classList\.add\("home-world-presented"\)/u);
+assert.match(home, /function watchForLateHomeWorldReady\(scene\)[\s\S]*?scene\?\.ready\.then[\s\S]*?void presentHomeWorld\(\);/u);
+assert.match(home, /function watchForLateHomeWorldHandoff\(canvas\)[\s\S]*?completeIfReady[\s\S]*?completeHomeWorldPresentation\(\)[\s\S]*?MutationObserver\(completeIfReady\)/u);
+assert.match(home, /attributeFilter: \["data-scene-visual-handoff"\]/u);
+assert.match(home, /homeWorldHandoffObserver\.observe\([\s\S]*?completeIfReady\(\);/u);
+assert.match(home, /sceneResult\?\.status === "ready"[\s\S]*?presentHomeWorld\(\{ updateLoading: true \}\)[\s\S]*?watchForLateHomeWorldReady\(homeWorldScene\);/u);
 for (const stage of ["terrain", "meshing", "rendering", "ready", "fallback"]) {
   assert.match(home, new RegExp(`setSiteLoadingStage\\(t\\("loading\\.${stage}"\\)\\)`, "u"));
 }
@@ -212,6 +216,10 @@ assert.match(home, /Math\.abs\(section\.offsetTop - container\.scrollTop\)/u);
 
 assert.match(scene, /CHUNK_RUNTIME_BUNDLE = "chunk\/browser-runtime\.js"/u);
 assert.match(scene, /CHUNK_WORKER_BUNDLE = "chunk\/chunk-build-worker\.bundle\.js"/u);
+assert.match(scene, /async function loadChunkWorkerSource\(runtimeRoot\)[\s\S]*?fetch\(sourceUrl,[\s\S]*?return Object\.freeze\(\{ sourceUrl, source \}\)/u);
+assert.match(scene, /function createChunkWorkerUrl\([\s\S]*?URL\.createObjectURL\(new Blob/u);
+assert.match(scene, /workerUrl: loadedWorker\.url/u);
+assert.match(scene, /function releaseChunkWorkerObjectUrl\(\)[\s\S]*?URL\.revokeObjectURL\(chunkWorkerObjectUrl\)/u);
 assert.equal([...scene.matchAll(/new runtime\.ChunkManager\(/gu)].length, 1);
 assert.match(scene, /return import\(\/\* @vite-ignore \*\/ runtimeAssetUrl\(root, CHUNK_RUNTIME_BUNDLE\)\)/u);
 assert.match(scene, /return homeBuildAssetUrl\(path\);/u);

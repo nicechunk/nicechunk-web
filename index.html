@@ -4,6 +4,19 @@
     <meta charset="UTF-8" />
     <script>
       (() => {
+        const rawBuildVersion = document.documentElement.dataset.i18nBuildVersion || "";
+        const buildVersion = rawBuildVersion.includes("__NICECHUNK_") ? "" : rawBuildVersion;
+        const versionSuffix = buildVersion ? `?v=${encodeURIComponent(buildVersion)}` : "";
+        const warmups = [
+          { rel: "modulepreload", href: `/chunk.js/chunk/browser-runtime.js${versionSuffix}` },
+          { rel: "preload", as: "fetch", type: "application/javascript", href: `/chunk.js/chunk/chunk-build-worker.bundle.js${versionSuffix}` },
+        ];
+        for (const warmup of warmups) {
+          const link = document.createElement("link");
+          Object.assign(link, warmup, { crossOrigin: "anonymous", fetchPriority: "high" });
+          document.head.append(link);
+        }
+
         const supported = ["en", "es", "fr", "de", "ja", "ru", "ko", "zh-Hant", "zh-Hans"];
         const stored = String(localStorage.getItem("nicechunk.language") || "").trim();
         const lower = stored.toLowerCase();

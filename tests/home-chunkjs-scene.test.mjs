@@ -25,7 +25,7 @@ import {
   HOME_STRUCTURE_ROOF_MATERIAL_ID,
 } from "../home/home-world-structure-codes.js";
 
-const [html, home, inspector, scene, deferredAssets, layout, terrainModule, generator, ncm4Benchmark, style, i18nSource, siteUi, siteHeaderCss, siteHeader, packageSource, viteConfigSource, assetManifestSource, terrainBytes, compressedTerrainBytes, ncm4ReportSource, ncm4BundleBytes] = await Promise.all([
+const [html, home, inspector, scene, deferredAssets, layout, terrainModule, generator, ncm4Benchmark, style, i18nSource, siteUi, siteHeaderCss, siteHeader, packageSource, buildVersionTransformSource, assetManifestSource, terrainBytes, compressedTerrainBytes, ncm4ReportSource, ncm4BundleBytes] = await Promise.all([
   readFile(new URL("../index.html", import.meta.url), "utf8"),
   readFile(new URL("../home/home.js", import.meta.url), "utf8"),
   readFile(new URL("../home/home-building-inspector.js", import.meta.url), "utf8"),
@@ -41,7 +41,7 @@ const [html, home, inspector, scene, deferredAssets, layout, terrainModule, gene
   readFile(new URL("../src/site-header.css", import.meta.url), "utf8"),
   readFile(new URL("../src/site-header.js", import.meta.url), "utf8"),
   readFile(new URL("../package.json", import.meta.url), "utf8"),
-  readFile(new URL("../vite.config.js", import.meta.url), "utf8"),
+  readBuildVersionTransformSource(),
   readFile(new URL("../public/asset-manifest.json", import.meta.url), "utf8"),
   readFile(new URL("../public/media/home-world-terrain-v1.bin", import.meta.url)),
   readFile(new URL("../public/media/home-world-terrain-v1.bin.gz", import.meta.url)),
@@ -129,7 +129,7 @@ assert.ok(
 );
 assert.match(i18nSource, /translateAttribute\(root, "data-home-i18n-aria-label", "aria-label"\)/u);
 assert.equal(packageJson.scripts["benchmark:home-world:ncm4"], "node scripts/benchmark-home-world-ncm4.mjs");
-assert.match(viteConfigSource, /\.replaceAll\("__NICECHUNK_BUILD_VERSION__", buildVersion\)/u);
+assert.match(buildVersionTransformSource, /\.replaceAll\("__NICECHUNK_BUILD_VERSION__", buildVersion\)/u);
 for (const viewport of ["desktop", "mobile"]) {
   const previewPath = `home-world-preview-${viewport}.webp`;
   assert.ok(html.includes(`/media/${previewPath}`), `Missing ${viewport} preview preload.`);
@@ -804,3 +804,20 @@ for (const cloudOverride of ["cloudHeight", "cloudRadius", "cloudCellSize", "clo
 assert.doesNotMatch(scene, /function positionAvatar\(/u);
 
 console.log("Homepage Chunk.js scene wiring and compact terrain are valid.");
+
+async function readBuildVersionTransformSource() {
+  const candidates = [
+    new URL("../vite.config.js", import.meta.url),
+    new URL("../scripts/build-static-site.mjs", import.meta.url),
+  ];
+  let missingError;
+  for (const candidate of candidates) {
+    try {
+      return await readFile(candidate, "utf8");
+    } catch (error) {
+      if (error?.code !== "ENOENT") throw error;
+      missingError = error;
+    }
+  }
+  throw missingError;
+}

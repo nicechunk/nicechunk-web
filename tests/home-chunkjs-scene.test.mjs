@@ -5,6 +5,7 @@ import { gunzipSync } from "node:zlib";
 
 import {
   decodeHomeWorldTerrain,
+  homeBuildAssetUrl,
   unpackHomeWorldTerrainChunk,
 } from "../home/home-world-terrain.js";
 import {
@@ -55,6 +56,7 @@ const homeLocales = await Promise.all(homeLocaleCodes.map(async (language) => ({
 
 assert.match(html, /id="homeWorldCanvas"/u);
 assert.match(html, /id="homeWorldLoader"[\s\S]*?data-site-loading-progress/u);
+assert.match(html, /class="home-world-loader-backdrop" aria-hidden="true"/u);
 assert.match(html, /id="homeWorldLoadingStage"[\s\S]*?data-site-loading-stage/u);
 assert.equal([...html.matchAll(/class="home-loader-voxel"/gu)].length, 16);
 assert.match(html, /id="homeBuildingInspector"/u);
@@ -100,6 +102,10 @@ assert.match(style, /PoUW reveal storyboard/u);
 assert.match(style, /\.snap-section\.active \.terrain-pouw-candidate > i > b \{\s*width: 100%;/u);
 assert.match(style, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.terrain-pouw-demo,/u);
 assert.match(style, /Homepage world-loader storyboard/u);
+assert.match(style, /\.home-world-loader-backdrop \{[\s\S]*?backdrop-filter: blur\(8px\) saturate\(0\.82\);/u);
+assert.match(style, /\.home-world-loader \{[\s\S]*?top: 50%;[\s\S]*?transform: translate\(-50%, calc\(-50% - 6px\)\) scale\(0\.98\);/u);
+assert.match(style, /\.site-loading \.home-world-loader \{[\s\S]*?transform: translate\(-50%, -50%\) scale\(1\);/u);
+assert.match(style, /\.home-world-presented \.home-world-static \{\s*display: none;/u);
 assert.match(style, /@keyframes home-loader-voxel-rise/u);
 assert.match(style, /@keyframes home-loader-scan/u);
 assert.match(style, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.home-loader-voxel-grid i,/u);
@@ -123,14 +129,17 @@ for (const viewport of ["desktop", "mobile"]) {
   assert.ok(assetManifestSource.includes(`public/media/${previewPath}`), `Missing ${viewport} preview manifest entry.`);
   await access(new URL(`../public/media/${previewPath}`, import.meta.url));
 }
-assert.match(html, /rel="modulepreload" href="\/chunk\.js\/chunk\/browser-runtime\.js"/u);
+assert.match(html, /rel="modulepreload" href="\/chunk\.js\/chunk\/browser-runtime\.js\?v=__NICECHUNK_BUILD_VERSION__"/u);
 for (const preloadPath of [
   "/media/home-world-terrain-v1.bin.gz",
   "/media/vox/chr_peasant_guy_blackhair.ncm",
   "/media/vox/chr_peasant_girl_orangehair.ncm",
 ]) {
-  assert.match(html, new RegExp(`rel="preload" as="fetch"[^>]+href="${preloadPath.replaceAll(".", "\\.")}"`, "u"));
+  assert.match(html, new RegExp(`rel="preload" as="fetch"[^>]+href="${preloadPath.replaceAll(".", "\\.")}\\?v=__NICECHUNK_BUILD_VERSION__"`, "u"));
 }
+assert.equal(homeBuildAssetUrl("/chunk.js/chunk/browser-runtime.js", "build 42"), "/chunk.js/chunk/browser-runtime.js?v=build%2042");
+assert.equal(homeBuildAssetUrl("/asset.bin?format=gzip", "build-42"), "/asset.bin?format=gzip&v=build-42");
+assert.equal(homeBuildAssetUrl("/asset.bin", "__NICECHUNK_BUILD_VERSION__"), "/asset.bin");
 
 const [brandLogoBytes, desktopPreviewBytes] = await Promise.all([
   readFile(new URL("../public/media/nck.png", import.meta.url)),
@@ -161,10 +170,11 @@ assert.match(siteUi, /export function setSiteLoadingStage\(value\)/u);
 assert.match(siteUi, /querySelectorAll\("\[data-site-loading-progress\]"\)/u);
 assert.match(siteUi, /if \(loadingState\.active && loadingState\.autoFinish\) finishSiteLoading\(\);/u);
 assert.equal([...home.matchAll(/createHomeWorldScene\(homeWorldCanvas, \{/gu)].length, 1);
-assert.match(home, /const HOME_WORLD_READY_TIMEOUT_MS = 12_000;/u);
-assert.match(home, /const HOME_WORLD_VISUAL_HANDOFF_TIMEOUT_MS = 1_200;/u);
+assert.match(home, /const HOME_WORLD_READY_TIMEOUT_MS = 30_000;/u);
+assert.match(home, /const HOME_WORLD_VISUAL_HANDOFF_TIMEOUT_MS = 4_000;/u);
 assert.match(home, /const sceneResult = await waitForHomeWorldScene\(homeWorldScene\);/u);
-assert.match(home, /await waitForHomeWorldVisualHandoff\(homeWorldCanvas\);/u);
+assert.match(home, /const handoffResult = await waitForHomeWorldVisualHandoff\(homeWorldCanvas\);/u);
+assert.match(home, /handoffResult === "ready"[\s\S]*?classList\.add\("home-world-presented"\)/u);
 for (const stage of ["terrain", "meshing", "rendering", "ready", "fallback"]) {
   assert.match(home, new RegExp(`setSiteLoadingStage\\(t\\("loading\\.${stage}"\\)\\)`, "u"));
 }
@@ -182,6 +192,11 @@ assert.match(scene, /CHUNK_RUNTIME_BUNDLE = "chunk\/browser-runtime\.js"/u);
 assert.match(scene, /CHUNK_WORKER_BUNDLE = "chunk\/chunk-build-worker\.bundle\.js"/u);
 assert.equal([...scene.matchAll(/new runtime\.ChunkManager\(/gu)].length, 1);
 assert.match(scene, /return import\(\/\* @vite-ignore \*\/ runtimeAssetUrl\(root, CHUNK_RUNTIME_BUNDLE\)\)/u);
+assert.match(scene, /return homeBuildAssetUrl\(path\);/u);
+assert.match(scene, /canvas\.dataset\.scenePresented = "true";/u);
+assert.match(scene, /canvas\.dataset\.scenePresented === "true"[\s\S]*?opacity >= 0\.98/u);
+assert.match(scene, /fetch\(homeBuildAssetUrl\(url\),/u);
+assert.match(terrainModule, /fetch\(homeBuildAssetUrl\(url\),/u);
 assert.doesNotMatch(scene, /load\("(?:construction|renderer|world)\//u);
 assert.match(scene, /payloadBytes: building\.payloadBytes/u);
 assert.match(scene, /voxelCount: building\.voxels\.size/u);

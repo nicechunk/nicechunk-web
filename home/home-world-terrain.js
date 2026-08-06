@@ -7,6 +7,13 @@ const PACKED_COLUMN_COUNT_BYTES = COLUMN_COUNT / 2;
 export const HOME_WORLD_TERRAIN_URL = "/media/home-world-terrain-v1.bin";
 export const HOME_WORLD_TERRAIN_COMPRESSED_URL = `${HOME_WORLD_TERRAIN_URL}.gz`;
 
+export function homeBuildAssetUrl(url, buildVersion = currentHomeBuildVersion()) {
+  const source = String(url || "");
+  const version = String(buildVersion || "").trim();
+  if (!version || version.includes("__NICECHUNK_BUILD_VERSION__")) return source;
+  return `${source}${source.includes("?") ? "&" : "?"}v=${encodeURIComponent(version)}`;
+}
+
 export async function loadHomeWorldTerrain(url = HOME_WORLD_TERRAIN_URL, {
   compressedUrl = url === HOME_WORLD_TERRAIN_URL ? HOME_WORLD_TERRAIN_COMPRESSED_URL : `${url}.gz`,
   signal,
@@ -29,7 +36,7 @@ export async function loadHomeWorldTerrain(url = HOME_WORLD_TERRAIN_URL, {
 }
 
 async function fetchTerrain(url, signal) {
-  const response = await fetch(url, {
+  const response = await fetch(homeBuildAssetUrl(url), {
     cache: "force-cache",
     headers: { Accept: "application/octet-stream" },
     signal,
@@ -37,6 +44,11 @@ async function fetchTerrain(url, signal) {
   if (!response.ok) throw new Error(`Unable to load homepage terrain (${response.status}).`);
   if (!response.body) throw new Error("Homepage terrain response has no body.");
   return response;
+}
+
+function currentHomeBuildVersion() {
+  if (typeof document === "undefined") return "";
+  return document.documentElement?.dataset?.i18nBuildVersion || "";
 }
 
 export function decodeHomeWorldTerrain(source) {

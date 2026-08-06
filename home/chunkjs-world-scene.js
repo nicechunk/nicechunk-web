@@ -22,6 +22,7 @@ import {
 import { HOME_STRUCTURE_NCM_CODES } from "./home-world-structure-codes.js";
 import {
   applyHomeWorldTerrain,
+  homeBuildAssetUrl,
   loadHomeWorldTerrain,
 } from "./home-world-terrain.js";
 
@@ -188,6 +189,7 @@ export function createHomeWorldScene(canvas, options = {}) {
   let initialBoyCode = "";
   let backgroundTerrainTimer = 0;
   let deferredTerrainPreparationStart = null;
+  let presentedFrameCount = 0;
   const buildMetrics = { baseBuilds: 0, remeshBuilds: 0 };
   let resolveReady;
   const ready = new Promise((resolve) => {
@@ -304,6 +306,11 @@ export function createHomeWorldScene(canvas, options = {}) {
     const readinessPending = canvas.dataset.sceneReady !== "true";
     if (readinessPending) lastReadiness = Object.freeze(cameraReadiness(camera));
     const becameReady = readinessPending && lastReadiness.ready;
+    if (lastReadiness.ready && renderStats.drawCalls > 0 && renderStats.triangles > 0) {
+      presentedFrameCount += 1;
+      canvas.dataset.scenePresentedFrames = String(presentedFrameCount);
+      if (presentedFrameCount >= 2) canvas.dataset.scenePresented = "true";
+    }
     const diagnosticsDue = force
       || becameReady
       || timestamp - lastDiagnosticsAt >= SCENE_DIAGNOSTICS_INTERVAL_MS;
@@ -755,7 +762,7 @@ export function createHomeWorldScene(canvas, options = {}) {
     const probe = () => {
       probeTimer = 0;
       const opacity = Number.parseFloat(window.getComputedStyle(canvas).opacity);
-      if (reducedMotion.matches || opacity >= 0.98) {
+      if (canvas.dataset.scenePresented === "true" && (reducedMotion.matches || opacity >= 0.98)) {
         release();
         return;
       }
@@ -1057,8 +1064,10 @@ export function createHomeWorldScene(canvas, options = {}) {
     renderer = null;
     chunks = null;
     document.documentElement.classList.remove("home-world-ready");
+    document.documentElement.classList.remove("home-world-presented");
     document.documentElement.classList.add("home-world-fallback");
     canvas.dataset.sceneReady = "false";
+    canvas.dataset.scenePresented = "false";
     canvas.dataset.sceneFallback = isWebGl2UnavailableError(error)
       ? "webgl2-unavailable"
       : "chunkjs-initialization-failed";
@@ -1125,6 +1134,8 @@ export function createHomeWorldScene(canvas, options = {}) {
   cleanups.push(() => inspectorHoverMedia.removeEventListener?.("change", handleVisibility));
   canvas.dataset.sceneView = focusView;
   canvas.dataset.sceneReady = "false";
+  canvas.dataset.scenePresented = "false";
+  canvas.dataset.scenePresentedFrames = "0";
   canvas.dataset.sceneCameraTransitioning = "false";
   void initialize();
 
@@ -1148,6 +1159,7 @@ export function createHomeWorldScene(canvas, options = {}) {
       renderer = null;
       chunks = null;
       document.documentElement.classList.remove("home-world-ready");
+      document.documentElement.classList.remove("home-world-presented");
       document.documentElement.classList.remove("home-camera-transitioning");
     },
   };
@@ -1159,7 +1171,8 @@ async function loadChunkRuntime(runtimeRoot) {
 }
 
 function runtimeAssetUrl(runtimeRoot, relativePath) {
-  return `${String(runtimeRoot || DEFAULT_RUNTIME_ROOT).replace(/\/+$/, "")}/${relativePath}`;
+  const path = `${String(runtimeRoot || DEFAULT_RUNTIME_ROOT).replace(/\/+$/, "")}/${relativePath}`;
+  return homeBuildAssetUrl(path);
 }
 
 function createStructures(runtime) {
@@ -1829,7 +1842,10 @@ function rotateSceneVector(vector, rotation) {
 }
 
 async function fetchNcm(url) {
-  const response = await fetch(url, { cache: "force-cache", headers: { Accept: "text/plain" } });
+  const response = await fetch(homeBuildAssetUrl(url), {
+    cache: "force-cache",
+    headers: { Accept: "text/plain" },
+  });
   if (!response.ok) throw new Error(`Unable to load canonical avatar model (${response.status}).`);
   const code = (await response.text()).trim();
   if (!code.startsWith("NCM2:") && !code.startsWith("NCM4:")) throw new Error("Canonical avatar model is invalid.");

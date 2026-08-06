@@ -24,8 +24,8 @@ const guardianChatBubbles = Object.freeze({
   girl: createGuardianChatBubbleController("girl"),
 });
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-const HOME_WORLD_READY_TIMEOUT_MS = 12_000;
-const HOME_WORLD_VISUAL_HANDOFF_TIMEOUT_MS = 1_200;
+const HOME_WORLD_READY_TIMEOUT_MS = 30_000;
+const HOME_WORLD_VISUAL_HANDOFF_TIMEOUT_MS = 4_000;
 
 claimSiteLoading();
 
@@ -62,9 +62,16 @@ async function initHome() {
   if (sceneResult?.status === "ready") {
     setSiteLoadingStage(t("loading.rendering"));
     setSiteLoadingProgress(96);
-    await waitForHomeWorldVisualHandoff(homeWorldCanvas);
-    setSiteLoadingStage(t("loading.ready"));
+    const handoffResult = await waitForHomeWorldVisualHandoff(homeWorldCanvas);
+    if (handoffResult === "ready") {
+      document.documentElement.classList.add("home-world-presented");
+      setSiteLoadingStage(t("loading.ready"));
+    } else {
+      document.documentElement.classList.remove("home-world-presented");
+      setSiteLoadingStage(t("loading.fallback"));
+    }
   } else {
+    document.documentElement.classList.remove("home-world-presented");
     setSiteLoadingStage(t("loading.fallback"));
   }
   finishSiteLoading();

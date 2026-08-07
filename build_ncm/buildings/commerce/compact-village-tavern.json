@@ -1,0 +1,505 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-tavern",
+  "category": "commerce",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Compact Village Tavern",
+    "es": "Taberna Compacta de la Aldea",
+    "fr": "Taverne Compacte du Village",
+    "de": "Kompakte Dorftaverne",
+    "ja": "コンパクトな村の酒場",
+    "ru": "Компактная деревенская таверна",
+    "ko": "소형 마을 선술집",
+    "zh-Hant": "緊湊型村莊酒館",
+    "zh-Hans": "紧凑型村庄酒馆"
+  },
+  "descriptions": {
+    "en": "An enterable compact village tavern scaled to the 1.75 m avatar, with a zero-threshold 5 × 7-voxel entrance and five-voxel central aisle, two adult-scale 4 × 9-voxel communal tables with four long benches, a split rear service counter and paired storage shelves, a centered open 3 × 3-voxel hearth with a real masonry chimney through the roof, permanent high daylight windows, continuous post-and-beam load paths, and a shallow terracotta roof on a complete stepped deck.",
+    "es": "Una taberna compacta y accesible de aldea, dimensionada para el avatar de 1,75 m, con una entrada sin umbral de 5 × 7 vóxeles y un pasillo central de cinco vóxeles, dos mesas comunales para adultos de 4 × 9 vóxeles con cuatro bancos largos, un mostrador de servicio trasero dividido y dos estantes de almacén, un hogar abierto central de 3 × 3 vóxeles con chimenea real de mampostería atravesando el tejado, ventanas altas permanentes, recorridos de carga continuos de postes y vigas y un tejado poco inclinado de terracota sobre un entablado escalonado completo.",
+    "fr": "Une taverne compacte de village accessible et dimensionnée pour l’avatar de 1,75 m, avec une entrée sans seuil de 5 × 7 voxels et une allée centrale de cinq voxels, deux tables communes pour adultes de 4 × 9 voxels avec quatre longs bancs, un comptoir arrière séparé et deux étagères de rangement, un foyer ouvert central de 3 × 3 voxels avec une véritable cheminée maçonnée traversant le toit, des fenêtres hautes permanentes, des descentes de charge continues par poteaux et poutres et un toit peu pentu en terre cuite sur un platelage complet en gradins.",
+    "de": "Eine begehbare kompakte Dorftaverne im Maßstab des 1,75-m-Avatars mit einem schwellenlosen Eingang von 5 × 7 Voxeln und einem fünf Voxel breiten Mittelgang, zwei erwachsenengroßen Gemeinschaftstischen von 4 × 9 Voxeln mit vier langen Bänken, einer geteilten rückwärtigen Theke und zwei Lagerregalen, einer mittigen offenen Feuerstelle von 3 × 3 Voxeln mit echtem gemauertem Schornstein durch das Dach, festen hohen Fenstern, durchgehenden Pfosten-Riegel-Lastpfaden und einem flachen Terrakottadach auf vollständiger abgestufter Schalung.",
+    "ja": "身長1.75 mのアバターに合わせた、内部に入れるコンパクトな村の酒場です。段差のない5 × 7ボクセルの入口、幅5ボクセルの中央通路、大人用4 × 9ボクセルの共同テーブル2台と長椅子4脚、左右に分かれた後部サービスカウンターと一対の収納棚、屋根を実際に貫通する組積煙突付きの中央3 × 3ボクセル開放炉、高い固定採光窓、連続する柱梁の荷重経路、そして完全な階段状屋根下地で支えた緩勾配のテラコッタ屋根を備えます。",
+    "ru": "Компактная доступная деревенская таверна в масштабе аватара ростом 1,75 м: вход 5 × 7 вокселей без порога, центральный проход шириной пять вокселей, два общих стола взрослого масштаба размером 4 × 9 вокселей с четырьмя длинными скамьями, разделённая задняя стойка и две полки хранения, центральный открытый очаг 3 × 3 вокселя с настоящей каменной трубой через крышу, постоянные высокие окна, непрерывные несущие линии стоек и балок и пологая терракотовая крыша на сплошном ступенчатом настиле.",
+    "ko": "키 1.75 m 아바타 비율에 맞춘 출입 가능한 소형 마을 선술집입니다. 문턱 없는 5 × 7복셀 입구와 폭 5복셀 중앙 통로, 성인 비율의 4 × 9복셀 공동 테이블 2개와 긴 벤치 4개, 양쪽으로 나뉜 뒤쪽 서비스 카운터와 한 쌍의 수납 선반, 지붕을 실제로 관통하는 조적 굴뚝이 달린 중앙 3 × 3복셀 개방 화덕, 고정식 높은 채광창, 끊김 없는 기둥·보 하중 경로, 완전한 계단식 지붕판 위의 완만한 테라코타 지붕을 갖춥니다.",
+    "zh-Hant": "依1.75公尺角色比例設計的可進入緊湊型村莊酒館，設有零門檻5 × 7體素入口、五體素寬中央通道、兩張成人尺度4 × 9體素公共長桌與四張長凳、分置兩側的後部服務櫃臺與成對儲物架、帶真實穿屋面砌體煙囪的中央3 × 3體素開放爐膛、固定高位採光窗、連續柱樑受力路徑，以及由完整階梯式屋面承托的淺坡赤陶屋頂。",
+    "zh-Hans": "依1.75米角色比例设计的可进入紧凑型村庄酒馆，设有零门槛5 × 7体素入口、五体素宽中央通道、两张成人尺度4 × 9体素公共长桌与四张长凳、分置两侧的后部服务柜台与成对储物架、带真实穿屋面砌体烟囱的中央3 × 3体素开放炉膛、固定高位采光窗、连续柱梁受力路径，以及由完整阶梯式屋面承托的浅坡赤陶屋顶。"
+  },
+  "referenceImage": "concepts/commerce/compact-village-tavern.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "23 × 25 vu",
+  "height": "18 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 19,
+      "z": 21
+    },
+    "wallFootprintMeters": {
+      "x": 7.6,
+      "z": 8.4
+    },
+    "doorClearVoxels": {
+      "width": 5,
+      "height": 7
+    },
+    "interiorClearHeightVoxels": 7
+  },
+  "preview": {
+    "fitScale": 1.02,
+    "minScale": 4,
+    "yaw": 2.48
+  },
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "fixtures",
+      "label": "Communal Tables, Benches, Service Counter, and Storage Shelves"
+    },
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Communal-table Trestles"
+    },
+    {
+      "materialId": 58,
+      "phase": "openings",
+      "label": "Permanent High Daylight Windows"
+    },
+    {
+      "materialId": 66,
+      "phase": "fixtures",
+      "label": "Dark-stone Hearth Fireback"
+    },
+    {
+      "materialId": 69,
+      "phase": "foundation",
+      "label": "Level Zero-threshold Approach and Hearth Slab"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARcSGSsCAQIAAwYAAAEYAAABAQIAFxIAAAIBAgAEAAASASQAAAEGAwAEEAASAUUJAAAEAAMCAgMBAwQHAAEYAAACOgQEAwICAAEYAAABAwgIAwYAAAICAgEEAAcSASQAAAI6AgQFAAIEASQAAAI6AgQOAAIEASQAAAECAwEXEAcAAgMCAAMACQABAAAoAgMUAAMACQABAAAoAgMIAAMACQABDAAAAgMCAA0ACQABJAAAAgMHABcACQABEAAAAgMCCQMSAAACAAAUAgMCCQMAABQBJAAAAQMLDwIAABYCAgIKAxIAAAEAACgCAgQLAw4AAAEAACgCAgYMAwoAAAEAACgCAggNAwYAAAEAACgCAgoOAwIAAAEAACgCAwIKAwAAFAUEAgACAxQKAwAAFAUDAgACNwQCBwMACAEWAAACOAQBCAMAAAEWAAACOAQBDgMAAAEWAAACNwMBBwAACAEgAAACNwgBBwAACAEMAAACNwMBEwUAAQEWAAACNwMCEwUAAQEWAAACNwMDFgQAAAEYAAACNwMGFgQAAAEYAAABRQkBFAQAAgIHCQIWAAMAAQgAAAEHCQUWBAAAAUIKAhcCAgACBQAKAgIAFgUEAgACBRQKAgIAFgUDAgABBwoGFgILAQ"
+  },
+  "validation": {
+    "expectedVoxelCount": 2184,
+    "expectedPayloadBytes": 481,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      56,
+      57,
+      58,
+      62,
+      66,
+      68,
+      69,
+      70,
+      96
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 499,
+      "56": 16,
+      "57": 185,
+      "58": 78,
+      "62": 83,
+      "66": 9,
+      "68": 61,
+      "69": 35,
+      "70": 469,
+      "96": 749
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 11,
+    "supportColumns": [
+      {
+        "label": "Front-left corner post",
+        "x": 2,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-right corner post",
+        "x": 20,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-left corner post",
+        "x": 2,
+        "z": 23,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-right corner post",
+        "x": 20,
+        "z": 23,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-left portal post",
+        "x": 8,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-right portal post",
+        "x": 14,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Left center post",
+        "x": 2,
+        "z": 13,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Right center post",
+        "x": 20,
+        "z": 13,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-left counter-bay post",
+        "x": 7,
+        "z": 23,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-right counter-bay post",
+        "x": 15,
+        "z": 23,
+        "baseY": 0,
+        "topY": 9
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Front portal lintel and roof tie",
+        "axis": "x",
+        "start": 2,
+        "end": 20,
+        "y": 9,
+        "fixed": 3
+      },
+      {
+        "label": "Center roof tie",
+        "axis": "x",
+        "start": 2,
+        "end": 20,
+        "y": 9,
+        "fixed": 13
+      },
+      {
+        "label": "Rear roof tie",
+        "axis": "x",
+        "start": 2,
+        "end": 20,
+        "y": 9,
+        "fixed": 23
+      },
+      {
+        "label": "Left eave beam",
+        "axis": "z",
+        "start": 3,
+        "end": 23,
+        "y": 9,
+        "fixed": 2
+      },
+      {
+        "label": "Right eave beam",
+        "axis": "z",
+        "start": 3,
+        "end": 23,
+        "y": 9,
+        "fixed": 20
+      },
+      {
+        "label": "Longitudinal ridge",
+        "axis": "z",
+        "start": 2,
+        "end": 24,
+        "y": 15,
+        "fixed": 11
+      }
+    ],
+    "walkableDecks": [
+      {
+        "label": "Zero-threshold entrance and central tavern aisle",
+        "axis": "z",
+        "start": 0,
+        "end": 18,
+        "crossStart": 9,
+        "crossEnd": 13,
+        "topProfile": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "clearance": 7
+      }
+    ],
+    "diagonalBands": [
+      {
+        "label": "Left shallow terracotta roof slope",
+        "materialId": 96,
+        "x": 0,
+        "y": 10,
+        "z": 2,
+        "width": 3,
+        "height": 1,
+        "depth": 23,
+        "count": 6,
+        "dx": 2,
+        "dy": 1,
+        "dz": 0,
+        "allowedPenetrations": [
+          {
+            "label": "Centered masonry chimney through the roof",
+            "x": 10,
+            "y": 14,
+            "z": 22,
+            "width": 3,
+            "height": 2,
+            "depth": 2,
+            "materialId": 62
+          }
+        ]
+      },
+      {
+        "label": "Right shallow terracotta roof slope",
+        "materialId": 96,
+        "x": 20,
+        "y": 10,
+        "z": 2,
+        "width": 3,
+        "height": 1,
+        "depth": 23,
+        "count": 6,
+        "dx": -2,
+        "dy": 1,
+        "dz": 0,
+        "allowedPenetrations": [
+          {
+            "label": "Centered masonry chimney through the roof",
+            "x": 10,
+            "y": 14,
+            "z": 22,
+            "width": 3,
+            "height": 2,
+            "depth": 2,
+            "materialId": 62
+          }
+        ]
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "Clear front 5 by 7 tavern portal",
+        "x": 9,
+        "y": 1,
+        "z": 3,
+        "width": 5,
+        "height": 7,
+        "depth": 1
+      },
+      {
+        "label": "Seven-voxel-high central public aisle",
+        "x": 9,
+        "y": 1,
+        "z": 4,
+        "width": 5,
+        "height": 7,
+        "depth": 15
+      },
+      {
+        "label": "Open 3 by 3 hearth mouth",
+        "x": 10,
+        "y": 2,
+        "z": 22,
+        "width": 3,
+        "height": 3,
+        "depth": 1
+      }
+    ],
+    "approach": [
+      {
+        "x": 11,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 1,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 9,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 14,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 18,
+        "topY": 1
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 3,
+        "y": 0,
+        "z": 3,
+        "materialId": 68
+      },
+      {
+        "x": 3,
+        "y": 0,
+        "z": 4,
+        "materialId": 55
+      },
+      {
+        "x": 11,
+        "y": 0,
+        "z": 0,
+        "materialId": 69
+      },
+      {
+        "x": 8,
+        "y": 5,
+        "z": 3,
+        "materialId": 57
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "z": 3,
+        "materialId": 70
+      },
+      {
+        "x": 4,
+        "y": 5,
+        "z": 3,
+        "materialId": 58
+      },
+      {
+        "x": 4,
+        "y": 2,
+        "z": 7,
+        "materialId": 55
+      },
+      {
+        "x": 4,
+        "y": 1,
+        "z": 8,
+        "materialId": 56
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "z": 19,
+        "materialId": 55
+      },
+      {
+        "x": 11,
+        "y": 1,
+        "z": 20,
+        "materialId": 69
+      },
+      {
+        "x": 11,
+        "y": 3,
+        "z": 23,
+        "materialId": 66
+      },
+      {
+        "x": 11,
+        "y": 10,
+        "z": 22,
+        "materialId": 62
+      },
+      {
+        "x": 0,
+        "y": 10,
+        "z": 2,
+        "materialId": 96
+      },
+      {
+        "x": 11,
+        "y": 15,
+        "z": 11,
+        "materialId": 96
+      }
+    ]
+  }
+}

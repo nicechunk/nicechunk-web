@@ -7,6 +7,7 @@ import { decodeNcm3, encodeNcm3, payloadByteLength, voxelize } from "../../chunk
 import { BUILDING_MATERIAL_CATALOG } from "../../chunk.js/construction/building-material-catalog.js";
 import { BUILDING_STYLE_PRESETS } from "../../chunk.js/construction/building-style-catalog.js";
 import { ROOF_TILE_VARIANTS } from "../../chunk.js/construction/roof-tile-catalog.js";
+import { PLAYER_AVATAR_HEIGHT_WORLD_UNITS, WORLD_BLOCK_SIZE_METERS } from "../../chunk.js/core/constants.js";
 import { createCivicTownHall } from "../civic-town-hall-blueprint.js";
 import { createGrandCastle } from "../grand-castle-blueprint.js";
 import { createReferenceCottage } from "../house-blueprint.js";
@@ -76,6 +77,7 @@ for (const relativePath of catalog.buildings) {
   const template = decodeNcm3(building.ncm.code);
   assert.equal(encodeNcm3(template), building.ncm.code, `${building.key} NCM template must be canonical`);
   assert.ok(voxelize(template).size > 0, `${building.key} NCM template must contain voxels`);
+  validateScaleMetadata(building, template);
   const roleByPlaceholder = new Map(Object.entries(building.ncm.materialRoles).map(([role, value]) => [value, role]));
   const extraMaterialIds = new Set((building.extraMaterials ?? []).map((entry) => entry.materialId));
   const fixedMaterialIds = new Set(template.commands
@@ -207,6 +209,23 @@ function validateBuildingEvidence(building, voxels) {
     if (previousTopY != null) assert.ok(Math.abs(point.topY - previousTopY) <= maxStepRise, `${building.key} approach exceeds its step-rise limit`);
     previousTopY = point.topY;
   }
+}
+
+function validateScaleMetadata(building, template) {
+  const scale = building.scale;
+  if (scale == null) return;
+  assert.equal(scale.voxelMeters, WORLD_BLOCK_SIZE_METERS, `${building.key} voxel scale diverges from Chunk.js`);
+  assert.equal(scale.avatarHeightVoxels, PLAYER_AVATAR_HEIGHT_WORLD_UNITS, `${building.key} avatar scale diverges from Chunk.js`);
+  assert.ok(Number.isInteger(scale.wallFootprintVoxels?.x) && scale.wallFootprintVoxels.x > 0 && scale.wallFootprintVoxels.x <= template.size.x, `${building.key} has an invalid wall-footprint width`);
+  assert.ok(Number.isInteger(scale.wallFootprintVoxels?.z) && scale.wallFootprintVoxels.z > 0 && scale.wallFootprintVoxels.z <= template.size.z, `${building.key} has an invalid wall-footprint depth`);
+  assert.equal(scale.wallFootprintMeters?.x, scale.wallFootprintVoxels.x * WORLD_BLOCK_SIZE_METERS, `${building.key} wall width is not derived from its voxel footprint`);
+  assert.equal(scale.wallFootprintMeters?.z, scale.wallFootprintVoxels.z * WORLD_BLOCK_SIZE_METERS, `${building.key} wall depth is not derived from its voxel footprint`);
+  assert.ok(Number.isInteger(scale.doorClearVoxels?.width) && scale.doorClearVoxels.width >= 2, `${building.key} has an invalid clear doorway width`);
+  assert.ok(Number.isInteger(scale.doorClearVoxels?.height) && scale.doorClearVoxels.height > PLAYER_AVATAR_HEIGHT_WORLD_UNITS, `${building.key} doorway does not clear the canonical avatar`);
+  assert.ok(Number.isInteger(scale.interiorClearHeightVoxels) && scale.interiorClearHeightVoxels > PLAYER_AVATAR_HEIGHT_WORLD_UNITS, `${building.key} interior does not clear the canonical avatar`);
+  const openings = building.validation?.openVolumes ?? [];
+  assert.ok(openings.some((volume) => volume.width === scale.doorClearVoxels.width && volume.height === scale.doorClearVoxels.height && volume.depth >= 1), `${building.key} does not prove its declared doorway clearance`);
+  assert.ok(openings.some((volume) => volume.height >= scale.interiorClearHeightVoxels && volume.width >= scale.doorClearVoxels.width && volume.depth >= 3), `${building.key} does not prove its declared interior headroom`);
 }
 
 function validateConnectedGeometry(building, voxels) {

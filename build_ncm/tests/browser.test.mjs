@@ -38,7 +38,7 @@ try {
   await client.send("Page.enable");
   await client.send("Emulation.setDeviceMetricsOverride", { width: 1600, height: 1200, deviceScaleFactor: 1, mobile: false });
   await client.send("Page.navigate", { url });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 11 && document.querySelectorAll('[data-building]').length === 1 && document.querySelector('[data-building=hollow-cottage]') && document.querySelector('[data-language-select]').options.length === 9"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 12 && document.querySelectorAll('[data-building]').length === 1 && document.querySelector('[data-building=hollow-cottage]') && document.querySelector('[data-language-select]').options.length === 9"));
 
   const initial = await evaluate(client, `({
     visibleBuildingCount: document.querySelectorAll('[data-building]').length,
@@ -76,8 +76,8 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 1);
-  assert.match(initial.totalBuildingCount, /21 BUILDINGS/);
-  assert.equal(initial.categoryCount, 11);
+  assert.match(initial.totalBuildingCount, /24 BUILDINGS/);
+  assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
   assert.equal(initial.buildingLabel, "Hollow Cottage");
@@ -279,7 +279,16 @@ try {
   assert.equal(warehouse.selectedInUrl, "freight-warehouse");
 
   await evaluate(client, "document.querySelector('[data-building-category=fortress]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=grand-castle]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=grand-castle]') && document.querySelector('[data-building=compact-village-guardhouse]')"));
+  const fortressBrowse = await evaluate(client, `({
+    activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
+    cardCount: document.querySelectorAll('[data-building]').length,
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(fortressBrowse.activeBuilding, null);
+  assert.equal(fortressBrowse.cardCount, 2);
+  assert.ok(!fortressBrowse.resources.includes("/build_ncm/buildings/fortress/compact-village-guardhouse.json"), "category browsing must not load the guardhouse JSON");
+  assert.ok(!fortressBrowse.resources.includes("/build_ncm/concepts/fortress/compact-village-guardhouse.webp"), "category browsing must not load the guardhouse concept art");
   await evaluate(client, "document.querySelector('[data-building=grand-castle]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'grand-castle' && document.querySelector('#modelSize').textContent === '152 × 86 × 136'"));
   const castle = await evaluate(client, `({
@@ -294,6 +303,7 @@ try {
     voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
     uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
     selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.match(castle.title, /Royal Blue Citadel/);
   assert.equal(castle.modelSize, "152 × 86 × 136");
@@ -308,6 +318,47 @@ try {
   assert.ok(castle.voxelCount > warehouse.voxelCount);
   assert.equal(castle.uncovered, false);
   assert.equal(castle.selectedInUrl, "grand-castle");
+  assert.ok(!castle.resources.includes("/build_ncm/buildings/fortress/compact-village-guardhouse.json"), "selecting the castle must not load the guardhouse JSON");
+  assert.ok(!castle.resources.includes("/build_ncm/concepts/fortress/compact-village-guardhouse.webp"), "selecting the castle must not load the guardhouse concept art");
+
+  await evaluate(client, "document.querySelector('[data-building=compact-village-guardhouse]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-guardhouse' && document.querySelector('#modelSize').textContent === '15 × 17 × 13' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const guardhouse = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(guardhouse.activeCategory, "fortress");
+  assert.match(guardhouse.title, /Compact Village Guardhouse/);
+  assert.equal(guardhouse.modelSize, "15 × 17 × 13");
+  assert.match(guardhouse.payload, /^NCM3:/);
+  assert.equal(guardhouse.voxelCount, 835);
+  for (const id of [55, 57, 58, 64, 68, 69, 96]) assert.match(guardhouse.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(guardhouse.uncovered, false);
+  assert.equal(guardhouse.glazingDisabled, true);
+  assert.equal(guardhouse.glazingLabel, "Openings: Not applicable");
+  assert.equal(guardhouse.disabledStyles, 6);
+  assert.equal(guardhouse.disabledRoofs, 6);
+  assert.equal(guardhouse.conceptHidden, false);
+  assert.match(guardhouse.conceptAlt, /Compact Village Guardhouse concept reference/);
+  assert.equal(guardhouse.conceptFit, "contain");
+  assert.equal(guardhouse.selectedInUrl, "compact-village-guardhouse");
+  assert.ok(guardhouse.resources.includes("/build_ncm/buildings/fortress/compact-village-guardhouse.json"));
+  assert.ok(guardhouse.resources.includes("/build_ncm/concepts/fortress/compact-village-guardhouse.webp"));
+  assert.ok(!guardhouse.resources.some((path) => path.endsWith("compact-village-guardhouse-blueprint.js")));
 
   if (screenshotPath) {
     await evaluate(client, "document.querySelector('.building-library-panel').scrollIntoView({block:'start'}); window.scrollBy(0, -76); new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))");
@@ -1195,7 +1246,7 @@ try {
 
   await client.send("Emulation.setDeviceMetricsOverride", { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
   await client.send("Page.reload", { ignoreCache: true });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 11 && document.querySelectorAll('[data-building]').length === 1"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 12 && document.querySelectorAll('[data-building]').length === 1"));
   await evaluate(client, "document.querySelector('[data-material-filter=all]').click()");
   await waitFor(() => evaluate(client, "document.querySelectorAll('#buildingMaterialCatalog .model-material-card').length === 33"));
   const mobile = await evaluate(client, `({
@@ -1215,7 +1266,7 @@ try {
   assert.equal(mobile.scrollWidth, mobile.clientWidth, "mobile page must not create document-level horizontal overflow");
   assert.equal(mobile.modelCards, 33);
   assert.equal(mobile.modelErrors, 0);
-  assert.equal(mobile.categories, 11);
+  assert.equal(mobile.categories, 12);
   assert.equal(mobile.buildingCards, 1);
   assert.equal(mobile.buildingThumbnails, 0);
   assert.equal(mobile.categoryFlow, "row");
@@ -1224,10 +1275,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const seasideDirectUrl = new URL(url);
-  seasideDirectUrl.searchParams.set("building", "grand-castle");
-  await client.send("Page.navigate", { url: seasideDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'fortress' && document.querySelector('[data-building].active')?.dataset.building === 'grand-castle'"));
+  const guardhouseDirectUrl = new URL(url);
+  guardhouseDirectUrl.searchParams.set("building", "compact-village-guardhouse");
+  await client.send("Page.navigate", { url: guardhouseDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'fortress' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-guardhouse'"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -1237,11 +1288,12 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(directSelection.activeCategory, "fortress");
-  assert.equal(directSelection.activeBuilding, "grand-castle");
-  assert.match(directSelection.title, /Royal Blue Citadel/);
-  assert.equal(directSelection.modelSize, "152 × 86 × 136");
+  assert.equal(directSelection.activeBuilding, "compact-village-guardhouse");
+  assert.match(directSelection.title, /Compact Village Guardhouse/);
+  assert.equal(directSelection.modelSize, "15 × 17 × 13");
   assert.match(directSelection.payload, /^NCM3:/);
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/fortress/grand-castle.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/fortress/compact-village-guardhouse.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/concepts/fortress/compact-village-guardhouse.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

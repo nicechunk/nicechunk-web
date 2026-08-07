@@ -1561,13 +1561,16 @@ try {
   const stableBarnDirectUrl = new URL(url);
   stableBarnDirectUrl.searchParams.set("building", "compact-village-stable-barn");
   await client.send("Page.navigate", { url: stableBarnDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'agriculture' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-stable-barn'"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'agriculture' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-stable-barn' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
     title: document.querySelector('#buildingTitle').textContent,
     modelSize: document.querySelector('#modelSize').textContent,
     payload: document.querySelector('#codeOutput').value,
+    conceptComplete: document.querySelector('#conceptImage').complete,
+    conceptNaturalWidth: document.querySelector('#conceptImage').naturalWidth,
+    conceptPath: new URL(document.querySelector('#conceptImage').currentSrc).pathname,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(directSelection.activeCategory, "agriculture");
@@ -1575,8 +1578,10 @@ try {
   assert.match(directSelection.title, /Compact Village Stable Barn/);
   assert.equal(directSelection.modelSize, "25 × 17 × 27");
   assert.match(directSelection.payload, /^NCM3:/);
+  assert.equal(directSelection.conceptComplete, true);
+  assert.ok(directSelection.conceptNaturalWidth > 0);
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/agriculture/compact-village-stable-barn.webp");
   assert.ok(directSelection.resources.includes("/build_ncm/buildings/agriculture/compact-village-stable-barn.json"));
-  assert.ok(directSelection.resources.includes("/build_ncm/concepts/agriculture/compact-village-stable-barn.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

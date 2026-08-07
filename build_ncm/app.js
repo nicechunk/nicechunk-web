@@ -130,6 +130,9 @@ let codeEditorDirty = false;
 let blueprintRequest = 0;
 let blueprintBusy = false;
 let buildingLibraryStatusMessage = { key: "library.lazyReady", variables: {}, state: "" };
+let conceptImageRequest = 0;
+let pendingConceptImage = null;
+let displayedConceptObjectUrl = null;
 
 const materialModels = new MaterialModelPreviewRenderer({
   seed: "nicechunk-mainnet-001",
@@ -795,19 +798,114 @@ function setBlueprintControlsEnabled(hasBlueprint) {
 function renderConceptReference() {
   if (!els.conceptReference || !els.conceptImage || !els.conceptCaption) return;
   if (!selectedBuilding?.referenceImage) {
+    conceptImageRequest += 1;
+    cancelPendingConceptImage();
+    clearDisplayedConceptImage();
     els.conceptReference.hidden = true;
-    els.conceptImage.removeAttribute("src");
     els.conceptImage.alt = "";
     els.conceptCaption.textContent = "";
     return;
   }
   const buildingName = localizedBuildingText(selectedBuilding, "titles", getLocale());
   const source = new URL(selectedBuilding.referenceImage, import.meta.url).href;
-  els.conceptReference.hidden = false;
-  els.conceptImage.loading = "eager";
-  if (els.conceptImage.src !== source) els.conceptImage.src = source;
-  els.conceptImage.alt = t("view.conceptAlt", { building: buildingName });
+  const alt = t("view.conceptAlt", { building: buildingName });
   els.conceptCaption.textContent = t("view.conceptReference");
+
+  if (els.conceptImage.dataset.source === source && els.conceptImage.complete && els.conceptImage.naturalWidth > 0) {
+    conceptImageRequest += 1;
+    cancelPendingConceptImage();
+    els.conceptImage.alt = alt;
+    els.conceptReference.hidden = false;
+    return;
+  }
+
+  if (pendingConceptImage?.source === source) {
+    pendingConceptImage.alt = alt;
+    if (pendingConceptImage.image) pendingConceptImage.image.alt = alt;
+    els.conceptImage.alt = alt;
+    return;
+  }
+
+  const request = ++conceptImageRequest;
+  cancelPendingConceptImage();
+  clearDisplayedConceptImage();
+  els.conceptReference.hidden = true;
+  els.conceptImage.alt = alt;
+  const pending = {
+    request,
+    source,
+    alt,
+    controller: new AbortController(),
+    image: null,
+    objectUrl: null,
+  };
+  pendingConceptImage = pending;
+  void loadConceptImage(pending);
+}
+
+async function loadConceptImage(pending) {
+  try {
+    const response = await fetch(pending.source, {
+      cache: "force-cache",
+      credentials: "same-origin",
+      signal: pending.controller.signal,
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const blob = await response.blob();
+    if (pendingConceptImage !== pending || pending.request !== conceptImageRequest) return;
+
+    pending.objectUrl = URL.createObjectURL(blob);
+    const nextImage = new Image();
+    pending.image = nextImage;
+    nextImage.id = "conceptImage";
+    nextImage.loading = "eager";
+    nextImage.decoding = "async";
+    nextImage.fetchPriority = "high";
+    nextImage.alt = pending.alt;
+    nextImage.dataset.source = pending.source;
+    nextImage.src = pending.objectUrl;
+    await nextImage.decode();
+    if (pendingConceptImage !== pending || pending.request !== conceptImageRequest) return;
+
+    pendingConceptImage = null;
+    displayedConceptObjectUrl = pending.objectUrl;
+    pending.objectUrl = null;
+    els.conceptImage.replaceWith(nextImage);
+    els.conceptImage = nextImage;
+    els.conceptReference.hidden = false;
+  } catch (error) {
+    if (error.name === "AbortError" || pendingConceptImage !== pending) return;
+    pendingConceptImage = null;
+    els.conceptReference.hidden = true;
+    console.error(`Concept image ${pending.source} failed to load`, error);
+  } finally {
+    if (pending.objectUrl) URL.revokeObjectURL(pending.objectUrl);
+  }
+}
+
+function cancelPendingConceptImage() {
+  if (!pendingConceptImage) return;
+  const pending = pendingConceptImage;
+  pendingConceptImage = null;
+  pending.controller.abort();
+  pending.image?.removeAttribute("src");
+  if (pending.objectUrl) {
+    URL.revokeObjectURL(pending.objectUrl);
+    pending.objectUrl = null;
+  }
+}
+
+function clearDisplayedConceptImage() {
+  const placeholder = document.createElement("img");
+  placeholder.id = "conceptImage";
+  placeholder.loading = "eager";
+  placeholder.decoding = "async";
+  els.conceptImage.replaceWith(placeholder);
+  els.conceptImage = placeholder;
+  if (displayedConceptObjectUrl) {
+    URL.revokeObjectURL(displayedConceptObjectUrl);
+    displayedConceptObjectUrl = null;
+  }
 }
 
 function renderCodePanel({ preserveEditor = false } = {}) {

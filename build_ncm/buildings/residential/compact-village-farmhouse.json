@@ -1,0 +1,547 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-farmhouse",
+  "category": "residential",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Compact Village Farmhouse",
+    "es": "Granja Compacta de la Aldea",
+    "fr": "Ferme Compacte du Village",
+    "de": "Kompaktes Dorfbauernhaus",
+    "ja": "コンパクトな村の農家",
+    "ru": "Компактный деревенский фермерский дом",
+    "ko": "소형 마을 농가",
+    "zh-Hant": "緊湊型村莊農舍",
+    "zh-Hans": "紧凑型村庄农舍"
+  },
+  "descriptions": {
+    "en": "An enterable 7.6 × 9.2 m compact village farmhouse scaled to the 1.75 m avatar, with a zero-threshold 5 × 7-voxel entrance, a five-voxel central aisle, and a full-height room divider with a second 5 × 7 opening. The front living room contains a hollow 5 × 3 × 6-voxel fired-clay cooking hearth with a continuous roof flue and an adult 5 × 3 dining table with paired benches; the rear sleeping room contains two adult 4 × 6 low timber platforms with head rails. Permanent high windows, continuous post-and-beam load paths, and a complete shallow terracotta roof keep every living and circulation dimension physically credible.",
+    "es": "Una granja compacta de aldea de 7,6 × 9,2 m, accesible y dimensionada para el avatar de 1,75 m, con una entrada sin umbral de 5 × 7 vóxeles, un pasillo central de cinco vóxeles y un tabique de altura completa con una segunda abertura de 5 × 7. La sala delantera contiene un hogar de cocina hueco de arcilla cocida de 5 × 3 × 6 vóxeles con conducto continuo hasta el tejado y una mesa de comedor para adultos de 5 × 3 con bancos pareados; el dormitorio trasero contiene dos plataformas bajas de madera para adultos de 4 × 6 con cabeceros. Ventanas altas permanentes, recorridos de carga continuos de postes y vigas y un tejado completo y poco inclinado de terracota mantienen creíbles todas las dimensiones habitables y de circulación.",
+    "fr": "Une ferme compacte de village de 7,6 × 9,2 m, accessible et dimensionnée pour l’avatar de 1,75 m, avec une entrée sans seuil de 5 × 7 voxels, une allée centrale de cinq voxels et une cloison pleine hauteur dotée d’une seconde ouverture de 5 × 7. La pièce de vie avant comprend un foyer de cuisine creux en argile cuite de 5 × 3 × 6 voxels avec conduit continu à travers le toit et une table à manger adulte de 5 × 3 avec deux bancs; la chambre arrière contient deux plateformes de couchage basses en bois de 4 × 6 pour adultes avec chevets. Des fenêtres hautes permanentes, des descentes de charge continues par poteaux et poutres et un toit complet peu pentu en terre cuite assurent des dimensions d’habitation et de circulation crédibles.",
+    "de": "Ein begehbares kompaktes Dorfbauernhaus von 7,6 × 9,2 m im Maßstab des 1,75-m-Avatars mit einem schwellenlosen Eingang von 5 × 7 Voxeln, einem fünf Voxel breiten Mittelgang und einer raumhohen Trennwand mit einer zweiten 5 × 7 großen Öffnung. Der vordere Wohnraum enthält eine hohle Kochstelle aus gebranntem Ton von 5 × 3 × 6 Voxeln mit durchgehendem Dachabzug sowie einen erwachsenengroßen Esstisch von 5 × 3 mit zwei Bänken; der hintere Schlafraum enthält zwei niedrige hölzerne Schlafplattformen von 4 × 6 für Erwachsene mit Kopfleisten. Feste hohe Fenster, durchgehende Pfosten-Riegel-Lastpfade und ein vollständiges flaches Terrakottadach halten alle Wohn- und Verkehrsmaße glaubwürdig.",
+    "ja": "身長1.75 mのアバターに合わせた、7.6 × 9.2 mの内部に入れるコンパクトな村の農家です。段差のない5 × 7ボクセルの入口、幅5ボクセルの中央通路、二つ目の5 × 7開口を持つ天井までの間仕切りを備えます。前室には屋根まで連続する煙道を備えた中空の5 × 3 × 6ボクセル焼成粘土製調理炉と、向かい合う長椅子付きの大人用5 × 3食卓を配置し、後室には頭側レール付きの大人用4 × 6低床木製寝台を2台配置します。固定式高窓、連続する柱梁の荷重経路、完全な緩勾配テラコッタ屋根により、居住と動線の寸法を現実的に保ちます。",
+    "ru": "Компактный доступный деревенский фермерский дом размером 7,6 × 9,2 м в масштабе аватара ростом 1,75 м: вход 5 × 7 вокселей без порога, центральный проход шириной пять вокселей и полноразмерная перегородка со вторым проёмом 5 × 7. В передней жилой комнате находятся полый кухонный очаг из обожжённой глины размером 5 × 3 × 6 вокселей с непрерывным дымоходом через крышу и взрослый обеденный стол 5 × 3 с двумя скамьями; в задней спальне — две низкие деревянные платформы для сна взрослых размером 4 × 6 с изголовьями. Постоянные высокие окна, непрерывные несущие линии стоек и балок и полная пологая терракотовая крыша сохраняют правдоподобные жилые и проходные размеры.",
+    "ko": "키 1.75 m 아바타 비율에 맞춘 출입 가능한 7.6 × 9.2 m 소형 마을 농가입니다. 문턱 없는 5 × 7복셀 입구, 폭 5복셀 중앙 통로, 두 번째 5 × 7개구부가 있는 천장 높이 칸막이를 갖춥니다. 앞 생활실에는 지붕까지 이어지는 연도를 갖춘 속 빈 5 × 3 × 6복셀 소성 점토 조리 화덕과 마주 보는 벤치가 달린 성인용 5 × 3 식탁을 두고, 뒤 침실에는 머리맡 난간이 있는 성인용 4 × 6 저상 목재 침상 2개를 둡니다. 고정식 높은 창, 끊김 없는 기둥·보 하중 경로, 완전한 완경사 테라코타 지붕으로 생활 및 이동 치수를 현실적으로 유지합니다.",
+    "zh-Hant": "依1.75公尺角色比例設計的可進入7.6 × 9.2公尺緊湊型村莊農舍，設有零門檻5 × 7體素入口、五體素寬中央通道，以及帶第二個5 × 7開口的通高隔牆。前部起居室配置中空5 × 3 × 6體素燒製黏土炊事爐及貫穿屋面的連續煙道，另有成人尺度5 × 3餐桌與成對長凳；後部臥室配置兩張帶床頭橫桿的成人4 × 6低矮木製睡臺。固定高窗、連續柱樑受力路徑與完整淺坡赤陶屋頂，使全部居住及通行尺度保持可信。",
+    "zh-Hans": "依1.75米角色比例设计的可进入7.6 × 9.2米紧凑型村庄农舍，设有零门槛5 × 7体素入口、五体素宽中央通道，以及带第二个5 × 7开口的通高隔墙。前部起居室配置中空5 × 3 × 6体素烧制黏土炊事炉及贯穿屋面的连续烟道，另有成人尺度5 × 3餐桌与成对长凳；后部卧室配置两张带床头横杆的成人4 × 6低矮木制睡台。固定高窗、连续柱梁受力路径与完整浅坡赤陶屋顶，使全部居住及通行尺度保持可信。"
+  },
+  "referenceImage": "concepts/residential/compact-village-farmhouse.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "23 × 27 vu",
+  "height": "18 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 19,
+      "z": 23
+    },
+    "wallFootprintMeters": {
+      "x": 7.6,
+      "z": 9.2
+    },
+    "doorClearVoxels": {
+      "width": 5,
+      "height": 7
+    },
+    "interiorClearHeightVoxels": 7
+  },
+  "preview": {
+    "fitScale": 1.02,
+    "minScale": 4,
+    "yaw": 2.5
+  },
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "fixtures",
+      "label": "Dining Table, Paired Benches, and Adult Sleeping Platforms"
+    },
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Table Supports and Sleeping-platform Head Rails"
+    },
+    {
+      "materialId": 58,
+      "phase": "openings",
+      "label": "Permanent High Living and Sleeping-room Windows"
+    },
+    {
+      "materialId": 62,
+      "phase": "fixtures",
+      "label": "Hollow Fired-clay Cooking Hearth and Continuous Flue"
+    },
+    {
+      "materialId": 69,
+      "phase": "foundation",
+      "label": "Level Zero-threshold Stone Approach"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARcSGy0CAQIAAwYAAAEYAAABAQIAGRIAAAIBAgAEAAAUASQAAAEGAwAEEAAUAUUJAAAEAAMCAgMBAwQHAAEYAAACAgIBBAAHFAEkAAABAgMBGRAHAAI6BAQDAgIAARgAAAI6AgQFAAIEAQAAGAI6FAQFAAIEAQAAGAI6BAQZAwIAARgAAAEDCAgDBgAAAgMCAAMACQABJAAAAgMCABkACQABJAAAAgMCAA4ACQABJAAAAgMIAAMACQABDAAAAgMIABkACQABDAAAAgMCCQMSAAACAAAWAgMCCQMAABYBJAAAAQMLDwIAABgCAgMBDgUHAAEWAAACAwgADgAJAAEMAAABAwgIDgYAAAICAgoDEgAAAQAALAICBAsDDgAAAQAALAICBgwDCgAAAQAALAICCA0DBgAAAQAALAICCg4DAgAAAQAALAIDAgoDAAAWBQQCAAIDFAoDAAAWBQMCAAI-AwELAAQCAQgAAAE-BAENAgQAAT4EBAsCAQABPgMGCwQAAgE3DwIHBAACAjgPAQcAAAIBCAAAAjcPAQUEAAABAAAMAjcDARIDAAUBGgAAAjgDAhcDAAABGgAAAjgDARcAAQABGgAAAjgGARcAAQABGgAAAgUACgICABgFBAIAAgUUCgICABgFAwIAAT4EBwwBCgE"
+  },
+  "validation": {
+    "expectedVoxelCount": 2361,
+    "expectedPayloadBytes": 497,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      56,
+      57,
+      58,
+      62,
+      68,
+      69,
+      70,
+      96
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 424,
+      "56": 18,
+      "57": 215,
+      "58": 102,
+      "62": 110,
+      "68": 65,
+      "69": 20,
+      "70": 588,
+      "96": 819
+    },
+    "requireConnected": true,
+    "supportColumns": [
+      {
+        "label": "Front-left corner post",
+        "x": 2,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-right corner post",
+        "x": 20,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-left corner post",
+        "x": 2,
+        "z": 25,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-right corner post",
+        "x": 20,
+        "z": 25,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-left portal post",
+        "x": 8,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-right portal post",
+        "x": 14,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Divider-left portal post",
+        "x": 8,
+        "z": 14,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Divider-right portal post",
+        "x": 14,
+        "z": 14,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Left center post",
+        "x": 2,
+        "z": 14,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Right center post",
+        "x": 20,
+        "z": 14,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-left bay post",
+        "x": 8,
+        "z": 25,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-right bay post",
+        "x": 14,
+        "z": 25,
+        "baseY": 0,
+        "topY": 9
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Front portal lintel and roof tie",
+        "axis": "x",
+        "start": 2,
+        "end": 20,
+        "y": 9,
+        "fixed": 3
+      },
+      {
+        "label": "Divider portal lintel and roof tie",
+        "axis": "x",
+        "start": 2,
+        "end": 20,
+        "y": 9,
+        "fixed": 14
+      },
+      {
+        "label": "Rear roof tie",
+        "axis": "x",
+        "start": 2,
+        "end": 20,
+        "y": 9,
+        "fixed": 25
+      },
+      {
+        "label": "Left eave beam",
+        "axis": "z",
+        "start": 3,
+        "end": 25,
+        "y": 9,
+        "fixed": 2
+      },
+      {
+        "label": "Right eave beam",
+        "axis": "z",
+        "start": 3,
+        "end": 25,
+        "y": 9,
+        "fixed": 20
+      },
+      {
+        "label": "Longitudinal ridge",
+        "axis": "z",
+        "start": 2,
+        "end": 26,
+        "y": 15,
+        "fixed": 11
+      }
+    ],
+    "walkableDecks": [
+      {
+        "label": "Zero-threshold entrance and central farmhouse aisle",
+        "axis": "z",
+        "start": 0,
+        "end": 24,
+        "crossStart": 9,
+        "crossEnd": 13,
+        "topProfile": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "clearance": 7
+      }
+    ],
+    "diagonalBands": [
+      {
+        "label": "Left shallow terracotta roof slope",
+        "materialId": 96,
+        "x": 0,
+        "y": 10,
+        "z": 2,
+        "width": 3,
+        "height": 1,
+        "depth": 25,
+        "count": 6,
+        "dx": 2,
+        "dy": 1,
+        "dz": 0,
+        "allowedPenetrations": [
+          {
+            "label": "Left cooking-hearth flue through the roof",
+            "x": 4,
+            "y": 11,
+            "z": 12,
+            "width": 2,
+            "height": 2,
+            "depth": 2,
+            "materialId": 62
+          }
+        ]
+      },
+      {
+        "label": "Right shallow terracotta roof slope",
+        "materialId": 96,
+        "x": 20,
+        "y": 10,
+        "z": 2,
+        "width": 3,
+        "height": 1,
+        "depth": 25,
+        "count": 6,
+        "dx": -2,
+        "dy": 1,
+        "dz": 0
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "Clear front 5 by 7 farmhouse portal",
+        "x": 9,
+        "y": 1,
+        "z": 3,
+        "width": 5,
+        "height": 7,
+        "depth": 1
+      },
+      {
+        "label": "Seven-voxel-high central farmhouse aisle",
+        "x": 9,
+        "y": 1,
+        "z": 4,
+        "width": 5,
+        "height": 7,
+        "depth": 21
+      },
+      {
+        "label": "Clear divider 5 by 7 bedroom portal",
+        "x": 9,
+        "y": 1,
+        "z": 14,
+        "width": 5,
+        "height": 7,
+        "depth": 1
+      },
+      {
+        "label": "Hollow three-by-three cooking-hearth mouth",
+        "x": 4,
+        "y": 1,
+        "z": 11,
+        "width": 3,
+        "height": 3,
+        "depth": 1
+      }
+    ],
+    "approach": [
+      {
+        "x": 11,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 1,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 8,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 12,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 14,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 18,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 24,
+        "topY": 1
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 3,
+        "y": 0,
+        "z": 3,
+        "materialId": 68
+      },
+      {
+        "x": 3,
+        "y": 0,
+        "z": 4,
+        "materialId": 55
+      },
+      {
+        "x": 11,
+        "y": 0,
+        "z": 0,
+        "materialId": 69
+      },
+      {
+        "x": 8,
+        "y": 5,
+        "z": 3,
+        "materialId": 57
+      },
+      {
+        "x": 8,
+        "y": 5,
+        "z": 14,
+        "materialId": 57
+      },
+      {
+        "x": 4,
+        "y": 5,
+        "z": 3,
+        "materialId": 58
+      },
+      {
+        "x": 4,
+        "y": 5,
+        "z": 25,
+        "materialId": 58
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "z": 12,
+        "materialId": 62
+      },
+      {
+        "x": 4,
+        "y": 4,
+        "z": 11,
+        "materialId": 62
+      },
+      {
+        "x": 4,
+        "y": 10,
+        "z": 12,
+        "materialId": 62
+      },
+      {
+        "x": 15,
+        "y": 2,
+        "z": 7,
+        "materialId": 55
+      },
+      {
+        "x": 15,
+        "y": 1,
+        "z": 7,
+        "materialId": 56
+      },
+      {
+        "x": 15,
+        "y": 1,
+        "z": 5,
+        "materialId": 55
+      },
+      {
+        "x": 3,
+        "y": 1,
+        "z": 18,
+        "materialId": 55
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "z": 23,
+        "materialId": 56
+      },
+      {
+        "x": 0,
+        "y": 10,
+        "z": 2,
+        "materialId": 96
+      },
+      {
+        "x": 11,
+        "y": 15,
+        "z": 13,
+        "materialId": 96
+      }
+    ]
+  }
+}

@@ -1,0 +1,757 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-brewhouse",
+  "category": "industrial",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Compact Village Brewhouse",
+    "es": "Cervecería Compacta de la Aldea",
+    "fr": "Brasserie Compacte du Village",
+    "de": "Kompaktes Dorfbrauhaus",
+    "ja": "コンパクトな村の醸造所",
+    "ru": "Компактная деревенская пивоварня",
+    "ko": "소형 마을 양조장",
+    "zh-Hant": "緊湊型村莊釀造坊",
+    "zh-Hans": "紧凑型村庄酿造坊"
+  },
+  "descriptions": {
+    "en": "An enterable 7.6 × 8.4 m compact village brewhouse scaled to the 1.75 m avatar, with a zero-threshold 5 × 7-voxel entrance and a clear five-voxel center aisle. Two hollow 2 m-square timber tuns with complete upper hoop courses occupy the left wet-work bay, opposite a grounded preparation table. A five-wide brick boil furnace supports a hollow 2 m-square stone kettle rim beneath a short smoke hood, while the only tall flue remains hollow and external. A polished stone floor, permanent high windows, continuous timber load paths and a complete transverse terracotta gable roof make the production room practical and structurally credible.",
+    "es": "Una cervecería compacta de aldea de 7,6 × 8,4 m, accesible y dimensionada para el avatar de 1,75 m, con entrada sin umbral de 5 × 7 vóxeles y un pasillo central despejado de cinco vóxeles. Dos cubas huecas de madera de 2 m de lado, con aros superiores completos, ocupan la zona húmeda izquierda frente a una mesa de preparación apoyada en el suelo. Un horno de cocción de ladrillo de cinco vóxeles sostiene el borde hueco de una caldera de piedra de 2 m bajo una campana baja, mientras el único conducto alto permanece hueco y en el exterior. El suelo de piedra pulida, las ventanas altas permanentes, las cargas continuas de madera y el tejado transversal completo de terracota a dos aguas hacen que la sala sea práctica y estructuralmente creíble.",
+    "fr": "Une brasserie compacte de village de 7,6 × 8,4 m, accessible et dimensionnée pour l’avatar de 1,75 m, avec une entrée sans seuil de 5 × 7 voxels et une allée centrale libre de cinq voxels. Deux cuves creuses en bois de 2 m de côté, munies de cercles supérieurs complets, occupent la zone humide gauche face à une table de préparation ancrée au sol. Un four de brassage en brique large de cinq voxels porte le rebord creux d’une cuve en pierre de 2 m sous une hotte basse, tandis que l’unique conduit haut reste creux et extérieur. Le sol en pierre polie, les fenêtres hautes permanentes, les descentes de charge continues en bois et le toit transversal complet en terre cuite rendent la salle de production pratique et structurellement crédible.",
+    "de": "Ein begehbares kompaktes Dorfbrauhaus von 7,6 × 8,4 m im Maßstab des 1,75-m-Avatars mit einem schwellenlosen Eingang von 5 × 7 Voxeln und einem freien, fünf Voxel breiten Mittelgang. Zwei hohle, 2 m breite Holzbottiche mit geschlossenen oberen Reifenzonen belegen den linken Nassarbeitsbereich gegenüber einem bodengestützten Vorbereitungstisch. Ein fünf Voxel breiter gemauerter Sudofen trägt den hohlen Rand eines 2 m breiten Steinbottichs unter einer niedrigen Rauchhaube; der einzige hohe Abzug bleibt hohl und außenliegend. Polierter Steinboden, dauerhafte Hochfenster, durchgehende hölzerne Lastpfade und ein vollständiges quer verlaufendes Terrakotta-Satteldach machen den Produktionsraum praktisch und baulich glaubwürdig.",
+    "ja": "身長1.75 mのアバターに合わせた、内部に入れる7.6 × 8.4 mのコンパクトな村の醸造所です。段差のない5 × 7ボクセルの入口と幅5ボクセルの明確な中央通路を備えます。上部の輪が連続する2 m角の中空木槽2基を左の湿式作業域に置き、向かい側に床支持の仕込み台を配置しています。幅5ボクセルのレンガ煮沸炉は、低い排煙フードの下で2 m角の中空石製釜縁を支え、唯一の高い煙道は中空のまま屋外に設置されています。磨き石の床、固定高窓、連続する木造荷重経路、完全な横棟テラコッタ切妻屋根により、実用的で構造的にも妥当な製造室となっています。",
+    "ru": "Компактная доступная деревенская пивоварня размером 7,6 × 8,4 м в масштабе аватара ростом 1,75 м: вход 5 × 7 вокселей без порога и свободный центральный проход шириной пять вокселей. Две полые деревянные чаны со стороной 2 м и замкнутыми верхними обручами занимают левую мокрую зону напротив закреплённого на полу подготовительного стола. Кирпичная варочная печь шириной пять вокселей несёт полый обод каменного котла размером 2 м под низким дымовым колпаком, а единственный высокий дымоход остаётся полым и наружным. Полированный каменный пол, постоянные высокие окна, непрерывные деревянные несущие линии и полная поперечная двускатная крыша из терракоты делают помещение практичным и конструктивно правдоподобным.",
+    "ko": "키 1.75 m 아바타 비율에 맞춘 출입 가능한 7.6 × 8.4 m 소형 마을 양조장입니다. 문턱 없는 5 × 7복셀 입구와 폭 5복셀의 비워 둔 중앙 통로를 갖춥니다. 완전한 상부 띠를 두른 2 m 정사각 중공 목재 통 두 개가 왼쪽 습식 작업 구역에 놓이고, 맞은편에는 바닥 지지 준비대가 있습니다. 폭 5복셀 벽돌 끓임 화덕은 낮은 연기 후드 아래에서 2 m 정사각 중공 석재 솥 테두리를 받치며, 유일한 높은 연도는 속이 빈 외부 구조로 유지됩니다. 연마 석재 바닥, 고정식 높은 창, 연속 목재 하중 경로, 완전한 가로 능선 테라코타 박공지붕으로 실용적이고 구조적으로 타당한 생산실을 완성합니다.",
+    "zh-Hant": "依1.75公尺角色比例設計的可進入7.6 × 8.4公尺緊湊型村莊釀造坊，設有零門檻5 × 7體素入口與五體素寬暢通中央通道。兩具2公尺見方、上部箍圈完整閉合的中空木製釀造槽位於左側濕作區，對面是落地支撐備料桌。五體素寬磚砌煮沸爐在低矮集煙罩下承托2公尺見方的中空石製鍋緣，唯一的高煙道保持中空並設於室外。拋光石地面、固定高窗、連續木構受力路徑與完整橫脊赤陶雙坡屋頂，使生產間實用且結構可信。",
+    "zh-Hans": "依1.75米角色比例设计的可进入7.6 × 8.4米紧凑型村庄酿造坊，设有零门槛5 × 7体素入口与五体素宽畅通中央通道。两具2米见方、上部箍圈完整闭合的中空木制酿造槽位于左侧湿作区，对面是落地支撑备料桌。五体素宽砖砌煮沸炉在低矮集烟罩下承托2米见方的中空石制锅缘，唯一的高烟道保持中空并设于室外。抛光石地面、固定高窗、连续木构受力路径与完整横脊赤陶双坡屋顶，使生产间实用且结构可信。"
+  },
+  "referenceImage": "concepts/industrial/compact-village-brewhouse.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "25 × 27 vu",
+  "height": "25 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 19,
+      "z": 21
+    },
+    "wallFootprintMeters": {
+      "x": 7.6,
+      "z": 8.4
+    },
+    "doorClearVoxels": {
+      "width": 5,
+      "height": 7
+    },
+    "interiorClearHeightVoxels": 7
+  },
+  "preview": {
+    "fitScale": 0.98,
+    "minScale": 3.8,
+    "yaw": 2.56
+  },
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "fixtures",
+      "label": "Twin Hollow Timber Tuns and Preparation-table Top"
+    },
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Closed Tun Hoop Courses and Grounded Table Legs"
+    },
+    {
+      "materialId": 58,
+      "phase": "openings",
+      "label": "Permanent High Brewhouse Windows and Entrance Transom"
+    },
+    {
+      "materialId": 62,
+      "phase": "fixtures",
+      "label": "Five-wide Brick Boil Furnace and Low Smoke Hood"
+    },
+    {
+      "materialId": 65,
+      "phase": "structure",
+      "label": "Hollow External Deep-stone Flue"
+    },
+    {
+      "materialId": 69,
+      "phase": "foundation",
+      "label": "Polished Wet-work Floor and Hollow Boil-kettle Rim"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARkZGysBAQIAAhQAFgEBCQAABgACAQEWABACAAQBRQMAAxIAFAICAwEDBgoAARgAAAECCggDBAMAAQIDARcSCgACAgMBBAAKEgEkAAACAwMBAwAKAAEkAAACAwMBFwAKAAEkAAACAwkBAwAHAAEMAAABAwkIAwYAAAIDAwsDEgAAAQAAKAIDAwsEAAASASQAAAI6AwYHAAICAQAAFAI6FQYHAAICAQAAFAI6BgYXAgIAARIAAAE6CwkDAgEACgIDDAMAFAoCFQwDABQJAwMMAxIUAQMDFg0SAAAIBQIMAhQWAjcFAQcEAgABAAAQAjcFAQsEAgABAAAQAjcFAQgAAgIBAAAQAjcJAQgAAgIBAAAQAjgFBAcEAAABAAAQAjgFBAsEAAABAAAQAjgFBAgAAAIBAAAQAjgJBAgAAAIBAAAQAjgQAQYAAQABCAAAAjgQAQsAAQABCAAAATcQAwYEAAUBPhABDgQABgI-EAIOAAIGAQgAAAE-EQIUAgIAAT4RAg4CAAACRRAEDwQAAAEAAAgCRRAEEAAAAgEIAAABPhMFEQIBAgJBFgERAhcAAQAABAJBFgESABcAAQQAAA"
+  },
+  "validation": {
+    "expectedVoxelCount": 2512,
+    "expectedPayloadBytes": 445,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      56,
+      57,
+      58,
+      62,
+      65,
+      68,
+      69,
+      70,
+      96
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 126,
+      "56": 40,
+      "57": 196,
+      "58": 57,
+      "62": 97,
+      "65": 192,
+      "68": 108,
+      "69": 415,
+      "70": 801,
+      "96": 480
+    },
+    "requireConnected": true,
+    "supportColumns": [
+      {
+        "label": "Front-left brewhouse corner",
+        "x": 3,
+        "z": 3,
+        "baseY": 0,
+        "topY": 12
+      },
+      {
+        "label": "Front-right brewhouse corner",
+        "x": 21,
+        "z": 3,
+        "baseY": 0,
+        "topY": 12
+      },
+      {
+        "label": "Rear-left brewhouse corner",
+        "x": 3,
+        "z": 23,
+        "baseY": 0,
+        "topY": 12
+      },
+      {
+        "label": "Rear-right brewhouse corner",
+        "x": 21,
+        "z": 23,
+        "baseY": 0,
+        "topY": 12
+      },
+      {
+        "label": "Left entrance post",
+        "x": 9,
+        "z": 3,
+        "baseY": 0,
+        "topY": 8
+      },
+      {
+        "label": "Right entrance post",
+        "x": 15,
+        "z": 3,
+        "baseY": 0,
+        "topY": 8
+      },
+      {
+        "label": "External flue front-left wall",
+        "x": 22,
+        "z": 17,
+        "baseY": 0,
+        "topY": 24
+      },
+      {
+        "label": "External flue rear-right wall",
+        "x": 24,
+        "z": 19,
+        "baseY": 0,
+        "topY": 24
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Entrance lintel",
+        "axis": "x",
+        "start": 9,
+        "end": 15,
+        "y": 8,
+        "fixed": 3
+      },
+      {
+        "label": "Front eave beam",
+        "axis": "x",
+        "start": 3,
+        "end": 21,
+        "y": 11,
+        "fixed": 3
+      },
+      {
+        "label": "Rear eave beam",
+        "axis": "x",
+        "start": 3,
+        "end": 21,
+        "y": 11,
+        "fixed": 23
+      },
+      {
+        "label": "Left eave beam",
+        "axis": "z",
+        "start": 3,
+        "end": 23,
+        "y": 11,
+        "fixed": 3
+      },
+      {
+        "label": "Right eave beam",
+        "axis": "z",
+        "start": 3,
+        "end": 23,
+        "y": 11,
+        "fixed": 21
+      },
+      {
+        "label": "Transverse ridge beam",
+        "axis": "x",
+        "start": 3,
+        "end": 21,
+        "y": 22,
+        "fixed": 13
+      },
+      {
+        "label": "Front stone kettle rim",
+        "axis": "x",
+        "start": 16,
+        "end": 20,
+        "y": 4,
+        "fixed": 15
+      },
+      {
+        "label": "Rear stone kettle rim",
+        "axis": "x",
+        "start": 16,
+        "end": 20,
+        "y": 4,
+        "fixed": 19
+      }
+    ],
+    "diagonalBands": [
+      {
+        "label": "Front roof slope",
+        "materialId": 96,
+        "x": 2,
+        "y": 12,
+        "z": 2,
+        "width": 21,
+        "height": 1,
+        "depth": 1,
+        "count": 12,
+        "dx": 0,
+        "dy": 1,
+        "dz": 1
+      },
+      {
+        "label": "Rear roof slope with external-flue edge penetration",
+        "materialId": 96,
+        "x": 2,
+        "y": 12,
+        "z": 24,
+        "width": 21,
+        "height": 1,
+        "depth": 1,
+        "count": 12,
+        "dx": 0,
+        "dy": 1,
+        "dz": -1,
+        "allowedPenetrations": [
+          {
+            "x": 22,
+            "y": 17,
+            "z": 17,
+            "width": 1,
+            "height": 3,
+            "depth": 3,
+            "materialId": 65
+          }
+        ]
+      }
+    ],
+    "closedVoxelLoops": [
+      {
+        "label": "Front timber tun upper hoop",
+        "materialId": 56,
+        "points": [
+          [
+            5,
+            4,
+            7
+          ],
+          [
+            6,
+            4,
+            7
+          ],
+          [
+            7,
+            4,
+            7
+          ],
+          [
+            8,
+            4,
+            7
+          ],
+          [
+            9,
+            4,
+            7
+          ],
+          [
+            9,
+            4,
+            8
+          ],
+          [
+            9,
+            4,
+            9
+          ],
+          [
+            9,
+            4,
+            10
+          ],
+          [
+            9,
+            4,
+            11
+          ],
+          [
+            8,
+            4,
+            11
+          ],
+          [
+            7,
+            4,
+            11
+          ],
+          [
+            6,
+            4,
+            11
+          ],
+          [
+            5,
+            4,
+            11
+          ],
+          [
+            5,
+            4,
+            10
+          ],
+          [
+            5,
+            4,
+            9
+          ],
+          [
+            5,
+            4,
+            8
+          ]
+        ]
+      },
+      {
+        "label": "Rear timber tun upper hoop",
+        "materialId": 56,
+        "points": [
+          [
+            5,
+            4,
+            15
+          ],
+          [
+            6,
+            4,
+            15
+          ],
+          [
+            7,
+            4,
+            15
+          ],
+          [
+            8,
+            4,
+            15
+          ],
+          [
+            9,
+            4,
+            15
+          ],
+          [
+            9,
+            4,
+            16
+          ],
+          [
+            9,
+            4,
+            17
+          ],
+          [
+            9,
+            4,
+            18
+          ],
+          [
+            9,
+            4,
+            19
+          ],
+          [
+            8,
+            4,
+            19
+          ],
+          [
+            7,
+            4,
+            19
+          ],
+          [
+            6,
+            4,
+            19
+          ],
+          [
+            5,
+            4,
+            19
+          ],
+          [
+            5,
+            4,
+            18
+          ],
+          [
+            5,
+            4,
+            17
+          ],
+          [
+            5,
+            4,
+            16
+          ]
+        ]
+      },
+      {
+        "label": "Stone boil-kettle rim",
+        "materialId": 69,
+        "points": [
+          [
+            16,
+            4,
+            15
+          ],
+          [
+            17,
+            4,
+            15
+          ],
+          [
+            18,
+            4,
+            15
+          ],
+          [
+            19,
+            4,
+            15
+          ],
+          [
+            20,
+            4,
+            15
+          ],
+          [
+            20,
+            4,
+            16
+          ],
+          [
+            20,
+            4,
+            17
+          ],
+          [
+            20,
+            4,
+            18
+          ],
+          [
+            20,
+            4,
+            19
+          ],
+          [
+            19,
+            4,
+            19
+          ],
+          [
+            18,
+            4,
+            19
+          ],
+          [
+            17,
+            4,
+            19
+          ],
+          [
+            16,
+            4,
+            19
+          ],
+          [
+            16,
+            4,
+            18
+          ],
+          [
+            16,
+            4,
+            17
+          ],
+          [
+            16,
+            4,
+            16
+          ]
+        ]
+      },
+      {
+        "label": "Open external flue crown",
+        "materialId": 65,
+        "points": [
+          [
+            22,
+            24,
+            17
+          ],
+          [
+            23,
+            24,
+            17
+          ],
+          [
+            24,
+            24,
+            17
+          ],
+          [
+            24,
+            24,
+            18
+          ],
+          [
+            24,
+            24,
+            19
+          ],
+          [
+            23,
+            24,
+            19
+          ],
+          [
+            22,
+            24,
+            19
+          ],
+          [
+            22,
+            24,
+            18
+          ]
+        ]
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "zero-threshold five-wide entrance",
+        "x": 10,
+        "y": 1,
+        "z": 2,
+        "width": 5,
+        "height": 7,
+        "depth": 2
+      },
+      {
+        "label": "five-wide central service aisle",
+        "x": 10,
+        "y": 1,
+        "z": 4,
+        "width": 5,
+        "height": 7,
+        "depth": 19
+      },
+      {
+        "label": "front hollow timber tun",
+        "x": 6,
+        "y": 1,
+        "z": 8,
+        "width": 3,
+        "height": 4,
+        "depth": 3
+      },
+      {
+        "label": "rear hollow timber tun",
+        "x": 6,
+        "y": 1,
+        "z": 16,
+        "width": 3,
+        "height": 4,
+        "depth": 3
+      },
+      {
+        "label": "open boil-furnace firebox",
+        "x": 17,
+        "y": 3,
+        "z": 14,
+        "width": 3,
+        "height": 1,
+        "depth": 1
+      },
+      {
+        "label": "hollow stone boil-kettle center",
+        "x": 17,
+        "y": 4,
+        "z": 16,
+        "width": 3,
+        "height": 1,
+        "depth": 3
+      },
+      {
+        "label": "continuous hollow external flue",
+        "x": 23,
+        "y": 1,
+        "z": 18,
+        "width": 1,
+        "height": 24,
+        "depth": 1
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 5,
+        "y": 2,
+        "z": 7,
+        "materialId": 55
+      },
+      {
+        "x": 9,
+        "y": 4,
+        "z": 17,
+        "materialId": 56
+      },
+      {
+        "x": 18,
+        "y": 3,
+        "z": 8,
+        "materialId": 55
+      },
+      {
+        "x": 16,
+        "y": 2,
+        "z": 18,
+        "materialId": 62
+      },
+      {
+        "x": 18,
+        "y": 4,
+        "z": 15,
+        "materialId": 69
+      },
+      {
+        "x": 3,
+        "y": 7,
+        "z": 8,
+        "materialId": 58
+      },
+      {
+        "x": 15,
+        "y": 7,
+        "z": 23,
+        "materialId": 58
+      },
+      {
+        "x": 22,
+        "y": 24,
+        "z": 18,
+        "materialId": 65
+      }
+    ],
+    "approach": [
+      {
+        "x": 12,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 12,
+        "z": 1,
+        "topY": 1
+      },
+      {
+        "x": 12,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 12,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 12,
+        "z": 4,
+        "topY": 1
+      }
+    ]
+  }
+}

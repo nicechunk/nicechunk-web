@@ -44,6 +44,7 @@
     "buildings/fortress/compact-village-watchtower.json",
     "buildings/agriculture/compact-village-watermill.json",
     "buildings/coastal/compact-village-smokehouse.json",
-    "buildings/industrial/compact-village-cooper-workshop.json"
+    "buildings/industrial/compact-village-cooper-workshop.json",
+    "buildings/industrial/compact-village-brewhouse.json"
   ]
 }

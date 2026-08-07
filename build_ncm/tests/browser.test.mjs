@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 3);
-  assert.match(initial.totalBuildingCount, /44 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /45 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -384,14 +384,14 @@ try {
   assert.ok(!smokehouse.resources.some((path) => path.endsWith("compact-village-smokehouse-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=industrial]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=freight-warehouse]') && document.querySelector('[data-building=covered-village-bloomery]') && document.querySelector('[data-building=compact-village-blacksmith-shop]') && document.querySelector('[data-building=compact-village-weaving-workshop]') && document.querySelector('[data-building=compact-village-pottery-workshop]') && document.querySelector('[data-building=compact-village-cooper-workshop]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=freight-warehouse]') && document.querySelector('[data-building=covered-village-bloomery]') && document.querySelector('[data-building=compact-village-blacksmith-shop]') && document.querySelector('[data-building=compact-village-weaving-workshop]') && document.querySelector('[data-building=compact-village-pottery-workshop]') && document.querySelector('[data-building=compact-village-cooper-workshop]') && document.querySelector('[data-building=compact-village-brewhouse]')"));
   const industrialBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     cardCount: document.querySelectorAll('[data-building]').length,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(industrialBrowse.activeBuilding, null);
-  assert.equal(industrialBrowse.cardCount, 6);
+  assert.equal(industrialBrowse.cardCount, 7);
   assert.ok(!industrialBrowse.resources.includes("/build_ncm/buildings/industrial/freight-warehouse.json"), "category browsing must not load the warehouse JSON");
   assert.ok(!industrialBrowse.resources.includes("/build_ncm/buildings/industrial/covered-village-bloomery.json"), "category browsing must not load the bloomery JSON");
   assert.ok(!industrialBrowse.resources.includes("/build_ncm/buildings/industrial/compact-village-blacksmith-shop.json"), "category browsing must not load the blacksmith-shop JSON");
@@ -402,6 +402,8 @@ try {
   assert.ok(!industrialBrowse.resources.includes("/build_ncm/concepts/industrial/compact-village-pottery-workshop.webp"), "category browsing must not load the pottery-workshop concept art");
   assert.ok(!industrialBrowse.resources.includes("/build_ncm/buildings/industrial/compact-village-cooper-workshop.json"), "category browsing must not load the cooper-workshop JSON");
   assert.ok(!industrialBrowse.resources.includes("/build_ncm/concepts/industrial/compact-village-cooper-workshop.webp"), "category browsing must not load the cooper-workshop concept art");
+  assert.ok(!industrialBrowse.resources.includes("/build_ncm/buildings/industrial/compact-village-brewhouse.json"), "category browsing must not load the brewhouse JSON");
+  assert.ok(!industrialBrowse.resources.includes("/build_ncm/concepts/industrial/compact-village-brewhouse.webp"), "category browsing must not load the brewhouse concept art");
   await clickBuilding(client, "freight-warehouse");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'freight-warehouse' && document.querySelector('#modelSize').textContent === '48 × 36 × 38'"));
   const warehouse = await evaluate(client, `({
@@ -595,6 +597,49 @@ try {
   assert.ok(cooperWorkshop.resources.includes("/build_ncm/buildings/industrial/compact-village-cooper-workshop.json"));
   assert.ok(cooperWorkshop.resources.includes("/build_ncm/concepts/industrial/compact-village-cooper-workshop.webp"));
   assert.ok(!cooperWorkshop.resources.some((path) => path.endsWith("compact-village-cooper-workshop-blueprint.js")));
+  assert.ok(!cooperWorkshop.resources.includes("/build_ncm/buildings/industrial/compact-village-brewhouse.json"), "selecting the cooper workshop must not load the brewhouse JSON");
+  assert.ok(!cooperWorkshop.resources.includes("/build_ncm/concepts/industrial/compact-village-brewhouse.webp"), "selecting the cooper workshop must not load the brewhouse concept art");
+
+  await clickBuilding(client, "compact-village-brewhouse");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-brewhouse' && document.querySelector('#modelSize').textContent === '25 × 25 × 27' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const brewhouse = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptLoading: document.querySelector('#conceptImage').loading,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(brewhouse.activeCategory, "industrial");
+  assert.match(brewhouse.title, /Compact Village Brewhouse/);
+  assert.equal(brewhouse.modelSize, "25 × 25 × 27");
+  assert.match(brewhouse.payload, /^NCM3:/);
+  assert.equal(brewhouse.voxelCount, 2512);
+  for (const id of [55, 56, 57, 58, 62, 65, 68, 69, 70, 96]) assert.match(brewhouse.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(brewhouse.uncovered, false);
+  assert.equal(brewhouse.glazingDisabled, true);
+  assert.equal(brewhouse.glazingLabel, "Openings: Not applicable");
+  assert.equal(brewhouse.disabledStyles, 6);
+  assert.equal(brewhouse.disabledRoofs, 6);
+  assert.equal(brewhouse.conceptHidden, false);
+  assert.equal(brewhouse.conceptLoading, "eager");
+  assert.match(brewhouse.conceptAlt, /Compact Village Brewhouse concept reference/);
+  assert.equal(brewhouse.conceptFit, "contain");
+  assert.equal(brewhouse.selectedInUrl, "compact-village-brewhouse");
+  assert.ok(brewhouse.resources.includes("/build_ncm/buildings/industrial/compact-village-brewhouse.json"));
+  assert.ok(brewhouse.resources.includes("/build_ncm/concepts/industrial/compact-village-brewhouse.webp"));
+  assert.ok(!brewhouse.resources.some((path) => path.endsWith("compact-village-brewhouse-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=fortress]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=grand-castle]') && document.querySelector('[data-building=compact-village-guardhouse]') && document.querySelector('[data-building=compact-village-watchtower]')"));
@@ -2178,10 +2223,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const cooperDirectUrl = new URL(url);
-  cooperDirectUrl.searchParams.set("building", "compact-village-cooper-workshop");
-  await client.send("Page.navigate", { url: cooperDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'industrial' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-cooper-workshop' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const brewhouseDirectUrl = new URL(url);
+  brewhouseDirectUrl.searchParams.set("building", "compact-village-brewhouse");
+  await client.send("Page.navigate", { url: brewhouseDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'industrial' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-brewhouse' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -2194,15 +2239,15 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(directSelection.activeCategory, "industrial");
-  assert.equal(directSelection.activeBuilding, "compact-village-cooper-workshop");
-  assert.match(directSelection.title, /Compact Village Cooper's Workshop/);
-  assert.equal(directSelection.modelSize, "25 × 24 × 25");
+  assert.equal(directSelection.activeBuilding, "compact-village-brewhouse");
+  assert.match(directSelection.title, /Compact Village Brewhouse/);
+  assert.equal(directSelection.modelSize, "25 × 25 × 27");
   assert.match(directSelection.payload, /^NCM3:/);
   assert.equal(directSelection.conceptComplete, true);
   assert.ok(directSelection.conceptNaturalWidth > 0);
-  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/industrial/compact-village-cooper-workshop.webp");
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/industrial/compact-village-cooper-workshop.json"));
-  assert.ok(directSelection.resources.includes("/build_ncm/concepts/industrial/compact-village-cooper-workshop.webp"));
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/industrial/compact-village-brewhouse.webp");
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/industrial/compact-village-brewhouse.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/concepts/industrial/compact-village-brewhouse.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

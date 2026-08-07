@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 3);
-  assert.match(initial.totalBuildingCount, /41 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /42 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -1563,14 +1563,14 @@ try {
   assert.ok(!oreSortingShed.resources.some((path) => path.endsWith("covered-village-ore-sorting-shed-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=agriculture]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=glass-timber-greenhouse]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=glass-timber-greenhouse]') && document.querySelector('[data-building=compact-village-watermill]')"));
   const agricultureBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     cardCount: document.querySelectorAll('[data-building]').length,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(agricultureBrowse.activeBuilding, null);
-  assert.equal(agricultureBrowse.cardCount, 5);
+  assert.equal(agricultureBrowse.cardCount, 6);
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/buildings/agriculture/glass-timber-greenhouse.json"), "category browsing must not load the greenhouse JSON");
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/concepts/agriculture/glass-timber-greenhouse.webp"), "category browsing must not load the greenhouse concept art");
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/buildings/agriculture/stone-timber-tower-windmill.json"), "category browsing must not load the windmill JSON");
@@ -1581,6 +1581,8 @@ try {
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/concepts/agriculture/compact-village-stable-barn.webp"), "category browsing must not load the stable-barn concept art");
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/buildings/agriculture/compact-village-granary.json"), "category browsing must not load the granary JSON");
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/concepts/agriculture/compact-village-granary.webp"), "category browsing must not load the granary concept art");
+  assert.ok(!agricultureBrowse.resources.includes("/build_ncm/buildings/agriculture/compact-village-watermill.json"), "category browsing must not load the watermill JSON");
+  assert.ok(!agricultureBrowse.resources.includes("/build_ncm/concepts/agriculture/compact-village-watermill.webp"), "category browsing must not load the watermill concept art");
   await clickBuilding(client, "glass-timber-greenhouse");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'glass-timber-greenhouse' && document.querySelector('#modelSize').textContent === '19 × 20 × 27' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const greenhouse = await evaluate(client, `({
@@ -1785,6 +1787,49 @@ try {
   assert.ok(granary.resources.includes("/build_ncm/buildings/agriculture/compact-village-granary.json"));
   assert.ok(granary.resources.includes("/build_ncm/concepts/agriculture/compact-village-granary.webp"));
   assert.ok(!granary.resources.some((path) => path.endsWith("compact-village-granary-blueprint.js")));
+  assert.ok(!granary.resources.includes("/build_ncm/buildings/agriculture/compact-village-watermill.json"), "selecting the granary must not load the watermill JSON");
+  assert.ok(!granary.resources.includes("/build_ncm/concepts/agriculture/compact-village-watermill.webp"), "selecting the granary must not load the watermill concept art");
+
+  await clickBuilding(client, "compact-village-watermill");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-watermill' && document.querySelector('#modelSize').textContent === '27 × 30 × 25' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const watermill = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptLoading: document.querySelector('#conceptImage').loading,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(watermill.activeCategory, "agriculture");
+  assert.match(watermill.title, /Compact Village Watermill/);
+  assert.equal(watermill.modelSize, "27 × 30 × 25");
+  assert.match(watermill.payload, /^NCM3:/);
+  assert.equal(watermill.voxelCount, 2864);
+  for (const id of [55, 56, 57, 58, 65, 68, 69, 70, 96]) assert.match(watermill.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(watermill.uncovered, false);
+  assert.equal(watermill.glazingDisabled, true);
+  assert.equal(watermill.glazingLabel, "Openings: Not applicable");
+  assert.equal(watermill.disabledStyles, 6);
+  assert.equal(watermill.disabledRoofs, 6);
+  assert.equal(watermill.conceptHidden, false);
+  assert.equal(watermill.conceptLoading, "eager");
+  assert.match(watermill.conceptAlt, /Compact Village Watermill concept reference/);
+  assert.equal(watermill.conceptFit, "contain");
+  assert.equal(watermill.selectedInUrl, "compact-village-watermill");
+  assert.ok(watermill.resources.includes("/build_ncm/buildings/agriculture/compact-village-watermill.json"));
+  assert.ok(watermill.resources.includes("/build_ncm/concepts/agriculture/compact-village-watermill.webp"));
+  assert.ok(!watermill.resources.some((path) => path.endsWith("compact-village-watermill-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=construction]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'construction' && document.querySelectorAll('[data-building]').length === 3 && document.querySelector('[data-building=timber-building-scaffold]') && document.querySelector('[data-building=compact-village-stonemason-workshop]') && document.querySelector('[data-building=compact-village-carpenter-workshop]')"));
@@ -1796,7 +1841,7 @@ try {
   })`);
   assert.equal(constructionBrowse.activeBuilding, null, "browsing construction must not select or generate a building");
   assert.equal(constructionBrowse.buildingCount, 3);
-  assert.match(constructionBrowse.previewTitle, /Compact Village Granary/);
+  assert.match(constructionBrowse.previewTitle, /Compact Village Watermill/);
   assert.ok(!constructionBrowse.resources.includes("/build_ncm/buildings/construction/timber-building-scaffold.json"), "browsing construction must not load the scaffold JSON");
   assert.ok(!constructionBrowse.resources.includes("/build_ncm/buildings/construction/compact-village-stonemason-workshop.json"), "browsing construction must not load the stonemason workshop JSON");
   assert.ok(!constructionBrowse.resources.includes("/build_ncm/concepts/construction/compact-village-stonemason-workshop.webp"), "browsing construction must not load the stonemason concept art");
@@ -2039,10 +2084,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const watchtowerDirectUrl = new URL(url);
-  watchtowerDirectUrl.searchParams.set("building", "compact-village-watchtower");
-  await client.send("Page.navigate", { url: watchtowerDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'fortress' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-watchtower' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const watermillDirectUrl = new URL(url);
+  watermillDirectUrl.searchParams.set("building", "compact-village-watermill");
+  await client.send("Page.navigate", { url: watermillDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'agriculture' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-watermill' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -2054,16 +2099,16 @@ try {
     conceptPath: new URL(document.querySelector('#conceptImage').dataset.source).pathname,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(directSelection.activeCategory, "fortress");
-  assert.equal(directSelection.activeBuilding, "compact-village-watchtower");
-  assert.match(directSelection.title, /Compact Village Watchtower/);
-  assert.equal(directSelection.modelSize, "21 × 41 × 21");
+  assert.equal(directSelection.activeCategory, "agriculture");
+  assert.equal(directSelection.activeBuilding, "compact-village-watermill");
+  assert.match(directSelection.title, /Compact Village Watermill/);
+  assert.equal(directSelection.modelSize, "27 × 30 × 25");
   assert.match(directSelection.payload, /^NCM3:/);
   assert.equal(directSelection.conceptComplete, true);
   assert.ok(directSelection.conceptNaturalWidth > 0);
-  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/fortress/compact-village-watchtower.webp");
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/fortress/compact-village-watchtower.json"));
-  assert.ok(directSelection.resources.includes("/build_ncm/concepts/fortress/compact-village-watchtower.webp"));
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/agriculture/compact-village-watermill.webp");
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/agriculture/compact-village-watermill.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/concepts/agriculture/compact-village-watermill.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

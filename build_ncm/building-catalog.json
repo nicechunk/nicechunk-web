@@ -41,6 +41,7 @@
     "buildings/industrial/compact-village-pottery-workshop.json",
     "buildings/residential/compact-village-farmhouse.json",
     "buildings/civic/compact-village-chapel.json",
-    "buildings/fortress/compact-village-watchtower.json"
+    "buildings/fortress/compact-village-watchtower.json",
+    "buildings/agriculture/compact-village-watermill.json"
   ]
 }

@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 2);
-  assert.match(initial.totalBuildingCount, /30 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /31 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -1126,7 +1126,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(agricultureBrowse.activeBuilding, null);
-  assert.equal(agricultureBrowse.cardCount, 4);
+  assert.equal(agricultureBrowse.cardCount, 5);
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/buildings/agriculture/glass-timber-greenhouse.json"), "category browsing must not load the greenhouse JSON");
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/concepts/agriculture/glass-timber-greenhouse.webp"), "category browsing must not load the greenhouse concept art");
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/buildings/agriculture/stone-timber-tower-windmill.json"), "category browsing must not load the windmill JSON");
@@ -1135,6 +1135,8 @@ try {
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/concepts/agriculture/covered-village-apiary.webp"), "category browsing must not load the apiary concept art");
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/buildings/agriculture/compact-village-stable-barn.json"), "category browsing must not load the stable-barn JSON");
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/concepts/agriculture/compact-village-stable-barn.webp"), "category browsing must not load the stable-barn concept art");
+  assert.ok(!agricultureBrowse.resources.includes("/build_ncm/buildings/agriculture/compact-village-granary.json"), "category browsing must not load the granary JSON");
+  assert.ok(!agricultureBrowse.resources.includes("/build_ncm/concepts/agriculture/compact-village-granary.webp"), "category browsing must not load the granary concept art");
   await evaluate(client, "document.querySelector('[data-building=glass-timber-greenhouse]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'glass-timber-greenhouse' && document.querySelector('#modelSize').textContent === '19 × 20 × 27' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const greenhouse = await evaluate(client, `({
@@ -1297,7 +1299,48 @@ try {
   assert.equal(stableBarn.selectedInUrl, "compact-village-stable-barn");
   assert.ok(stableBarn.resources.includes("/build_ncm/buildings/agriculture/compact-village-stable-barn.json"));
   assert.ok(stableBarn.resources.includes("/build_ncm/concepts/agriculture/compact-village-stable-barn.webp"));
+  assert.ok(!stableBarn.resources.includes("/build_ncm/buildings/agriculture/compact-village-granary.json"), "selecting the stable barn must not load the granary JSON");
+  assert.ok(!stableBarn.resources.includes("/build_ncm/concepts/agriculture/compact-village-granary.webp"), "selecting the stable barn must not load the granary concept art");
   assert.ok(!stableBarn.resources.some((path) => path.endsWith("compact-village-stable-barn-blueprint.js")));
+
+  await evaluate(client, "document.querySelector('[data-building=compact-village-granary]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-granary' && document.querySelector('#modelSize').textContent === '23 × 16 × 21' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const granary = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(granary.activeCategory, "agriculture");
+  assert.match(granary.title, /Compact Village Granary/);
+  assert.equal(granary.modelSize, "23 × 16 × 21");
+  assert.match(granary.payload, /^NCM3:/);
+  assert.equal(granary.voxelCount, 2094);
+  for (const id of [55, 56, 57, 58, 68, 70, 72, 96]) assert.match(granary.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(granary.uncovered, false);
+  assert.equal(granary.glazingDisabled, true);
+  assert.equal(granary.glazingLabel, "Openings: Not applicable");
+  assert.equal(granary.disabledStyles, 6);
+  assert.equal(granary.disabledRoofs, 6);
+  assert.equal(granary.conceptHidden, false);
+  assert.match(granary.conceptAlt, /Compact Village Granary concept reference/);
+  assert.equal(granary.conceptFit, "contain");
+  assert.equal(granary.selectedInUrl, "compact-village-granary");
+  assert.ok(granary.resources.includes("/build_ncm/buildings/agriculture/compact-village-granary.json"));
+  assert.ok(granary.resources.includes("/build_ncm/concepts/agriculture/compact-village-granary.webp"));
+  assert.ok(!granary.resources.some((path) => path.endsWith("compact-village-granary-blueprint.js")));
 
   if (screenshotPath) {
     await evaluate(client, "document.querySelector('.building-library-panel').scrollIntoView({block:'start'}); window.scrollBy(0, -76); new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))");
@@ -1315,7 +1358,7 @@ try {
   })`);
   assert.equal(constructionBrowse.activeBuilding, null, "browsing construction must not select or generate a building");
   assert.equal(constructionBrowse.buildingCount, 3);
-  assert.match(constructionBrowse.previewTitle, /Compact Village Stable Barn/);
+  assert.match(constructionBrowse.previewTitle, /Compact Village Granary/);
   assert.ok(!constructionBrowse.resources.includes("/build_ncm/buildings/construction/timber-building-scaffold.json"), "browsing construction must not load the scaffold JSON");
   assert.ok(!constructionBrowse.resources.includes("/build_ncm/buildings/construction/compact-village-stonemason-workshop.json"), "browsing construction must not load the stonemason workshop JSON");
   assert.ok(!constructionBrowse.resources.includes("/build_ncm/concepts/construction/compact-village-stonemason-workshop.webp"), "browsing construction must not load the stonemason concept art");
@@ -1558,10 +1601,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const stableBarnDirectUrl = new URL(url);
-  stableBarnDirectUrl.searchParams.set("building", "compact-village-stable-barn");
-  await client.send("Page.navigate", { url: stableBarnDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'agriculture' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-stable-barn' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const granaryDirectUrl = new URL(url);
+  granaryDirectUrl.searchParams.set("building", "compact-village-granary");
+  await client.send("Page.navigate", { url: granaryDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'agriculture' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-granary' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -1574,14 +1617,14 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(directSelection.activeCategory, "agriculture");
-  assert.equal(directSelection.activeBuilding, "compact-village-stable-barn");
-  assert.match(directSelection.title, /Compact Village Stable Barn/);
-  assert.equal(directSelection.modelSize, "25 × 17 × 27");
+  assert.equal(directSelection.activeBuilding, "compact-village-granary");
+  assert.match(directSelection.title, /Compact Village Granary/);
+  assert.equal(directSelection.modelSize, "23 × 16 × 21");
   assert.match(directSelection.payload, /^NCM3:/);
   assert.equal(directSelection.conceptComplete, true);
   assert.ok(directSelection.conceptNaturalWidth > 0);
-  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/agriculture/compact-village-stable-barn.webp");
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/agriculture/compact-village-stable-barn.json"));
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/agriculture/compact-village-granary.webp");
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/agriculture/compact-village-granary.json"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

@@ -1,0 +1,421 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-granary",
+  "category": "agriculture",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Compact Village Granary",
+    "es": "Granero Compacto de la Aldea",
+    "fr": "Grenier Compact du Village",
+    "de": "Kompakter Dorfspeicher",
+    "ja": "コンパクトな村の穀物倉",
+    "ru": "Компактный деревенский зерновой амбар",
+    "ko": "소형 마을 곡물창고",
+    "zh-Hant": "緊湊型村莊糧倉",
+    "zh-Hans": "紧凑型村庄粮仓"
+  },
+  "descriptions": {
+    "en": "An enterable compact village granary scaled to the 1.75 m avatar, with a zero-threshold 5 × 7-voxel loading portal and five-voxel central aisle, raised timber grain-bin decks split into six ventilated bays, low wooden dividers, a level rammed-earth work floor, continuous post-and-beam load paths, permanent high ventilation glazing, and a shallow terracotta roof on a complete stepped timber deck.",
+    "es": "Un granero compacto y accesible de aldea, dimensionado para el avatar de 1,75 m, con un portal de carga sin umbral de 5 × 7 vóxeles y un pasillo central de cinco vóxeles, plataformas elevadas de madera divididas en seis depósitos ventilados, separadores bajos de madera, suelo de trabajo nivelado de tierra apisonada, recorridos estructurales continuos de postes y vigas, acristalamiento alto permanente para ventilación y un tejado poco inclinado de terracota sobre un entablado escalonado completo de madera.",
+    "fr": "Un grenier compact de village accessible et dimensionné pour l’avatar de 1,75 m, avec un portail de chargement sans seuil de 5 × 7 voxels et une allée centrale de cinq voxels, des planchers à grain surélevés répartis en six cellules ventilées, des séparations basses en bois, un sol de travail plan en terre compactée, des descentes de charge continues par poteaux et poutres, des vitrages hauts permanents de ventilation et un toit peu pentu en terre cuite sur un platelage bois complet en gradins.",
+    "de": "Ein begehbarer kompakter Dorfspeicher im Maßstab des 1,75-m-Avatars mit einem schwellenlosen Ladeportal von 5 × 7 Voxeln und einem fünf Voxel breiten Mittelgang, erhöhten Holzdecks für sechs belüftete Kornfächer, niedrigen Holzteilungen, einem ebenen Stampflehmboden, durchgehenden Pfosten-Riegel-Lastpfaden, fester hoher Lüftungsverglasung und einem flachen Terrakottadach auf einer vollständigen abgestuften Holzschalung.",
+    "ja": "身長1.75 mのアバターに合わせた、内部に入れるコンパクトな村の穀物倉です。段差のない5 × 7ボクセルの搬入口、幅5ボクセルの中央通路、6つの通気区画に分けた高床式木製穀物台、低い木製仕切り、平らな版築作業床、連続する柱梁の荷重経路、固定式の高窓、そして完全な階段状木屋面で支えた緩勾配のテラコッタ屋根を備えます。",
+    "ru": "Компактный доступный деревенский зерновой амбар в масштабе аватара ростом 1,75 м: погрузочный проём 5 × 7 вокселей без порога, центральный проход шириной пять вокселей, приподнятые деревянные настилы с шестью вентилируемыми зерновыми секциями, низкие деревянные перегородки, ровный рабочий пол из утрамбованной земли, непрерывные несущие линии стоек и балок, постоянные высокие вентиляционные окна и пологая терракотовая крыша на сплошном ступенчатом деревянном настиле.",
+    "ko": "키 1.75 m 아바타 비율에 맞춘 출입 가능한 소형 마을 곡물창고입니다. 문턱 없는 5 × 7복셀 하역문과 폭 5복셀 중앙 통로, 여섯 개의 통풍 저장칸으로 나뉜 높인 목재 곡물 바닥, 낮은 목재 칸막이, 평평한 다짐 흙 작업 바닥, 끊김 없는 기둥·보 하중 경로, 고정식 높은 환기창, 완전한 계단식 목재 지붕판 위의 완만한 테라코타 지붕을 갖춥니다.",
+    "zh-Hant": "依1.75公尺角色比例設計的可進入緊湊型村莊糧倉，設有零門檻5 × 7體素裝卸門、五體素寬中央通道、分成六個通風儲糧格的架高木平台、低位木隔欄、平整夯土工作地面、連續柱樑受力路徑、固定高位通風窗，以及由完整階梯式木屋面承托的淺坡赤陶屋頂。",
+    "zh-Hans": "依1.75米角色比例设计的可进入紧凑型村庄粮仓，设有零门槛5 × 7体素装卸门、五体素宽中央通道、分成六个通风储粮格的架高木平台、低位木隔栏、平整夯土工作地面、连续柱梁受力路径、固定高位通风窗，以及由完整阶梯式木屋面承托的浅坡赤陶屋顶。"
+  },
+  "referenceImage": "concepts/agriculture/compact-village-granary.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "23 × 21 vu",
+  "height": "16 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 19,
+      "z": 15
+    },
+    "wallFootprintMeters": {
+      "x": 7.6,
+      "z": 6
+    },
+    "doorClearVoxels": {
+      "width": 5,
+      "height": 7
+    },
+    "interiorClearHeightVoxels": 7
+  },
+  "preview": {
+    "fitScale": 1.04,
+    "minScale": 4,
+    "yaw": 2.48
+  },
+  "extraMaterials": [
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Low Grain-bin Dividers"
+    },
+    {
+      "materialId": 58,
+      "phase": "openings",
+      "label": "Permanent High Ventilation Windows"
+    },
+    {
+      "materialId": 72,
+      "phase": "foundation",
+      "label": "Level Loading Path and Central Work Floor"
+    }
+  ],
+  "validation": {
+    "expectedVoxelCount": 2094,
+    "expectedPayloadBytes": 437,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      56,
+      57,
+      58,
+      68,
+      70,
+      72,
+      96
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 132,
+      "56": 126,
+      "57": 528,
+      "58": 81,
+      "68": 49,
+      "70": 376,
+      "72": 241,
+      "96": 561
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 11,
+    "supportColumns": [
+      {
+        "label": "Front-left corner post",
+        "x": 2,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-right corner post",
+        "x": 20,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-left corner post",
+        "x": 2,
+        "z": 17,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-right corner post",
+        "x": 20,
+        "z": 17,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-left portal post",
+        "x": 8,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-right portal post",
+        "x": 14,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-left vent post",
+        "x": 8,
+        "z": 17,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-right vent post",
+        "x": 14,
+        "z": 17,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Left center post",
+        "x": 2,
+        "z": 10,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Right center post",
+        "x": 20,
+        "z": 10,
+        "baseY": 0,
+        "topY": 9
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Front portal lintel and roof tie",
+        "axis": "x",
+        "start": 2,
+        "end": 20,
+        "y": 9,
+        "fixed": 3
+      },
+      {
+        "label": "Center roof tie",
+        "axis": "x",
+        "start": 2,
+        "end": 20,
+        "y": 9,
+        "fixed": 10
+      },
+      {
+        "label": "Rear roof tie",
+        "axis": "x",
+        "start": 2,
+        "end": 20,
+        "y": 9,
+        "fixed": 17
+      },
+      {
+        "label": "Left eave beam",
+        "axis": "z",
+        "start": 3,
+        "end": 17,
+        "y": 9,
+        "fixed": 2
+      },
+      {
+        "label": "Right eave beam",
+        "axis": "z",
+        "start": 3,
+        "end": 17,
+        "y": 9,
+        "fixed": 20
+      },
+      {
+        "label": "Longitudinal ridge beam",
+        "axis": "z",
+        "start": 2,
+        "end": 18,
+        "y": 14,
+        "fixed": 11
+      }
+    ],
+    "walkableDecks": [
+      {
+        "label": "Zero-threshold loading path and central aisle",
+        "axis": "z",
+        "start": 0,
+        "end": 16,
+        "crossStart": 9,
+        "crossEnd": 13,
+        "topProfile": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "clearance": 7
+      }
+    ],
+    "diagonalBands": [
+      {
+        "label": "Left shallow terracotta roof slope",
+        "materialId": 96,
+        "x": 0,
+        "y": 10,
+        "z": 2,
+        "width": 3,
+        "height": 1,
+        "depth": 17,
+        "count": 6,
+        "dx": 2,
+        "dy": 1,
+        "dz": 0
+      },
+      {
+        "label": "Right shallow terracotta roof slope",
+        "materialId": 96,
+        "x": 20,
+        "y": 10,
+        "z": 2,
+        "width": 3,
+        "height": 1,
+        "depth": 17,
+        "count": 6,
+        "dx": -2,
+        "dy": 1,
+        "dz": 0
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "Clear front 5 by 7 loading portal",
+        "x": 9,
+        "y": 1,
+        "z": 3,
+        "width": 5,
+        "height": 7,
+        "depth": 1
+      },
+      {
+        "label": "Seven-voxel-high central loading aisle",
+        "x": 9,
+        "y": 1,
+        "z": 4,
+        "width": 5,
+        "height": 7,
+        "depth": 13
+      }
+    ],
+    "approach": [
+      {
+        "x": 11,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 1,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 10,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 16,
+        "topY": 1
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 3,
+        "y": 0,
+        "z": 3,
+        "materialId": 68
+      },
+      {
+        "x": 11,
+        "y": 0,
+        "z": 4,
+        "materialId": 72
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "z": 3,
+        "materialId": 70
+      },
+      {
+        "x": 4,
+        "y": 4,
+        "z": 3,
+        "materialId": 58
+      },
+      {
+        "x": 2,
+        "y": 5,
+        "z": 3,
+        "materialId": 57
+      },
+      {
+        "x": 3,
+        "y": 1,
+        "z": 5,
+        "materialId": 55
+      },
+      {
+        "x": 8,
+        "y": 2,
+        "z": 5,
+        "materialId": 56
+      },
+      {
+        "x": 0,
+        "y": 10,
+        "z": 2,
+        "materialId": 96
+      },
+      {
+        "x": 11,
+        "y": 15,
+        "z": 10,
+        "materialId": 96
+      }
+    ]
+  },
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARcQFSwBSAMABBAADAFICQAABAAEAQECAAMGAAABAQ4AAwYAAAEBAgAREgAAAQECAAQAAAwBARQABAAADAEGAwEFBQAKAQYOAQUFAAoBAgIBAwYHAAECDgEDBgcAAQIJCAMEAAABAgIBERIHAAECAgEEAAcMAQIUAQQABwwCOgQEAwICAAEYAAABOgkEEQQCAAI6AgQGAAICASQAAAI6AgQMAAICASQAAAIDAgADAAkAASQAAAIDAgARAAkAASQAAAIDCAADAAkAAQwAAAIDCAARAAkAAQwAAAIDAgAKAAkAASQAAAEDAgkDEgAAAQMCCQoSAAABAwIJERIAAAEDAgkDAAAOAQMUCQMAAA4BAwsOAgAAEAE4CAIFAAIKATgOAgUAAgoCOAMCCAUCAAEAAAgCOA4CCAUCAAEAAAgCAgIKAxIAAAEAABwCAgQLAw4AAAEAABwCAgYMAwoAAAEAABwCAggNAwYAAAEAABwCAgoOAwIAAAEAABwCAwAJAgIAEAUEAgACAxQJAgIAEAUDAgACOgoMAwIBAAEAABwCBQAKAgIAEAUEAgACBRQKAgIAEAUDAgA"
+  }
+}

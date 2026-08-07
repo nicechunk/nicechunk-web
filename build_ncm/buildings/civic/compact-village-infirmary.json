@@ -1,0 +1,449 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-infirmary",
+  "category": "civic",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Compact Village Infirmary",
+    "es": "Enfermería Compacta de la Aldea",
+    "fr": "Infirmerie Compacte du Village",
+    "de": "Kompakte Dorfkrankenstube",
+    "ja": "コンパクトな村の診療所",
+    "ru": "Компактный деревенский лазарет",
+    "ko": "소형 마을 진료소",
+    "zh-Hant": "緊湊型村莊診療所",
+    "zh-Hans": "紧凑型村庄诊疗所"
+  },
+  "descriptions": {
+    "en": "An enterable compact village infirmary scaled to the 1.75 m avatar, with a zero-threshold 5 × 7-voxel entrance and five-voxel stretcher aisle, four adult-scale 4 × 5-voxel low treatment platforms, timber head rails, paired rear preparation counters, blue ceramic wash basins, a washable white ceramic floor, permanent high daylight and ventilation glazing, continuous post-and-beam load paths, and a shallow terracotta roof on a complete stepped timber deck.",
+    "es": "Una enfermería compacta y accesible de aldea, dimensionada para el avatar de 1,75 m, con una entrada sin umbral de 5 × 7 vóxeles y un pasillo para camillas de cinco vóxeles, cuatro plataformas bajas de tratamiento para adultos de 4 × 5 vóxeles, cabeceros de madera, dos mostradores traseros de preparación, lavabos de cerámica azul, un suelo lavable de cerámica blanca, acristalamiento alto permanente para luz y ventilación, recorridos de carga continuos de postes y vigas y un tejado poco inclinado de terracota sobre un entablado escalonado completo de madera.",
+    "fr": "Une infirmerie compacte de village accessible et dimensionnée pour l’avatar de 1,75 m, avec une entrée sans seuil de 5 × 7 voxels et une allée de brancard de cinq voxels, quatre plateformes basses de soins pour adultes de 4 × 5 voxels, des barres de tête en bois, deux plans de préparation arrière, des lavabos en céramique bleue, un sol lavable en céramique blanche, des vitrages hauts permanents pour la lumière et la ventilation, des descentes de charge continues par poteaux et poutres et un toit peu pentu en terre cuite sur un platelage bois complet en gradins.",
+    "de": "Eine begehbare kompakte Dorfkrankenstube im Maßstab des 1,75-m-Avatars mit einem schwellenlosen Eingang von 5 × 7 Voxeln und einem fünf Voxel breiten Tragegang, vier niedrigen Behandlungsliegen für Erwachsene von 4 × 5 Voxeln, hölzernen Kopfschienen, zwei rückwärtigen Vorbereitungstischen, blauen Keramikwaschbecken, einem abwaschbaren weißen Keramikboden, fester hoher Tageslicht- und Lüftungsverglasung, durchgehenden Pfosten-Riegel-Lastpfaden und einem flachen Terrakottadach auf vollständiger abgestufter Holzschalung.",
+    "ja": "身長1.75 mのアバターに合わせた、内部に入れるコンパクトな村の診療所です。段差のない5 × 7ボクセルの入口、幅5ボクセルの担架通路、大人用4 × 5ボクセルの低い処置台4基、木製ヘッドレール、後部の左右一対の準備台、青い陶器の洗面器、洗浄可能な白い陶器床、固定式の高い採光・換気窓、連続する柱梁の荷重経路、そして完全な階段状木屋面で支えた緩勾配のテラコッタ屋根を備えます。",
+    "ru": "Компактный доступный деревенский лазарет в масштабе аватара ростом 1,75 м: вход 5 × 7 вокселей без порога, проход для носилок шириной пять вокселей, четыре низкие лечебные платформы для взрослых размером 4 × 5 вокселей, деревянные изголовья, две задние подготовительные стойки, синие керамические умывальники, моющийся белый керамический пол, постоянные высокие окна для света и вентиляции, непрерывные несущие линии стоек и балок и пологая терракотовая крыша на сплошном ступенчатом деревянном настиле.",
+    "ko": "키 1.75 m 아바타 비율에 맞춘 출입 가능한 소형 마을 진료소입니다. 문턱 없는 5 × 7복셀 입구와 폭 5복셀 들것 통로, 성인용 4 × 5복셀 낮은 처치대 4개, 목재 머리 난간, 뒤쪽의 한 쌍의 준비대, 파란 세라믹 세면대, 세척 가능한 흰 세라믹 바닥, 고정식 높은 채광·환기창, 끊김 없는 기둥·보 하중 경로, 완전한 계단식 목재 지붕판 위의 완만한 테라코타 지붕을 갖춥니다.",
+    "zh-Hant": "依1.75公尺角色比例設計的可進入緊湊型村莊診療所，設有零門檻5 × 7體素入口、五體素寬擔架通道、四張成人尺度4 × 5體素低位診療臺、木質床頭欄、後部左右準備櫃臺、藍色陶瓷洗手盆、可清洗白色陶瓷地面、固定高位採光通風窗、連續柱樑受力路徑，以及由完整階梯式木屋面承托的淺坡赤陶屋頂。",
+    "zh-Hans": "依1.75米角色比例设计的可进入紧凑型村庄诊疗所，设有零门槛5 × 7体素入口、五体素宽担架通道、四张成人尺度4 × 5体素低位诊疗台、木质床头栏、后部左右准备柜台、蓝色陶瓷洗手盆、可清洗白色陶瓷地面、固定高位采光通风窗、连续柱梁受力路径，以及由完整阶梯式木屋面承托的浅坡赤陶屋顶。"
+  },
+  "referenceImage": "concepts/civic/compact-village-infirmary.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "23 × 23 vu",
+  "height": "16 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 19,
+      "z": 17
+    },
+    "wallFootprintMeters": {
+      "x": 7.6,
+      "z": 6.8
+    },
+    "doorClearVoxels": {
+      "width": 5,
+      "height": 7
+    },
+    "interiorClearHeightVoxels": 7
+  },
+  "preview": {
+    "fitScale": 1.02,
+    "minScale": 4,
+    "yaw": 2.48
+  },
+  "extraMaterials": [
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Treatment-platform Head Rails"
+    },
+    {
+      "materialId": 58,
+      "phase": "openings",
+      "label": "Permanent High Daylight and Ventilation Windows"
+    },
+    {
+      "materialId": 72,
+      "phase": "foundation",
+      "label": "Level Zero-threshold Stretcher Approach"
+    },
+    {
+      "materialId": 74,
+      "phase": "foundation",
+      "label": "Washable Infirmary Work Floor"
+    },
+    {
+      "materialId": 75,
+      "phase": "fixtures",
+      "label": "Rear Wash Basins"
+    }
+  ],
+  "validation": {
+    "expectedVoxelCount": 2154,
+    "expectedPayloadBytes": 453,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      56,
+      57,
+      58,
+      68,
+      70,
+      72,
+      74,
+      75,
+      96
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 96,
+      "56": 32,
+      "57": 574,
+      "58": 93,
+      "68": 53,
+      "70": 396,
+      "72": 25,
+      "74": 250,
+      "75": 8,
+      "96": 627
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 11,
+    "supportColumns": [
+      {
+        "label": "Front-left corner post",
+        "x": 2,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-right corner post",
+        "x": 20,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-left corner post",
+        "x": 2,
+        "z": 19,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-right corner post",
+        "x": 20,
+        "z": 19,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-left portal post",
+        "x": 8,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-right portal post",
+        "x": 14,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-left counter-bay post",
+        "x": 8,
+        "z": 19,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-right counter-bay post",
+        "x": 14,
+        "z": 19,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Left center post",
+        "x": 2,
+        "z": 11,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Right center post",
+        "x": 20,
+        "z": 11,
+        "baseY": 0,
+        "topY": 9
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Front portal lintel and roof tie",
+        "axis": "x",
+        "start": 2,
+        "end": 20,
+        "y": 9,
+        "fixed": 3
+      },
+      {
+        "label": "Center roof tie",
+        "axis": "x",
+        "start": 2,
+        "end": 20,
+        "y": 9,
+        "fixed": 11
+      },
+      {
+        "label": "Rear roof tie",
+        "axis": "x",
+        "start": 2,
+        "end": 20,
+        "y": 9,
+        "fixed": 19
+      },
+      {
+        "label": "Left eave beam",
+        "axis": "z",
+        "start": 3,
+        "end": 19,
+        "y": 9,
+        "fixed": 2
+      },
+      {
+        "label": "Right eave beam",
+        "axis": "z",
+        "start": 3,
+        "end": 19,
+        "y": 9,
+        "fixed": 20
+      },
+      {
+        "label": "Longitudinal ridge beam",
+        "axis": "z",
+        "start": 2,
+        "end": 20,
+        "y": 14,
+        "fixed": 11
+      }
+    ],
+    "walkableDecks": [
+      {
+        "label": "Zero-threshold stretcher path and central aisle",
+        "axis": "z",
+        "start": 0,
+        "end": 18,
+        "crossStart": 9,
+        "crossEnd": 13,
+        "topProfile": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "clearance": 7
+      }
+    ],
+    "diagonalBands": [
+      {
+        "label": "Left shallow terracotta roof slope",
+        "materialId": 96,
+        "x": 0,
+        "y": 10,
+        "z": 2,
+        "width": 3,
+        "height": 1,
+        "depth": 19,
+        "count": 6,
+        "dx": 2,
+        "dy": 1,
+        "dz": 0
+      },
+      {
+        "label": "Right shallow terracotta roof slope",
+        "materialId": 96,
+        "x": 20,
+        "y": 10,
+        "z": 2,
+        "width": 3,
+        "height": 1,
+        "depth": 19,
+        "count": 6,
+        "dx": -2,
+        "dy": 1,
+        "dz": 0
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "Clear front 5 by 7 infirmary portal",
+        "x": 9,
+        "y": 1,
+        "z": 3,
+        "width": 5,
+        "height": 7,
+        "depth": 1
+      },
+      {
+        "label": "Seven-voxel-high central stretcher aisle",
+        "x": 9,
+        "y": 1,
+        "z": 4,
+        "width": 5,
+        "height": 7,
+        "depth": 15
+      }
+    ],
+    "approach": [
+      {
+        "x": 11,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 1,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 11,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 18,
+        "topY": 1
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 3,
+        "y": 0,
+        "z": 3,
+        "materialId": 68
+      },
+      {
+        "x": 4,
+        "y": 0,
+        "z": 4,
+        "materialId": 74
+      },
+      {
+        "x": 11,
+        "y": 0,
+        "z": 4,
+        "materialId": 72
+      },
+      {
+        "x": 7,
+        "y": 2,
+        "z": 3,
+        "materialId": 70
+      },
+      {
+        "x": 4,
+        "y": 4,
+        "z": 3,
+        "materialId": 58
+      },
+      {
+        "x": 2,
+        "y": 5,
+        "z": 3,
+        "materialId": 57
+      },
+      {
+        "x": 4,
+        "y": 1,
+        "z": 6,
+        "materialId": 55
+      },
+      {
+        "x": 4,
+        "y": 2,
+        "z": 10,
+        "materialId": 56
+      },
+      {
+        "x": 5,
+        "y": 2,
+        "z": 17,
+        "materialId": 75
+      },
+      {
+        "x": 0,
+        "y": 10,
+        "z": 2,
+        "materialId": 96
+      },
+      {
+        "x": 11,
+        "y": 15,
+        "z": 11,
+        "materialId": 96
+      }
+    ]
+  },
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARcQFywBSgMABBAADgFICQAABAAEAQECAAMGAAABAQ4AAwYAAAEBAgATEgAAAQECAAQAAA4BARQABAAADgECAgEDBgcAAQIOAQMGBwABAgkIAwQAAAECAgETEgcAAQICAQQABw4BAhQBBAAHDgI6BAQDAgIAARgAAAI6AgQGAAIDASQAAAI6AgQNAAIDASQAAAE6CQQTBAIAAgMCAAMACQABJAAAAgMCABMACQABJAAAAgMIAAMACQABDAAAAgMIABMACQABDAAAAgMCAAsACQABJAAAAQMCCQMSAAABAwIJCxIAAAEDAgkTEgAAAQMCCQMAABABAxQJAwAAEAEDCw4CAAASAgYEAQYDAAQBFgAAAgYEAQwDAAQBFgAAAjgEAgoDAQABFgAAAjgEAhADAQABFgAAAgYEAREDAAEBFgAAAksFAhEBAAEBFgAAAgICCgMSAAABAAAgAgIECwMOAAABAAAgAgIGDAMKAAABAAAgAgIIDQMGAAABAAAgAgIKDgMCAAABAAAgAgMACQICABIFBAIAAgMUCQICABIFAwIAAjoKDAMCAQABAAAgAgUACgICABIFBAIAAgUUCgICABIFAwIA"
+  }
+}

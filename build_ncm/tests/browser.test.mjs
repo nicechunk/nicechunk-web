@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 2);
-  assert.match(initial.totalBuildingCount, /33 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /34 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -373,12 +373,6 @@ try {
   assert.ok(blacksmithShop.resources.includes("/build_ncm/concepts/industrial/compact-village-blacksmith-shop.webp"));
   assert.ok(!blacksmithShop.resources.some((path) => path.endsWith("compact-village-blacksmith-shop-blueprint.js")));
 
-  if (screenshotPath) {
-    await evaluate(client, "document.querySelector('.building-library-panel').scrollIntoView({block:'start'}); window.scrollBy(0, -76); new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))");
-    const screenshot = await client.send("Page.captureScreenshot", { format: "png", fromSurface: true, captureBeyondViewport: false });
-    writeFileSync(screenshotPath, Buffer.from(screenshot.data, "base64"));
-  }
-
   await evaluate(client, "document.querySelector('[data-building-category=fortress]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=grand-castle]') && document.querySelector('[data-building=compact-village-guardhouse]')"));
   const fortressBrowse = await evaluate(client, `({
@@ -462,14 +456,14 @@ try {
   assert.ok(!guardhouse.resources.some((path) => path.endsWith("compact-village-guardhouse-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=civic]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=civic-town-hall]') && document.querySelector('[data-building=covered-village-bread-oven]') && document.querySelector('[data-building=covered-village-notice-board]') && document.querySelector('[data-building=stone-village-sundial]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=civic-town-hall]') && document.querySelector('[data-building=covered-village-bread-oven]') && document.querySelector('[data-building=covered-village-notice-board]') && document.querySelector('[data-building=stone-village-sundial]') && document.querySelector('[data-building=compact-village-infirmary]')"));
   const civicBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     cardCount: document.querySelectorAll('[data-building]').length,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(civicBrowse.activeBuilding, null);
-  assert.equal(civicBrowse.cardCount, 4);
+  assert.equal(civicBrowse.cardCount, 5);
   assert.ok(!civicBrowse.resources.includes("/build_ncm/buildings/civic/civic-town-hall.json"), "category browsing must not load the town-hall JSON");
   assert.ok(!civicBrowse.resources.includes("/build_ncm/buildings/civic/covered-village-bread-oven.json"), "category browsing must not load the bread-oven JSON");
   assert.ok(!civicBrowse.resources.includes("/build_ncm/concepts/civic/covered-village-bread-oven.webp"), "category browsing must not load the bread-oven concept art");
@@ -477,6 +471,8 @@ try {
   assert.ok(!civicBrowse.resources.includes("/build_ncm/concepts/civic/covered-village-notice-board.webp"), "category browsing must not load the notice-board concept art");
   assert.ok(!civicBrowse.resources.includes("/build_ncm/buildings/civic/stone-village-sundial.json"), "category browsing must not load the sundial JSON");
   assert.ok(!civicBrowse.resources.includes("/build_ncm/concepts/civic/stone-village-sundial.webp"), "category browsing must not load the sundial concept art");
+  assert.ok(!civicBrowse.resources.includes("/build_ncm/buildings/civic/compact-village-infirmary.json"), "category browsing must not load the infirmary JSON");
+  assert.ok(!civicBrowse.resources.includes("/build_ncm/concepts/civic/compact-village-infirmary.webp"), "category browsing must not load the infirmary concept art");
   await evaluate(client, "document.querySelector('[data-building=civic-town-hall]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'civic-town-hall' && document.querySelector('#modelSize').textContent === '44 × 42 × 40'"));
   const townHall = await evaluate(client, `({
@@ -676,6 +672,51 @@ try {
   assert.ok(sundial.resources.includes("/build_ncm/buildings/civic/stone-village-sundial.json"));
   assert.ok(sundial.resources.includes("/build_ncm/concepts/civic/stone-village-sundial.webp"));
   assert.ok(!sundial.resources.some((path) => path.endsWith("stone-village-sundial-blueprint.js")));
+
+  await evaluate(client, "document.querySelector('[data-building=compact-village-infirmary]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-infirmary' && document.querySelector('#modelSize').textContent === '23 × 16 × 23' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const infirmary = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(infirmary.activeCategory, "civic");
+  assert.match(infirmary.title, /Compact Village Infirmary/);
+  assert.equal(infirmary.modelSize, "23 × 16 × 23");
+  assert.match(infirmary.payload, /^NCM3:/);
+  assert.equal(infirmary.voxelCount, 2154);
+  for (const id of [55, 56, 57, 58, 68, 70, 72, 74, 75, 96]) assert.match(infirmary.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(infirmary.uncovered, false);
+  assert.equal(infirmary.glazingDisabled, true);
+  assert.equal(infirmary.glazingLabel, "Openings: Not applicable");
+  assert.equal(infirmary.disabledStyles, 6);
+  assert.equal(infirmary.disabledRoofs, 6);
+  assert.equal(infirmary.conceptHidden, false);
+  assert.match(infirmary.conceptAlt, /Compact Village Infirmary concept reference/);
+  assert.equal(infirmary.conceptFit, "contain");
+  assert.equal(infirmary.selectedInUrl, "compact-village-infirmary");
+  assert.ok(infirmary.resources.includes("/build_ncm/buildings/civic/compact-village-infirmary.json"));
+  assert.ok(infirmary.resources.includes("/build_ncm/concepts/civic/compact-village-infirmary.webp"));
+  assert.ok(!infirmary.resources.some((path) => path.endsWith("compact-village-infirmary-blueprint.js")));
+
+  if (screenshotPath) {
+    await evaluate(client, "document.querySelector('.building-library-panel').scrollIntoView({block:'start'}); window.scrollBy(0, -76); new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))");
+    const screenshot = await client.send("Page.captureScreenshot", { format: "png", fromSurface: true, captureBeyondViewport: false });
+    writeFileSync(screenshotPath, Buffer.from(screenshot.data, "base64"));
+  }
 
   await evaluate(client, "document.querySelector('[data-building-category=utility]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=covered-village-well]') && document.querySelector('[data-building=village-twin-lantern]') && document.querySelector('[data-building=covered-village-firewood-rack]')"));
@@ -1697,10 +1738,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const blacksmithDirectUrl = new URL(url);
-  blacksmithDirectUrl.searchParams.set("building", "compact-village-blacksmith-shop");
-  await client.send("Page.navigate", { url: blacksmithDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'industrial' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-blacksmith-shop' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const infirmaryDirectUrl = new URL(url);
+  infirmaryDirectUrl.searchParams.set("building", "compact-village-infirmary");
+  await client.send("Page.navigate", { url: infirmaryDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'civic' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-infirmary' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -1712,15 +1753,15 @@ try {
     conceptPath: new URL(document.querySelector('#conceptImage').currentSrc).pathname,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(directSelection.activeCategory, "industrial");
-  assert.equal(directSelection.activeBuilding, "compact-village-blacksmith-shop");
-  assert.match(directSelection.title, /Compact Village Blacksmith Shop/);
-  assert.equal(directSelection.modelSize, "23 × 18 × 21");
+  assert.equal(directSelection.activeCategory, "civic");
+  assert.equal(directSelection.activeBuilding, "compact-village-infirmary");
+  assert.match(directSelection.title, /Compact Village Infirmary/);
+  assert.equal(directSelection.modelSize, "23 × 16 × 23");
   assert.match(directSelection.payload, /^NCM3:/);
   assert.equal(directSelection.conceptComplete, true);
   assert.ok(directSelection.conceptNaturalWidth > 0);
-  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/industrial/compact-village-blacksmith-shop.webp");
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/industrial/compact-village-blacksmith-shop.json"));
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/civic/compact-village-infirmary.webp");
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/civic/compact-village-infirmary.json"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

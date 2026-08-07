@@ -48,6 +48,7 @@ const GUARDIAN_CHAT_HEAD_CLEARANCE = 0.72;
 const WINDMILL_VERTEX_PACK_SCALE = 64;
 const BUILDING_INSPECTOR_MIN_VIEWPORT = 901;
 const BUILDING_INSPECTOR_MIN_TARGET_PX = 30;
+const BUILDING_INSPECTION_FRAME_MS = 1_000 / 12;
 const BUILDING_OUTLINE_MASK_SCALE = 0.5;
 const BUILDING_OUTLINE_MASK_MAX_SIZE = 640;
 const BUILDING_OUTLINE_MASK_ALPHA_THRESHOLD = 128;
@@ -171,6 +172,7 @@ export function createHomeWorldScene(canvas, options = {}) {
   const actorTimeScale = Math.max(0.25, Math.min(8, Number(options.actorTimeScale) || 1));
   const frameInterval = 1_000 / maxFps;
   let sceneAspect = canvasAspect(canvas);
+  let sceneViewport = viewportRect(window.innerWidth, window.innerHeight);
   const cleanups = [];
   let runtime = null;
   let chunkWorkerObjectUrl = "";
@@ -197,7 +199,12 @@ export function createHomeWorldScene(canvas, options = {}) {
   let pointerClientY = -1;
   let pointerInspectionEligible = false;
   let inspectedBuildingId = "";
+  let buildingInspectionDirty = true;
+  let lastBuildingInspectionAt = -Infinity;
   let guardianChatVisible = false;
+  let guardianProjectionDirty = true;
+  let guardianDialogueKey = "";
+  let guardianAnchors = null;
   let transitionStart = startedAt;
   let cameraTransitioning = false;
   let cameraTransitionWaiting = false;
@@ -262,6 +269,8 @@ export function createHomeWorldScene(canvas, options = {}) {
     cameraStart = resolveCameraPose(timestamp, false);
     focusView = view;
     focusStartedAt = timestamp;
+    buildingInspectionDirty = true;
+    guardianProjectionDirty = true;
     if (runtime && chunks) {
       prioritizePendingTerrainBuilds(view);
       updateDeferredTerrainPriority(view);
@@ -313,6 +322,8 @@ export function createHomeWorldScene(canvas, options = {}) {
   const setCameraTransitioning = (active) => {
     if (cameraTransitioning === active) return;
     cameraTransitioning = active;
+    buildingInspectionDirty = true;
+    guardianProjectionDirty = true;
     canvas.dataset.sceneCameraTransitioning = String(active);
     document.documentElement.classList.toggle("home-camera-transitioning", active);
     if (active) emitBuildingInspection(null);
@@ -351,7 +362,7 @@ export function createHomeWorldScene(canvas, options = {}) {
       cameraState: camera,
     });
     const renderStats = renderer.render(camera, visibleChunks, avatars, overlaysForView(timestamp));
-    updateBuildingInspection(cameraPose);
+    updateBuildingInspection(cameraPose, timestamp);
     updateGuardianChat(cameraPose, timestamp);
     const readinessPending = canvas.dataset.sceneReady !== "true";
     if (readinessPending) lastReadiness = Object.freeze(cameraReadiness(camera));
@@ -665,7 +676,7 @@ export function createHomeWorldScene(canvas, options = {}) {
     return clamp(Math.atan2(MINING_TARGET.y + 0.5 - shoulderY, horizontal), -0.62, 0.34);
   }
 
-  function updateBuildingInspection(cameraPose) {
+  function updateBuildingInspection(cameraPose, timestamp) {
     if (typeof options.onBuildingInspect !== "function") return;
     const enabled = !cameraTransitioning
       && inspectorHoverMedia.matches
@@ -676,8 +687,13 @@ export function createHomeWorldScene(canvas, options = {}) {
       emitBuildingInspection(null);
       return;
     }
+    const animatedOutline = inspectedBuildingId === "tower-windmill";
+    if (!buildingInspectionDirty && !animatedOutline) return;
+    if (timestamp - lastBuildingInspectionAt < BUILDING_INSPECTION_FRAME_MS) return;
+    buildingInspectionDirty = false;
+    lastBuildingInspectionAt = timestamp;
 
-    const canvasRect = canvas.getBoundingClientRect();
+    const canvasRect = sceneViewport;
     const matches = structureInspectables
       .map((target) => projectInspectableStructure(target, cameraPose, canvasRect, {
         x: pointerClientX,
@@ -743,15 +759,23 @@ export function createHomeWorldScene(canvas, options = {}) {
       return;
     }
 
-    const viewport = canvas.getBoundingClientRect();
-    const boyAnchor = projectAvatarChatAnchor(boy, cameraPose, viewport);
-    const girlAnchor = projectAvatarChatAnchor(girl, cameraPose, viewport);
-    if (!boyAnchor || !girlAnchor) {
-      emitGuardianChat(null);
-      return;
-    }
-
     const dialogue = guardianDialogueState(Math.max(0, timestamp - focusStartedAt), reducedMotion.matches);
+    const dialogueKey = `${dialogue.pairIndex}:${dialogue.turn}:${dialogue.gesture}`;
+    const anchorsChanged = guardianProjectionDirty || !guardianAnchors;
+    if (anchorsChanged) {
+      const viewport = sceneViewport;
+      const boyAnchor = projectAvatarChatAnchor(boy, cameraPose, viewport);
+      const girlAnchor = projectAvatarChatAnchor(girl, cameraPose, viewport);
+      if (!boyAnchor || !girlAnchor) {
+        emitGuardianChat(null);
+        return;
+      }
+      guardianAnchors = Object.freeze({ boy: boyAnchor, girl: girlAnchor });
+      guardianProjectionDirty = false;
+    }
+    if (!anchorsChanged && guardianChatVisible && dialogueKey === guardianDialogueKey) return;
+
+    guardianDialogueKey = dialogueKey;
     setSceneData(canvas, "sceneGuardianDialoguePair", dialogue.pairIndex);
     setSceneData(canvas, "sceneGuardianDialogueTurn", dialogue.turn);
     setSceneData(canvas, "sceneGuardianGesture", dialogue.gesture);
@@ -759,8 +783,8 @@ export function createHomeWorldScene(canvas, options = {}) {
       pairIndex: dialogue.pairIndex,
       turn: dialogue.turn,
       gesture: dialogue.gesture,
-      boy: boyAnchor,
-      girl: girlAnchor,
+      boy: guardianAnchors.boy,
+      girl: guardianAnchors.girl,
     });
   }
 
@@ -787,6 +811,9 @@ export function createHomeWorldScene(canvas, options = {}) {
       options.onGuardianChat?.(detail);
       return;
     }
+    guardianAnchors = null;
+    guardianDialogueKey = "";
+    guardianProjectionDirty = true;
     if (!guardianChatVisible) return;
     guardianChatVisible = false;
     delete canvas.dataset.sceneGuardianDialoguePair;
@@ -1083,6 +1110,7 @@ export function createHomeWorldScene(canvas, options = {}) {
       renderer = new runtime.WebGL2VoxelRenderer(canvas, {
         viewDistance: renderViewDistance,
         dpr: sceneDpr,
+        autoResizeEachFrame: false,
         textureTileSize: 32,
         textureSeed: runtime.MAINNET_WORLD_SEED,
         useRegionBatching: false,
@@ -1200,24 +1228,30 @@ export function createHomeWorldScene(canvas, options = {}) {
       animationFrame = 0;
       return;
     }
+    buildingInspectionDirty = true;
+    guardianProjectionDirty = true;
     lastFrameTime = performance.now();
     schedule();
   };
   const handlePointerMove = (event) => {
     if (event.pointerType && event.pointerType !== "mouse") return;
-    pointerX = (event.clientX / Math.max(window.innerWidth, 1) - 0.5) * 2;
-    pointerY = (event.clientY / Math.max(window.innerHeight, 1) - 0.5) * 2;
+    pointerX = ((event.clientX - sceneViewport.left) / Math.max(sceneViewport.width, 1) - 0.5) * 2;
+    pointerY = ((event.clientY - sceneViewport.top) / Math.max(sceneViewport.height, 1) - 0.5) * 2;
     pointerClientX = event.clientX;
     pointerClientY = event.clientY;
     pointerInspectionEligible = isBuildingInspectionPointerTarget(event.target);
+    buildingInspectionDirty = true;
+    guardianProjectionDirty = true;
   };
   const handlePointerOut = (event) => {
     if (event.relatedTarget) return;
     pointerInspectionEligible = false;
+    buildingInspectionDirty = true;
     emitBuildingInspection(null);
   };
   const handleWindowBlur = () => {
     pointerInspectionEligible = false;
+    buildingInspectionDirty = true;
     emitBuildingInspection(null);
   };
 
@@ -1226,6 +1260,9 @@ export function createHomeWorldScene(canvas, options = {}) {
     const contentRect = entries[entries.length - 1]?.contentRect;
     const width = Math.max(1, contentRect?.width || canvas.clientWidth || window.innerWidth || 1);
     const height = Math.max(1, contentRect?.height || canvas.clientHeight || window.innerHeight || 1);
+    sceneViewport = viewportRect(width, height);
+    buildingInspectionDirty = true;
+    guardianProjectionDirty = true;
     sceneAspect = Math.max(0.25, width / height);
     cameraTarget = cameraPoseForView(focusView, sceneAspect);
     renderer?.resize(width, height, sceneDpr);
@@ -3060,6 +3097,21 @@ function isWebGl2UnavailableError(error) {
 function canvasAspect(canvas) {
   const rect = canvas.getBoundingClientRect();
   return Math.max(0.25, (rect.width || window.innerWidth || 1) / Math.max(1, rect.height || window.innerHeight || 1));
+}
+
+function viewportRect(width, height, left = 0, top = 0) {
+  const safeWidth = Math.max(1, Number(width) || 1);
+  const safeHeight = Math.max(1, Number(height) || 1);
+  const safeLeft = Number(left) || 0;
+  const safeTop = Number(top) || 0;
+  return Object.freeze({
+    left: safeLeft,
+    top: safeTop,
+    right: safeLeft + safeWidth,
+    bottom: safeTop + safeHeight,
+    width: safeWidth,
+    height: safeHeight,
+  });
 }
 
 function nextFrame() {

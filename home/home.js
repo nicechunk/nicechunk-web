@@ -28,6 +28,12 @@ const HOME_WORLD_READY_TIMEOUT_MS = 30_000;
 const HOME_WORLD_VISUAL_HANDOFF_TIMEOUT_MS = 4_000;
 const PROGRAMMATIC_SCROLL_TIMEOUT_MS = 2_400;
 const PROGRAMMATIC_SCROLL_TARGET_RATIO = 0.55;
+const CHAPTER_NAVIGATION_KEYS = Object.freeze({
+  ArrowDown: 1,
+  ArrowRight: 1,
+  ArrowUp: -1,
+  ArrowLeft: -1,
+});
 
 claimSiteLoading();
 
@@ -161,6 +167,7 @@ function setupSectionObserver() {
 function setupNavigation() {
   dots.forEach((dot) => {
     dot.addEventListener("click", () => scrollToSection(Number(dot.dataset.sectionIndex || 0)));
+    dot.addEventListener("keydown", handleChapterNavigationKeydown);
   });
 
   document.querySelectorAll("[data-scroll-target]").forEach((link) => {
@@ -169,6 +176,23 @@ function setupNavigation() {
       scrollToSection(Number(link.dataset.scrollTarget || 0));
     });
   });
+}
+
+function handleChapterNavigationKeydown(event) {
+  const currentIndex = dots.indexOf(event.currentTarget);
+  if (currentIndex < 0) return;
+  let targetIndex = currentIndex;
+  if (event.key === "Home") targetIndex = 0;
+  else if (event.key === "End") targetIndex = dots.length - 1;
+  else if (CHAPTER_NAVIGATION_KEYS[event.key]) {
+    targetIndex = clampIndex(currentIndex + CHAPTER_NAVIGATION_KEYS[event.key]);
+  } else {
+    return;
+  }
+  event.preventDefault();
+  event.stopPropagation();
+  dots[targetIndex]?.focus({ preventScroll: true });
+  scrollToSection(targetIndex);
 }
 
 function setupKeyboardPaging() {
@@ -208,6 +232,7 @@ function setActiveSection(index, { force = false, immediate = false } = {}) {
   dots.forEach((dot, dotIndex) => {
     const active = dotIndex === activeSectionIndex;
     dot.classList.toggle("active", active);
+    dot.tabIndex = active ? 0 : -1;
     if (active) dot.setAttribute("aria-current", "step");
     else dot.removeAttribute("aria-current");
   });

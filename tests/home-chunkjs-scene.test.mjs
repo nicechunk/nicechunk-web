@@ -97,6 +97,15 @@ assert.match(html, /href="\/media\/home-world-terrain-ncm4-v1-report\.json"/u);
 assert.match(html, /href="\/media\/home-world-terrain-ncm4-v1\.ncm4b" download/u);
 assert.equal([...html.matchAll(/data-i18n="terrainPouw\./gu)].length, 14);
 assert.match(html, /<footer class="site-footer" data-site-footer-native>/u);
+assert.ok(
+  html.indexOf('<header class="site-header"') < html.indexOf('<nav class="chapter-nav"'),
+  "Primary site navigation must precede chapter navigation in the tab order.",
+);
+assert.deepEqual(
+  [...html.matchAll(/<button class="side-dot[^"]*"[^>]*tabindex="(-?\d+)"/gu)].map((match) => Number(match[1])),
+  [0, -1, -1, -1, -1],
+  "Chapter navigation must expose one initial roving-tabindex stop.",
+);
 assert.equal([...html.matchAll(/class="chapter-copy-line"/gu)].length, 9);
 assert.match(style, /\.chapter-copy-line \{[\s\S]*?box-decoration-break: clone;/u);
 assert.match(style, /\.chapter-card \{[\s\S]*?background: transparent;[\s\S]*?backdrop-filter: none;/u);
@@ -213,6 +222,10 @@ assert.match(home, /container\.addEventListener\("wheel", cancelProgrammaticScro
 assert.match(home, /container\.addEventListener\("touchstart", cancelProgrammaticScroll/u);
 assert.match(home, /requestAnimationFrame\(\(\) => \{\s*if \(programmaticScrollTargetIndex !== null\) return;\s*setActiveSection\(nearestSectionIndex\(\)\);/u);
 assert.match(home, /Math\.abs\(section\.offsetTop - container\.scrollTop\)/u);
+assert.match(home, /const CHAPTER_NAVIGATION_KEYS = Object\.freeze\(\{[\s\S]*?ArrowRight: 1,[\s\S]*?ArrowLeft: -1,/u);
+assert.match(home, /dot\.addEventListener\("keydown", handleChapterNavigationKeydown\)/u);
+assert.match(home, /function handleChapterNavigationKeydown\(event\)[\s\S]*?event\.stopPropagation\(\)[\s\S]*?focus\(\{ preventScroll: true \}\)[\s\S]*?scrollToSection\(targetIndex\)/u);
+assert.match(home, /dot\.tabIndex = active \? 0 : -1;/u);
 
 assert.match(scene, /CHUNK_RUNTIME_BUNDLE = "chunk\/browser-runtime\.js"/u);
 assert.match(scene, /CHUNK_WORKER_BUNDLE = "chunk\/chunk-build-worker\.bundle\.js"/u);
@@ -270,10 +283,20 @@ assert.match(scene, /\(hover: hover\) and \(pointer: fine\)/u);
 assert.match(scene, /setCameraTransitioning\(cameraTransitionActive\(timestamp\)\)/u);
 assert.match(scene, /const enabled = !cameraTransitioning/u);
 assert.match(scene, /canvas\.dataset\.sceneCameraTransitioning = String\(active\)/u);
+assert.match(scene, /autoResizeEachFrame: false,/u);
+assert.match(scene, /sceneViewport = viewportRect\(width, height\);[\s\S]*?renderer\?\.resize\(width, height, sceneDpr\)/u);
+assert.match(scene, /const BUILDING_INSPECTION_FRAME_MS = 1_000 \/ 12;/u);
+assert.match(scene, /if \(!buildingInspectionDirty && !animatedOutline\) return;/u);
+assert.match(scene, /buildingInspectionDirty = true;[\s\S]*?guardianProjectionDirty = true;/u);
 assert.match(scene, /\.terrain-pouw-demo/u);
 assert.match(scene, /const GUARDIAN_DIALOGUE_PAIR_COUNT = 3;/u);
 assert.match(scene, /updateGuardianChat\(cameraPose, timestamp\)/u);
 assert.match(scene, /projectAvatarChatAnchor\(boy, cameraPose, viewport\)/u);
+const guardianChatProjectionBlock = scene.match(/function updateGuardianChat\(cameraPose, timestamp\) \{[\s\S]*?\n  \}\n\n  function projectAvatarChatAnchor/u)?.[0] || "";
+assert.doesNotMatch(guardianChatProjectionBlock, /getBoundingClientRect/u);
+assert.match(guardianChatProjectionBlock, /const viewport = sceneViewport;/u);
+assert.match(guardianChatProjectionBlock, /guardianProjectionDirty \|\| !guardianAnchors/u);
+assert.match(guardianChatProjectionBlock, /dialogueKey === guardianDialogueKey/u);
 assert.match(scene, /options\.onGuardianChat\?\.\(detail\)/u);
 assert.match(scene, /guardianActorGesture\(guardianDialogue, "boy"/u);
 assert.match(scene, /guardianActorGesture\(guardianDialogue, "girl"/u);
@@ -307,6 +330,8 @@ assert.match(style, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.home-scr
 assert.doesNotMatch(style, /@keyframes ncm-building-outline/u);
 assert.doesNotMatch(style, /\.ncm-building-outline \{[^}]*filter:/su);
 assert.match(style, /font: 650 11px\/1\.52/u);
+assert.match(style, /\.site-footer \.brand-mark \{[\s\S]*?min-height: 40px;/u);
+assert.match(style, /\.site-footer \.brand-mark:focus-visible,[\s\S]*?outline: 2px solid var\(--home-green\);[\s\S]*?outline-offset: 3px;/u);
 
 for (const { language, source, public: publicLocale } of homeLocales) {
   assert.deepEqual(publicLocale.buildingInspector, source.buildingInspector, `Public ${language} inspector copy is stale.`);

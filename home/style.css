@@ -2065,7 +2065,7 @@ html[data-i18n-scope="home"] .site-header.scrolled {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  min-height: 36px;
+  min-height: 40px;
   color: #fff;
   font-size: 9px;
   font-weight: 900;
@@ -2106,6 +2106,12 @@ html[data-i18n-scope="home"] .site-header.scrolled {
 .site-footer nav a:hover,
 .site-footer nav a:focus-visible {
   color: var(--home-green);
+}
+
+.site-footer .brand-mark:focus-visible,
+.site-footer nav a:focus-visible {
+  outline: 2px solid var(--home-green);
+  outline-offset: 3px;
 }
 
 .chapter-nav {
@@ -2761,7 +2767,7 @@ html[data-i18n-scope="home"] .site-header.scrolled {
   }
 
   .site-footer .brand-mark {
-    min-height: 30px;
+    min-height: 40px;
     font-size: 7px;
   }
 

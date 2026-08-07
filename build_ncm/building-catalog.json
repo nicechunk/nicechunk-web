@@ -39,6 +39,7 @@
     "buildings/commerce/compact-village-tavern.json",
     "buildings/industrial/compact-village-weaving-workshop.json",
     "buildings/industrial/compact-village-pottery-workshop.json",
-    "buildings/residential/compact-village-farmhouse.json"
+    "buildings/residential/compact-village-farmhouse.json",
+    "buildings/civic/compact-village-chapel.json"
   ]
 }

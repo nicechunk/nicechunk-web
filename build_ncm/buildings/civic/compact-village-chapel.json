@@ -1,0 +1,491 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-chapel",
+  "category": "civic",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Compact Village Chapel",
+    "es": "Capilla Compacta de la Aldea",
+    "fr": "Chapelle Compacte du Village",
+    "de": "Kompakte Dorfkapelle",
+    "ja": "コンパクトな村の礼拝堂",
+    "ru": "Компактная деревенская часовня",
+    "ko": "소형 마을 예배당",
+    "zh-Hant": "緊湊型村莊小教堂",
+    "zh-Hans": "紧凑型村庄小教堂"
+  },
+  "descriptions": {
+    "en": "An enterable 7.6 × 10 m compact village chapel scaled to the 1.75 m avatar, with a zero-threshold 5 × 7-voxel entrance, a five-voxel central aisle, and nine voxels of clear nave height. Four adult seating rows line each side of the aisle before a one-voxel stone altar dais and supported seven-voxel altar table. Permanent high windows, a centered amber altar window, continuous grounded timber ties, a complete steep terracotta roof, and a ridge-supported timber cross keep the ceremonial space structurally and physically credible.",
+    "es": "Una capilla compacta de aldea de 7,6 × 10 m, accesible y dimensionada para el avatar de 1,75 m, con entrada sin umbral de 5 × 7 vóxeles, pasillo central de cinco vóxeles y nueve vóxeles de altura libre en la nave. Cuatro filas de asientos para adultos flanquean el pasillo ante una tarima de altar de piedra de un vóxel y una mesa de altar sustentada de siete vóxeles. Ventanas altas permanentes, una ventana ámbar centrada tras el altar, tirantes continuos de madera apoyados en el suelo, un tejado completo y empinado de terracota y una cruz de madera sostenida por la cumbrera mantienen creíble el espacio ceremonial.",
+    "fr": "Une chapelle compacte de village de 7,6 × 10 m, accessible et dimensionnée pour l’avatar de 1,75 m, avec une entrée sans seuil de 5 × 7 voxels, une allée centrale large de cinq voxels et neuf voxels de hauteur libre dans la nef. Quatre rangées de sièges pour adultes bordent chaque côté de l’allée devant une estrade d’autel en pierre haute d’un voxel et une table d’autel portée de sept voxels. De hautes fenêtres fixes, une fenêtre ambrée centrée derrière l’autel, des tirants continus en bois ancrés au sol, un toit complet et pentu en terre cuite et une croix en bois portée par le faîtage rendent l’espace cérémoniel crédible.",
+    "de": "Eine begehbare kompakte Dorfkapelle von 7,6 × 10 m im Maßstab des 1,75-m-Avatars mit einem schwellenlosen Eingang von 5 × 7 Voxeln, einem fünf Voxel breiten Mittelgang und neun Voxeln lichter Höhe im Schiff. Auf jeder Seite des Gangs stehen vier Sitzreihen für Erwachsene vor einem ein Voxel hohen steinernen Altarpodest und einem abgestützten, sieben Voxel breiten Altartisch. Feste hohe Fenster, ein mittiges bernsteinfarbenes Altarfenster, durchgehende geerdete Holzbinder, ein vollständiges steiles Terrakottadach und ein vom First getragenes Holzkreuz halten den Zeremonialraum baulich und maßstäblich glaubwürdig.",
+    "ja": "身長1.75 mのアバターに合わせた、内部に入れる7.6 × 10 mのコンパクトな村の礼拝堂です。段差のない5 × 7ボクセルの入口、幅5ボクセルの中央通路、9ボクセルの身廊有効高を備えます。通路の両側には大人用座席を4列ずつ配置し、その先に1ボクセル高の石造祭壇壇と、支柱付き幅7ボクセルの祭壇卓を設けます。固定式高窓、中央の琥珀色祭壇窓、地面から連続する木造の梁、完全な急勾配テラコッタ屋根、棟に支持された木製十字架により、儀礼空間の構造と尺度を現実的に保ちます。",
+    "ru": "Компактная доступная деревенская часовня размером 7,6 × 10 м в масштабе аватара ростом 1,75 м: вход 5 × 7 вокселей без порога, центральный проход шириной пять вокселей и девять вокселей чистой высоты нефа. По обеим сторонам прохода расположены четыре ряда взрослых сидений, ведущие к каменному алтарному возвышению высотой один воксель и опирающемуся на стойки алтарному столу шириной семь вокселей. Постоянные высокие окна, центральное янтарное алтарное окно, непрерывные деревянные связи от основания, полная крутая терракотовая крыша и деревянный крест с опорой на конёк сохраняют достоверные конструкцию и масштаб церемониального пространства.",
+    "ko": "키 1.75 m 아바타 비율에 맞춘 출입 가능한 7.6 × 10 m 소형 마을 예배당입니다. 문턱 없는 5 × 7복셀 입구, 폭 5복셀 중앙 통로, 9복셀의 예배실 유효 높이를 갖춥니다. 통로 양쪽에는 성인용 좌석을 네 줄씩 두고, 끝에는 1복셀 높이 석재 제단 단과 지지대가 있는 폭 7복셀 제단상을 배치합니다. 고정식 높은 창, 중앙의 호박색 제단 창, 지면부터 이어지는 목재 결구, 완전한 급경사 테라코타 지붕, 용마루가 받치는 목재 십자가로 의식 공간의 구조와 비율을 현실적으로 유지합니다.",
+    "zh-Hant": "依1.75公尺角色比例設計的可進入7.6 × 10公尺緊湊型村莊小教堂，設有零門檻5 × 7體素入口、五體素寬中央通道，以及九體素身廊淨高。通道兩側各配置四排成人座椅，前方設一體素高石製祭臺及帶支腳的七體素寬祭壇桌。固定高窗、中央琥珀色祭壇窗、由地面連續承托的木構繫梁、完整陡坡赤陶屋頂，以及由屋脊支撐的木製十字架，使禮儀空間的結構與尺度保持可信。",
+    "zh-Hans": "依1.75米角色比例设计的可进入7.6 × 10米紧凑型村庄小教堂，设有零门槛5 × 7体素入口、五体素宽中央通道，以及九体素中殿净高。通道两侧各配置四排成人座椅，前方设一体素高石制祭台及带支脚的七体素宽祭坛桌。固定高窗、中央琥珀色祭坛窗、由地面连续承托的木构系梁、完整陡坡赤陶屋顶，以及由屋脊支撑的木制十字架，使礼仪空间的结构与尺度保持可信。"
+  },
+  "referenceImage": "concepts/civic/compact-village-chapel.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "23 × 30 vu",
+  "height": "29 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 19,
+      "z": 25
+    },
+    "wallFootprintMeters": {
+      "x": 7.6,
+      "z": 10
+    },
+    "doorClearVoxels": {
+      "width": 5,
+      "height": 7
+    },
+    "interiorClearHeightVoxels": 9
+  },
+  "preview": {
+    "fitScale": 0.86,
+    "minScale": 3.4,
+    "yaw": 2.52
+  },
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "fixtures",
+      "label": "Adult Nave Seats and Altar Supports"
+    },
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Adult Seat Backrests"
+    },
+    {
+      "materialId": 58,
+      "phase": "openings",
+      "label": "Permanent High Nave Windows"
+    },
+    {
+      "materialId": 60,
+      "phase": "openings",
+      "label": "Permanent Amber Altar Window"
+    },
+    {
+      "materialId": 69,
+      "phase": "fixtures",
+      "label": "Level Approach, Altar Dais, and Altar Tabletop"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARcdHh4BAQIAAxIAAAEBAgAbEgAAAgECAAQAABYBJAAAAQYDAAQQABYBRQkAAAQAAwICAwEDBQgAARYAAAECCQgDBAEAAgICAQQACBYBJAAAAQIDARsQCAACOgQEAwIDAAEYAAACOgIDBwAEAgIAAA4COhQDBwAEAgIAAA4BPAkEGwQEAAIDAgADAAoAAwAAEAIDFAADAAoAAwAAEAIDCAADAAoAAQwAAAIDAgoDEgAAAwAAEAIDAgoDAAAYASQAAAcCAgsDEgAHAgILGxIAAwUBCwIUGgI3BAEIBAAAAwAACAI4BAEHBAEAAwAACAI3DgEIBAAAAwAACAI4DgEHBAEAAwAACAFFBgEXCgADAjgJAhkAAAEBCAAAAUUIAxkGAAEBAwsVAgAHAAEDCBkCBgAA"
+  },
+  "validation": {
+    "expectedVoxelCount": 2291,
+    "expectedPayloadBytes": 306,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      56,
+      57,
+      58,
+      60,
+      68,
+      69,
+      70,
+      96
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 431,
+      "56": 84,
+      "57": 232,
+      "58": 114,
+      "60": 25,
+      "68": 69,
+      "69": 78,
+      "70": 692,
+      "96": 566
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 11,
+    "supportColumns": [
+      {
+        "label": "Front-left corner post",
+        "x": 2,
+        "z": 3,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Front-right corner post",
+        "x": 20,
+        "z": 3,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-left corner post",
+        "x": 2,
+        "z": 27,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-right corner post",
+        "x": 20,
+        "z": 27,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left entrance post",
+        "x": 8,
+        "z": 3,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right entrance post",
+        "x": 14,
+        "z": 3,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left front nave post",
+        "x": 2,
+        "z": 11,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right front nave post",
+        "x": 20,
+        "z": 11,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left rear nave post",
+        "x": 2,
+        "z": 19,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right rear nave post",
+        "x": 20,
+        "z": 19,
+        "baseY": 0,
+        "topY": 10
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Front entrance tie",
+        "axis": "x",
+        "start": 2,
+        "end": 20,
+        "y": 10,
+        "fixed": 3
+      },
+      {
+        "label": "Front nave tie",
+        "axis": "x",
+        "start": 2,
+        "end": 20,
+        "y": 10,
+        "fixed": 11
+      },
+      {
+        "label": "Rear nave tie",
+        "axis": "x",
+        "start": 2,
+        "end": 20,
+        "y": 10,
+        "fixed": 19
+      },
+      {
+        "label": "Rear altar tie",
+        "axis": "x",
+        "start": 2,
+        "end": 20,
+        "y": 10,
+        "fixed": 27
+      },
+      {
+        "label": "Left eave beam",
+        "axis": "z",
+        "start": 3,
+        "end": 27,
+        "y": 10,
+        "fixed": 2
+      },
+      {
+        "label": "Right eave beam",
+        "axis": "z",
+        "start": 3,
+        "end": 27,
+        "y": 10,
+        "fixed": 20
+      },
+      {
+        "label": "Continuous roof ridge",
+        "axis": "z",
+        "start": 2,
+        "end": 28,
+        "y": 21,
+        "fixed": 11
+      }
+    ],
+    "walkableDecks": [
+      {
+        "label": "Zero-threshold entrance and central chapel aisle",
+        "axis": "z",
+        "start": 0,
+        "end": 22,
+        "crossStart": 9,
+        "crossEnd": 13,
+        "topProfile": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "clearance": 7
+      }
+    ],
+    "gableProfiles": [
+      {
+        "label": "Complete steep terracotta roof section",
+        "x": 1,
+        "baseY": 11,
+        "z": 14,
+        "width": 21,
+        "slopeMaterialId": 96,
+        "ridgeMaterialId": 96
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "Clear front 5 by 7 chapel portal",
+        "x": 9,
+        "y": 1,
+        "z": 3,
+        "width": 5,
+        "height": 7,
+        "depth": 1
+      },
+      {
+        "label": "Nine-voxel-high central chapel aisle",
+        "x": 9,
+        "y": 1,
+        "z": 4,
+        "width": 5,
+        "height": 9,
+        "depth": 19
+      }
+    ],
+    "approach": [
+      {
+        "x": 11,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 1,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 8,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 12,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 16,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 20,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 22,
+        "topY": 1
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 2,
+        "y": 0,
+        "z": 3,
+        "materialId": 57
+      },
+      {
+        "x": 3,
+        "y": 0,
+        "z": 4,
+        "materialId": 55
+      },
+      {
+        "x": 11,
+        "y": 0,
+        "z": 0,
+        "materialId": 69
+      },
+      {
+        "x": 8,
+        "y": 5,
+        "z": 3,
+        "materialId": 57
+      },
+      {
+        "x": 4,
+        "y": 5,
+        "z": 3,
+        "materialId": 58
+      },
+      {
+        "x": 2,
+        "y": 4,
+        "z": 8,
+        "materialId": 58
+      },
+      {
+        "x": 11,
+        "y": 5,
+        "z": 27,
+        "materialId": 60
+      },
+      {
+        "x": 4,
+        "y": 1,
+        "z": 8,
+        "materialId": 55
+      },
+      {
+        "x": 4,
+        "y": 2,
+        "z": 7,
+        "materialId": 56
+      },
+      {
+        "x": 6,
+        "y": 1,
+        "z": 23,
+        "materialId": 69
+      },
+      {
+        "x": 9,
+        "y": 2,
+        "z": 25,
+        "materialId": 56
+      },
+      {
+        "x": 8,
+        "y": 3,
+        "z": 25,
+        "materialId": 69
+      },
+      {
+        "x": 1,
+        "y": 11,
+        "z": 14,
+        "materialId": 96
+      },
+      {
+        "x": 21,
+        "y": 11,
+        "z": 14,
+        "materialId": 96
+      },
+      {
+        "x": 11,
+        "y": 21,
+        "z": 14,
+        "materialId": 96
+      },
+      {
+        "x": 11,
+        "y": 28,
+        "z": 2,
+        "materialId": 57
+      },
+      {
+        "x": 8,
+        "y": 25,
+        "z": 2,
+        "materialId": 57
+      }
+    ]
+  }
+}

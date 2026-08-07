@@ -218,8 +218,8 @@ function validateScaleMetadata(building, template) {
   assert.equal(scale.avatarHeightVoxels, PLAYER_AVATAR_HEIGHT_WORLD_UNITS, `${building.key} avatar scale diverges from Chunk.js`);
   assert.ok(Number.isInteger(scale.wallFootprintVoxels?.x) && scale.wallFootprintVoxels.x > 0 && scale.wallFootprintVoxels.x <= template.size.x, `${building.key} has an invalid wall-footprint width`);
   assert.ok(Number.isInteger(scale.wallFootprintVoxels?.z) && scale.wallFootprintVoxels.z > 0 && scale.wallFootprintVoxels.z <= template.size.z, `${building.key} has an invalid wall-footprint depth`);
-  assert.equal(scale.wallFootprintMeters?.x, scale.wallFootprintVoxels.x * WORLD_BLOCK_SIZE_METERS, `${building.key} wall width is not derived from its voxel footprint`);
-  assert.equal(scale.wallFootprintMeters?.z, scale.wallFootprintVoxels.z * WORLD_BLOCK_SIZE_METERS, `${building.key} wall depth is not derived from its voxel footprint`);
+  assert.equal(scale.wallFootprintMeters?.x, Number((scale.wallFootprintVoxels.x * WORLD_BLOCK_SIZE_METERS).toFixed(6)), `${building.key} wall width is not derived from its voxel footprint`);
+  assert.equal(scale.wallFootprintMeters?.z, Number((scale.wallFootprintVoxels.z * WORLD_BLOCK_SIZE_METERS).toFixed(6)), `${building.key} wall depth is not derived from its voxel footprint`);
   assert.ok(Number.isInteger(scale.doorClearVoxels?.width) && scale.doorClearVoxels.width >= 2, `${building.key} has an invalid clear doorway width`);
   assert.ok(Number.isInteger(scale.doorClearVoxels?.height) && scale.doorClearVoxels.height > PLAYER_AVATAR_HEIGHT_WORLD_UNITS, `${building.key} doorway does not clear the canonical avatar`);
   assert.ok(Number.isInteger(scale.interiorClearHeightVoxels) && scale.interiorClearHeightVoxels > PLAYER_AVATAR_HEIGHT_WORLD_UNITS, `${building.key} interior does not clear the canonical avatar`);

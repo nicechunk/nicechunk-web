@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 1);
-  assert.match(initial.totalBuildingCount, /24 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /25 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -804,16 +804,18 @@ try {
   assert.ok(!gateway.resources.some((path) => path.endsWith("stone-timber-village-gateway-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=commerce]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=covered-market-stall]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=covered-market-stall]') && document.querySelector('[data-building=compact-village-general-store]')"));
   const commerceBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     cardCount: document.querySelectorAll('[data-building]').length,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(commerceBrowse.activeBuilding, null);
-  assert.equal(commerceBrowse.cardCount, 1);
+  assert.equal(commerceBrowse.cardCount, 2);
   assert.ok(!commerceBrowse.resources.includes("/build_ncm/buildings/commerce/covered-market-stall.json"), "category browsing must not load the market-stall JSON");
   assert.ok(!commerceBrowse.resources.includes("/build_ncm/concepts/commerce/covered-market-stall.webp"), "category browsing must not load the market-stall concept art");
+  assert.ok(!commerceBrowse.resources.includes("/build_ncm/buildings/commerce/compact-village-general-store.json"), "category browsing must not load the general-store JSON");
+  assert.ok(!commerceBrowse.resources.includes("/build_ncm/concepts/commerce/compact-village-general-store.webp"), "category browsing must not load the general-store concept art");
   await evaluate(client, "document.querySelector('[data-building=covered-market-stall]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'covered-market-stall' && document.querySelector('#modelSize').textContent === '21 × 21 × 15' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const marketStall = await evaluate(client, `({
@@ -852,6 +854,47 @@ try {
   assert.ok(marketStall.resources.includes("/build_ncm/buildings/commerce/covered-market-stall.json"));
   assert.ok(marketStall.resources.includes("/build_ncm/concepts/commerce/covered-market-stall.webp"));
   assert.ok(!marketStall.resources.some((path) => path.endsWith("covered-market-stall-blueprint.js")));
+  assert.ok(!marketStall.resources.includes("/build_ncm/buildings/commerce/compact-village-general-store.json"), "selecting the market stall must not load the general-store JSON");
+  assert.ok(!marketStall.resources.includes("/build_ncm/concepts/commerce/compact-village-general-store.webp"), "selecting the market stall must not load the general-store concept art");
+
+  await evaluate(client, "document.querySelector('[data-building=compact-village-general-store]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-general-store' && document.querySelector('#modelSize').textContent === '19 × 19 × 15' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const generalStore = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(generalStore.activeCategory, "commerce");
+  assert.match(generalStore.title, /Compact Village General Store/);
+  assert.equal(generalStore.modelSize, "19 × 19 × 15");
+  assert.match(generalStore.payload, /^NCM3:/);
+  assert.equal(generalStore.voxelCount, 1238);
+  for (const id of [55, 56, 57, 58, 64, 68, 69, 96]) assert.match(generalStore.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(generalStore.uncovered, false);
+  assert.equal(generalStore.glazingDisabled, true);
+  assert.equal(generalStore.glazingLabel, "Openings: Not applicable");
+  assert.equal(generalStore.disabledStyles, 6);
+  assert.equal(generalStore.disabledRoofs, 6);
+  assert.equal(generalStore.conceptHidden, false);
+  assert.match(generalStore.conceptAlt, /Compact Village General Store concept reference/);
+  assert.equal(generalStore.conceptFit, "contain");
+  assert.equal(generalStore.selectedInUrl, "compact-village-general-store");
+  assert.ok(generalStore.resources.includes("/build_ncm/buildings/commerce/compact-village-general-store.json"));
+  assert.ok(generalStore.resources.includes("/build_ncm/concepts/commerce/compact-village-general-store.webp"));
+  assert.ok(!generalStore.resources.some((path) => path.endsWith("compact-village-general-store-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=transport]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=stone-timber-footbridge]')"));
@@ -1275,10 +1318,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const guardhouseDirectUrl = new URL(url);
-  guardhouseDirectUrl.searchParams.set("building", "compact-village-guardhouse");
-  await client.send("Page.navigate", { url: guardhouseDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'fortress' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-guardhouse'"));
+  const generalStoreDirectUrl = new URL(url);
+  generalStoreDirectUrl.searchParams.set("building", "compact-village-general-store");
+  await client.send("Page.navigate", { url: generalStoreDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'commerce' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-general-store'"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -1287,13 +1330,13 @@ try {
     payload: document.querySelector('#codeOutput').value,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(directSelection.activeCategory, "fortress");
-  assert.equal(directSelection.activeBuilding, "compact-village-guardhouse");
-  assert.match(directSelection.title, /Compact Village Guardhouse/);
-  assert.equal(directSelection.modelSize, "15 × 17 × 13");
+  assert.equal(directSelection.activeCategory, "commerce");
+  assert.equal(directSelection.activeBuilding, "compact-village-general-store");
+  assert.match(directSelection.title, /Compact Village General Store/);
+  assert.equal(directSelection.modelSize, "19 × 19 × 15");
   assert.match(directSelection.payload, /^NCM3:/);
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/fortress/compact-village-guardhouse.json"));
-  assert.ok(directSelection.resources.includes("/build_ncm/concepts/fortress/compact-village-guardhouse.webp"));
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/commerce/compact-village-general-store.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/concepts/commerce/compact-village-general-store.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

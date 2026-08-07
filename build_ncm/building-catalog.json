@@ -34,6 +34,7 @@
     "buildings/agriculture/compact-village-granary.json",
     "buildings/commerce/compact-village-bakery.json",
     "buildings/industrial/compact-village-blacksmith-shop.json",
-    "buildings/civic/compact-village-infirmary.json"
+    "buildings/civic/compact-village-infirmary.json",
+    "buildings/civic/compact-village-schoolhouse.json"
   ]
 }

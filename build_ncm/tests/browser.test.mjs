@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 2);
-  assert.match(initial.totalBuildingCount, /34 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /35 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -456,14 +456,14 @@ try {
   assert.ok(!guardhouse.resources.some((path) => path.endsWith("compact-village-guardhouse-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=civic]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=civic-town-hall]') && document.querySelector('[data-building=covered-village-bread-oven]') && document.querySelector('[data-building=covered-village-notice-board]') && document.querySelector('[data-building=stone-village-sundial]') && document.querySelector('[data-building=compact-village-infirmary]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=civic-town-hall]') && document.querySelector('[data-building=covered-village-bread-oven]') && document.querySelector('[data-building=covered-village-notice-board]') && document.querySelector('[data-building=stone-village-sundial]') && document.querySelector('[data-building=compact-village-infirmary]') && document.querySelector('[data-building=compact-village-schoolhouse]')"));
   const civicBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     cardCount: document.querySelectorAll('[data-building]').length,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(civicBrowse.activeBuilding, null);
-  assert.equal(civicBrowse.cardCount, 5);
+  assert.equal(civicBrowse.cardCount, 6);
   assert.ok(!civicBrowse.resources.includes("/build_ncm/buildings/civic/civic-town-hall.json"), "category browsing must not load the town-hall JSON");
   assert.ok(!civicBrowse.resources.includes("/build_ncm/buildings/civic/covered-village-bread-oven.json"), "category browsing must not load the bread-oven JSON");
   assert.ok(!civicBrowse.resources.includes("/build_ncm/concepts/civic/covered-village-bread-oven.webp"), "category browsing must not load the bread-oven concept art");
@@ -473,6 +473,8 @@ try {
   assert.ok(!civicBrowse.resources.includes("/build_ncm/concepts/civic/stone-village-sundial.webp"), "category browsing must not load the sundial concept art");
   assert.ok(!civicBrowse.resources.includes("/build_ncm/buildings/civic/compact-village-infirmary.json"), "category browsing must not load the infirmary JSON");
   assert.ok(!civicBrowse.resources.includes("/build_ncm/concepts/civic/compact-village-infirmary.webp"), "category browsing must not load the infirmary concept art");
+  assert.ok(!civicBrowse.resources.includes("/build_ncm/buildings/civic/compact-village-schoolhouse.json"), "category browsing must not load the schoolhouse JSON");
+  assert.ok(!civicBrowse.resources.includes("/build_ncm/concepts/civic/compact-village-schoolhouse.webp"), "category browsing must not load the schoolhouse concept art");
   await evaluate(client, "document.querySelector('[data-building=civic-town-hall]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'civic-town-hall' && document.querySelector('#modelSize').textContent === '44 × 42 × 40'"));
   const townHall = await evaluate(client, `({
@@ -711,6 +713,45 @@ try {
   assert.ok(infirmary.resources.includes("/build_ncm/buildings/civic/compact-village-infirmary.json"));
   assert.ok(infirmary.resources.includes("/build_ncm/concepts/civic/compact-village-infirmary.webp"));
   assert.ok(!infirmary.resources.some((path) => path.endsWith("compact-village-infirmary-blueprint.js")));
+
+  await evaluate(client, "document.querySelector('[data-building=compact-village-schoolhouse]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-schoolhouse' && document.querySelector('#modelSize').textContent === '23 × 16 × 23' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const schoolhouse = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(schoolhouse.activeCategory, "civic");
+  assert.match(schoolhouse.title, /Compact Village Schoolhouse/);
+  assert.equal(schoolhouse.modelSize, "23 × 16 × 23");
+  assert.match(schoolhouse.payload, /^NCM3:/);
+  assert.equal(schoolhouse.voxelCount, 1992);
+  for (const id of [55, 56, 57, 58, 66, 68, 69, 70, 96]) assert.match(schoolhouse.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(schoolhouse.uncovered, false);
+  assert.equal(schoolhouse.glazingDisabled, true);
+  assert.equal(schoolhouse.glazingLabel, "Openings: Not applicable");
+  assert.equal(schoolhouse.disabledStyles, 6);
+  assert.equal(schoolhouse.disabledRoofs, 6);
+  assert.equal(schoolhouse.conceptHidden, false);
+  assert.match(schoolhouse.conceptAlt, /Compact Village Schoolhouse concept reference/);
+  assert.equal(schoolhouse.conceptFit, "contain");
+  assert.equal(schoolhouse.selectedInUrl, "compact-village-schoolhouse");
+  assert.ok(schoolhouse.resources.includes("/build_ncm/buildings/civic/compact-village-schoolhouse.json"));
+  assert.ok(schoolhouse.resources.includes("/build_ncm/concepts/civic/compact-village-schoolhouse.webp"));
+  assert.ok(!schoolhouse.resources.some((path) => path.endsWith("compact-village-schoolhouse-blueprint.js")));
 
   if (screenshotPath) {
     await evaluate(client, "document.querySelector('.building-library-panel').scrollIntoView({block:'start'}); window.scrollBy(0, -76); new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))");
@@ -1738,10 +1779,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const infirmaryDirectUrl = new URL(url);
-  infirmaryDirectUrl.searchParams.set("building", "compact-village-infirmary");
-  await client.send("Page.navigate", { url: infirmaryDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'civic' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-infirmary' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const schoolhouseDirectUrl = new URL(url);
+  schoolhouseDirectUrl.searchParams.set("building", "compact-village-schoolhouse");
+  await client.send("Page.navigate", { url: schoolhouseDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'civic' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-schoolhouse' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -1754,14 +1795,14 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(directSelection.activeCategory, "civic");
-  assert.equal(directSelection.activeBuilding, "compact-village-infirmary");
-  assert.match(directSelection.title, /Compact Village Infirmary/);
+  assert.equal(directSelection.activeBuilding, "compact-village-schoolhouse");
+  assert.match(directSelection.title, /Compact Village Schoolhouse/);
   assert.equal(directSelection.modelSize, "23 × 16 × 23");
   assert.match(directSelection.payload, /^NCM3:/);
   assert.equal(directSelection.conceptComplete, true);
   assert.ok(directSelection.conceptNaturalWidth > 0);
-  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/civic/compact-village-infirmary.webp");
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/civic/compact-village-infirmary.json"));
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/civic/compact-village-schoolhouse.webp");
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/civic/compact-village-schoolhouse.json"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 2);
-  assert.match(initial.totalBuildingCount, /27 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /28 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -206,12 +206,6 @@ try {
   assert.ok(duplex.resources.includes("/build_ncm/buildings/residential/compact-village-duplex.json"));
   assert.ok(duplex.resources.includes("/build_ncm/concepts/residential/compact-village-duplex.webp"));
   assert.ok(!duplex.resources.some((path) => path.endsWith("compact-village-duplex-blueprint.js")));
-
-  if (screenshotPath) {
-    await evaluate(client, "document.querySelector('.building-library-panel').scrollIntoView({block:'start'}); window.scrollBy(0, -76); new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))");
-    const screenshot = await client.send("Page.captureScreenshot", { format: "png", fromSurface: true, captureBeyondViewport: false });
-    writeFileSync(screenshotPath, Buffer.from(screenshot.data, "base64"));
-  }
 
   await evaluate(client, "document.querySelector('[data-building-category=coastal]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'coastal' && document.querySelector('[data-building=seaside-cottage]') && document.querySelector('[data-building=stone-timber-harbor-beacon]')"));
@@ -1262,6 +1256,79 @@ try {
   assert.ok(apiary.resources.includes("/build_ncm/concepts/agriculture/covered-village-apiary.webp"));
   assert.ok(!apiary.resources.some((path) => path.endsWith("covered-village-apiary-blueprint.js")));
 
+  await evaluate(client, "document.querySelector('[data-building-category=construction]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'construction' && document.querySelectorAll('[data-building]').length === 2 && document.querySelector('[data-building=timber-building-scaffold]') && document.querySelector('[data-building=compact-village-stonemason-workshop]')"));
+  const constructionBrowse = await evaluate(client, `({
+    activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
+    buildingCount: document.querySelectorAll('[data-building]').length,
+    previewTitle: document.querySelector('#buildingTitle').textContent,
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(constructionBrowse.activeBuilding, null, "browsing construction must not select or generate a building");
+  assert.equal(constructionBrowse.buildingCount, 2);
+  assert.match(constructionBrowse.previewTitle, /Covered Village Apiary/);
+  assert.ok(!constructionBrowse.resources.includes("/build_ncm/buildings/construction/timber-building-scaffold.json"), "browsing construction must not load the scaffold JSON");
+  assert.ok(!constructionBrowse.resources.includes("/build_ncm/buildings/construction/compact-village-stonemason-workshop.json"), "browsing construction must not load the stonemason workshop JSON");
+  assert.ok(!constructionBrowse.resources.includes("/build_ncm/concepts/construction/compact-village-stonemason-workshop.webp"), "browsing construction must not load the stonemason concept art");
+
+  await evaluate(client, "document.querySelector('[data-building=timber-building-scaffold]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'timber-building-scaffold'"));
+  const scaffold = await evaluate(client, `({
+    title: document.querySelector('#buildingTitle').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.match(scaffold.title, /Timber Building Scaffold/);
+  assert.match(scaffold.payload, /^NCM3:/);
+  assert.ok(scaffold.resources.includes("/build_ncm/buildings/construction/timber-building-scaffold.json"));
+  assert.ok(!scaffold.resources.includes("/build_ncm/buildings/construction/compact-village-stonemason-workshop.json"), "selecting the scaffold must not load the stonemason workshop JSON");
+  assert.ok(!scaffold.resources.includes("/build_ncm/concepts/construction/compact-village-stonemason-workshop.webp"), "selecting the scaffold must not load the stonemason concept art");
+
+  await evaluate(client, "document.querySelector('[data-building=compact-village-stonemason-workshop]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-stonemason-workshop' && document.querySelector('#modelSize').textContent === '23 × 18 × 17' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const stonemason = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(stonemason.activeCategory, "construction");
+  assert.match(stonemason.title, /Compact Village Stonemason Workshop/);
+  assert.equal(stonemason.modelSize, "23 × 18 × 17");
+  assert.match(stonemason.payload, /^NCM3:/);
+  assert.equal(stonemason.voxelCount, 1459);
+  for (const id of [55, 57, 58, 64, 68, 69, 70, 96]) assert.match(stonemason.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(stonemason.uncovered, false);
+  assert.equal(stonemason.glazingDisabled, true);
+  assert.equal(stonemason.glazingLabel, "Openings: Not applicable");
+  assert.equal(stonemason.disabledStyles, 6);
+  assert.equal(stonemason.disabledRoofs, 6);
+  assert.equal(stonemason.conceptHidden, false);
+  assert.match(stonemason.conceptAlt, /Compact Village Stonemason Workshop concept reference/);
+  assert.equal(stonemason.conceptFit, "contain");
+  assert.equal(stonemason.selectedInUrl, "compact-village-stonemason-workshop");
+  assert.ok(stonemason.resources.includes("/build_ncm/buildings/construction/compact-village-stonemason-workshop.json"));
+  assert.ok(stonemason.resources.includes("/build_ncm/concepts/construction/compact-village-stonemason-workshop.webp"));
+  assert.ok(!stonemason.resources.some((path) => path.endsWith("compact-village-stonemason-workshop-blueprint.js")));
+
+  if (screenshotPath) {
+    await evaluate(client, "document.querySelector('.building-library-panel').scrollIntoView({block:'start'}); window.scrollBy(0, -76); new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))");
+    const screenshot = await client.send("Page.captureScreenshot", { format: "png", fromSurface: true, captureBeyondViewport: false });
+    writeFileSync(screenshotPath, Buffer.from(screenshot.data, "base64"));
+  }
+
   await evaluate(client, "document.querySelector('[data-building-category=residential]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=hollow-cottage]')"));
   await evaluate(client, "document.querySelector('[data-building=hollow-cottage]').click()");
@@ -1403,10 +1470,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const duplexDirectUrl = new URL(url);
-  duplexDirectUrl.searchParams.set("building", "compact-village-duplex");
-  await client.send("Page.navigate", { url: duplexDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'residential' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-duplex'"));
+  const stonemasonDirectUrl = new URL(url);
+  stonemasonDirectUrl.searchParams.set("building", "compact-village-stonemason-workshop");
+  await client.send("Page.navigate", { url: stonemasonDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'construction' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-stonemason-workshop'"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -1415,13 +1482,13 @@ try {
     payload: document.querySelector('#codeOutput').value,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(directSelection.activeCategory, "residential");
-  assert.equal(directSelection.activeBuilding, "compact-village-duplex");
-  assert.match(directSelection.title, /Compact Village Duplex/);
-  assert.equal(directSelection.modelSize, "25 × 18 × 17");
+  assert.equal(directSelection.activeCategory, "construction");
+  assert.equal(directSelection.activeBuilding, "compact-village-stonemason-workshop");
+  assert.match(directSelection.title, /Compact Village Stonemason Workshop/);
+  assert.equal(directSelection.modelSize, "23 × 18 × 17");
   assert.match(directSelection.payload, /^NCM3:/);
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/residential/compact-village-duplex.json"));
-  assert.ok(directSelection.resources.includes("/build_ncm/concepts/residential/compact-village-duplex.webp"));
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/construction/compact-village-stonemason-workshop.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/concepts/construction/compact-village-stonemason-workshop.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 1);
-  assert.match(initial.totalBuildingCount, /25 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /26 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -359,12 +359,6 @@ try {
   assert.ok(guardhouse.resources.includes("/build_ncm/buildings/fortress/compact-village-guardhouse.json"));
   assert.ok(guardhouse.resources.includes("/build_ncm/concepts/fortress/compact-village-guardhouse.webp"));
   assert.ok(!guardhouse.resources.some((path) => path.endsWith("compact-village-guardhouse-blueprint.js")));
-
-  if (screenshotPath) {
-    await evaluate(client, "document.querySelector('.building-library-panel').scrollIntoView({block:'start'}); window.scrollBy(0, -76); new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))");
-    const screenshot = await client.send("Page.captureScreenshot", { format: "png", fromSurface: true, captureBeyondViewport: false });
-    writeFileSync(screenshotPath, Buffer.from(screenshot.data, "base64"));
-  }
 
   await evaluate(client, "document.querySelector('[data-building-category=civic]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=civic-town-hall]') && document.querySelector('[data-building=covered-village-bread-oven]') && document.querySelector('[data-building=covered-village-notice-board]') && document.querySelector('[data-building=stone-village-sundial]')"));
@@ -990,16 +984,18 @@ try {
   assert.ok(!handcart.resources.some((path) => path.endsWith("two-wheel-village-handcart-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=mining]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=timber-mine-headframe]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=timber-mine-headframe]') && document.querySelector('[data-building=covered-village-ore-sorting-shed]')"));
   const miningBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     cardCount: document.querySelectorAll('[data-building]').length,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(miningBrowse.activeBuilding, null);
-  assert.equal(miningBrowse.cardCount, 1);
+  assert.equal(miningBrowse.cardCount, 2);
   assert.ok(!miningBrowse.resources.includes("/build_ncm/buildings/mining/timber-mine-headframe.json"), "category browsing must not load the headframe JSON");
   assert.ok(!miningBrowse.resources.includes("/build_ncm/concepts/mining/timber-mine-headframe.webp"), "category browsing must not load the headframe concept art");
+  assert.ok(!miningBrowse.resources.includes("/build_ncm/buildings/mining/covered-village-ore-sorting-shed.json"), "category browsing must not load the ore-sorting-shed JSON");
+  assert.ok(!miningBrowse.resources.includes("/build_ncm/concepts/mining/covered-village-ore-sorting-shed.webp"), "category browsing must not load the ore-sorting-shed concept art");
   await evaluate(client, "document.querySelector('[data-building=timber-mine-headframe]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'timber-mine-headframe' && document.querySelector('#modelSize').textContent === '23 × 27 × 17' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const headframe = await evaluate(client, `({
@@ -1038,6 +1034,53 @@ try {
   assert.ok(headframe.resources.includes("/build_ncm/buildings/mining/timber-mine-headframe.json"));
   assert.ok(headframe.resources.includes("/build_ncm/concepts/mining/timber-mine-headframe.webp"));
   assert.ok(!headframe.resources.some((path) => path.endsWith("timber-mine-headframe-blueprint.js")));
+  assert.ok(!headframe.resources.includes("/build_ncm/buildings/mining/covered-village-ore-sorting-shed.json"), "selecting the headframe must not load the ore-sorting-shed JSON");
+  assert.ok(!headframe.resources.includes("/build_ncm/concepts/mining/covered-village-ore-sorting-shed.webp"), "selecting the headframe must not load the ore-sorting-shed concept art");
+
+  await evaluate(client, "document.querySelector('[data-building=covered-village-ore-sorting-shed]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'covered-village-ore-sorting-shed' && document.querySelector('#modelSize').textContent === '21 × 19 × 17' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const oreSortingShed = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(oreSortingShed.activeCategory, "mining");
+  assert.match(oreSortingShed.title, /Covered Village Ore Sorting Shed/);
+  assert.equal(oreSortingShed.modelSize, "21 × 19 × 17");
+  assert.match(oreSortingShed.payload, /^NCM3:/);
+  assert.equal(oreSortingShed.voxelCount, 1026);
+  for (const id of [55, 56, 57, 64, 68, 69, 96]) assert.match(oreSortingShed.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(oreSortingShed.uncovered, false);
+  assert.equal(oreSortingShed.glazingDisabled, true);
+  assert.equal(oreSortingShed.glazingLabel, "Openings: Not applicable");
+  assert.equal(oreSortingShed.disabledStyles, 6);
+  assert.equal(oreSortingShed.disabledRoofs, 6);
+  assert.equal(oreSortingShed.conceptHidden, false);
+  assert.match(oreSortingShed.conceptAlt, /Covered Village Ore Sorting Shed concept reference/);
+  assert.equal(oreSortingShed.conceptFit, "contain");
+  assert.equal(oreSortingShed.selectedInUrl, "covered-village-ore-sorting-shed");
+  assert.ok(oreSortingShed.resources.includes("/build_ncm/buildings/mining/covered-village-ore-sorting-shed.json"));
+  assert.ok(oreSortingShed.resources.includes("/build_ncm/concepts/mining/covered-village-ore-sorting-shed.webp"));
+  assert.ok(!oreSortingShed.resources.some((path) => path.endsWith("covered-village-ore-sorting-shed-blueprint.js")));
+
+  if (screenshotPath) {
+    await evaluate(client, "document.querySelector('.building-library-panel').scrollIntoView({block:'start'}); window.scrollBy(0, -76); new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))");
+    const screenshot = await client.send("Page.captureScreenshot", { format: "png", fromSurface: true, captureBeyondViewport: false });
+    writeFileSync(screenshotPath, Buffer.from(screenshot.data, "base64"));
+  }
 
   await evaluate(client, "document.querySelector('[data-building-category=agriculture]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=glass-timber-greenhouse]')"));
@@ -1318,10 +1361,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const generalStoreDirectUrl = new URL(url);
-  generalStoreDirectUrl.searchParams.set("building", "compact-village-general-store");
-  await client.send("Page.navigate", { url: generalStoreDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'commerce' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-general-store'"));
+  const oreSortingShedDirectUrl = new URL(url);
+  oreSortingShedDirectUrl.searchParams.set("building", "covered-village-ore-sorting-shed");
+  await client.send("Page.navigate", { url: oreSortingShedDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'mining' && document.querySelector('[data-building].active')?.dataset.building === 'covered-village-ore-sorting-shed'"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -1330,13 +1373,13 @@ try {
     payload: document.querySelector('#codeOutput').value,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(directSelection.activeCategory, "commerce");
-  assert.equal(directSelection.activeBuilding, "compact-village-general-store");
-  assert.match(directSelection.title, /Compact Village General Store/);
-  assert.equal(directSelection.modelSize, "19 × 19 × 15");
+  assert.equal(directSelection.activeCategory, "mining");
+  assert.equal(directSelection.activeBuilding, "covered-village-ore-sorting-shed");
+  assert.match(directSelection.title, /Covered Village Ore Sorting Shed/);
+  assert.equal(directSelection.modelSize, "21 × 19 × 17");
   assert.match(directSelection.payload, /^NCM3:/);
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/commerce/compact-village-general-store.json"));
-  assert.ok(directSelection.resources.includes("/build_ncm/concepts/commerce/compact-village-general-store.webp"));
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/mining/covered-village-ore-sorting-shed.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/concepts/mining/covered-village-ore-sorting-shed.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

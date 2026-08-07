@@ -380,6 +380,14 @@ function validateDiagonalBand(building, voxels, band) {
     assert.ok(Number.isInteger(band[key]), `${building.key} has an invalid ${band.label} ${key}`);
   }
   assert.ok(Number.isInteger(band.materialId) && band.materialId > 0, `${building.key} has an invalid ${band.label} material`);
+  for (const penetration of band.allowedPenetrations ?? []) {
+    for (const key of ["x", "y", "z"]) {
+      assert.ok(Number.isInteger(penetration[key]) && penetration[key] >= 0, `${building.key} has an invalid ${band.label} penetration ${key}`);
+    }
+    for (const key of ["width", "height", "depth", "materialId"]) {
+      assert.ok(Number.isInteger(penetration[key]) && penetration[key] > 0, `${building.key} has an invalid ${band.label} penetration ${key}`);
+    }
+  }
   for (let index = 0; index < band.count; index += 1) {
     const originX = band.x + band.dx * index;
     const originY = band.y + band.dy * index;
@@ -387,7 +395,13 @@ function validateDiagonalBand(building, voxels, band) {
     for (let x = originX; x < originX + band.width; x += 1) {
       for (let y = originY; y < originY + band.height; y += 1) {
         for (let z = originZ; z < originZ + band.depth; z += 1) {
-          assert.equal(voxels.get(`${x},${y},${z}`)?.material, band.materialId, `${building.key} breaks ${band.label} at ${x},${y},${z}`);
+          const penetration = (band.allowedPenetrations ?? []).find((candidate) => (
+            x >= candidate.x && x < candidate.x + candidate.width
+            && y >= candidate.y && y < candidate.y + candidate.height
+            && z >= candidate.z && z < candidate.z + candidate.depth
+          ));
+          const expectedMaterial = penetration?.materialId ?? band.materialId;
+          assert.equal(voxels.get(`${x},${y},${z}`)?.material, expectedMaterial, `${building.key} breaks ${band.label} at ${x},${y},${z}`);
         }
       }
     }

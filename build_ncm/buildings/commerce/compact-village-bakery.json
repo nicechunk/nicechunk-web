@@ -1,0 +1,477 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-bakery",
+  "category": "commerce",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Compact Village Bakery",
+    "es": "Panadería Compacta de la Aldea",
+    "fr": "Boulangerie Compacte du Village",
+    "de": "Kompakte Dorfbäckerei",
+    "ja": "コンパクトな村のパン屋",
+    "ru": "Компактная деревенская пекарня",
+    "ko": "소형 마을 빵집",
+    "zh-Hant": "緊湊型村莊麵包房",
+    "zh-Hans": "紧凑型村庄面包房"
+  },
+  "descriptions": {
+    "en": "An enterable compact village bakery scaled to the 1.75 m avatar, with a zero-threshold 5 × 7-voxel shop portal and five-voxel central aisle, paired low sales counters, two tiers of wall shelving, permanent high glazing, a hollow rear stone-brick bread oven with an open 3 × 3-voxel mouth, a roof-penetrating masonry chimney, continuous post-and-beam load paths, and a shallow terracotta roof on a complete stepped timber deck.",
+    "es": "Una panadería compacta y accesible de aldea, dimensionada para el avatar de 1,75 m, con un portal comercial sin umbral de 5 × 7 vóxeles y un pasillo central de cinco vóxeles, dos mostradores bajos, dos niveles de estanterías murales, acristalamiento alto permanente, un horno de pan hueco de ladrillo de piedra con boca abierta de 3 × 3 vóxeles, una chimenea de mampostería que atraviesa el tejado, recorridos de carga continuos de postes y vigas y un tejado poco inclinado de terracota sobre un entablado escalonado completo de madera.",
+    "fr": "Une boulangerie compacte de village accessible et dimensionnée pour l’avatar de 1,75 m, avec un portail de boutique sans seuil de 5 × 7 voxels et une allée centrale de cinq voxels, deux comptoirs bas, deux niveaux d’étagères murales, des vitrages hauts permanents, un four à pain creux en briques de pierre doté d’une bouche ouverte de 3 × 3 voxels, une cheminée maçonnée traversant le toit, des descentes de charge continues par poteaux et poutres et un toit peu pentu en terre cuite sur un platelage bois complet en gradins.",
+    "de": "Eine begehbare kompakte Dorfbäckerei im Maßstab des 1,75-m-Avatars mit einem schwellenlosen Ladenportal von 5 × 7 Voxeln und einem fünf Voxel breiten Mittelgang, zwei niedrigen Verkaufstheken, zwei Ebenen Wandregalen, fester hoher Verglasung, einem hohlen Steinziegel-Backofen mit offener 3 × 3-Voxel-Mündung, einem gemauerten Schornstein durch das Dach, durchgehenden Pfosten-Riegel-Lastpfaden und einem flachen Terrakottadach auf vollständiger abgestufter Holzschalung.",
+    "ja": "身長1.75 mのアバターに合わせた、内部に入れるコンパクトな村のパン屋です。段差のない5 × 7ボクセルの店入口、幅5ボクセルの中央通路、左右一対の低い販売台、2段の壁棚、固定式の高窓、3 × 3ボクセルの開いた焚き口を持つ中空の石れんがパン窯、屋根を貫く組積造煙突、連続する柱梁の荷重経路、そして完全な階段状木屋面で支えた緩勾配のテラコッタ屋根を備えます。",
+    "ru": "Компактная доступная деревенская пекарня в масштабе аватара ростом 1,75 м: вход в лавку 5 × 7 вокселей без порога, центральный проход шириной пять вокселей, две низкие торговые стойки, два яруса настенных полок, постоянные высокие окна, полая хлебная печь из каменного кирпича с открытым устьем 3 × 3 вокселя, проходящая сквозь крышу каменная труба, непрерывные несущие линии стоек и балок и пологая терракотовая крыша на сплошном ступенчатом деревянном настиле.",
+    "ko": "키 1.75 m 아바타 비율에 맞춘 출입 가능한 소형 마을 빵집입니다. 문턱 없는 5 × 7복셀 가게 입구와 폭 5복셀 중앙 통로, 한 쌍의 낮은 판매대, 2단 벽 선반, 고정식 높은 창, 열린 3 × 3복셀 아궁이를 갖춘 속이 빈 석재 벽돌 화덕, 지붕을 관통하는 조적 굴뚝, 끊김 없는 기둥·보 하중 경로, 완전한 계단식 목재 지붕판 위의 완만한 테라코타 지붕을 갖춥니다.",
+    "zh-Hant": "依1.75公尺角色比例設計的可進入緊湊型村莊麵包房，設有零門檻5 × 7體素店面入口、五體素寬中央通道、左右低位售貨櫃臺、兩層壁架、固定高位採光窗、帶開放3 × 3體素爐口的中空石磚麵包爐、穿出屋頂的砌體煙囪、連續柱樑受力路徑，以及由完整階梯式木屋面承托的淺坡赤陶屋頂。",
+    "zh-Hans": "依1.75米角色比例设计的可进入紧凑型村庄面包房，设有零门槛5 × 7体素店面入口、五体素宽中央通道、左右低位售货柜台、两层壁架、固定高位采光窗、带开放3 × 3体素炉口的中空石砖面包炉、穿出屋顶的砌体烟囱、连续柱梁受力路径，以及由完整阶梯式木屋面承托的浅坡赤陶屋顶。"
+  },
+  "referenceImage": "concepts/commerce/compact-village-bakery.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "21 × 21 vu",
+  "height": "18 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 17,
+      "z": 15
+    },
+    "wallFootprintMeters": {
+      "x": 6.8,
+      "z": 6
+    },
+    "doorClearVoxels": {
+      "width": 5,
+      "height": 7
+    },
+    "interiorClearHeightVoxels": 7
+  },
+  "preview": {
+    "fitScale": 1.05,
+    "minScale": 4,
+    "yaw": 2.48
+  },
+  "extraMaterials": [
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Two-tier Wall Shelving"
+    },
+    {
+      "materialId": 58,
+      "phase": "openings",
+      "label": "Permanent High Shop and Ventilation Windows"
+    },
+    {
+      "materialId": 64,
+      "phase": "fixtures",
+      "label": "Hollow Rear Bread Oven and Chimney Cap"
+    },
+    {
+      "materialId": 72,
+      "phase": "foundation",
+      "label": "Level Zero-threshold Shop Approach"
+    }
+  ],
+  "validation": {
+    "expectedVoxelCount": 1940,
+    "expectedPayloadBytes": 509,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      56,
+      57,
+      58,
+      62,
+      64,
+      68,
+      70,
+      72,
+      96
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 230,
+      "56": 20,
+      "57": 486,
+      "58": 84,
+      "62": 54,
+      "64": 186,
+      "68": 45,
+      "70": 323,
+      "72": 25,
+      "96": 487
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 10,
+    "supportColumns": [
+      {
+        "label": "Front-left corner post",
+        "x": 2,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-right corner post",
+        "x": 18,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-left corner post",
+        "x": 2,
+        "z": 17,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-right corner post",
+        "x": 18,
+        "z": 17,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-left portal post",
+        "x": 7,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-right portal post",
+        "x": 13,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-left oven-bay post",
+        "x": 6,
+        "z": 17,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-right oven-bay post",
+        "x": 14,
+        "z": 17,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Left center post",
+        "x": 2,
+        "z": 10,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Right center post",
+        "x": 18,
+        "z": 10,
+        "baseY": 0,
+        "topY": 9
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Front portal lintel and roof tie",
+        "axis": "x",
+        "start": 2,
+        "end": 18,
+        "y": 9,
+        "fixed": 3
+      },
+      {
+        "label": "Center roof tie",
+        "axis": "x",
+        "start": 2,
+        "end": 18,
+        "y": 9,
+        "fixed": 10
+      },
+      {
+        "label": "Rear roof tie",
+        "axis": "x",
+        "start": 2,
+        "end": 18,
+        "y": 9,
+        "fixed": 17
+      },
+      {
+        "label": "Left eave beam",
+        "axis": "z",
+        "start": 3,
+        "end": 17,
+        "y": 9,
+        "fixed": 2
+      },
+      {
+        "label": "Right eave beam",
+        "axis": "z",
+        "start": 3,
+        "end": 17,
+        "y": 9,
+        "fixed": 18
+      },
+      {
+        "label": "Longitudinal ridge beam",
+        "axis": "z",
+        "start": 2,
+        "end": 18,
+        "y": 13,
+        "fixed": 10
+      }
+    ],
+    "walkableDecks": [
+      {
+        "label": "Zero-threshold shop path and central aisle",
+        "axis": "z",
+        "start": 0,
+        "end": 12,
+        "crossStart": 8,
+        "crossEnd": 12,
+        "topProfile": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "clearance": 7
+      }
+    ],
+    "diagonalBands": [
+      {
+        "label": "Left shallow terracotta roof slope",
+        "materialId": 96,
+        "x": 0,
+        "y": 10,
+        "z": 2,
+        "width": 3,
+        "height": 1,
+        "depth": 17,
+        "count": 5,
+        "dx": 2,
+        "dy": 1,
+        "dz": 0,
+        "allowedPenetrations": [
+          {
+            "label": "Centered masonry chimney through the roof",
+            "x": 9,
+            "y": 14,
+            "z": 15,
+            "width": 3,
+            "height": 1,
+            "depth": 2,
+            "materialId": 62
+          }
+        ]
+      },
+      {
+        "label": "Right shallow terracotta roof slope",
+        "materialId": 96,
+        "x": 18,
+        "y": 10,
+        "z": 2,
+        "width": 3,
+        "height": 1,
+        "depth": 17,
+        "count": 5,
+        "dx": -2,
+        "dy": 1,
+        "dz": 0,
+        "allowedPenetrations": [
+          {
+            "label": "Centered masonry chimney through the roof",
+            "x": 9,
+            "y": 14,
+            "z": 15,
+            "width": 3,
+            "height": 1,
+            "depth": 2,
+            "materialId": 62
+          }
+        ]
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "Clear front 5 by 7 shop portal",
+        "x": 8,
+        "y": 1,
+        "z": 3,
+        "width": 5,
+        "height": 7,
+        "depth": 1
+      },
+      {
+        "label": "Seven-voxel-high central customer and loading aisle",
+        "x": 8,
+        "y": 1,
+        "z": 4,
+        "width": 5,
+        "height": 7,
+        "depth": 9
+      },
+      {
+        "label": "Open 3 by 3 bread-oven mouth and cavity",
+        "x": 9,
+        "y": 2,
+        "z": 13,
+        "width": 3,
+        "height": 3,
+        "depth": 3
+      }
+    ],
+    "approach": [
+      {
+        "x": 10,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 10,
+        "z": 1,
+        "topY": 1
+      },
+      {
+        "x": 10,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 10,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 10,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 10,
+        "z": 9,
+        "topY": 1
+      },
+      {
+        "x": 10,
+        "z": 12,
+        "topY": 1
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 3,
+        "y": 0,
+        "z": 3,
+        "materialId": 68
+      },
+      {
+        "x": 4,
+        "y": 0,
+        "z": 4,
+        "materialId": 55
+      },
+      {
+        "x": 10,
+        "y": 0,
+        "z": 4,
+        "materialId": 72
+      },
+      {
+        "x": 6,
+        "y": 2,
+        "z": 3,
+        "materialId": 70
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "z": 3,
+        "materialId": 58
+      },
+      {
+        "x": 2,
+        "y": 5,
+        "z": 3,
+        "materialId": 57
+      },
+      {
+        "x": 3,
+        "y": 1,
+        "z": 9,
+        "materialId": 55
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "z": 6,
+        "materialId": 56
+      },
+      {
+        "x": 6,
+        "y": 2,
+        "z": 13,
+        "materialId": 64
+      },
+      {
+        "x": 9,
+        "y": 10,
+        "z": 15,
+        "materialId": 62
+      },
+      {
+        "x": 0,
+        "y": 10,
+        "z": 2,
+        "materialId": 96
+      },
+      {
+        "x": 10,
+        "y": 14,
+        "z": 10,
+        "materialId": 96
+      }
+    ]
+  },
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARUSFTMBBgMABA4ADAFICAAABAAEAQECAAMFAAABAQ0AAwUAAAEBAgAREAAAAQECAAQAAAwBARIABAAADAECAgEDBQcAAQINAQMFBwABAggIAwQAAAECAgEREAcAAQICAQQABwwBAhIBBAAHDAI6AwMDAgMAARgAAAI6AgQGAAICASAAAAI6AgQLAAIBASAAAAI6AwQRAgIAARgAAAIDAgADAAkAASAAAAIDAgARAAkAASAAAAIDBwADAAkAAQwAAAIDBgARAAkAARAAAAIDAgAKAAkAASAAAAEDAgkDEAAAAQMCCQoQAAABAwIJERAAAAEDAgkDAAAOAQMSCQMAAA4BAwoNAgAAEAIGAwEJBAEBARQAAAI4AwMGAAAEARwAAAI4AwUGAAAEARwAAAICAgoDEAAAAQAAHAICBAsDDAAAAQAAHAICBgwDCAAAAQAAHAICCA0DBAAAAQAAHAICCg4DAAAAAQAAHAIDAAkCAgAQBAQCAAIDEgkCAgAQBAMCAAI6CQsDAgEAAQAAHAIFAAoCAgAQBAQCAAIFEgoCAgAQBAMCAAFABgENCAADAkAGAg0AAwMBEAAAAUAHAhAGAwACQAYCDQIDAAEMAAABQAkFDQIAAAFABgYNCAADAUAHBw4GAAIBQAgIDwQAAQEHCQgPAgkBAUAIEQ8EAAE"
+  }
+}

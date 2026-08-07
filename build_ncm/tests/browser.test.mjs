@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 2);
-  assert.match(initial.totalBuildingCount, /31 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /32 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -840,18 +840,20 @@ try {
   assert.ok(!gateway.resources.some((path) => path.endsWith("stone-timber-village-gateway-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=commerce]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=covered-market-stall]') && document.querySelector('[data-building=compact-village-general-store]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=covered-market-stall]') && document.querySelector('[data-building=compact-village-general-store]') && document.querySelector('[data-building=compact-village-bakery]')"));
   const commerceBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     cardCount: document.querySelectorAll('[data-building]').length,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(commerceBrowse.activeBuilding, null);
-  assert.equal(commerceBrowse.cardCount, 2);
+  assert.equal(commerceBrowse.cardCount, 3);
   assert.ok(!commerceBrowse.resources.includes("/build_ncm/buildings/commerce/covered-market-stall.json"), "category browsing must not load the market-stall JSON");
   assert.ok(!commerceBrowse.resources.includes("/build_ncm/concepts/commerce/covered-market-stall.webp"), "category browsing must not load the market-stall concept art");
   assert.ok(!commerceBrowse.resources.includes("/build_ncm/buildings/commerce/compact-village-general-store.json"), "category browsing must not load the general-store JSON");
   assert.ok(!commerceBrowse.resources.includes("/build_ncm/concepts/commerce/compact-village-general-store.webp"), "category browsing must not load the general-store concept art");
+  assert.ok(!commerceBrowse.resources.includes("/build_ncm/buildings/commerce/compact-village-bakery.json"), "category browsing must not load the bakery JSON");
+  assert.ok(!commerceBrowse.resources.includes("/build_ncm/concepts/commerce/compact-village-bakery.webp"), "category browsing must not load the bakery concept art");
   await evaluate(client, "document.querySelector('[data-building=covered-market-stall]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'covered-market-stall' && document.querySelector('#modelSize').textContent === '21 × 21 × 15' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const marketStall = await evaluate(client, `({
@@ -930,7 +932,54 @@ try {
   assert.equal(generalStore.selectedInUrl, "compact-village-general-store");
   assert.ok(generalStore.resources.includes("/build_ncm/buildings/commerce/compact-village-general-store.json"));
   assert.ok(generalStore.resources.includes("/build_ncm/concepts/commerce/compact-village-general-store.webp"));
+  assert.ok(!generalStore.resources.includes("/build_ncm/buildings/commerce/compact-village-bakery.json"), "selecting the general store must not load the bakery JSON");
+  assert.ok(!generalStore.resources.includes("/build_ncm/concepts/commerce/compact-village-bakery.webp"), "selecting the general store must not load the bakery concept art");
   assert.ok(!generalStore.resources.some((path) => path.endsWith("compact-village-general-store-blueprint.js")));
+
+  await evaluate(client, "document.querySelector('[data-building=compact-village-bakery]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-bakery' && document.querySelector('#modelSize').textContent === '21 × 18 × 21' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const bakery = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(bakery.activeCategory, "commerce");
+  assert.match(bakery.title, /Compact Village Bakery/);
+  assert.equal(bakery.modelSize, "21 × 18 × 21");
+  assert.match(bakery.payload, /^NCM3:/);
+  assert.equal(bakery.voxelCount, 1940);
+  for (const id of [55, 56, 57, 58, 62, 64, 68, 70, 72, 96]) assert.match(bakery.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(bakery.uncovered, false);
+  assert.equal(bakery.glazingDisabled, true);
+  assert.equal(bakery.glazingLabel, "Openings: Not applicable");
+  assert.equal(bakery.disabledStyles, 6);
+  assert.equal(bakery.disabledRoofs, 6);
+  assert.equal(bakery.conceptHidden, false);
+  assert.match(bakery.conceptAlt, /Compact Village Bakery concept reference/);
+  assert.equal(bakery.conceptFit, "contain");
+  assert.equal(bakery.selectedInUrl, "compact-village-bakery");
+  assert.ok(bakery.resources.includes("/build_ncm/buildings/commerce/compact-village-bakery.json"));
+  assert.ok(bakery.resources.includes("/build_ncm/concepts/commerce/compact-village-bakery.webp"));
+  assert.ok(!bakery.resources.some((path) => path.endsWith("compact-village-bakery-blueprint.js")));
+
+  if (screenshotPath) {
+    await evaluate(client, "document.querySelector('.building-library-panel').scrollIntoView({block:'start'}); window.scrollBy(0, -76); new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))");
+    const screenshot = await client.send("Page.captureScreenshot", { format: "png", fromSurface: true, captureBeyondViewport: false });
+    writeFileSync(screenshotPath, Buffer.from(screenshot.data, "base64"));
+  }
 
   await evaluate(client, "document.querySelector('[data-building-category=transport]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=stone-timber-footbridge]')"));
@@ -1342,12 +1391,6 @@ try {
   assert.ok(granary.resources.includes("/build_ncm/concepts/agriculture/compact-village-granary.webp"));
   assert.ok(!granary.resources.some((path) => path.endsWith("compact-village-granary-blueprint.js")));
 
-  if (screenshotPath) {
-    await evaluate(client, "document.querySelector('.building-library-panel').scrollIntoView({block:'start'}); window.scrollBy(0, -76); new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))");
-    const screenshot = await client.send("Page.captureScreenshot", { format: "png", fromSurface: true, captureBeyondViewport: false });
-    writeFileSync(screenshotPath, Buffer.from(screenshot.data, "base64"));
-  }
-
   await evaluate(client, "document.querySelector('[data-building-category=construction]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'construction' && document.querySelectorAll('[data-building]').length === 3 && document.querySelector('[data-building=timber-building-scaffold]') && document.querySelector('[data-building=compact-village-stonemason-workshop]') && document.querySelector('[data-building=compact-village-carpenter-workshop]')"));
   const constructionBrowse = await evaluate(client, `({
@@ -1601,10 +1644,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const granaryDirectUrl = new URL(url);
-  granaryDirectUrl.searchParams.set("building", "compact-village-granary");
-  await client.send("Page.navigate", { url: granaryDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'agriculture' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-granary' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const bakeryDirectUrl = new URL(url);
+  bakeryDirectUrl.searchParams.set("building", "compact-village-bakery");
+  await client.send("Page.navigate", { url: bakeryDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'commerce' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-bakery' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -1616,15 +1659,15 @@ try {
     conceptPath: new URL(document.querySelector('#conceptImage').currentSrc).pathname,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(directSelection.activeCategory, "agriculture");
-  assert.equal(directSelection.activeBuilding, "compact-village-granary");
-  assert.match(directSelection.title, /Compact Village Granary/);
-  assert.equal(directSelection.modelSize, "23 × 16 × 21");
+  assert.equal(directSelection.activeCategory, "commerce");
+  assert.equal(directSelection.activeBuilding, "compact-village-bakery");
+  assert.match(directSelection.title, /Compact Village Bakery/);
+  assert.equal(directSelection.modelSize, "21 × 18 × 21");
   assert.match(directSelection.payload, /^NCM3:/);
   assert.equal(directSelection.conceptComplete, true);
   assert.ok(directSelection.conceptNaturalWidth > 0);
-  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/agriculture/compact-village-granary.webp");
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/agriculture/compact-village-granary.json"));
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/commerce/compact-village-bakery.webp");
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/commerce/compact-village-bakery.json"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

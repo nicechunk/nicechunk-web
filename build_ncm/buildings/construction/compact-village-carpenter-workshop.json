@@ -1,0 +1,188 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-carpenter-workshop",
+  "category": "construction",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Compact Village Carpenter Workshop",
+    "es": "Taller Compacto de Carpintería de la Aldea",
+    "fr": "Atelier Compact de Menuiserie du Village",
+    "de": "Kompakte Dorf-Tischlerwerkstatt",
+    "ja": "コンパクトな村の木工工房",
+    "ru": "Компактная деревенская столярная мастерская",
+    "ko": "소형 마을 목공 작업장",
+    "zh-Hant": "緊湊型村莊木匠工坊",
+    "zh-Hans": "紧凑型村庄木匠工坊"
+  },
+  "descriptions": {
+    "en": "A compact enterable carpenter workshop scaled to the 1.75 m avatar, with a zero-threshold 5 × 7-voxel work portal, a straight five-voxel cart aisle, a 0.8 m wooden workbench and tool rails on the left, a grounded two-tier lumber rack on the right, permanent clear glazing, a two-course stone-brick plinth, timber-filled end gables and two clear-height trusses carrying a terracotta roof without aisle posts.",
+    "es": "Un taller de carpintería compacto y accesible, dimensionado para el avatar de 1,75 m, con un portal de trabajo de 5 × 7 vóxeles sin umbral, un pasillo recto para carros de cinco vóxeles, un banco de madera de 0,8 m y rieles para herramientas a la izquierda, un estante de madera de dos niveles apoyado en el suelo a la derecha, acristalamiento transparente permanente, un zócalo de ladrillo de piedra de dos hiladas, hastiales rellenos de madera y dos cerchas altas que sostienen el tejado de terracota sin postes en el pasillo.",
+    "fr": "Un atelier de menuiserie compact et accessible, dimensionné pour l’avatar de 1,75 m, avec un portail de travail de 5 × 7 voxels sans seuil, une allée droite de cinq voxels pour les chariots, un établi en bois de 0,8 m et des rails à outils à gauche, un rayonnage à bois à deux niveaux ancré au sol à droite, des vitrages clairs permanents, un soubassement de briques de pierre sur deux assises, des pignons remplis de bois et deux fermes en hauteur portant le toit en terre cuite sans poteau dans l’allée.",
+    "de": "Eine kompakte begehbare Dorf-Tischlerwerkstatt im Maßstab des 1,75-m-Avatars mit einem schwellenlosen 5 × 7 Voxel großen Arbeitsportal, einem geraden fünf Voxel breiten Karrengang, einer 0,8 m hohen Holzwerkbank samt Werkzeugleisten links, einem geerdeten zweistufigen Holzlager rechts, fester Klarverglasung, einem zweilagigen Steinziegelsockel, holzgefüllten Giebeln und zwei hoch liegenden Fachwerkträgern, die das Terrakottadach ohne Gangstützen tragen.",
+    "ja": "身長1.75 mのアバターに合わせた、内部に入れるコンパクトな木工工房です。段差のない5 × 7ボクセルの作業入口、幅5ボクセルの直線運搬通路、左側の高さ0.8 mの木製作業台と工具レール、右側の接地した2段木材棚、固定透明窓、2段積み石れんがの基壇、木張りの妻壁、そして通路に柱を置かずテラコッタ屋根を支える高所の木造トラス2組を備えます。",
+    "ru": "Компактная доступная столярная мастерская в масштабе аватара ростом 1,75 м: рабочий проём 5 × 7 вокселей без порога, прямой проход для тележки шириной пять вокселей, деревянный верстак высотой 0,8 м и рейки для инструментов слева, опирающийся на пол двухъярусный стеллаж для пиломатериалов справа, постоянное прозрачное остекление, двухрядный цоколь из каменного кирпича, деревянное заполнение фронтонов и две высокие фермы, несущие терракотовую крышу без стоек в проходе.",
+    "ko": "키 1.75 m 아바타 비율에 맞춘 출입 가능한 소형 목공 작업장으로, 문턱 없는 5 × 7복셀 작업 출입구, 폭 5복셀의 곧은 운반 통로, 왼쪽의 높이 0.8 m 목재 작업대와 공구 레일, 오른쪽의 바닥 지지 2단 목재 선반, 고정 투명 창, 두 단 석재 벽돌 기단, 목재로 채운 박공 벽과 통로 기둥 없이 테라코타 지붕을 받치는 높은 목재 트러스 두 개를 갖춥니다.",
+    "zh-Hant": "依1.75公尺角色比例設計的可進入緊湊型木匠工坊，設有零門檻5 × 7體素工作門洞、五體素寬直線推車通道、左側0.8公尺高木製工作臺與工具掛軌、右側落地雙層木料架、固定透明窗、兩層石磚基座、木材填充山牆，以及不在通道設柱而承托赤陶屋頂的兩道高位木桁架。",
+    "zh-Hans": "依1.75米角色比例设计的可进入紧凑型木匠工坊，设有零门槛5 × 7体素工作门洞、五体素宽直线推车通道、左侧0.8米高木制工作台与工具挂轨、右侧落地双层木料架、固定透明窗、两层石砖基座、木材填充山墙，以及不在通道设柱而承托赤陶屋顶的两道高位木桁架。"
+  },
+  "referenceImage": "concepts/construction/compact-village-carpenter-workshop.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "19 × 25 vu",
+  "height": "19 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 15,
+      "z": 21
+    },
+    "wallFootprintMeters": {
+      "x": 6,
+      "z": 8.4
+    },
+    "doorClearVoxels": {
+      "width": 5,
+      "height": 7
+    },
+    "interiorClearHeightVoxels": 7
+  },
+  "preview": {
+    "fitScale": 1.01,
+    "minScale": 4,
+    "yaw": 2.5
+  },
+  "extraMaterials": [
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Tool Rails and Bounded Racked Timber Stock"
+    },
+    {
+      "materialId": 58,
+      "phase": "openings",
+      "label": "Permanent Clear-glass Front, Side and Rear Windows"
+    },
+    {
+      "materialId": 64,
+      "phase": "foundation",
+      "label": "Two-course Stone-brick Plinth"
+    }
+  ],
+  "validation": {
+    "expectedVoxelCount": 1811,
+    "expectedPayloadBytes": 481,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [55, 56, 57, 58, 64, 68, 70, 96],
+    "expectedMaterialVoxelCounts": {
+      "55": 495,
+      "56": 30,
+      "57": 433,
+      "58": 90,
+      "64": 104,
+      "68": 52,
+      "70": 170,
+      "96": 437
+    },
+    "requireConnected": true,
+    "supportColumns": [
+      { "label": "Front-left corner post", "x": 2, "z": 2, "baseY": 0, "topY": 9 },
+      { "label": "Front-right corner post", "x": 16, "z": 2, "baseY": 0, "topY": 9 },
+      { "label": "Rear-left corner post", "x": 2, "z": 22, "baseY": 0, "topY": 9 },
+      { "label": "Rear-right corner post", "x": 16, "z": 22, "baseY": 0, "topY": 9 },
+      { "label": "Left portal post", "x": 6, "z": 2, "baseY": 0, "topY": 9 },
+      { "label": "Right portal post", "x": 12, "z": 2, "baseY": 0, "topY": 9 },
+      { "label": "Left first side post", "x": 2, "z": 9, "baseY": 0, "topY": 9 },
+      { "label": "Right first side post", "x": 16, "z": 9, "baseY": 0, "topY": 9 },
+      { "label": "Left second side post", "x": 2, "z": 15, "baseY": 0, "topY": 9 },
+      { "label": "Right second side post", "x": 16, "z": 15, "baseY": 0, "topY": 9 },
+      { "label": "Rear center post", "x": 9, "z": 22, "baseY": 0, "topY": 9 }
+    ],
+    "horizontalSpans": [
+      { "label": "Five-voxel portal lintel", "axis": "x", "start": 2, "end": 16, "y": 8, "fixed": 2 },
+      { "label": "Rear window lintel", "axis": "x", "start": 2, "end": 16, "y": 7, "fixed": 22 },
+      { "label": "Front eave beam", "axis": "x", "start": 2, "end": 16, "y": 9, "fixed": 2 },
+      { "label": "Rear eave beam", "axis": "x", "start": 2, "end": 16, "y": 9, "fixed": 22 },
+      { "label": "Left side eave beam", "axis": "z", "start": 2, "end": 22, "y": 9, "fixed": 2 },
+      { "label": "Right side eave beam", "axis": "z", "start": 2, "end": 22, "y": 9, "fixed": 16 },
+      { "label": "First clear-height truss tie", "axis": "x", "start": 2, "end": 16, "y": 8, "fixed": 9 },
+      { "label": "Second clear-height truss tie", "axis": "x", "start": 2, "end": 16, "y": 8, "fixed": 15 },
+      { "label": "Longitudinal ridge beam", "axis": "z", "start": 2, "end": 22, "y": 17, "fixed": 9 }
+    ],
+    "walkableDecks": [
+      {
+        "label": "Zero-threshold central work aisle",
+        "axis": "z",
+        "start": 0,
+        "end": 21,
+        "crossStart": 7,
+        "crossEnd": 11,
+        "topProfile": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "clearance": 7
+      }
+    ],
+    "diagonalBands": [
+      { "label": "Left terracotta roof slope", "materialId": 96, "x": 0, "y": 9, "z": 1, "width": 1, "height": 1, "depth": 23, "count": 10, "dx": 1, "dy": 1, "dz": 0 },
+      { "label": "Right terracotta roof slope", "materialId": 96, "x": 18, "y": 9, "z": 1, "width": 1, "height": 1, "depth": 23, "count": 10, "dx": -1, "dy": 1, "dz": 0 }
+    ],
+    "openVolumes": [
+      { "label": "Clear 5 by 7 work portal", "x": 7, "y": 1, "z": 2, "width": 5, "height": 7, "depth": 1 },
+      { "label": "Seven-voxel-high central cart aisle", "x": 7, "y": 1, "z": 3, "width": 5, "height": 7, "depth": 19 }
+    ],
+    "approach": [
+      { "x": 9, "z": 0, "topY": 1 },
+      { "x": 9, "z": 1, "topY": 1 },
+      { "x": 9, "z": 2, "topY": 1 },
+      { "x": 9, "z": 3, "topY": 1 },
+      { "x": 9, "z": 9, "topY": 1 },
+      { "x": 9, "z": 21, "topY": 1 }
+    ],
+    "solidPoints": [
+      { "x": 3, "y": 0, "z": 2, "materialId": 68 },
+      { "x": 9, "y": 0, "z": 3, "materialId": 55 },
+      { "x": 9, "y": 0, "z": 0, "materialId": 55 },
+      { "x": 3, "y": 1, "z": 2, "materialId": 64 },
+      { "x": 3, "y": 3, "z": 2, "materialId": 70 },
+      { "x": 3, "y": 4, "z": 2, "materialId": 58 },
+      { "x": 2, "y": 4, "z": 5, "materialId": 58 },
+      { "x": 4, "y": 4, "z": 22, "materialId": 58 },
+      { "x": 6, "y": 4, "z": 2, "materialId": 57 },
+      { "x": 4, "y": 2, "z": 8, "materialId": 55 },
+      { "x": 4, "y": 5, "z": 4, "materialId": 56 },
+      { "x": 14, "y": 2, "z": 10, "materialId": 55 },
+      { "x": 14, "y": 3, "z": 9, "materialId": 56 },
+      { "x": 9, "y": 8, "z": 9, "materialId": 57 },
+      { "x": 9, "y": 17, "z": 10, "materialId": 57 },
+      { "x": 9, "y": 17, "z": 2, "materialId": 55 },
+      { "x": 0, "y": 9, "z": 1, "materialId": 96 },
+      { "x": 0, "y": 9, "z": 0, "materialId": 57 }
+    ]
+  },
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARMTGS4BAQIAAg4AFAEGAwADDAASAQYHAAAEAAICQAIBAwABEgEcAAABQAIBFg4BAAJAAgECBAEAARQAAAICAgMDAAUSARwAAAECAgMWDgUAAgICAwIEBQABFAAAAgMCAAIACQABHAAAAgMCABYACQABHAAAAgMCAAkACQABHAAAAgMCAA8ACQABHAAAAgMGAAIACQABDAAAAQMJABYACQABAwIIAg4AAAEDAgcWDgAAAQMCBwIAABQBAxAHAgAAFAIDAgkCDgAAAQAAKAIDAgkCAAAUARwAAAIDAQkBAAAWASAAAAI6AwQCAgIAARQAAAI6AgQFAAIDAQAAFgI6EAQFAAIDAQAAFgI6BAQWAwIAAQ4AAAIDAwEFAAAAAQQAAAIDAwENAAAAAQQAAAEGAwIFAgAIAjgDBQQCAAABAAAUAgMNAQUABQABBAAAAgMNAREABQABBAAAAQYNAgUCAAwBBg0FBQIADAI4DQMGAgAAAwAABgI4DQYGAgAAAwAABgIDAggJDgAAAQAADAIDAQgJAQAACAICAAIDEQgJAQAACAECAAIDAQgPAQAACAICAAIDEQgPAQAACAECAAEDCRECAAAUBwYCCgIOAAcGAgoWDgADBQAJABIYBgMACQASGA"
+  }
+}

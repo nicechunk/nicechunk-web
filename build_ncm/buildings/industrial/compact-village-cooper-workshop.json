@@ -1,0 +1,561 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-cooper-workshop",
+  "category": "industrial",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Compact Village Cooper's Workshop",
+    "es": "Taller Compacto de Tonelero de la Aldea",
+    "fr": "Atelier Compact de Tonnelier du Village",
+    "de": "Kompakte Dorfküferei",
+    "ja": "コンパクトな村の桶職人工房",
+    "ru": "Компактная деревенская бондарная мастерская",
+    "ko": "소형 마을 통 제작소",
+    "zh-Hant": "緊湊型村莊箍桶匠工坊",
+    "zh-Hans": "紧凑型村庄箍桶匠工坊"
+  },
+  "descriptions": {
+    "en": "An enterable 7.6 × 6.8 m compact village cooper's workshop scaled to the 1.75 m avatar, with a zero-threshold 5 × 7-voxel entrance and a clear five-voxel center aisle. A long grounded shaving bench faces two 1.2 m-wide stave casks with distinct hoop courses, while a high rack stores loose staves above the work zone. A brick steaming hearth, supported stone pan and hollow external deep-stone flue form a credible bending station without blocking the complete terracotta gable roof. Permanent high windows and continuous timber load paths keep the workshop usable, bright and structurally sound.",
+    "es": "Un taller compacto de tonelero de 7,6 × 6,8 m, accesible y dimensionado para el avatar de 1,75 m, con entrada sin umbral de 5 × 7 vóxeles y un pasillo central despejado de cinco vóxeles. Un largo banco de cepillado apoyado en el suelo se enfrenta a dos toneles de duelas de 1,2 m de ancho con aros diferenciados, mientras un estante alto guarda duelas sueltas sobre la zona de trabajo. Un hogar de ladrillo para vapor, una pileta de piedra sustentada y un conducto exterior hueco de piedra profunda forman una estación de curvado creíble sin bloquear el tejado completo de terracota a dos aguas. Las ventanas altas permanentes y los recorridos continuos de carga de madera mantienen el taller útil, luminoso y estable.",
+    "fr": "Un atelier compact de tonnelier de 7,6 × 6,8 m, accessible et dimensionné pour l’avatar de 1,75 m, avec une entrée sans seuil de 5 × 7 voxels et une allée centrale libre de cinq voxels. Un long banc de planage ancré au sol fait face à deux tonneaux à douelles larges de 1,2 m avec des rangs de cercles distincts, tandis qu’un râtelier haut range les douelles libres au-dessus de la zone de travail. Un foyer de chauffe en brique, une cuve en pierre soutenue et un conduit extérieur creux en pierre profonde composent un poste de cintrage crédible sans obstruer le toit complet à deux versants en terre cuite. Des fenêtres hautes permanentes et des descentes de charge continues en bois rendent l’atelier pratique, lumineux et solide.",
+    "de": "Eine begehbare kompakte Dorfküferei von 7,6 × 6,8 m im Maßstab des 1,75-m-Avatars mit einem schwellenlosen Eingang von 5 × 7 Voxeln und einem freien, fünf Voxel breiten Mittelgang. Eine lange, bodengestützte Hobelbank steht zwei 1,2 m breiten Daubenfässern mit klaren Reifenzonen gegenüber; ein hohes Gestell lagert lose Dauben über dem Arbeitsbereich. Eine gemauerte Dämpffeuerstelle, eine abgestützte Steinwanne und ein hohler äußerer Tiefsteinabzug bilden eine glaubwürdige Biegestation, ohne das vollständige Terrakotta-Satteldach zu blockieren. Dauerhafte Hochfenster und durchgehende hölzerne Lastpfade halten die Werkstatt nutzbar, hell und standsicher.",
+    "ja": "身長1.75 mのアバターに合わせた、内部に入れる7.6 × 6.8 mのコンパクトな村の桶職人工房です。段差のない5 × 7ボクセルの入口と幅5ボクセルの明確な中央通路を備えます。床から支えられた長い削り台の向かいには、輪の段が明確な幅1.2 mの樽胴が2基あり、高い棚には作業域の上で予備の樽板を保管します。レンガ造りの蒸し炉、支持された石槽、中空の外付け深層石煙道が、完全なテラコッタ切妻屋根を塞がずに実用的な曲げ加工所を構成します。固定高窓と連続する木造荷重経路により、明るく使いやすい堅牢な工房となっています。",
+    "ru": "Компактная доступная деревенская бондарная мастерская размером 7,6 × 6,8 м в масштабе аватара ростом 1,75 м: вход 5 × 7 вокселей без порога и свободный центральный проход шириной пять вокселей. Длинный закреплённый на полу строгальный верстак стоит напротив двух клёпочных бочек шириной 1,2 м с выраженными рядами обручей, а высокий стеллаж хранит свободные клёпки над рабочей зоной. Кирпичный паровой очаг, опирающаяся каменная ёмкость и полый наружный дымоход из глубинного камня образуют правдоподобное место для гибки, не перекрывая полную двускатную крышу из терракоты. Постоянные высокие окна и непрерывные деревянные несущие линии делают мастерскую удобной, светлой и устойчивой.",
+    "ko": "키 1.75 m 아바타 비율에 맞춘 출입 가능한 7.6 × 6.8 m 소형 마을 통 제작소입니다. 문턱 없는 5 × 7복셀 입구와 폭 5복셀의 비워 둔 중앙 통로를 갖춥니다. 바닥에서 지지되는 긴 깎기 작업대 맞은편에는 띠 층이 분명한 폭 1.2 m 통 몸체 두 개가 있고, 높은 선반은 작업 구역 위에 여분의 통널을 보관합니다. 벽돌 증기 화덕, 지지된 석재 수조, 속이 빈 외부 심층석 연도가 완전한 테라코타 박공지붕을 막지 않으면서 실제적인 휨 작업 구역을 이룹니다. 고정식 높은 창과 연속된 목재 하중 경로로 밝고 쓰기 좋으며 견고한 공방을 완성합니다.",
+    "zh-Hant": "依1.75公尺角色比例設計的可進入7.6 × 6.8公尺緊湊型村莊箍桶匠工坊，設有零門檻5 × 7體素入口與五體素寬暢通中央通道。落地承托的長削木工作臺面向兩具1.2公尺寬、箍圈層次清楚的桶身，高架則在工作區上方收納散裝桶板。磚砌蒸汽爐、受支撐石槽與中空外置深層石煙道構成可信的彎板工位，且不會堵塞完整赤陶雙坡屋頂。固定高窗與連續木構受力路徑，使工坊明亮、可用且結構穩固。",
+    "zh-Hans": "依1.75米角色比例设计的可进入7.6 × 6.8米紧凑型村庄箍桶匠工坊，设有零门槛5 × 7体素入口与五体素宽畅通中央通道。落地承托的长削木工作台面向两具1.2米宽、箍圈层次清楚的桶身，高架则在工作区上方收纳散装桶板。砖砌蒸汽炉、受支撑石槽与中空外置深层石烟道构成可信的弯板工位，且不会堵塞完整赤陶双坡屋顶。固定高窗与连续木构受力路径，使工坊明亮、可用且结构稳固。"
+  },
+  "referenceImage": "concepts/industrial/compact-village-cooper-workshop.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "25 × 25 vu",
+  "height": "24 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 19,
+      "z": 17
+    },
+    "wallFootprintMeters": {
+      "x": 7.6,
+      "z": 6.8
+    },
+    "doorClearVoxels": {
+      "width": 5,
+      "height": 7
+    },
+    "interiorClearHeightVoxels": 7
+  },
+  "preview": {
+    "fitScale": 1,
+    "minScale": 3.8,
+    "yaw": 2.56
+  },
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "fixtures",
+      "label": "Long Shaving-bench Top, Stave Casks and High Stave Rack"
+    },
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Grounded Bench Legs, Clamping Battens and Cask Hoop Courses"
+    },
+    {
+      "materialId": 58,
+      "phase": "openings",
+      "label": "Permanent High Workshop Windows and Entrance Transom"
+    },
+    {
+      "materialId": 62,
+      "phase": "fixtures",
+      "label": "Five-wide Brick Steaming Hearth and Smoke Hood"
+    },
+    {
+      "materialId": 65,
+      "phase": "structure",
+      "label": "Hollow External Deep-stone Flue"
+    },
+    {
+      "materialId": 69,
+      "phase": "fixtures",
+      "label": "Supported Stone Steaming Pan"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARkYGSwBAQIAAxQAEgEBCQAABgADAQEFABUEAAIBBgMABBIAEAICAwEEBgoAARgAAAECCggEBAMAAQIDARQSCgACAgMBBQAKDgEkAAACAwMBBAAKAAEkAAACAwMBFAAKAAEkAAACAwkBBAAHAAEMAAABAwkIBAYAAAIDAwsEEgAAAQAAIAIDAwsFAAAOASQAAAI6AwUIAAICAQAADgI6FQUIAAICAQAADgI6BgUUAgIAARQAAAE6CwkEAgEABwIDDAQSAAcCAwwUEgAGAwMMBBIQAQMMFQQAABADBQIMAxQSAjgFAQcAAQABBgAAAjgFAQ4AAQABBgAAATcFAwcDAAcCOAUECAMAAAIAAAYBPgUBEAQAAwI-BQIQAAIDAQgAAAE-BgITAgIAAT4GAhACAAABRQYEEQIAAAFFBgQTAgAAAUUGBBIAAAABRQgEEgAAAAE-BgUTAgEBAjcRAQgCAwIBAAAMAjgRAQgCAAIBAAAMAjgRBAgCAAIBAAAMATgQBxIEAAACNxAIEgADAAQCAAACQQYBFQAWAgEEAAABQQcBFQAWAAFBBwEXABYA"
+  },
+  "validation": {
+    "expectedVoxelCount": 2154,
+    "expectedPayloadBytes": 429,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      56,
+      57,
+      58,
+      62,
+      65,
+      68,
+      69,
+      70,
+      96
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 411,
+      "56": 61,
+      "57": 182,
+      "58": 54,
+      "62": 65,
+      "65": 184,
+      "68": 107,
+      "69": 8,
+      "70": 686,
+      "96": 396
+    },
+    "requireConnected": true,
+    "supportColumns": [
+      {
+        "label": "Front-left workshop corner",
+        "x": 3,
+        "z": 4,
+        "baseY": 0,
+        "topY": 11
+      },
+      {
+        "label": "Front-right workshop corner",
+        "x": 21,
+        "z": 4,
+        "baseY": 0,
+        "topY": 11
+      },
+      {
+        "label": "Rear-left workshop corner",
+        "x": 3,
+        "z": 20,
+        "baseY": 0,
+        "topY": 11
+      },
+      {
+        "label": "Rear-right workshop corner",
+        "x": 21,
+        "z": 20,
+        "baseY": 0,
+        "topY": 11
+      },
+      {
+        "label": "Left entrance post",
+        "x": 9,
+        "z": 4,
+        "baseY": 0,
+        "topY": 8
+      },
+      {
+        "label": "Right entrance post",
+        "x": 15,
+        "z": 4,
+        "baseY": 0,
+        "topY": 8
+      },
+      {
+        "label": "External flue front-left wall",
+        "x": 6,
+        "z": 21,
+        "baseY": 0,
+        "topY": 23
+      },
+      {
+        "label": "External flue rear-right wall",
+        "x": 8,
+        "z": 23,
+        "baseY": 0,
+        "topY": 23
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Entrance lintel",
+        "axis": "x",
+        "start": 9,
+        "end": 15,
+        "y": 8,
+        "fixed": 4
+      },
+      {
+        "label": "Front eave beam",
+        "axis": "x",
+        "start": 3,
+        "end": 21,
+        "y": 11,
+        "fixed": 4
+      },
+      {
+        "label": "Rear eave beam",
+        "axis": "x",
+        "start": 3,
+        "end": 21,
+        "y": 11,
+        "fixed": 20
+      },
+      {
+        "label": "Left eave beam",
+        "axis": "z",
+        "start": 4,
+        "end": 20,
+        "y": 11,
+        "fixed": 3
+      },
+      {
+        "label": "Right eave beam",
+        "axis": "z",
+        "start": 4,
+        "end": 20,
+        "y": 11,
+        "fixed": 21
+      },
+      {
+        "label": "Continuous ridge beam",
+        "axis": "z",
+        "start": 4,
+        "end": 20,
+        "y": 21,
+        "fixed": 12
+      },
+      {
+        "label": "High stave rack",
+        "axis": "x",
+        "start": 16,
+        "end": 20,
+        "y": 7,
+        "fixed": 18
+      }
+    ],
+    "gableProfiles": [
+      {
+        "label": "Front roof profile",
+        "x": 2,
+        "baseY": 12,
+        "z": 3,
+        "width": 21,
+        "slopeMaterialId": 96,
+        "ridgeMaterialId": 96
+      },
+      {
+        "label": "Rear roof profile beside external flue",
+        "x": 2,
+        "baseY": 12,
+        "z": 20,
+        "width": 21,
+        "slopeMaterialId": 96,
+        "ridgeMaterialId": 96
+      }
+    ],
+    "closedVoxelLoops": [
+      {
+        "label": "Front cask upper hoop",
+        "materialId": 56,
+        "points": [
+          [
+            17,
+            4,
+            8
+          ],
+          [
+            18,
+            4,
+            8
+          ],
+          [
+            19,
+            4,
+            8
+          ],
+          [
+            19,
+            4,
+            9
+          ],
+          [
+            19,
+            4,
+            10
+          ],
+          [
+            18,
+            4,
+            10
+          ],
+          [
+            17,
+            4,
+            10
+          ],
+          [
+            17,
+            4,
+            9
+          ]
+        ]
+      },
+      {
+        "label": "Rear cask upper hoop",
+        "materialId": 56,
+        "points": [
+          [
+            17,
+            4,
+            14
+          ],
+          [
+            18,
+            4,
+            14
+          ],
+          [
+            19,
+            4,
+            14
+          ],
+          [
+            19,
+            4,
+            15
+          ],
+          [
+            19,
+            4,
+            16
+          ],
+          [
+            18,
+            4,
+            16
+          ],
+          [
+            17,
+            4,
+            16
+          ],
+          [
+            17,
+            4,
+            15
+          ]
+        ]
+      },
+      {
+        "label": "Open flue crown",
+        "materialId": 65,
+        "points": [
+          [
+            6,
+            23,
+            21
+          ],
+          [
+            7,
+            23,
+            21
+          ],
+          [
+            8,
+            23,
+            21
+          ],
+          [
+            8,
+            23,
+            22
+          ],
+          [
+            8,
+            23,
+            23
+          ],
+          [
+            7,
+            23,
+            23
+          ],
+          [
+            6,
+            23,
+            23
+          ],
+          [
+            6,
+            23,
+            22
+          ]
+        ]
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "zero-threshold five-wide entrance",
+        "x": 10,
+        "y": 1,
+        "z": 3,
+        "width": 5,
+        "height": 7,
+        "depth": 2
+      },
+      {
+        "label": "five-wide center work aisle",
+        "x": 10,
+        "y": 1,
+        "z": 5,
+        "width": 5,
+        "height": 7,
+        "depth": 12
+      },
+      {
+        "label": "open steaming-hearth firebox",
+        "x": 6,
+        "y": 3,
+        "z": 16,
+        "width": 3,
+        "height": 1,
+        "depth": 1
+      },
+      {
+        "label": "hollow stone steaming-pan center",
+        "x": 7,
+        "y": 4,
+        "z": 18,
+        "width": 1,
+        "height": 1,
+        "depth": 1
+      },
+      {
+        "label": "continuous hollow external flue",
+        "x": 7,
+        "y": 1,
+        "z": 22,
+        "width": 1,
+        "height": 23,
+        "depth": 1
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 5,
+        "y": 3,
+        "z": 10,
+        "materialId": 55
+      },
+      {
+        "x": 5,
+        "y": 4,
+        "z": 11,
+        "materialId": 56
+      },
+      {
+        "x": 6,
+        "y": 4,
+        "z": 17,
+        "materialId": 69
+      },
+      {
+        "x": 5,
+        "y": 2,
+        "z": 18,
+        "materialId": 62
+      },
+      {
+        "x": 18,
+        "y": 2,
+        "z": 9,
+        "materialId": 55
+      },
+      {
+        "x": 18,
+        "y": 4,
+        "z": 15,
+        "materialId": 56
+      },
+      {
+        "x": 18,
+        "y": 10,
+        "z": 18,
+        "materialId": 55
+      },
+      {
+        "x": 3,
+        "y": 6,
+        "z": 9,
+        "materialId": 58
+      },
+      {
+        "x": 16,
+        "y": 6,
+        "z": 20,
+        "materialId": 58
+      },
+      {
+        "x": 6,
+        "y": 23,
+        "z": 22,
+        "materialId": 65
+      }
+    ],
+    "approach": [
+      {
+        "x": 12,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 12,
+        "z": 1,
+        "topY": 1
+      },
+      {
+        "x": 12,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 12,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 12,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 12,
+        "z": 5,
+        "topY": 1
+      }
+    ]
+  }
+}

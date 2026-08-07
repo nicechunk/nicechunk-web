@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 3);
-  assert.match(initial.totalBuildingCount, /42 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /43 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -251,17 +251,21 @@ try {
   assert.ok(!farmhouse.resources.some((path) => path.endsWith("compact-village-farmhouse-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=coastal]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'coastal' && document.querySelector('[data-building=seaside-cottage]') && document.querySelector('[data-building=stone-timber-harbor-beacon]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'coastal' && document.querySelector('[data-building=seaside-cottage]') && document.querySelector('[data-building=stone-timber-harbor-beacon]') && document.querySelector('[data-building=compact-village-smokehouse]')"));
   const coastalBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
+    cardCount: document.querySelectorAll('[data-building]').length,
     previewTitle: document.querySelector('#buildingTitle').textContent,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(coastalBrowse.activeBuilding, null, "browsing another category must not select or generate a building");
+  assert.equal(coastalBrowse.cardCount, 3);
   assert.match(coastalBrowse.previewTitle, /Compact Village Farmhouse/);
   assert.ok(!coastalBrowse.resources.includes("/build_ncm/buildings/coastal/seaside-cottage.json"), "category browsing must not load its building JSON");
   assert.ok(!coastalBrowse.resources.includes("/build_ncm/buildings/coastal/stone-timber-harbor-beacon.json"), "category browsing must not load the harbor-beacon JSON");
   assert.ok(!coastalBrowse.resources.includes("/build_ncm/concepts/coastal/stone-timber-harbor-beacon.webp"), "category browsing must not load the harbor-beacon concept art");
+  assert.ok(!coastalBrowse.resources.includes("/build_ncm/buildings/coastal/compact-village-smokehouse.json"), "category browsing must not load the smokehouse JSON");
+  assert.ok(!coastalBrowse.resources.includes("/build_ncm/concepts/coastal/compact-village-smokehouse.webp"), "category browsing must not load the smokehouse concept art");
   await clickBuilding(client, "seaside-cottage");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'seaside-cottage' && document.querySelector('#modelSize').textContent === '38 × 29 × 32'"));
   const seaside = await evaluate(client, `({
@@ -294,6 +298,8 @@ try {
   assert.equal(await evaluate(client, "performance.getEntriesByType('resource').some((entry) => new URL(entry.name).pathname === '/build_ncm/seaside-cottage-blueprint.js')"), false);
   assert.equal(await evaluate(client, "performance.getEntriesByType('resource').some((entry) => new URL(entry.name).pathname === '/build_ncm/buildings/coastal/stone-timber-harbor-beacon.json')"), false, "selecting the seaside cottage must not load the harbor-beacon JSON");
   assert.equal(await evaluate(client, "performance.getEntriesByType('resource').some((entry) => new URL(entry.name).pathname === '/build_ncm/concepts/coastal/stone-timber-harbor-beacon.webp')"), false, "selecting the seaside cottage must not load the harbor-beacon concept art");
+  assert.equal(await evaluate(client, "performance.getEntriesByType('resource').some((entry) => new URL(entry.name).pathname === '/build_ncm/buildings/coastal/compact-village-smokehouse.json')"), false, "selecting the seaside cottage must not load the smokehouse JSON");
+  assert.equal(await evaluate(client, "performance.getEntriesByType('resource').some((entry) => new URL(entry.name).pathname === '/build_ncm/concepts/coastal/compact-village-smokehouse.webp')"), false, "selecting the seaside cottage must not load the smokehouse concept art");
 
   await clickBuilding(client, "stone-timber-harbor-beacon");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'stone-timber-harbor-beacon' && document.querySelector('#modelSize').textContent === '25 × 43 × 23' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
@@ -333,6 +339,49 @@ try {
   assert.ok(harborBeacon.resources.includes("/build_ncm/buildings/coastal/stone-timber-harbor-beacon.json"));
   assert.ok(harborBeacon.resources.includes("/build_ncm/concepts/coastal/stone-timber-harbor-beacon.webp"));
   assert.ok(!harborBeacon.resources.some((path) => path.endsWith("stone-timber-harbor-beacon-blueprint.js")));
+  assert.ok(!harborBeacon.resources.includes("/build_ncm/buildings/coastal/compact-village-smokehouse.json"), "selecting the harbor beacon must not load the smokehouse JSON");
+  assert.ok(!harborBeacon.resources.includes("/build_ncm/concepts/coastal/compact-village-smokehouse.webp"), "selecting the harbor beacon must not load the smokehouse concept art");
+
+  await clickBuilding(client, "compact-village-smokehouse");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-smokehouse' && document.querySelector('#modelSize').textContent === '23 × 24 × 23' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const smokehouse = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptLoading: document.querySelector('#conceptImage').loading,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(smokehouse.activeCategory, "coastal");
+  assert.match(smokehouse.title, /Compact Village Smokehouse/);
+  assert.equal(smokehouse.modelSize, "23 × 24 × 23");
+  assert.match(smokehouse.payload, /^NCM3:/);
+  assert.equal(smokehouse.voxelCount, 1876);
+  for (const id of [55, 56, 57, 58, 62, 65, 68, 69, 70, 96]) assert.match(smokehouse.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(smokehouse.uncovered, false);
+  assert.equal(smokehouse.glazingDisabled, true);
+  assert.equal(smokehouse.glazingLabel, "Openings: Not applicable");
+  assert.equal(smokehouse.disabledStyles, 6);
+  assert.equal(smokehouse.disabledRoofs, 6);
+  assert.equal(smokehouse.conceptHidden, false);
+  assert.equal(smokehouse.conceptLoading, "eager");
+  assert.match(smokehouse.conceptAlt, /Compact Village Smokehouse concept reference/);
+  assert.equal(smokehouse.conceptFit, "contain");
+  assert.equal(smokehouse.selectedInUrl, "compact-village-smokehouse");
+  assert.ok(smokehouse.resources.includes("/build_ncm/buildings/coastal/compact-village-smokehouse.json"));
+  assert.ok(smokehouse.resources.includes("/build_ncm/concepts/coastal/compact-village-smokehouse.webp"));
+  assert.ok(!smokehouse.resources.some((path) => path.endsWith("compact-village-smokehouse-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=industrial]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=freight-warehouse]') && document.querySelector('[data-building=covered-village-bloomery]') && document.querySelector('[data-building=compact-village-blacksmith-shop]') && document.querySelector('[data-building=compact-village-weaving-workshop]') && document.querySelector('[data-building=compact-village-pottery-workshop]')"));
@@ -2084,10 +2133,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const watermillDirectUrl = new URL(url);
-  watermillDirectUrl.searchParams.set("building", "compact-village-watermill");
-  await client.send("Page.navigate", { url: watermillDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'agriculture' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-watermill' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const smokehouseDirectUrl = new URL(url);
+  smokehouseDirectUrl.searchParams.set("building", "compact-village-smokehouse");
+  await client.send("Page.navigate", { url: smokehouseDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'coastal' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-smokehouse' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -2099,16 +2148,16 @@ try {
     conceptPath: new URL(document.querySelector('#conceptImage').dataset.source).pathname,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(directSelection.activeCategory, "agriculture");
-  assert.equal(directSelection.activeBuilding, "compact-village-watermill");
-  assert.match(directSelection.title, /Compact Village Watermill/);
-  assert.equal(directSelection.modelSize, "27 × 30 × 25");
+  assert.equal(directSelection.activeCategory, "coastal");
+  assert.equal(directSelection.activeBuilding, "compact-village-smokehouse");
+  assert.match(directSelection.title, /Compact Village Smokehouse/);
+  assert.equal(directSelection.modelSize, "23 × 24 × 23");
   assert.match(directSelection.payload, /^NCM3:/);
   assert.equal(directSelection.conceptComplete, true);
   assert.ok(directSelection.conceptNaturalWidth > 0);
-  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/agriculture/compact-village-watermill.webp");
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/agriculture/compact-village-watermill.json"));
-  assert.ok(directSelection.resources.includes("/build_ncm/concepts/agriculture/compact-village-watermill.webp"));
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/coastal/compact-village-smokehouse.webp");
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/coastal/compact-village-smokehouse.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/concepts/coastal/compact-village-smokehouse.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

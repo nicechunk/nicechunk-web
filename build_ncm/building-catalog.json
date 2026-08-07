@@ -2,6 +2,7 @@
   "schema": "nicechunk.building-catalog.v1",
   "buildings": [
     "buildings/residential/hollow-cottage.json",
+    "buildings/residential/compact-village-duplex.json",
     "buildings/coastal/seaside-cottage.json",
     "buildings/coastal/stone-timber-harbor-beacon.json",
     "buildings/civic/civic-town-hall.json",

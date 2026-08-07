@@ -1,0 +1,214 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-duplex",
+  "category": "residential",
+  "kind": "habitable-building",
+  "titles": {
+    "en": "Compact Village Duplex",
+    "es": "Dúplex Compacto de la Aldea",
+    "fr": "Duplex Compact du Village",
+    "de": "Kompaktes Dorf-Doppelhaus",
+    "ja": "コンパクトな村の二戸住宅",
+    "ru": "Компактный деревенский дуплекс",
+    "ko": "소형 마을 2세대 주택",
+    "zh-Hant": "緊湊型村莊雙戶住宅",
+    "zh-Hans": "紧凑型村庄双户住宅"
+  },
+  "descriptions": {
+    "en": "A symmetrical two-unit village dwelling scaled to the 1.75 m avatar, with paired zero-threshold 3 × 6-voxel doorways, two clear three-voxel aisles, paired 0.4 m built-in sleeping platforms, paired 0.8 m worktables, a grounded central party wall, permanent front, side and rear clear glazing, a two-course stone-brick plinth and a center-supported terracotta gable roof.",
+    "es": "Una vivienda simétrica de dos unidades, dimensionada para el avatar de 1,75 m, con dos portales de 3 × 6 vóxeles sin umbral, dos pasillos despejados de tres vóxeles, dos plataformas de descanso integradas de 0,4 m, dos mesas de trabajo de 0,8 m, un muro medianero central apoyado en el suelo, acristalamiento transparente permanente delantero, lateral y posterior, un zócalo de ladrillo de piedra de dos hiladas y una cubierta a dos aguas de terracota con apoyo central.",
+    "fr": "Une habitation villageoise symétrique à deux logements, dimensionnée pour l’avatar de 1,75 m, avec deux portes de 3 × 6 voxels sans seuil, deux allées libres de trois voxels, deux plateformes de couchage intégrées de 0,4 m, deux tables de travail de 0,8 m, un mur mitoyen central ancré au sol, des vitrages clairs permanents à l’avant, sur les côtés et à l’arrière, un soubassement de briques de pierre sur deux assises et un toit à deux versants en terre cuite soutenu au centre.",
+    "de": "Ein symmetrisches Dorf-Doppelhaus im Maßstab des 1,75-m-Avatars mit zwei schwellenlosen 3 × 6 Voxel großen Eingängen, zwei freien drei Voxel breiten Gängen, zwei eingebauten 0,4 m hohen Schlafplattformen, zwei 0,8 m hohen Arbeitstischen, einer geerdeten mittleren Trennwand, fester Klarverglasung an Vorder-, Seiten- und Rückwänden, einem zweilagigen Steinziegelsockel und einem mittig getragenen Terrakotta-Satteldach.",
+    "ja": "身長1.75 mのアバターに合わせた左右対称の二戸住宅です。段差のない3 × 6ボクセルの入口2か所、幅3ボクセルの空いた通路2本、高さ0.4 mの造り付け寝台2台、高さ0.8 mの作業台2台、接地した中央界壁、正面・側面・背面の固定透明窓、2段積み石れんがの基壇、中央支持付きテラコッタ切妻屋根を備えます。",
+    "ru": "Симметричный деревенский дом на две семьи в масштабе аватара ростом 1,75 м: два проёма 3 × 6 вокселей без порогов, два свободных прохода шириной три вокселя, две встроенные спальные платформы высотой 0,4 м, два рабочих стола высотой 0,8 м, опирающаяся на основание центральная разделительная стена, постоянное прозрачное остекление спереди, по бокам и сзади, двухрядный цоколь из каменного кирпича и терракотовая двускатная крыша с центральной опорой.",
+    "ko": "키 1.75 m 아바타 비율에 맞춘 좌우 대칭 2세대 주택으로, 문턱 없는 3 × 6복셀 출입구 두 곳, 폭 3복셀의 막힘없는 통로 두 줄, 높이 0.4 m의 붙박이 수면대 두 개, 높이 0.8 m의 작업대 두 개, 지면에 닿은 중앙 세대 구분벽, 정면·측면·후면의 고정 투명 창, 두 단 석재 벽돌 기단과 중앙 지지 구조를 갖춘 테라코타 박공지붕을 갖춥니다.",
+    "zh-Hant": "依1.75公尺角色比例設計的對稱雙戶住宅，設有兩個零門檻3 × 6體素門洞、兩條三體素寬暢通通道、成對0.4公尺高內建睡臺、成對0.8公尺高工作桌、落地中央分戶牆、正面與側面及後方固定透明窗、兩層石磚基座，以及具中央承托的赤陶人字頂。",
+    "zh-Hans": "依1.75米角色比例设计的对称双户住宅，设有两个零门槛3 × 6体素门洞、两条三体素宽畅通通道、成对0.4米高内建睡台、成对0.8米高工作桌、落地中央分户墙、正面与侧面及后方固定透明窗、两层石砖基座，以及具中央承托的赤陶人字顶。"
+  },
+  "referenceImage": "concepts/residential/compact-village-duplex.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "25 × 17 vu",
+  "height": "18 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 21,
+      "z": 13
+    },
+    "wallFootprintMeters": {
+      "x": 8.4,
+      "z": 5.2
+    },
+    "doorClearVoxels": {
+      "width": 3,
+      "height": 6
+    },
+    "interiorClearHeightVoxels": 7
+  },
+  "preview": {
+    "fitScale": 0.98,
+    "minScale": 4,
+    "yaw": 2.48
+  },
+  "extraMaterials": [
+    {
+      "materialId": 56,
+      "phase": "structure",
+      "label": "Wooden-stick Worktable Supports"
+    },
+    {
+      "materialId": 58,
+      "phase": "openings",
+      "label": "Permanent Clear-glass Front, Side and Rear Windows"
+    },
+    {
+      "materialId": 64,
+      "phase": "foundation",
+      "label": "Two-course Stone-brick Plinth and Party-wall Base"
+    },
+    {
+      "materialId": 69,
+      "phase": "foundation",
+      "label": "Paired Level Polished-stone Approaches"
+    }
+  ],
+  "validation": {
+    "expectedVoxelCount": 1556,
+    "expectedPayloadBytes": 533,
+    "maxPayloadBytes": 768,
+    "expectedDefaultMaterialIds": [55, 56, 57, 58, 64, 68, 69, 70, 96],
+    "expectedMaterialVoxelCounts": {
+      "55": 348,
+      "56": 8,
+      "57": 369,
+      "58": 48,
+      "64": 104,
+      "68": 42,
+      "69": 18,
+      "70": 228,
+      "96": 391
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 12,
+    "supportColumns": [
+      { "label": "Front-left corner post", "x": 2, "z": 2, "baseY": 0, "topY": 9 },
+      { "label": "Front-right corner post", "x": 22, "z": 2, "baseY": 0, "topY": 9 },
+      { "label": "Rear-left corner post", "x": 2, "z": 14, "baseY": 0, "topY": 9 },
+      { "label": "Rear-right corner post", "x": 22, "z": 14, "baseY": 0, "topY": 9 },
+      { "label": "Left outer door post", "x": 5, "z": 2, "baseY": 0, "topY": 9 },
+      { "label": "Left inner door post", "x": 9, "z": 2, "baseY": 0, "topY": 9 },
+      { "label": "Right inner door post", "x": 15, "z": 2, "baseY": 0, "topY": 9 },
+      { "label": "Right outer door post", "x": 19, "z": 2, "baseY": 0, "topY": 9 },
+      { "label": "Central ridge support", "x": 12, "z": 8, "baseY": 0, "topY": 16 }
+    ],
+    "horizontalSpans": [
+      { "label": "Front door and window lintel", "axis": "x", "start": 2, "end": 22, "y": 7, "fixed": 2 },
+      { "label": "Rear window lintel", "axis": "x", "start": 2, "end": 22, "y": 7, "fixed": 14 },
+      { "label": "Front eave beam", "axis": "x", "start": 2, "end": 22, "y": 9, "fixed": 2 },
+      { "label": "Rear eave beam", "axis": "x", "start": 2, "end": 22, "y": 9, "fixed": 14 },
+      { "label": "Left side eave beam", "axis": "z", "start": 2, "end": 14, "y": 9, "fixed": 2 },
+      { "label": "Right side eave beam", "axis": "z", "start": 2, "end": 14, "y": 9, "fixed": 22 },
+      { "label": "Front roof ledger", "axis": "x", "start": 2, "end": 22, "y": 9, "fixed": 1 },
+      { "label": "Rear roof ledger", "axis": "x", "start": 2, "end": 22, "y": 9, "fixed": 15 },
+      { "label": "Center-supported ridge beam", "axis": "x", "start": 2, "end": 22, "y": 16, "fixed": 8 }
+    ],
+    "walkableDecks": [
+      {
+        "label": "Left zero-threshold residential aisle",
+        "axis": "z",
+        "start": 0,
+        "end": 12,
+        "crossStart": 6,
+        "crossEnd": 8,
+        "topProfile": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "clearance": 6
+      },
+      {
+        "label": "Right zero-threshold residential aisle",
+        "axis": "z",
+        "start": 0,
+        "end": 12,
+        "crossStart": 16,
+        "crossEnd": 18,
+        "topProfile": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "clearance": 6
+      }
+    ],
+    "diagonalBands": [
+      { "label": "Front terracotta roof slope", "materialId": 96, "x": 1, "y": 9, "z": 0, "width": 23, "height": 1, "depth": 1, "count": 9, "dx": 0, "dy": 1, "dz": 1 },
+      { "label": "Rear terracotta roof slope", "materialId": 96, "x": 1, "y": 9, "z": 16, "width": 23, "height": 1, "depth": 1, "count": 9, "dx": 0, "dy": 1, "dz": -1 }
+    ],
+    "openVolumes": [
+      { "label": "Clear left 3 by 6 entrance", "x": 6, "y": 1, "z": 2, "width": 3, "height": 6, "depth": 1 },
+      { "label": "Clear right 3 by 6 entrance", "x": 16, "y": 1, "z": 2, "width": 3, "height": 6, "depth": 1 },
+      { "label": "Seven-voxel-high left interior aisle", "x": 6, "y": 1, "z": 3, "width": 3, "height": 7, "depth": 10 },
+      { "label": "Seven-voxel-high right interior aisle", "x": 16, "y": 1, "z": 3, "width": 3, "height": 7, "depth": 10 }
+    ],
+    "approach": [
+      { "x": 7, "z": 0, "topY": 1 },
+      { "x": 7, "z": 1, "topY": 1 },
+      { "x": 7, "z": 2, "topY": 1 },
+      { "x": 7, "z": 6, "topY": 1 },
+      { "x": 7, "z": 12, "topY": 1 },
+      { "x": 17, "z": 0, "topY": 1 },
+      { "x": 17, "z": 1, "topY": 1 },
+      { "x": 17, "z": 2, "topY": 1 },
+      { "x": 17, "z": 6, "topY": 1 },
+      { "x": 17, "z": 12, "topY": 1 }
+    ],
+    "solidPoints": [
+      { "x": 3, "y": 0, "z": 2, "materialId": 68 },
+      { "x": 4, "y": 0, "z": 4, "materialId": 55 },
+      { "x": 7, "y": 0, "z": 0, "materialId": 69 },
+      { "x": 17, "y": 0, "z": 0, "materialId": 69 },
+      { "x": 3, "y": 1, "z": 2, "materialId": 64 },
+      { "x": 3, "y": 3, "z": 2, "materialId": 70 },
+      { "x": 3, "y": 4, "z": 2, "materialId": 58 },
+      { "x": 2, "y": 5, "z": 5, "materialId": 58 },
+      { "x": 7, "y": 5, "z": 14, "materialId": 58 },
+      { "x": 5, "y": 4, "z": 2, "materialId": 57 },
+      { "x": 12, "y": 1, "z": 5, "materialId": 64 },
+      { "x": 12, "y": 4, "z": 5, "materialId": 70 },
+      { "x": 3, "y": 1, "z": 7, "materialId": 55 },
+      { "x": 3, "y": 2, "z": 12, "materialId": 55 },
+      { "x": 9, "y": 1, "z": 9, "materialId": 56 },
+      { "x": 9, "y": 2, "z": 9, "materialId": 55 },
+      { "x": 12, "y": 9, "z": 2, "materialId": 57 },
+      { "x": 2, "y": 10, "z": 8, "materialId": 55 },
+      { "x": 12, "y": 12, "z": 8, "materialId": 57 },
+      { "x": 12, "y": 16, "z": 8, "materialId": 57 },
+      { "x": 12, "y": 9, "z": 0, "materialId": 96 },
+      { "x": 0, "y": 9, "z": 0, "materialId": 57 },
+      { "x": 12, "y": 17, "z": 8, "materialId": 96 }
+    ]
+  },
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARkSET0BAQIAAhQADAEGAwADEgAKAUUGAAACAAIBRRAAAAIAAgFAAgEDAAEKAUAWAQMAAQoBQAIBDhQBAAFAAgECAwEAAUAJAQIGAQABQBMBAgMBAAFADAEDAAEKAQICAwMABQoBAhYDAwAFCgECAgMOFAUAAQICAwIDBQABAgkDAgYFAAECEwMCAwUAAQIGBwICAQABAhAHAgIBAAECDAMDAAUKAgMCAAIACQABKAAAAgMCAA4ACQABKAAAAgMCAAgACQABKAAAAgMFAAIACQABCAAAAgMPAAIACQABCAAAAgMFAA4ACQABCAAAAgMPAA4ACQABCAAAAQMMAAIACQABAwwADgAJAAEDAgcCFAAAAQMCBw4UAAABAwIHAgAADAEDFgcCAAAMAQMCCQIUAAABAwIJDhQAAAEDAgkCAAAMAQMWCQIAAAwBAwIJARQAAAEDAgkPFAAAAToDBAIBAgABOhQEAgECAAE6AgQEAAICAToWBAQAAgIBOgYEDgICAAE6EAQOAgIAAQYDAQcBAAUBBhQBBwEABQEGAwIMAQEAAQYUAgwBAQACOAkBCQAAAAECAAACOAkBCwAAAAECAAACOA4BCQAAAAECAAACOA4BCwAAAAECAAABBgkCCQEAAgEGDgIJAQACCgYCCgIADAoGFgoCAAwBAwwACAAQAAEDAhAIFAAACAUACQAYEAkDAAkAGBA"
+  }
+}

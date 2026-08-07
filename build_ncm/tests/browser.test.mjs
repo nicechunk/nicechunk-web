@@ -38,7 +38,7 @@ try {
   await client.send("Page.enable");
   await client.send("Emulation.setDeviceMetricsOverride", { width: 1600, height: 1200, deviceScaleFactor: 1, mobile: false });
   await client.send("Page.navigate", { url });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 12 && document.querySelectorAll('[data-building]').length === 1 && document.querySelector('[data-building=hollow-cottage]') && document.querySelector('[data-language-select]').options.length === 9"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 12 && document.querySelectorAll('[data-building]').length === 2 && document.querySelector('[data-building=hollow-cottage]') && document.querySelector('[data-building=compact-village-duplex]') && document.querySelector('[data-language-select]').options.length === 9"));
 
   const initial = await evaluate(client, `({
     visibleBuildingCount: document.querySelectorAll('[data-building]').length,
@@ -75,8 +75,8 @@ try {
     hasHorizontalOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(initial.visibleBuildingCount, 1);
-  assert.match(initial.totalBuildingCount, /26 BUILDINGS/);
+  assert.equal(initial.visibleBuildingCount, 2);
+  assert.match(initial.totalBuildingCount, /27 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -163,8 +163,56 @@ try {
   assert.match(cottageLoaded.payload, /^NCM3:/);
   assert.ok(cottageLoaded.resources.includes("/build_ncm/buildings/residential/hollow-cottage.json"));
   assert.ok(!cottageLoaded.resources.includes("/build_ncm/house-blueprint.js"));
+  assert.ok(!cottageLoaded.resources.includes("/build_ncm/buildings/residential/compact-village-duplex.json"), "selecting the hollow cottage must not load the duplex JSON");
+  assert.ok(!cottageLoaded.resources.includes("/build_ncm/concepts/residential/compact-village-duplex.webp"), "selecting the hollow cottage must not load the duplex concept art");
   const cottagePayload = cottageLoaded.payload;
   const cottageVoxels = Number((await evaluate(client, "document.querySelectorAll('#metrics .metric strong')[2].textContent")).replaceAll(",", ""));
+
+  await evaluate(client, "document.querySelector('[data-building=compact-village-duplex]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-duplex' && document.querySelector('#modelSize').textContent === '25 × 18 × 17' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const duplex = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(duplex.activeCategory, "residential");
+  assert.match(duplex.title, /Compact Village Duplex/);
+  assert.equal(duplex.modelSize, "25 × 18 × 17");
+  assert.match(duplex.payload, /^NCM3:/);
+  assert.equal(duplex.voxelCount, 1556);
+  for (const id of [55, 56, 57, 58, 64, 68, 69, 70, 96]) assert.match(duplex.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(duplex.uncovered, false);
+  assert.equal(duplex.glazingDisabled, true);
+  assert.equal(duplex.glazingLabel, "Openings: Not applicable");
+  assert.equal(duplex.disabledStyles, 6);
+  assert.equal(duplex.disabledRoofs, 6);
+  assert.equal(duplex.conceptHidden, false);
+  assert.match(duplex.conceptAlt, /Compact Village Duplex concept reference/);
+  assert.equal(duplex.conceptFit, "contain");
+  assert.equal(duplex.selectedInUrl, "compact-village-duplex");
+  assert.ok(duplex.resources.includes("/build_ncm/buildings/residential/compact-village-duplex.json"));
+  assert.ok(duplex.resources.includes("/build_ncm/concepts/residential/compact-village-duplex.webp"));
+  assert.ok(!duplex.resources.some((path) => path.endsWith("compact-village-duplex-blueprint.js")));
+
+  if (screenshotPath) {
+    await evaluate(client, "document.querySelector('.building-library-panel').scrollIntoView({block:'start'}); window.scrollBy(0, -76); new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))");
+    const screenshot = await client.send("Page.captureScreenshot", { format: "png", fromSurface: true, captureBeyondViewport: false });
+    writeFileSync(screenshotPath, Buffer.from(screenshot.data, "base64"));
+  }
+
   await evaluate(client, "document.querySelector('[data-building-category=coastal]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'coastal' && document.querySelector('[data-building=seaside-cottage]') && document.querySelector('[data-building=stone-timber-harbor-beacon]')"));
   const coastalBrowse = await evaluate(client, `({
@@ -173,7 +221,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(coastalBrowse.activeBuilding, null, "browsing another category must not select or generate a building");
-  assert.match(coastalBrowse.previewTitle, /Hollow Cottage/);
+  assert.match(coastalBrowse.previewTitle, /Compact Village Duplex/);
   assert.ok(!coastalBrowse.resources.includes("/build_ncm/buildings/coastal/seaside-cottage.json"), "category browsing must not load its building JSON");
   assert.ok(!coastalBrowse.resources.includes("/build_ncm/buildings/coastal/stone-timber-harbor-beacon.json"), "category browsing must not load the harbor-beacon JSON");
   assert.ok(!coastalBrowse.resources.includes("/build_ncm/concepts/coastal/stone-timber-harbor-beacon.webp"), "category browsing must not load the harbor-beacon concept art");
@@ -1076,12 +1124,6 @@ try {
   assert.ok(oreSortingShed.resources.includes("/build_ncm/concepts/mining/covered-village-ore-sorting-shed.webp"));
   assert.ok(!oreSortingShed.resources.some((path) => path.endsWith("covered-village-ore-sorting-shed-blueprint.js")));
 
-  if (screenshotPath) {
-    await evaluate(client, "document.querySelector('.building-library-panel').scrollIntoView({block:'start'}); window.scrollBy(0, -76); new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))");
-    const screenshot = await client.send("Page.captureScreenshot", { format: "png", fromSurface: true, captureBeyondViewport: false });
-    writeFileSync(screenshotPath, Buffer.from(screenshot.data, "base64"));
-  }
-
   await evaluate(client, "document.querySelector('[data-building-category=agriculture]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=glass-timber-greenhouse]')"));
   const agricultureBrowse = await evaluate(client, `({
@@ -1332,7 +1374,7 @@ try {
 
   await client.send("Emulation.setDeviceMetricsOverride", { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
   await client.send("Page.reload", { ignoreCache: true });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 12 && document.querySelectorAll('[data-building]').length === 1"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 12 && document.querySelectorAll('[data-building]').length === 2"));
   await evaluate(client, "document.querySelector('[data-material-filter=all]').click()");
   await waitFor(() => evaluate(client, "document.querySelectorAll('#buildingMaterialCatalog .model-material-card').length === 33"));
   const mobile = await evaluate(client, `({
@@ -1353,7 +1395,7 @@ try {
   assert.equal(mobile.modelCards, 33);
   assert.equal(mobile.modelErrors, 0);
   assert.equal(mobile.categories, 12);
-  assert.equal(mobile.buildingCards, 1);
+  assert.equal(mobile.buildingCards, 2);
   assert.equal(mobile.buildingThumbnails, 0);
   assert.equal(mobile.categoryFlow, "row");
   assert.equal(mobile.editorReadOnly, false);
@@ -1361,10 +1403,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const oreSortingShedDirectUrl = new URL(url);
-  oreSortingShedDirectUrl.searchParams.set("building", "covered-village-ore-sorting-shed");
-  await client.send("Page.navigate", { url: oreSortingShedDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'mining' && document.querySelector('[data-building].active')?.dataset.building === 'covered-village-ore-sorting-shed'"));
+  const duplexDirectUrl = new URL(url);
+  duplexDirectUrl.searchParams.set("building", "compact-village-duplex");
+  await client.send("Page.navigate", { url: duplexDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'residential' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-duplex'"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -1373,13 +1415,13 @@ try {
     payload: document.querySelector('#codeOutput').value,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(directSelection.activeCategory, "mining");
-  assert.equal(directSelection.activeBuilding, "covered-village-ore-sorting-shed");
-  assert.match(directSelection.title, /Covered Village Ore Sorting Shed/);
-  assert.equal(directSelection.modelSize, "21 × 19 × 17");
+  assert.equal(directSelection.activeCategory, "residential");
+  assert.equal(directSelection.activeBuilding, "compact-village-duplex");
+  assert.match(directSelection.title, /Compact Village Duplex/);
+  assert.equal(directSelection.modelSize, "25 × 18 × 17");
   assert.match(directSelection.payload, /^NCM3:/);
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/mining/covered-village-ore-sorting-shed.json"));
-  assert.ok(directSelection.resources.includes("/build_ncm/concepts/mining/covered-village-ore-sorting-shed.webp"));
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/residential/compact-village-duplex.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/concepts/residential/compact-village-duplex.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

@@ -29,6 +29,7 @@
     "buildings/industrial/covered-village-bloomery.json",
     "buildings/construction/timber-building-scaffold.json",
     "buildings/construction/compact-village-stonemason-workshop.json",
-    "buildings/construction/compact-village-carpenter-workshop.json"
+    "buildings/construction/compact-village-carpenter-workshop.json",
+    "buildings/agriculture/compact-village-stable-barn.json"
   ]
 }

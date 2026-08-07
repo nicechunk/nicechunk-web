@@ -1,0 +1,208 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-stable-barn",
+  "category": "agriculture",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Compact Village Stable Barn",
+    "es": "Establo Granero Compacto de la Aldea",
+    "fr": "Grange-Écurie Compacte du Village",
+    "de": "Kompakte Dorf-Stallscheune",
+    "ja": "コンパクトな村の厩舎納屋",
+    "ru": "Компактная деревенская конюшня-амбар",
+    "ko": "소형 마을 마구간 헛간",
+    "zh-Hant": "緊湊型村莊馬廄穀倉",
+    "zh-Hans": "紧凑型村庄马厩谷仓"
+  },
+  "descriptions": {
+    "en": "A compact enterable stable barn scaled to the 1.75 m avatar and livestock movement, with matching zero-threshold 5 × 7-voxel front and rear portals, a clear five-voxel through aisle, two large stalls per side, low timber gates and dividers, partial hay-loft decks above only the side bays, permanent high ventilation glazing, level rammed-earth floors, a two-course stone-brick plinth and a shallow terracotta roof carried by a continuous stepped timber deck without aisle posts.",
+    "es": "Un establo granero compacto y accesible, dimensionado para el avatar de 1,75 m y el movimiento del ganado, con portales delantero y trasero iguales de 5 × 7 vóxeles sin umbral, un pasillo pasante despejado de cinco vóxeles, dos pesebres grandes por lado, puertas y divisiones bajas de madera, altillos de heno parciales solo sobre las crujías laterales, acristalamiento alto de ventilación permanente, suelos nivelados de tierra apisonada, un zócalo de ladrillo de piedra de dos hiladas y un tejado bajo de terracota apoyado en una cubierta escalonada continua de madera sin postes en el pasillo.",
+    "fr": "Une grange-écurie compacte et accessible, dimensionnée pour l’avatar de 1,75 m et la circulation du bétail, avec des portails avant et arrière identiques de 5 × 7 voxels sans seuil, une allée traversante libre de cinq voxels, deux grandes stalles de chaque côté, des portillons et cloisons bas en bois, des demi-planchers à foin uniquement au-dessus des travées latérales, des vitrages hauts permanents de ventilation, des sols plans en terre compactée, un soubassement de briques de pierre sur deux assises et un toit bas en terre cuite porté par un platelage bois continu en gradins sans poteau dans l’allée.",
+    "de": "Eine kompakte begehbare Dorf-Stallscheune im Maßstab des 1,75-m-Avatars und für Tierbewegungen, mit gleichen schwellenlosen Front- und Rückportalen von 5 × 7 Voxeln, einem freien fünf Voxel breiten Durchgang, zwei großen Boxen je Seite, niedrigen Holztoren und Trennungen, teilweisen Heuböden nur über den Seitenfeldern, fester hoher Lüftungsverglasung, ebenen Stampflehmböden, einem zweilagigen Steinziegelsockel und einem flachen Terrakottadach auf einer durchgehenden abgestuften Holzschalung ohne Stützen im Gang.",
+    "ja": "身長1.75 mのアバターと家畜の移動に合わせた、内部に入れるコンパクトな厩舎納屋です。前後に同じ段差のない5 × 7ボクセルの門、幅5ボクセルの貫通通路、左右各2区画の広い厩房、低い木製ゲートと仕切り、側廊の上だけに設けた部分的な干し草ロフト、固定式の高窓、平らな版築床、2段積み石れんがの基壇、そして通路に柱を置かず連続する段状木屋面で支えた浅いテラコッタ屋根を備えます。",
+    "ru": "Компактная доступная конюшня-амбар в масштабе аватара ростом 1,75 м и с учётом движения скота: одинаковые передний и задний проёмы 5 × 7 вокселей без порога, свободный сквозной проход шириной пять вокселей, по две большие стойловые секции с каждой стороны, низкие деревянные ворота и перегородки, частичные сеновалы только над боковыми пролётами, постоянные высокие вентиляционные окна, ровные полы из утрамбованной земли, двухрядный цоколь из каменного кирпича и пологая терракотовая крыша на сплошном ступенчатом деревянном настиле без стоек в проходе.",
+    "ko": "키 1.75 m 아바타와 가축 이동 비율에 맞춘 출입 가능한 소형 마구간 헛간으로, 앞뒤에 같은 크기의 문턱 없는 5 × 7복셀 출입구, 폭 5복셀의 막힘없는 관통 통로, 양쪽에 두 칸씩 마련한 넓은 축사, 낮은 목재 문과 칸막이, 측면 칸 위에만 놓인 부분 건초 다락, 고정식 높은 환기창, 평평한 다짐 흙바닥, 두 단 석재 벽돌 기단, 그리고 통로 기둥 없이 연속된 계단식 목재 지붕판이 받치는 완만한 테라코타 지붕을 갖춥니다.",
+    "zh-Hant": "依1.75公尺角色與牲畜通行比例設計的可進入緊湊型馬廄穀倉，前後各設相同的零門檻5 × 7體素門洞、五體素寬暢通貫穿通道、左右各兩間大型廄位、低位木門與隔欄、僅覆蓋側廊的局部乾草閣樓、固定高位通風窗、平整夯土地面、兩層石磚基座，以及由連續階梯式木屋面承托且通道內無立柱的淺坡赤陶屋頂。",
+    "zh-Hans": "依1.75米角色与牲畜通行比例设计的可进入紧凑型马厩谷仓，前后各设相同的零门槛5 × 7体素门洞、五体素宽畅通贯穿通道、左右各两间大型厩位、低位木门与隔栏、仅覆盖侧廊的局部干草阁楼、固定高位通风窗、平整夯土地面、两层石砖基座，以及由连续阶梯式木屋面承托且通道内无立柱的浅坡赤陶屋顶。"
+  },
+  "referenceImage": "concepts/agriculture/compact-village-stable-barn.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "25 × 27 vu",
+  "height": "17 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 21,
+      "z": 23
+    },
+    "wallFootprintMeters": {
+      "x": 8.4,
+      "z": 9.2
+    },
+    "doorClearVoxels": {
+      "width": 5,
+      "height": 7
+    },
+    "interiorClearHeightVoxels": 7
+  },
+  "preview": {
+    "fitScale": 1.02,
+    "minScale": 4,
+    "yaw": 2.46
+  },
+  "extraMaterials": [
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Low Stall Gates and Face-connected Divider Rails"
+    },
+    {
+      "materialId": 58,
+      "phase": "openings",
+      "label": "Permanent High Ventilation Windows"
+    },
+    {
+      "materialId": 64,
+      "phase": "foundation",
+      "label": "Two-course Stone-brick Plinth"
+    },
+    {
+      "materialId": 72,
+      "phase": "foundation",
+      "label": "Level Rammed-earth Aisle and Stall Floors"
+    }
+  ],
+  "validation": {
+    "expectedVoxelCount": 3015,
+    "expectedPayloadBytes": 501,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [55, 56, 57, 58, 64, 68, 70, 72, 96],
+    "expectedMaterialVoxelCounts": {
+      "55": 270,
+      "56": 72,
+      "57": 805,
+      "58": 132,
+      "64": 120,
+      "68": 60,
+      "70": 192,
+      "72": 427,
+      "96": 937
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 12,
+    "supportColumns": [
+      { "label": "Front-left corner post", "x": 2, "z": 2, "baseY": 0, "topY": 9 },
+      { "label": "Front-right corner post", "x": 22, "z": 2, "baseY": 0, "topY": 9 },
+      { "label": "Rear-left corner post", "x": 2, "z": 24, "baseY": 0, "topY": 9 },
+      { "label": "Rear-right corner post", "x": 22, "z": 24, "baseY": 0, "topY": 9 },
+      { "label": "Front-left portal post", "x": 9, "z": 2, "baseY": 0, "topY": 9 },
+      { "label": "Front-right portal post", "x": 15, "z": 2, "baseY": 0, "topY": 9 },
+      { "label": "Center-left loft post", "x": 9, "z": 13, "baseY": 0, "topY": 9 },
+      { "label": "Center-right loft post", "x": 15, "z": 13, "baseY": 0, "topY": 9 },
+      { "label": "Rear-left portal post", "x": 9, "z": 24, "baseY": 0, "topY": 9 },
+      { "label": "Rear-right portal post", "x": 15, "z": 24, "baseY": 0, "topY": 9 },
+      { "label": "Left first outer post", "x": 2, "z": 8, "baseY": 0, "topY": 9 },
+      { "label": "Right first outer post", "x": 22, "z": 8, "baseY": 0, "topY": 9 },
+      { "label": "Left center outer post", "x": 2, "z": 14, "baseY": 0, "topY": 9 },
+      { "label": "Right center outer post", "x": 22, "z": 14, "baseY": 0, "topY": 9 },
+      { "label": "Left rear outer post", "x": 2, "z": 20, "baseY": 0, "topY": 9 },
+      { "label": "Right rear outer post", "x": 22, "z": 20, "baseY": 0, "topY": 9 }
+    ],
+    "horizontalSpans": [
+      { "label": "Front five-voxel portal lintel", "axis": "x", "start": 2, "end": 22, "y": 8, "fixed": 2 },
+      { "label": "Rear five-voxel portal lintel", "axis": "x", "start": 2, "end": 22, "y": 8, "fixed": 24 },
+      { "label": "Left outer loft beam", "axis": "z", "start": 2, "end": 24, "y": 7, "fixed": 2 },
+      { "label": "Right outer loft beam", "axis": "z", "start": 2, "end": 24, "y": 7, "fixed": 22 },
+      { "label": "Left inner loft beam", "axis": "z", "start": 2, "end": 24, "y": 7, "fixed": 9 },
+      { "label": "Right inner loft beam", "axis": "z", "start": 2, "end": 24, "y": 7, "fixed": 15 },
+      { "label": "Left eave beam", "axis": "z", "start": 2, "end": 24, "y": 9, "fixed": 2 },
+      { "label": "Right eave beam", "axis": "z", "start": 2, "end": 24, "y": 9, "fixed": 22 },
+      { "label": "Front roof tie", "axis": "x", "start": 2, "end": 22, "y": 9, "fixed": 2 },
+      { "label": "Center roof tie", "axis": "x", "start": 2, "end": 22, "y": 9, "fixed": 13 },
+      { "label": "Rear roof tie", "axis": "x", "start": 2, "end": 22, "y": 9, "fixed": 24 },
+      { "label": "Longitudinal ridge beam", "axis": "z", "start": 2, "end": 24, "y": 14, "fixed": 12 }
+    ],
+    "walkableDecks": [
+      {
+        "label": "Zero-threshold through aisle",
+        "axis": "z",
+        "start": 0,
+        "end": 26,
+        "crossStart": 10,
+        "crossEnd": 14,
+        "topProfile": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        "clearance": 7
+      }
+    ],
+    "diagonalBands": [
+      { "label": "Left shallow terracotta roof slope", "materialId": 96, "x": 0, "y": 10, "z": 1, "width": 3, "height": 1, "depth": 25, "count": 6, "dx": 2, "dy": 1, "dz": 0 },
+      { "label": "Right shallow terracotta roof slope", "materialId": 96, "x": 22, "y": 10, "z": 1, "width": 3, "height": 1, "depth": 25, "count": 6, "dx": -2, "dy": 1, "dz": 0 }
+    ],
+    "openVolumes": [
+      { "label": "Clear front 5 by 7 portal", "x": 10, "y": 1, "z": 2, "width": 5, "height": 7, "depth": 1 },
+      { "label": "Seven-voxel-high through aisle", "x": 10, "y": 1, "z": 3, "width": 5, "height": 7, "depth": 21 },
+      { "label": "Clear rear 5 by 7 portal", "x": 10, "y": 1, "z": 24, "width": 5, "height": 7, "depth": 1 }
+    ],
+    "approach": [
+      { "x": 12, "z": 0, "topY": 1 },
+      { "x": 12, "z": 1, "topY": 1 },
+      { "x": 12, "z": 2, "topY": 1 },
+      { "x": 12, "z": 3, "topY": 1 },
+      { "x": 12, "z": 13, "topY": 1 },
+      { "x": 12, "z": 23, "topY": 1 },
+      { "x": 12, "z": 24, "topY": 1 },
+      { "x": 12, "z": 25, "topY": 1 },
+      { "x": 12, "z": 26, "topY": 1 }
+    ],
+    "solidPoints": [
+      { "x": 3, "y": 0, "z": 2, "materialId": 68 },
+      { "x": 12, "y": 0, "z": 3, "materialId": 72 },
+      { "x": 12, "y": 0, "z": 0, "materialId": 72 },
+      { "x": 3, "y": 1, "z": 2, "materialId": 64 },
+      { "x": 3, "y": 3, "z": 2, "materialId": 70 },
+      { "x": 4, "y": 5, "z": 2, "materialId": 58 },
+      { "x": 2, "y": 5, "z": 4, "materialId": 58 },
+      { "x": 4, "y": 5, "z": 24, "materialId": 58 },
+      { "x": 9, "y": 4, "z": 2, "materialId": 57 },
+      { "x": 4, "y": 8, "z": 10, "materialId": 55 },
+      { "x": 9, "y": 2, "z": 4, "materialId": 56 },
+      { "x": 15, "y": 4, "z": 14, "materialId": 56 },
+      { "x": 4, "y": 2, "z": 13, "materialId": 56 },
+      { "x": 12, "y": 12, "z": 2, "materialId": 55 },
+      { "x": 5, "y": 11, "z": 10, "materialId": 57 },
+      { "x": 12, "y": 14, "z": 10, "materialId": 57 },
+      { "x": 0, "y": 10, "z": 1, "materialId": 96 },
+      { "x": 0, "y": 10, "z": 0, "materialId": 57 },
+      { "x": 12, "y": 16, "z": 10, "materialId": 96 }
+    ]
+  },
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARkRGysBAQIAAhQAFgFIAwADEgAUAUgKAAAEABoCQAIBAwABFAEoAAACQAIBAgcBAAEaAAACQAIBGAcBAAEaAAACAgIDAwAFFAEoAAACAgIDAgcFAAEaAAACAgIDGAcFAAEaAAACAwIAAgAJAAEoAAACAwIAGAAJAAEoAAACAwIACAAJAAEoAAACAwIADgAJAAEoAAACAwIAFAAJAAEoAAACAwkAAgAIAAIAABYCAw8AAgAIAAIAABYCAwIIAhQAAAEAACwCAwIHAgAAFgEoAAACAwIJAgAAFgEoAAACAwIJAhQAAAIAABYCAwkHAgAAFgEMAAACOgQFAgQCAAEYAAACOgQFGAQCAAEYAAACOgIFBAACAwIAAAwCOhYFBAACAwIAAAwCBgMIBQUAEAEaAAACOAkCAwAABQEAABYCOAkEAwAABQEAABYCOA8CAwAABQEAABYCOA8EAwAABQEAABYCOAMCDQUAAAEaAAACOAMEDQUAAAEaAAACBgMKAhIAAAEAACwCBgULAg4AAAEAACwCBgcMAgoAAAEAACwCAwIKAgIAFgQEAgACAxQKAgIAFgQDAgABAwwOAgAAFgIFAAoAAgAaBQQCAAIFFgoAAgAaBQMCAAIDAAoAAgAABQQCAAIDFgoAAgAABQMCAAEFDBAAAAAa"
+  }
+}

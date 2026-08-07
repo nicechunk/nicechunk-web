@@ -1,0 +1,468 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-weaving-workshop",
+  "category": "industrial",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Compact Village Weaving Workshop",
+    "es": "Taller de Tejido Compacto de la Aldea",
+    "fr": "Atelier de Tissage Compact du Village",
+    "de": "Kompakte Dorfweberei",
+    "ja": "コンパクトな村の織物工房",
+    "ru": "Компактная деревенская ткацкая мастерская",
+    "ko": "소형 마을 직조 공방",
+    "zh-Hant": "緊湊型村莊織布工坊",
+    "zh-Hans": "紧凑型村庄织布工坊"
+  },
+  "descriptions": {
+    "en": "An enterable compact village weaving workshop scaled to the 1.75 m avatar, with a zero-threshold 5 × 7-voxel entrance and five-voxel central aisle, two mirrored adult-scale 5 × 9 × 6-voxel timber floor looms with heddle frames, breast beams, treadles and matching weaver benches, a rear 9 × 3-voxel cutting table with paired blue ceramic dye basins, two wall shelves, permanent high daylight windows, continuous post-and-beam load paths, and a shallow terracotta roof on a complete stepped deck.",
+    "es": "Un taller de tejido compacto y accesible de aldea, dimensionado para el avatar de 1,75 m, con una entrada sin umbral de 5 × 7 vóxeles y un pasillo central de cinco vóxeles, dos telares de piso de madera simétricos para adultos de 5 × 9 × 6 vóxeles con marcos de lizos, travesaños, pedales y bancos de tejedor, una mesa trasera de corte de 9 × 3 vóxeles con dos cubetas de tinte de cerámica azul, dos estantes de pared, ventanas altas permanentes, recorridos de carga continuos de postes y vigas y un tejado poco inclinado de terracota sobre un entablado escalonado completo.",
+    "fr": "Un atelier de tissage compact de village accessible et dimensionné pour l’avatar de 1,75 m, avec une entrée sans seuil de 5 × 7 voxels et une allée centrale de cinq voxels, deux métiers à tisser en bois symétriques pour adultes de 5 × 9 × 6 voxels avec cadres de lisses, ensouples, pédales et bancs assortis, une table de coupe arrière de 9 × 3 voxels avec deux cuves de teinture en céramique bleue, deux étagères murales, des fenêtres hautes permanentes, des descentes de charge continues par poteaux et poutres et un toit peu pentu en terre cuite sur un platelage complet en gradins.",
+    "de": "Eine begehbare kompakte Dorfweberei im Maßstab des 1,75-m-Avatars mit einem schwellenlosen Eingang von 5 × 7 Voxeln und einem fünf Voxel breiten Mittelgang, zwei gespiegelten erwachsenengroßen hölzernen Bodenwebstühlen von 5 × 9 × 6 Voxeln mit Litzenrahmen, Brustbäumen, Tritten und passenden Weberbänken, einem rückwärtigen Zuschneidetisch von 9 × 3 Voxeln mit zwei blauen Keramik-Färbebecken, zwei Wandregalen, festen hohen Fenstern, durchgehenden Pfosten-Riegel-Lastpfaden und einem flachen Terrakottadach auf vollständiger abgestufter Schalung.",
+    "ja": "身長1.75 mのアバターに合わせた、内部に入れるコンパクトな村の織物工房です。段差のない5 × 7ボクセルの入口、幅5ボクセルの中央通路、綜絖枠・胸木・踏み木・織り手用長椅子を備えた左右対称の大人用木製床織機2基（各5 × 9 × 6ボクセル）、後部の9 × 3ボクセル裁断台と青い陶器の染色鉢2個、壁棚2基、固定式高窓、連続する柱梁の荷重経路、そして完全な階段状屋根下地で支えた緩勾配のテラコッタ屋根を備えます。",
+    "ru": "Компактная доступная деревенская ткацкая мастерская в масштабе аватара ростом 1,75 м: вход 5 × 7 вокселей без порога, центральный проход шириной пять вокселей, два зеркальных деревянных напольных станка взрослого масштаба размером 5 × 9 × 6 вокселей с ремизными рамами, навоями, педалями и скамьями, задний раскройный стол 9 × 3 вокселя с двумя синими керамическими красильными чашами, две настенные полки, постоянные высокие окна, непрерывные несущие линии стоек и балок и пологая терракотовая крыша на сплошном ступенчатом настиле.",
+    "ko": "키 1.75 m 아바타 비율에 맞춘 출입 가능한 소형 마을 직조 공방입니다. 문턱 없는 5 × 7복셀 입구와 폭 5복셀 중앙 통로, 종광틀·가슴대·발판·직조용 벤치를 갖춘 좌우 대칭의 성인용 5 × 9 × 6복셀 목재 바닥 베틀 2대, 뒤쪽 9 × 3복셀 재단대와 파란 세라믹 염색 대야 2개, 벽 선반 2개, 고정식 높은 채광창, 끊김 없는 기둥·보 하중 경로, 완전한 계단식 지붕판 위의 완만한 테라코타 지붕을 갖춥니다.",
+    "zh-Hant": "依1.75公尺角色比例設計的可進入緊湊型村莊織布工坊，設有零門檻5 × 7體素入口、五體素寬中央通道、兩座左右鏡像的成人尺度5 × 9 × 6體素木製落地織機（含綜框、胸樑、踏板與配套織工長凳）、後部9 × 3體素裁剪臺與成對藍色陶瓷染盆、兩座壁架、固定高位採光窗、連續柱樑受力路徑，以及由完整階梯式屋面承托的淺坡赤陶屋頂。",
+    "zh-Hans": "依1.75米角色比例设计的可进入紧凑型村庄织布工坊，设有零门槛5 × 7体素入口、五体素宽中央通道、两座左右镜像的成人尺度5 × 9 × 6体素木制落地织机（含综框、胸梁、踏板与配套织工长凳）、后部9 × 3体素裁剪台与成对蓝色陶瓷染盆、两座壁架、固定高位采光窗、连续柱梁受力路径，以及由完整阶梯式屋面承托的浅坡赤陶屋顶。"
+  },
+  "referenceImage": "concepts/industrial/compact-village-weaving-workshop.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "23 × 23 vu",
+  "height": "16 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 19,
+      "z": 19
+    },
+    "wallFootprintMeters": {
+      "x": 7.6,
+      "z": 7.6
+    },
+    "doorClearVoxels": {
+      "width": 5,
+      "height": 7
+    },
+    "interiorClearHeightVoxels": 7
+  },
+  "preview": {
+    "fitScale": 1.02,
+    "minScale": 4,
+    "yaw": 2.48
+  },
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "fixtures",
+      "label": "Loom Beams, Treadles, Weaver Benches, Cutting Table, and Wall Shelves"
+    },
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Loom Heddle Frames and Cutting-table Supports"
+    },
+    {
+      "materialId": 58,
+      "phase": "openings",
+      "label": "Permanent High Daylight Windows"
+    },
+    {
+      "materialId": 69,
+      "phase": "foundation",
+      "label": "Level Zero-threshold Stone Approach"
+    },
+    {
+      "materialId": 75,
+      "phase": "fixtures",
+      "label": "Paired Blue Ceramic Dye Basins"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARcQFywCAQIAAwYAAAEYAAABAQIAFRIAAAIBAgAEAAAQASQAAAEGAwAEEAAQAUUJAAAEAAMCAgMBAwQHAAEYAAACOgQEAwICAAEYAAABAwgIAwYAAAICAgEEAAcQASQAAAI6AgQFAAIEASQAAAI6AgQPAAIEASQAAAECAwEVEAcAAgMCAAMACQABAAAkAgMUAAMACQABAAAkAgMIAAMACQABDAAAAgMCAAwACQABJAAAAgMHABUACQABEAAAAgMCCQMSAAACAAASAgMCCQMAABIBJAAAAQMLDwIAABQCAgIKAxIAAAEAACQCAgQLAw4AAAEAACQCAgYMAwoAAAEAACQCAggNAwYAAAEAACQCAgoOAwIAAAEAACQCAwIKAwAAEgUEAgACAxQKAwAAEgUDAgAFAwMBBggBCAUDBwEGCAEIBQMPAQYIAQgFAxMBBggBCAIDAwYGBAAAARgAAAIDAwYOBAAAARgAAAI3AwIHBAAAARgAAAI3AwINBAAAARgAAAI4BAIKAgMAARgAAAI3BAEIAgAAARgAAAI3BAEEAgAAARgAAAE3BwIRCAACAjgHAREAAAIBEAAAAksIAxIBAAABCgAAAjcDAxQDAAABGgAAAgUACgICABQFBAIAAgUUCgICABQFAwIA"
+  },
+  "validation": {
+    "expectedVoxelCount": 1998,
+    "expectedPayloadBytes": 489,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      56,
+      57,
+      58,
+      68,
+      69,
+      70,
+      75,
+      96
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 356,
+      "56": 30,
+      "57": 292,
+      "58": 78,
+      "68": 57,
+      "69": 20,
+      "70": 468,
+      "75": 4,
+      "96": 693
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 11,
+    "supportColumns": [
+      {
+        "label": "Front-left corner post",
+        "x": 2,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-right corner post",
+        "x": 20,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-left corner post",
+        "x": 2,
+        "z": 21,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-right corner post",
+        "x": 20,
+        "z": 21,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-left portal post",
+        "x": 8,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-right portal post",
+        "x": 14,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Left center post",
+        "x": 2,
+        "z": 12,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Right center post",
+        "x": 20,
+        "z": 12,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-left work-bay post",
+        "x": 7,
+        "z": 21,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-right work-bay post",
+        "x": 15,
+        "z": 21,
+        "baseY": 0,
+        "topY": 9
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Front portal lintel and roof tie",
+        "axis": "x",
+        "start": 2,
+        "end": 20,
+        "y": 9,
+        "fixed": 3
+      },
+      {
+        "label": "Center roof tie",
+        "axis": "x",
+        "start": 2,
+        "end": 20,
+        "y": 9,
+        "fixed": 12
+      },
+      {
+        "label": "Rear roof tie",
+        "axis": "x",
+        "start": 2,
+        "end": 20,
+        "y": 9,
+        "fixed": 21
+      },
+      {
+        "label": "Left eave beam",
+        "axis": "z",
+        "start": 3,
+        "end": 21,
+        "y": 9,
+        "fixed": 2
+      },
+      {
+        "label": "Right eave beam",
+        "axis": "z",
+        "start": 3,
+        "end": 21,
+        "y": 9,
+        "fixed": 20
+      },
+      {
+        "label": "Longitudinal ridge",
+        "axis": "z",
+        "start": 2,
+        "end": 22,
+        "y": 15,
+        "fixed": 11
+      }
+    ],
+    "walkableDecks": [
+      {
+        "label": "Zero-threshold entrance and central weaving aisle",
+        "axis": "z",
+        "start": 0,
+        "end": 16,
+        "crossStart": 9,
+        "crossEnd": 13,
+        "topProfile": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "clearance": 7
+      }
+    ],
+    "diagonalBands": [
+      {
+        "label": "Left shallow terracotta roof slope",
+        "materialId": 96,
+        "x": 0,
+        "y": 10,
+        "z": 2,
+        "width": 3,
+        "height": 1,
+        "depth": 21,
+        "count": 6,
+        "dx": 2,
+        "dy": 1,
+        "dz": 0
+      },
+      {
+        "label": "Right shallow terracotta roof slope",
+        "materialId": 96,
+        "x": 20,
+        "y": 10,
+        "z": 2,
+        "width": 3,
+        "height": 1,
+        "depth": 21,
+        "count": 6,
+        "dx": -2,
+        "dy": 1,
+        "dz": 0
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "Clear front 5 by 7 weaving-workshop portal",
+        "x": 9,
+        "y": 1,
+        "z": 3,
+        "width": 5,
+        "height": 7,
+        "depth": 1
+      },
+      {
+        "label": "Seven-voxel-high central weaving aisle",
+        "x": 9,
+        "y": 1,
+        "z": 4,
+        "width": 5,
+        "height": 7,
+        "depth": 13
+      }
+    ],
+    "approach": [
+      {
+        "x": 11,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 1,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 8,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 12,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 16,
+        "topY": 1
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 3,
+        "y": 0,
+        "z": 3,
+        "materialId": 68
+      },
+      {
+        "x": 3,
+        "y": 0,
+        "z": 4,
+        "materialId": 55
+      },
+      {
+        "x": 11,
+        "y": 0,
+        "z": 0,
+        "materialId": 69
+      },
+      {
+        "x": 8,
+        "y": 5,
+        "z": 3,
+        "materialId": 57
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "z": 3,
+        "materialId": 70
+      },
+      {
+        "x": 4,
+        "y": 5,
+        "z": 3,
+        "materialId": 58
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "z": 6,
+        "materialId": 57
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "z": 10,
+        "materialId": 56
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "z": 7,
+        "materialId": 55
+      },
+      {
+        "x": 4,
+        "y": 1,
+        "z": 4,
+        "materialId": 55
+      },
+      {
+        "x": 11,
+        "y": 2,
+        "z": 18,
+        "materialId": 55
+      },
+      {
+        "x": 8,
+        "y": 3,
+        "z": 18,
+        "materialId": 75
+      },
+      {
+        "x": 0,
+        "y": 10,
+        "z": 2,
+        "materialId": 96
+      },
+      {
+        "x": 11,
+        "y": 15,
+        "z": 11,
+        "materialId": 96
+      }
+    ]
+  }
+}

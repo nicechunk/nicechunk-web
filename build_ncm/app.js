@@ -803,10 +803,11 @@ function renderConceptReference() {
   }
   const buildingName = localizedBuildingText(selectedBuilding, "titles", getLocale());
   const source = new URL(selectedBuilding.referenceImage, import.meta.url).href;
+  els.conceptReference.hidden = false;
+  els.conceptImage.loading = "eager";
   if (els.conceptImage.src !== source) els.conceptImage.src = source;
   els.conceptImage.alt = t("view.conceptAlt", { building: buildingName });
   els.conceptCaption.textContent = t("view.conceptReference");
-  els.conceptReference.hidden = false;
 }
 
 function renderCodePanel({ preserveEditor = false } = {}) {

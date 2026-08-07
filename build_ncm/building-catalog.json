@@ -36,6 +36,7 @@
     "buildings/industrial/compact-village-blacksmith-shop.json",
     "buildings/civic/compact-village-infirmary.json",
     "buildings/civic/compact-village-schoolhouse.json",
-    "buildings/commerce/compact-village-tavern.json"
+    "buildings/commerce/compact-village-tavern.json",
+    "buildings/industrial/compact-village-weaving-workshop.json"
   ]
 }

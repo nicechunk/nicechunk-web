@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 2);
-  assert.match(initial.totalBuildingCount, /32 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /33 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -292,7 +292,18 @@ try {
   assert.ok(!harborBeacon.resources.some((path) => path.endsWith("stone-timber-harbor-beacon-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=industrial]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=freight-warehouse]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=freight-warehouse]') && document.querySelector('[data-building=covered-village-bloomery]') && document.querySelector('[data-building=compact-village-blacksmith-shop]')"));
+  const industrialBrowse = await evaluate(client, `({
+    activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
+    cardCount: document.querySelectorAll('[data-building]').length,
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(industrialBrowse.activeBuilding, null);
+  assert.equal(industrialBrowse.cardCount, 3);
+  assert.ok(!industrialBrowse.resources.includes("/build_ncm/buildings/industrial/freight-warehouse.json"), "category browsing must not load the warehouse JSON");
+  assert.ok(!industrialBrowse.resources.includes("/build_ncm/buildings/industrial/covered-village-bloomery.json"), "category browsing must not load the bloomery JSON");
+  assert.ok(!industrialBrowse.resources.includes("/build_ncm/buildings/industrial/compact-village-blacksmith-shop.json"), "category browsing must not load the blacksmith-shop JSON");
+  assert.ok(!industrialBrowse.resources.includes("/build_ncm/concepts/industrial/compact-village-blacksmith-shop.webp"), "category browsing must not load the blacksmith-shop concept art");
   await evaluate(client, "document.querySelector('[data-building=freight-warehouse]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'freight-warehouse' && document.querySelector('#modelSize').textContent === '48 × 36 × 38'"));
   const warehouse = await evaluate(client, `({
@@ -307,6 +318,7 @@ try {
     voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
     uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
     selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.match(warehouse.title, /Freight Warehouse/);
   assert.equal(warehouse.modelSize, "48 × 36 × 38");
@@ -319,6 +331,53 @@ try {
   assert.ok(warehouse.voxelCount > seaside.voxelCount);
   assert.equal(warehouse.uncovered, false);
   assert.equal(warehouse.selectedInUrl, "freight-warehouse");
+  assert.ok(!warehouse.resources.includes("/build_ncm/buildings/industrial/compact-village-blacksmith-shop.json"), "selecting the warehouse must not load the blacksmith-shop JSON");
+  assert.ok(!warehouse.resources.includes("/build_ncm/concepts/industrial/compact-village-blacksmith-shop.webp"), "selecting the warehouse must not load the blacksmith-shop concept art");
+
+  await evaluate(client, "document.querySelector('[data-building=compact-village-blacksmith-shop]').click()");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-blacksmith-shop' && document.querySelector('#modelSize').textContent === '23 × 18 × 21' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const blacksmithShop = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(blacksmithShop.activeCategory, "industrial");
+  assert.match(blacksmithShop.title, /Compact Village Blacksmith Shop/);
+  assert.equal(blacksmithShop.modelSize, "23 × 18 × 21");
+  assert.match(blacksmithShop.payload, /^NCM3:/);
+  assert.equal(blacksmithShop.voxelCount, 2106);
+  for (const id of [55, 56, 57, 58, 60, 62, 65, 66, 68, 70, 72, 96]) assert.match(blacksmithShop.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(blacksmithShop.uncovered, false);
+  assert.equal(blacksmithShop.glazingDisabled, true);
+  assert.equal(blacksmithShop.glazingLabel, "Openings: Not applicable");
+  assert.equal(blacksmithShop.disabledStyles, 6);
+  assert.equal(blacksmithShop.disabledRoofs, 6);
+  assert.equal(blacksmithShop.conceptHidden, false);
+  assert.match(blacksmithShop.conceptAlt, /Compact Village Blacksmith Shop concept reference/);
+  assert.equal(blacksmithShop.conceptFit, "contain");
+  assert.equal(blacksmithShop.selectedInUrl, "compact-village-blacksmith-shop");
+  assert.ok(blacksmithShop.resources.includes("/build_ncm/buildings/industrial/compact-village-blacksmith-shop.json"));
+  assert.ok(blacksmithShop.resources.includes("/build_ncm/concepts/industrial/compact-village-blacksmith-shop.webp"));
+  assert.ok(!blacksmithShop.resources.some((path) => path.endsWith("compact-village-blacksmith-shop-blueprint.js")));
+
+  if (screenshotPath) {
+    await evaluate(client, "document.querySelector('.building-library-panel').scrollIntoView({block:'start'}); window.scrollBy(0, -76); new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))");
+    const screenshot = await client.send("Page.captureScreenshot", { format: "png", fromSurface: true, captureBeyondViewport: false });
+    writeFileSync(screenshotPath, Buffer.from(screenshot.data, "base64"));
+  }
 
   await evaluate(client, "document.querySelector('[data-building-category=fortress]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=grand-castle]') && document.querySelector('[data-building=compact-village-guardhouse]')"));
@@ -974,12 +1033,6 @@ try {
   assert.ok(bakery.resources.includes("/build_ncm/buildings/commerce/compact-village-bakery.json"));
   assert.ok(bakery.resources.includes("/build_ncm/concepts/commerce/compact-village-bakery.webp"));
   assert.ok(!bakery.resources.some((path) => path.endsWith("compact-village-bakery-blueprint.js")));
-
-  if (screenshotPath) {
-    await evaluate(client, "document.querySelector('.building-library-panel').scrollIntoView({block:'start'}); window.scrollBy(0, -76); new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))");
-    const screenshot = await client.send("Page.captureScreenshot", { format: "png", fromSurface: true, captureBeyondViewport: false });
-    writeFileSync(screenshotPath, Buffer.from(screenshot.data, "base64"));
-  }
 
   await evaluate(client, "document.querySelector('[data-building-category=transport]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=stone-timber-footbridge]')"));
@@ -1644,10 +1697,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const bakeryDirectUrl = new URL(url);
-  bakeryDirectUrl.searchParams.set("building", "compact-village-bakery");
-  await client.send("Page.navigate", { url: bakeryDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'commerce' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-bakery' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const blacksmithDirectUrl = new URL(url);
+  blacksmithDirectUrl.searchParams.set("building", "compact-village-blacksmith-shop");
+  await client.send("Page.navigate", { url: blacksmithDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'industrial' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-blacksmith-shop' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -1659,15 +1712,15 @@ try {
     conceptPath: new URL(document.querySelector('#conceptImage').currentSrc).pathname,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(directSelection.activeCategory, "commerce");
-  assert.equal(directSelection.activeBuilding, "compact-village-bakery");
-  assert.match(directSelection.title, /Compact Village Bakery/);
-  assert.equal(directSelection.modelSize, "21 × 18 × 21");
+  assert.equal(directSelection.activeCategory, "industrial");
+  assert.equal(directSelection.activeBuilding, "compact-village-blacksmith-shop");
+  assert.match(directSelection.title, /Compact Village Blacksmith Shop/);
+  assert.equal(directSelection.modelSize, "23 × 18 × 21");
   assert.match(directSelection.payload, /^NCM3:/);
   assert.equal(directSelection.conceptComplete, true);
   assert.ok(directSelection.conceptNaturalWidth > 0);
-  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/commerce/compact-village-bakery.webp");
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/commerce/compact-village-bakery.json"));
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/industrial/compact-village-blacksmith-shop.webp");
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/industrial/compact-village-blacksmith-shop.json"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

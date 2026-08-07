@@ -1,0 +1,517 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-blacksmith-shop",
+  "category": "industrial",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Compact Village Blacksmith Shop",
+    "es": "Herrería Compacta de la Aldea",
+    "fr": "Forge Compacte du Village",
+    "de": "Kompakte Dorfschmiede",
+    "ja": "コンパクトな村の鍛冶屋",
+    "ru": "Компактная деревенская кузница",
+    "ko": "소형 마을 대장간",
+    "zh-Hant": "緊湊型村莊鐵匠鋪",
+    "zh-Hans": "紧凑型村庄铁匠铺"
+  },
+  "descriptions": {
+    "en": "An enterable compact village blacksmith shop scaled to the 1.75 m avatar, with a zero-threshold 7 × 7-voxel loading portal, a seven-voxel receiving bay narrowing to a clear five-voxel hammering aisle, paired timber benches, two deep-stone masonry work blocks, wall tool rails, a fire-safe basalt-brick floor, permanent high ventilation glazing, a hollow fired-clay forge with contained amber heat glow, a roof-penetrating chimney, continuous post-and-beam load paths, and a shallow terracotta roof on a complete stepped timber deck.",
+    "es": "Una herrería compacta y accesible de aldea, dimensionada para el avatar de 1,75 m, con un portal de carga sin umbral de 7 × 7 vóxeles, una zona de recepción de siete vóxeles que se estrecha hasta un pasillo de martilleo despejado de cinco vóxeles, dos bancos de madera, dos bloques de trabajo de mampostería de piedra profunda, rieles murales para herramientas, suelo ignífugo de ladrillo basáltico, acristalamiento alto permanente de ventilación, una fragua hueca de ladrillo cocido con brillo ámbar contenido, una chimenea que atraviesa el tejado, recorridos de carga continuos de postes y vigas y un tejado poco inclinado de terracota sobre un entablado escalonado completo de madera.",
+    "fr": "Une forge compacte de village accessible et dimensionnée pour l’avatar de 1,75 m, avec un portail de chargement sans seuil de 7 × 7 voxels, une aire de réception de sept voxels se resserrant en une allée de martelage libre de cinq voxels, deux établis en bois, deux blocs de travail maçonnés en pierre profonde, des rails muraux à outils, un sol ignifuge en briques de basalte, des vitrages hauts permanents de ventilation, un foyer creux en briques cuites avec lueur ambrée contenue, une cheminée traversant le toit, des descentes de charge continues par poteaux et poutres et un toit peu pentu en terre cuite sur un platelage bois complet en gradins.",
+    "de": "Eine begehbare kompakte Dorfschmiede im Maßstab des 1,75-m-Avatars mit einem schwellenlosen Ladeportal von 7 × 7 Voxeln, einer sieben Voxel breiten Annahmezone, die sich zu einem freien fünf Voxel breiten Schmiedegang verengt, zwei Holzwerkbänken, zwei gemauerten Tiefstein-Arbeitsblöcken, Werkzeugleisten an den Wänden, einem feuerfesten Basaltziegelboden, fester hoher Lüftungsverglasung, einer hohlen Brennziegelesse mit eingeschlossenem Bernsteinglühen, einem Schornstein durch das Dach, durchgehenden Pfosten-Riegel-Lastpfaden und einem flachen Terrakottadach auf vollständiger abgestufter Holzschalung.",
+    "ja": "身長1.75 mのアバターに合わせた、内部に入れるコンパクトな村の鍛冶屋です。段差のない7 × 7ボクセルの搬入口、幅7ボクセルの受入区画から幅5ボクセルの鍛造通路へ続く空間、左右一対の木製作業台、深層石れんがの作業ブロック2基、壁面工具レール、耐火性の玄武岩れんが床、固定式の高い換気窓、琥珀色の熱光を封じた中空の焼成れんが炉、屋根を貫く煙突、連続する柱梁の荷重経路、そして完全な階段状木屋面で支えた緩勾配のテラコッタ屋根を備えます。",
+    "ru": "Компактная доступная деревенская кузница в масштабе аватара ростом 1,75 м: погрузочный проём 7 × 7 вокселей без порога, приёмная зона шириной семь вокселей, переходящая в свободный кузнечный проход шириной пять вокселей, две деревянные рабочие скамьи, два кладочных рабочих блока из глубинного камня, настенные рейки для инструментов, огнестойкий пол из базальтового кирпича, постоянные высокие вентиляционные окна, полый горн из обожжённого кирпича с закрытым янтарным свечением, проходящая сквозь крышу труба, непрерывные несущие линии стоек и балок и пологая терракотовая крыша на сплошном ступенчатом деревянном настиле.",
+    "ko": "키 1.75 m 아바타 비율에 맞춘 출입 가능한 소형 마을 대장간입니다. 문턱 없는 7 × 7복셀 하역문, 폭 7복셀의 반입 공간에서 폭 5복셀의 막힘없는 단조 통로로 이어지는 동선, 한 쌍의 목재 작업대, 두 개의 심층석 벽돌 작업 블록, 벽면 공구 레일, 내화성 현무암 벽돌 바닥, 고정식 높은 환기창, 호박빛 열광을 가둔 속이 빈 소성 벽돌 화덕, 지붕을 관통하는 굴뚝, 끊김 없는 기둥·보 하중 경로, 완전한 계단식 목재 지붕판 위의 완만한 테라코타 지붕을 갖춥니다.",
+    "zh-Hant": "依1.75公尺角色比例設計的可進入緊湊型村莊鐵匠鋪，設有零門檻7 × 7體素裝卸門、由七體素寬收料區收窄至五體素寬暢通鍛造通道的動線、左右木工作臺、兩座深層石磚工作塊、壁面工具掛桿、耐火玄武岩磚地面、固定高位通風窗、封存琥珀熱光的中空燒製磚爐、穿出屋頂的煙囪、連續柱樑受力路徑，以及由完整階梯式木屋面承托的淺坡赤陶屋頂。",
+    "zh-Hans": "依1.75米角色比例设计的可进入紧凑型村庄铁匠铺，设有零门槛7 × 7体素装卸门、由七体素宽收料区收窄至五体素宽畅通锻造通道的动线、左右木工作台、两座深层石砖工作块、壁面工具挂杆、耐火玄武岩砖地面、固定高位通风窗、封存琥珀热光的中空烧制砖炉、穿出屋顶的烟囱、连续柱梁受力路径，以及由完整阶梯式木屋面承托的浅坡赤陶屋顶。"
+  },
+  "referenceImage": "concepts/industrial/compact-village-blacksmith-shop.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "23 × 21 vu",
+  "height": "18 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 19,
+      "z": 15
+    },
+    "wallFootprintMeters": {
+      "x": 7.6,
+      "z": 6
+    },
+    "doorClearVoxels": {
+      "width": 7,
+      "height": 7
+    },
+    "interiorClearHeightVoxels": 7
+  },
+  "preview": {
+    "fitScale": 1.03,
+    "minScale": 4,
+    "yaw": 2.48
+  },
+  "extraMaterials": [
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Wall Tool Rails"
+    },
+    {
+      "materialId": 58,
+      "phase": "openings",
+      "label": "Permanent High Ventilation Windows"
+    },
+    {
+      "materialId": 60,
+      "phase": "fixtures",
+      "label": "Contained Forge Heat Glow"
+    },
+    {
+      "materialId": 62,
+      "phase": "fixtures",
+      "label": "Hollow Forge Chamber"
+    },
+    {
+      "materialId": 65,
+      "phase": "fixtures",
+      "label": "Forge Lining, Work Blocks and Chimney Cap"
+    },
+    {
+      "materialId": 66,
+      "phase": "foundation",
+      "label": "Fire-safe Smithy Work Floor"
+    },
+    {
+      "materialId": 72,
+      "phase": "foundation",
+      "label": "Level Zero-threshold Loading Approach"
+    }
+  ],
+  "validation": {
+    "expectedVoxelCount": 2106,
+    "expectedPayloadBytes": 493,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      56,
+      57,
+      58,
+      60,
+      62,
+      65,
+      66,
+      68,
+      70,
+      72,
+      96
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 64,
+      "56": 10,
+      "57": 522,
+      "58": 48,
+      "60": 6,
+      "62": 160,
+      "65": 54,
+      "66": 214,
+      "68": 47,
+      "70": 395,
+      "72": 35,
+      "96": 551
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 11,
+    "supportColumns": [
+      {
+        "label": "Front-left corner post",
+        "x": 2,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-right corner post",
+        "x": 20,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-left corner post",
+        "x": 2,
+        "z": 17,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-right corner post",
+        "x": 20,
+        "z": 17,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-left portal post",
+        "x": 7,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-right portal post",
+        "x": 15,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-left forge-bay post",
+        "x": 7,
+        "z": 17,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-right forge-bay post",
+        "x": 15,
+        "z": 17,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Left center post",
+        "x": 2,
+        "z": 10,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Right center post",
+        "x": 20,
+        "z": 10,
+        "baseY": 0,
+        "topY": 9
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Front portal lintel and roof tie",
+        "axis": "x",
+        "start": 2,
+        "end": 20,
+        "y": 9,
+        "fixed": 3
+      },
+      {
+        "label": "Center roof tie",
+        "axis": "x",
+        "start": 2,
+        "end": 20,
+        "y": 9,
+        "fixed": 10
+      },
+      {
+        "label": "Rear roof tie",
+        "axis": "x",
+        "start": 2,
+        "end": 20,
+        "y": 9,
+        "fixed": 17
+      },
+      {
+        "label": "Left eave beam",
+        "axis": "z",
+        "start": 3,
+        "end": 17,
+        "y": 9,
+        "fixed": 2
+      },
+      {
+        "label": "Right eave beam",
+        "axis": "z",
+        "start": 3,
+        "end": 17,
+        "y": 9,
+        "fixed": 20
+      },
+      {
+        "label": "Longitudinal ridge beam",
+        "axis": "z",
+        "start": 2,
+        "end": 18,
+        "y": 14,
+        "fixed": 11
+      }
+    ],
+    "walkableDecks": [
+      {
+        "label": "Zero-threshold loading path and hammering aisle",
+        "axis": "z",
+        "start": 0,
+        "end": 12,
+        "crossStart": 9,
+        "crossEnd": 13,
+        "topProfile": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "clearance": 7
+      }
+    ],
+    "diagonalBands": [
+      {
+        "label": "Left shallow terracotta roof slope",
+        "materialId": 96,
+        "x": 0,
+        "y": 10,
+        "z": 2,
+        "width": 3,
+        "height": 1,
+        "depth": 17,
+        "count": 6,
+        "dx": 2,
+        "dy": 1,
+        "dz": 0,
+        "allowedPenetrations": [
+          {
+            "label": "Centered fired-clay chimney through the rear roof",
+            "x": 10,
+            "y": 14,
+            "z": 15,
+            "width": 3,
+            "height": 2,
+            "depth": 2,
+            "materialId": 62
+          }
+        ]
+      },
+      {
+        "label": "Right shallow terracotta roof slope",
+        "materialId": 96,
+        "x": 20,
+        "y": 10,
+        "z": 2,
+        "width": 3,
+        "height": 1,
+        "depth": 17,
+        "count": 6,
+        "dx": -2,
+        "dy": 1,
+        "dz": 0,
+        "allowedPenetrations": [
+          {
+            "label": "Centered fired-clay chimney through the rear roof",
+            "x": 10,
+            "y": 14,
+            "z": 15,
+            "width": 3,
+            "height": 2,
+            "depth": 2,
+            "materialId": 62
+          }
+        ]
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "Clear front 7 by 7 loading portal",
+        "x": 8,
+        "y": 1,
+        "z": 3,
+        "width": 7,
+        "height": 7,
+        "depth": 1
+      },
+      {
+        "label": "Seven-voxel-wide receiving bay",
+        "x": 8,
+        "y": 1,
+        "z": 4,
+        "width": 7,
+        "height": 7,
+        "depth": 3
+      },
+      {
+        "label": "Five-voxel-wide central hammering aisle",
+        "x": 9,
+        "y": 1,
+        "z": 7,
+        "width": 5,
+        "height": 7,
+        "depth": 6
+      },
+      {
+        "label": "Open 3 by 3 forge mouth and cavity",
+        "x": 10,
+        "y": 2,
+        "z": 13,
+        "width": 3,
+        "height": 3,
+        "depth": 2
+      }
+    ],
+    "approach": [
+      {
+        "x": 11,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 1,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 8,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 12,
+        "topY": 1
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 3,
+        "y": 0,
+        "z": 3,
+        "materialId": 68
+      },
+      {
+        "x": 4,
+        "y": 0,
+        "z": 4,
+        "materialId": 66
+      },
+      {
+        "x": 11,
+        "y": 0,
+        "z": 4,
+        "materialId": 72
+      },
+      {
+        "x": 6,
+        "y": 2,
+        "z": 3,
+        "materialId": 70
+      },
+      {
+        "x": 2,
+        "y": 4,
+        "z": 6,
+        "materialId": 58
+      },
+      {
+        "x": 2,
+        "y": 5,
+        "z": 3,
+        "materialId": 57
+      },
+      {
+        "x": 3,
+        "y": 1,
+        "z": 7,
+        "materialId": 55
+      },
+      {
+        "x": 7,
+        "y": 1,
+        "z": 8,
+        "materialId": 65
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "z": 6,
+        "materialId": 56
+      },
+      {
+        "x": 8,
+        "y": 2,
+        "z": 13,
+        "materialId": 62
+      },
+      {
+        "x": 10,
+        "y": 2,
+        "z": 15,
+        "materialId": 60
+      },
+      {
+        "x": 10,
+        "y": 10,
+        "z": 15,
+        "materialId": 62
+      },
+      {
+        "x": 0,
+        "y": 10,
+        "z": 2,
+        "materialId": 96
+      },
+      {
+        "x": 11,
+        "y": 15,
+        "z": 10,
+        "materialId": 96
+      }
+    ]
+  },
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARcSFTIBQgMABBAADAFICAAABgAEAQECAAMFAAABAQ8AAwUAAAEBAgAREgAAAQECAAQAAAwBARQABAAADAECAgEDBQcAAQIPAQMFBwABAggIAwYAAAECAgEREgcAAQICAQQABwwBAhQBBAAHDAI6AgQGAAICASQAAAI6AgQMAAICASQAAAIDAgADAAkAASQAAAIDAgARAAkAASQAAAIDBwADAAkAARAAAAIDBwARAAkAARAAAAIDAgAKAAkAASQAAAEDAgkDEgAAAQMCCQoSAAABAwIJERIAAAEDAgkDAAAOAQMUCQMAAA4BAwsOAgAAEAIGAwEHAwEDARoAAAJBBwEIAQEBAQ4AAAI4AwQGAAAEASAAAAICAgoDEgAAAQAAHAICBAsDDgAAAQAAHAICBgwDCgAAAQAAHAICCA0DBgAAAQAAHAICCg4DAgAAAQAAHAIDAAkCAgAQBQQCAAIDFAkCAgAQBQMCAAI6CgwDAgEAAQAAHAIFAAoCAgAQBQQCAAIFFAoCAgAQBQMCAAFBCAENBgADAj4IAg0AAwMBDAAAAT4JAhAEAwACPggCDQEDAAEKAAABPgoFDQIAAAE-CAYNBgADAT4JBw4EAAIBPgoIDwIAAQE8CgIPAgEAAQcKCA8CCQEBQQkRDwQAAQ"
+  }
+}

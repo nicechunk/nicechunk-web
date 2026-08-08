@@ -1,0 +1,374 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-carriage-house",
+  "category": "transport",
+  "kind": "habitable-building",
+  "titles": {
+    "en": "Compact Village Carriage House",
+    "es": "Cochera Compacta de la Aldea",
+    "fr": "Remise à Voitures Compacte du Village",
+    "de": "Kompaktes Dorfwagenhaus",
+    "ja": "コンパクトな村の馬車庫",
+    "ru": "Компактный деревенский каретный сарай",
+    "ko": "소형 마을 마차고",
+    "zh-Hant": "緊湊型村莊馬車房",
+    "zh-Hans": "紧凑型村庄马车房"
+  },
+  "descriptions": {
+    "en": "A human-scaled timber-and-plaster carriage house with twin zero-threshold seven-wide vehicle bays, level polished-stone approaches, clear five-wide player lanes, a rear timber loft with a guarded edge and grounded ladder, floor guide rails, axle racks and high glazing; vehicles and cargo are excluded.",
+    "es": "Una cochera de madera y revoco a escala humana, con dos vanos para vehículos de siete vóxeles y sin desnivel, accesos nivelados de piedra pulida, pasos libres de cinco vóxeles, altillo trasero de madera con barandilla y escalera apoyada en el suelo, guías en el piso, soportes para ejes y ventanas altas; no se incluyen vehículos ni carga.",
+    "fr": "Une remise à voitures en bois et enduit à échelle humaine, avec deux baies de sept voxels sans ressaut, accès de plain-pied en pierre polie, passages libres de cinq voxels, mezzanine arrière en bois munie d’un garde-corps et d’une échelle ancrée au sol, rails de guidage, râteliers d’essieux et vitrages hauts ; véhicules et cargaison sont exclus.",
+    "de": "Ein maßstäbliches Wagenhaus aus Fachwerk und Putz mit zwei schwellenlosen sieben Voxel breiten Fahrzeugtoren, ebenen Zufahrten aus poliertem Stein, fünf Voxel breiten freien Laufwegen, hinterem Holzloft mit Geländer und bodengestützter Leiter, Führungsschienen, Achsregalen und hoch liegenden Fenstern; Fahrzeuge und Ladung sind nicht enthalten.",
+    "ja": "人のスケールに合わせた木骨と漆喰の馬車庫です。段差のない7ボクセル幅の車両開口を2つ、平らな磨き石の進入路、5ボクセル幅の通路、手すり付き後部木造ロフトと接地したはしご、床のガイドレール、車軸棚、高窓を備えています。車両と積荷は含まれません。",
+    "ru": "Каретный сарай из фахверка и штукатурки в масштабе персонажа: два проёма шириной семь вокселей без порогов, ровные подъезды из полированного камня, свободные проходы шириной пять вокселей, задний деревянный чердак с ограждением и опирающейся на пол лестницей, направляющие, стеллажи для осей и высокие окна; транспорт и груз не входят в чертёж.",
+    "ko": "사람 크기에 맞춘 목구조 회벽 마차고로, 단차 없는 7복셀 폭 차량 출입구 두 개, 평평한 연마석 진입로, 5복셀 폭 통로, 난간과 바닥에 닿는 사다리를 갖춘 뒤쪽 목조 다락, 바닥 유도 레일, 차축 선반과 높은 창을 갖췄습니다. 차량과 화물은 포함하지 않습니다.",
+    "zh-Hant": "一座符合角色尺度的木構灰泥馬車房，設有兩個零高差七體素寬車位入口、平整拋光石引道、五體素寬暢通走道、帶護欄及接地梯子的後部木閣樓、地面導向條、車軸架與高窗；車輛及貨物不包含在藍圖內。",
+    "zh-Hans": "一座符合角色尺度的木构灰泥马车房，设有两个零高差七体素宽车位入口、平整抛光石引道、五体素宽畅通走道、带护栏及接地梯子的后部木阁楼、地面导向条、车轴架与高窗；车辆及货物不包含在蓝图内。"
+  },
+  "referenceImage": "concepts/transport/compact-village-carriage-house.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "charcoal",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "33 × 31 vu",
+  "height": "25 vu",
+  "referenceScale": "1 voxel = 0.4 m; wall footprint 10 × 8.4 m; 1.75 m avatar = 4.375 voxels",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 25,
+      "z": 21
+    },
+    "wallFootprintMeters": {
+      "x": 10,
+      "z": 8.4
+    },
+    "doorClearVoxels": {
+      "width": 5,
+      "height": 7
+    },
+    "interiorClearHeightVoxels": 7
+  },
+  "preview": {
+    "fitScale": 1,
+    "minScale": 3.1,
+    "yaw": 2.45
+  },
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "fixtures",
+      "label": "Rear Timber Loft and Inlaid Vehicle Guide Rails"
+    },
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Loft Guard, Grounded Ladder and Twin Axle Racks"
+    },
+    {
+      "materialId": 58,
+      "phase": "glazing",
+      "label": "High Carriage-house Clerestory Panels"
+    },
+    {
+      "materialId": 69,
+      "phase": "floor",
+      "label": "Level Polished-stone Bay Floor and Twin Approaches"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ASEZHyQBAQQABhgAFAFFBQAHFgASAkUGAAIGAAQBHAAAAQIEAQYBCQABAg0BBgYJAAECGwEGAQkAAgIGCQYGAQABHAAAAQIEARoYCQACAgQBBwAJEgEwAAAHAgQLBhgABwIECxoYAAMFAwsFGhYGAwMLBRoWAgMFAAYACgABLAAAAgMNAAYACgABDAAAAgMEABoACgACGAAAAgMEABAACgABMAAAAgMFABQACAACFgAAAQMFCQYIAAABAxMJBggAAAIDAwoFAAAWATQAAAIDBAoGGAAAAQAAKAE6DgYGBAIAAjoGBhoGAgABHAAAAjoEBgkAAgMBMAAAAjoEBhQAAgMBMAAAATcFCBQWAAUFOAUIFBYABQI4DwETAAcAAQQAAAI4DwITAgAAAwAEAAI3BwAJAAAJAQgAAAI3FQAJAAAJAQgAAAI4BgEZAAYAAQwAAAI4FAEZAAYAAQwAAAI4BgMZBgAAARwAAAI4BgYZBgAAARwAAA"
+  },
+  "validation": {
+    "expectedVoxelCount": 2639,
+    "expectedPayloadBytes": 373,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      56,
+      57,
+      58,
+      68,
+      69,
+      70,
+      99
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 172,
+      "56": 132,
+      "57": 280,
+      "58": 105,
+      "68": 65,
+      "69": 464,
+      "70": 854,
+      "99": 567
+    },
+    "requireConnected": true,
+    "supportColumns": [
+      {
+        "label": "Left outer bay jamb",
+        "x": 5,
+        "z": 6,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left inner bay jamb",
+        "x": 13,
+        "z": 6,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right inner bay jamb",
+        "x": 19,
+        "z": 6,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right outer bay jamb",
+        "x": 27,
+        "z": 6,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-left main post",
+        "x": 4,
+        "z": 26,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-centre main post",
+        "x": 16,
+        "z": 26,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-right main post",
+        "x": 28,
+        "z": 26,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left loft support",
+        "x": 5,
+        "z": 20,
+        "baseY": 0,
+        "topY": 8
+      },
+      {
+        "label": "Centre loft support",
+        "x": 16,
+        "z": 20,
+        "baseY": 0,
+        "topY": 8
+      },
+      {
+        "label": "Right loft support",
+        "x": 27,
+        "z": 20,
+        "baseY": 0,
+        "topY": 8
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Left vehicle-bay lintel",
+        "axis": "x",
+        "start": 5,
+        "end": 13,
+        "y": 9,
+        "fixed": 6
+      },
+      {
+        "label": "Right vehicle-bay lintel",
+        "axis": "x",
+        "start": 19,
+        "end": 27,
+        "y": 9,
+        "fixed": 6
+      },
+      {
+        "label": "Front wall plate",
+        "axis": "x",
+        "start": 4,
+        "end": 28,
+        "y": 10,
+        "fixed": 6
+      },
+      {
+        "label": "Rear wall plate",
+        "axis": "x",
+        "start": 4,
+        "end": 28,
+        "y": 10,
+        "fixed": 26
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "left seven-wide vehicle entrance",
+        "x": 6,
+        "y": 1,
+        "z": 6,
+        "width": 7,
+        "height": 8,
+        "depth": 1
+      },
+      {
+        "label": "right seven-wide vehicle entrance",
+        "x": 20,
+        "y": 1,
+        "z": 6,
+        "width": 7,
+        "height": 8,
+        "depth": 1
+      },
+      {
+        "label": "left five-wide clear lane",
+        "x": 7,
+        "y": 1,
+        "z": 7,
+        "width": 5,
+        "height": 7,
+        "depth": 13
+      },
+      {
+        "label": "right five-wide clear lane",
+        "x": 21,
+        "y": 1,
+        "z": 7,
+        "width": 5,
+        "height": 7,
+        "depth": 13
+      },
+      {
+        "label": "left under-loft parking bay",
+        "x": 7,
+        "y": 1,
+        "z": 20,
+        "width": 5,
+        "height": 7,
+        "depth": 5
+      },
+      {
+        "label": "right under-loft parking bay",
+        "x": 21,
+        "y": 1,
+        "z": 20,
+        "width": 5,
+        "height": 7,
+        "depth": 5
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 4,
+        "y": 0,
+        "z": 12,
+        "materialId": 68
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "z": 14,
+        "materialId": 70
+      },
+      {
+        "x": 5,
+        "y": 5,
+        "z": 6,
+        "materialId": 57
+      },
+      {
+        "x": 15,
+        "y": 6,
+        "z": 6,
+        "materialId": 58
+      },
+      {
+        "x": 7,
+        "y": 0,
+        "z": 12,
+        "materialId": 55
+      },
+      {
+        "x": 15,
+        "y": 4,
+        "z": 19,
+        "materialId": 56
+      },
+      {
+        "x": 9,
+        "y": 0,
+        "z": 8,
+        "materialId": 69
+      },
+      {
+        "x": 3,
+        "y": 11,
+        "z": 14,
+        "materialId": 99
+      }
+    ],
+    "approach": [
+      {
+        "x": 9,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 9,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 9,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 9,
+        "z": 5,
+        "topY": 1
+      },
+      {
+        "x": 9,
+        "z": 6,
+        "topY": 1
+      },
+      {
+        "x": 9,
+        "z": 7,
+        "topY": 1
+      }
+    ]
+  }
+}

@@ -51,6 +51,7 @@
     "buildings/commerce/compact-village-butcher-shop.json",
     "buildings/industrial/compact-village-tannery.json",
     "buildings/industrial/compact-village-sawmill.json",
-    "buildings/civic/compact-village-bathhouse.json"
+    "buildings/civic/compact-village-bathhouse.json",
+    "buildings/transport/compact-village-carriage-house.json"
   ]
 }

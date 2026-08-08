@@ -1,0 +1,367 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-rowhouse",
+  "category": "residential",
+  "kind": "habitable-building",
+  "titles": {
+    "en": "Compact Village Rowhouse",
+    "es": "Casa Adosada Compacta de la Aldea",
+    "fr": "Maison Mitoyenne Compacte du Village",
+    "de": "Kompaktes Dorfreihenhaus",
+    "ja": "コンパクトな村の長屋",
+    "ru": "Компактный деревенский рядный дом",
+    "ko": "소형 마을 연립주택",
+    "zh-Hant": "緊湊型村莊聯排屋",
+    "zh-Hans": "紧凑型村庄联排屋"
+  },
+  "descriptions": {
+    "en": "A human-scaled three-home timber-and-plaster rowhouse with three independent zero-threshold five-wide entrances, separate full-depth living rooms, timber floors, rear high windows, a continuous terracotta gable roof and one grounded firebrick hearth and chimney per home; doors, furniture and landscaping are excluded.",
+    "es": "Una casa adosada de tres viviendas, de madera y revoco y a escala humana, con tres entradas independientes de cinco vóxeles sin desnivel, estancias separadas de fondo completo, suelos de madera, ventanas traseras altas, cubierta continua a dos aguas de terracota y un hogar de ladrillo refractario con chimenea apoyado en el suelo por vivienda; no se incluyen puertas, muebles ni paisajismo.",
+    "fr": "Une rangée de trois logements en bois et enduit à échelle humaine, avec trois entrées indépendantes de cinq voxels sans ressaut, pièces séparées sur toute la profondeur, planchers en bois, fenêtres arrière hautes, toit à deux versants continu en terre cuite et un foyer en brique cuite avec cheminée ancré au sol par logement ; portes, mobilier et aménagement paysager sont exclus.",
+    "de": "Ein maßstäbliches Reihenhaus aus Fachwerk und Putz mit drei getrennten Wohnungen, drei schwellenlosen fünf Voxel breiten Eingängen, separaten Wohnräumen über die volle Tiefe, Holzböden, hoch liegenden Rückfenstern, durchgehendem Terrakotta-Satteldach sowie je einer bodengestützten Ziegelfeuerstelle mit Schornstein; Türen, Möbel und Landschaft sind nicht enthalten.",
+    "ja": "人のスケールに合わせた木骨と漆喰の3戸長屋です。各戸に段差のない5ボクセル幅の独立入口、奥行きいっぱいの居室、木床、後部高窓を備え、全体を連続したテラコッタ切妻屋根で覆い、各戸に接地した耐火れんが炉床と煙突を1基ずつ設けています。扉、家具、景観は含まれません。",
+    "ru": "Рядный дом из трёх фахверковых оштукатуренных жилищ в масштабе персонажа: три независимых входа шириной пять вокселей без порогов, раздельные комнаты на всю глубину, деревянные полы, высокие задние окна, общая двускатная терракотовая крыша и по одному опирающемуся на пол кирпичному очагу с трубой в каждом жилище; двери, мебель и благоустройство не входят в чертёж.",
+    "ko": "사람 크기에 맞춘 목구조 회벽 3세대 연립주택으로, 세대마다 단차 없는 5복셀 폭 독립 입구와 전체 깊이의 분리된 생활 공간, 목재 바닥, 뒤쪽 높은 창을 갖췄습니다. 전체를 하나의 테라코타 박공지붕이 덮고 각 세대에는 바닥에 지지된 내화벽돌 화덕과 굴뚝이 하나씩 있습니다. 문짝, 가구와 조경은 포함하지 않습니다.",
+    "zh-Hant": "一座符合角色尺度的三戶木構灰泥聯排屋，設有三個獨立零高差五體素寬入口、彼此分隔且貫穿進深的起居空間、木地板、後部高窗、連續赤陶雙坡屋頂，以及每戶一座接地耐火磚爐台與煙囪；門扇、家具及景觀不包含在藍圖內。",
+    "zh-Hans": "一座符合角色尺度的三户木构灰泥联排屋，设有三个独立零高差五体素宽入口、彼此分隔且贯穿进深的起居空间、木地板、后部高窗、连续赤陶双坡屋顶，以及每户一座接地耐火砖炉台与烟囱；门扇、家具及景观不包含在蓝图内。"
+  },
+  "referenceImage": "concepts/residential/compact-village-rowhouse.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "37 × 25 vu",
+  "height": "21 vu",
+  "referenceScale": "1 voxel = 0.4 m; wall footprint 11.6 × 6.8 m; each home is about 3.9 m wide; 1.75 m avatar = 4.375 voxels",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 29,
+      "z": 17
+    },
+    "wallFootprintMeters": {
+      "x": 11.6,
+      "z": 6.8
+    },
+    "doorClearVoxels": {
+      "width": 5,
+      "height": 7
+    },
+    "interiorClearHeightVoxels": 7
+  },
+  "preview": {
+    "fitScale": 1,
+    "minScale": 2.9,
+    "yaw": 2.42
+  },
+  "extraMaterials": [
+    {
+      "materialId": 58,
+      "phase": "glazing",
+      "label": "Rear and End-wall High Window Panels"
+    },
+    {
+      "materialId": 69,
+      "phase": "floor",
+      "label": "Three Level Polished-stone Entrance Approaches"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ASUVGRsBAQQABRwAEAEGBQAGGgAOAkUGAAIEAAMCFAAAAQIEAQUBCQACAgYIBQQCAAIUAAACAgsBBQQJAAEUAAABAh8BBQEJAAECBAEVHAkAAgIEAQYACQ4BOAAAAgINAQYACQ4BFAAACgIECwUAEAoCIAsFABAIBQMLBB4SCQMDCwQeEgIDBQAFAAoAAhQAAAIDCwAFAAoAAhQAAAIDBAAVAAoAATgAAAIDDQAVAAoAARQAAAIDBAANAAoAATgAAAIDBQgFBgAAAhQAAAIDAwoEHgAAAQAAJAIDBAoFHAAAAQAAIAI6CAYVAwIAAhQAAAI6BAYIAAIDATgAAAI6BAYQAAICATgAAAIHBQESAgMCAhQAAAIHBQUTAg4BAhQAAA"
+  },
+  "validation": {
+    "expectedVoxelCount": 2786,
+    "expectedPayloadBytes": 289,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      57,
+      58,
+      62,
+      68,
+      69,
+      70,
+      96
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 405,
+      "57": 295,
+      "58": 78,
+      "62": 378,
+      "68": 61,
+      "69": 60,
+      "70": 976,
+      "96": 533
+    },
+    "requireConnected": true,
+    "supportColumns": [
+      {
+        "label": "Left home left jamb",
+        "x": 5,
+        "z": 5,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left home right jamb",
+        "x": 11,
+        "z": 5,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Middle home left jamb",
+        "x": 15,
+        "z": 5,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Middle home right jamb",
+        "x": 21,
+        "z": 5,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right home left jamb",
+        "x": 25,
+        "z": 5,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right home right jamb",
+        "x": 31,
+        "z": 5,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-left corner post",
+        "x": 4,
+        "z": 21,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-left party-wall post",
+        "x": 13,
+        "z": 21,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-right party-wall post",
+        "x": 23,
+        "z": 21,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-right corner post",
+        "x": 32,
+        "z": 21,
+        "baseY": 0,
+        "topY": 10
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Left entrance lintel",
+        "axis": "x",
+        "start": 5,
+        "end": 11,
+        "y": 8,
+        "fixed": 5
+      },
+      {
+        "label": "Middle entrance lintel",
+        "axis": "x",
+        "start": 15,
+        "end": 21,
+        "y": 8,
+        "fixed": 5
+      },
+      {
+        "label": "Right entrance lintel",
+        "axis": "x",
+        "start": 25,
+        "end": 31,
+        "y": 8,
+        "fixed": 5
+      },
+      {
+        "label": "Front wall plate",
+        "axis": "x",
+        "start": 4,
+        "end": 32,
+        "y": 10,
+        "fixed": 5
+      },
+      {
+        "label": "Rear wall plate",
+        "axis": "x",
+        "start": 4,
+        "end": 32,
+        "y": 10,
+        "fixed": 21
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "left zero-threshold entrance",
+        "x": 6,
+        "y": 1,
+        "z": 5,
+        "width": 5,
+        "height": 7,
+        "depth": 1
+      },
+      {
+        "label": "middle zero-threshold entrance",
+        "x": 16,
+        "y": 1,
+        "z": 5,
+        "width": 5,
+        "height": 7,
+        "depth": 1
+      },
+      {
+        "label": "right zero-threshold entrance",
+        "x": 26,
+        "y": 1,
+        "z": 5,
+        "width": 5,
+        "height": 7,
+        "depth": 1
+      },
+      {
+        "label": "left home living volume",
+        "x": 6,
+        "y": 1,
+        "z": 6,
+        "width": 5,
+        "height": 7,
+        "depth": 12
+      },
+      {
+        "label": "middle home living volume",
+        "x": 16,
+        "y": 1,
+        "z": 6,
+        "width": 5,
+        "height": 7,
+        "depth": 12
+      },
+      {
+        "label": "right home living volume",
+        "x": 26,
+        "y": 1,
+        "z": 6,
+        "width": 5,
+        "height": 7,
+        "depth": 12
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 4,
+        "y": 0,
+        "z": 10,
+        "materialId": 68
+      },
+      {
+        "x": 8,
+        "y": 0,
+        "z": 10,
+        "materialId": 55
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "z": 12,
+        "materialId": 70
+      },
+      {
+        "x": 5,
+        "y": 5,
+        "z": 5,
+        "materialId": 57
+      },
+      {
+        "x": 9,
+        "y": 6,
+        "z": 21,
+        "materialId": 58
+      },
+      {
+        "x": 8,
+        "y": 0,
+        "z": 3,
+        "materialId": 69
+      },
+      {
+        "x": 10,
+        "y": 11,
+        "z": 4,
+        "materialId": 96
+      },
+      {
+        "x": 6,
+        "y": 18,
+        "z": 19,
+        "materialId": 62
+      }
+    ],
+    "approach": [
+      {
+        "x": 8,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 8,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 8,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 8,
+        "z": 5,
+        "topY": 1
+      },
+      {
+        "x": 8,
+        "z": 6,
+        "topY": 1
+      }
+    ]
+  }
+}

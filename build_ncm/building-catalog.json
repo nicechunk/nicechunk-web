@@ -52,6 +52,7 @@
     "buildings/industrial/compact-village-tannery.json",
     "buildings/industrial/compact-village-sawmill.json",
     "buildings/civic/compact-village-bathhouse.json",
-    "buildings/transport/compact-village-carriage-house.json"
+    "buildings/transport/compact-village-carriage-house.json",
+    "buildings/residential/compact-village-rowhouse.json"
   ]
 }

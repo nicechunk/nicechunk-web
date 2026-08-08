@@ -1,0 +1,460 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-fish-market",
+  "category": "coastal",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Compact Village Fish Market",
+    "es": "Mercado de Pescado Compacto de la Aldea",
+    "fr": "Marché aux Poissons Compact du Village",
+    "de": "Kompakter Dorffischmarkt",
+    "ja": "コンパクトな村の魚市場",
+    "ru": "Компактный деревенский рыбный рынок",
+    "ko": "소형 마을 어시장",
+    "zh-Hant": "緊湊型村莊魚市場",
+    "zh-Hans": "紧凑型村庄鱼市场"
+  },
+  "descriptions": {
+    "en": "An enterable 7.6 × 6.8 m compact village fish market scaled to the 1.75 m avatar, with a zero-threshold 5 × 7-voxel central entrance and a clear five-voxel customer aisle. The front colonnade and upper side bays remain open for ventilation, while a full rear wall shelters a centered hollow stone wash trough. Two mirrored grounded timber counters carry polished stone worktops and compact salt-crystal chilled display beds without crowding circulation. A washable shell-terrazzo floor, continuous timber load paths, permanent rear high windows and a complete ice-blue gable roof make the market hygienic, accessible and structurally credible.",
+    "es": "Un mercado de pescado compacto de 7,6 × 6,8 m, accesible y dimensionado para el avatar de 1,75 m, con entrada central sin umbral de 5 × 7 vóxeles y un pasillo de clientes despejado de cinco vóxeles. La columnata frontal y las franjas superiores laterales permanecen abiertas para ventilar, mientras una pared trasera completa protege un fregadero hueco de piedra centrado. Dos mostradores de madera simétricos y apoyados en el suelo sostienen encimeras de piedra pulida y pequeñas camas refrigeradas de cristal de sal sin estrechar la circulación. El suelo lavable de terrazo de conchas, las cargas continuas de madera, las ventanas altas traseras permanentes y el tejado completo azul hielo a dos aguas hacen que el mercado sea higiénico, accesible y estructuralmente creíble.",
+    "fr": "Un marché aux poissons compact de 7,6 × 6,8 m, accessible et dimensionné pour l’avatar de 1,75 m, avec une entrée centrale sans seuil de 5 × 7 voxels et une allée clientèle libre de cinq voxels. La colonnade avant et les parties hautes des côtés restent ouvertes pour la ventilation, tandis qu’un mur arrière complet abrite une auge de lavage creuse en pierre au centre. Deux comptoirs en bois symétriques et ancrés au sol portent des plateaux en pierre polie et de petites zones réfrigérées en cristal de sel sans gêner la circulation. Le sol lavable en terrazzo coquillier, les descentes de charge continues en bois, les fenêtres hautes arrière permanentes et le toit complet à deux versants bleu glace rendent le marché hygiénique, accessible et structurellement crédible.",
+    "de": "Ein begehbarer kompakter Dorffischmarkt von 7,6 × 6,8 m im Maßstab des 1,75-m-Avatars mit einem schwellenlosen mittigen Eingang von 5 × 7 Voxeln und einem freien, fünf Voxel breiten Kundengang. Die vordere Kolonnade und die oberen Seitenfelder bleiben zur Lüftung offen, während eine volle Rückwand ein mittiges, hohles Steinwaschbecken schützt. Zwei gespiegelte, bodengestützte Holztresen tragen polierte Steinplatten und kompakte gekühlte Salzkrystallagen, ohne den Laufweg einzuengen. Ein waschbarer Muschelterrazzo-Boden, durchgehende hölzerne Lastpfade, dauerhafte rückwärtige Hochfenster und ein vollständiges eisblaues Satteldach machen den Markt hygienisch, zugänglich und baulich glaubwürdig.",
+    "ja": "身長1.75 mのアバターに合わせた、内部に入れる7.6 × 6.8 mのコンパクトな村の魚市場です。段差のない5 × 7ボクセルの中央入口と幅5ボクセルの明確な客用通路を備えます。正面の列柱と側面上部は換気のため開放し、完全な背面壁が中央の中空石製洗い槽を守ります。左右対称の床支持木製売台には磨き石の天板と小型の塩結晶冷却陳列床を設け、動線を狭めません。洗浄可能な貝殻テラゾー床、連続する木造荷重経路、固定式背面高窓、完全な氷青色切妻屋根により、衛生的で利用しやすく構造的にも妥当な市場となっています。",
+    "ru": "Компактный доступный деревенский рыбный рынок размером 7,6 × 6,8 м в масштабе аватара ростом 1,75 м: центральный вход 5 × 7 вокселей без порога и свободный проход для покупателей шириной пять вокселей. Передняя колоннада и верхние боковые проёмы остаются открытыми для вентиляции, а сплошная задняя стена защищает центральную полую каменную мойку. Два зеркальных деревянных прилавка с опорой на пол несут столешницы из полированного камня и компактные охлаждаемые выкладки из соляного кристалла, не сужая проход. Моющийся пол из ракушечного терраццо, непрерывные деревянные несущие линии, постоянные задние высокие окна и полная ледяно-голубая двускатная крыша делают рынок гигиеничным, доступным и конструктивно правдоподобным.",
+    "ko": "키 1.75 m 아바타 비율에 맞춘 출입 가능한 7.6 × 6.8 m 소형 마을 어시장입니다. 문턱 없는 5 × 7복셀 중앙 입구와 폭 5복셀의 비워 둔 고객 통로를 갖춥니다. 앞쪽 열주와 측면 상부 공간은 환기를 위해 열어 두고, 완전한 뒤벽은 중앙의 중공 석재 세척조를 보호합니다. 좌우 대칭의 바닥 지지 목재 판매대에는 연마 석재 상판과 소형 소금 결정 냉각 진열대를 올려 동선을 좁히지 않습니다. 세척 가능한 조개 테라조 바닥, 연속 목재 하중 경로, 고정식 뒤쪽 높은 창, 완전한 얼음빛 파란 박공지붕으로 위생적이고 접근 가능하며 구조적으로 타당한 시장을 완성합니다.",
+    "zh-Hant": "依1.75公尺角色比例設計的可進入7.6 × 6.8公尺緊湊型村莊魚市場，設有零門檻5 × 7體素中央入口與五體素寬暢通顧客通道。正面柱廊與側面上半部保持開放以利通風，完整後牆則遮護中央中空石製洗滌槽。兩座左右對稱、落地支撐的木製攤臺配有拋光石檯面與小型鹽晶冷藏展示床，不會擠壓動線。可清洗貝殼磨石地面、連續木構受力路徑、固定後側高窗與完整冰藍雙坡屋頂，使市場衛生、易用且結構可信。",
+    "zh-Hans": "依1.75米角色比例设计的可进入7.6 × 6.8米紧凑型村庄鱼市场，设有零门槛5 × 7体素中央入口与五体素宽畅通顾客通道。正面柱廊与侧面上半部保持开放以利通风，完整后墙则遮护中央中空石制洗涤槽。两座左右对称、落地支撑的木制摊台配有抛光石台面与小型盐晶冷藏展示床，不会挤压动线。可清洗贝壳磨石地面、连续木构受力路径、固定后侧高窗与完整冰蓝双坡屋顶，使市场卫生、易用且结构可信。"
+  },
+  "referenceImage": "concepts/coastal/compact-village-fish-market.webp",
+  "defaults": {
+    "style": "coastal",
+    "roof": "iceBlue",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "27 × 25 vu",
+  "height": "21 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 19,
+      "z": 17
+    },
+    "wallFootprintMeters": {
+      "x": 7.6,
+      "z": 6.8
+    },
+    "doorClearVoxels": {
+      "width": 5,
+      "height": 7
+    },
+    "interiorClearHeightVoxels": 7
+  },
+  "preview": {
+    "fitScale": 1,
+    "minScale": 3.8,
+    "yaw": 2.56
+  },
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "fixtures",
+      "label": "Mirrored Grounded Timber Display-counter Bases"
+    },
+    {
+      "materialId": 59,
+      "phase": "openings",
+      "label": "Permanent Rear Ice-blue High Windows"
+    },
+    {
+      "materialId": 69,
+      "phase": "fixtures",
+      "label": "Polished Display Worktops and Hollow Rear Wash Trough"
+    },
+    {
+      "materialId": 77,
+      "phase": "fixtures",
+      "label": "Twin Compact Salt-crystal Chilled Display Beds"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARsVGRUBAQMAAxQAEgEBCgAABgADAQYEAAQSABABAgQBFBIIAAICBAEFAAIOASQAAAIDBAEEAAgAAwwAAAIDBAEUAAgAASQAAAIDBAEMAAgAASQAAAIDBAkEEgAAAQAAIAIDBAkFAAAOASQAAAI7BwUUAgIAARQAAAcCBAoEEgAHAgQKFBIABgMECgQSEAEDDRMEAAAQAwUDCgMUEgI3BgEHAwEIARYAAAJFBgMHAwAIARYAAAJNBwQJAQACARYAAAJFCwERBAEAAQAABAJFCwESAAEAAQgAAA"
+  },
+  "validation": {
+    "expectedVoxelCount": 1638,
+    "expectedPayloadBytes": 217,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      57,
+      59,
+      68,
+      69,
+      70,
+      73,
+      77,
+      97
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 144,
+      "57": 185,
+      "59": 18,
+      "68": 97,
+      "69": 96,
+      "70": 364,
+      "73": 323,
+      "77": 12,
+      "97": 399
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 13,
+    "supportColumns": [
+      {
+        "label": "Front-left market corner",
+        "x": 4,
+        "z": 4,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Front-right market corner",
+        "x": 22,
+        "z": 4,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-left market corner",
+        "x": 4,
+        "z": 20,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-right market corner",
+        "x": 22,
+        "z": 20,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left central-entrance post",
+        "x": 10,
+        "z": 4,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Right central-entrance post",
+        "x": 16,
+        "z": 4,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Left side-bay post",
+        "x": 4,
+        "z": 12,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Right side-bay post",
+        "x": 22,
+        "z": 12,
+        "baseY": 0,
+        "topY": 9
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Front colonnade beam",
+        "axis": "x",
+        "start": 4,
+        "end": 22,
+        "y": 9,
+        "fixed": 4
+      },
+      {
+        "label": "Rear eave beam",
+        "axis": "x",
+        "start": 4,
+        "end": 22,
+        "y": 9,
+        "fixed": 20
+      },
+      {
+        "label": "Left eave beam",
+        "axis": "z",
+        "start": 4,
+        "end": 20,
+        "y": 9,
+        "fixed": 4
+      },
+      {
+        "label": "Right eave beam",
+        "axis": "z",
+        "start": 4,
+        "end": 20,
+        "y": 9,
+        "fixed": 22
+      },
+      {
+        "label": "Continuous ridge beam",
+        "axis": "z",
+        "start": 4,
+        "end": 20,
+        "y": 19,
+        "fixed": 13
+      },
+      {
+        "label": "Left display worktop",
+        "axis": "z",
+        "start": 7,
+        "end": 15,
+        "y": 3,
+        "fixed": 7
+      },
+      {
+        "label": "Right display worktop",
+        "axis": "z",
+        "start": 7,
+        "end": 15,
+        "y": 3,
+        "fixed": 19
+      }
+    ],
+    "gableProfiles": [
+      {
+        "label": "Front ice-blue roof profile",
+        "x": 3,
+        "baseY": 10,
+        "z": 3,
+        "width": 21,
+        "slopeMaterialId": 97,
+        "ridgeMaterialId": 97
+      },
+      {
+        "label": "Rear ice-blue roof profile",
+        "x": 3,
+        "baseY": 10,
+        "z": 21,
+        "width": 21,
+        "slopeMaterialId": 97,
+        "ridgeMaterialId": 97
+      }
+    ],
+    "closedVoxelLoops": [
+      {
+        "label": "Hollow rear wash-trough rim",
+        "materialId": 69,
+        "points": [
+          [
+            11,
+            2,
+            17
+          ],
+          [
+            12,
+            2,
+            17
+          ],
+          [
+            13,
+            2,
+            17
+          ],
+          [
+            14,
+            2,
+            17
+          ],
+          [
+            15,
+            2,
+            17
+          ],
+          [
+            15,
+            2,
+            18
+          ],
+          [
+            15,
+            2,
+            19
+          ],
+          [
+            14,
+            2,
+            19
+          ],
+          [
+            13,
+            2,
+            19
+          ],
+          [
+            12,
+            2,
+            19
+          ],
+          [
+            11,
+            2,
+            19
+          ],
+          [
+            11,
+            2,
+            18
+          ]
+        ]
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "zero-threshold five-wide central entrance",
+        "x": 11,
+        "y": 1,
+        "z": 3,
+        "width": 5,
+        "height": 7,
+        "depth": 2
+      },
+      {
+        "label": "five-wide customer aisle",
+        "x": 11,
+        "y": 1,
+        "z": 5,
+        "width": 5,
+        "height": 7,
+        "depth": 12
+      },
+      {
+        "label": "left open market side bay",
+        "x": 4,
+        "y": 4,
+        "z": 6,
+        "width": 1,
+        "height": 5,
+        "depth": 5
+      },
+      {
+        "label": "right open market side bay",
+        "x": 22,
+        "y": 4,
+        "z": 6,
+        "width": 1,
+        "height": 5,
+        "depth": 5
+      },
+      {
+        "label": "hollow rear wash-trough basin",
+        "x": 12,
+        "y": 1,
+        "z": 18,
+        "width": 3,
+        "height": 2,
+        "depth": 1
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 7,
+        "y": 2,
+        "z": 12,
+        "materialId": 55
+      },
+      {
+        "x": 19,
+        "y": 3,
+        "z": 14,
+        "materialId": 69
+      },
+      {
+        "x": 7,
+        "y": 4,
+        "z": 10,
+        "materialId": 77
+      },
+      {
+        "x": 19,
+        "y": 4,
+        "z": 10,
+        "materialId": 77
+      },
+      {
+        "x": 11,
+        "y": 2,
+        "z": 18,
+        "materialId": 69
+      },
+      {
+        "x": 8,
+        "y": 6,
+        "z": 20,
+        "materialId": 59
+      },
+      {
+        "x": 18,
+        "y": 6,
+        "z": 20,
+        "materialId": 59
+      }
+    ],
+    "approach": [
+      {
+        "x": 13,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 1,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 5,
+        "topY": 1
+      }
+    ]
+  }
+}

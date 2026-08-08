@@ -47,6 +47,7 @@
     "buildings/industrial/compact-village-cooper-workshop.json",
     "buildings/industrial/compact-village-brewhouse.json",
     "buildings/coastal/compact-village-fish-market.json",
-    "buildings/agriculture/compact-village-cheese-house.json"
+    "buildings/agriculture/compact-village-cheese-house.json",
+    "buildings/commerce/compact-village-butcher-shop.json"
   ]
 }

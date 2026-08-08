@@ -1,0 +1,424 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-butcher-shop",
+  "category": "commerce",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Compact Village Butcher Shop",
+    "es": "Carnicería Compacta de la Aldea",
+    "fr": "Boucherie Compacte du Village",
+    "de": "Kompakte Dorfmetzgerei",
+    "ja": "コンパクトな村の肉屋",
+    "ru": "Компактная деревенская мясная лавка",
+    "ko": "소형 마을 정육점",
+    "zh-Hant": "緊湊型村莊肉鋪",
+    "zh-Hans": "紧凑型村庄肉铺"
+  },
+  "descriptions": {
+    "en": "A human-scaled lime-plaster butcher shop with a zero-threshold five-wide entrance, twin front display windows, a sheltered sales counter, ceramic preparation tables, a wash station, hanging rails and a clear central aisle.",
+    "es": "Una carnicería de pueblo a escala humana, con revoque de cal, entrada de cinco vóxeles sin desnivel, dos escaparates, mostrador protegido, mesas de preparación de cerámica, puesto de lavado, rieles de colgado y pasillo central despejado.",
+    "fr": "Une boucherie villageoise à échelle humaine, enduite à la chaux, avec entrée de cinq voxels sans ressaut, deux vitrines, comptoir abrité, tables de préparation en céramique, poste de lavage, rails de suspension et allée centrale dégagée.",
+    "de": "Eine maßstäbliche Dorfmetzgerei mit Kalkputz, schwellenlosem fünf Voxel breitem Eingang, zwei Schaufenstern, überdachter Verkaufstheke, keramischen Arbeitstischen, Waschplatz, Hängevorrichtungen und freiem Mittelgang.",
+    "ja": "人のスケールに合わせた石灰漆喰の村の肉屋。段差のない5ボクセル幅の入口、2つの陳列窓、屋根付き販売台、陶製の作業台、洗い場、吊り下げレール、中央の通路を備えています。",
+    "ru": "Масштабная деревенская мясная лавка с известковой штукатуркой, беспороговым входом шириной пять вокселей, двумя витринами, крытым прилавком, керамическими разделочными столами, мойкой, подвесными рейками и свободным центральным проходом.",
+    "ko": "사람 크기에 맞춘 회반죽 마을 정육점으로, 단차 없는 5복셀 폭 입구, 전면 진열창 2개, 차양 아래 판매대, 세라믹 작업대, 세척대, 걸이 레일, 막힘없는 중앙 통로를 갖췄습니다.",
+    "zh-Hant": "一座符合角色尺度的石灰灰泥村莊肉鋪，設有零高差五體素寬入口、兩扇前展示窗、遮棚下售貨檯、陶瓷備料桌、清洗台、吊掛軌道與暢通中央走道。",
+    "zh-Hans": "一座符合角色尺度的石灰灰泥村庄肉铺，设有零高差五体素宽入口、两扇前展示窗、遮棚下售货台、陶瓷备料桌、清洗台、吊挂轨道与畅通中央走道。"
+  },
+  "referenceImage": "concepts/commerce/compact-village-butcher-shop.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "25 × 25 vu",
+  "height": "21 vu",
+  "referenceScale": "1 voxel = 0.4 m; wall footprint 6.8 × 6.8 m; 1.75 m avatar = 4.375 voxels",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 17,
+      "z": 17
+    },
+    "wallFootprintMeters": {
+      "x": 6.8,
+      "z": 6.8
+    },
+    "doorClearVoxels": {
+      "width": 5,
+      "height": 7
+    },
+    "interiorClearHeightVoxels": 7
+  },
+  "preview": {
+    "fitScale": 1.02,
+    "minScale": 3.6,
+    "yaw": 2.55
+  },
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "fixtures",
+      "label": "Grounded Sales-counter Base and Rear Chopping Block"
+    },
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Window Muntins, Preparation-table Legs and Hanging Rails"
+    },
+    {
+      "materialId": 58,
+      "phase": "openings",
+      "label": "Permanent Twin Display, Side-ventilation and Gable Windows"
+    },
+    {
+      "materialId": 62,
+      "phase": "fixtures",
+      "label": "Stylized Counter and Suspended Cured-goods Displays"
+    },
+    {
+      "materialId": 69,
+      "phase": "foundation",
+      "label": "Level Polished-stone Shop Floor and Five-wide Approach"
+    },
+    {
+      "materialId": 74,
+      "phase": "fixtures",
+      "label": "Ceramic Sales Top, Hollow Wash Trough and Preparation Table"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARkVGS8BAQMABBIAEgFFBAAFEAAQAUUKAAAEAAQCAQMAAgAAAAEkAAABAgQBBQUKAAECDwEFBQoAAQIKCAUEAwABAgQBFRAKAAECBAEGAAoOAQIUAQYACg4BOgUDBQMDAAE6EAMFAwMAAToGBRUDAgABOg8FFQMCAAE6BAUKAAIDAToUBQoAAgMCOAUFBQMAAAEWAAACOAYGFQMAAAESAAACOAQGCgAAAwEgAAACAwQBBQAKAAEgAAACAwQBFQAKAAEgAAACAwkBBQAKAAEMAAABAwkIBQYAAAIDBAsFEAAAAQAAIAIDBAsGAAAOASAAAAE3BQEIAwEFAUoFAwgDAAUCPgUECQIAAAIAAAQCShABBwIBAAEAAAQCShABCAABAAEEAAACOBABCwABAAEEAAACOBABEAABAAEEAAABShADCwIABQE3EAESAgICAjgGARIABwABGAAAATgGCBIMAAABPggFEgECAAE-DAYSAAEAAT4PBRIBAgAHAgQMBRAABwIEDBUQAAE6Cw4FAgEAAwUDCwQSEgYDAwsEEhICAwMBAgAHAAEkAAABAwMIAhIAAAEFAwkCEgAD"
+  },
+  "validation": {
+    "expectedVoxelCount": 1821,
+    "expectedPayloadBytes": 441,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      56,
+      57,
+      58,
+      62,
+      68,
+      69,
+      70,
+      74,
+      96
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 72,
+      "56": 59,
+      "57": 196,
+      "58": 62,
+      "62": 23,
+      "68": 69,
+      "69": 314,
+      "70": 569,
+      "74": 58,
+      "96": 399
+    },
+    "requireConnected": true,
+    "supportColumns": [
+      {
+        "label": "Front-left shop corner",
+        "x": 4,
+        "z": 5,
+        "baseY": 0,
+        "topY": 11
+      },
+      {
+        "label": "Front-right shop corner",
+        "x": 20,
+        "z": 5,
+        "baseY": 0,
+        "topY": 11
+      },
+      {
+        "label": "Rear-left shop corner",
+        "x": 4,
+        "z": 21,
+        "baseY": 0,
+        "topY": 11
+      },
+      {
+        "label": "Rear-right shop corner",
+        "x": 20,
+        "z": 21,
+        "baseY": 0,
+        "topY": 11
+      },
+      {
+        "label": "Left entrance jamb",
+        "x": 9,
+        "z": 5,
+        "baseY": 0,
+        "topY": 11
+      },
+      {
+        "label": "Right entrance jamb",
+        "x": 15,
+        "z": 5,
+        "baseY": 0,
+        "topY": 11
+      },
+      {
+        "label": "Left canopy post",
+        "x": 3,
+        "z": 2,
+        "baseY": 0,
+        "topY": 8
+      },
+      {
+        "label": "Right canopy post",
+        "x": 21,
+        "z": 2,
+        "baseY": 0,
+        "topY": 8
+      },
+      {
+        "label": "Left hanging-rail post",
+        "x": 6,
+        "z": 18,
+        "baseY": 0,
+        "topY": 8
+      },
+      {
+        "label": "Right hanging-rail post",
+        "x": 18,
+        "z": 18,
+        "baseY": 0,
+        "topY": 8
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Entrance lintel",
+        "axis": "x",
+        "start": 9,
+        "end": 15,
+        "y": 8,
+        "fixed": 5
+      },
+      {
+        "label": "Front wall plate",
+        "axis": "x",
+        "start": 4,
+        "end": 20,
+        "y": 11,
+        "fixed": 5
+      },
+      {
+        "label": "Rear wall plate",
+        "axis": "x",
+        "start": 4,
+        "end": 20,
+        "y": 11,
+        "fixed": 21
+      },
+      {
+        "label": "Left wall plate",
+        "axis": "z",
+        "start": 6,
+        "end": 20,
+        "y": 11,
+        "fixed": 4
+      },
+      {
+        "label": "Right wall plate",
+        "axis": "z",
+        "start": 6,
+        "end": 20,
+        "y": 11,
+        "fixed": 20
+      },
+      {
+        "label": "Canopy front beam",
+        "axis": "x",
+        "start": 3,
+        "end": 21,
+        "y": 8,
+        "fixed": 2
+      },
+      {
+        "label": "Ceramic preparation top",
+        "axis": "z",
+        "start": 11,
+        "end": 16,
+        "y": 3,
+        "fixed": 17
+      },
+      {
+        "label": "Rear hanging rail",
+        "axis": "x",
+        "start": 6,
+        "end": 18,
+        "y": 8,
+        "fixed": 18
+      }
+    ],
+    "gableProfiles": [
+      {
+        "label": "Front inner terracotta roof profile",
+        "x": 3,
+        "baseY": 11,
+        "z": 5,
+        "width": 19,
+        "slopeMaterialId": 96,
+        "ridgeMaterialId": 96
+      },
+      {
+        "label": "Rear inner terracotta roof profile",
+        "x": 3,
+        "baseY": 11,
+        "z": 21,
+        "width": 19,
+        "slopeMaterialId": 96,
+        "ridgeMaterialId": 96
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "zero-threshold five-wide entrance",
+        "x": 10,
+        "y": 1,
+        "z": 4,
+        "width": 5,
+        "height": 7,
+        "depth": 3
+      },
+      {
+        "label": "five-wide central customer and work aisle",
+        "x": 10,
+        "y": 1,
+        "z": 6,
+        "width": 5,
+        "height": 7,
+        "depth": 12
+      },
+      {
+        "label": "front customer bay",
+        "x": 10,
+        "y": 1,
+        "z": 7,
+        "width": 5,
+        "height": 7,
+        "depth": 4
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 5,
+        "y": 1,
+        "z": 8,
+        "materialId": 55
+      },
+      {
+        "x": 5,
+        "y": 3,
+        "z": 8,
+        "materialId": 74
+      },
+      {
+        "x": 6,
+        "y": 4,
+        "z": 9,
+        "materialId": 62
+      },
+      {
+        "x": 16,
+        "y": 1,
+        "z": 11,
+        "materialId": 56
+      },
+      {
+        "x": 17,
+        "y": 3,
+        "z": 13,
+        "materialId": 74
+      },
+      {
+        "x": 12,
+        "y": 8,
+        "z": 18,
+        "materialId": 56
+      },
+      {
+        "x": 8,
+        "y": 5,
+        "z": 18,
+        "materialId": 62
+      },
+      {
+        "x": 5,
+        "y": 3,
+        "z": 5,
+        "materialId": 58
+      },
+      {
+        "x": 10,
+        "y": 9,
+        "z": 2,
+        "materialId": 96
+      }
+    ],
+    "approach": [
+      {
+        "x": 12,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 12,
+        "z": 1,
+        "topY": 1
+      },
+      {
+        "x": 12,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 12,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 12,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 12,
+        "z": 5,
+        "topY": 1
+      },
+      {
+        "x": 12,
+        "z": 6,
+        "topY": 1
+      }
+    ]
+  }
+}

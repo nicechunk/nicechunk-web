@@ -1,0 +1,462 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-tannery",
+  "category": "industrial",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Compact Village Tannery",
+    "es": "Curtiduría Compacta de la Aldea",
+    "fr": "Tannerie Compacte du Village",
+    "de": "Kompakte Dorfgerberei",
+    "ja": "コンパクトな村のなめし工房",
+    "ru": "Компактная деревенская кожевня",
+    "ko": "소형 마을 무두질 공방",
+    "zh-Hant": "緊湊型村莊製革坊",
+    "zh-Hans": "紧凑型村庄制革坊"
+  },
+  "descriptions": {
+    "en": "A human-scaled semi-open lime-plaster tannery with a zero-threshold five-wide entrance, two ceramic soaking vats, amber liquor surfaces, a long scraping bench, a flush floor drain, an exterior drying rack and a clear central aisle.",
+    "es": "Una curtiduría semiabierta de escala humana, con revoco de cal, entrada de cinco vóxeles sin desnivel, dos cubas de cerámica, superficies de licor ámbar, un banco largo de raspado, desagüe enrasado, secadero exterior y pasillo central despejado.",
+    "fr": "Une tannerie semi-ouverte à échelle humaine, enduite à la chaux, avec entrée de cinq voxels sans ressaut, deux cuves en céramique, bains ambrés, long banc de raclage, drain affleurant, séchoir extérieur et allée centrale dégagée.",
+    "de": "Eine maßstäbliche, halboffene Dorfgerberei mit Kalkputz, schwellenlosem fünf Voxel breitem Eingang, zwei Keramikbottichen, bernsteinfarbenen Gerbflotten, langem Schabebock, bündigem Bodenablauf, äußerem Trockengestell und freiem Mittelgang.",
+    "ja": "人のスケールに合わせた半開放式の石灰漆喰なめし工房。段差のない5ボクセル幅の入口、2基の陶製浸漬槽、琥珀色の液面、長い削り台、床面と同じ高さの排水路、屋外乾燥棚、中央通路を備えています。",
+    "ru": "Полуоткрытая деревенская кожевня в масштабе персонажа с известковой штукатуркой, беспороговым входом шириной пять вокселей, двумя керамическими чанами, янтарной дубильной жидкостью, длинным скоблильным столом, сливом вровень с полом, наружной сушильной рамой и свободным центральным проходом.",
+    "ko": "사람 크기에 맞춘 반개방형 회반죽 무두질 공방으로, 단차 없는 5복셀 폭 입구, 세라믹 침지조 2개, 호박빛 액면, 긴 가죽 손질대, 바닥과 같은 높이의 배수로, 외부 건조대, 막힘없는 중앙 통로를 갖췄습니다.",
+    "zh-Hant": "一座符合角色尺度的半開放石灰灰泥製革坊，設有零高差五體素寬入口、兩座陶瓷浸泡槽、琥珀色液面、長刮製台、齊平地面排水槽、外置晾革架與暢通中央走道。",
+    "zh-Hans": "一座符合角色尺度的半开放石灰灰泥制革坊，设有零高差五体素宽入口、两座陶瓷浸泡槽、琥珀色液面、长刮制台、齐平地面排水槽、外置晾革架与畅通中央走道。"
+  },
+  "referenceImage": "concepts/industrial/compact-village-tannery.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "27 × 27 vu",
+  "height": "21 vu",
+  "referenceScale": "1 voxel = 0.4 m; wall footprint 7.6 × 6.8 m; 1.75 m avatar = 4.375 voxels",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 19,
+      "z": 17
+    },
+    "wallFootprintMeters": {
+      "x": 7.6,
+      "z": 6.8
+    },
+    "doorClearVoxels": {
+      "width": 5,
+      "height": 7
+    },
+    "interiorClearHeightVoxels": 7
+  },
+  "preview": {
+    "fitScale": 1.02,
+    "minScale": 3.45,
+    "yaw": 2.52
+  },
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "fixtures",
+      "label": "Grounded Long Scraping Bench and Raised Work Beam"
+    },
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Rear-window Muntins and Four Grounded Bench Legs"
+    },
+    {
+      "materialId": 58,
+      "phase": "openings",
+      "label": "Permanent Twin Rear Ventilation Windows"
+    },
+    {
+      "materialId": 60,
+      "phase": "fixtures",
+      "label": "Recessed Amber Tanning-liquor Surfaces"
+    },
+    {
+      "materialId": 65,
+      "phase": "foundation",
+      "label": "Flush Deep-stone Central Floor Drain"
+    },
+    {
+      "materialId": 69,
+      "phase": "foundation",
+      "label": "Level Polished-stone Wet-work Floor and Five-wide Approach"
+    },
+    {
+      "materialId": 71,
+      "phase": "fixtures",
+      "label": "Two Non-graphic Warm Hide Panels on the Exterior Rack"
+    },
+    {
+      "materialId": 74,
+      "phase": "fixtures",
+      "label": "Twin Grounded Hollow Ceramic Soaking Vats"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARsVGycBAQMABRQAEgFFBAAGEgAQAUULAAAEAAUBARcABwIADgFBDQAHAAANAQIEAQYGAwABAhABBgYDAAECBAEHAAQOAQIWAQcABA4BAgQBFhIJAAE6BwQWAwMAAToQBBYDAwACOAcGFgMAAAESAAACAwQBBgAJAAEkAAACAwQBFgAJAAEkAAACAwoBBgAJAAEMAAACAwQBDgAJAAEkAAABAwoIBgYAAAIDBAoGEgAAAQAAIAIDBAoHAAAOASQAAAJKBQEIBAAEAQAADgJKBQIIBAEAAQAACAJKBQIPBAEAAQAACAJKBQIJAAECAQgAAAJKBQIQAAECAQgAAAI8BgIJAgACAQAADgI4EQEIAAEAAQYAAAI4EQERAAEAAQYAAAE3EQMIAwAJATcSBAkBAAcCAxgBCAAHAAIAAAwBAxgECAAADAEDGAgIAAAMAUcYBQkAAgMBRxgFDwACAwcCBAsGEgAHAgQLFhIAAwUDCgUUEgYDAwoFFBI"
+  },
+  "validation": {
+    "expectedVoxelCount": 1757,
+    "expectedPayloadBytes": 377,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      56,
+      57,
+      58,
+      60,
+      65,
+      68,
+      69,
+      70,
+      71,
+      74,
+      96
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 56,
+      "56": 16,
+      "57": 231,
+      "58": 24,
+      "60": 18,
+      "65": 14,
+      "68": 101,
+      "69": 339,
+      "70": 463,
+      "71": 24,
+      "74": 114,
+      "96": 357
+    },
+    "requireConnected": true,
+    "supportColumns": [
+      {
+        "label": "Front-left tannery corner",
+        "x": 4,
+        "z": 6,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Front-right tannery corner",
+        "x": 22,
+        "z": 6,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-left tannery corner",
+        "x": 4,
+        "z": 22,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-right tannery corner",
+        "x": 22,
+        "z": 22,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left entrance jamb",
+        "x": 10,
+        "z": 6,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right entrance jamb",
+        "x": 16,
+        "z": 6,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left mid-bay post",
+        "x": 4,
+        "z": 14,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right mid-bay post",
+        "x": 22,
+        "z": 14,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Front drying-rack post",
+        "x": 24,
+        "z": 8,
+        "baseY": 0,
+        "topY": 8
+      },
+      {
+        "label": "Middle drying-rack post",
+        "x": 24,
+        "z": 14,
+        "baseY": 0,
+        "topY": 8
+      },
+      {
+        "label": "Rear drying-rack post",
+        "x": 24,
+        "z": 20,
+        "baseY": 0,
+        "topY": 8
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Entrance lintel",
+        "axis": "x",
+        "start": 10,
+        "end": 16,
+        "y": 8,
+        "fixed": 6
+      },
+      {
+        "label": "Front wall plate",
+        "axis": "x",
+        "start": 4,
+        "end": 22,
+        "y": 10,
+        "fixed": 6
+      },
+      {
+        "label": "Rear wall plate",
+        "axis": "x",
+        "start": 4,
+        "end": 22,
+        "y": 10,
+        "fixed": 22
+      },
+      {
+        "label": "Left wall plate",
+        "axis": "z",
+        "start": 7,
+        "end": 21,
+        "y": 10,
+        "fixed": 4
+      },
+      {
+        "label": "Right wall plate",
+        "axis": "z",
+        "start": 7,
+        "end": 21,
+        "y": 10,
+        "fixed": 22
+      },
+      {
+        "label": "Long scraping-bench top",
+        "axis": "z",
+        "start": 8,
+        "end": 17,
+        "y": 3,
+        "fixed": 18
+      },
+      {
+        "label": "Lower exterior drying rail",
+        "axis": "z",
+        "start": 8,
+        "end": 20,
+        "y": 4,
+        "fixed": 24
+      },
+      {
+        "label": "Upper exterior drying rail",
+        "axis": "z",
+        "start": 8,
+        "end": 20,
+        "y": 8,
+        "fixed": 24
+      }
+    ],
+    "gableProfiles": [
+      {
+        "label": "Front inner terracotta roof profile",
+        "x": 3,
+        "baseY": 10,
+        "z": 6,
+        "width": 21,
+        "slopeMaterialId": 96,
+        "ridgeMaterialId": 96
+      },
+      {
+        "label": "Rear inner terracotta roof profile",
+        "x": 3,
+        "baseY": 10,
+        "z": 22,
+        "width": 21,
+        "slopeMaterialId": 96,
+        "ridgeMaterialId": 96
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "zero-threshold five-wide entrance",
+        "x": 11,
+        "y": 1,
+        "z": 5,
+        "width": 5,
+        "height": 7,
+        "depth": 3
+      },
+      {
+        "label": "five-wide central wet-work aisle",
+        "x": 11,
+        "y": 1,
+        "z": 7,
+        "width": 5,
+        "height": 7,
+        "depth": 14
+      },
+      {
+        "label": "front cross-work bay",
+        "x": 5,
+        "y": 5,
+        "z": 7,
+        "width": 17,
+        "height": 5,
+        "depth": 5
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 5,
+        "y": 2,
+        "z": 8,
+        "materialId": 74
+      },
+      {
+        "x": 6,
+        "y": 2,
+        "z": 9,
+        "materialId": 60
+      },
+      {
+        "x": 5,
+        "y": 2,
+        "z": 15,
+        "materialId": 74
+      },
+      {
+        "x": 6,
+        "y": 2,
+        "z": 16,
+        "materialId": 60
+      },
+      {
+        "x": 17,
+        "y": 1,
+        "z": 8,
+        "materialId": 56
+      },
+      {
+        "x": 18,
+        "y": 3,
+        "z": 12,
+        "materialId": 55
+      },
+      {
+        "x": 18,
+        "y": 4,
+        "z": 12,
+        "materialId": 55
+      },
+      {
+        "x": 24,
+        "y": 5,
+        "z": 10,
+        "materialId": 71
+      },
+      {
+        "x": 24,
+        "y": 8,
+        "z": 14,
+        "materialId": 57
+      },
+      {
+        "x": 7,
+        "y": 4,
+        "z": 22,
+        "materialId": 58
+      },
+      {
+        "x": 13,
+        "y": 0,
+        "z": 10,
+        "materialId": 65
+      }
+    ],
+    "approach": [
+      {
+        "x": 13,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 1,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 5,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 6,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 7,
+        "topY": 1
+      }
+    ]
+  }
+}

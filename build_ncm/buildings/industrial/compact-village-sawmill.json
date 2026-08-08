@@ -1,0 +1,451 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-sawmill",
+  "category": "industrial",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Compact Village Sawmill",
+    "es": "Aserradero Compacto de la Aldea",
+    "fr": "Scierie Compacte du Village",
+    "de": "Kompaktes Dorfsägewerk",
+    "ja": "コンパクトな村の製材所",
+    "ru": "Компактная деревенская лесопилка",
+    "ko": "소형 마을 제재소",
+    "zh-Hant": "緊湊型村莊鋸木廠",
+    "zh-Hans": "紧凑型村庄锯木厂"
+  },
+  "descriptions": {
+    "en": "A human-scaled open timber sawmill with a zero-threshold five-wide entrance, a long saw carriage and log bed, an overhead blade frame, a two-tier lumber rack, an attached nine-voxel waterwheel and a clear central aisle; the watercourse is excluded.",
+    "es": "Un aserradero abierto de madera a escala humana, con entrada de cinco vóxeles sin desnivel, carro de sierra y bancada largos, bastidor elevado para la hoja, estantería de madera de dos niveles, rueda hidráulica lateral de nueve vóxeles y pasillo central despejado; el cauce no se incluye.",
+    "fr": "Une scierie ouverte en bois à échelle humaine, avec entrée de cinq voxels sans ressaut, long chariot et banc de sciage, bâti supérieur pour la lame, râtelier à bois à deux niveaux, roue hydraulique latérale de neuf voxels et allée centrale dégagée ; le cours d’eau est exclu.",
+    "de": "Ein maßstäbliches offenes Dorfsägewerk aus Holz mit schwellenlosem fünf Voxel breitem Eingang, langem Sägewagen und Stammbett, oberem Sägerahmen, zweistufigem Holzregal, seitlichem Wasserrad mit neun Voxeln Durchmesser und freiem Mittelgang; der Wasserlauf ist nicht enthalten.",
+    "ja": "人のスケールに合わせた開放式木造製材所。段差のない5ボクセル幅の入口、長い送材台と丸太床、上部の鋸刃フレーム、2段木材棚、側面の9ボクセル水車、中央通路を備えています。水路は含まれません。",
+    "ru": "Открытая деревянная лесопилка в масштабе персонажа с беспороговым входом шириной пять вокселей, длинной пильной тележкой и ложем для бревна, верхней рамой полотна, двухъярусным стеллажом, боковым водяным колесом диаметром девять вокселей и свободным центральным проходом; водоток не входит в чертёж.",
+    "ko": "사람 크기에 맞춘 개방형 목조 제재소로, 단차 없는 5복셀 폭 입구, 긴 톱 운반대와 통나무 받침, 상부 톱날 프레임, 2단 목재 선반, 측면의 지름 9복셀 물레방아, 막힘없는 중앙 통로를 갖췄습니다. 수로는 포함하지 않습니다.",
+    "zh-Hant": "一座符合角色尺度的開放式木構鋸木廠，設有零高差五體素寬入口、長送材台與原木床、上置鋸片框、雙層木料架、側置九體素水輪及暢通中央走道；水道不包含在藍圖內。",
+    "zh-Hans": "一座符合角色尺度的开放式木构锯木厂，设有零高差五体素宽入口、长送材台与原木床、上置锯片框、双层木料架、侧置九体素水轮及畅通中央走道；水道不包含在蓝图内。"
+  },
+  "referenceImage": "concepts/industrial/compact-village-sawmill.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "charcoal",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "31 × 29 vu",
+  "height": "21 vu",
+  "referenceScale": "1 voxel = 0.4 m; main post footprint 7.6 × 7.6 m; 1.75 m avatar = 4.375 voxels",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 19,
+      "z": 19
+    },
+    "wallFootprintMeters": {
+      "x": 7.6,
+      "z": 7.6
+    },
+    "doorClearVoxels": {
+      "width": 5,
+      "height": 7
+    },
+    "interiorClearHeightVoxels": 7
+  },
+  "preview": {
+    "fitScale": 1,
+    "minScale": 3.2,
+    "yaw": 2.48
+  },
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "fixtures",
+      "label": "Long Twin-rail Saw Carriage and Two-tier Lumber Shelves"
+    },
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Carriage Cross Ties, Grounded Saw Frame and Lumber-rack Posts"
+    },
+    {
+      "materialId": 69,
+      "phase": "foundation",
+      "label": "Level Polished-stone Work Floor and Five-wide Approach"
+    },
+    {
+      "materialId": 74,
+      "phase": "fixtures",
+      "label": "Centered Five-voxel Vertical Saw Blade"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:AR8VHSQBAQQABRQAFAFFBQAGEgASAUUNAAAEAAUBARcADQUACgIDBQEGAAkAAgAAEgIDFwEGAAkAAgAAEgIDDAEGAAkAAQwAAAEDDAgGBgAAAgMFCgYSAAACAAASAgMFCgcAABABJAAAAjcHAQgAAQ4BCAAAAjgHAwgEAAAEAAAGAQMIBAkCAQsCOAcBDwAIAAEIAAABOAcJDwQAAAFKCQQPAAQAAjgTAQgABgABBgAAAjgTARUABgABBgAAAjcTAwgDAA0BAAYAAgMXARIABwABBAAAAQMXCBICAAABAxcGEgQAAAEDGwoQAAAEAQMbAhAAAAQBAxsEDgAEAAEDGwQWAAQAAgMbAw8AAAEBAAIBAgMbAxQAAAEBAAICAgMbCQ8AAAEBAAICAgMbCRQAAAEBAAIBAQMbAhIACAABAxsGDgAACAcCBQsGEgAHAgULGBIAAwUECgUUFAYDBAoFFBQ"
+  },
+  "validation": {
+    "expectedVoxelCount": 1650,
+    "expectedPayloadBytes": 353,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      56,
+      57,
+      68,
+      69,
+      70,
+      74,
+      99
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 168,
+      "56": 66,
+      "57": 340,
+      "68": 130,
+      "69": 380,
+      "70": 162,
+      "74": 5,
+      "99": 399
+    },
+    "requireConnected": true,
+    "supportColumns": [
+      {
+        "label": "Front-left main post",
+        "x": 5,
+        "z": 6,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Front-right main post",
+        "x": 23,
+        "z": 6,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-left main post",
+        "x": 5,
+        "z": 24,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-right main post",
+        "x": 23,
+        "z": 24,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left mid-bay post",
+        "x": 5,
+        "z": 15,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right mid-bay post",
+        "x": 23,
+        "z": 15,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left entrance jamb",
+        "x": 12,
+        "z": 6,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right entrance jamb",
+        "x": 18,
+        "z": 6,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Inner wheel-bearing post",
+        "x": 23,
+        "z": 18,
+        "baseY": 0,
+        "topY": 8
+      },
+      {
+        "label": "Outer wheel-bearing post",
+        "x": 25,
+        "z": 18,
+        "baseY": 0,
+        "topY": 8
+      },
+      {
+        "label": "Left saw-frame post",
+        "x": 7,
+        "z": 15,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Right saw-frame post",
+        "x": 11,
+        "z": 15,
+        "baseY": 0,
+        "topY": 9
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Entrance lintel",
+        "axis": "x",
+        "start": 12,
+        "end": 18,
+        "y": 8,
+        "fixed": 6
+      },
+      {
+        "label": "Front tie beam",
+        "axis": "x",
+        "start": 5,
+        "end": 23,
+        "y": 10,
+        "fixed": 6
+      },
+      {
+        "label": "Middle tie beam",
+        "axis": "x",
+        "start": 5,
+        "end": 23,
+        "y": 10,
+        "fixed": 15
+      },
+      {
+        "label": "Rear tie beam",
+        "axis": "x",
+        "start": 5,
+        "end": 23,
+        "y": 10,
+        "fixed": 24
+      },
+      {
+        "label": "Left wall plate",
+        "axis": "z",
+        "start": 7,
+        "end": 23,
+        "y": 10,
+        "fixed": 5
+      },
+      {
+        "label": "Right wall plate",
+        "axis": "z",
+        "start": 7,
+        "end": 23,
+        "y": 10,
+        "fixed": 23
+      },
+      {
+        "label": "Left saw-carriage rail",
+        "axis": "z",
+        "start": 8,
+        "end": 22,
+        "y": 2,
+        "fixed": 7
+      },
+      {
+        "label": "Right saw-carriage rail",
+        "axis": "z",
+        "start": 8,
+        "end": 22,
+        "y": 2,
+        "fixed": 11
+      },
+      {
+        "label": "Overhead saw-frame beam",
+        "axis": "x",
+        "start": 7,
+        "end": 11,
+        "y": 9,
+        "fixed": 15
+      },
+      {
+        "label": "Wheel axle",
+        "axis": "x",
+        "start": 23,
+        "end": 27,
+        "y": 6,
+        "fixed": 18
+      }
+    ],
+    "gableProfiles": [
+      {
+        "label": "Front inner charcoal roof profile",
+        "x": 4,
+        "baseY": 10,
+        "z": 6,
+        "width": 21,
+        "slopeMaterialId": 99,
+        "ridgeMaterialId": 99
+      },
+      {
+        "label": "Rear inner charcoal roof profile",
+        "x": 4,
+        "baseY": 10,
+        "z": 24,
+        "width": 21,
+        "slopeMaterialId": 99,
+        "ridgeMaterialId": 99
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "zero-threshold five-wide entrance",
+        "x": 13,
+        "y": 1,
+        "z": 5,
+        "width": 5,
+        "height": 7,
+        "depth": 3
+      },
+      {
+        "label": "five-wide central lumber aisle",
+        "x": 13,
+        "y": 1,
+        "z": 7,
+        "width": 5,
+        "height": 7,
+        "depth": 16
+      },
+      {
+        "label": "open front unloading bay",
+        "x": 6,
+        "y": 1,
+        "z": 6,
+        "width": 5,
+        "height": 7,
+        "depth": 2
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 7,
+        "y": 1,
+        "z": 8,
+        "materialId": 55
+      },
+      {
+        "x": 8,
+        "y": 3,
+        "z": 11,
+        "materialId": 56
+      },
+      {
+        "x": 8,
+        "y": 4,
+        "z": 10,
+        "materialId": 57
+      },
+      {
+        "x": 9,
+        "y": 6,
+        "z": 15,
+        "materialId": 74
+      },
+      {
+        "x": 19,
+        "y": 3,
+        "z": 12,
+        "materialId": 55
+      },
+      {
+        "x": 19,
+        "y": 6,
+        "z": 12,
+        "materialId": 55
+      },
+      {
+        "x": 27,
+        "y": 10,
+        "z": 18,
+        "materialId": 57
+      },
+      {
+        "x": 27,
+        "y": 6,
+        "z": 14,
+        "materialId": 57
+      },
+      {
+        "x": 27,
+        "y": 6,
+        "z": 18,
+        "materialId": 57
+      },
+      {
+        "x": 23,
+        "y": 6,
+        "z": 18,
+        "materialId": 57
+      }
+    ],
+    "approach": [
+      {
+        "x": 15,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 15,
+        "z": 1,
+        "topY": 1
+      },
+      {
+        "x": 15,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 15,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 15,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 15,
+        "z": 5,
+        "topY": 1
+      },
+      {
+        "x": 15,
+        "z": 6,
+        "topY": 1
+      },
+      {
+        "x": 15,
+        "z": 7,
+        "topY": 1
+      }
+    ]
+  }
+}

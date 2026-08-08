@@ -49,6 +49,7 @@
     "buildings/coastal/compact-village-fish-market.json",
     "buildings/agriculture/compact-village-cheese-house.json",
     "buildings/commerce/compact-village-butcher-shop.json",
-    "buildings/industrial/compact-village-tannery.json"
+    "buildings/industrial/compact-village-tannery.json",
+    "buildings/industrial/compact-village-sawmill.json"
   ]
 }

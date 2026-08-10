@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 4);
-  assert.match(initial.totalBuildingCount, /57 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /58 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -822,18 +822,20 @@ try {
   assert.ok(!sawmill.resources.some((path) => path.endsWith("compact-village-sawmill-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=fortress]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=grand-castle]') && document.querySelector('[data-building=compact-village-guardhouse]') && document.querySelector('[data-building=compact-village-watchtower]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=grand-castle]') && document.querySelector('[data-building=compact-village-guardhouse]') && document.querySelector('[data-building=compact-village-watchtower]') && document.querySelector('[data-building=compact-village-barracks]')"));
   const fortressBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     cardCount: document.querySelectorAll('[data-building]').length,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(fortressBrowse.activeBuilding, null);
-  assert.equal(fortressBrowse.cardCount, 3);
+  assert.equal(fortressBrowse.cardCount, 4);
   assert.ok(!fortressBrowse.resources.includes("/build_ncm/buildings/fortress/compact-village-guardhouse.json"), "category browsing must not load the guardhouse JSON");
   assert.ok(!fortressBrowse.resources.includes("/build_ncm/concepts/fortress/compact-village-guardhouse.webp"), "category browsing must not load the guardhouse concept art");
   assert.ok(!fortressBrowse.resources.includes("/build_ncm/buildings/fortress/compact-village-watchtower.json"), "category browsing must not load the watchtower JSON");
   assert.ok(!fortressBrowse.resources.includes("/build_ncm/concepts/fortress/compact-village-watchtower.webp"), "category browsing must not load the watchtower concept art");
+  assert.ok(!fortressBrowse.resources.includes("/build_ncm/buildings/fortress/compact-village-barracks.json"), "category browsing must not load the barracks JSON");
+  assert.ok(!fortressBrowse.resources.includes("/build_ncm/concepts/fortress/compact-village-barracks.webp"), "category browsing must not load the barracks concept art");
   await clickBuilding(client, "grand-castle");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'grand-castle' && document.querySelector('#modelSize').textContent === '152 × 86 × 136'"));
   const castle = await evaluate(client, `({
@@ -867,6 +869,8 @@ try {
   assert.ok(!castle.resources.includes("/build_ncm/concepts/fortress/compact-village-guardhouse.webp"), "selecting the castle must not load the guardhouse concept art");
   assert.ok(!castle.resources.includes("/build_ncm/buildings/fortress/compact-village-watchtower.json"), "selecting the castle must not load the watchtower JSON");
   assert.ok(!castle.resources.includes("/build_ncm/concepts/fortress/compact-village-watchtower.webp"), "selecting the castle must not load the watchtower concept art");
+  assert.ok(!castle.resources.includes("/build_ncm/buildings/fortress/compact-village-barracks.json"), "selecting the castle must not load the barracks JSON");
+  assert.ok(!castle.resources.includes("/build_ncm/concepts/fortress/compact-village-barracks.webp"), "selecting the castle must not load the barracks concept art");
 
   await clickBuilding(client, "compact-village-guardhouse");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-guardhouse' && document.querySelector('#modelSize').textContent === '15 × 17 × 13' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
@@ -908,6 +912,8 @@ try {
   assert.ok(!guardhouse.resources.some((path) => path.endsWith("compact-village-guardhouse-blueprint.js")));
   assert.ok(!guardhouse.resources.includes("/build_ncm/buildings/fortress/compact-village-watchtower.json"), "selecting the guardhouse must not load the watchtower JSON");
   assert.ok(!guardhouse.resources.includes("/build_ncm/concepts/fortress/compact-village-watchtower.webp"), "selecting the guardhouse must not load the watchtower concept art");
+  assert.ok(!guardhouse.resources.includes("/build_ncm/buildings/fortress/compact-village-barracks.json"), "selecting the guardhouse must not load the barracks JSON");
+  assert.ok(!guardhouse.resources.includes("/build_ncm/concepts/fortress/compact-village-barracks.webp"), "selecting the guardhouse must not load the barracks concept art");
 
   await clickBuilding(client, "compact-village-watchtower");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-watchtower' && document.querySelector('#modelSize').textContent === '21 × 41 × 21' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
@@ -949,6 +955,49 @@ try {
   assert.ok(watchtower.resources.includes("/build_ncm/buildings/fortress/compact-village-watchtower.json"));
   assert.ok(watchtower.resources.includes("/build_ncm/concepts/fortress/compact-village-watchtower.webp"));
   assert.ok(!watchtower.resources.some((path) => path.endsWith("compact-village-watchtower-blueprint.js")));
+  assert.ok(!watchtower.resources.includes("/build_ncm/buildings/fortress/compact-village-barracks.json"), "selecting the watchtower must not load the barracks JSON");
+  assert.ok(!watchtower.resources.includes("/build_ncm/concepts/fortress/compact-village-barracks.webp"), "selecting the watchtower must not load the barracks concept art");
+
+  await clickBuilding(client, "compact-village-barracks");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-barracks' && document.querySelector('#modelSize').textContent === '35 × 23 × 27' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const barracks = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptLoading: document.querySelector('#conceptImage').loading,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(barracks.activeCategory, "fortress");
+  assert.match(barracks.title, /Compact Village Barracks/);
+  assert.equal(barracks.modelSize, "35 × 23 × 27");
+  assert.match(barracks.payload, /^NCM3:/);
+  assert.equal(barracks.voxelCount, 2725);
+  for (const id of [55, 56, 57, 58, 62, 64, 68, 69, 70, 99]) assert.match(barracks.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(barracks.uncovered, false);
+  assert.equal(barracks.glazingDisabled, true);
+  assert.equal(barracks.glazingLabel, "Openings: Not applicable");
+  assert.equal(barracks.disabledStyles, 6);
+  assert.equal(barracks.disabledRoofs, 6);
+  assert.equal(barracks.conceptHidden, false);
+  assert.equal(barracks.conceptLoading, "eager");
+  assert.match(barracks.conceptAlt, /Compact Village Barracks concept reference/);
+  assert.equal(barracks.conceptFit, "contain");
+  assert.equal(barracks.selectedInUrl, "compact-village-barracks");
+  assert.ok(barracks.resources.includes("/build_ncm/buildings/fortress/compact-village-barracks.json"));
+  assert.ok(barracks.resources.includes("/build_ncm/concepts/fortress/compact-village-barracks.webp"));
+  assert.ok(!barracks.resources.some((path) => path.endsWith("compact-village-barracks-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=civic]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=civic-town-hall]') && document.querySelector('[data-building=covered-village-bread-oven]') && document.querySelector('[data-building=covered-village-notice-board]') && document.querySelector('[data-building=stone-village-sundial]') && document.querySelector('[data-building=compact-village-infirmary]') && document.querySelector('[data-building=compact-village-schoolhouse]') && document.querySelector('[data-building=compact-village-chapel]') && document.querySelector('[data-building=compact-village-bathhouse]')"));
@@ -2765,10 +2814,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const laundryHouseDirectUrl = new URL(url);
-  laundryHouseDirectUrl.searchParams.set("building", "compact-village-laundry-house");
-  await client.send("Page.navigate", { url: laundryHouseDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'utility' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-laundry-house' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const barracksDirectUrl = new URL(url);
+  barracksDirectUrl.searchParams.set("building", "compact-village-barracks");
+  await client.send("Page.navigate", { url: barracksDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'fortress' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-barracks' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -2780,16 +2829,16 @@ try {
     conceptPath: new URL(document.querySelector('#conceptImage').dataset.source).pathname,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(directSelection.activeCategory, "utility");
-  assert.equal(directSelection.activeBuilding, "compact-village-laundry-house");
-  assert.match(directSelection.title, /Compact Village Laundry House/);
-  assert.equal(directSelection.modelSize, "29 × 23 × 25");
+  assert.equal(directSelection.activeCategory, "fortress");
+  assert.equal(directSelection.activeBuilding, "compact-village-barracks");
+  assert.match(directSelection.title, /Compact Village Barracks/);
+  assert.equal(directSelection.modelSize, "35 × 23 × 27");
   assert.match(directSelection.payload, /^NCM3:/);
   assert.equal(directSelection.conceptComplete, true);
   assert.ok(directSelection.conceptNaturalWidth > 0);
-  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/utility/compact-village-laundry-house.webp");
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/utility/compact-village-laundry-house.json"));
-  assert.ok(directSelection.resources.includes("/build_ncm/concepts/utility/compact-village-laundry-house.webp"));
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/fortress/compact-village-barracks.webp");
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/fortress/compact-village-barracks.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/concepts/fortress/compact-village-barracks.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

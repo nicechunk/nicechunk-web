@@ -54,6 +54,7 @@
     "buildings/civic/compact-village-bathhouse.json",
     "buildings/transport/compact-village-carriage-house.json",
     "buildings/residential/compact-village-rowhouse.json",
-    "buildings/mining/compact-village-assay-house.json"
+    "buildings/mining/compact-village-assay-house.json",
+    "buildings/transport/compact-village-courier-post.json"
   ]
 }

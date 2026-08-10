@@ -1,0 +1,322 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-courier-post",
+  "category": "transport",
+  "kind": "habitable-building",
+  "titles": {
+    "en": "Compact Village Courier Post",
+    "es": "Estafeta Compacta de la Aldea",
+    "fr": "Relais de Courrier Compact du Village",
+    "de": "Kompakte Dorfkurierstation",
+    "ja": "コンパクトな村の飛脚宿",
+    "ru": "Компактная деревенская курьерская станция",
+    "ko": "소형 마을 우편소",
+    "zh-Hant": "緊湊型村莊驛站",
+    "zh-Hans": "紧凑型村庄驿站"
+  },
+  "descriptions": {
+    "en": "A human-scaled timber-and-plaster courier post with a zero-threshold five-wide entrance, a clear central customer aisle, high windows, an exterior route board, a supported sorting counter, a three-level parcel rack, a grounded rear stove and tall chimney, plus a connected side hitching rail; letters, parcels, horses, tack and fire are excluded.",
+    "es": "Una estafeta de madera y revoco a escala humana, con entrada de cinco vóxeles sin desnivel, pasillo central despejado para clientes, ventanas altas, tablero exterior de rutas, mostrador de clasificación con soportes, estantería de paquetes de tres niveles, estufa trasera apoyada en el suelo con chimenea alta y barra lateral conectada para atar monturas; no se incluyen cartas, paquetes, caballos, arreos ni fuego.",
+    "fr": "Un relais de courrier en bois et enduit à échelle humaine, avec entrée de cinq voxels sans ressaut, allée centrale dégagée pour les visiteurs, fenêtres hautes, tableau d’itinéraires extérieur, comptoir de tri soutenu, rayonnage à colis sur trois niveaux, poêle arrière ancré au sol avec haute cheminée et barre d’attache latérale reliée au bâtiment ; lettres, colis, chevaux, harnachement et feu sont exclus.",
+    "de": "Eine maßstäbliche Dorfkurierstation aus Fachwerk und Putz mit schwellenlosem fünf Voxel breitem Eingang, freiem Kundenmittelgang, hohen Fenstern, äußerer Routentafel, abgestütztem Sortiertresen, dreistufigem Paketregal, bodengestütztem Hinterofen mit hohem Kamin und angebundener seitlicher Anbindestange; Briefe, Pakete, Pferde, Zaumzeug und Feuer sind nicht enthalten.",
+    "ja": "人のスケールに合わせた木骨と漆喰の飛脚宿です。段差のない5ボクセル幅の入口、中央の来客通路、高窓、外壁の経路板、支持脚付き仕分け台、3段の荷物棚、接地した奥のストーブと高い煙突、建物につながる側面のつなぎ柵を備えています。手紙、荷物、馬、馬具、火は含まれません。",
+    "ru": "Курьерская станция из фахверка и штукатурки в масштабе персонажа: вход шириной пять вокселей без порога, свободный центральный проход для посетителей, высокие окна, наружная маршрутная доска, сортировочная стойка на опорах, трёхъярусный стеллаж для посылок, опирающаяся на пол задняя печь с высокой трубой и соединённая с домом боковая коновязь; письма, посылки, лошади, сбруя и огонь не входят в чертёж.",
+    "ko": "사람 크기에 맞춘 목구조 회벽 우편소로, 단차 없는 5복셀 폭 입구, 막힘없는 중앙 방문객 통로, 높은 창, 외벽 노선판, 지지대가 있는 분류대, 3단 소포 선반, 바닥에 지지된 뒤쪽 난로와 높은 굴뚝, 건물에 연결된 측면 말 매는 난간을 갖췄습니다. 편지, 소포, 말, 마구와 불은 포함하지 않습니다.",
+    "zh-Hant": "一座符合角色尺度的木構灰泥驛站，設有零高差五體素寬入口、暢通中央訪客走道、高窗、外牆路線板、帶支腳的分揀櫃台、三層包裹架、接地後爐與高煙囪，以及與建築相連的側面拴馬欄；信件、包裹、馬匹、馬具與火焰不包含在藍圖內。",
+    "zh-Hans": "一座符合角色尺度的木构灰泥驿站，设有零高差五体素宽入口、畅通中央访客走道、高窗、外墙路线板、带支脚的分拣柜台、三层包裹架、接地后炉与高烟囱，以及与建筑相连的侧面拴马栏；信件、包裹、马匹、马具与火焰不包含在蓝图内。"
+  },
+  "referenceImage": "concepts/transport/compact-village-courier-post.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "charcoal",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "31 × 27 vu",
+  "height": "23 vu",
+  "referenceScale": "1 voxel = 0.4 m; wall footprint 8.4 × 6.8 m; 1.75 m avatar = 4.375 voxels",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 21,
+      "z": 17
+    },
+    "wallFootprintMeters": {
+      "x": 8.4,
+      "z": 6.8
+    },
+    "doorClearVoxels": {
+      "width": 5,
+      "height": 7
+    },
+    "interiorClearHeightVoxels": 7
+  },
+  "preview": {
+    "fitScale": 1,
+    "minScale": 3.3,
+    "yaw": 2.45
+  },
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "fixtures",
+      "label": "Route Board, Sorting Counter and Parcel Shelves"
+    },
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Route-board Trim, Counter Supports, Parcel-rack Posts and Connected Hitching Rail"
+    },
+    {
+      "materialId": 58,
+      "phase": "glazing",
+      "label": "High Courier-room Window Panels"
+    },
+    {
+      "materialId": 69,
+      "phase": "floor",
+      "label": "Level Polished-stone Road Approach"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:AR8XGyQBAQUABhQAEAEGBgAHEgAOAUUNAAIEAAQBAgUBBgcJAAECEgEGBwkAAQINCAYEAgABAgUBFhQJAAICBQEHAAkOASgAAAcCBQsGFAAHAgULFhQAAwUECwUWEgYDBAsFFhICAwUABgAKAAEoAAACAwUAFgAKAAEoAAACAwwABgAKAAEMAAACAwUADgAKAAEoAAABAwUKBhQAAAEDBQoWFAAAAgMFCgcAAA4BKAAAAQMMCAYGAAABOhQFBgMCAAE6BQUKAAIEAToZBQoAAgQBOg0FFgQCAAE3BwUFBAIAAjgHBQQEAAABAAQAAjgGBAUABAABDAAAATcTAwkEAAUCOBMBCQABAAEIAAACOBMBDgABAAEIAAACOBMBEwAHAAEIAAACNxMCEwQAAQIABgABBwgBEwIDAgEHCQUUAQ4BBTgbAAoKAQUBOBkBCgIAAA"
+  },
+  "validation": {
+    "expectedVoxelCount": 1978,
+    "expectedPayloadBytes": 337,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      56,
+      57,
+      58,
+      62,
+      68,
+      69,
+      70,
+      99
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 360,
+      "56": 71,
+      "57": 197,
+      "58": 57,
+      "62": 96,
+      "68": 59,
+      "69": 25,
+      "70": 726,
+      "99": 387
+    },
+    "requireConnected": true,
+    "supportColumns": [
+      {
+        "label": "Front-left main post",
+        "x": 5,
+        "z": 6,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Front-right main post",
+        "x": 25,
+        "z": 6,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-left main post",
+        "x": 5,
+        "z": 22,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-right main post",
+        "x": 25,
+        "z": 22,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left entrance jamb",
+        "x": 12,
+        "z": 6,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right entrance jamb",
+        "x": 18,
+        "z": 6,
+        "baseY": 0,
+        "topY": 10
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Entrance lintel",
+        "axis": "x",
+        "start": 12,
+        "end": 18,
+        "y": 8,
+        "fixed": 6
+      },
+      {
+        "label": "Front wall plate",
+        "axis": "x",
+        "start": 5,
+        "end": 25,
+        "y": 10,
+        "fixed": 6
+      },
+      {
+        "label": "Rear wall plate",
+        "axis": "x",
+        "start": 5,
+        "end": 25,
+        "y": 10,
+        "fixed": 22
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "zero-threshold five-wide entrance",
+        "x": 13,
+        "y": 1,
+        "z": 6,
+        "width": 5,
+        "height": 7,
+        "depth": 1
+      },
+      {
+        "label": "central courier-room aisle",
+        "x": 13,
+        "y": 1,
+        "z": 7,
+        "width": 5,
+        "height": 7,
+        "depth": 11
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 5,
+        "y": 0,
+        "z": 12,
+        "materialId": 68
+      },
+      {
+        "x": 5,
+        "y": 3,
+        "z": 16,
+        "materialId": 70
+      },
+      {
+        "x": 5,
+        "y": 5,
+        "z": 6,
+        "materialId": 57
+      },
+      {
+        "x": 25,
+        "y": 6,
+        "z": 12,
+        "materialId": 58
+      },
+      {
+        "x": 15,
+        "y": 0,
+        "z": 12,
+        "materialId": 55
+      },
+      {
+        "x": 15,
+        "y": 0,
+        "z": 3,
+        "materialId": 69
+      },
+      {
+        "x": 4,
+        "y": 11,
+        "z": 10,
+        "materialId": 99
+      },
+      {
+        "x": 9,
+        "y": 18,
+        "z": 20,
+        "materialId": 62
+      },
+      {
+        "x": 8,
+        "y": 6,
+        "z": 5,
+        "materialId": 55
+      },
+      {
+        "x": 20,
+        "y": 3,
+        "z": 11,
+        "materialId": 55
+      },
+      {
+        "x": 27,
+        "y": 3,
+        "z": 15,
+        "materialId": 56
+      }
+    ],
+    "approach": [
+      {
+        "x": 15,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 15,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 15,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 15,
+        "z": 5,
+        "topY": 1
+      },
+      {
+        "x": 15,
+        "z": 6,
+        "topY": 1
+      },
+      {
+        "x": 15,
+        "z": 7,
+        "topY": 1
+      }
+    ]
+  }
+}

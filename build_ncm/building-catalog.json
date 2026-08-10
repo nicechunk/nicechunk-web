@@ -56,6 +56,7 @@
     "buildings/residential/compact-village-rowhouse.json",
     "buildings/mining/compact-village-assay-house.json",
     "buildings/transport/compact-village-courier-post.json",
-    "buildings/wayfinding/covered-village-route-map-shelter.json"
+    "buildings/wayfinding/covered-village-route-map-shelter.json",
+    "buildings/utility/compact-village-laundry-house.json"
   ]
 }

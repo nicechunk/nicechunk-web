@@ -178,6 +178,22 @@ const DRINKING_TROUGH_LAYOUTS = Object.freeze({
     spoutMouth: 10,
   },
 });
+const ROADSIDE_WELL_LAYOUTS = Object.freeze({
+  "stone-and-timber-village-roadside-well": {
+    foundation: 0,
+    curbWalls: [1, 2, 3, 4],
+    postFeet: [5, 6],
+    posts: [7, 8],
+    postCaps: [9, 10],
+    crossbeam: 11,
+    spindle: 12,
+    rope: 13,
+    bucket: 14,
+    crankAxle: 15,
+    crankDrop: 16,
+    crankGrip: 17,
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -418,6 +434,11 @@ const ITEM_NAMES = Object.freeze({
     "Stone-and-timber Village Drinking Trough", "Abrevadero público de aldea de piedra y madera", "Abreuvoir public de village en pierre et bois",
     "Dorftränke aus Stein und Holz", "石と木の村落共同水飲み槽", "Деревенская общественная поилка из камня и дерева",
     "석재·목재 마을 공용 물통", "石木村莊公共飲水槽", "石木村庄公共饮水槽",
+  ),
+  "stone-and-timber-village-roadside-well": names(
+    "Stone-and-timber Village Roadside Well", "Pozo de camino de aldea de piedra y madera", "Puits de bord de route villageois en pierre et bois",
+    "Dorfbrunnen am Weg aus Stein und Holz", "石と木の村落街道井戸", "Деревенский придорожный колодец из камня и дерева",
+    "석재·목재 마을 길가 우물", "石木村莊路邊水井", "石木村庄路边水井",
   ),
   "iron-blacksmith-anvil": names(
     "Iron Blacksmith Anvil", "Yunque de herrero de hierro", "Enclume de forgeron en fer", "Eiserner Schmiedeamboss",
@@ -991,6 +1012,30 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+  placeable("exterior-decor", "stone-and-timber-village-roadside-well", [
+    part("polished_stone_slab", [76, 6, 66], [0, 3, 0]),
+    part("polished_stone_slab", [64, 30, 8], [0, 21, -27]),
+    part("polished_stone_slab", [64, 30, 8], [0, 21, 27]),
+    part("polished_stone_slab", [8, 30, 46], [-28, 21, 0]),
+    part("polished_stone_slab", [8, 30, 46], [28, 21, 0]),
+    part("iron_bloom", [16, 8, 16], [-24, 40, -23]),
+    part("iron_bloom", [16, 8, 16], [24, 40, -23]),
+    part("squared_timber", [8, 66, 8], [-24, 77, -23]),
+    part("squared_timber", [8, 66, 8], [24, 77, -23]),
+    part("iron_bloom", [16, 8, 16], [-24, 114, -23]),
+    part("iron_bloom", [16, 8, 16], [24, 114, -23]),
+    part("squared_timber", [32, 10, 10], [0, 113, -23]),
+    part("squared_timber", [40, 10, 20], [0, 79, -13]),
+    part("wooden_stick", [4, 26, 4], [0, 61, -5]),
+    part("squared_timber", [24, 22, 24], [0, 37, 3], { mask: wellSuspendedBucketMask }),
+    part("iron_bloom", [12, 6, 6], [34, 79, -23]),
+    part("iron_bloom", [6, 24, 6], [43, 67, -23]),
+    part("wooden_stick", [16, 6, 6], [54, 67, -23]),
+  ], { yaw: -0.7, pitch: 0.27 }, {
+    image: "concepts/exterior-decor/stone-and-timber-village-roadside-well-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
 ]);
 
 generate();
@@ -1082,6 +1127,8 @@ function buildItem(spec) {
   if (windowBoxLayout) validateWindowBoxGeometry(spec, runtime, windowBoxLayout);
   const drinkingTroughLayout = DRINKING_TROUGH_LAYOUTS[spec.key] ?? null;
   if (drinkingTroughLayout) validateDrinkingTroughGeometry(spec, runtime, drinkingTroughLayout);
+  const roadsideWellLayout = ROADSIDE_WELL_LAYOUTS[spec.key] ?? null;
+  if (roadsideWellLayout) validateRoadsideWellGeometry(spec, runtime, roadsideWellLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -1185,6 +1232,7 @@ function buildItem(spec) {
       ...(handbellLayout ? { handbellGeometryValidated: true } : {}),
       ...(windowBoxLayout ? { windowBoxGeometryValidated: true } : {}),
       ...(drinkingTroughLayout ? { drinkingTroughGeometryValidated: true } : {}),
+      ...(roadsideWellLayout ? { roadsideWellGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -1833,6 +1881,105 @@ function validateDrinkingTroughGeometry(spec, runtime, layout) {
   }
 }
 
+function validateRoadsideWellGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 18 || runtime.boundsQ.sizeQ.join(",") !== "100,118,66") {
+    throw new Error(`${spec.key} must preserve its compact human-scale roadside-well proportions (got ${runtime.componentCount} components and ${runtime.boundsQ.sizeQ.join(",")}).`);
+  }
+  const components = runtime.components ?? [];
+  const componentBounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    "polished_stone_slab", "polished_stone_slab", "polished_stone_slab", "polished_stone_slab", "polished_stone_slab",
+    "iron_bloom", "iron_bloom", "squared_timber", "squared_timber", "iron_bloom", "iron_bloom", "squared_timber",
+    "squared_timber", "wooden_stick", "squared_timber", "iron_bloom", "iron_bloom", "wooden_stick",
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  const foundation = componentBounds[layout.foundation];
+  const [back, front, left, right] = layout.curbWalls.map((index) => componentBounds[index]);
+  if (foundation.min[1] !== 0 || foundation.max[1] !== back.min[1]
+    || foundation.max[1] !== front.min[1] || foundation.max[1] !== left.min[1] || foundation.max[1] !== right.min[1]
+    || back.max[2] !== left.min[2] || front.min[2] !== left.max[2]
+    || back.min[0] !== left.min[0] || back.max[0] !== right.max[0]
+    || front.min[0] !== left.min[0] || front.max[0] !== right.max[0]) {
+    throw new Error(`${spec.key} stone foundation and four curb walls do not form a continuous grounded wellhead.`);
+  }
+  for (let position = 0; position < layout.posts.length; position += 1) {
+    const post = componentBounds[layout.posts[position]];
+    const foot = componentBounds[layout.postFeet[position]];
+    if (foot.min[1] !== back.max[1] || foot.max[1] !== post.min[1]
+      || post.min[0] < foot.min[0] || post.max[0] > foot.max[0]
+      || post.min[2] < foot.min[2] || post.max[2] > foot.max[2]) {
+      throw new Error(`${spec.key} post ${position} is not continuously iron-anchored to the stone curb.`);
+    }
+  }
+  const crossbeam = componentBounds[layout.crossbeam];
+  for (let position = 0; position < layout.posts.length; position += 1) {
+    const post = componentBounds[layout.posts[position]];
+    const cap = componentBounds[layout.postCaps[position]];
+    const beamTouchesInnerCapFace = position === 0
+      ? crossbeam.min[0] === cap.max[0]
+      : crossbeam.max[0] === cap.min[0];
+    if (post.max[1] !== cap.min[1] || !beamTouchesInnerCapFace
+      || overlapLength(cap.min[1], cap.max[1], crossbeam.min[1], crossbeam.max[1]) <= 0
+      || overlapLength(cap.min[2], cap.max[2], crossbeam.min[2], crossbeam.max[2]) <= 0
+      || post.min[0] < cap.min[0] || post.max[0] > cap.max[0]
+      || post.min[2] < cap.min[2] || post.max[2] > cap.max[2]) {
+      throw new Error(`${spec.key} upper cap ${position} does not bind its post to the timber crossbeam.`);
+    }
+  }
+  const spindle = componentBounds[layout.spindle];
+  const [leftPost, rightPost] = layout.posts.map((index) => componentBounds[index]);
+  if (spindle.min[0] !== leftPost.max[0] || spindle.max[0] !== rightPost.min[0]
+    || overlapLength(spindle.min[1], spindle.max[1], leftPost.min[1], leftPost.max[1]) <= 0
+    || overlapLength(spindle.min[1], spindle.max[1], rightPost.min[1], rightPost.max[1]) <= 0
+    || overlapLength(spindle.min[2], spindle.max[2], leftPost.min[2], leftPost.max[2]) <= 0
+    || overlapLength(spindle.min[2], spindle.max[2], rightPost.min[2], rightPost.max[2]) <= 0) {
+    throw new Error(`${spec.key} timber spindle is not face-seated between both posts.`);
+  }
+  const rope = componentBounds[layout.rope];
+  const bucket = componentBounds[layout.bucket];
+  const bucketComponent = components[layout.bucket];
+  const bucketSolidCount = bucketComponent.solid.reduce((sum, value) => sum + value, 0);
+  if (rope.max[1] !== spindle.min[1] || rope.min[1] !== bucket.max[1]
+    || overlapLength(rope.min[0], rope.max[0], spindle.min[0], spindle.max[0]) <= 0
+    || overlapLength(rope.min[2], rope.max[2], spindle.min[2], spindle.max[2]) <= 0
+    || overlapLength(rope.min[0], rope.max[0], bucket.min[0], bucket.max[0]) <= 0
+    || overlapLength(rope.min[2], rope.max[2], bucket.min[2], bucket.max[2]) <= 0
+    || bucket.min[1] < foundation.max[1] || bucket.max[1] > spindle.min[1]
+    || bucket.min[0] <= left.max[0] || bucket.max[0] >= right.min[0]
+    || bucket.min[2] <= back.max[2] || bucket.max[2] >= front.min[2]) {
+    throw new Error(`${spec.key} rope or captive bucket leaves the safe interior of the curb.`);
+  }
+  if (bucketSolidCount <= 0 || bucketSolidCount >= FORGE_COMPONENT_GRID.x * FORGE_COMPONENT_GRID.y * FORGE_COMPONENT_GRID.z) {
+    throw new Error(`${spec.key} bucket must preserve its hollow forged body and raised handle.`);
+  }
+  const crankAxle = componentBounds[layout.crankAxle];
+  const crankDrop = componentBounds[layout.crankDrop];
+  const crankGrip = componentBounds[layout.crankGrip];
+  if (crankAxle.min[0] !== rightPost.max[0]
+    || overlapLength(crankAxle.min[1], crankAxle.max[1], rightPost.min[1], rightPost.max[1]) <= 0
+    || overlapLength(crankAxle.min[2], crankAxle.max[2], rightPost.min[2], rightPost.max[2]) <= 0
+    || crankAxle.max[0] !== crankDrop.min[0]
+    || overlapLength(crankAxle.min[1], crankAxle.max[1], crankDrop.min[1], crankDrop.max[1]) <= 0
+    || overlapLength(crankAxle.min[2], crankAxle.max[2], crankDrop.min[2], crankDrop.max[2]) <= 0
+    || crankDrop.max[0] !== crankGrip.min[0]
+    || overlapLength(crankDrop.min[1], crankDrop.max[1], crankGrip.min[1], crankGrip.max[1]) <= 0
+    || overlapLength(crankDrop.min[2], crankDrop.max[2], crankGrip.min[2], crankGrip.max[2]) <= 0
+    || crankGrip.max[0] <= foundation.max[0]) {
+    throw new Error(`${spec.key} crank does not form a continuous post-mounted axle, drop, and outward wooden grip.`);
+  }
+}
+
+function overlapLength(leftMin, leftMax, rightMin, rightMax) {
+  return Math.min(leftMax, rightMax) - Math.max(leftMin, rightMin);
+}
+
 function validateToolHolding(spec, runtime) {
   const policy = spec.holding;
   const components = runtime.components ?? [];
@@ -2267,6 +2414,14 @@ function windowBoxBloomMask({ nx, ny, nz }) {
     || (Math.abs(nx) <= 0.92 && Math.abs(nz) <= 0.28)
   );
   return stem || petals;
+}
+
+function wellSuspendedBucketMask({ nx, ny, nz }) {
+  const radial = Math.sqrt(nx * nx + nz * nz);
+  const wall = radial >= 0.6 && radial <= 1.02 && ny <= 0.58;
+  const bottom = ny <= -0.72 && radial <= 0.78;
+  const handle = ny >= 0.36 && (Math.abs(nx) <= 0.2 || Math.abs(nz) <= 0.2);
+  return wall || bottom || handle;
 }
 
 function chiselTip({ nx, ny, nz }) {

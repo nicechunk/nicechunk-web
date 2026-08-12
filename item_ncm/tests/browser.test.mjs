@@ -82,7 +82,7 @@ try {
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 16);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /48 ITEMS/);
+  assert.match(initial.total, /49 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -633,8 +633,10 @@ try {
   assert.ok(wateringCan.resources.includes("/item_ncm/json/forestry-farming/copper-field-watering-can.json"));
 
   await evaluate(client, `document.querySelector('[data-category="exterior-decor"]').click()`);
-  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 2
-    && document.querySelector('[data-item="iron-braced-village-window-box-planter"]')`));
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 3
+    && document.querySelector('[data-item="iron-braced-village-window-box-planter"]')
+    && document.querySelector('[data-item="stone-and-timber-village-drinking-trough"]')
+    && document.querySelector('[data-item="stone-and-timber-village-roadside-well"]')`));
   assert.equal(await evaluate(client, `performance.getEntriesByType("resource").some((entry) => new URL(entry.name).pathname.includes("/item_ncm/json/exterior-decor/"))`), false,
     "category browsing must not load exterior decor item JSON files");
   await evaluate(client, `document.querySelector('[data-item="iron-braced-village-window-box-planter"]').click()`);
@@ -708,6 +710,42 @@ try {
   })()`);
   await waitFor(() => evaluate(client, `document.querySelector("#itemTitle").textContent === "石木村庄公共饮水槽"`));
   assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), drinkingTrough.payload);
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "en";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
+
+  await evaluate(client, `document.querySelector('[data-item="stone-and-timber-village-roadside-well"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="stone-and-timber-village-roadside-well"].active')
+    && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const roadsideWell = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payload: document.querySelector("#codeOutput").value,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    materialRows: document.querySelectorAll("#bomRows .bom-row").length,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(roadsideWell.title, "Stone-and-timber Village Roadside Well");
+  assert.equal(roadsideWell.type, "PLACEABLE");
+  assert.match(roadsideWell.payload, /^NCF1\./);
+  assert.equal(roadsideWell.payloadBytes, "624 / 640 B");
+  assert.equal(roadsideWell.componentCount, "18");
+  assert.equal(roadsideWell.materialRows, 4);
+  assert.equal(roadsideWell.selectedInUrl, "stone-and-timber-village-roadside-well");
+  assert.ok(roadsideWell.resources.includes("/item_ncm/json/exterior-decor/stone-and-timber-village-roadside-well.json"));
+
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "zh-Hans";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.querySelector("#itemTitle").textContent === "石木村庄路边水井"`));
+  assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), roadsideWell.payload);
   await evaluate(client, `(() => {
     const select = document.querySelector("[data-language-select]");
     select.value = "en";

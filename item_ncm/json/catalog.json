@@ -49,6 +49,7 @@
     "json/signage/iron-bracketed-village-shop-sign.json",
     "json/signage/timber-village-public-notice-board.json",
     "json/exterior-decor/iron-braced-village-window-box-planter.json",
-    "json/exterior-decor/stone-and-timber-village-drinking-trough.json"
+    "json/exterior-decor/stone-and-timber-village-drinking-trough.json",
+    "json/exterior-decor/stone-and-timber-village-roadside-well.json"
   ]
 }

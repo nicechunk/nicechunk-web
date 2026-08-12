@@ -154,10 +154,26 @@ const drinkingTroughLayouts = new Map([
     spoutMouth: 10,
   }],
 ]);
+const roadsideWellLayouts = new Map([
+  ["stone-and-timber-village-roadside-well", {
+    foundation: 0,
+    curbWalls: [1, 2, 3, 4],
+    postFeet: [5, 6],
+    posts: [7, 8],
+    postCaps: [9, 10],
+    crossbeam: 11,
+    spindle: 12,
+    rope: 13,
+    bucket: 14,
+    crankAxle: 15,
+    crankDrop: 16,
+    crankGrip: 17,
+  }],
+]);
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
-assert.equal(catalog.items.length, 48);
+assert.equal(catalog.items.length, 49);
 assert.equal(new Set(catalog.items).size, catalog.items.length);
 
 const listedFiles = new Set(catalog.items);
@@ -181,6 +197,7 @@ let noticeBoardGeometryCount = 0;
 let handbellGeometryCount = 0;
 let windowBoxGeometryCount = 0;
 let drinkingTroughGeometryCount = 0;
+let roadsideWellGeometryCount = 0;
 for (const file of catalog.items) {
   assert.match(file, /^json\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/);
   const item = json(join(root, file));
@@ -317,6 +334,14 @@ for (const file of catalog.items) {
     assert.equal(item.verification.drinkingTroughGeometryValidated, true);
     assertDrinkingTroughGeometry(item, runtime, drinkingTroughLayout);
   }
+  const roadsideWellLayout = roadsideWellLayouts.get(item.key);
+  if (roadsideWellLayout) {
+    roadsideWellGeometryCount += 1;
+    assert.equal(item.category, "exterior-decor");
+    assert.equal(item.interaction, "placeable");
+    assert.equal(item.verification.roadsideWellGeometryValidated, true);
+    assertRoadsideWellGeometry(item, runtime, roadsideWellLayout);
+  }
   assert.equal(forgeWorkbenchComponentsConnected(runtime.components), true, `${item.key} must be a connected assembly`);
   const grip = validateForgeGripBindings(runtime.components);
   assert.equal(grip.valid, true, `${item.key} grip must remain valid after decoding`);
@@ -406,11 +431,11 @@ assert.deepEqual([...categories], [
   ["books-writing", 7],
   ["interior-decor", 2],
   ["signage", 2],
-  ["exterior-decor", 2],
+  ["exterior-decor", 3],
 ]);
 assert.equal(tools, 16);
-assert.equal(placeables, 32);
-assert.equal(conceptReferences, 21);
+assert.equal(placeables, 33);
+assert.equal(conceptReferences, 22);
 assert.equal(bookGeometryCount, 7);
 assert.equal(framedTextileGeometryCount, 1);
 assert.equal(drawerCabinetGeometryCount, 1);
@@ -422,9 +447,10 @@ assert.equal(noticeBoardGeometryCount, 1);
 assert.equal(handbellGeometryCount, 1);
 assert.equal(windowBoxGeometryCount, 1);
 assert.equal(drinkingTroughGeometryCount, 1);
+assert.equal(roadsideWellGeometryCount, 1);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
-console.log("item_ncm catalog tests passed: 48 canonical NCF1 items across 16 categories");
+console.log("item_ncm catalog tests passed: 49 canonical NCF1 items across 16 categories");
 
 function json(file) {
   return JSON.parse(readFileSync(file, "utf8"));
@@ -848,4 +874,55 @@ function assertDrinkingTroughGeometry(item, runtime, layout) {
   }
   assert.equal(bounds[layout.timberRail].max[2], back.min[2]);
   assert.equal(bounds[layout.spout].max[2], bounds[layout.spoutMouth].min[2]);
+}
+
+function assertRoadsideWellGeometry(item, runtime, layout) {
+  assert.equal(runtime.componentCount, 18);
+  assert.deepEqual(item.dimensions.sizeQ, [100, 118, 66]);
+  assert.ok(item.dimensions.width >= 1.5 && item.dimensions.width <= 1.6);
+  assert.ok(item.dimensions.height >= 1.8 && item.dimensions.height <= 1.9);
+  assert.ok(item.dimensions.depth >= 1 && item.dimensions.depth <= 1.1);
+  assert.ok(item.forge.rawBytes <= 640);
+  assert.ok(item.forge.requirements.outputMassGrams <= 350_000, `${item.key} must remain a compact village fixture rather than monumental masonry`);
+  assert.deepEqual(
+    [...new Set(item.forge.materialComponents.map(({ materialId }) => materialId))].sort(),
+    ["iron_bloom", "polished_stone_slab", "squared_timber", "wooden_stick"],
+  );
+  const components = runtime.components;
+  const bounds = components.map((component) => componentBoundsQ(component));
+  const foundation = bounds[layout.foundation];
+  const [back, front, left, right] = layout.curbWalls.map((index) => bounds[index]);
+  assert.equal(foundation.min[1], 0);
+  for (const curb of [back, front, left, right]) assert.equal(curb.min[1], foundation.max[1]);
+  assert.equal(back.max[2], left.min[2]);
+  assert.equal(front.min[2], left.max[2]);
+  for (let index = 0; index < layout.posts.length; index += 1) {
+    const foot = bounds[layout.postFeet[index]];
+    const post = bounds[layout.posts[index]];
+    const cap = bounds[layout.postCaps[index]];
+    assert.equal(foot.min[1], back.max[1]);
+    assert.equal(foot.max[1], post.min[1]);
+    assert.equal(post.max[1], cap.min[1]);
+  }
+  const [leftPost, rightPost] = layout.posts.map((index) => bounds[index]);
+  const crossbeam = bounds[layout.crossbeam];
+  const spindle = bounds[layout.spindle];
+  assert.equal(crossbeam.min[0], bounds[layout.postCaps[0]].max[0]);
+  assert.equal(crossbeam.max[0], bounds[layout.postCaps[1]].min[0]);
+  assert.equal(spindle.min[0], leftPost.max[0]);
+  assert.equal(spindle.max[0], rightPost.min[0]);
+  const rope = bounds[layout.rope];
+  const bucket = bounds[layout.bucket];
+  assert.equal(rope.max[1], spindle.min[1]);
+  assert.equal(rope.min[1], bucket.max[1]);
+  assert.ok(bucket.min[0] > left.max[0] && bucket.max[0] < right.min[0]);
+  assert.ok(bucket.min[2] > back.max[2] && bucket.max[2] < front.min[2]);
+  assert.ok(item.forge.materialComponents[layout.bucket].usedVolumeMm3 < item.forge.materialComponents[layout.bucket].inputVolumeMm3);
+  const crankAxle = bounds[layout.crankAxle];
+  const crankDrop = bounds[layout.crankDrop];
+  const crankGrip = bounds[layout.crankGrip];
+  assert.equal(crankAxle.min[0], rightPost.max[0]);
+  assert.equal(crankAxle.max[0], crankDrop.min[0]);
+  assert.equal(crankDrop.max[0], crankGrip.min[0]);
+  assert.ok(crankGrip.max[0] > foundation.max[0]);
 }

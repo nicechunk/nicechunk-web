@@ -74,6 +74,7 @@
     "buildings/industrial/compact-village-wheelwright-workshop.json",
     "buildings/industrial/compact-village-candlemaker-workshop.json",
     "buildings/commerce/compact-village-tailor-shop.json",
-    "buildings/agriculture/compact-village-poultry-house.json"
+    "buildings/agriculture/compact-village-poultry-house.json",
+    "buildings/commerce/compact-village-cobbler-shop.json"
   ]
 }

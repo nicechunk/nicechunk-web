@@ -82,7 +82,7 @@ try {
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 16);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /63 ITEMS/);
+  assert.match(initial.total, /64 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -955,11 +955,12 @@ try {
   await assertRigidClothPreview(client);
 
   await evaluate(client, `document.querySelector('[data-category="interior-decor"]').click()`);
-  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 4
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 5
     && document.querySelector('[data-item="timber-framed-woven-tapestry"]')
     && document.querySelector('[data-item="copper-rimmed-village-wall-clock"]')
     && document.querySelector('[data-item="polished-copper-timber-village-inn-wall-mirror"]')
-    && document.querySelector('[data-item="iron-hinged-timber-village-inn-privacy-screen"]')`));
+    && document.querySelector('[data-item="iron-hinged-timber-village-inn-privacy-screen"]')
+    && document.querySelector('[data-item="stone-and-iron-village-inn-hearth-fireplace"]')`));
   assert.equal(await evaluate(client, `performance.getEntriesByType("resource").some((entry) => new URL(entry.name).pathname.includes("/item_ncm/json/interior-decor/"))`), false,
     "category browsing must not load interior decor item JSON files");
   await evaluate(client, `document.querySelector('[data-item="timber-framed-woven-tapestry"]').click()`);
@@ -1093,6 +1094,53 @@ try {
     })()`);
     await waitFor(() => evaluate(client, `document.documentElement.lang === ${JSON.stringify(locale)} && document.querySelector("#itemTitle").textContent === ${JSON.stringify(expectedName)}`));
     assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), privacyScreen.payload);
+  }
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "en";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
+
+  await evaluate(client, `document.querySelector('[data-item="stone-and-iron-village-inn-hearth-fireplace"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="stone-and-iron-village-inn-hearth-fireplace"].active')
+    && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const hearthFireplace = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payload: document.querySelector("#codeOutput").value,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    materialRows: document.querySelectorAll("#bomRows .bom-row").length,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(hearthFireplace.title, "Stone-and-iron Village Inn Hearth Fireplace");
+  assert.equal(hearthFireplace.type, "PLACEABLE");
+  assert.match(hearthFireplace.payload, /^NCF1\./);
+  assert.equal(hearthFireplace.payloadBytes, "249 / 640 B");
+  assert.equal(hearthFireplace.componentCount, "23");
+  assert.equal(hearthFireplace.materialRows, 5);
+  assert.equal(hearthFireplace.selectedInUrl, "stone-and-iron-village-inn-hearth-fireplace");
+  assert.ok(hearthFireplace.resources.includes("/item_ncm/json/interior-decor/stone-and-iron-village-inn-hearth-fireplace.json"));
+  for (const [locale, expectedName] of Object.entries({
+    en: "Stone-and-iron Village Inn Hearth Fireplace",
+    es: "Chimenea de hogar de posada de aldea de piedra y hierro",
+    fr: "Cheminée d’âtre d’auberge villageoise en pierre et fer",
+    de: "Herdkamin aus Stein und Eisen für Dorfgasthäuser",
+    ja: "石造り鉄格子付き村宿暖炉",
+    ru: "Каменный очаг-камин деревенской гостиницы с железной решёткой",
+    ko: "석재·철제 마을 여관 화덕 벽난로",
+    "zh-Hant": "石砌鐵柵村莊旅店壁爐",
+    "zh-Hans": "石砌铁栅村庄客栈壁炉",
+  })) {
+    await evaluate(client, `(() => {
+      const select = document.querySelector("[data-language-select]");
+      select.value = ${JSON.stringify(locale)};
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+    })()`);
+    await waitFor(() => evaluate(client, `document.documentElement.lang === ${JSON.stringify(locale)} && document.querySelector("#itemTitle").textContent === ${JSON.stringify(expectedName)}`));
+    assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), hearthFireplace.payload);
   }
   await evaluate(client, `(() => {
     const select = document.querySelector("[data-language-select]");

@@ -370,6 +370,24 @@ const PRIVACY_SCREEN_LAYOUTS = Object.freeze({
     hingePlates: [17, 18, 19, 20],
   },
 });
+const HEARTH_FIREPLACE_LAYOUTS = Object.freeze({
+  "stone-and-iron-village-inn-hearth-fireplace": {
+    hearth: 0,
+    lowerPiers: [1, 2],
+    upperPiers: [3, 4],
+    backPanels: [5, 6],
+    lintel: 7,
+    mantel: 8,
+    chimneyBreast: 9,
+    chimneyCrown: 10,
+    grateFeet: [11, 12],
+    grateSideRails: [13, 14],
+    grateBars: [15, 16, 17],
+    charcoalBed: 18,
+    mantelBrackets: [19, 20],
+    grateEndRails: [21, 22],
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -685,6 +703,11 @@ const ITEM_NAMES = Object.freeze({
     "Iron-hinged Timber Village Inn Privacy Screen", "Biombo de privacidad de posada de aldea de madera con bisagras de hierro", "Paravent d’intimité d’auberge villageoise en bois à charnières de fer",
     "Holz-Sichtschutz mit Eisenscharnieren für Dorfgasthäuser", "鉄蝶番付き木製村宿間仕切り", "Деревянная ширма деревенской гостиницы с железными петлями",
     "철제 경첩 목재 마을 여관 가림막", "鐵鉸鏈木製村莊旅店屏風", "铁铰链木制村庄客栈屏风",
+  ),
+  "stone-and-iron-village-inn-hearth-fireplace": names(
+    "Stone-and-iron Village Inn Hearth Fireplace", "Chimenea de hogar de posada de aldea de piedra y hierro", "Cheminée d’âtre d’auberge villageoise en pierre et fer",
+    "Herdkamin aus Stein und Eisen für Dorfgasthäuser", "石造り鉄格子付き村宿暖炉", "Каменный очаг-камин деревенской гостиницы с железной решёткой",
+    "석재·철제 마을 여관 화덕 벽난로", "石砌鐵柵村莊旅店壁爐", "石砌铁栅村庄客栈壁炉",
   ),
   "iron-blacksmith-anvil": names(
     "Iron Blacksmith Anvil", "Yunque de herrero de hierro", "Enclume de forgeron en fer", "Eiserner Schmiedeamboss",
@@ -1611,6 +1634,35 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+  placeable("interior-decor", "stone-and-iron-village-inn-hearth-fireplace", [
+    part("polished_stone_slab", [96, 6, 44], [0, 3, 0]),
+    part("stone_brick", [18, 32, 32], [-35, 22, -4]),
+    part("stone_brick", [18, 32, 32], [35, 22, -4]),
+    part("stone_brick", [18, 32, 32], [-35, 54, -4]),
+    part("stone_brick", [18, 32, 32], [35, 54, -4]),
+    part("stone_brick", [52, 32, 4], [0, 22, -18]),
+    part("stone_brick", [52, 32, 4], [0, 54, -18]),
+    part("polished_stone_slab", [88, 12, 32], [0, 76, -4]),
+    part("squared_timber", [96, 8, 44], [0, 86, 0]),
+    part("stone_brick", [68, 10, 28], [0, 95, -4]),
+    part("polished_stone_slab", [76, 6, 32], [0, 103, -4]),
+    part("iron_bloom", [4, 6, 4], [-20, 9, 0]),
+    part("iron_bloom", [4, 6, 4], [20, 9, 0]),
+    part("iron_bloom", [4, 8, 24], [-20, 16, 0]),
+    part("iron_bloom", [4, 8, 24], [20, 16, 0]),
+    part("iron_bloom", [36, 4, 4], [0, 18, -8]),
+    part("iron_bloom", [36, 4, 4], [0, 18, 0]),
+    part("iron_bloom", [36, 4, 4], [0, 18, 8]),
+    part("charcoal", [32, 4, 20], [0, 8, 0]),
+    part("iron_bloom", [8, 12, 2], [-30, 76, 13]),
+    part("iron_bloom", [8, 12, 2], [30, 76, 13]),
+    part("iron_bloom", [36, 4, 4], [0, 14, -12]),
+    part("iron_bloom", [36, 4, 4], [0, 14, 12]),
+  ], { yaw: -0.64, pitch: 0.25 }, {
+    image: "concepts/interior-decor/stone-and-iron-village-inn-hearth-fireplace-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
   placeable("commerce", "iron-braced-timber-village-inn-reception-counter", [
     part("iron_bloom", [10, 6, 10], [-45, 3, -17]),
     part("iron_bloom", [10, 6, 10], [-45, 3, 17]),
@@ -1758,6 +1810,8 @@ function buildItem(spec) {
   if (wallMirrorLayout) validateWallMirrorGeometry(spec, runtime, wallMirrorLayout);
   const privacyScreenLayout = PRIVACY_SCREEN_LAYOUTS[spec.key] ?? null;
   if (privacyScreenLayout) validatePrivacyScreenGeometry(spec, runtime, privacyScreenLayout);
+  const hearthFireplaceLayout = HEARTH_FIREPLACE_LAYOUTS[spec.key] ?? null;
+  if (hearthFireplaceLayout) validateHearthFireplaceGeometry(spec, runtime, hearthFireplaceLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -1876,6 +1930,7 @@ function buildItem(spec) {
       ...(doubleDoorWardrobeLayout ? { doubleDoorWardrobeGeometryValidated: true } : {}),
       ...(wallMirrorLayout ? { wallMirrorGeometryValidated: true } : {}),
       ...(privacyScreenLayout ? { privacyScreenGeometryValidated: true } : {}),
+      ...(hearthFireplaceLayout ? { hearthFireplaceGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -3714,6 +3769,119 @@ function validateDoubleDoorWardrobeGeometry(spec, runtime, layout) {
       || Math.abs(components[layout.pulls[position]].offsetQ[0]) > 4
       || overlapLength(pull.min[1], pull.max[1], door.min[1], door.max[1]) <= 0) {
       throw new Error(`${spec.key} door pull ${position} must remain face-mounted beside the center seam.`);
+    }
+  }
+  for (let first = 0; first < bounds.length; first += 1) {
+    for (let second = first + 1; second < bounds.length; second += 1) {
+      if (boundsOverlap(bounds[first], bounds[second], 0)) {
+        throw new Error(`${spec.key} components ${first} and ${second} intersect.`);
+      }
+    }
+  }
+}
+
+function validateHearthFireplaceGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 23 || runtime.boundsQ.sizeQ.join(",") !== "96,106,44") {
+    throw new Error(`${spec.key} must preserve its human-scale open-hearth proportions (got ${runtime.componentCount} components and ${runtime.boundsQ.sizeQ.join(",")}).`);
+  }
+  const components = runtime.components ?? [];
+  const bounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    "polished_stone_slab",
+    ...Array(6).fill("stone_brick"),
+    "polished_stone_slab", "squared_timber", "stone_brick", "polished_stone_slab",
+    ...Array(7).fill("iron_bloom"),
+    "charcoal",
+    ...Array(4).fill("iron_bloom"),
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  const hearth = bounds[layout.hearth];
+  const [leftLower, rightLower] = layout.lowerPiers.map((index) => bounds[index]);
+  const [leftUpper, rightUpper] = layout.upperPiers.map((index) => bounds[index]);
+  const [lowerBack, upperBack] = layout.backPanels.map((index) => bounds[index]);
+  const lintel = bounds[layout.lintel];
+  const mantel = bounds[layout.mantel];
+  const chimneyBreast = bounds[layout.chimneyBreast];
+  const chimneyCrown = bounds[layout.chimneyCrown];
+  if (hearth.min[1] !== 0
+    || leftLower.min[1] !== hearth.max[1] || rightLower.min[1] !== hearth.max[1]
+    || lowerBack.min[1] !== hearth.max[1]
+    || leftLower.max[1] !== leftUpper.min[1] || rightLower.max[1] !== rightUpper.min[1]
+    || lowerBack.max[1] !== upperBack.min[1]
+    || leftUpper.max[1] !== lintel.min[1] || rightUpper.max[1] !== lintel.min[1]
+    || upperBack.max[1] !== lintel.min[1]
+    || lintel.max[1] !== mantel.min[1]
+    || mantel.max[1] !== chimneyBreast.min[1]
+    || chimneyBreast.max[1] !== chimneyCrown.min[1]) {
+    throw new Error(`${spec.key} hearth, piers, lintel, mantel, and chimney stack must remain continuously supported.`);
+  }
+  for (const [pier, back] of [
+    [leftLower, lowerBack], [rightLower, lowerBack], [leftUpper, upperBack], [rightUpper, upperBack],
+  ]) {
+    const sideTouchesBack = pier.max[0] === back.min[0] || pier.min[0] === back.max[0];
+    if (!sideTouchesBack
+      || overlapLength(pier.min[1], pier.max[1], back.min[1], back.max[1]) <= 0
+      || overlapLength(pier.min[2], pier.max[2], back.min[2], back.max[2]) <= 0) {
+      throw new Error(`${spec.key} firebox back must remain face-connected between both masonry piers.`);
+    }
+  }
+  const opening = {
+    min: [leftLower.max[0], hearth.max[1], lowerBack.max[2]],
+    max: [rightLower.min[0], lintel.min[1], leftLower.max[2]],
+  };
+  if (opening.max[0] - opening.min[0] < 48
+    || opening.max[1] - opening.min[1] < 58
+    || opening.max[2] - opening.min[2] < 24) {
+    throw new Error(`${spec.key} must retain a genuinely usable recessed open firebox.`);
+  }
+  for (const index of [layout.hearth, ...layout.lowerPiers, ...layout.upperPiers, ...layout.backPanels, layout.lintel]) {
+    if (boundsOverlap(bounds[index], opening, 0)) {
+      throw new Error(`${spec.key} masonry component ${index} obstructs the firebox opening.`);
+    }
+  }
+  for (let position = 0; position < layout.grateFeet.length; position += 1) {
+    const foot = bounds[layout.grateFeet[position]];
+    const sideRail = bounds[layout.grateSideRails[position]];
+    if (foot.min[1] !== hearth.max[1] || foot.max[1] !== sideRail.min[1]
+      || overlapLength(foot.min[0], foot.max[0], sideRail.min[0], sideRail.max[0]) <= 0
+      || overlapLength(foot.min[2], foot.max[2], sideRail.min[2], sideRail.max[2]) <= 0) {
+      throw new Error(`${spec.key} grate foot ${position} must ground and support its iron side rail.`);
+    }
+  }
+  const sideRails = layout.grateSideRails.map((index) => bounds[index]);
+  for (const barIndex of layout.grateBars) {
+    const bar = bounds[barIndex];
+    if (bar.min[0] !== sideRails[0].max[0] || bar.max[0] !== sideRails[1].min[0]
+      || sideRails.some((rail) => overlapLength(bar.min[1], bar.max[1], rail.min[1], rail.max[1]) <= 0)) {
+      throw new Error(`${spec.key} grate bar ${barIndex} must remain captive between both side rails.`);
+    }
+  }
+  const [backEndRail, frontEndRail] = layout.grateEndRails.map((index) => bounds[index]);
+  if (backEndRail.min[0] !== sideRails[0].max[0] || backEndRail.max[0] !== sideRails[1].min[0]
+    || frontEndRail.min[0] !== sideRails[0].max[0] || frontEndRail.max[0] !== sideRails[1].min[0]
+    || backEndRail.max[2] !== bounds[layout.grateBars[0]].min[2]
+    || frontEndRail.min[2] !== bounds[layout.grateBars.at(-1)].max[2]) {
+    throw new Error(`${spec.key} grate end rails must close and support the three-bar iron frame.`);
+  }
+  const charcoalBed = bounds[layout.charcoalBed];
+  if (charcoalBed.min[1] !== hearth.max[1]
+    || charcoalBed.min[0] <= sideRails[0].max[0] || charcoalBed.max[0] >= sideRails[1].min[0]
+    || charcoalBed.min[2] < opening.min[2] || charcoalBed.max[2] > opening.max[2]
+    || charcoalBed.max[1] >= bounds[layout.grateBars[0]].min[1]) {
+    throw new Error(`${spec.key} charcoal bed must remain contained below the grate inside the open firebox.`);
+  }
+  for (const bracketIndex of layout.mantelBrackets) {
+    const bracket = bounds[bracketIndex];
+    if (bracket.min[2] !== lintel.max[2] || bracket.max[1] !== mantel.min[1]
+      || overlapLength(bracket.min[0], bracket.max[0], lintel.min[0], lintel.max[0]) <= 0) {
+      throw new Error(`${spec.key} mantel bracket ${bracketIndex} must remain face-fastened to the lintel and shelf.`);
     }
   }
   for (let first = 0; first < bounds.length; first += 1) {

@@ -346,10 +346,28 @@ const doubleDoorWardrobeLayouts = new Map([
     pulls: [22, 23],
   }],
 ]);
+const hearthFireplaceLayouts = new Map([
+  ["stone-and-iron-village-inn-hearth-fireplace", {
+    hearth: 0,
+    lowerPiers: [1, 2],
+    upperPiers: [3, 4],
+    backPanels: [5, 6],
+    lintel: 7,
+    mantel: 8,
+    chimneyBreast: 9,
+    chimneyCrown: 10,
+    grateFeet: [11, 12],
+    grateSideRails: [13, 14],
+    grateBars: [15, 16, 17],
+    charcoalBed: 18,
+    mantelBrackets: [19, 20],
+    grateEndRails: [21, 22],
+  }],
+]);
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
-assert.equal(catalog.items.length, 63);
+assert.equal(catalog.items.length, 64);
 assert.equal(new Set(catalog.items).size, catalog.items.length);
 
 const listedFiles = new Set(catalog.items);
@@ -388,6 +406,7 @@ let writingChairGeometryCount = 0;
 let wallMirrorGeometryCount = 0;
 let privacyScreenGeometryCount = 0;
 let doubleDoorWardrobeGeometryCount = 0;
+let hearthFireplaceGeometryCount = 0;
 for (const file of catalog.items) {
   assert.match(file, /^json\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/);
   const item = json(join(root, file));
@@ -645,6 +664,14 @@ for (const file of catalog.items) {
     assert.equal(item.verification.doubleDoorWardrobeGeometryValidated, true);
     assertDoubleDoorWardrobeGeometry(item, runtime, doubleDoorWardrobeLayout);
   }
+  const hearthFireplaceLayout = hearthFireplaceLayouts.get(item.key);
+  if (hearthFireplaceLayout) {
+    hearthFireplaceGeometryCount += 1;
+    assert.equal(item.category, "interior-decor");
+    assert.equal(item.interaction, "placeable");
+    assert.equal(item.verification.hearthFireplaceGeometryValidated, true);
+    assertHearthFireplaceGeometry(item, runtime, hearthFireplaceLayout);
+  }
   assert.equal(forgeWorkbenchComponentsConnected(runtime.components), true, `${item.key} must be a connected assembly`);
   const grip = validateForgeGripBindings(runtime.components);
   assert.equal(grip.valid, true, `${item.key} grip must remain valid after decoding`);
@@ -732,13 +759,13 @@ assert.deepEqual([...categories], [
   ["commerce", 2],
   ["construction", 1],
   ["books-writing", 7],
-  ["interior-decor", 4],
+  ["interior-decor", 5],
   ["signage", 2],
   ["exterior-decor", 5],
 ]);
 assert.equal(tools, 16);
-assert.equal(placeables, 47);
-assert.equal(conceptReferences, 36);
+assert.equal(placeables, 48);
+assert.equal(conceptReferences, 37);
 assert.equal(bookGeometryCount, 7);
 assert.equal(framedTextileGeometryCount, 1);
 assert.equal(drawerCabinetGeometryCount, 1);
@@ -765,9 +792,10 @@ assert.equal(writingChairGeometryCount, 1);
 assert.equal(wallMirrorGeometryCount, 1);
 assert.equal(privacyScreenGeometryCount, 1);
 assert.equal(doubleDoorWardrobeGeometryCount, 1);
+assert.equal(hearthFireplaceGeometryCount, 1);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
-console.log("item_ncm catalog tests passed: 63 canonical NCF1 items across 16 categories");
+console.log("item_ncm catalog tests passed: 64 canonical NCF1 items across 16 categories");
 
 function json(file) {
   return JSON.parse(readFileSync(file, "utf8"));
@@ -1948,6 +1976,86 @@ function assertDoubleDoorWardrobeGeometry(item, runtime, layout) {
     assert.equal(pull.min[2], door.max[2]);
     assert.equal(Math.sign(components[layout.pulls[position]].offsetQ[0]), position === 0 ? -1 : 1);
     assert.ok(Math.abs(components[layout.pulls[position]].offsetQ[0]) <= 4);
+  }
+  for (let first = 0; first < bounds.length; first += 1) {
+    for (let second = first + 1; second < bounds.length; second += 1) {
+      assert.equal(positiveVolumeOverlap(bounds[first], bounds[second]), false, `${item.key} components ${first} and ${second} intersect`);
+    }
+  }
+}
+
+function assertHearthFireplaceGeometry(item, runtime, layout) {
+  assert.equal(runtime.componentCount, 23);
+  assert.deepEqual(item.dimensions.sizeQ, [96, 106, 44]);
+  assert.equal(item.dimensions.width, 1.5);
+  assert.equal(item.dimensions.height, 1.6563);
+  assert.equal(item.dimensions.depth, 0.6875);
+  assert.ok(item.dimensions.height >= 1.6 && item.dimensions.height <= 1.7, `${item.key} must remain below but close to canonical player height`);
+  assert.ok(item.dimensions.width >= 1.4 && item.dimensions.width <= 1.6);
+  assert.ok(item.dimensions.depth >= 0.6 && item.dimensions.depth <= 0.75);
+  assert.ok(item.forge.rawBytes <= 290);
+  assert.ok(item.forge.requirements.outputMassGrams <= 360_000, `${item.key} must remain plausible room-scale masonry`);
+  assert.deepEqual(
+    [...new Set(item.forge.materialComponents.map(({ materialId }) => materialId))].sort(),
+    ["charcoal", "iron_bloom", "polished_stone_slab", "squared_timber", "stone_brick"],
+  );
+  const components = runtime.components;
+  const bounds = components.map((component) => componentBoundsQ(component));
+  const hearth = bounds[layout.hearth];
+  const [leftLower, rightLower] = layout.lowerPiers.map((index) => bounds[index]);
+  const [leftUpper, rightUpper] = layout.upperPiers.map((index) => bounds[index]);
+  const [lowerBack, upperBack] = layout.backPanels.map((index) => bounds[index]);
+  const lintel = bounds[layout.lintel];
+  const mantel = bounds[layout.mantel];
+  const chimneyBreast = bounds[layout.chimneyBreast];
+  const chimneyCrown = bounds[layout.chimneyCrown];
+  assert.equal(hearth.min[1], 0);
+  assert.equal(leftLower.min[1], hearth.max[1]);
+  assert.equal(rightLower.min[1], hearth.max[1]);
+  assert.equal(lowerBack.min[1], hearth.max[1]);
+  assert.equal(leftLower.max[1], leftUpper.min[1]);
+  assert.equal(rightLower.max[1], rightUpper.min[1]);
+  assert.equal(lowerBack.max[1], upperBack.min[1]);
+  assert.equal(leftUpper.max[1], lintel.min[1]);
+  assert.equal(rightUpper.max[1], lintel.min[1]);
+  assert.equal(lintel.max[1], mantel.min[1]);
+  assert.equal(mantel.max[1], chimneyBreast.min[1]);
+  assert.equal(chimneyBreast.max[1], chimneyCrown.min[1]);
+  const opening = {
+    min: [leftLower.max[0], hearth.max[1], lowerBack.max[2]],
+    max: [rightLower.min[0], lintel.min[1], leftLower.max[2]],
+  };
+  assert.ok(opening.max[0] - opening.min[0] >= 48);
+  assert.ok(opening.max[1] - opening.min[1] >= 58);
+  assert.ok(opening.max[2] - opening.min[2] >= 24);
+  for (const index of [layout.hearth, ...layout.lowerPiers, ...layout.upperPiers, ...layout.backPanels, layout.lintel]) {
+    assert.equal(positiveVolumeOverlap(bounds[index], opening), false, `${item.key} masonry ${index} obstructs the open firebox`);
+  }
+  const sideRails = layout.grateSideRails.map((index) => bounds[index]);
+  for (let position = 0; position < layout.grateFeet.length; position += 1) {
+    const foot = bounds[layout.grateFeet[position]];
+    assert.equal(foot.min[1], hearth.max[1]);
+    assert.equal(foot.max[1], sideRails[position].min[1]);
+  }
+  for (const barIndex of layout.grateBars) {
+    const bar = bounds[barIndex];
+    assert.equal(bar.min[0], sideRails[0].max[0]);
+    assert.equal(bar.max[0], sideRails[1].min[0]);
+  }
+  const [backEndRail, frontEndRail] = layout.grateEndRails.map((index) => bounds[index]);
+  assert.equal(backEndRail.min[0], sideRails[0].max[0]);
+  assert.equal(backEndRail.max[0], sideRails[1].min[0]);
+  assert.equal(frontEndRail.min[0], sideRails[0].max[0]);
+  assert.equal(frontEndRail.max[0], sideRails[1].min[0]);
+  const charcoalBed = bounds[layout.charcoalBed];
+  assert.equal(charcoalBed.min[1], hearth.max[1]);
+  assert.ok(charcoalBed.min[0] > sideRails[0].max[0]);
+  assert.ok(charcoalBed.max[0] < sideRails[1].min[0]);
+  assert.ok(charcoalBed.max[1] < bounds[layout.grateBars[0]].min[1]);
+  for (const bracketIndex of layout.mantelBrackets) {
+    const bracket = bounds[bracketIndex];
+    assert.equal(bracket.min[2], lintel.max[2]);
+    assert.equal(bracket.max[1], mantel.min[1]);
   }
   for (let first = 0; first < bounds.length; first += 1) {
     for (let second = first + 1; second < bounds.length; second += 1) {

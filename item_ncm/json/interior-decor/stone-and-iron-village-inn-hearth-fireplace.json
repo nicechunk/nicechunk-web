@@ -1,0 +1,328 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "stone-and-iron-village-inn-hearth-fireplace",
+  "category": "interior-decor",
+  "interaction": "placeable",
+  "names": {
+    "en": "Stone-and-iron Village Inn Hearth Fireplace",
+    "es": "Chimenea de hogar de posada de aldea de piedra y hierro",
+    "fr": "Cheminée d’âtre d’auberge villageoise en pierre et fer",
+    "de": "Herdkamin aus Stein und Eisen für Dorfgasthäuser",
+    "ja": "石造り鉄格子付き村宿暖炉",
+    "ru": "Каменный очаг-камин деревенской гостиницы с железной решёткой",
+    "ko": "석재·철제 마을 여관 화덕 벽난로",
+    "zh-Hant": "石砌鐵柵村莊旅店壁爐",
+    "zh-Hans": "石砌铁栅村庄客栈壁炉"
+  },
+  "descriptions": {
+    "en": "Stone-and-iron Village Inn Hearth Fireplace is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Chimenea de hogar de posada de aldea de piedra y hierro es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Cheminée d’âtre d’auberge villageoise en pierre et fer est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Herdkamin aus Stein und Eisen für Dorfgasthäuser ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "石造り鉄格子付き村宿暖炉は、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Каменный очаг-камин деревенской гостиницы с железной решёткой — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "석재·철제 마을 여관 화덕 벽난로은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "石砌鐵柵村莊旅店壁爐是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "石砌铁栅村庄客栈壁炉是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 1.5,
+    "height": 1.6563,
+    "depth": 0.6875,
+    "sizeQ": [
+      96,
+      106,
+      44
+    ]
+  },
+  "preview": {
+    "yaw": -0.64,
+    "pitch": 0.25
+  },
+  "concept": {
+    "image": "concepts/interior-decor/stone-and-iron-village-inn-hearth-fireplace-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "843f1ccb00eb001fb2960c6d3868b878cd89a919af8d5a76274a02f208d5eb62"
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.___6Mku0iEjpzyGTEcXSqtgBiwAABgAQAKJEBA90Fv8IAFEiAgBGC3-EACiRAQPdDb_CABRIgIARht_hAApoQAgAAW-4gAU0IAQAAbfcQAJVWsBhAAATP8IAIhlYAgsAAKwAEACogUOAAF__CABKq0wGIAADP_hAAE1IIDAj7AJAAgACakEBgQCgEgAQABNSCBAw-wEAAIAAmpBAgYAoCAAEAATUkgICAABL-CAAJqSQEBAAAkABAAE1JICAgAASAggAYiIgBBQAAEAAQABNSEBgE-ITANIAAmpCAwCA8JgGkAATUkgICAAA79CAAJqSQEBAAAcBhAAA",
+    "rawBytes": 249,
+    "sha256": "7214dcae161af472282aeff0c61466bc2296a3001dae2e0e2c307d8330edc0c4",
+    "designHash": 3874025031,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 249,
+    "savedBytes": 0,
+    "sourceComponentCount": 23,
+    "decodedComponentCount": 23,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "polished_stone_slab",
+        "itemCode": 1045,
+        "inputVolumeMm3": 96679688,
+        "usedVolumeMm3": 96679688,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "stone_brick",
+        "itemCode": 1040,
+        "inputVolumeMm3": 70312500,
+        "usedVolumeMm3": 70312500,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "stone_brick",
+        "itemCode": 1040,
+        "inputVolumeMm3": 70312500,
+        "usedVolumeMm3": 70312500,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "stone_brick",
+        "itemCode": 1040,
+        "inputVolumeMm3": 70312500,
+        "usedVolumeMm3": 70312500,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "stone_brick",
+        "itemCode": 1040,
+        "inputVolumeMm3": 70312500,
+        "usedVolumeMm3": 70312500,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "stone_brick",
+        "itemCode": 1040,
+        "inputVolumeMm3": 25390625,
+        "usedVolumeMm3": 25390625,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "stone_brick",
+        "itemCode": 1040,
+        "inputVolumeMm3": 25390625,
+        "usedVolumeMm3": 25390625,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 7,
+        "materialId": "polished_stone_slab",
+        "itemCode": 1045,
+        "inputVolumeMm3": 128906250,
+        "usedVolumeMm3": 128906250,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 8,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 128906250,
+        "usedVolumeMm3": 128906250,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 9,
+        "materialId": "stone_brick",
+        "itemCode": 1040,
+        "inputVolumeMm3": 72631836,
+        "usedVolumeMm3": 72631836,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 10,
+        "materialId": "polished_stone_slab",
+        "itemCode": 1045,
+        "inputVolumeMm3": 55664063,
+        "usedVolumeMm3": 55664063,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 11,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 366211,
+        "usedVolumeMm3": 366211,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 12,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 366211,
+        "usedVolumeMm3": 366211,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 13,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 2929688,
+        "usedVolumeMm3": 2929688,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 14,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 2929688,
+        "usedVolumeMm3": 2929688,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 15,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 2197266,
+        "usedVolumeMm3": 2197266,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 16,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 2197266,
+        "usedVolumeMm3": 2197266,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 17,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 2197266,
+        "usedVolumeMm3": 2197266,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 18,
+        "materialId": "charcoal",
+        "itemCode": 1001,
+        "inputVolumeMm3": 9765625,
+        "usedVolumeMm3": 9765625,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 19,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 732422,
+        "usedVolumeMm3": 732422,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 20,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 732422,
+        "usedVolumeMm3": 732422,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 21,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 2197266,
+        "usedVolumeMm3": 2197266,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 22,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 2197266,
+        "usedVolumeMm3": 2197266,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 843055104,
+      "requiredEffectiveDurability": 65979,
+      "outputMassGrams": 327675,
+      "materialScore": 60
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 552,
+      "triangleCount": 276,
+      "meshByteLength": 10488
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "polished_stone_slab",
+      "itemCode": 1045,
+      "componentCount": 3,
+      "inputVolumeMm3": 281250001,
+      "usedVolumeMm3": 281250001,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 60000,
+      "equivalentInputUnits": 4688
+    },
+    {
+      "materialId": "stone_brick",
+      "itemCode": 1040,
+      "componentCount": 7,
+      "inputVolumeMm3": 404663086,
+      "usedVolumeMm3": 404663086,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 31250,
+      "equivalentInputUnits": 12950
+    },
+    {
+      "materialId": "squared_timber",
+      "itemCode": 1033,
+      "componentCount": 1,
+      "inputVolumeMm3": 128906250,
+      "usedVolumeMm3": 128906250,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 48400,
+      "equivalentInputUnits": 2664
+    },
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 11,
+      "inputVolumeMm3": 19042972,
+      "usedVolumeMm3": 19042972,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 77
+    },
+    {
+      "materialId": "charcoal",
+      "itemCode": 1001,
+      "componentCount": 1,
+      "inputVolumeMm3": 9765625,
+      "usedVolumeMm3": 9765625,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 750000,
+      "equivalentInputUnits": 14
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "hearthFireplaceGeometryValidated": true,
+    "chainMinted": false
+  }
+}

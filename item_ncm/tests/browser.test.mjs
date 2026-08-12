@@ -82,7 +82,7 @@ try {
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 16);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /58 ITEMS/);
+  assert.match(initial.total, /59 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -217,7 +217,7 @@ try {
   await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
 
   await evaluate(client, `document.querySelector('[data-category="furniture"]').click()`);
-  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 11 && document.querySelector('[data-item="timber-workbench"]')`));
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 12 && document.querySelector('[data-item="timber-workbench"]')`));
   const furnitureBrowse = await evaluate(client, `({
     activeCategory: document.querySelector("[data-category].active")?.dataset.category,
     activeItem: document.querySelector("[data-item].active")?.dataset.item ?? null,
@@ -584,6 +584,52 @@ try {
     })()`);
     await waitFor(() => evaluate(client, `document.documentElement.lang === ${JSON.stringify(locale)} && document.querySelector("#itemTitle").textContent === ${JSON.stringify(expectedName)}`));
     assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), luggageRack.payload);
+  }
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "en";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
+
+  await evaluate(client, `document.querySelector('[data-item="iron-braced-timber-village-inn-writing-desk"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="iron-braced-timber-village-inn-writing-desk"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const writingDesk = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payload: document.querySelector("#codeOutput").value,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    materialRows: document.querySelectorAll("#bomRows .bom-row").length,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(writingDesk.title, "Iron-braced Timber Village Inn Writing Desk");
+  assert.equal(writingDesk.type, "PLACEABLE");
+  assert.match(writingDesk.payload, /^NCF1\./);
+  assert.equal(writingDesk.payloadBytes, "238 / 640 B");
+  assert.equal(writingDesk.componentCount, "21");
+  assert.equal(writingDesk.materialRows, 3);
+  assert.equal(writingDesk.selectedInUrl, "iron-braced-timber-village-inn-writing-desk");
+  assert.ok(writingDesk.resources.includes("/item_ncm/json/furniture/iron-braced-timber-village-inn-writing-desk.json"));
+  for (const [locale, expectedName] of Object.entries({
+    en: "Iron-braced Timber Village Inn Writing Desk",
+    es: "Escritorio de posada de aldea de madera reforzado con hierro",
+    fr: "Bureau d’écriture d’auberge villageoise en bois renforcé de fer",
+    de: "Eisenverstärkter Holzschreibtisch für Dorfgasthäuser",
+    ja: "鉄補強の木製村宿書き物机",
+    ru: "Деревянный письменный стол деревенской гостиницы с железными скобами",
+    ko: "철제 보강 목재 마을 여관 책상",
+    "zh-Hant": "鐵箍木製村莊旅店寫字桌",
+    "zh-Hans": "铁箍木制村庄客栈写字桌",
+  })) {
+    await evaluate(client, `(() => {
+      const select = document.querySelector("[data-language-select]");
+      select.value = ${JSON.stringify(locale)};
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+    })()`);
+    await waitFor(() => evaluate(client, `document.documentElement.lang === ${JSON.stringify(locale)} && document.querySelector("#itemTitle").textContent === ${JSON.stringify(expectedName)}`));
+    assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), writingDesk.payload);
   }
   await evaluate(client, `(() => {
     const select = document.querySelector("[data-language-select]");

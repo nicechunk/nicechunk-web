@@ -282,10 +282,24 @@ const luggageRackLayouts = new Map([
     cornerPlates: [20, 21, 22, 23],
   }],
 ]);
+const writingDeskLayouts = new Map([
+  ["iron-braced-timber-village-inn-writing-desk", {
+    feet: [0, 1, 2, 3],
+    legs: [4, 5, 6, 7],
+    desktop: 8,
+    frontAprons: [9, 10],
+    drawer: 11,
+    handle: 12,
+    backApron: 13,
+    sideAprons: [14, 15],
+    rearStretcher: 16,
+    cornerPlates: [17, 18, 19, 20],
+  }],
+]);
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
-assert.equal(catalog.items.length, 58);
+assert.equal(catalog.items.length, 59);
 assert.equal(new Set(catalog.items).size, catalog.items.length);
 
 const listedFiles = new Set(catalog.items);
@@ -319,6 +333,7 @@ let singleBedFrameGeometryCount = 0;
 let roomKeyBoardGeometryCount = 0;
 let receptionCounterGeometryCount = 0;
 let luggageRackGeometryCount = 0;
+let writingDeskGeometryCount = 0;
 for (const file of catalog.items) {
   assert.match(file, /^json\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/);
   const item = json(join(root, file));
@@ -535,6 +550,14 @@ for (const file of catalog.items) {
     assert.equal(item.verification.luggageRackGeometryValidated, true);
     assertLuggageRackGeometry(item, runtime, luggageRackLayout);
   }
+  const writingDeskLayout = writingDeskLayouts.get(item.key);
+  if (writingDeskLayout) {
+    writingDeskGeometryCount += 1;
+    assert.equal(item.category, "furniture");
+    assert.equal(item.interaction, "placeable");
+    assert.equal(item.verification.writingDeskGeometryValidated, true);
+    assertWritingDeskGeometry(item, runtime, writingDeskLayout);
+  }
   assert.equal(forgeWorkbenchComponentsConnected(runtime.components), true, `${item.key} must be a connected assembly`);
   const grip = validateForgeGripBindings(runtime.components);
   assert.equal(grip.valid, true, `${item.key} grip must remain valid after decoding`);
@@ -616,7 +639,7 @@ assert.deepEqual([...categories], [
   ["building-fittings", 3],
   ["lighting", 4],
   ["handheld-civic", 1],
-  ["furniture", 11],
+  ["furniture", 12],
   ["containers", 3],
   ["cooking", 2],
   ["commerce", 2],
@@ -627,8 +650,8 @@ assert.deepEqual([...categories], [
   ["exterior-decor", 5],
 ]);
 assert.equal(tools, 16);
-assert.equal(placeables, 42);
-assert.equal(conceptReferences, 31);
+assert.equal(placeables, 43);
+assert.equal(conceptReferences, 32);
 assert.equal(bookGeometryCount, 7);
 assert.equal(framedTextileGeometryCount, 1);
 assert.equal(drawerCabinetGeometryCount, 1);
@@ -650,9 +673,10 @@ assert.equal(singleBedFrameGeometryCount, 1);
 assert.equal(roomKeyBoardGeometryCount, 1);
 assert.equal(receptionCounterGeometryCount, 1);
 assert.equal(luggageRackGeometryCount, 1);
+assert.equal(writingDeskGeometryCount, 1);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
-console.log("item_ncm catalog tests passed: 58 canonical NCF1 items across 16 categories");
+console.log("item_ncm catalog tests passed: 59 canonical NCF1 items across 16 categories");
 
 function json(file) {
   return JSON.parse(readFileSync(file, "utf8"));
@@ -1554,6 +1578,63 @@ function assertLuggageRackGeometry(item, runtime, layout) {
     const plate = bounds[layout.cornerPlates[position]];
     const rail = upperRails[position % 2];
     assert.equal(position < 2 ? plate.max[0] : plate.min[0], position < 2 ? rail.min[0] : rail.max[0]);
+  }
+  for (let first = 0; first < bounds.length; first += 1) {
+    for (let second = first + 1; second < bounds.length; second += 1) {
+      assert.equal(positiveVolumeOverlap(bounds[first], bounds[second]), false, `${item.key} components ${first} and ${second} intersect`);
+    }
+  }
+}
+
+function assertWritingDeskGeometry(item, runtime, layout) {
+  assert.equal(runtime.componentCount, 21);
+  assert.deepEqual(item.dimensions.sizeQ, [72, 48, 40]);
+  assert.equal(item.dimensions.width, 1.125);
+  assert.equal(item.dimensions.height, 0.75);
+  assert.equal(item.dimensions.depth, 0.625);
+  assert.ok(item.dimensions.height >= 0.72 && item.dimensions.height <= 0.78, `${item.key} must remain at canonical seated-work height`);
+  assert.ok(item.dimensions.width >= 1.05 && item.dimensions.width <= 1.2);
+  assert.ok(item.forge.rawBytes <= 280);
+  assert.ok(item.forge.requirements.outputMassGrams <= 150_000, `${item.key} must remain movable guest-room furniture`);
+  assert.deepEqual(
+    [...new Set(item.forge.materialComponents.map(({ materialId }) => materialId))].sort(),
+    ["iron_bloom", "squared_timber", "wooden_plank"],
+  );
+  const components = runtime.components;
+  const bounds = components.map((component) => componentBoundsQ(component));
+  const desktop = bounds[layout.desktop];
+  assert.equal(desktop.min[1], 42);
+  assert.equal(desktop.max[1], 48);
+  for (let position = 0; position < layout.feet.length; position += 1) {
+    const foot = bounds[layout.feet[position]];
+    const leg = bounds[layout.legs[position]];
+    assert.equal(foot.min[1], 0);
+    assert.equal(foot.max[1], leg.min[1]);
+    assert.equal(leg.max[1], desktop.min[1]);
+  }
+  const [leftApron, rightApron] = layout.frontAprons.map((index) => bounds[index]);
+  const drawer = bounds[layout.drawer];
+  assert.equal(leftApron.max[0], drawer.min[0]);
+  assert.equal(drawer.max[0], rightApron.min[0]);
+  assert.ok(drawer.min[1] >= 32, `${item.key} drawer must leave an open knee bay`);
+  assert.equal(drawer.max[1], desktop.min[1]);
+  const handle = bounds[layout.handle];
+  assert.equal(handle.min[2], drawer.max[2]);
+  const backApron = bounds[layout.backApron];
+  assert.equal(backApron.min[0], bounds[layout.legs[0]].max[0]);
+  assert.equal(backApron.max[0], bounds[layout.legs[2]].min[0]);
+  for (let position = 0; position < layout.sideAprons.length; position += 1) {
+    const apron = bounds[layout.sideAprons[position]];
+    assert.equal(apron.min[2], bounds[layout.legs[position * 2]].max[2]);
+    assert.equal(apron.max[2], bounds[layout.legs[position * 2 + 1]].min[2]);
+    assert.equal(apron.max[1], desktop.min[1]);
+  }
+  const rearStretcher = bounds[layout.rearStretcher];
+  assert.equal(rearStretcher.min[0], bounds[layout.legs[0]].max[0]);
+  assert.equal(rearStretcher.max[0], bounds[layout.legs[2]].min[0]);
+  for (const plateIndex of layout.cornerPlates) {
+    const plate = bounds[plateIndex];
+    assert.ok(plate.max[2] === desktop.min[2] || plate.min[2] === desktop.max[2]);
   }
   for (let first = 0; first < bounds.length; first += 1) {
     for (let second = first + 1; second < bounds.length; second += 1) {

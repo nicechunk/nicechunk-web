@@ -1,0 +1,574 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-mine-rescue-station",
+  "category": "mining",
+  "kind": "habitable-building",
+  "titles": {
+    "en": "Compact Village Mine Rescue Station",
+    "es": "Estación Compacta de Rescate Minero de la Aldea",
+    "fr": "Poste Compact de Secours Minier du Village",
+    "de": "Kompakte Dorf-Grubenrettungsstation",
+    "ja": "コンパクトな村の鉱山救助所",
+    "ru": "Компактная деревенская горноспасательная станция",
+    "ko": "소형 마을 광산 구조대",
+    "zh-Hant": "緊湊型村莊礦山救援站",
+    "zh-Hans": "紧凑型村庄矿山救援站"
+  },
+  "descriptions": {
+    "en": "An enterable 8.4 × 8.4 m mine rescue station scaled to the 1.75 m avatar, with a zero-threshold seven-wide portal and a clear 7 × 8 × 20-voxel stretcher aisle. Continuous grounded framing supports two clear-height ties and a complete terracotta roof. Six fixed empty two-level equipment cabinets, paired hollow rear decontamination basins, washable polished-stone flooring and permanent high ventilation windows provide a credible emergency work hall; breathing apparatus, casualties, medicine, tools and loose supplies are excluded.",
+    "es": "Una estación de rescate minero transitable de 8,4 × 8,4 m, a escala del avatar de 1,75 m, con portal de siete vóxeles sin desnivel y pasillo despejado para camillas de 7 × 8 × 20 vóxeles. La estructura continua apoyada en el suelo sostiene dos tirantes a altura libre y un techo completo de teja terracota. Seis armarios fijos vacíos de dos niveles, dos pilas traseras huecas de descontaminación, suelo lavable de piedra pulida y ventanas altas permanentes de ventilación forman una nave de emergencia creíble; se excluyen equipos respiratorios, heridos, medicinas, herramientas y suministros sueltos.",
+    "fr": "Un poste de secours minier accessible de 8,4 × 8,4 m, à l’échelle de l’avatar de 1,75 m, avec un portail sans ressaut large de sept voxels et une allée dégagée pour brancard de 7 × 8 × 20 voxels. L’ossature continue ancrée au sol porte deux entraits au-dessus de la hauteur libre et une toiture complète en terre cuite. Six armoires fixes vides à deux niveaux, deux bassins arrière creux de décontamination, un sol lavable en pierre polie et des fenêtres hautes permanentes de ventilation composent un hall d’urgence crédible ; appareils respiratoires, blessés, médicaments, outils et fournitures mobiles sont exclus.",
+    "de": "Eine begehbare 8,4 × 8,4 m große Grubenrettungsstation im Maßstab des 1,75-m-Avatars mit schwellenlosem sieben Voxel breitem Portal und freiem 7 × 8 × 20 Voxel großem Tragenweg. Das durchgehende bodengebundene Tragwerk stützt zwei Binder oberhalb der Kopffreiheit und ein vollständiges Terrakottadach. Sechs feste leere zweistöckige Geräteschränke, zwei hohle Dekontaminationsbecken, abwaschbarer polierter Steinboden und dauerhafte hohe Lüftungsfenster bilden eine glaubwürdige Notfallhalle; Atemgeräte, Verletzte, Medikamente, Werkzeuge und lose Vorräte sind ausgeschlossen.",
+    "ja": "1.75mのアバター尺度に合わせた8.4×8.4mの進入可能な鉱山救助所です。段差のない幅7ボクセルの入口と、7×8×20ボクセルの空いた担架通路を備えます。地面から連続する架構が、頭上クリアランスを確保した2本の小屋組と全面のテラコッタ屋根を支えます。固定された空の二段装備棚6基、後部の中空除染槽2基、洗浄可能な磨き石床、常設高窓を備え、呼吸装置、負傷者、薬品、工具、ばらの備品は含みません。",
+    "ru": "Доступная горноспасательная станция размером 8,4 × 8,4 м в масштабе аватара ростом 1,75 м: вход шириной семь вокселей без порога и свободный проход для носилок размером 7 × 8 × 20 вокселей. Непрерывный каркас от земли несёт две затяжки выше зоны прохода и полную терракотовую крышу. Шесть закреплённых пустых двухъярусных шкафов, два полых задних дезактивационных бассейна, моющийся пол из полированного камня и постоянные верхние вентиляционные окна создают правдоподобный аварийный зал; дыхательные аппараты, пострадавшие, лекарства, инструменты и отдельные припасы исключены.",
+    "ko": "1.75m 아바타 크기에 맞춘 8.4 × 8.4m의 출입 가능한 광산 구조대로, 단차 없는 7복셀 폭 출입구와 7 × 8 × 20복셀의 막힘없는 들것 통로를 갖춥니다. 지면부터 이어지는 연속 골조가 머리 위 여유를 둔 가로보 두 개와 완전한 테라코타 지붕을 지지합니다. 고정된 빈 2단 장비장 여섯 개, 뒤쪽의 속 빈 제염조 두 개, 세척 가능한 연마 석재 바닥과 상부 고정 환기창으로 실제적인 비상 작업 공간을 이루며 호흡 장비, 부상자, 약품, 공구와 낱개 비품은 포함하지 않습니다.",
+    "zh-Hant": "一座可進入、符合1.75米角色尺度的8.4×8.4米礦山救援站，設有零高差七體素寬入口，以及7×8×20體素的暢通擔架通道。連續落地構架承托兩道高於淨空的繫梁與完整赤陶雙坡屋頂。六組固定空置雙層裝備櫃、後部兩座中空除污池、可沖洗拋光石地坪及常設高位通風窗構成可信應急工作廳；呼吸裝置、傷員、藥品、工具與散裝用品不包含在藍圖內。",
+    "zh-Hans": "一座可进入、符合1.75米角色尺度的8.4×8.4米矿山救援站，设有零高差七体素宽入口，以及7×8×20体素的畅通担架通道。连续落地构架承托两道高于净空的系梁与完整赤陶双坡屋顶。六组固定空置双层装备柜、后部两座中空除污池、可冲洗抛光石地坪及常设高位通风窗构成可信应急工作厅；呼吸装置、伤员、药品、工具与散装用品不包含在蓝图内。"
+  },
+  "referenceImage": "concepts/mining/compact-village-mine-rescue-station.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "27 × 25 vu",
+  "height": "22 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 21,
+      "z": 21
+    },
+    "wallFootprintMeters": {
+      "x": 8.4,
+      "z": 8.4
+    },
+    "doorClearVoxels": {
+      "width": 7,
+      "height": 8
+    },
+    "interiorClearHeightVoxels": 8
+  },
+  "preview": {
+    "fitScale": 1,
+    "minScale": 3.6,
+    "yaw": 2.4
+  },
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "fixtures",
+      "label": "Empty Rescue-equipment Cabinets and Timber Gable Infill"
+    },
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Cabinet Supports and Dividers"
+    },
+    {
+      "materialId": 58,
+      "phase": "openings",
+      "label": "Permanent Clear-glass Ventilation Windows"
+    },
+    {
+      "materialId": 65,
+      "phase": "foundation",
+      "label": "Deep-stone Perimeter Plinth"
+    },
+    {
+      "materialId": 69,
+      "phase": "floor",
+      "label": "Washable Floor, Wide Approach and Hollow Decontamination Basins"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARsWGSkBRQMAAhQAFAFFCgAABgABAUEDAAIUAAABQQMAFhQAAAFBAwADAAASAUEXAAMAABICAwMAAgAJAAMAAA4CAxcAAgAJAAMAAA4CAwkAAgAJAAEAACgCAxEAAgAJAAEAACgCAgMBAwADBQIAAA4CAhcBAwADBQIAAA4COgMFAwACBQIAAA4COhcFAwACBQIAAA4CAgQBAgQDAAEcAAACOgQFAgQCAAEcAAACAgQBFgQDAAEcAAABAgoBFgYDAAI6BAUWBAIAARwAAAE6CgUWBgIAAgMCCQIWAAABAAAoAgMCCQMAABIBLAAAAgMCCQkWAAABAAAMAjcFAwUDAAgBGgAAAjcFBgUDAAgBGgAAAjgFAQUDAQADAAAGAjgSAQUDAQADAAAGAjgFBAUAAggBIAAAAkUFARADAQABGgAAAkUFARMDAQABGgAAAkUFAREAAQEBIAAAAkUIAREAAQEBFAAABzcDCgIUAAc3AwoWFAACAwMKCQAAAAoCAgACAxcKCQAAAAoBAgACAwMKDwAAAAoCAgACAxcKDwAAAAoBAgADBQIKARYWBgMCCgEWFgEDDRUBAAAW"
+  },
+  "validation": {
+    "expectedVoxelCount": 2229,
+    "expectedPayloadBytes": 441,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      56,
+      57,
+      58,
+      65,
+      69,
+      70,
+      96
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 368,
+      "56": 118,
+      "57": 347,
+      "58": 189,
+      "65": 70,
+      "69": 423,
+      "70": 252,
+      "96": 462
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 13,
+    "supportColumns": [
+      {
+        "label": "Front-left outer post",
+        "x": 3,
+        "z": 2,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-right outer post",
+        "x": 23,
+        "z": 2,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-left outer post",
+        "x": 3,
+        "z": 23,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-right outer post",
+        "x": 23,
+        "z": 23,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Left rescue-portal post",
+        "x": 9,
+        "z": 2,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Right rescue-portal post",
+        "x": 17,
+        "z": 2,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Left first side post",
+        "x": 3,
+        "z": 9,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Right first side post",
+        "x": 23,
+        "z": 9,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Left second side post",
+        "x": 3,
+        "z": 16,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Right second side post",
+        "x": 23,
+        "z": 16,
+        "baseY": 0,
+        "topY": 9
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Seven-wide rescue-portal lintel",
+        "axis": "x",
+        "start": 2,
+        "end": 24,
+        "y": 9,
+        "fixed": 2
+      },
+      {
+        "label": "Rear wall plate",
+        "axis": "x",
+        "start": 2,
+        "end": 24,
+        "y": 9,
+        "fixed": 22
+      },
+      {
+        "label": "Left eave plate",
+        "axis": "z",
+        "start": 2,
+        "end": 22,
+        "y": 9,
+        "fixed": 2
+      },
+      {
+        "label": "Right eave plate",
+        "axis": "z",
+        "start": 2,
+        "end": 22,
+        "y": 9,
+        "fixed": 24
+      },
+      {
+        "label": "First clear-height tie",
+        "axis": "x",
+        "start": 2,
+        "end": 24,
+        "y": 9,
+        "fixed": 9
+      },
+      {
+        "label": "Second clear-height tie",
+        "axis": "x",
+        "start": 2,
+        "end": 24,
+        "y": 9,
+        "fixed": 15
+      },
+      {
+        "label": "Continuous ridge beam",
+        "axis": "z",
+        "start": 1,
+        "end": 23,
+        "y": 21,
+        "fixed": 13
+      },
+      {
+        "label": "Left upper rescue-equipment shelf",
+        "axis": "z",
+        "start": 5,
+        "end": 13,
+        "y": 6,
+        "fixed": 5
+      },
+      {
+        "label": "Right upper rescue-equipment shelf",
+        "axis": "z",
+        "start": 5,
+        "end": 13,
+        "y": 6,
+        "fixed": 18
+      }
+    ],
+    "gableProfiles": [
+      {
+        "label": "Front exposed timber roof trim",
+        "x": 2,
+        "baseY": 10,
+        "z": 1,
+        "width": 23,
+        "slopeMaterialId": 57,
+        "ridgeMaterialId": 57
+      },
+      {
+        "label": "Front terracotta roof profile",
+        "x": 2,
+        "baseY": 10,
+        "z": 2,
+        "width": 23,
+        "slopeMaterialId": 96,
+        "ridgeMaterialId": 57
+      },
+      {
+        "label": "Rear terracotta roof profile",
+        "x": 2,
+        "baseY": 10,
+        "z": 22,
+        "width": 23,
+        "slopeMaterialId": 96,
+        "ridgeMaterialId": 57
+      },
+      {
+        "label": "Rear exposed timber roof trim",
+        "x": 2,
+        "baseY": 10,
+        "z": 23,
+        "width": 23,
+        "slopeMaterialId": 57,
+        "ridgeMaterialId": 57
+      }
+    ],
+    "closedVoxelLoops": [
+      {
+        "label": "Left hollow decontamination basin rim",
+        "materialId": 69,
+        "points": [
+          [
+            5,
+            2,
+            16
+          ],
+          [
+            6,
+            2,
+            16
+          ],
+          [
+            7,
+            2,
+            16
+          ],
+          [
+            8,
+            2,
+            16
+          ],
+          [
+            8,
+            2,
+            17
+          ],
+          [
+            8,
+            2,
+            18
+          ],
+          [
+            8,
+            2,
+            19
+          ],
+          [
+            7,
+            2,
+            19
+          ],
+          [
+            6,
+            2,
+            19
+          ],
+          [
+            5,
+            2,
+            19
+          ],
+          [
+            5,
+            2,
+            18
+          ],
+          [
+            5,
+            2,
+            17
+          ]
+        ]
+      },
+      {
+        "label": "Right hollow decontamination basin rim",
+        "materialId": 69,
+        "points": [
+          [
+            18,
+            2,
+            16
+          ],
+          [
+            19,
+            2,
+            16
+          ],
+          [
+            20,
+            2,
+            16
+          ],
+          [
+            21,
+            2,
+            16
+          ],
+          [
+            21,
+            2,
+            17
+          ],
+          [
+            21,
+            2,
+            18
+          ],
+          [
+            21,
+            2,
+            19
+          ],
+          [
+            20,
+            2,
+            19
+          ],
+          [
+            19,
+            2,
+            19
+          ],
+          [
+            18,
+            2,
+            19
+          ],
+          [
+            18,
+            2,
+            18
+          ],
+          [
+            18,
+            2,
+            17
+          ]
+        ]
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "zero-threshold seven-wide rescue portal",
+        "x": 10,
+        "y": 1,
+        "z": 1,
+        "width": 7,
+        "height": 8,
+        "depth": 1
+      },
+      {
+        "label": "clear central stretcher aisle",
+        "x": 10,
+        "y": 1,
+        "z": 2,
+        "width": 7,
+        "height": 8,
+        "depth": 20
+      }
+    ],
+    "approach": [
+      {
+        "x": 13,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 1,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 9,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 16,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 21,
+        "topY": 1
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 13,
+        "y": 0,
+        "z": 0,
+        "materialId": 69
+      },
+      {
+        "x": 4,
+        "y": 0,
+        "z": 2,
+        "materialId": 65
+      },
+      {
+        "x": 13,
+        "y": 0,
+        "z": 10,
+        "materialId": 69
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "z": 6,
+        "materialId": 70
+      },
+      {
+        "x": 3,
+        "y": 6,
+        "z": 6,
+        "materialId": 58
+      },
+      {
+        "x": 6,
+        "y": 6,
+        "z": 8,
+        "materialId": 55
+      },
+      {
+        "x": 5,
+        "y": 5,
+        "z": 8,
+        "materialId": 56
+      },
+      {
+        "x": 5,
+        "y": 2,
+        "z": 16,
+        "materialId": 69
+      },
+      {
+        "x": 13,
+        "y": 9,
+        "z": 9,
+        "materialId": 57
+      },
+      {
+        "x": 2,
+        "y": 10,
+        "z": 2,
+        "materialId": 96
+      },
+      {
+        "x": 13,
+        "y": 21,
+        "z": 12,
+        "materialId": 57
+      }
+    ]
+  }
+}

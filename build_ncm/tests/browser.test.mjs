@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 4);
-  assert.match(initial.totalBuildingCount, /63 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /64 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -2239,14 +2239,14 @@ try {
   assert.ok(!ferryLanding.resources.some((path) => path.endsWith("covered-village-ferry-landing-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=mining]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=timber-mine-headframe]') && document.querySelector('[data-building=covered-village-ore-sorting-shed]') && document.querySelector('[data-building=compact-village-assay-house]') && document.querySelector('[data-building=compact-village-lamp-room]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=timber-mine-headframe]') && document.querySelector('[data-building=covered-village-ore-sorting-shed]') && document.querySelector('[data-building=compact-village-assay-house]') && document.querySelector('[data-building=compact-village-lamp-room]') && document.querySelector('[data-building=compact-village-mine-rescue-station]')"));
   const miningBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     cardCount: document.querySelectorAll('[data-building]').length,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(miningBrowse.activeBuilding, null);
-  assert.equal(miningBrowse.cardCount, 4);
+  assert.equal(miningBrowse.cardCount, 5);
   assert.ok(!miningBrowse.resources.includes("/build_ncm/buildings/mining/timber-mine-headframe.json"), "category browsing must not load the headframe JSON");
   assert.ok(!miningBrowse.resources.includes("/build_ncm/concepts/mining/timber-mine-headframe.webp"), "category browsing must not load the headframe concept art");
   assert.ok(!miningBrowse.resources.includes("/build_ncm/buildings/mining/covered-village-ore-sorting-shed.json"), "category browsing must not load the ore-sorting-shed JSON");
@@ -2255,6 +2255,8 @@ try {
   assert.ok(!miningBrowse.resources.includes("/build_ncm/concepts/mining/compact-village-assay-house.webp"), "category browsing must not load the assay-house concept art");
   assert.ok(!miningBrowse.resources.includes("/build_ncm/buildings/mining/compact-village-lamp-room.json"), "category browsing must not load the lamp-room JSON");
   assert.ok(!miningBrowse.resources.includes("/build_ncm/concepts/mining/compact-village-lamp-room.webp"), "category browsing must not load the lamp-room concept art");
+  assert.ok(!miningBrowse.resources.includes("/build_ncm/buildings/mining/compact-village-mine-rescue-station.json"), "category browsing must not load the mine-rescue-station JSON");
+  assert.ok(!miningBrowse.resources.includes("/build_ncm/concepts/mining/compact-village-mine-rescue-station.webp"), "category browsing must not load the mine-rescue-station concept art");
   await clickBuilding(client, "timber-mine-headframe");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'timber-mine-headframe' && document.querySelector('#modelSize').textContent === '23 × 27 × 17' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const headframe = await evaluate(client, `({
@@ -2424,6 +2426,47 @@ try {
   assert.ok(lampRoom.resources.includes("/build_ncm/buildings/mining/compact-village-lamp-room.json"));
   assert.ok(lampRoom.resources.includes("/build_ncm/concepts/mining/compact-village-lamp-room.webp"));
   assert.ok(!lampRoom.resources.some((path) => path.endsWith("compact-village-lamp-room-blueprint.js")));
+
+  await clickBuilding(client, "compact-village-mine-rescue-station");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-mine-rescue-station' && document.querySelector('#modelSize').textContent === '27 × 22 × 25' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const mineRescueStation = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptLoading: document.querySelector('#conceptImage').loading,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(mineRescueStation.activeCategory, "mining");
+  assert.match(mineRescueStation.title, /Compact Village Mine Rescue Station/);
+  assert.equal(mineRescueStation.modelSize, "27 × 22 × 25");
+  assert.match(mineRescueStation.payload, /^NCM3:/);
+  assert.equal(mineRescueStation.voxelCount, 2229);
+  for (const id of [55, 56, 57, 58, 65, 69, 70, 96]) assert.match(mineRescueStation.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(mineRescueStation.uncovered, false);
+  assert.equal(mineRescueStation.glazingDisabled, true);
+  assert.equal(mineRescueStation.glazingLabel, "Openings: Not applicable");
+  assert.equal(mineRescueStation.disabledStyles, 6);
+  assert.equal(mineRescueStation.disabledRoofs, 6);
+  assert.equal(mineRescueStation.conceptHidden, false);
+  assert.equal(mineRescueStation.conceptLoading, "eager");
+  assert.match(mineRescueStation.conceptAlt, /Compact Village Mine Rescue Station concept reference/);
+  assert.equal(mineRescueStation.conceptFit, "contain");
+  assert.equal(mineRescueStation.selectedInUrl, "compact-village-mine-rescue-station");
+  assert.ok(mineRescueStation.resources.includes("/build_ncm/buildings/mining/compact-village-mine-rescue-station.json"));
+  assert.ok(mineRescueStation.resources.includes("/build_ncm/concepts/mining/compact-village-mine-rescue-station.webp"));
+  assert.ok(!mineRescueStation.resources.some((path) => path.endsWith("compact-village-mine-rescue-station-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=agriculture]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=glass-timber-greenhouse]') && document.querySelector('[data-building=compact-village-watermill]') && document.querySelector('[data-building=compact-village-cheese-house]')"));
@@ -3041,10 +3084,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const ferryLandingDirectUrl = new URL(url);
-  ferryLandingDirectUrl.searchParams.set("building", "covered-village-ferry-landing");
-  await client.send("Page.navigate", { url: ferryLandingDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'transport' && document.querySelector('[data-building].active')?.dataset.building === 'covered-village-ferry-landing' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const mineRescueStationDirectUrl = new URL(url);
+  mineRescueStationDirectUrl.searchParams.set("building", "compact-village-mine-rescue-station");
+  await client.send("Page.navigate", { url: mineRescueStationDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'mining' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-mine-rescue-station' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -3056,16 +3099,16 @@ try {
     conceptPath: new URL(document.querySelector('#conceptImage').dataset.source).pathname,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(directSelection.activeCategory, "transport");
-  assert.equal(directSelection.activeBuilding, "covered-village-ferry-landing");
-  assert.match(directSelection.title, /Covered Village Ferry Landing/);
-  assert.equal(directSelection.modelSize, "19 × 21 × 29");
+  assert.equal(directSelection.activeCategory, "mining");
+  assert.equal(directSelection.activeBuilding, "compact-village-mine-rescue-station");
+  assert.match(directSelection.title, /Compact Village Mine Rescue Station/);
+  assert.equal(directSelection.modelSize, "27 × 22 × 25");
   assert.match(directSelection.payload, /^NCM3:/);
   assert.equal(directSelection.conceptComplete, true);
   assert.ok(directSelection.conceptNaturalWidth > 0);
-  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/transport/covered-village-ferry-landing.webp");
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/transport/covered-village-ferry-landing.json"));
-  assert.ok(directSelection.resources.includes("/build_ncm/concepts/transport/covered-village-ferry-landing.webp"));
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/mining/compact-village-mine-rescue-station.webp");
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/mining/compact-village-mine-rescue-station.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/concepts/mining/compact-village-mine-rescue-station.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,
@@ -3122,7 +3165,7 @@ async function clickBuilding(client, key) {
 }
 
 async function waitFor(check) {
-  for (let attempt = 0; attempt < 400; attempt += 1) {
+  for (let attempt = 0; attempt < 800; attempt += 1) {
     if (await check()) return;
     await new Promise((resolve) => setTimeout(resolve, 50));
   }

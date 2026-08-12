@@ -1,0 +1,419 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-boathouse",
+  "category": "coastal",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Compact Village Boathouse",
+    "es": "Cobertizo para Barcas Compacto de la Aldea",
+    "fr": "Hangar à Bateaux Compact du Village",
+    "de": "Kompaktes Dorfbootshaus",
+    "ja": "コンパクトな村のボートハウス",
+    "ru": "Компактный деревенский эллинг",
+    "ko": "소형 마을 보트 창고",
+    "zh-Hant": "緊湊型村莊船庫",
+    "zh-Hans": "紧凑型村庄船库"
+  },
+  "descriptions": {
+    "en": "An enterable 11.6 × 10.0 m boathouse scaled to the 1.75 m avatar. A zero-threshold 13 × 11-voxel haul-out entrance opens directly into a thirteen-wide, 8.4 m-long clear boat hall with two flush timber skids. A washable shell-terrazzo floor, level apron, high cross-ventilation windows and a complete deep-overhang ice-blue roof form a credible coastal service building. Continuous embedded side frames, wall plates, clear-height transverse ties and ridge carry the long shell; door leaves, boats, water, ropes, tools, workers, signs, docks and terrain are excluded.",
+    "es": "Un cobertizo para barcas transitable de 11,6 × 10,0 m, dimensionado para el avatar de 1,75 m. Una entrada de varada sin desnivel de 13 × 11 vóxeles abre directamente a una nave despejada de trece vóxeles de ancho y 8,4 m de longitud, con dos patines de madera enrasados. Un suelo lavable de terrazo de concha, una explanada nivelada, ventanas altas de ventilación cruzada y una cubierta azul hielo completa con gran alero forman un edificio costero verosímil. Bastidores laterales empotrados, soleras, tirantes transversales elevados y cumbrera continuos sostienen la envolvente larga; se excluyen hojas de puerta, barcas, agua, cuerdas, herramientas, operarios, letreros, muelles y terreno.",
+    "fr": "Un hangar à bateaux accessible de 11,6 × 10,0 m, dimensionné pour l’avatar de 1,75 m. Une entrée de halage sans ressaut de 13 × 11 voxels ouvre directement sur une nef dégagée large de treize voxels et longue de 8,4 m, dotée de deux patins en bois affleurants. Un sol lavable en terrazzo coquillier, une aire nivelée, des fenêtres hautes à ventilation croisée et un toit bleu glacier complet à fort débord composent un bâtiment côtier crédible. Des portiques latéraux intégrés, sablières, entraits transversaux hauts et une faîtière continus portent la longue enveloppe ; vantaux, bateaux, eau, cordages, outils, ouvriers, enseignes, quais et terrain sont exclus.",
+    "de": "Ein begehbares 11,6 × 10,0 m großes Dorfbootshaus im Maßstab des 1,75-m-Avatars. Eine schwellenlose 13 × 11-Voxel-Slipzufahrt öffnet sich direkt in eine dreizehn Voxel breite und 8,4 m lange freie Bootshalle mit zwei bündigen Holzgleitern. Ein abwaschbarer Muschelterrazzo-Boden, eine ebene Vorfläche, hohe Querlüftungsfenster und ein vollständiges eisblaues Dach mit tiefem Überstand bilden ein glaubwürdiges Küstengebäude. Durchgehende eingelassene Seitenrahmen, Wandplatten, hoch liegende Querbinder und der First tragen die lange Hülle; Türblätter, Boote, Wasser, Seile, Werkzeuge, Arbeiter, Schilder, Stege und Gelände sind ausgeschlossen.",
+    "ja": "身長1.75 mのアバター尺度に合わせた、進入可能な11.6 × 10.0 mのボートハウスです。段差のない13 × 11ボクセルの引揚げ入口から、床と面一の木製滑り材2本を備えた、幅13ボクセル・奥行き8.4 mの明瞭な船庫へ直接進めます。洗浄可能な貝殻テラゾー床、水平な前庭、高所の対向換気窓、深い軒の全面アイスブルー屋根により、現実的な沿岸作業棟を構成します。埋め込まれた連続側面架構・桁・高所横梁・棟が長い外皮を支持します。扉、船、水、ロープ、工具、作業者、看板、桟橋、地形は含みません。",
+    "ru": "Доступный эллинг размером 11,6 × 10,0 м в масштабе аватара ростом 1,75 м. Беспороговый вход для вытаскивания судна 13 × 11 вокселей открывается прямо в свободный зал шириной тринадцать вокселей и длиной 8,4 м с двумя утопленными деревянными полозьями. Моющийся пол из ракушечного терраццо, ровная площадка, высокие окна сквозного проветривания и полная ледяно-голубая крыша с глубоким свесом образуют правдоподобное прибрежное служебное здание. Непрерывные встроенные боковые рамы, обвязки, высокие поперечные связи и конёк несут длинную оболочку; дверные полотна, лодки, вода, канаты, инструменты, работники, вывески, причалы и рельеф исключены.",
+    "ko": "키 1.75 m 아바타 비율에 맞춘 출입 가능한 11.6 × 10.0 m 보트 창고입니다. 단차 없는 13 × 11복셀 인양 입구가 바닥과 같은 높이의 목재 활주대 두 줄을 갖춘 폭 13복셀, 길이 8.4 m의 빈 선박 홀로 바로 이어집니다. 세척 가능한 조개 테라초 바닥, 평평한 앞마당, 높은 맞통풍 창과 깊은 처마의 완전한 아이스블루 지붕이 현실적인 해안 작업동을 이룹니다. 벽에 매입된 연속 측면 골조, 벽도리, 높은 가로보와 용마루가 긴 외피를 지지합니다. 문짝, 배, 물, 밧줄, 공구, 작업자, 간판, 부두와 지형은 포함하지 않습니다.",
+    "zh-Hant": "一座可進入、符合1.75公尺角色尺度的11.6 × 10.0公尺船庫。零門檻13 × 11體素拖船入口直接通往十三體素寬、8.4公尺長的完整淨空船廳，地坪內嵌兩條齊平木滑道。可沖洗貝殼磨石地坪、水平前場、高位對流窗與完整深出簷冰藍屋頂，構成可信的海岸作業建築。連續嵌入側框、牆頂樑、高位橫向繫樑及屋脊承托長形外殼；門扇、船隻、水體、繩索、工具、工人、招牌、碼頭及地形不包含在藍圖內。",
+    "zh-Hans": "一座可进入、符合1.75米角色尺度的11.6 × 10.0米船库。零门槛13 × 11体素拖船入口直接通往十三体素宽、8.4米长的完整净空船厅，地坪内嵌两条齐平木滑道。可冲洗贝壳磨石地坪、水平前场、高位对流窗与完整深出檐冰蓝屋顶，构成可信的海岸作业建筑。连续嵌入侧框、墙顶梁、高位横向系梁及屋脊承托长形外壳；门扇、船只、水体、绳索、工具、工人、招牌、码头及地形不包含在蓝图内。"
+  },
+  "referenceImage": "concepts/coastal/compact-village-boathouse.webp",
+  "defaults": {
+    "style": "coastal",
+    "roof": "iceBlue",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "35 × 31 vu",
+  "height": "22 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 29,
+      "z": 25
+    },
+    "wallFootprintMeters": {
+      "x": 11.6,
+      "z": 10
+    },
+    "doorClearVoxels": {
+      "width": 13,
+      "height": 11
+    },
+    "interiorClearHeightVoxels": 11
+  },
+  "preview": {
+    "fitScale": 1,
+    "minScale": 2.7,
+    "yaw": 2.4
+  },
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "fixtures",
+      "label": "Twin Flush Timber Haul-out Skids"
+    },
+    {
+      "materialId": 59,
+      "phase": "openings",
+      "label": "Permanent High Ice-blue Cross-ventilation Windows"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ASMWHyEBAQMAAxwAAAIBAwAEAAAWATgAAAEBAwAbHAAAAQYFAAQYABYBBgsAAAwAAwE3DgAEAQAVATcUAAQBABUBAgMBAwcKAQECGAEDBwoBAQIDARocCgEBAgMBBQEKFAECHgEFAQoUAjsDBwgBAgICAAAOAjseBwgBAgICAAAOAjsHBxoCAgEDDAAAAgMDAAMBDAEEAAAMAgMeAAMBDAEEAAAMAQMJAAMBDAEBAxgAAwEMAQEDAwwDHAABAQMDDBocAAECAwMMAwEAGAE2AAACAwMMCRwAAQIAAAwCAgQNAxoAAQEAAC4CAgYOAxYAAQEAAC4CAggPAxIAAQEAAC4CAgoQAw4AAQEAAC4CAgwRAwoAAQEAAC4CAg4SAwYAAQEAAC4CAhATAwIAAQEAAC4CBQENAQIAHAcEAgACBR8NAQIAHAcDAgABAxEVAQAAHA"
+  },
+  "validation": {
+    "expectedVoxelCount": 4860,
+    "expectedPayloadBytes": 337,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      57,
+      59,
+      68,
+      70,
+      73,
+      97
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 88,
+      "57": 959,
+      "59": 120,
+      "68": 65,
+      "70": 1730,
+      "73": 535,
+      "97": 1363
+    },
+    "requireConnected": true,
+    "supportColumns": [
+      {
+        "label": "Front-left embedded corner frame",
+        "x": 3,
+        "z": 3,
+        "baseY": 0,
+        "topY": 12
+      },
+      {
+        "label": "Front-right embedded corner frame",
+        "x": 30,
+        "z": 3,
+        "baseY": 0,
+        "topY": 12
+      },
+      {
+        "label": "Rear-left embedded corner frame",
+        "x": 3,
+        "z": 27,
+        "baseY": 0,
+        "topY": 12
+      },
+      {
+        "label": "Rear-right embedded corner frame",
+        "x": 30,
+        "z": 27,
+        "baseY": 0,
+        "topY": 12
+      },
+      {
+        "label": "Left boat-entrance jamb",
+        "x": 9,
+        "z": 3,
+        "baseY": 0,
+        "topY": 12
+      },
+      {
+        "label": "Right boat-entrance jamb",
+        "x": 24,
+        "z": 3,
+        "baseY": 0,
+        "topY": 12
+      },
+      {
+        "label": "Left first intermediate side frame",
+        "x": 3,
+        "z": 9,
+        "baseY": 0,
+        "topY": 12
+      },
+      {
+        "label": "Left third intermediate side frame",
+        "x": 3,
+        "z": 21,
+        "baseY": 0,
+        "topY": 12
+      },
+      {
+        "label": "Right first intermediate side frame",
+        "x": 30,
+        "z": 9,
+        "baseY": 0,
+        "topY": 12
+      },
+      {
+        "label": "Right third intermediate side frame",
+        "x": 30,
+        "z": 21,
+        "baseY": 0,
+        "topY": 12
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Front wall plate and boat-entrance lintel",
+        "axis": "x",
+        "start": 3,
+        "end": 31,
+        "y": 12,
+        "fixed": 3
+      },
+      {
+        "label": "Rear wall plate",
+        "axis": "x",
+        "start": 3,
+        "end": 31,
+        "y": 12,
+        "fixed": 26
+      },
+      {
+        "label": "Left wall plate",
+        "axis": "z",
+        "start": 3,
+        "end": 27,
+        "y": 12,
+        "fixed": 3
+      },
+      {
+        "label": "Right wall plate",
+        "axis": "z",
+        "start": 3,
+        "end": 27,
+        "y": 12,
+        "fixed": 30
+      },
+      {
+        "label": "First clear-height transverse tie",
+        "axis": "x",
+        "start": 3,
+        "end": 31,
+        "y": 12,
+        "fixed": 9
+      },
+      {
+        "label": "Second clear-height transverse tie",
+        "axis": "x",
+        "start": 3,
+        "end": 31,
+        "y": 12,
+        "fixed": 15
+      },
+      {
+        "label": "Third clear-height transverse tie",
+        "axis": "x",
+        "start": 3,
+        "end": 31,
+        "y": 12,
+        "fixed": 21
+      },
+      {
+        "label": "Continuous ridge beam",
+        "axis": "z",
+        "start": 1,
+        "end": 29,
+        "y": 21,
+        "fixed": 17
+      },
+      {
+        "label": "Left flush haul-out skid",
+        "axis": "z",
+        "start": 4,
+        "end": 25,
+        "y": 0,
+        "fixed": 14
+      },
+      {
+        "label": "Right flush haul-out skid",
+        "axis": "z",
+        "start": 4,
+        "end": 25,
+        "y": 0,
+        "fixed": 20
+      }
+    ],
+    "diagonalBands": [
+      {
+        "label": "Left ice-blue coastal roof slope",
+        "materialId": 97,
+        "x": 1,
+        "y": 13,
+        "z": 1,
+        "width": 3,
+        "height": 1,
+        "depth": 29,
+        "count": 8,
+        "dx": 2,
+        "dy": 1,
+        "dz": 0
+      },
+      {
+        "label": "Right ice-blue coastal roof slope",
+        "materialId": 97,
+        "x": 31,
+        "y": 13,
+        "z": 1,
+        "width": 3,
+        "height": 1,
+        "depth": 29,
+        "count": 8,
+        "dx": -2,
+        "dy": 1,
+        "dz": 0
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "zero-threshold thirteen-wide haul-out entrance",
+        "x": 11,
+        "y": 1,
+        "z": 3,
+        "width": 13,
+        "height": 11,
+        "depth": 2
+      },
+      {
+        "label": "thirteen-wide clear boat hall",
+        "x": 11,
+        "y": 1,
+        "z": 5,
+        "width": 13,
+        "height": 11,
+        "depth": 21
+      }
+    ],
+    "approach": [
+      {
+        "x": 17,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 17,
+        "z": 1,
+        "topY": 1
+      },
+      {
+        "x": 17,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 17,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 17,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 17,
+        "z": 5,
+        "topY": 1
+      },
+      {
+        "x": 17,
+        "z": 12,
+        "topY": 1
+      },
+      {
+        "x": 17,
+        "z": 20,
+        "topY": 1
+      },
+      {
+        "x": 17,
+        "z": 25,
+        "topY": 1
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 17,
+        "y": 0,
+        "z": 0,
+        "materialId": 73
+      },
+      {
+        "x": 14,
+        "y": 0,
+        "z": 12,
+        "materialId": 55
+      },
+      {
+        "x": 20,
+        "y": 0,
+        "z": 20,
+        "materialId": 55
+      },
+      {
+        "x": 3,
+        "y": 7,
+        "z": 8,
+        "materialId": 59
+      },
+      {
+        "x": 30,
+        "y": 7,
+        "z": 17,
+        "materialId": 59
+      },
+      {
+        "x": 3,
+        "y": 12,
+        "z": 15,
+        "materialId": 57
+      },
+      {
+        "x": 17,
+        "y": 21,
+        "z": 15,
+        "materialId": 57
+      },
+      {
+        "x": 1,
+        "y": 13,
+        "z": 12,
+        "materialId": 97
+      }
+    ]
+  }
+}

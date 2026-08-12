@@ -80,6 +80,7 @@
     "buildings/agriculture/compact-village-piggery.json",
     "buildings/industrial/compact-village-ropemaker-workshop.json",
     "buildings/utility/compact-village-icehouse.json",
-    "buildings/agriculture/compact-village-cider-press-house.json"
+    "buildings/agriculture/compact-village-cider-press-house.json",
+    "buildings/coastal/compact-village-boathouse.json"
   ]
 }

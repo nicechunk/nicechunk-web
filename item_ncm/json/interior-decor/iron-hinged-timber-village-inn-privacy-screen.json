@@ -1,0 +1,293 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "iron-hinged-timber-village-inn-privacy-screen",
+  "category": "interior-decor",
+  "interaction": "placeable",
+  "names": {
+    "en": "Iron-hinged Timber Village Inn Privacy Screen",
+    "es": "Biombo de privacidad de posada de aldea de madera con bisagras de hierro",
+    "fr": "Paravent d’intimité d’auberge villageoise en bois à charnières de fer",
+    "de": "Holz-Sichtschutz mit Eisenscharnieren für Dorfgasthäuser",
+    "ja": "鉄蝶番付き木製村宿間仕切り",
+    "ru": "Деревянная ширма деревенской гостиницы с железными петлями",
+    "ko": "철제 경첩 목재 마을 여관 가림막",
+    "zh-Hant": "鐵鉸鏈木製村莊旅店屏風",
+    "zh-Hans": "铁铰链木制村庄客栈屏风"
+  },
+  "descriptions": {
+    "en": "Iron-hinged Timber Village Inn Privacy Screen is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Biombo de privacidad de posada de aldea de madera con bisagras de hierro es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Paravent d’intimité d’auberge villageoise en bois à charnières de fer est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Holz-Sichtschutz mit Eisenscharnieren für Dorfgasthäuser ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "鉄蝶番付き木製村宿間仕切りは、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Деревянная ширма деревенской гостиницы с железными петлями — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "철제 경첩 목재 마을 여관 가림막은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "鐵鉸鏈木製村莊旅店屏風是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "铁铰链木制村庄客栈屏风是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 1.5313,
+    "height": 1.75,
+    "depth": 0.4375,
+    "sizeQ": [
+      98,
+      112,
+      28
+    ]
+  },
+  "preview": {
+    "yaw": -0.56,
+    "pitch": 0.2,
+    "clothMotion": "rigid"
+  },
+  "concept": {
+    "image": "concepts/interior-decor/iron-hinged-timber-village-inn-privacy-screen-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "6d89d2305ce63eef524ff796d5b840d08a55957cc3c1ae5047a647cab31d1f5b"
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.8zG4heZtvaOeYaGIHzViGUIBBx6YBAAQARDKEAg4_EAgAIAIhlCAQcAeAQAEAEQyhAIOAtAIACACIZQZsBnph0ABABEMoM2Az8Q6AAgAiGUGbAYB4dAAQARDKDNgMC0OgAIAIhlGAYGfEBYAEAEQyjAMDPiGUACACIZRgGBgAAWABABEMowDAwABlAAgAiGUYBgYDwFgAQARDKMAwMB4ZQAIALGFQCfEHAAEAFjCoBAADgACACxhUAgPBwABAAE1IMEAT8QmAQgACakGCAJ-InAIQABNSDBAEA8JgEIAAmpBggCAeJwCEAA",
+    "rawBytes": 233,
+    "sha256": "7f81264c69f7c1a1fa40e468a02605e1132c62504d398535d374007e93b6dfb7",
+    "designHash": 3547275791,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 233,
+    "savedBytes": 0,
+    "sourceComponentCount": 21,
+    "decodedComponentCount": 21,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 3417969,
+        "usedVolumeMm3": 3417969,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 3417969,
+        "usedVolumeMm3": 3417969,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 3417969,
+        "usedVolumeMm3": 3417969,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 3417969,
+        "usedVolumeMm3": 3417969,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 14831543,
+        "usedVolumeMm3": 14831543,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 14831543,
+        "usedVolumeMm3": 14831543,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 14831543,
+        "usedVolumeMm3": 14831543,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 7,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 14831543,
+        "usedVolumeMm3": 14831543,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 8,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 3295898,
+        "usedVolumeMm3": 3295898,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 9,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 3295898,
+        "usedVolumeMm3": 3295898,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 10,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 3295898,
+        "usedVolumeMm3": 3295898,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 11,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 3295898,
+        "usedVolumeMm3": 3295898,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 12,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 3295898,
+        "usedVolumeMm3": 3295898,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 13,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 3295898,
+        "usedVolumeMm3": 3295898,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 14,
+        "materialId": "cotton_cloth",
+        "itemCode": 1025,
+        "inputVolumeMm3": 15380859,
+        "usedVolumeMm3": 15380859,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 15,
+        "materialId": "cotton_cloth",
+        "itemCode": 1025,
+        "inputVolumeMm3": 15380859,
+        "usedVolumeMm3": 15380859,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 16,
+        "materialId": "cotton_cloth",
+        "itemCode": 1025,
+        "inputVolumeMm3": 15380859,
+        "usedVolumeMm3": 15380859,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 17,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 366211,
+        "usedVolumeMm3": 366211,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 18,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 366211,
+        "usedVolumeMm3": 366211,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 19,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 366211,
+        "usedVolumeMm3": 366211,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 20,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 366211,
+        "usedVolumeMm3": 366211,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 140378112,
+      "requiredEffectiveDurability": 16868,
+      "outputMassGrams": 65415,
+      "materialScore": 64
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 3288,
+      "triangleCount": 1644,
+      "meshByteLength": 62472
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "squared_timber",
+      "itemCode": 1033,
+      "componentCount": 14,
+      "inputVolumeMm3": 92773436,
+      "usedVolumeMm3": 92773436,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 48400,
+      "equivalentInputUnits": 1917
+    },
+    {
+      "materialId": "cotton_cloth",
+      "itemCode": 1025,
+      "componentCount": 3,
+      "inputVolumeMm3": 46142577,
+      "usedVolumeMm3": 46142577,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 1000000,
+      "equivalentInputUnits": 47
+    },
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 4,
+      "inputVolumeMm3": 1464844,
+      "usedVolumeMm3": 1464844,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 6
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "privacyScreenGeometryValidated": true,
+    "chainMinted": false
+  }
+}

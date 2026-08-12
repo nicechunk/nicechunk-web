@@ -318,10 +318,22 @@ const wallMirrorLayouts = new Map([
     cornerPlates: [8, 9, 10, 11],
   }],
 ]);
+const privacyScreenLayouts = new Map([
+  ["iron-hinged-timber-village-inn-privacy-screen", {
+    feet: [0, 1, 2, 3],
+    posts: [4, 5, 6, 7],
+    panels: [
+      { bottomRail: 8, topRail: 9, cloth: 14, leftPost: 4, rightPost: 5 },
+      { bottomRail: 10, topRail: 11, cloth: 15, leftPost: 5, rightPost: 6 },
+      { bottomRail: 12, topRail: 13, cloth: 16, leftPost: 6, rightPost: 7 },
+    ],
+    hingePlates: [17, 18, 19, 20],
+  }],
+]);
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
-assert.equal(catalog.items.length, 61);
+assert.equal(catalog.items.length, 62);
 assert.equal(new Set(catalog.items).size, catalog.items.length);
 
 const listedFiles = new Set(catalog.items);
@@ -358,6 +370,7 @@ let luggageRackGeometryCount = 0;
 let writingDeskGeometryCount = 0;
 let writingChairGeometryCount = 0;
 let wallMirrorGeometryCount = 0;
+let privacyScreenGeometryCount = 0;
 for (const file of catalog.items) {
   assert.match(file, /^json\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/);
   const item = json(join(root, file));
@@ -598,6 +611,15 @@ for (const file of catalog.items) {
     assert.equal(item.verification.wallMirrorGeometryValidated, true);
     assertWallMirrorGeometry(item, runtime, wallMirrorLayout);
   }
+  const privacyScreenLayout = privacyScreenLayouts.get(item.key);
+  if (privacyScreenLayout) {
+    privacyScreenGeometryCount += 1;
+    assert.equal(item.category, "interior-decor");
+    assert.equal(item.interaction, "placeable");
+    assert.equal(item.preview.clothMotion, "rigid");
+    assert.equal(item.verification.privacyScreenGeometryValidated, true);
+    assertPrivacyScreenGeometry(item, runtime, privacyScreenLayout);
+  }
   assert.equal(forgeWorkbenchComponentsConnected(runtime.components), true, `${item.key} must be a connected assembly`);
   const grip = validateForgeGripBindings(runtime.components);
   assert.equal(grip.valid, true, `${item.key} grip must remain valid after decoding`);
@@ -685,13 +707,13 @@ assert.deepEqual([...categories], [
   ["commerce", 2],
   ["construction", 1],
   ["books-writing", 7],
-  ["interior-decor", 3],
+  ["interior-decor", 4],
   ["signage", 2],
   ["exterior-decor", 5],
 ]);
 assert.equal(tools, 16);
-assert.equal(placeables, 45);
-assert.equal(conceptReferences, 34);
+assert.equal(placeables, 46);
+assert.equal(conceptReferences, 35);
 assert.equal(bookGeometryCount, 7);
 assert.equal(framedTextileGeometryCount, 1);
 assert.equal(drawerCabinetGeometryCount, 1);
@@ -716,9 +738,10 @@ assert.equal(luggageRackGeometryCount, 1);
 assert.equal(writingDeskGeometryCount, 1);
 assert.equal(writingChairGeometryCount, 1);
 assert.equal(wallMirrorGeometryCount, 1);
+assert.equal(privacyScreenGeometryCount, 1);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
-console.log("item_ncm catalog tests passed: 61 canonical NCF1 items across 16 categories");
+console.log("item_ncm catalog tests passed: 62 canonical NCF1 items across 16 categories");
 
 function json(file) {
   return JSON.parse(readFileSync(file, "utf8"));
@@ -1775,6 +1798,59 @@ function assertWallMirrorGeometry(item, runtime, layout) {
     const plate = bounds[plateIndex];
     assert.equal(plate.min[2], 3);
     assert.equal(plate.max[2], 5);
+  }
+  for (let first = 0; first < bounds.length; first += 1) {
+    for (let second = first + 1; second < bounds.length; second += 1) {
+      assert.equal(positiveVolumeOverlap(bounds[first], bounds[second]), false, `${item.key} components ${first} and ${second} intersect`);
+    }
+  }
+}
+
+function assertPrivacyScreenGeometry(item, runtime, layout) {
+  assert.equal(runtime.componentCount, 21);
+  assert.deepEqual(item.dimensions.sizeQ, [98, 112, 28]);
+  assert.equal(item.dimensions.width, 1.5313);
+  assert.equal(item.dimensions.height, 1.75);
+  assert.equal(item.dimensions.depth, 0.4375);
+  assert.equal(item.preview.clothMotion, "rigid");
+  assert.ok(item.dimensions.width >= 1.45 && item.dimensions.width <= 1.6);
+  assert.ok(item.forge.rawBytes <= 280);
+  assert.ok(item.forge.requirements.outputMassGrams <= 80_000, `${item.key} must remain movable inn decor`);
+  assert.deepEqual(
+    [...new Set(item.forge.materialComponents.map(({ materialId }) => materialId))].sort(),
+    ["cotton_cloth", "iron_bloom", "squared_timber"],
+  );
+  const components = runtime.components;
+  const bounds = components.map((component) => componentBoundsQ(component));
+  for (let position = 0; position < layout.feet.length; position += 1) {
+    const foot = bounds[layout.feet[position]];
+    const post = bounds[layout.posts[position]];
+    assert.equal(foot.min[1], 0);
+    assert.equal(foot.max[1], post.min[1]);
+    assert.equal(components[layout.feet[position]].offsetQ[2], 0);
+    assert.equal(components[layout.posts[position]].offsetQ[2], 0);
+  }
+  for (const panel of layout.panels) {
+    const cloth = bounds[panel.cloth];
+    const bottomRail = bounds[panel.bottomRail];
+    const topRail = bounds[panel.topRail];
+    const leftPost = bounds[panel.leftPost];
+    const rightPost = bounds[panel.rightPost];
+    assert.equal(item.forge.materialComponents[panel.cloth].materialId, "cotton_cloth");
+    assert.equal(components[panel.cloth].resourceId, "cloth");
+    assert.equal(cloth.min[0], leftPost.max[0]);
+    assert.equal(cloth.max[0], rightPost.min[0]);
+    assert.equal(cloth.min[1], bottomRail.max[1]);
+    assert.equal(cloth.max[1], topRail.min[1]);
+    assert.equal(components[panel.cloth].offsetQ[2], 0);
+  }
+  assert.deepEqual(layout.hingePlates.map((index) => components[index].offsetQ.slice(0, 2)), [
+    [-15, 38], [-15, 78], [15, 38], [15, 78],
+  ]);
+  for (let position = 0; position < layout.hingePlates.length; position += 1) {
+    const hinge = bounds[layout.hingePlates[position]];
+    const post = bounds[layout.posts[position < 2 ? 1 : 2]];
+    assert.equal(hinge.min[2], post.max[2]);
   }
   for (let first = 0; first < bounds.length; first += 1) {
     for (let second = first + 1; second < bounds.length; second += 1) {

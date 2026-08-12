@@ -82,7 +82,7 @@ try {
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 16);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /61 ITEMS/);
+  assert.match(initial.total, /62 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -906,10 +906,11 @@ try {
   await assertRigidClothPreview(client);
 
   await evaluate(client, `document.querySelector('[data-category="interior-decor"]').click()`);
-  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 3
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 4
     && document.querySelector('[data-item="timber-framed-woven-tapestry"]')
     && document.querySelector('[data-item="copper-rimmed-village-wall-clock"]')
-    && document.querySelector('[data-item="polished-copper-timber-village-inn-wall-mirror"]')`));
+    && document.querySelector('[data-item="polished-copper-timber-village-inn-wall-mirror"]')
+    && document.querySelector('[data-item="iron-hinged-timber-village-inn-privacy-screen"]')`));
   assert.equal(await evaluate(client, `performance.getEntriesByType("resource").some((entry) => new URL(entry.name).pathname.includes("/item_ncm/json/interior-decor/"))`), false,
     "category browsing must not load interior decor item JSON files");
   await evaluate(client, `document.querySelector('[data-item="timber-framed-woven-tapestry"]').click()`);
@@ -993,6 +994,56 @@ try {
     })()`);
     await waitFor(() => evaluate(client, `document.documentElement.lang === ${JSON.stringify(locale)} && document.querySelector("#itemTitle").textContent === ${JSON.stringify(expectedName)}`));
     assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), wallMirror.payload);
+  }
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "en";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
+
+  await evaluate(client, `document.querySelector('[data-item="iron-hinged-timber-village-inn-privacy-screen"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="iron-hinged-timber-village-inn-privacy-screen"].active')
+    && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const privacyScreen = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payload: document.querySelector("#codeOutput").value,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    materialRows: document.querySelectorAll("#bomRows .bom-row").length,
+    clothMotion: document.querySelector("#forgePreview").dataset.clothMotion,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(privacyScreen.title, "Iron-hinged Timber Village Inn Privacy Screen");
+  assert.equal(privacyScreen.type, "PLACEABLE");
+  assert.match(privacyScreen.payload, /^NCF1\./);
+  assert.equal(privacyScreen.payloadBytes, "233 / 640 B");
+  assert.equal(privacyScreen.componentCount, "21");
+  assert.equal(privacyScreen.materialRows, 3);
+  assert.equal(privacyScreen.clothMotion, "rigid");
+  assert.equal(privacyScreen.selectedInUrl, "iron-hinged-timber-village-inn-privacy-screen");
+  assert.ok(privacyScreen.resources.includes("/item_ncm/json/interior-decor/iron-hinged-timber-village-inn-privacy-screen.json"));
+  await assertRigidClothPreview(client, { verifyFrames: true });
+  for (const [locale, expectedName] of Object.entries({
+    en: "Iron-hinged Timber Village Inn Privacy Screen",
+    es: "Biombo de privacidad de posada de aldea de madera con bisagras de hierro",
+    fr: "Paravent d’intimité d’auberge villageoise en bois à charnières de fer",
+    de: "Holz-Sichtschutz mit Eisenscharnieren für Dorfgasthäuser",
+    ja: "鉄蝶番付き木製村宿間仕切り",
+    ru: "Деревянная ширма деревенской гостиницы с железными петлями",
+    ko: "철제 경첩 목재 마을 여관 가림막",
+    "zh-Hant": "鐵鉸鏈木製村莊旅店屏風",
+    "zh-Hans": "铁铰链木制村庄客栈屏风",
+  })) {
+    await evaluate(client, `(() => {
+      const select = document.querySelector("[data-language-select]");
+      select.value = ${JSON.stringify(locale)};
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+    })()`);
+    await waitFor(() => evaluate(client, `document.documentElement.lang === ${JSON.stringify(locale)} && document.querySelector("#itemTitle").textContent === ${JSON.stringify(expectedName)}`));
+    assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), privacyScreen.payload);
   }
   await evaluate(client, `(() => {
     const select = document.querySelector("[data-language-select]");

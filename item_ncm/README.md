@@ -11,7 +11,7 @@ ITEM_NCM is the public NiceChunk forge-item blueprint registry. It follows the s
 - Every item JSON contains its own nine-language names and descriptions.
 - `tools/generate-items.mjs` is the canonical source for the initial collection and regenerates every item JSON deterministically.
 
-The registry currently contains 61 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, containers, cooking, commerce, construction, books and writing, interior decor, signage, exterior decor, and hand-held civic props. New designs begin with an Imagegen material-style concept; the resulting item JSON records the concept path, provenance, version, and SHA-256 before the forge encoding is accepted.
+The registry currently contains 62 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, containers, cooking, commerce, construction, books and writing, interior decor, signage, exterior decor, and hand-held civic props. New designs begin with an Imagegen material-style concept; the resulting item JSON records the concept path, provenance, version, and SHA-256 before the forge encoding is accepted.
 
 ## Forge guarantees
 
@@ -50,6 +50,7 @@ The generator rejects an item unless all of these checks pass:
 31. Inn writing desks keep a canonical seated-work height, a broad timber desktop on four grounded iron-footed legs, one closed centered drawer with a face-connected iron pull, continuous front, rear, and side aprons, an open knee bay, and a connected rear lower stretcher without component intersections.
 32. Inn writing chairs keep a canonical adult seat height, four grounded iron-footed supports, a broad face-supported seat, two ordered backrest slats captive between continuous rear posts, four connected lower stretchers, and four flush iron seat plates without component intersections.
 33. Inn wall mirrors keep a portrait human-readable scale, a full timber backplate, a flat polished-copper face captive inside four face-connected timber rails, two connected upper hangers, and four flush iron corner plates without component intersections.
+34. Inn privacy screens stand at canonical player height, keep four grounded cross-feet and full-height posts in one straight plane, hold three rigid cotton panels captive inside separate four-rail timber frames, and preserve four face-connected iron hinge plates without component intersections or cloth deformation.
 
 `verification.chainMinted` remains `false` because this library validates blueprint readiness; it does not claim that a blueprint PDA has already been created.
 

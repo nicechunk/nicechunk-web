@@ -342,6 +342,18 @@ const WALL_MIRROR_LAYOUTS = Object.freeze({
     cornerPlates: [8, 9, 10, 11],
   },
 });
+const PRIVACY_SCREEN_LAYOUTS = Object.freeze({
+  "iron-hinged-timber-village-inn-privacy-screen": {
+    feet: [0, 1, 2, 3],
+    posts: [4, 5, 6, 7],
+    panels: [
+      { bottomRail: 8, topRail: 9, cloth: 14, leftPost: 4, rightPost: 5 },
+      { bottomRail: 10, topRail: 11, cloth: 15, leftPost: 5, rightPost: 6 },
+      { bottomRail: 12, topRail: 13, cloth: 16, leftPost: 6, rightPost: 7 },
+    ],
+    hingePlates: [17, 18, 19, 20],
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -647,6 +659,11 @@ const ITEM_NAMES = Object.freeze({
     "Polished-copper Timber Village Inn Wall Mirror", "Espejo de pared de posada de aldea de madera con cobre pulido", "Miroir mural d’auberge villageoise en bois à face de cuivre poli",
     "Dorfherbergen-Wandspiegel aus Holz mit polierter Kupferfläche", "磨き銅面の木製村宿壁鏡", "Настенное зеркало деревенской гостиницы в деревянной раме с полированной медной поверхностью",
     "광택 구리면 목재 마을 여관 벽거울", "拋光銅面木框村莊旅店壁鏡", "抛光铜面木框村庄客栈壁镜",
+  ),
+  "iron-hinged-timber-village-inn-privacy-screen": names(
+    "Iron-hinged Timber Village Inn Privacy Screen", "Biombo de privacidad de posada de aldea de madera con bisagras de hierro", "Paravent d’intimité d’auberge villageoise en bois à charnières de fer",
+    "Holz-Sichtschutz mit Eisenscharnieren für Dorfgasthäuser", "鉄蝶番付き木製村宿間仕切り", "Деревянная ширма деревенской гостиницы с железными петлями",
+    "철제 경첩 목재 마을 여관 가림막", "鐵鉸鏈木製村莊旅店屏風", "铁铰链木制村庄客栈屏风",
   ),
   "iron-blacksmith-anvil": names(
     "Iron Blacksmith Anvil", "Yunque de herrero de hierro", "Enclume de forgeron en fer", "Eiserner Schmiedeamboss",
@@ -1516,6 +1533,33 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+  placeable("interior-decor", "iron-hinged-timber-village-inn-privacy-screen", [
+    part("squared_timber", [8, 4, 28], [-45, 2, 0]),
+    part("squared_timber", [8, 4, 28], [-15, 2, 0]),
+    part("squared_timber", [8, 4, 28], [15, 2, 0]),
+    part("squared_timber", [8, 4, 28], [45, 2, 0]),
+    part("squared_timber", [6, 108, 6], [-45, 58, 0]),
+    part("squared_timber", [6, 108, 6], [-15, 58, 0]),
+    part("squared_timber", [6, 108, 6], [15, 58, 0]),
+    part("squared_timber", [6, 108, 6], [45, 58, 0]),
+    part("squared_timber", [24, 6, 6], [-30, 11, 0]),
+    part("squared_timber", [24, 6, 6], [-30, 101, 0]),
+    part("squared_timber", [24, 6, 6], [0, 11, 0]),
+    part("squared_timber", [24, 6, 6], [0, 101, 0]),
+    part("squared_timber", [24, 6, 6], [30, 11, 0]),
+    part("squared_timber", [24, 6, 6], [30, 101, 0]),
+    part("cotton_cloth", [24, 84, 2], [-30, 56, 0]),
+    part("cotton_cloth", [24, 84, 2], [0, 56, 0]),
+    part("cotton_cloth", [24, 84, 2], [30, 56, 0]),
+    part("iron_bloom", [6, 8, 2], [-15, 38, 4]),
+    part("iron_bloom", [6, 8, 2], [-15, 78, 4]),
+    part("iron_bloom", [6, 8, 2], [15, 38, 4]),
+    part("iron_bloom", [6, 8, 2], [15, 78, 4]),
+  ], { yaw: -0.56, pitch: 0.2, clothMotion: "rigid" }, {
+    image: "concepts/interior-decor/iron-hinged-timber-village-inn-privacy-screen-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
   placeable("commerce", "iron-braced-timber-village-inn-reception-counter", [
     part("iron_bloom", [10, 6, 10], [-45, 3, -17]),
     part("iron_bloom", [10, 6, 10], [-45, 3, 17]),
@@ -1659,6 +1703,8 @@ function buildItem(spec) {
   if (writingChairLayout) validateWritingChairGeometry(spec, runtime, writingChairLayout);
   const wallMirrorLayout = WALL_MIRROR_LAYOUTS[spec.key] ?? null;
   if (wallMirrorLayout) validateWallMirrorGeometry(spec, runtime, wallMirrorLayout);
+  const privacyScreenLayout = PRIVACY_SCREEN_LAYOUTS[spec.key] ?? null;
+  if (privacyScreenLayout) validatePrivacyScreenGeometry(spec, runtime, privacyScreenLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -1775,6 +1821,7 @@ function buildItem(spec) {
       ...(writingDeskLayout ? { writingDeskGeometryValidated: true } : {}),
       ...(writingChairLayout ? { writingChairGeometryValidated: true } : {}),
       ...(wallMirrorLayout ? { wallMirrorGeometryValidated: true } : {}),
+      ...(privacyScreenLayout ? { privacyScreenGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -3454,6 +3501,76 @@ function validateWallMirrorGeometry(spec, runtime, layout) {
       || overlapLength(plate.min[1], plate.max[1], horizontalRail.min[1], horizontalRail.max[1]) <= 0) {
       throw new Error(`${spec.key} iron corner plate ${position} is detached from both meeting frame rails.`);
     }
+  }
+  for (let first = 0; first < bounds.length; first += 1) {
+    for (let second = first + 1; second < bounds.length; second += 1) {
+      if (boundsOverlap(bounds[first], bounds[second], 0)) {
+        throw new Error(`${spec.key} components ${first} and ${second} intersect.`);
+      }
+    }
+  }
+}
+
+function validatePrivacyScreenGeometry(spec, runtime, layout) {
+  if (spec.preview?.clothMotion !== "rigid") {
+    throw new Error(`${spec.key} must disable free-cloth deformation for its frame-bound privacy panels.`);
+  }
+  if (runtime.componentCount !== 21 || runtime.boundsQ.sizeQ.join(",") !== "98,112,28") {
+    throw new Error(`${spec.key} must preserve its canonical-player-height three-panel screen proportions (got ${runtime.componentCount} components and ${runtime.boundsQ.sizeQ.join(",")}).`);
+  }
+  const components = runtime.components ?? [];
+  const bounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    ...Array(14).fill("squared_timber"), ...Array(3).fill("cotton_cloth"), ...Array(4).fill("iron_bloom"),
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  for (let position = 0; position < layout.feet.length; position += 1) {
+    const foot = bounds[layout.feet[position]];
+    const post = bounds[layout.posts[position]];
+    if (foot.min[1] !== 0 || foot.max[1] !== post.min[1]
+      || overlapLength(foot.min[0], foot.max[0], post.min[0], post.max[0]) <= 0
+      || overlapLength(foot.min[2], foot.max[2], post.min[2], post.max[2]) <= 0) {
+      throw new Error(`${spec.key} grounded support ${position} is detached from its full-height post.`);
+    }
+  }
+  for (let position = 0; position < layout.panels.length; position += 1) {
+    const panel = layout.panels[position];
+    const cloth = bounds[panel.cloth];
+    const bottomRail = bounds[panel.bottomRail];
+    const topRail = bounds[panel.topRail];
+    const leftPost = bounds[panel.leftPost];
+    const rightPost = bounds[panel.rightPost];
+    if (cloth.min[0] !== leftPost.max[0] || cloth.max[0] !== rightPost.min[0]
+      || cloth.min[1] !== bottomRail.max[1] || cloth.max[1] !== topRail.min[1]
+      || bottomRail.min[0] !== leftPost.max[0] || bottomRail.max[0] !== rightPost.min[0]
+      || topRail.min[0] !== leftPost.max[0] || topRail.max[0] !== rightPost.min[0]
+      || overlapLength(cloth.min[2], cloth.max[2], leftPost.min[2], leftPost.max[2]) <= 0
+      || overlapLength(cloth.min[2], cloth.max[2], bottomRail.min[2], bottomRail.max[2]) <= 0) {
+      throw new Error(`${spec.key} cloth panel ${position} must remain taut and captive inside all four frame rails.`);
+    }
+  }
+  const expectedHingePositions = [[-15, 38], [-15, 78], [15, 38], [15, 78]];
+  for (let position = 0; position < layout.hingePlates.length; position += 1) {
+    const hingeIndex = layout.hingePlates[position];
+    const hinge = bounds[hingeIndex];
+    const [expectedX, expectedY] = expectedHingePositions[position];
+    const post = bounds[layout.posts[expectedX < 0 ? 1 : 2]];
+    if (components[hingeIndex].offsetQ[0] !== expectedX || components[hingeIndex].offsetQ[1] !== expectedY
+      || hinge.min[2] !== post.max[2]
+      || overlapLength(hinge.min[0], hinge.max[0], post.min[0], post.max[0]) <= 0
+      || overlapLength(hinge.min[1], hinge.max[1], post.min[1], post.max[1]) <= 0) {
+      throw new Error(`${spec.key} iron hinge plate ${position} is detached or misaligned.`);
+    }
+  }
+  if (components.some((component) => component.offsetQ[2] !== 0 && !layout.hingePlates.includes(components.indexOf(component)))) {
+    throw new Error(`${spec.key} timber and cloth panels must remain in one straight aligned plane.`);
   }
   for (let first = 0; first < bounds.length; first += 1) {
     for (let second = first + 1; second < bounds.length; second += 1) {

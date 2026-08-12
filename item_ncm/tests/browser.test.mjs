@@ -82,7 +82,7 @@ try {
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 16);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /60 ITEMS/);
+  assert.match(initial.total, /61 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -906,9 +906,10 @@ try {
   await assertRigidClothPreview(client);
 
   await evaluate(client, `document.querySelector('[data-category="interior-decor"]').click()`);
-  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 2
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 3
     && document.querySelector('[data-item="timber-framed-woven-tapestry"]')
-    && document.querySelector('[data-item="copper-rimmed-village-wall-clock"]')`));
+    && document.querySelector('[data-item="copper-rimmed-village-wall-clock"]')
+    && document.querySelector('[data-item="polished-copper-timber-village-inn-wall-mirror"]')`));
   assert.equal(await evaluate(client, `performance.getEntriesByType("resource").some((entry) => new URL(entry.name).pathname.includes("/item_ncm/json/interior-decor/"))`), false,
     "category browsing must not load interior decor item JSON files");
   await evaluate(client, `document.querySelector('[data-item="timber-framed-woven-tapestry"]').click()`);
@@ -952,6 +953,53 @@ try {
   assert.equal(wallClock.materialRows, 5);
   assert.equal(wallClock.selectedInUrl, "copper-rimmed-village-wall-clock");
   assert.ok(wallClock.resources.includes("/item_ncm/json/interior-decor/copper-rimmed-village-wall-clock.json"));
+
+  await evaluate(client, `document.querySelector('[data-item="polished-copper-timber-village-inn-wall-mirror"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="polished-copper-timber-village-inn-wall-mirror"].active')
+    && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const wallMirror = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payload: document.querySelector("#codeOutput").value,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    materialRows: document.querySelectorAll("#bomRows .bom-row").length,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(wallMirror.title, "Polished-copper Timber Village Inn Wall Mirror");
+  assert.equal(wallMirror.type, "PLACEABLE");
+  assert.match(wallMirror.payload, /^NCF1\./);
+  assert.equal(wallMirror.payloadBytes, "141 / 640 B");
+  assert.equal(wallMirror.componentCount, "12");
+  assert.equal(wallMirror.materialRows, 4);
+  assert.equal(wallMirror.selectedInUrl, "polished-copper-timber-village-inn-wall-mirror");
+  assert.ok(wallMirror.resources.includes("/item_ncm/json/interior-decor/polished-copper-timber-village-inn-wall-mirror.json"));
+  for (const [locale, expectedName] of Object.entries({
+    en: "Polished-copper Timber Village Inn Wall Mirror",
+    es: "Espejo de pared de posada de aldea de madera con cobre pulido",
+    fr: "Miroir mural d’auberge villageoise en bois à face de cuivre poli",
+    de: "Dorfherbergen-Wandspiegel aus Holz mit polierter Kupferfläche",
+    ja: "磨き銅面の木製村宿壁鏡",
+    ru: "Настенное зеркало деревенской гостиницы в деревянной раме с полированной медной поверхностью",
+    ko: "광택 구리면 목재 마을 여관 벽거울",
+    "zh-Hant": "拋光銅面木框村莊旅店壁鏡",
+    "zh-Hans": "抛光铜面木框村庄客栈壁镜",
+  })) {
+    await evaluate(client, `(() => {
+      const select = document.querySelector("[data-language-select]");
+      select.value = ${JSON.stringify(locale)};
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+    })()`);
+    await waitFor(() => evaluate(client, `document.documentElement.lang === ${JSON.stringify(locale)} && document.querySelector("#itemTitle").textContent === ${JSON.stringify(expectedName)}`));
+    assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), wallMirror.payload);
+  }
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "en";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
 
   await evaluate(client, `document.querySelector('[data-category="signage"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 2

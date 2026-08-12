@@ -309,10 +309,19 @@ const writingChairLayouts = new Map([
     seatPlates: [15, 16, 17, 18],
   }],
 ]);
+const wallMirrorLayouts = new Map([
+  ["polished-copper-timber-village-inn-wall-mirror", {
+    backplate: 0,
+    frame: [1, 2, 3, 4],
+    mirrorFace: 5,
+    hangers: [6, 7],
+    cornerPlates: [8, 9, 10, 11],
+  }],
+]);
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
-assert.equal(catalog.items.length, 60);
+assert.equal(catalog.items.length, 61);
 assert.equal(new Set(catalog.items).size, catalog.items.length);
 
 const listedFiles = new Set(catalog.items);
@@ -348,6 +357,7 @@ let receptionCounterGeometryCount = 0;
 let luggageRackGeometryCount = 0;
 let writingDeskGeometryCount = 0;
 let writingChairGeometryCount = 0;
+let wallMirrorGeometryCount = 0;
 for (const file of catalog.items) {
   assert.match(file, /^json\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/);
   const item = json(join(root, file));
@@ -580,6 +590,14 @@ for (const file of catalog.items) {
     assert.equal(item.verification.writingChairGeometryValidated, true);
     assertWritingChairGeometry(item, runtime, writingChairLayout);
   }
+  const wallMirrorLayout = wallMirrorLayouts.get(item.key);
+  if (wallMirrorLayout) {
+    wallMirrorGeometryCount += 1;
+    assert.equal(item.category, "interior-decor");
+    assert.equal(item.interaction, "placeable");
+    assert.equal(item.verification.wallMirrorGeometryValidated, true);
+    assertWallMirrorGeometry(item, runtime, wallMirrorLayout);
+  }
   assert.equal(forgeWorkbenchComponentsConnected(runtime.components), true, `${item.key} must be a connected assembly`);
   const grip = validateForgeGripBindings(runtime.components);
   assert.equal(grip.valid, true, `${item.key} grip must remain valid after decoding`);
@@ -667,13 +685,13 @@ assert.deepEqual([...categories], [
   ["commerce", 2],
   ["construction", 1],
   ["books-writing", 7],
-  ["interior-decor", 2],
+  ["interior-decor", 3],
   ["signage", 2],
   ["exterior-decor", 5],
 ]);
 assert.equal(tools, 16);
-assert.equal(placeables, 44);
-assert.equal(conceptReferences, 33);
+assert.equal(placeables, 45);
+assert.equal(conceptReferences, 34);
 assert.equal(bookGeometryCount, 7);
 assert.equal(framedTextileGeometryCount, 1);
 assert.equal(drawerCabinetGeometryCount, 1);
@@ -697,9 +715,10 @@ assert.equal(receptionCounterGeometryCount, 1);
 assert.equal(luggageRackGeometryCount, 1);
 assert.equal(writingDeskGeometryCount, 1);
 assert.equal(writingChairGeometryCount, 1);
+assert.equal(wallMirrorGeometryCount, 1);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
-console.log("item_ncm catalog tests passed: 60 canonical NCF1 items across 16 categories");
+console.log("item_ncm catalog tests passed: 61 canonical NCF1 items across 16 categories");
 
 function json(file) {
   return JSON.parse(readFileSync(file, "utf8"));
@@ -1716,6 +1735,47 @@ function assertWritingChairGeometry(item, runtime, layout) {
   assert.equal(rearStretcher.min[0], leftRearPost.max[0]);
   assert.equal(rearStretcher.max[0], rightRearPost.min[0]);
   for (const plateIndex of layout.seatPlates) assert.equal(bounds[plateIndex].min[1], seat.max[1]);
+  for (let first = 0; first < bounds.length; first += 1) {
+    for (let second = first + 1; second < bounds.length; second += 1) {
+      assert.equal(positiveVolumeOverlap(bounds[first], bounds[second]), false, `${item.key} components ${first} and ${second} intersect`);
+    }
+  }
+}
+
+function assertWallMirrorGeometry(item, runtime, layout) {
+  assert.equal(runtime.componentCount, 12);
+  assert.deepEqual(item.dimensions.sizeQ, [40, 64, 8]);
+  assert.equal(item.dimensions.width, 0.625);
+  assert.equal(item.dimensions.height, 1);
+  assert.equal(item.dimensions.depth, 0.125);
+  assert.ok(item.dimensions.height > item.dimensions.width * 1.5, `${item.key} must remain a portrait wall mirror`);
+  assert.ok(item.dimensions.depth < item.dimensions.width * 0.25);
+  assert.ok(item.forge.rawBytes <= 180);
+  assert.ok(item.forge.requirements.outputMassGrams <= 150_000, `${item.key} must remain wall-mountable inn decor`);
+  assert.deepEqual(
+    [...new Set(item.forge.materialComponents.map(({ materialId }) => materialId))].sort(),
+    ["copper_bloom", "iron_bloom", "squared_timber", "wooden_plank"],
+  );
+  const bounds = runtime.components.map((component) => componentBoundsQ(component));
+  const backplate = bounds[layout.backplate];
+  const mirrorFace = bounds[layout.mirrorFace];
+  const [left, right, bottom, top] = layout.frame.map((index) => bounds[index]);
+  assert.equal(item.forge.materialComponents[layout.mirrorFace].materialId, "copper_bloom");
+  assert.equal(backplate.max[2], mirrorFace.min[2]);
+  assert.equal(backplate.min[0], mirrorFace.min[0]);
+  assert.equal(backplate.max[0], mirrorFace.max[0]);
+  assert.equal(backplate.min[1], mirrorFace.min[1]);
+  assert.equal(backplate.max[1], mirrorFace.max[1]);
+  assert.equal(mirrorFace.min[0], left.max[0]);
+  assert.equal(mirrorFace.max[0], right.min[0]);
+  assert.equal(mirrorFace.min[1], bottom.max[1]);
+  assert.equal(mirrorFace.max[1], top.min[1]);
+  for (const hangerIndex of layout.hangers) assert.equal(bounds[hangerIndex].min[1], top.max[1]);
+  for (const plateIndex of layout.cornerPlates) {
+    const plate = bounds[plateIndex];
+    assert.equal(plate.min[2], 3);
+    assert.equal(plate.max[2], 5);
+  }
   for (let first = 0; first < bounds.length; first += 1) {
     for (let second = first + 1; second < bounds.length; second += 1) {
       assert.equal(positiveVolumeOverlap(bounds[first], bounds[second]), false, `${item.key} components ${first} and ${second} intersect`);

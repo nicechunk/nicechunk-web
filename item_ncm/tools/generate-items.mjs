@@ -333,6 +333,15 @@ const WRITING_CHAIR_LAYOUTS = Object.freeze({
     seatPlates: [15, 16, 17, 18],
   },
 });
+const WALL_MIRROR_LAYOUTS = Object.freeze({
+  "polished-copper-timber-village-inn-wall-mirror": {
+    backplate: 0,
+    frame: [1, 2, 3, 4],
+    mirrorFace: 5,
+    hangers: [6, 7],
+    cornerPlates: [8, 9, 10, 11],
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -633,6 +642,11 @@ const ITEM_NAMES = Object.freeze({
     "Iron-braced Timber Village Inn Writing Chair", "Silla de escritorio de posada de aldea de madera reforzada con hierro", "Chaise de bureau d’auberge villageoise en bois renforcée de fer",
     "Eisenverstärkter Holzschreibstuhl für Dorfgasthäuser", "鉄補強の木製村宿書き物椅子", "Деревянный письменный стул деревенской гостиницы с железными скобами",
     "철제 보강 목재 마을 여관 책상 의자", "鐵箍木製村莊旅店寫字椅", "铁箍木制村庄客栈写字椅",
+  ),
+  "polished-copper-timber-village-inn-wall-mirror": names(
+    "Polished-copper Timber Village Inn Wall Mirror", "Espejo de pared de posada de aldea de madera con cobre pulido", "Miroir mural d’auberge villageoise en bois à face de cuivre poli",
+    "Dorfherbergen-Wandspiegel aus Holz mit polierter Kupferfläche", "磨き銅面の木製村宿壁鏡", "Настенное зеркало деревенской гостиницы в деревянной раме с полированной медной поверхностью",
+    "광택 구리면 목재 마을 여관 벽거울", "拋光銅面木框村莊旅店壁鏡", "抛光铜面木框村庄客栈壁镜",
   ),
   "iron-blacksmith-anvil": names(
     "Iron Blacksmith Anvil", "Yunque de herrero de hierro", "Enclume de forgeron en fer", "Eiserner Schmiedeamboss",
@@ -1484,6 +1498,24 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+  placeable("interior-decor", "polished-copper-timber-village-inn-wall-mirror", [
+    part("wooden_plank", [32, 52, 2], [0, 30, -2]),
+    part("squared_timber", [4, 52, 4], [-18, 30, 1]),
+    part("squared_timber", [4, 52, 4], [18, 30, 1]),
+    part("squared_timber", [32, 4, 4], [0, 2, 1]),
+    part("squared_timber", [32, 4, 4], [0, 58, 1]),
+    part("copper_bloom", [32, 52, 2], [0, 30, 0]),
+    part("iron_bloom", [6, 4, 4], [-10, 62, 1]),
+    part("iron_bloom", [6, 4, 4], [10, 62, 1]),
+    part("iron_bloom", [4, 4, 2], [-16, 2, 4]),
+    part("iron_bloom", [4, 4, 2], [16, 2, 4]),
+    part("iron_bloom", [4, 4, 2], [-16, 58, 4]),
+    part("iron_bloom", [4, 4, 2], [16, 58, 4]),
+  ], { yaw: -0.58, pitch: 0.2 }, {
+    image: "concepts/interior-decor/polished-copper-timber-village-inn-wall-mirror-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
   placeable("commerce", "iron-braced-timber-village-inn-reception-counter", [
     part("iron_bloom", [10, 6, 10], [-45, 3, -17]),
     part("iron_bloom", [10, 6, 10], [-45, 3, 17]),
@@ -1625,6 +1657,8 @@ function buildItem(spec) {
   if (writingDeskLayout) validateWritingDeskGeometry(spec, runtime, writingDeskLayout);
   const writingChairLayout = WRITING_CHAIR_LAYOUTS[spec.key] ?? null;
   if (writingChairLayout) validateWritingChairGeometry(spec, runtime, writingChairLayout);
+  const wallMirrorLayout = WALL_MIRROR_LAYOUTS[spec.key] ?? null;
+  if (wallMirrorLayout) validateWallMirrorGeometry(spec, runtime, wallMirrorLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -1740,6 +1774,7 @@ function buildItem(spec) {
       ...(luggageRackLayout ? { luggageRackGeometryValidated: true } : {}),
       ...(writingDeskLayout ? { writingDeskGeometryValidated: true } : {}),
       ...(writingChairLayout ? { writingChairGeometryValidated: true } : {}),
+      ...(wallMirrorLayout ? { wallMirrorGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -3360,6 +3395,64 @@ function validateWritingChairGeometry(spec, runtime, layout) {
       || overlapLength(plate.min[0], plate.max[0], seat.min[0], seat.max[0]) <= 0
       || overlapLength(plate.min[2], plate.max[2], seat.min[2], seat.max[2]) <= 0) {
       throw new Error(`${spec.key} iron seat plate ${plateIndex} is detached.`);
+    }
+  }
+  for (let first = 0; first < bounds.length; first += 1) {
+    for (let second = first + 1; second < bounds.length; second += 1) {
+      if (boundsOverlap(bounds[first], bounds[second], 0)) {
+        throw new Error(`${spec.key} components ${first} and ${second} intersect.`);
+      }
+    }
+  }
+}
+
+function validateWallMirrorGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 12 || runtime.boundsQ.sizeQ.join(",") !== "40,64,8") {
+    throw new Error(`${spec.key} must preserve its portrait human-readable inn wall-mirror proportions (got ${runtime.componentCount} components and ${runtime.boundsQ.sizeQ.join(",")}).`);
+  }
+  const components = runtime.components ?? [];
+  const bounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    "wooden_plank", ...Array(4).fill("squared_timber"), "copper_bloom", ...Array(6).fill("iron_bloom"),
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  const backplate = bounds[layout.backplate];
+  const mirrorFace = bounds[layout.mirrorFace];
+  const [left, right, bottom, top] = layout.frame.map((index) => bounds[index]);
+  if (backplate.max[2] !== mirrorFace.min[2]
+    || backplate.min[0] !== mirrorFace.min[0] || backplate.max[0] !== mirrorFace.max[0]
+    || backplate.min[1] !== mirrorFace.min[1] || backplate.max[1] !== mirrorFace.max[1]) {
+    throw new Error(`${spec.key} polished copper face must be fully supported by the timber backplate without intersection.`);
+  }
+  if (mirrorFace.min[0] !== left.max[0] || mirrorFace.max[0] !== right.min[0]
+    || mirrorFace.min[1] !== bottom.max[1] || mirrorFace.max[1] !== top.min[1]
+    || [left, right, bottom, top].some((rail) => rail.min[2] !== backplate.max[2]
+      || overlapLength(rail.min[2], rail.max[2], mirrorFace.min[2], mirrorFace.max[2]) <= 0)) {
+    throw new Error(`${spec.key} copper face must remain captive inside all four timber frame rails.`);
+  }
+  for (let position = 0; position < layout.hangers.length; position += 1) {
+    const hanger = bounds[layout.hangers[position]];
+    if (hanger.min[1] !== top.max[1]
+      || overlapLength(hanger.min[0], hanger.max[0], top.min[0], top.max[0]) <= 0
+      || overlapLength(hanger.min[2], hanger.max[2], top.min[2], top.max[2]) <= 0) {
+      throw new Error(`${spec.key} upper hanger ${position} is detached from the top rail.`);
+    }
+  }
+  for (let position = 0; position < layout.cornerPlates.length; position += 1) {
+    const plate = bounds[layout.cornerPlates[position]];
+    const verticalRail = bounds[layout.frame[position % 2]];
+    const horizontalRail = bounds[layout.frame[position < 2 ? 2 : 3]];
+    if (plate.min[2] !== verticalRail.max[2]
+      || overlapLength(plate.min[0], plate.max[0], verticalRail.min[0], verticalRail.max[0]) <= 0
+      || overlapLength(plate.min[1], plate.max[1], horizontalRail.min[1], horizontalRail.max[1]) <= 0) {
+      throw new Error(`${spec.key} iron corner plate ${position} is detached from both meeting frame rails.`);
     }
   }
   for (let first = 0; first < bounds.length; first += 1) {

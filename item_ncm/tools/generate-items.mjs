@@ -388,6 +388,16 @@ const HEARTH_FIREPLACE_LAYOUTS = Object.freeze({
     grateEndRails: [21, 22],
   },
 });
+const FIREPLACE_TONG_LAYOUTS = Object.freeze({
+  "iron-and-timber-village-inn-fireplace-tongs": {
+    handle: 0,
+    collar: 1,
+    armRoots: [2, 3],
+    arms: [4, 5],
+    jawStops: [6, 7],
+    jaws: [8, 9],
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -558,6 +568,11 @@ const ITEM_NAMES = Object.freeze({
     "Iron Field Cooking Grate", "Parrilla de campaña de hierro", "Grille de cuisine de campagne en fer",
     "Eiserner Feldkochrost", "鉄製の野外調理台", "Железная походная решётка",
     "철제 야외 조리대", "鐵製野外烹飪架", "铁制野外烹饪架",
+  ),
+  "iron-and-timber-village-inn-fireplace-tongs": names(
+    "Iron-and-timber Village Inn Fireplace Tongs", "Tenazas de chimenea de posada de aldea de hierro y madera", "Pinces de cheminée d’auberge villageoise en fer et bois",
+    "Kaminzange aus Eisen und Holz für Dorfgasthäuser", "鉄製木柄の村宿暖炉用火ばさみ", "Каминные щипцы деревенской гостиницы из железа и дерева",
+    "철제 목재 손잡이 마을 여관 벽난로 집게", "鐵製木柄村莊旅店壁爐火鉗", "铁制木柄村庄客栈壁炉火钳",
   ),
   "timber-bound-village-ledger": names(
     "Timber-bound Village Ledger", "Libro mayor de aldea encuadernado en madera", "Registre de village relié en bois",
@@ -997,6 +1012,22 @@ const ITEM_SPECS = Object.freeze([
     ...[-21, 21].flatMap((x) => [-17, 17].map((z) => part("iron_bloom", [12, 4, 12], [x, 0, z]))),
   ], { yaw: -0.72, pitch: 0.4 }, {
     image: "concepts/cooking/iron-field-cooking-grate-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
+  tool("cooking", "iron-and-timber-village-inn-fireplace-tongs", [
+    part("squared_timber", [8, 16, 10], [0, -12, 0], { grip: handGrip(4, -4) }),
+    part("iron_bloom", [8, 4, 10], [0, -2, 0]),
+    part("iron_bloom", [6, 4, 3], [0, 2, -4]),
+    part("iron_bloom", [6, 4, 3], [0, 2, 4]),
+    part("iron_bloom", [3, 20, 3], [0, 14, -4]),
+    part("iron_bloom", [3, 20, 3], [0, 14, 4]),
+    part("iron_bloom", [3, 2, 3], [0, 25, -4]),
+    part("iron_bloom", [3, 2, 3], [0, 25, 4]),
+    part("iron_bloom", [3, 4, 2], [0, 28, -2]),
+    part("iron_bloom", [3, 4, 2], [0, 28, 2]),
+  ], held([4, 5, 6, 7, 8, 9]), { yaw: -0.7, pitch: 0.32 }, {
+    image: "concepts/cooking/iron-and-timber-village-inn-fireplace-tongs-v1.webp",
     source: "imagegen",
     version: 1,
   }),
@@ -1812,6 +1843,8 @@ function buildItem(spec) {
   if (privacyScreenLayout) validatePrivacyScreenGeometry(spec, runtime, privacyScreenLayout);
   const hearthFireplaceLayout = HEARTH_FIREPLACE_LAYOUTS[spec.key] ?? null;
   if (hearthFireplaceLayout) validateHearthFireplaceGeometry(spec, runtime, hearthFireplaceLayout);
+  const fireplaceTongLayout = FIREPLACE_TONG_LAYOUTS[spec.key] ?? null;
+  if (fireplaceTongLayout) validateFireplaceTongGeometry(spec, runtime, fireplaceTongLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -1931,6 +1964,7 @@ function buildItem(spec) {
       ...(wallMirrorLayout ? { wallMirrorGeometryValidated: true } : {}),
       ...(privacyScreenLayout ? { privacyScreenGeometryValidated: true } : {}),
       ...(hearthFireplaceLayout ? { hearthFireplaceGeometryValidated: true } : {}),
+      ...(fireplaceTongLayout ? { fireplaceTongGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -3883,6 +3917,71 @@ function validateHearthFireplaceGeometry(spec, runtime, layout) {
       || overlapLength(bracket.min[0], bracket.max[0], lintel.min[0], lintel.max[0]) <= 0) {
       throw new Error(`${spec.key} mantel bracket ${bracketIndex} must remain face-fastened to the lintel and shelf.`);
     }
+  }
+  for (let first = 0; first < bounds.length; first += 1) {
+    for (let second = first + 1; second < bounds.length; second += 1) {
+      if (boundsOverlap(bounds[first], bounds[second], 0)) {
+        throw new Error(`${spec.key} components ${first} and ${second} intersect.`);
+      }
+    }
+  }
+}
+
+function validateFireplaceTongGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 10 || runtime.boundsQ.sizeQ.join(",") !== "8,50,11") {
+    throw new Error(`${spec.key} must preserve its long hand-held fireplace-tool proportions (got ${runtime.componentCount} components and ${runtime.boundsQ.sizeQ.join(",")}).`);
+  }
+  const components = runtime.components ?? [];
+  const bounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = ["squared_timber", ...Array(9).fill("iron_bloom")];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  const handle = bounds[layout.handle];
+  const collar = bounds[layout.collar];
+  if (handle.max[1] !== collar.min[1]
+    || overlapLength(handle.min[0], handle.max[0], collar.min[0], collar.max[0]) <= 0
+    || overlapLength(handle.min[2], handle.max[2], collar.min[2], collar.max[2]) <= 0) {
+    throw new Error(`${spec.key} timber grip and iron collar must be face-connected.`);
+  }
+  for (let position = 0; position < 2; position += 1) {
+    const root = bounds[layout.armRoots[position]];
+    const arm = bounds[layout.arms[position]];
+    const stop = bounds[layout.jawStops[position]];
+    const jaw = bounds[layout.jaws[position]];
+    if (root.min[1] !== collar.max[1] || root.max[1] !== arm.min[1]
+      || arm.max[1] !== stop.min[1] || stop.max[1] !== jaw.min[1]
+      || overlapLength(root.min[0], root.max[0], collar.min[0], collar.max[0]) <= 0
+      || overlapLength(root.min[2], root.max[2], collar.min[2], collar.max[2]) <= 0
+      || overlapLength(root.min[0], root.max[0], arm.min[0], arm.max[0]) <= 0
+      || overlapLength(root.min[2], root.max[2], arm.min[2], arm.max[2]) <= 0
+      || overlapLength(arm.min[0], arm.max[0], stop.min[0], stop.max[0]) <= 0
+      || overlapLength(arm.min[2], arm.max[2], stop.min[2], stop.max[2]) <= 0
+      || overlapLength(stop.min[0], stop.max[0], jaw.min[0], jaw.max[0]) <= 0
+      || overlapLength(stop.min[2], stop.max[2], jaw.min[2], jaw.max[2]) <= 0) {
+      throw new Error(`${spec.key} tong arm ${position} must remain continuously connected from collar to jaw.`);
+    }
+  }
+  const [leftArm, rightArm] = layout.arms.map((index) => bounds[index]);
+  const [leftJaw, rightJaw] = layout.jaws.map((index) => bounds[index]);
+  const [leftArmCenter, rightArmCenter] = layout.arms.map((index) => components[index].offsetQ[2]);
+  const [leftJawCenter, rightJawCenter] = layout.jaws.map((index) => components[index].offsetQ[2]);
+  if (leftArmCenter >= rightArmCenter || leftJaw.max[2] >= rightJaw.min[2]
+    || leftJawCenter <= leftArmCenter || leftJawCenter >= 0
+    || rightJawCenter >= rightArmCenter || rightJawCenter <= 0
+    || leftJaw.max[2] !== -1 || rightJaw.min[2] !== 1
+    || components[layout.jaws[0]].offsetQ[1] !== components[layout.jaws[1]].offsetQ[1]) {
+    throw new Error(`${spec.key} jaws must remain symmetric, separated, and inward-facing at the work end.`);
+  }
+  const grip = components[layout.handle].grip;
+  if (!grip || grip.axis !== 0 || grip.sign !== 1 || grip.rotation !== 0
+    || components[layout.jaws[0]].offsetQ[1] <= components[layout.handle].offsetQ[1]) {
+    throw new Error(`${spec.key} must preserve its canonical forward-facing right-hand grip.`);
   }
   for (let first = 0; first < bounds.length; first += 1) {
     for (let second = first + 1; second < bounds.length; second += 1) {

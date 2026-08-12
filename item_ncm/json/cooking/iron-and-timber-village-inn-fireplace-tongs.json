@@ -1,0 +1,212 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "iron-and-timber-village-inn-fireplace-tongs",
+  "category": "cooking",
+  "interaction": "tool",
+  "names": {
+    "en": "Iron-and-timber Village Inn Fireplace Tongs",
+    "es": "Tenazas de chimenea de posada de aldea de hierro y madera",
+    "fr": "Pinces de cheminée d’auberge villageoise en fer et bois",
+    "de": "Kaminzange aus Eisen und Holz für Dorfgasthäuser",
+    "ja": "鉄製木柄の村宿暖炉用火ばさみ",
+    "ru": "Каминные щипцы деревенской гостиницы из железа и дерева",
+    "ko": "철제 목재 손잡이 마을 여관 벽난로 집게",
+    "zh-Hant": "鐵製木柄村莊旅店壁爐火鉗",
+    "zh-Hans": "铁制木柄村庄客栈壁炉火钳"
+  },
+  "descriptions": {
+    "en": "Iron-and-timber Village Inn Fireplace Tongs is a canonical NCF1 hand-held blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Tenazas de chimenea de posada de aldea de hierro y madera es un plano NCF1 canónico de mano, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Pinces de cheminée d’auberge villageoise en fer et bois est un plan NCF1 canonique tenu en main, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Kaminzange aus Eisen und Holz für Dorfgasthäuser ist ein kanonischer, handgeführter NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "鉄製木柄の村宿暖炉用火ばさみは、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1手持ち設計図です。",
+    "ru": "Каминные щипцы деревенской гостиницы из железа и дерева — канонический ручной чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "철제 목재 손잡이 마을 여관 벽난로 집게은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 휴대 장비 설계도입니다.",
+    "zh-Hant": "鐵製木柄村莊旅店壁爐火鉗是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 手持物品設計圖。",
+    "zh-Hans": "铁制木柄村庄客栈壁炉火钳是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 手持物品设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 0.125,
+    "height": 0.7813,
+    "depth": 0.1719,
+    "sizeQ": [
+      8,
+      50,
+      11
+    ]
+  },
+  "preview": {
+    "yaw": -0.7,
+    "pitch": 0.32
+  },
+  "concept": {
+    "image": "concepts/cooking/iron-and-timber-village-inn-fireplace-tongs-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "038db4f9965b5f3ca8d5f76bdc5a44e31aab1b570e45f1a9dbef99c2c780d987"
+  },
+  "holding": {
+    "gripComponentIndex": 0,
+    "workComponentIndexes": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "lateralComponentGroups": [],
+    "sourceToAvatarAxes": [
+      "+Y",
+      "-Z",
+      "-X"
+    ],
+    "testedPoseCount": 27
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.8U7Wf1mtvgQvoWacooKiGUIEAoAH6ABAT_AAIgACakIBAoAH_AAQABNSDAgGAAAv8IAAmpBgQDAAAQCEAATUgYoBgAA7_CAAJqQMUAwAAcAhAAE1IGBAYAAZ_wgACakDAgMAAMgIQABNSBggEAAHP-IAAmpAwQCAADgBEAA",
+    "rawBytes": 125,
+    "sha256": "f8d7d4c949c2fd6face6ef1eedce89ab49d92980850d8a4831cede44ba763238",
+    "designHash": 1947868059,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 125,
+    "savedBytes": 0,
+    "sourceComponentCount": 10,
+    "decodedComponentCount": 10,
+    "appearanceQuadCount": 0,
+    "hasGrip": true,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 4882813,
+        "usedVolumeMm3": 4882813,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 1220703,
+        "usedVolumeMm3": 1220703,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 274658,
+        "usedVolumeMm3": 274658,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 274658,
+        "usedVolumeMm3": 274658,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 686646,
+        "usedVolumeMm3": 686646,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 686646,
+        "usedVolumeMm3": 686646,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 68665,
+        "usedVolumeMm3": 68665,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 7,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 68665,
+        "usedVolumeMm3": 68665,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 8,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 91553,
+        "usedVolumeMm3": 91553,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 9,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 91553,
+        "usedVolumeMm3": 91553,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 8343552,
+      "requiredEffectiveDurability": 5994,
+      "outputMassGrams": 26785,
+      "materialScore": 67
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 240,
+      "triangleCount": 120,
+      "meshByteLength": 4560
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "squared_timber",
+      "itemCode": 1033,
+      "componentCount": 1,
+      "inputVolumeMm3": 4882813,
+      "usedVolumeMm3": 4882813,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 48400,
+      "equivalentInputUnits": 101
+    },
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 9,
+      "inputVolumeMm3": 3463747,
+      "usedVolumeMm3": 3463747,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 14
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "fireplaceTongGeometryValidated": true,
+    "chainMinted": false
+  }
+}

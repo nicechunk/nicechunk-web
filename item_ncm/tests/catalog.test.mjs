@@ -364,10 +364,20 @@ const hearthFireplaceLayouts = new Map([
     grateEndRails: [21, 22],
   }],
 ]);
+const fireplaceTongLayouts = new Map([
+  ["iron-and-timber-village-inn-fireplace-tongs", {
+    handle: 0,
+    collar: 1,
+    armRoots: [2, 3],
+    arms: [4, 5],
+    jawStops: [6, 7],
+    jaws: [8, 9],
+  }],
+]);
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
-assert.equal(catalog.items.length, 64);
+assert.equal(catalog.items.length, 65);
 assert.equal(new Set(catalog.items).size, catalog.items.length);
 
 const listedFiles = new Set(catalog.items);
@@ -407,6 +417,7 @@ let wallMirrorGeometryCount = 0;
 let privacyScreenGeometryCount = 0;
 let doubleDoorWardrobeGeometryCount = 0;
 let hearthFireplaceGeometryCount = 0;
+let fireplaceTongGeometryCount = 0;
 for (const file of catalog.items) {
   assert.match(file, /^json\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/);
   const item = json(join(root, file));
@@ -672,6 +683,14 @@ for (const file of catalog.items) {
     assert.equal(item.verification.hearthFireplaceGeometryValidated, true);
     assertHearthFireplaceGeometry(item, runtime, hearthFireplaceLayout);
   }
+  const fireplaceTongLayout = fireplaceTongLayouts.get(item.key);
+  if (fireplaceTongLayout) {
+    fireplaceTongGeometryCount += 1;
+    assert.equal(item.category, "cooking");
+    assert.equal(item.interaction, "tool");
+    assert.equal(item.verification.fireplaceTongGeometryValidated, true);
+    assertFireplaceTongGeometry(item, runtime, fireplaceTongLayout);
+  }
   assert.equal(forgeWorkbenchComponentsConnected(runtime.components), true, `${item.key} must be a connected assembly`);
   const grip = validateForgeGripBindings(runtime.components);
   assert.equal(grip.valid, true, `${item.key} grip must remain valid after decoding`);
@@ -755,7 +774,7 @@ assert.deepEqual([...categories], [
   ["handheld-civic", 1],
   ["furniture", 14],
   ["containers", 3],
-  ["cooking", 2],
+  ["cooking", 3],
   ["commerce", 2],
   ["construction", 1],
   ["books-writing", 7],
@@ -763,9 +782,9 @@ assert.deepEqual([...categories], [
   ["signage", 2],
   ["exterior-decor", 5],
 ]);
-assert.equal(tools, 16);
+assert.equal(tools, 17);
 assert.equal(placeables, 48);
-assert.equal(conceptReferences, 37);
+assert.equal(conceptReferences, 38);
 assert.equal(bookGeometryCount, 7);
 assert.equal(framedTextileGeometryCount, 1);
 assert.equal(drawerCabinetGeometryCount, 1);
@@ -793,9 +812,10 @@ assert.equal(wallMirrorGeometryCount, 1);
 assert.equal(privacyScreenGeometryCount, 1);
 assert.equal(doubleDoorWardrobeGeometryCount, 1);
 assert.equal(hearthFireplaceGeometryCount, 1);
+assert.equal(fireplaceTongGeometryCount, 1);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
-console.log("item_ncm catalog tests passed: 64 canonical NCF1 items across 16 categories");
+console.log("item_ncm catalog tests passed: 65 canonical NCF1 items across 16 categories");
 
 function json(file) {
   return JSON.parse(readFileSync(file, "utf8"));
@@ -2057,6 +2077,56 @@ function assertHearthFireplaceGeometry(item, runtime, layout) {
     assert.equal(bracket.min[2], lintel.max[2]);
     assert.equal(bracket.max[1], mantel.min[1]);
   }
+  for (let first = 0; first < bounds.length; first += 1) {
+    for (let second = first + 1; second < bounds.length; second += 1) {
+      assert.equal(positiveVolumeOverlap(bounds[first], bounds[second]), false, `${item.key} components ${first} and ${second} intersect`);
+    }
+  }
+}
+
+function assertFireplaceTongGeometry(item, runtime, layout) {
+  assert.equal(runtime.componentCount, 10);
+  assert.deepEqual(item.dimensions.sizeQ, [8, 50, 11]);
+  assert.equal(item.dimensions.width, 0.125);
+  assert.equal(item.dimensions.height, 0.7813);
+  assert.equal(item.dimensions.depth, 0.1719);
+  assert.ok(item.dimensions.height >= 0.72 && item.dimensions.height <= 0.82, `${item.key} must remain a long one-hand hearth tool`);
+  assert.ok(item.dimensions.height > item.dimensions.width * 5);
+  assert.ok(item.forge.rawBytes <= 160);
+  assert.ok(item.forge.requirements.outputMassGrams <= 35_000, `${item.key} must remain lighter than existing hand hammers`);
+  assert.deepEqual(
+    [...new Set(item.forge.materialComponents.map(({ materialId }) => materialId))].sort(),
+    ["iron_bloom", "squared_timber"],
+  );
+  assert.deepEqual(item.holding, {
+    gripComponentIndex: layout.handle,
+    workComponentIndexes: [...layout.arms, ...layout.jawStops, ...layout.jaws],
+    lateralComponentGroups: [],
+    sourceToAvatarAxes: ["+Y", "-Z", "-X"],
+    testedPoseCount: 27,
+  });
+  const components = runtime.components;
+  const bounds = components.map((component) => componentBoundsQ(component));
+  const handle = bounds[layout.handle];
+  const collar = bounds[layout.collar];
+  assert.equal(handle.max[1], collar.min[1]);
+  for (let position = 0; position < 2; position += 1) {
+    const root = bounds[layout.armRoots[position]];
+    const arm = bounds[layout.arms[position]];
+    const stop = bounds[layout.jawStops[position]];
+    const jaw = bounds[layout.jaws[position]];
+    assert.equal(root.min[1], collar.max[1]);
+    assert.equal(root.max[1], arm.min[1]);
+    assert.equal(arm.max[1], stop.min[1]);
+    assert.equal(stop.max[1], jaw.min[1]);
+  }
+  const [leftArmCenter, rightArmCenter] = layout.arms.map((index) => components[index].offsetQ[2]);
+  const [leftJawCenter, rightJawCenter] = layout.jaws.map((index) => components[index].offsetQ[2]);
+  assert.ok(leftArmCenter < leftJawCenter && leftJawCenter < 0);
+  assert.ok(rightArmCenter > rightJawCenter && rightJawCenter > 0);
+  assert.equal(bounds[layout.jaws[0]].max[2], -1);
+  assert.equal(bounds[layout.jaws[1]].min[2], 1);
+  assert.equal(components[layout.jaws[0]].offsetQ[1], components[layout.jaws[1]].offsetQ[1]);
   for (let first = 0; first < bounds.length; first += 1) {
     for (let second = first + 1; second < bounds.length; second += 1) {
       assert.equal(positiveVolumeOverlap(bounds[first], bounds[second]), false, `${item.key} components ${first} and ${second} intersect`);

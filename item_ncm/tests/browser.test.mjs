@@ -14,6 +14,7 @@ const debugPort = Number(process.env.ITEM_NCM_DEBUG_PORT ?? 9325);
 const externalUrl = process.env.ITEM_NCM_TEST_URL ?? "";
 const screenshotPath = process.env.ITEM_NCM_SCREENSHOT_PATH ?? "";
 const screenshotItem = process.env.ITEM_NCM_SCREENSHOT_ITEM ?? "";
+const screenshotOrbitX = Number(process.env.ITEM_NCM_SCREENSHOT_ORBIT_X ?? 0);
 const rulesFile = process.env.ITEM_NCM_RULES_FILE ? normalize(process.env.ITEM_NCM_RULES_FILE) : "";
 const server = externalUrl ? null : await startStaticServer(localPort);
 const url = externalUrl || `http://127.0.0.1:${localPort}/item_ncm/`;
@@ -82,7 +83,7 @@ try {
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 16);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /64 ITEMS/);
+  assert.match(initial.total, /65 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -785,7 +786,9 @@ try {
   await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
 
   await evaluate(client, `document.querySelector('[data-category="cooking"]').click()`);
-  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 2 && document.querySelector('[data-item="iron-hearth-cauldron"]')`));
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 3
+    && document.querySelector('[data-item="iron-hearth-cauldron"]')
+    && document.querySelector('[data-item="iron-and-timber-village-inn-fireplace-tongs"]')`));
   assert.equal(await evaluate(client, `performance.getEntriesByType("resource").some((entry) => new URL(entry.name).pathname.includes("/item_ncm/json/cooking/"))`), false,
     "category browsing must not load cooking item JSON files");
   await evaluate(client, `document.querySelector('[data-item="iron-hearth-cauldron"]').click()`);
@@ -823,6 +826,53 @@ try {
   assert.equal(cookingGrate.componentCount, "17");
   assert.equal(cookingGrate.selectedInUrl, "iron-field-cooking-grate");
   assert.ok(cookingGrate.resources.includes("/item_ncm/json/cooking/iron-field-cooking-grate.json"));
+
+  await evaluate(client, `document.querySelector('[data-item="iron-and-timber-village-inn-fireplace-tongs"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="iron-and-timber-village-inn-fireplace-tongs"].active')
+    && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const fireplaceTongs = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payload: document.querySelector("#codeOutput").value,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    materialRows: document.querySelectorAll("#bomRows .bom-row").length,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(fireplaceTongs.title, "Iron-and-timber Village Inn Fireplace Tongs");
+  assert.equal(fireplaceTongs.type, "HAND-HELD");
+  assert.match(fireplaceTongs.payload, /^NCF1\./);
+  assert.equal(fireplaceTongs.payloadBytes, "125 / 640 B");
+  assert.equal(fireplaceTongs.componentCount, "10");
+  assert.equal(fireplaceTongs.materialRows, 2);
+  assert.equal(fireplaceTongs.selectedInUrl, "iron-and-timber-village-inn-fireplace-tongs");
+  assert.ok(fireplaceTongs.resources.includes("/item_ncm/json/cooking/iron-and-timber-village-inn-fireplace-tongs.json"));
+  for (const [locale, expectedName] of Object.entries({
+    en: "Iron-and-timber Village Inn Fireplace Tongs",
+    es: "Tenazas de chimenea de posada de aldea de hierro y madera",
+    fr: "Pinces de cheminée d’auberge villageoise en fer et bois",
+    de: "Kaminzange aus Eisen und Holz für Dorfgasthäuser",
+    ja: "鉄製木柄の村宿暖炉用火ばさみ",
+    ru: "Каминные щипцы деревенской гостиницы из железа и дерева",
+    ko: "철제 목재 손잡이 마을 여관 벽난로 집게",
+    "zh-Hant": "鐵製木柄村莊旅店壁爐火鉗",
+    "zh-Hans": "铁制木柄村庄客栈壁炉火钳",
+  })) {
+    await evaluate(client, `(() => {
+      const select = document.querySelector("[data-language-select]");
+      select.value = ${JSON.stringify(locale)};
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+    })()`);
+    await waitFor(() => evaluate(client, `document.documentElement.lang === ${JSON.stringify(locale)} && document.querySelector("#itemTitle").textContent === ${JSON.stringify(expectedName)}`));
+    assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), fireplaceTongs.payload);
+  }
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "en";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
 
   await evaluate(client, `document.querySelector('[data-category="books-writing"]').click()`);
   await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 7 && document.querySelector('[data-item="timber-bound-village-ledger"]')`));
@@ -1492,6 +1542,16 @@ try {
       await waitFor(() => evaluate(client, `document.readyState === "complete"
         && document.querySelector('[data-item="${screenshotItem}"].active')
         && document.querySelector("#runtimeState").dataset.state === "verified"`));
+    }
+    if (Number.isFinite(screenshotOrbitX) && screenshotOrbitX !== 0) {
+      const point = await evaluate(client, `(() => {
+        const bounds = document.querySelector("#forgePreview").getBoundingClientRect();
+        return { x: bounds.right - 36, y: bounds.bottom - 36 };
+      })()`);
+      await client.send("Input.dispatchMouseEvent", { type: "mousePressed", x: point.x, y: point.y, button: "left", buttons: 1, clickCount: 1 });
+      await client.send("Input.dispatchMouseEvent", { type: "mouseMoved", x: point.x + screenshotOrbitX, y: point.y, button: "left", buttons: 1 });
+      await client.send("Input.dispatchMouseEvent", { type: "mouseReleased", x: point.x + screenshotOrbitX, y: point.y, button: "left", buttons: 0, clickCount: 1 });
+      await new Promise((resolve) => setTimeout(resolve, 100));
     }
     const screenshot = await client.send("Page.captureScreenshot", { format: "png", captureBeyondViewport: false });
     writeFileSync(screenshotPath, Buffer.from(screenshot.data, "base64"));

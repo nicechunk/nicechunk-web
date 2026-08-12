@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 4);
-  assert.match(initial.totalBuildingCount, /58 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /59 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -2562,7 +2562,7 @@ try {
   assert.ok(!cheeseHouse.resources.some((path) => path.endsWith("compact-village-cheese-house-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=construction]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'construction' && document.querySelectorAll('[data-building]').length === 3 && document.querySelector('[data-building=timber-building-scaffold]') && document.querySelector('[data-building=compact-village-stonemason-workshop]') && document.querySelector('[data-building=compact-village-carpenter-workshop]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'construction' && document.querySelectorAll('[data-building]').length === 4 && document.querySelector('[data-building=timber-building-scaffold]') && document.querySelector('[data-building=compact-village-stonemason-workshop]') && document.querySelector('[data-building=compact-village-carpenter-workshop]') && document.querySelector('[data-building=compact-village-building-supply-depot]')"));
   const constructionBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     buildingCount: document.querySelectorAll('[data-building]').length,
@@ -2570,13 +2570,15 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(constructionBrowse.activeBuilding, null, "browsing construction must not select or generate a building");
-  assert.equal(constructionBrowse.buildingCount, 3);
+  assert.equal(constructionBrowse.buildingCount, 4);
   assert.match(constructionBrowse.previewTitle, /Compact Village Cheese House/);
   assert.ok(!constructionBrowse.resources.includes("/build_ncm/buildings/construction/timber-building-scaffold.json"), "browsing construction must not load the scaffold JSON");
   assert.ok(!constructionBrowse.resources.includes("/build_ncm/buildings/construction/compact-village-stonemason-workshop.json"), "browsing construction must not load the stonemason workshop JSON");
   assert.ok(!constructionBrowse.resources.includes("/build_ncm/concepts/construction/compact-village-stonemason-workshop.webp"), "browsing construction must not load the stonemason concept art");
   assert.ok(!constructionBrowse.resources.includes("/build_ncm/buildings/construction/compact-village-carpenter-workshop.json"), "browsing construction must not load the carpenter workshop JSON");
   assert.ok(!constructionBrowse.resources.includes("/build_ncm/concepts/construction/compact-village-carpenter-workshop.webp"), "browsing construction must not load the carpenter concept art");
+  assert.ok(!constructionBrowse.resources.includes("/build_ncm/buildings/construction/compact-village-building-supply-depot.json"), "browsing construction must not load the supply depot JSON");
+  assert.ok(!constructionBrowse.resources.includes("/build_ncm/concepts/construction/compact-village-building-supply-depot.webp"), "browsing construction must not load the supply depot concept art");
 
   await clickBuilding(client, "timber-building-scaffold");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'timber-building-scaffold'"));
@@ -2592,6 +2594,8 @@ try {
   assert.ok(!scaffold.resources.includes("/build_ncm/concepts/construction/compact-village-stonemason-workshop.webp"), "selecting the scaffold must not load the stonemason concept art");
   assert.ok(!scaffold.resources.includes("/build_ncm/buildings/construction/compact-village-carpenter-workshop.json"), "selecting the scaffold must not load the carpenter workshop JSON");
   assert.ok(!scaffold.resources.includes("/build_ncm/concepts/construction/compact-village-carpenter-workshop.webp"), "selecting the scaffold must not load the carpenter concept art");
+  assert.ok(!scaffold.resources.includes("/build_ncm/buildings/construction/compact-village-building-supply-depot.json"), "selecting the scaffold must not load the supply depot JSON");
+  assert.ok(!scaffold.resources.includes("/build_ncm/concepts/construction/compact-village-building-supply-depot.webp"), "selecting the scaffold must not load the supply depot concept art");
 
   await clickBuilding(client, "compact-village-stonemason-workshop");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-stonemason-workshop' && document.querySelector('#modelSize').textContent === '23 × 18 × 17' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
@@ -2633,6 +2637,8 @@ try {
   assert.ok(!stonemason.resources.includes("/build_ncm/buildings/construction/compact-village-carpenter-workshop.json"), "selecting the stonemason workshop must not load the carpenter workshop JSON");
   assert.ok(!stonemason.resources.includes("/build_ncm/concepts/construction/compact-village-carpenter-workshop.webp"), "selecting the stonemason workshop must not load the carpenter concept art");
   assert.ok(!stonemason.resources.some((path) => path.endsWith("compact-village-stonemason-workshop-blueprint.js")));
+  assert.ok(!stonemason.resources.includes("/build_ncm/buildings/construction/compact-village-building-supply-depot.json"), "selecting the stonemason workshop must not load the supply depot JSON");
+  assert.ok(!stonemason.resources.includes("/build_ncm/concepts/construction/compact-village-building-supply-depot.webp"), "selecting the stonemason workshop must not load the supply depot concept art");
 
   await clickBuilding(client, "compact-village-carpenter-workshop");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-carpenter-workshop' && document.querySelector('#modelSize').textContent === '19 × 19 × 25' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
@@ -2672,6 +2678,49 @@ try {
   assert.ok(carpenter.resources.includes("/build_ncm/buildings/construction/compact-village-carpenter-workshop.json"));
   assert.ok(carpenter.resources.includes("/build_ncm/concepts/construction/compact-village-carpenter-workshop.webp"));
   assert.ok(!carpenter.resources.some((path) => path.endsWith("compact-village-carpenter-workshop-blueprint.js")));
+  assert.ok(!carpenter.resources.includes("/build_ncm/buildings/construction/compact-village-building-supply-depot.json"), "selecting the carpenter workshop must not load the supply depot JSON");
+  assert.ok(!carpenter.resources.includes("/build_ncm/concepts/construction/compact-village-building-supply-depot.webp"), "selecting the carpenter workshop must not load the supply depot concept art");
+
+  await clickBuilding(client, "compact-village-building-supply-depot");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-building-supply-depot' && document.querySelector('#modelSize').textContent === '27 × 21 × 29' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const supplyDepot = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptLoading: document.querySelector('#conceptImage').loading,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(supplyDepot.activeCategory, "construction");
+  assert.match(supplyDepot.title, /Compact Village Building Supply Depot/);
+  assert.equal(supplyDepot.modelSize, "27 × 21 × 29");
+  assert.match(supplyDepot.payload, /^NCM3:/);
+  assert.equal(supplyDepot.voxelCount, 2456);
+  for (const id of [55, 56, 57, 58, 64, 68, 69, 70, 99]) assert.match(supplyDepot.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(supplyDepot.uncovered, false);
+  assert.equal(supplyDepot.glazingDisabled, true);
+  assert.equal(supplyDepot.glazingLabel, "Openings: Not applicable");
+  assert.equal(supplyDepot.disabledStyles, 6);
+  assert.equal(supplyDepot.disabledRoofs, 6);
+  assert.equal(supplyDepot.conceptHidden, false);
+  assert.equal(supplyDepot.conceptLoading, "eager");
+  assert.match(supplyDepot.conceptAlt, /Compact Village Building Supply Depot concept reference/);
+  assert.equal(supplyDepot.conceptFit, "contain");
+  assert.equal(supplyDepot.selectedInUrl, "compact-village-building-supply-depot");
+  assert.ok(supplyDepot.resources.includes("/build_ncm/buildings/construction/compact-village-building-supply-depot.json"));
+  assert.ok(supplyDepot.resources.includes("/build_ncm/concepts/construction/compact-village-building-supply-depot.webp"));
+  assert.ok(!supplyDepot.resources.some((path) => path.endsWith("compact-village-building-supply-depot-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=residential]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=hollow-cottage]')"));
@@ -2814,10 +2863,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const barracksDirectUrl = new URL(url);
-  barracksDirectUrl.searchParams.set("building", "compact-village-barracks");
-  await client.send("Page.navigate", { url: barracksDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'fortress' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-barracks' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const supplyDepotDirectUrl = new URL(url);
+  supplyDepotDirectUrl.searchParams.set("building", "compact-village-building-supply-depot");
+  await client.send("Page.navigate", { url: supplyDepotDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'construction' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-building-supply-depot' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -2829,16 +2878,16 @@ try {
     conceptPath: new URL(document.querySelector('#conceptImage').dataset.source).pathname,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(directSelection.activeCategory, "fortress");
-  assert.equal(directSelection.activeBuilding, "compact-village-barracks");
-  assert.match(directSelection.title, /Compact Village Barracks/);
-  assert.equal(directSelection.modelSize, "35 × 23 × 27");
+  assert.equal(directSelection.activeCategory, "construction");
+  assert.equal(directSelection.activeBuilding, "compact-village-building-supply-depot");
+  assert.match(directSelection.title, /Compact Village Building Supply Depot/);
+  assert.equal(directSelection.modelSize, "27 × 21 × 29");
   assert.match(directSelection.payload, /^NCM3:/);
   assert.equal(directSelection.conceptComplete, true);
   assert.ok(directSelection.conceptNaturalWidth > 0);
-  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/fortress/compact-village-barracks.webp");
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/fortress/compact-village-barracks.json"));
-  assert.ok(directSelection.resources.includes("/build_ncm/concepts/fortress/compact-village-barracks.webp"));
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/construction/compact-village-building-supply-depot.webp");
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/construction/compact-village-building-supply-depot.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/concepts/construction/compact-village-building-supply-depot.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

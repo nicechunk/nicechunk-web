@@ -58,6 +58,7 @@
     "buildings/transport/compact-village-courier-post.json",
     "buildings/wayfinding/covered-village-route-map-shelter.json",
     "buildings/utility/compact-village-laundry-house.json",
-    "buildings/fortress/compact-village-barracks.json"
+    "buildings/fortress/compact-village-barracks.json",
+    "buildings/construction/compact-village-building-supply-depot.json"
   ]
 }

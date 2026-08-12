@@ -71,6 +71,7 @@
     "buildings/construction/timber-village-building-gantry.json",
     "buildings/wayfinding/compact-village-visitor-information-kiosk.json",
     "buildings/civic/compact-village-fire-brigade-station.json",
-    "buildings/industrial/compact-village-wheelwright-workshop.json"
+    "buildings/industrial/compact-village-wheelwright-workshop.json",
+    "buildings/industrial/compact-village-candlemaker-workshop.json"
   ]
 }

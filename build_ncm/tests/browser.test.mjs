@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 5);
-  assert.match(initial.totalBuildingCount, /71 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /72 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -560,14 +560,14 @@ try {
   assert.ok(!boatwrightWorkshop.resources.some((path) => path.endsWith("compact-village-boatwright-workshop-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=industrial]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=freight-warehouse]') && document.querySelector('[data-building=covered-village-bloomery]') && document.querySelector('[data-building=compact-village-blacksmith-shop]') && document.querySelector('[data-building=compact-village-weaving-workshop]') && document.querySelector('[data-building=compact-village-pottery-workshop]') && document.querySelector('[data-building=compact-village-cooper-workshop]') && document.querySelector('[data-building=compact-village-brewhouse]') && document.querySelector('[data-building=compact-village-tannery]') && document.querySelector('[data-building=compact-village-sawmill]') && document.querySelector('[data-building=compact-village-wheelwright-workshop]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=freight-warehouse]') && document.querySelector('[data-building=covered-village-bloomery]') && document.querySelector('[data-building=compact-village-blacksmith-shop]') && document.querySelector('[data-building=compact-village-weaving-workshop]') && document.querySelector('[data-building=compact-village-pottery-workshop]') && document.querySelector('[data-building=compact-village-cooper-workshop]') && document.querySelector('[data-building=compact-village-brewhouse]') && document.querySelector('[data-building=compact-village-tannery]') && document.querySelector('[data-building=compact-village-sawmill]') && document.querySelector('[data-building=compact-village-wheelwright-workshop]') && document.querySelector('[data-building=compact-village-candlemaker-workshop]')"));
   const industrialBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     cardCount: document.querySelectorAll('[data-building]').length,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(industrialBrowse.activeBuilding, null);
-  assert.equal(industrialBrowse.cardCount, 10);
+  assert.equal(industrialBrowse.cardCount, 11);
   assert.ok(!industrialBrowse.resources.includes("/build_ncm/buildings/industrial/freight-warehouse.json"), "category browsing must not load the warehouse JSON");
   assert.ok(!industrialBrowse.resources.includes("/build_ncm/buildings/industrial/covered-village-bloomery.json"), "category browsing must not load the bloomery JSON");
   assert.ok(!industrialBrowse.resources.includes("/build_ncm/buildings/industrial/compact-village-blacksmith-shop.json"), "category browsing must not load the blacksmith-shop JSON");
@@ -586,6 +586,8 @@ try {
   assert.ok(!industrialBrowse.resources.includes("/build_ncm/concepts/industrial/compact-village-sawmill.webp"), "category browsing must not load the sawmill concept art");
   assert.ok(!industrialBrowse.resources.includes("/build_ncm/buildings/industrial/compact-village-wheelwright-workshop.json"), "category browsing must not load the wheelwright-workshop JSON");
   assert.ok(!industrialBrowse.resources.includes("/build_ncm/concepts/industrial/compact-village-wheelwright-workshop.webp"), "category browsing must not load the wheelwright-workshop concept art");
+  assert.ok(!industrialBrowse.resources.includes("/build_ncm/buildings/industrial/compact-village-candlemaker-workshop.json"), "category browsing must not load the candlemaker-workshop JSON");
+  assert.ok(!industrialBrowse.resources.includes("/build_ncm/concepts/industrial/compact-village-candlemaker-workshop.webp"), "category browsing must not load the candlemaker-workshop concept art");
   await clickBuilding(client, "freight-warehouse");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'freight-warehouse' && document.querySelector('#modelSize').textContent === '48 × 36 × 38'"));
   const warehouse = await evaluate(client, `({
@@ -949,6 +951,47 @@ try {
   assert.ok(wheelwrightWorkshop.resources.includes("/build_ncm/buildings/industrial/compact-village-wheelwright-workshop.json"));
   assert.ok(wheelwrightWorkshop.resources.includes("/build_ncm/concepts/industrial/compact-village-wheelwright-workshop.webp"));
   assert.ok(!wheelwrightWorkshop.resources.some((path) => path.endsWith("compact-village-wheelwright-workshop-blueprint.js")));
+
+  await clickBuilding(client, "compact-village-candlemaker-workshop");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-candlemaker-workshop' && document.querySelector('#modelSize').textContent === '27 × 19 × 23' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const candlemakerWorkshop = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptLoading: document.querySelector('#conceptImage').loading,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(candlemakerWorkshop.activeCategory, "industrial");
+  assert.match(candlemakerWorkshop.title, /Compact Village Candlemaker Workshop/);
+  assert.equal(candlemakerWorkshop.modelSize, "27 × 19 × 23");
+  assert.match(candlemakerWorkshop.payload, /^NCM3:/);
+  assert.equal(candlemakerWorkshop.voxelCount, 2270);
+  for (const id of [56, 57, 60, 62, 65, 68, 69, 70, 74, 96]) assert.match(candlemakerWorkshop.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(candlemakerWorkshop.uncovered, false);
+  assert.equal(candlemakerWorkshop.glazingDisabled, true);
+  assert.equal(candlemakerWorkshop.glazingLabel, "Openings: Not applicable");
+  assert.equal(candlemakerWorkshop.disabledStyles, 6);
+  assert.equal(candlemakerWorkshop.disabledRoofs, 6);
+  assert.equal(candlemakerWorkshop.conceptHidden, false);
+  assert.equal(candlemakerWorkshop.conceptLoading, "eager");
+  assert.match(candlemakerWorkshop.conceptAlt, /Compact Village Candlemaker Workshop concept reference/);
+  assert.equal(candlemakerWorkshop.conceptFit, "contain");
+  assert.equal(candlemakerWorkshop.selectedInUrl, "compact-village-candlemaker-workshop");
+  assert.ok(candlemakerWorkshop.resources.includes("/build_ncm/buildings/industrial/compact-village-candlemaker-workshop.json"));
+  assert.ok(candlemakerWorkshop.resources.includes("/build_ncm/concepts/industrial/compact-village-candlemaker-workshop.webp"));
+  assert.ok(!candlemakerWorkshop.resources.some((path) => path.endsWith("compact-village-candlemaker-workshop-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=fortress]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=grand-castle]') && document.querySelector('[data-building=compact-village-guardhouse]') && document.querySelector('[data-building=compact-village-watchtower]') && document.querySelector('[data-building=compact-village-barracks]') && document.querySelector('[data-building=compact-village-palisade-gatehouse]')"));
@@ -3385,10 +3428,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const wheelwrightWorkshopDirectUrl = new URL(url);
-  wheelwrightWorkshopDirectUrl.searchParams.set("building", "compact-village-wheelwright-workshop");
-  await client.send("Page.navigate", { url: wheelwrightWorkshopDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'industrial' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-wheelwright-workshop' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const candlemakerWorkshopDirectUrl = new URL(url);
+  candlemakerWorkshopDirectUrl.searchParams.set("building", "compact-village-candlemaker-workshop");
+  await client.send("Page.navigate", { url: candlemakerWorkshopDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'industrial' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-candlemaker-workshop' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -3401,15 +3444,15 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(directSelection.activeCategory, "industrial");
-  assert.equal(directSelection.activeBuilding, "compact-village-wheelwright-workshop");
-  assert.match(directSelection.title, /Compact Village Wheelwright Workshop/);
-  assert.equal(directSelection.modelSize, "31 × 19 × 25");
+  assert.equal(directSelection.activeBuilding, "compact-village-candlemaker-workshop");
+  assert.match(directSelection.title, /Compact Village Candlemaker Workshop/);
+  assert.equal(directSelection.modelSize, "27 × 19 × 23");
   assert.match(directSelection.payload, /^NCM3:/);
   assert.equal(directSelection.conceptComplete, true);
   assert.ok(directSelection.conceptNaturalWidth > 0);
-  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/industrial/compact-village-wheelwright-workshop.webp");
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/industrial/compact-village-wheelwright-workshop.json"));
-  assert.ok(directSelection.resources.includes("/build_ncm/concepts/industrial/compact-village-wheelwright-workshop.webp"));
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/industrial/compact-village-candlemaker-workshop.webp");
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/industrial/compact-village-candlemaker-workshop.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/concepts/industrial/compact-village-candlemaker-workshop.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

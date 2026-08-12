@@ -82,7 +82,7 @@ try {
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 14);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /44 ITEMS/);
+  assert.match(initial.total, /45 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -485,8 +485,9 @@ try {
   assert.ok(wallClock.resources.includes("/item_ncm/json/interior-decor/copper-rimmed-village-wall-clock.json"));
 
   await evaluate(client, `document.querySelector('[data-category="signage"]').click()`);
-  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 1
-    && document.querySelector('[data-item="iron-bracketed-village-shop-sign"]')`));
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 2
+    && document.querySelector('[data-item="iron-bracketed-village-shop-sign"]')
+    && document.querySelector('[data-item="timber-village-public-notice-board"]')`));
   assert.equal(await evaluate(client, `performance.getEntriesByType("resource").some((entry) => new URL(entry.name).pathname.includes("/item_ncm/json/signage/"))`), false,
     "category browsing must not load signage item JSON files");
   await evaluate(client, `document.querySelector('[data-item="iron-bracketed-village-shop-sign"]').click()`);
@@ -510,14 +511,36 @@ try {
   assert.equal(shopSign.selectedInUrl, "iron-bracketed-village-shop-sign");
   assert.ok(shopSign.resources.includes("/item_ncm/json/signage/iron-bracketed-village-shop-sign.json"));
 
+  await evaluate(client, `document.querySelector('[data-item="timber-village-public-notice-board"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="timber-village-public-notice-board"].active')
+    && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const noticeBoard = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payload: document.querySelector("#codeOutput").value,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    materialRows: document.querySelectorAll("#bomRows .bom-row").length,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(noticeBoard.title, "Timber Village Public Notice Board");
+  assert.equal(noticeBoard.type, "PLACEABLE");
+  assert.match(noticeBoard.payload, /^NCF1\./);
+  assert.equal(noticeBoard.payloadBytes, "287 / 640 B");
+  assert.equal(noticeBoard.componentCount, "21");
+  assert.equal(noticeBoard.materialRows, 5);
+  assert.equal(noticeBoard.selectedInUrl, "timber-village-public-notice-board");
+  assert.ok(noticeBoard.resources.includes("/item_ncm/json/signage/timber-village-public-notice-board.json"));
+
   await evaluate(client, `(() => {
     const select = document.querySelector("[data-language-select]");
     select.value = "zh-Hans";
     select.dispatchEvent(new Event("change", { bubbles: true }));
   })()`);
-  await waitFor(() => evaluate(client, `document.querySelector("#itemTitle").textContent === "铁架村庄商店招牌"`));
+  await waitFor(() => evaluate(client, `document.querySelector("#itemTitle").textContent === "木制村庄公共公告板"`));
   assert.equal(await evaluate(client, `document.querySelector('[data-category="signage"] span').textContent`), "招牌与公告板");
-  assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), shopSign.payload);
+  assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), noticeBoard.payload);
   await evaluate(client, `(() => {
     const select = document.querySelector("[data-language-select]");
     select.value = "en";

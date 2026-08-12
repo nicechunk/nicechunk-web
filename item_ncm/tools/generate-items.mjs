@@ -131,6 +131,20 @@ const SHOP_SIGN_LAYOUTS = Object.freeze({
     emblem: [15, 16],
   },
 });
+const NOTICE_BOARD_LAYOUTS = Object.freeze({
+  "timber-village-public-notice-board": {
+    feet: [0, 1],
+    anchors: [2, 3],
+    posts: [4, 5],
+    boardSlats: [6, 7, 8, 9],
+    sideFrame: [10, 11],
+    crossFrame: [12, 13],
+    fasteners: 14,
+    header: 15,
+    roof: [16, 17, 18],
+    roofPins: [19, 20],
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -349,6 +363,11 @@ const ITEM_NAMES = Object.freeze({
     "Iron-bracketed Village Shop Sign", "Letrero de tienda de aldea con soporte de hierro", "Enseigne de boutique villageoise sur potence en fer",
     "Dorfladenschild mit Eisenhalterung", "鉄製ブラケット付き村落商店看板", "Деревенская магазинная вывеска на железном кронштейне",
     "철제 브래킷 마을 상점 간판", "鐵架村莊商店招牌", "铁架村庄商店招牌",
+  ),
+  "timber-village-public-notice-board": names(
+    "Timber Village Public Notice Board", "Tablón público de anuncios de aldea en madera", "Panneau d’affichage public de village en bois",
+    "Öffentliche Dorfanschlagtafel aus Holz", "木製村落公共掲示板", "Деревянная общественная доска объявлений деревни",
+    "목재 마을 공공 게시판", "木製村莊公共公告板", "木制村庄公共公告板",
   ),
   "iron-blacksmith-anvil": names(
     "Iron Blacksmith Anvil", "Yunque de herrero de hierro", "Enclume de forgeron en fer", "Eiserner Schmiedeamboss",
@@ -848,6 +867,30 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+  placeable("signage", "timber-village-public-notice-board", [
+    part("polished_stone_slab", [18, 8, 22], [-48, 4, 0]),
+    part("polished_stone_slab", [18, 8, 22], [48, 4, 0]),
+    part("iron_bloom", [14, 8, 16], [-48, 12, 0]),
+    part("iron_bloom", [14, 8, 16], [48, 12, 0]),
+    part("squared_timber", [10, 86, 10], [-48, 59, 0]),
+    part("squared_timber", [10, 86, 10], [48, 59, 0]),
+    ...[46, 60, 74, 88].map((y) => part("wooden_plank", [86, 12, 4], [0, y, 0])),
+    part("squared_timber", [6, 64, 6], [-46, 68, 0]),
+    part("squared_timber", [6, 64, 6], [46, 68, 0]),
+    part("squared_timber", [86, 6, 6], [0, 97, 0]),
+    part("squared_timber", [86, 6, 6], [0, 37, 0]),
+    part("iron_bloom", [78, 48, 2], [0, 67, 3], { mask: noticeBoardFastenerMask }),
+    part("squared_timber", [112, 8, 10], [0, 106, 0]),
+    part("wooden_plank", [116, 4, 30], [0, 112, 0]),
+    part("wooden_plank", [104, 4, 26], [0, 116, 0]),
+    part("wooden_plank", [92, 4, 22], [0, 120, 0]),
+    part("wooden_stick", [10, 8, 30], [-51, 116, 0]),
+    part("wooden_stick", [10, 8, 30], [51, 116, 0]),
+  ], { yaw: -0.62, pitch: 0.25 }, {
+    image: "concepts/signage/timber-village-public-notice-board-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
 ]);
 
 generate();
@@ -931,6 +974,8 @@ function buildItem(spec) {
   if (wallClockLayout) validateWallClockGeometry(spec, runtime, wallClockLayout);
   const shopSignLayout = SHOP_SIGN_LAYOUTS[spec.key] ?? null;
   if (shopSignLayout) validateShopSignGeometry(spec, runtime, shopSignLayout);
+  const noticeBoardLayout = NOTICE_BOARD_LAYOUTS[spec.key] ?? null;
+  if (noticeBoardLayout) validateNoticeBoardGeometry(spec, runtime, noticeBoardLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -1030,6 +1075,7 @@ function buildItem(spec) {
       ...(publicBenchLayout ? { publicBenchGeometryValidated: true } : {}),
       ...(wallClockLayout ? { wallClockGeometryValidated: true } : {}),
       ...(shopSignLayout ? { shopSignGeometryValidated: true } : {}),
+      ...(noticeBoardLayout ? { noticeBoardGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -1452,6 +1498,77 @@ function validateShopSignGeometry(spec, runtime, layout) {
   }
 }
 
+function validateNoticeBoardGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 21 || runtime.boundsQ.sizeQ.join(",") !== "116,122,30") {
+    throw new Error(`${spec.key} must preserve its roofed, human-scale public notice-board proportions.`);
+  }
+  const components = runtime.components ?? [];
+  const componentBounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    "polished_stone_slab", "polished_stone_slab", "iron_bloom", "iron_bloom",
+    "squared_timber", "squared_timber",
+    "wooden_plank", "wooden_plank", "wooden_plank", "wooden_plank",
+    "squared_timber", "squared_timber", "squared_timber", "squared_timber",
+    "iron_bloom", "squared_timber", "wooden_plank", "wooden_plank", "wooden_plank",
+    "wooden_stick", "wooden_stick",
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  for (let position = 0; position < layout.posts.length; position += 1) {
+    const foot = componentBounds[layout.feet[position]];
+    const anchor = componentBounds[layout.anchors[position]];
+    const post = componentBounds[layout.posts[position]];
+    if (foot.min[1] !== 0 || foot.max[1] !== anchor.min[1] || anchor.max[1] !== post.min[1]
+      || post.max[1] !== componentBounds[layout.header].min[1]) {
+      throw new Error(`${spec.key} support ${position} is not grounded continuously into the roof header.`);
+    }
+  }
+  const [leftFrame, rightFrame] = layout.sideFrame.map((index) => componentBounds[index]);
+  const [topFrame, bottomFrame] = layout.crossFrame.map((index) => componentBounds[index]);
+  for (const slatIndex of layout.boardSlats) {
+    const slat = componentBounds[slatIndex];
+    if (slat.min[0] !== leftFrame.max[0] || slat.max[0] !== rightFrame.min[0]
+      || slat.min[1] < bottomFrame.max[1] || slat.max[1] > topFrame.min[1]) {
+      throw new Error(`${spec.key} notice slat ${slatIndex} escapes its timber frame.`);
+    }
+  }
+  if (bottomFrame.max[1] !== componentBounds[layout.boardSlats[0]].min[1]
+    || topFrame.min[1] !== componentBounds[layout.boardSlats.at(-1)].max[1]) {
+    throw new Error(`${spec.key} notice panel does not meet its upper and lower frame rails.`);
+  }
+  const fasteners = componentBounds[layout.fasteners];
+  if (fasteners.min[0] < leftFrame.max[0] || fasteners.max[0] > rightFrame.min[0]
+    || fasteners.min[1] < bottomFrame.max[1] || fasteners.max[1] > topFrame.min[1]) {
+    throw new Error(`${spec.key} iron posting points leave the notice panel.`);
+  }
+  let previous = componentBounds[layout.header];
+  for (const roofIndex of layout.roof) {
+    const roof = componentBounds[roofIndex];
+    if (previous.max[1] !== roof.min[1]
+      || roof.min[0] < previous.min[0] - 2 || roof.max[0] > previous.max[0] + 2
+      || roof.min[2] < -15 || roof.max[2] > 15) {
+      throw new Error(`${spec.key} roof tier ${roofIndex} is detached or unstable.`);
+    }
+    previous = roof;
+  }
+  const firstRoof = componentBounds[layout.roof[0]];
+  const lastRoof = componentBounds[layout.roof.at(-1)];
+  for (const pinIndex of layout.roofPins) {
+    const pin = componentBounds[pinIndex];
+    if (pin.min[1] > firstRoof.max[1] || pin.max[1] < lastRoof.min[1]
+      || pin.min[0] < firstRoof.min[0] || pin.max[0] > firstRoof.max[0]
+      || pin.min[2] < firstRoof.min[2] || pin.max[2] > firstRoof.max[2]) {
+      throw new Error(`${spec.key} roof pin ${pinIndex} does not bind the rain-hood tiers.`);
+    }
+  }
+}
+
 function validateToolHolding(spec, runtime) {
   const policy = spec.holding;
   const components = runtime.components ?? [];
@@ -1854,6 +1971,10 @@ function shopSignDiamondMask({ nx, ny }) {
 function shopSignMerchantMarkMask({ nx, ny }) {
   const diamond = Math.abs(nx) + Math.abs(ny) <= 1.12;
   return diamond && (Math.abs(nx) <= 0.24 || Math.abs(ny) <= 0.28);
+}
+
+function noticeBoardFastenerMask({ x, y }) {
+  return [1, 4, 7, 10, 12].includes(x) && [1, 3, 5, 7, 9].includes(y);
 }
 
 function chiselTip({ nx, ny, nz }) {

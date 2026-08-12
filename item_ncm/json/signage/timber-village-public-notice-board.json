@@ -1,0 +1,312 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "timber-village-public-notice-board",
+  "category": "signage",
+  "interaction": "placeable",
+  "names": {
+    "en": "Timber Village Public Notice Board",
+    "es": "Tablón público de anuncios de aldea en madera",
+    "fr": "Panneau d’affichage public de village en bois",
+    "de": "Öffentliche Dorfanschlagtafel aus Holz",
+    "ja": "木製村落公共掲示板",
+    "ru": "Деревянная общественная доска объявлений деревни",
+    "ko": "목재 마을 공공 게시판",
+    "zh-Hant": "木製村莊公共公告板",
+    "zh-Hans": "木制村庄公共公告板"
+  },
+  "descriptions": {
+    "en": "Timber Village Public Notice Board is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Tablón público de anuncios de aldea en madera es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Panneau d’affichage public de village en bois est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Öffentliche Dorfanschlagtafel aus Holz ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "木製村落公共掲示板は、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Деревянная общественная доска объявлений деревни — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "목재 마을 공공 게시판은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "木製村莊公共公告板是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "木制村庄公共公告板是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 1.8125,
+    "height": 1.9063,
+    "depth": 0.4688,
+    "sizeQ": [
+      116,
+      122,
+      30
+    ]
+  },
+  "preview": {
+    "yaw": -0.62,
+    "pitch": 0.25
+  },
+  "concept": {
+    "image": "concepts/signage/timber-village-public-notice-board-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "9fb225f3648cdbdbf5cdb282db1a06617088be42640c2f45cadde4f6e6e2aed9"
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.___5dGgusWTmheLQPtVSqsSCBZ6ACAAQAJVWJBAsDABAAIAAmpDggQegBgAEAATUhwQIAwAwACACIZQpWCnoB2ABABEMoUrBQMA7AAgAinVWDAQAAXAAQARTqrBgIAAPAAIAIp1VgwEAAJQAEAEU6qwYCAAFgACACIZQZABnpCIABABEMoMgAwLhEAAgAiGVWBgYAAwgAQARDKrAwMAAJQAIAAmpTjACAAIYBuGYeAgQCBAIEAgICIAIEAgQCBAICAiACBAIEAgQCAgIgAgQCBAIEAgICIAIEAgQCBAICAgIAIhlcAgKAANQAEAEU6ugIPAAHAACACKdWgEGgADoABABFOq4CCwAB4AAgAkKCB55o6AAQASFBA8DMdAAIAA",
+    "rawBytes": 287,
+    "sha256": "02fc7f2c330cfdbdbb920fc806315407c1cf5b1ccdb5c6bcd5eac7e1cc8c5044",
+    "designHash": 1224592137,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 287,
+    "savedBytes": 0,
+    "sourceComponentCount": 21,
+    "decodedComponentCount": 21,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "polished_stone_slab",
+        "itemCode": 1045,
+        "inputVolumeMm3": 12084961,
+        "usedVolumeMm3": 12084961,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "polished_stone_slab",
+        "itemCode": 1045,
+        "inputVolumeMm3": 12084961,
+        "usedVolumeMm3": 12084961,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 6835938,
+        "usedVolumeMm3": 6835938,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 6835938,
+        "usedVolumeMm3": 6835938,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 32806396,
+        "usedVolumeMm3": 32806396,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 32806396,
+        "usedVolumeMm3": 32806396,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 15747070,
+        "usedVolumeMm3": 15747070,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 7,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 15747070,
+        "usedVolumeMm3": 15747070,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 8,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 15747070,
+        "usedVolumeMm3": 15747070,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 9,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 15747070,
+        "usedVolumeMm3": 15747070,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 10,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 8789063,
+        "usedVolumeMm3": 8789063,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 11,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 8789063,
+        "usedVolumeMm3": 8789063,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 12,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 11810303,
+        "usedVolumeMm3": 11810303,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 13,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 11810303,
+        "usedVolumeMm3": 11810303,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 14,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 28564453,
+        "usedVolumeMm3": 5100795,
+        "unusedVolumeMm3": 23463658
+      },
+      {
+        "index": 15,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 34179688,
+        "usedVolumeMm3": 34179688,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 16,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 53100586,
+        "usedVolumeMm3": 53100586,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 17,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 41259766,
+        "usedVolumeMm3": 41259766,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 18,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 30883789,
+        "usedVolumeMm3": 30883789,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 19,
+        "materialId": "wooden_stick",
+        "itemCode": 1032,
+        "inputVolumeMm3": 9155273,
+        "usedVolumeMm3": 9155273,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 20,
+        "materialId": "wooden_stick",
+        "itemCode": 1032,
+        "inputVolumeMm3": 9155273,
+        "usedVolumeMm3": 9155273,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 390463488,
+      "requiredEffectiveDurability": 60707,
+      "outputMassGrams": 327675,
+      "materialScore": 64
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 1080,
+      "triangleCount": 540,
+      "meshByteLength": 20520
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "polished_stone_slab",
+      "itemCode": 1045,
+      "componentCount": 2,
+      "inputVolumeMm3": 24169922,
+      "usedVolumeMm3": 24169922,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 60000,
+      "equivalentInputUnits": 403
+    },
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 3,
+      "inputVolumeMm3": 42236329,
+      "usedVolumeMm3": 18772671,
+      "unusedVolumeMm3": 23463658,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 169
+    },
+    {
+      "materialId": "squared_timber",
+      "itemCode": 1033,
+      "componentCount": 7,
+      "inputVolumeMm3": 140991212,
+      "usedVolumeMm3": 140991212,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 48400,
+      "equivalentInputUnits": 2914
+    },
+    {
+      "materialId": "wooden_plank",
+      "itemCode": 1031,
+      "componentCount": 7,
+      "inputVolumeMm3": 188232421,
+      "usedVolumeMm3": 188232421,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 9412
+    },
+    {
+      "materialId": "wooden_stick",
+      "itemCode": 1032,
+      "componentCount": 2,
+      "inputVolumeMm3": 18310546,
+      "usedVolumeMm3": 18310546,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 4900,
+      "equivalentInputUnits": 3737
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "noticeBoardGeometryValidated": true,
+    "chainMinted": false
+  }
+}

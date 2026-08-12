@@ -1,0 +1,204 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "iron-hooped-timber-village-inn-ale-barrel",
+  "category": "containers",
+  "interaction": "placeable",
+  "names": {
+    "en": "Iron-hooped Timber Village Inn Ale Barrel",
+    "es": "Barril de cerveza de posada de aldea de madera con aros de hierro",
+    "fr": "Tonneau à bière d’auberge villageoise en bois cerclé de fer",
+    "de": "Eisenbereiftes Holz-Bierfass für Dorfgasthäuser",
+    "ja": "鉄箍付き木製村宿エール樽",
+    "ru": "Деревянная бочка для эля деревенской гостиницы с железными обручами",
+    "ko": "철제 띠를 두른 목재 마을 여관 에일 통",
+    "zh-Hant": "鐵箍木製村莊旅店麥酒桶",
+    "zh-Hans": "铁箍木制村庄客栈麦酒桶"
+  },
+  "descriptions": {
+    "en": "Iron-hooped Timber Village Inn Ale Barrel is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Barril de cerveza de posada de aldea de madera con aros de hierro es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Tonneau à bière d’auberge villageoise en bois cerclé de fer est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Eisenbereiftes Holz-Bierfass für Dorfgasthäuser ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "鉄箍付き木製村宿エール樽は、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Деревянная бочка для эля деревенской гостиницы с железными обручами — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "철제 띠를 두른 목재 마을 여관 에일 통은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "鐵箍木製村莊旅店麥酒桶是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "铁箍木制村庄客栈麦酒桶是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 0.6875,
+    "height": 0.9375,
+    "depth": 0.7813,
+    "sizeQ": [
+      44,
+      60,
+      50
+    ]
+  },
+  "preview": {
+    "yaw": -0.68,
+    "pitch": 0.34
+  },
+  "concept": {
+    "image": "concepts/containers/iron-hooped-timber-village-inn-ale-barrel-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "ea3c8c9d2730d501b0db0865157f983f7173c8e07473375ac33ca25aaad307ff"
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.-v04nagtudQqjYUVcvKinUkOCQAAOAAogAHQ2AHQgAlQ4AlQgBDQ6BDQoJNFGJjEUJjEEKDDWKDDAFjR6FjRiGDRYGDREGjQ2GjQgACaksBCwAAEAA0TgYQCgIQAgYCFAICAhgEGAQYBBgEGAQYBBgEGAICAhQCBgIQAgoQBgACaksBCwAAOAA0TgYQCgIQAgYCFAICAhgEGAQYBBgEGAQYBBgEGAICAhQCBgIQAgoQBgACaksBCwAAYAA0TgYQCgIQAgYCFAICAhgEGAQYBBgEGAQYBBgEGAICAhQCBgIQAgoQBgACakKCgIAAJgmQABNSCAgQAAEwYIAAmpBAgEAABoNEAATUggMCAABgGCAAJqQoEBAAA6DBABEMoQCBAAA6AAgAA",
+    "rawBytes": 294,
+    "sha256": "1c8d6d79b08e27e4b3cd44f922994863fdbc178c5d129e5df617a7bba80bb383",
+    "designHash": 32857602,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 294,
+    "savedBytes": 0,
+    "sourceComponentCount": 10,
+    "decodedComponentCount": 10,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 276855469,
+        "usedVolumeMm3": 143512834,
+        "unusedVolumeMm3": 133342635
+      },
+      {
+        "index": 1,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 29541016,
+        "usedVolumeMm3": 6028778,
+        "unusedVolumeMm3": 23512238
+      },
+      {
+        "index": 2,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 29541016,
+        "usedVolumeMm3": 6028778,
+        "unusedVolumeMm3": 23512238
+      },
+      {
+        "index": 3,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 29541016,
+        "usedVolumeMm3": 6028778,
+        "unusedVolumeMm3": 23512238
+      },
+      {
+        "index": 4,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 762939,
+        "usedVolumeMm3": 762939,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 488281,
+        "usedVolumeMm3": 488281,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 488281,
+        "usedVolumeMm3": 488281,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 7,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 366211,
+        "usedVolumeMm3": 366211,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 8,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 610352,
+        "usedVolumeMm3": 610352,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 9,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 976563,
+        "usedVolumeMm3": 976563,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 165281792,
+      "requiredEffectiveDurability": 41400,
+      "outputMassGrams": 225055,
+      "materialScore": 66
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 1296,
+      "triangleCount": 648,
+      "meshByteLength": 24624
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "wooden_plank",
+      "itemCode": 1031,
+      "componentCount": 1,
+      "inputVolumeMm3": 276855469,
+      "usedVolumeMm3": 143512834,
+      "unusedVolumeMm3": 133342635,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 13843
+    },
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 8,
+      "inputVolumeMm3": 91339112,
+      "usedVolumeMm3": 20802398,
+      "unusedVolumeMm3": 70536714,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 366
+    },
+    {
+      "materialId": "squared_timber",
+      "itemCode": 1033,
+      "componentCount": 1,
+      "inputVolumeMm3": 976563,
+      "usedVolumeMm3": 976563,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 48400,
+      "equivalentInputUnits": 21
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "aleBarrelGeometryValidated": true,
+    "chainMinted": false
+  }
+}

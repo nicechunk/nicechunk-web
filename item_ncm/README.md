@@ -11,7 +11,7 @@ ITEM_NCM is the public NiceChunk forge-item blueprint registry. It follows the s
 - Every item JSON contains its own nine-language names and descriptions.
 - `tools/generate-items.mjs` is the canonical source for the initial collection and regenerates every item JSON deterministically.
 
-The registry currently contains 66 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, containers, cooking, commerce, construction, books and writing, interior decor, signage, exterior decor, and hand-held civic props. New designs begin with an Imagegen material-style concept; the resulting item JSON records the concept path, provenance, version, and SHA-256 before the forge encoding is accepted.
+The registry currently contains 67 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, containers, cooking, commerce, construction, books and writing, interior decor, signage, exterior decor, and hand-held civic props. New designs begin with an Imagegen material-style concept; the resulting item JSON records the concept path, provenance, version, and SHA-256 before the forge encoding is accepted.
 
 ## Forge guarantees
 
@@ -55,6 +55,7 @@ The generator rejects an item unless all of these checks pass:
 36. Inn hearth fireplaces keep a broad grounded stone slab, two continuously stacked masonry piers and a connected rear firebox wall below a stone lintel, support a projecting timber mantel and centered chimney crown, preserve a genuinely open recessed firebox, and contain a closed iron grate plus charcoal bed without component intersections.
 37. Inn fireplace tongs preserve a long one-hand hearth-tool scale, join a palm-sized timber grip through one iron collar into two parallel arms, retain symmetric inward-facing jaws with a clear gripping gap, point the jaws forward after game mounting, and clear the canonical avatar through all 27 motion samples without component intersections.
 38. Inn communal dining tables preserve a canonical six-person footprint and dining height, keep five flush tabletop planks on four grounded iron-shod legs, close continuous long and end aprons beneath the top, retain an open knee bay, and connect two lower end rails through one longitudinal stretcher without component intersections.
+39. Inn ale barrels preserve an upright player-readable cask scale, machine one grounded octagonal timber shell with a genuinely captive cavity between closed bottom and lid, keep three ordered exterior iron hoops, and retain a connected forward tap with downward outlet and a face-mounted control handle without solid-volume intersections.
 
 `verification.chainMinted` remains `false` because this library validates blueprint readiness; it does not claim that a blueprint PDA has already been created.
 

@@ -8,10 +8,15 @@ import {
   decodeNcf1,
   encodeNcf1Bytes,
   forgeMaterialRequirements,
+  forgeVoxelIndex,
 } from "../../chunk.js/forge/forge-core.js";
 import { validateForgeGripBindings } from "../../chunk.js/forge/forge-grip-validation.js";
 import { ForgeRuntimeCache } from "../../chunk.js/forge/forge-runtime-cache.js";
-import { forgeWorkbenchComponentsConnected } from "../../chunk.js/forge/forge-workbench.js";
+import {
+  forgeComponentOccupiedBoundsQ2,
+  forgeComponentsOverlapQ2,
+  forgeWorkbenchComponentsConnected,
+} from "../../chunk.js/forge/forge-workbench.js";
 import {
   DEFAULT_PEASANT_GUY_NCM,
   createAvatarMeshFromNcm,
@@ -386,10 +391,22 @@ const fireplaceTongLayouts = new Map([
     jaws: [8, 9],
   }],
 ]);
+const aleBarrelLayouts = new Map([
+  ["iron-hooped-timber-village-inn-ale-barrel", {
+    vessel: 0,
+    hoops: [1, 2, 3],
+    tapMount: 4,
+    tapBarrel: 5,
+    tapOutlet: 6,
+    tapStem: 7,
+    tapHandle: 8,
+    lidPlug: 9,
+  }],
+]);
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
-assert.equal(catalog.items.length, 66);
+assert.equal(catalog.items.length, 67);
 assert.equal(new Set(catalog.items).size, catalog.items.length);
 
 const listedFiles = new Set(catalog.items);
@@ -431,6 +448,7 @@ let privacyScreenGeometryCount = 0;
 let doubleDoorWardrobeGeometryCount = 0;
 let hearthFireplaceGeometryCount = 0;
 let fireplaceTongGeometryCount = 0;
+let aleBarrelGeometryCount = 0;
 for (const file of catalog.items) {
   assert.match(file, /^json\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/);
   const item = json(join(root, file));
@@ -712,6 +730,14 @@ for (const file of catalog.items) {
     assert.equal(item.verification.fireplaceTongGeometryValidated, true);
     assertFireplaceTongGeometry(item, runtime, fireplaceTongLayout);
   }
+  const aleBarrelLayout = aleBarrelLayouts.get(item.key);
+  if (aleBarrelLayout) {
+    aleBarrelGeometryCount += 1;
+    assert.equal(item.category, "containers");
+    assert.equal(item.interaction, "placeable");
+    assert.equal(item.verification.aleBarrelGeometryValidated, true);
+    assertAleBarrelGeometry(item, runtime, aleBarrelLayout);
+  }
   assert.equal(forgeWorkbenchComponentsConnected(runtime.components), true, `${item.key} must be a connected assembly`);
   const grip = validateForgeGripBindings(runtime.components);
   assert.equal(grip.valid, true, `${item.key} grip must remain valid after decoding`);
@@ -794,7 +820,7 @@ assert.deepEqual([...categories], [
   ["lighting", 4],
   ["handheld-civic", 1],
   ["furniture", 15],
-  ["containers", 3],
+  ["containers", 4],
   ["cooking", 3],
   ["commerce", 2],
   ["construction", 1],
@@ -804,8 +830,8 @@ assert.deepEqual([...categories], [
   ["exterior-decor", 5],
 ]);
 assert.equal(tools, 17);
-assert.equal(placeables, 49);
-assert.equal(conceptReferences, 39);
+assert.equal(placeables, 50);
+assert.equal(conceptReferences, 40);
 assert.equal(bookGeometryCount, 7);
 assert.equal(framedTextileGeometryCount, 1);
 assert.equal(drawerCabinetGeometryCount, 1);
@@ -835,9 +861,10 @@ assert.equal(privacyScreenGeometryCount, 1);
 assert.equal(doubleDoorWardrobeGeometryCount, 1);
 assert.equal(hearthFireplaceGeometryCount, 1);
 assert.equal(fireplaceTongGeometryCount, 1);
+assert.equal(aleBarrelGeometryCount, 1);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
-console.log("item_ncm catalog tests passed: 66 canonical NCF1 items across 16 categories");
+console.log("item_ncm catalog tests passed: 67 canonical NCF1 items across 16 categories");
 
 function json(file) {
   return JSON.parse(readFileSync(file, "utf8"));
@@ -2215,6 +2242,50 @@ function assertFireplaceTongGeometry(item, runtime, layout) {
   for (let first = 0; first < bounds.length; first += 1) {
     for (let second = first + 1; second < bounds.length; second += 1) {
       assert.equal(positiveVolumeOverlap(bounds[first], bounds[second]), false, `${item.key} components ${first} and ${second} intersect`);
+    }
+  }
+}
+
+function assertAleBarrelGeometry(item, runtime, layout) {
+  assert.equal(runtime.componentCount, 10);
+  assert.deepEqual(item.dimensions.sizeQ, [44, 60, 50]);
+  assert.equal(item.dimensions.width, 0.6875);
+  assert.equal(item.dimensions.height, 0.9375);
+  assert.equal(item.dimensions.depth, 0.7813);
+  assert.ok(item.dimensions.height >= 0.88 && item.dimensions.height <= 1, `${item.key} must remain a player-readable upright cask`);
+  assert.ok(item.dimensions.height > item.dimensions.width && item.dimensions.height < item.dimensions.width * 1.5);
+  assert.ok(item.forge.rawBytes <= 340);
+  assert.ok(item.forge.requirements.outputMassGrams <= 240_000, `${item.key} must remain plausible heavy inn storage`);
+  assert.deepEqual(
+    [...new Set(item.forge.materialComponents.map(({ materialId }) => materialId))].sort(),
+    ["iron_bloom", "squared_timber", "wooden_plank"],
+  );
+  const components = runtime.components;
+  const vessel = components[layout.vessel];
+  const occupied = forgeComponentOccupiedBoundsQ2(vessel);
+  assert.deepEqual(occupied.minQ2, [-36, 0, -36]);
+  assert.deepEqual(occupied.maxQ2, [36, 112, 36]);
+  assert.equal(vessel.solid[forgeVoxelIndex(7, 5, 7)], 0, `${item.key} must retain a real internal cavity`);
+  assert.equal(vessel.solid[forgeVoxelIndex(7, 0, 7)], 1, `${item.key} bottom must remain closed`);
+  assert.equal(vessel.solid[forgeVoxelIndex(7, 9, 7)], 1, `${item.key} lid must remain closed`);
+  assert.deepEqual(layout.hoops.map((index) => components[index].offsetQ[1]), [8, 28, 48]);
+  for (const hoopIndex of layout.hoops) {
+    assert.equal(forgeComponentsOverlapQ2(vessel, components[hoopIndex]), false, `${item.key} hoop ${hoopIndex} intersects the vessel`);
+  }
+  assert.equal(forgeWorkbenchComponentsConnected([
+    layout.tapMount,
+    layout.tapBarrel,
+    layout.tapOutlet,
+    layout.tapStem,
+    layout.tapHandle,
+  ].map((index) => components[index])), true);
+  assert.ok(components[layout.tapBarrel].offsetQ[2] > components[layout.tapMount].offsetQ[2]);
+  assert.ok(components[layout.tapOutlet].offsetQ[1] < components[layout.tapBarrel].offsetQ[1]);
+  assert.ok(components[layout.tapHandle].dimsQ[0] > components[layout.tapStem].dimsQ[0]);
+  assert.equal(forgeWorkbenchComponentsConnected([vessel, components[layout.lidPlug]]), true);
+  for (let first = 0; first < components.length; first += 1) {
+    for (let second = first + 1; second < components.length; second += 1) {
+      assert.equal(forgeComponentsOverlapQ2(components[first], components[second]), false, `${item.key} components ${first} and ${second} intersect`);
     }
   }
 }

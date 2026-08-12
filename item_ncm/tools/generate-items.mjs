@@ -14,6 +14,8 @@ import {
 import {
   createForgeWorkbenchDesign,
   createForgeWorkbenchMaterial,
+  forgeComponentOccupiedBoundsQ2,
+  forgeComponentsOverlapQ2,
   forgeWorkbenchComponentsConnected,
   forgeWorkbenchStats,
 } from "../../chunk.js/forge/forge-workbench.js";
@@ -410,6 +412,18 @@ const FIREPLACE_TONG_LAYOUTS = Object.freeze({
     jaws: [8, 9],
   },
 });
+const ALE_BARREL_LAYOUTS = Object.freeze({
+  "iron-hooped-timber-village-inn-ale-barrel": {
+    vessel: 0,
+    hoops: [1, 2, 3],
+    tapMount: 4,
+    tapBarrel: 5,
+    tapOutlet: 6,
+    tapStem: 7,
+    tapHandle: 8,
+    lidPlug: 9,
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -571,6 +585,11 @@ const ITEM_NAMES = Object.freeze({
   "reinforced-travel-crate": names(
     "Reinforced Travel Crate", "Cajón de viaje reforzado", "Caisse de voyage renforcée", "Verstärkte Transportkiste",
     "補強輸送箱", "Усиленный дорожный ящик", "보강 운송 상자", "強化運輸箱", "强化运输箱",
+  ),
+  "iron-hooped-timber-village-inn-ale-barrel": names(
+    "Iron-hooped Timber Village Inn Ale Barrel", "Barril de cerveza de posada de aldea de madera con aros de hierro", "Tonneau à bière d’auberge villageoise en bois cerclé de fer",
+    "Eisenbereiftes Holz-Bierfass für Dorfgasthäuser", "鉄箍付き木製村宿エール樽", "Деревянная бочка для эля деревенской гостиницы с железными обручами",
+    "철제 띠를 두른 목재 마을 여관 에일 통", "鐵箍木製村莊旅店麥酒桶", "铁箍木制村庄客栈麦酒桶",
   ),
   "iron-hearth-cauldron": names(
     "Iron Hearth Cauldron", "Caldero de hogar de hierro", "Chaudron de foyer en fer", "Eiserner Herdkessel",
@@ -1006,6 +1025,22 @@ const ITEM_SPECS = Object.freeze([
     part("wooden_plank", [54, 5, 38], [0, 42, 0]),
     ...[14, 30].flatMap((y) => [-21, 21].map((z) => part("iron_bloom", [54, 4, 3], [0, y, z]))),
   ]),
+  placeable("containers", "iron-hooped-timber-village-inn-ale-barrel", [
+    part("wooden_plank", [36, 56, 36], [0, 28, 0], { mask: aleBarrelVesselMask }),
+    part("iron_bloom", [44, 4, 44], [0, 8, 0], { mask: aleBarrelHoopMask }),
+    part("iron_bloom", [44, 4, 44], [0, 28, 0], { mask: aleBarrelHoopMask }),
+    part("iron_bloom", [44, 4, 44], [0, 48, 0], { mask: aleBarrelHoopMask }),
+    part("iron_bloom", [10, 10, 2], [0, 19, 19]),
+    part("iron_bloom", [4, 4, 8], [0, 19, 24]),
+    part("iron_bloom", [4, 8, 4], [0, 13, 26]),
+    part("iron_bloom", [4, 6, 4], [0, 24, 24]),
+    part("iron_bloom", [10, 4, 4], [0, 29, 24]),
+    part("squared_timber", [8, 4, 8], [0, 58, 0]),
+  ], { yaw: -0.68, pitch: 0.34 }, {
+    image: "concepts/containers/iron-hooped-timber-village-inn-ale-barrel-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
 
   placeable("cooking", "iron-hearth-cauldron", [
     part("iron_bloom", [26, 16, 26], [0, 21, 0], { mask: cauldronBowlMask }),
@@ -1890,6 +1925,8 @@ function buildItem(spec) {
   if (hearthFireplaceLayout) validateHearthFireplaceGeometry(spec, runtime, hearthFireplaceLayout);
   const fireplaceTongLayout = FIREPLACE_TONG_LAYOUTS[spec.key] ?? null;
   if (fireplaceTongLayout) validateFireplaceTongGeometry(spec, runtime, fireplaceTongLayout);
+  const aleBarrelLayout = ALE_BARREL_LAYOUTS[spec.key] ?? null;
+  if (aleBarrelLayout) validateAleBarrelGeometry(spec, runtime, aleBarrelLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -2011,6 +2048,7 @@ function buildItem(spec) {
       ...(privacyScreenLayout ? { privacyScreenGeometryValidated: true } : {}),
       ...(hearthFireplaceLayout ? { hearthFireplaceGeometryValidated: true } : {}),
       ...(fireplaceTongLayout ? { fireplaceTongGeometryValidated: true } : {}),
+      ...(aleBarrelLayout ? { aleBarrelGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -4134,6 +4172,62 @@ function validateFireplaceTongGeometry(spec, runtime, layout) {
   }
 }
 
+function validateAleBarrelGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 10 || runtime.boundsQ.sizeQ.join(",") !== "44,60,50") {
+    throw new Error(`${spec.key} must preserve its canonical-player-scale upright ale-barrel proportions (got ${runtime.componentCount} components and ${runtime.boundsQ.sizeQ.join(",")}).`);
+  }
+  const components = runtime.components ?? [];
+  const expectedMaterials = ["wooden_plank", ...Array(8).fill("iron_bloom"), "squared_timber"];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  const vessel = components[layout.vessel];
+  const vesselOccupied = forgeComponentOccupiedBoundsQ2(vessel);
+  if (!vesselOccupied || vesselOccupied.minQ2.join(",") !== "-36,0,-36" || vesselOccupied.maxQ2.join(",") !== "36,112,36") {
+    throw new Error(`${spec.key} timber vessel must remain grounded and closed across its full octagonal envelope.`);
+  }
+  const centerX = Math.floor(FORGE_COMPONENT_GRID.x / 2);
+  const centerY = Math.floor(FORGE_COMPONENT_GRID.y / 2);
+  const centerZ = Math.floor(FORGE_COMPONENT_GRID.z / 2);
+  if (vessel.solid[forgeVoxelIndex(centerX, centerY, centerZ)] !== 0
+    || vessel.solid[forgeVoxelIndex(centerX, 0, centerZ)] !== 1
+    || vessel.solid[forgeVoxelIndex(centerX, FORGE_COMPONENT_GRID.y - 1, centerZ)] !== 1) {
+    throw new Error(`${spec.key} timber vessel must keep a genuine captive inner cavity between a closed bottom and lid.`);
+  }
+  for (const hoopIndex of layout.hoops) {
+    if (forgeComponentsOverlapQ2(vessel, components[hoopIndex])) {
+      throw new Error(`${spec.key} iron hoop ${hoopIndex} cuts through the timber vessel.`);
+    }
+  }
+  if (components[layout.hoops[0]].offsetQ[1] !== 8
+    || components[layout.hoops[1]].offsetQ[1] !== 28
+    || components[layout.hoops[2]].offsetQ[1] !== 48) {
+    throw new Error(`${spec.key} three iron hoops must remain ordered at lower, middle, and upper barrel heights.`);
+  }
+  for (let first = 0; first < components.length; first += 1) {
+    for (let second = first + 1; second < components.length; second += 1) {
+      if (forgeComponentsOverlapQ2(components[first], components[second])) {
+        throw new Error(`${spec.key} components ${first} and ${second} intersect.`);
+      }
+    }
+  }
+  const tapChain = [layout.tapMount, layout.tapBarrel, layout.tapOutlet, layout.tapStem, layout.tapHandle];
+  if (!forgeWorkbenchComponentsConnected(tapChain.map((index) => components[index]))) {
+    throw new Error(`${spec.key} tap mount, barrel, outlet, stem, and handle must remain one connected assembly.`);
+  }
+  if (components[layout.tapMount].offsetQ[2] <= vessel.offsetQ[2]
+    || components[layout.tapBarrel].offsetQ[2] <= components[layout.tapMount].offsetQ[2]
+    || components[layout.tapOutlet].offsetQ[1] >= components[layout.tapBarrel].offsetQ[1]
+    || components[layout.tapHandle].dimsQ[0] <= components[layout.tapStem].dimsQ[0]) {
+    throw new Error(`${spec.key} must keep its tap projecting forward with a downward outlet and readable control handle.`);
+  }
+  if (!forgeWorkbenchComponentsConnected([vessel, components[layout.lidPlug]])) {
+    throw new Error(`${spec.key} timber lid plug is detached from the closed vessel lid.`);
+  }
+}
+
 function validateToolHolding(spec, runtime) {
   const policy = spec.holding;
   const components = runtime.components ?? [];
@@ -4647,6 +4741,22 @@ function bucketMask({ nx, ny, nz }) {
   const wall = radial >= taper - 0.22 && radial <= taper;
   const bottom = ny < -0.72 && radial <= taper;
   return wall || bottom;
+}
+
+function aleBarrelRadius(nx, nz) {
+  return Math.max(Math.abs(nx), Math.abs(nz), (Math.abs(nx) + Math.abs(nz)) / 1.55);
+}
+
+function aleBarrelVesselMask({ nx, ny, nz }) {
+  const radial = aleBarrelRadius(nx, nz);
+  const outer = radial <= 0.98;
+  const captiveCavity = radial < 0.68 && Math.abs(ny) < 0.82;
+  return outer && !captiveCavity;
+}
+
+function aleBarrelHoopMask({ nx, nz }) {
+  const radial = aleBarrelRadius(nx, nz);
+  return radial >= 0.84 && radial <= 0.98;
 }
 
 function sideHandleMask({ ny, nz }) {

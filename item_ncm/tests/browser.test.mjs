@@ -83,7 +83,7 @@ try {
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 16);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /66 ITEMS/);
+  assert.match(initial.total, /67 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -122,6 +122,58 @@ try {
   assert.equal(chinese.category, "采矿工具");
   assert.equal(chinese.payload, initial.payload, "locale changes must never alter canonical NCF1");
 
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "en";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
+
+  await evaluate(client, `document.querySelector('[data-category="containers"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 4
+    && document.querySelector('[data-item="banded-wooden-chest"]')
+    && document.querySelector('[data-item="iron-hooped-timber-village-inn-ale-barrel"]')`));
+  assert.equal(await evaluate(client, `performance.getEntriesByType("resource").some((entry) => new URL(entry.name).pathname.includes("/item_ncm/json/containers/"))`), false,
+    "category browsing must not load container item JSON files");
+  await evaluate(client, `document.querySelector('[data-item="iron-hooped-timber-village-inn-ale-barrel"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="iron-hooped-timber-village-inn-ale-barrel"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const aleBarrel = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payload: document.querySelector("#codeOutput").value,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    materialRows: document.querySelectorAll("#bomRows .bom-row").length,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(aleBarrel.title, "Iron-hooped Timber Village Inn Ale Barrel");
+  assert.equal(aleBarrel.type, "PLACEABLE");
+  assert.match(aleBarrel.payload, /^NCF1\./);
+  assert.equal(aleBarrel.payloadBytes, "294 / 640 B");
+  assert.equal(aleBarrel.componentCount, "10");
+  assert.equal(aleBarrel.materialRows, 3);
+  assert.equal(aleBarrel.selectedInUrl, "iron-hooped-timber-village-inn-ale-barrel");
+  assert.ok(aleBarrel.resources.includes("/item_ncm/json/containers/iron-hooped-timber-village-inn-ale-barrel.json"));
+  for (const [locale, expectedName] of Object.entries({
+    en: "Iron-hooped Timber Village Inn Ale Barrel",
+    es: "Barril de cerveza de posada de aldea de madera con aros de hierro",
+    fr: "Tonneau à bière d’auberge villageoise en bois cerclé de fer",
+    de: "Eisenbereiftes Holz-Bierfass für Dorfgasthäuser",
+    ja: "鉄箍付き木製村宿エール樽",
+    ru: "Деревянная бочка для эля деревенской гостиницы с железными обручами",
+    ko: "철제 띠를 두른 목재 마을 여관 에일 통",
+    "zh-Hant": "鐵箍木製村莊旅店麥酒桶",
+    "zh-Hans": "铁箍木制村庄客栈麦酒桶",
+  })) {
+    await evaluate(client, `(() => {
+      const select = document.querySelector("[data-language-select]");
+      select.value = ${JSON.stringify(locale)};
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+    })()`);
+    await waitFor(() => evaluate(client, `document.documentElement.lang === ${JSON.stringify(locale)} && document.querySelector("#itemTitle").textContent === ${JSON.stringify(expectedName)}`));
+    assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), aleBarrel.payload);
+  }
   await evaluate(client, `(() => {
     const select = document.querySelector("[data-language-select]");
     select.value = "en";

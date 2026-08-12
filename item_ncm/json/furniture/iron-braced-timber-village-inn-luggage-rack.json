@@ -1,0 +1,316 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "iron-braced-timber-village-inn-luggage-rack",
+  "category": "furniture",
+  "interaction": "placeable",
+  "names": {
+    "en": "Iron-braced Timber Village Inn Luggage Rack",
+    "es": "Portaequipajes de posada de aldea de madera reforzado con hierro",
+    "fr": "Porte-bagages d’auberge villageoise en bois renforcé de fer",
+    "de": "Eisenverstärkte Holz-Gepäckablage für Dorfgasthäuser",
+    "ja": "鉄補強の木製村宿荷物台",
+    "ru": "Деревянная багажная подставка деревенской гостиницы с железными скобами",
+    "ko": "철제 보강 목재 마을 여관 짐받이",
+    "zh-Hant": "鐵箍木製村莊旅店行李架",
+    "zh-Hans": "铁箍木制村庄客栈行李架"
+  },
+  "descriptions": {
+    "en": "Iron-braced Timber Village Inn Luggage Rack is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Portaequipajes de posada de aldea de madera reforzado con hierro es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Porte-bagages d’auberge villageoise en bois renforcé de fer est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Eisenverstärkte Holz-Gepäckablage für Dorfgasthäuser ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "鉄補強の木製村宿荷物台は、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Деревянная багажная подставка деревенской гостиницы с железными скобами — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "철제 보강 목재 마을 여관 짐받이은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "鐵箍木製村莊旅店行李架是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "铁箍木制村庄客栈行李架是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 0.7813,
+    "height": 0.625,
+    "depth": 0.5,
+    "sizeQ": [
+      50,
+      40,
+      32
+    ]
+  },
+  "preview": {
+    "yaw": -0.68,
+    "pitch": 0.3
+  },
+  "concept": {
+    "image": "concepts/furniture/iron-braced-timber-village-inn-luggage-rack-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "e0f268730e5c054c6dbb089785dd4846ea7e5e099f77142a16e2d0b14fb75c09"
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.8r3oKwhuvcQqiYTVctYCakIBAh9YBfoQABNSEAgQ-sAgMIAAmpCAQIAqAX6EAATUhAIEAVAIDCACIZQYcBn1gl-hABEMoMOAz6wSAwgAiGUGHAYCoJfoQARDKDDgMBUEgMIAIhlKgYGAAEf6EAEQylQMDAACMDCACKdQYCGH5hOABABFOoMBDD_AnAAgAinUGAhgAgTgAQARTqDAQwA0JwAIAIhlJAQEAABn6EAEQykgICAAAwDCACKdQYCGH5geABABFOoMBDD_APAAgAinUGAhgAgHgAQARTqDAQwA0DwAIAAmpAgYGfUEf6EAATUgQMDPqCMDCAAJqQIGBgLBH-hAAE1IEDAwFgjAwgAA",
+    "rawBytes": 270,
+    "sha256": "6966cb6bd41efba74021785d4b7a7c55ec78ca5644e682b816c269ad6e469503",
+    "designHash": 524243491,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 270,
+    "savedBytes": 0,
+    "sourceComponentCount": 24,
+    "decodedComponentCount": 24,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 976563,
+        "usedVolumeMm3": 976563,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 976563,
+        "usedVolumeMm3": 976563,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 976563,
+        "usedVolumeMm3": 976563,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 976563,
+        "usedVolumeMm3": 976563,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 3845215,
+        "usedVolumeMm3": 3845215,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 3845215,
+        "usedVolumeMm3": 3845215,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 3845215,
+        "usedVolumeMm3": 3845215,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 7,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 3845215,
+        "usedVolumeMm3": 3845215,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 8,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 5767822,
+        "usedVolumeMm3": 5767822,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 9,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 5767822,
+        "usedVolumeMm3": 5767822,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 10,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 1098633,
+        "usedVolumeMm3": 1098633,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 11,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 1098633,
+        "usedVolumeMm3": 1098633,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 12,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 1098633,
+        "usedVolumeMm3": 1098633,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 13,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 1098633,
+        "usedVolumeMm3": 1098633,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 14,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 2197266,
+        "usedVolumeMm3": 2197266,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 15,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 2197266,
+        "usedVolumeMm3": 2197266,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 16,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 1098633,
+        "usedVolumeMm3": 1098633,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 17,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 1098633,
+        "usedVolumeMm3": 1098633,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 18,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 1098633,
+        "usedVolumeMm3": 1098633,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 19,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 1098633,
+        "usedVolumeMm3": 1098633,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 20,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 274658,
+        "usedVolumeMm3": 274658,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 21,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 274658,
+        "usedVolumeMm3": 274658,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 22,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 274658,
+        "usedVolumeMm3": 274658,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 23,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 274658,
+        "usedVolumeMm3": 274658,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 45088768,
+      "requiredEffectiveDurability": 12572,
+      "outputMassGrams": 56150,
+      "materialScore": 66
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 576,
+      "triangleCount": 288,
+      "meshByteLength": 10944
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 8,
+      "inputVolumeMm3": 5004884,
+      "usedVolumeMm3": 5004884,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 21
+    },
+    {
+      "materialId": "squared_timber",
+      "itemCode": 1033,
+      "componentCount": 8,
+      "inputVolumeMm3": 31311036,
+      "usedVolumeMm3": 31311036,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 48400,
+      "equivalentInputUnits": 647
+    },
+    {
+      "materialId": "wooden_plank",
+      "itemCode": 1031,
+      "componentCount": 8,
+      "inputVolumeMm3": 8789064,
+      "usedVolumeMm3": 8789064,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 440
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "luggageRackGeometryValidated": true,
+    "chainMinted": false
+  }
+}

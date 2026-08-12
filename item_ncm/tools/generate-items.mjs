@@ -295,6 +295,17 @@ const RECEPTION_COUNTER_LAYOUTS = Object.freeze({
     ironBands: [18, 19],
   },
 });
+const LUGGAGE_RACK_LAYOUTS = Object.freeze({
+  "iron-braced-timber-village-inn-luggage-rack": {
+    feet: [0, 1, 2, 3],
+    legs: [4, 5, 6, 7],
+    upperRails: [8, 9],
+    luggageSlats: [10, 11, 12, 13],
+    lowerRails: [14, 15],
+    shoeSlats: [16, 17, 18, 19],
+    cornerPlates: [20, 21, 22, 23],
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -580,6 +591,11 @@ const ITEM_NAMES = Object.freeze({
     "Iron-braced Timber Village Inn Reception Counter", "Mostrador de recepción de posada de aldea de madera reforzado con hierro", "Comptoir d’accueil d’auberge villageoise en bois renforcé de fer",
     "Eisenverstärkter Holzempfangstresen für Dorfgasthäuser", "鉄補強の木製村宿受付カウンター", "Деревянная стойка регистрации деревенской гостиницы с железными скобами",
     "철제 보강 목재 마을 여관 접수대", "鐵箍木製村莊旅店接待櫃檯", "铁箍木制村庄客栈接待柜台",
+  ),
+  "iron-braced-timber-village-inn-luggage-rack": names(
+    "Iron-braced Timber Village Inn Luggage Rack", "Portaequipajes de posada de aldea de madera reforzado con hierro", "Porte-bagages d’auberge villageoise en bois renforcé de fer",
+    "Eisenverstärkte Holz-Gepäckablage für Dorfgasthäuser", "鉄補強の木製村宿荷物台", "Деревянная багажная подставка деревенской гостиницы с железными скобами",
+    "철제 보강 목재 마을 여관 짐받이", "鐵箍木製村莊旅店行李架", "铁箍木制村庄客栈行李架",
   ),
   "iron-blacksmith-anvil": names(
     "Iron Blacksmith Anvil", "Yunque de herrero de hierro", "Enclume de forgeron en fer", "Eiserner Schmiedeamboss",
@@ -1355,6 +1371,30 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+  placeable("furniture", "iron-braced-timber-village-inn-luggage-rack", [
+    part("iron_bloom", [8, 4, 8], [-21, 2, -12]),
+    part("iron_bloom", [8, 4, 8], [-21, 2, 12]),
+    part("iron_bloom", [8, 4, 8], [21, 2, -12]),
+    part("iron_bloom", [8, 4, 8], [21, 2, 12]),
+    part("squared_timber", [6, 28, 6], [-21, 18, -12]),
+    part("squared_timber", [6, 28, 6], [-21, 18, 12]),
+    part("squared_timber", [6, 28, 6], [21, 18, -12]),
+    part("squared_timber", [6, 28, 6], [21, 18, 12]),
+    part("squared_timber", [42, 6, 6], [0, 35, -12]),
+    part("squared_timber", [42, 6, 6], [0, 35, 12]),
+    ...[-13, -4, 4, 13].map((x) => part("wooden_plank", [6, 2, 24], [x, 39, 0])),
+    part("squared_timber", [36, 4, 4], [0, 12, -12]),
+    part("squared_timber", [36, 4, 4], [0, 12, 12]),
+    ...[-13, -4, 4, 13].map((x) => part("wooden_plank", [6, 2, 24], [x, 15, 0])),
+    part("iron_bloom", [2, 6, 6], [-22, 35, -12]),
+    part("iron_bloom", [2, 6, 6], [-22, 35, 12]),
+    part("iron_bloom", [2, 6, 6], [22, 35, -12]),
+    part("iron_bloom", [2, 6, 6], [22, 35, 12]),
+  ], { yaw: -0.68, pitch: 0.3 }, {
+    image: "concepts/furniture/iron-braced-timber-village-inn-luggage-rack-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
   placeable("commerce", "iron-braced-timber-village-inn-reception-counter", [
     part("iron_bloom", [10, 6, 10], [-45, 3, -17]),
     part("iron_bloom", [10, 6, 10], [-45, 3, 17]),
@@ -1490,6 +1530,8 @@ function buildItem(spec) {
   if (roomKeyBoardLayout) validateRoomKeyBoardGeometry(spec, runtime, roomKeyBoardLayout);
   const receptionCounterLayout = RECEPTION_COUNTER_LAYOUTS[spec.key] ?? null;
   if (receptionCounterLayout) validateReceptionCounterGeometry(spec, runtime, receptionCounterLayout);
+  const luggageRackLayout = LUGGAGE_RACK_LAYOUTS[spec.key] ?? null;
+  if (luggageRackLayout) validateLuggageRackGeometry(spec, runtime, luggageRackLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -1602,6 +1644,7 @@ function buildItem(spec) {
       ...(singleBedFrameLayout ? { singleBedFrameGeometryValidated: true } : {}),
       ...(roomKeyBoardLayout ? { roomKeyBoardGeometryValidated: true } : {}),
       ...(receptionCounterLayout ? { receptionCounterGeometryValidated: true } : {}),
+      ...(luggageRackLayout ? { luggageRackGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -2966,6 +3009,87 @@ function validateReceptionCounterGeometry(spec, runtime, layout) {
       || band.min[0] !== beam.min[0] || band.max[0] !== beam.max[0]
       || overlapLength(band.min[1], band.max[1], beam.min[1], beam.max[1]) <= 0) {
       throw new Error(`${spec.key} iron face band ${position} is detached from its timber beam.`);
+    }
+  }
+  for (let first = 0; first < bounds.length; first += 1) {
+    for (let second = first + 1; second < bounds.length; second += 1) {
+      if (boundsOverlap(bounds[first], bounds[second], 0)) {
+        throw new Error(`${spec.key} components ${first} and ${second} intersect.`);
+      }
+    }
+  }
+}
+
+function validateLuggageRackGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 24 || runtime.boundsQ.sizeQ.join(",") !== "50,40,32") {
+    throw new Error(`${spec.key} must preserve its compact human-scale inn luggage-rack proportions (got ${runtime.componentCount} components and ${runtime.boundsQ.sizeQ.join(",")}).`);
+  }
+  const components = runtime.components ?? [];
+  const bounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    ...Array(4).fill("iron_bloom"),
+    ...Array(6).fill("squared_timber"),
+    ...Array(4).fill("wooden_plank"),
+    ...Array(2).fill("squared_timber"),
+    ...Array(4).fill("wooden_plank"),
+    ...Array(4).fill("iron_bloom"),
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  const upperRails = layout.upperRails.map((index) => bounds[index]);
+  for (let position = 0; position < layout.feet.length; position += 1) {
+    const foot = bounds[layout.feet[position]];
+    const leg = bounds[layout.legs[position]];
+    const upperRail = upperRails[position % 2];
+    if (foot.min[1] !== 0 || foot.max[1] !== leg.min[1] || leg.max[1] !== upperRail.min[1]
+      || overlapLength(foot.min[0], foot.max[0], leg.min[0], leg.max[0]) <= 0
+      || overlapLength(foot.min[2], foot.max[2], leg.min[2], leg.max[2]) <= 0
+      || overlapLength(leg.min[0], leg.max[0], upperRail.min[0], upperRail.max[0]) <= 0
+      || overlapLength(leg.min[2], leg.max[2], upperRail.min[2], upperRail.max[2]) <= 0) {
+      throw new Error(`${spec.key} support stack ${position} does not continuously connect a grounded iron foot to the luggage deck.`);
+    }
+  }
+  for (const slatIndex of layout.luggageSlats) {
+    const slat = bounds[slatIndex];
+    if (slat.min[1] !== upperRails[0].max[1]
+      || upperRails.some((rail) => overlapLength(slat.min[2], slat.max[2], rail.min[2], rail.max[2]) <= 0)) {
+      throw new Error(`${spec.key} upper luggage slat ${slatIndex} is not supported by both rails.`);
+    }
+  }
+  const lowerRails = layout.lowerRails.map((index) => bounds[index]);
+  const [leftBackLeg, leftFrontLeg, rightBackLeg, rightFrontLeg] = layout.legs.map((index) => bounds[index]);
+  for (let position = 0; position < lowerRails.length; position += 1) {
+    const rail = lowerRails[position];
+    const leftLeg = position === 0 ? leftBackLeg : leftFrontLeg;
+    const rightLeg = position === 0 ? rightBackLeg : rightFrontLeg;
+    if (rail.min[0] !== leftLeg.max[0] || rail.max[0] !== rightLeg.min[0]
+      || overlapLength(rail.min[1], rail.max[1], leftLeg.min[1], leftLeg.max[1]) <= 0
+      || overlapLength(rail.min[2], rail.max[2], leftLeg.min[2], leftLeg.max[2]) <= 0
+      || overlapLength(rail.min[1], rail.max[1], rightLeg.min[1], rightLeg.max[1]) <= 0
+      || overlapLength(rail.min[2], rail.max[2], rightLeg.min[2], rightLeg.max[2]) <= 0) {
+      throw new Error(`${spec.key} lower shoe-shelf rail ${position} is detached from its leg pair.`);
+    }
+  }
+  for (const slatIndex of layout.shoeSlats) {
+    const slat = bounds[slatIndex];
+    if (slat.min[1] !== lowerRails[0].max[1]
+      || lowerRails.some((rail) => overlapLength(slat.min[2], slat.max[2], rail.min[2], rail.max[2]) <= 0)) {
+      throw new Error(`${spec.key} lower shoe slat ${slatIndex} is not supported by both rails.`);
+    }
+  }
+  for (let position = 0; position < layout.cornerPlates.length; position += 1) {
+    const plate = bounds[layout.cornerPlates[position]];
+    const rail = upperRails[position % 2];
+    const attached = position < 2 ? plate.max[0] === rail.min[0] : plate.min[0] === rail.max[0];
+    if (!attached || plate.min[1] !== rail.min[1] || plate.max[1] !== rail.max[1]
+      || overlapLength(plate.min[2], plate.max[2], rail.min[2], rail.max[2]) <= 0) {
+      throw new Error(`${spec.key} iron corner plate ${position} is detached from its upper rail.`);
     }
   }
   for (let first = 0; first < bounds.length; first += 1) {

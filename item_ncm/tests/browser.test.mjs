@@ -82,7 +82,7 @@ try {
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 16);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /57 ITEMS/);
+  assert.match(initial.total, /58 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -217,7 +217,7 @@ try {
   await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
 
   await evaluate(client, `document.querySelector('[data-category="furniture"]').click()`);
-  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 10 && document.querySelector('[data-item="timber-workbench"]')`));
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 11 && document.querySelector('[data-item="timber-workbench"]')`));
   const furnitureBrowse = await evaluate(client, `({
     activeCategory: document.querySelector("[data-category].active")?.dataset.category,
     activeItem: document.querySelector("[data-item].active")?.dataset.item ?? null,
@@ -538,6 +538,52 @@ try {
     })()`);
     await waitFor(() => evaluate(client, `document.documentElement.lang === ${JSON.stringify(locale)} && document.querySelector("#itemTitle").textContent === ${JSON.stringify(expectedName)}`));
     assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), roomKeyBoard.payload);
+  }
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "en";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
+
+  await evaluate(client, `document.querySelector('[data-item="iron-braced-timber-village-inn-luggage-rack"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="iron-braced-timber-village-inn-luggage-rack"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const luggageRack = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payload: document.querySelector("#codeOutput").value,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    materialRows: document.querySelectorAll("#bomRows .bom-row").length,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(luggageRack.title, "Iron-braced Timber Village Inn Luggage Rack");
+  assert.equal(luggageRack.type, "PLACEABLE");
+  assert.match(luggageRack.payload, /^NCF1\./);
+  assert.equal(luggageRack.payloadBytes, "270 / 640 B");
+  assert.equal(luggageRack.componentCount, "24");
+  assert.equal(luggageRack.materialRows, 3);
+  assert.equal(luggageRack.selectedInUrl, "iron-braced-timber-village-inn-luggage-rack");
+  assert.ok(luggageRack.resources.includes("/item_ncm/json/furniture/iron-braced-timber-village-inn-luggage-rack.json"));
+  for (const [locale, expectedName] of Object.entries({
+    en: "Iron-braced Timber Village Inn Luggage Rack",
+    es: "Portaequipajes de posada de aldea de madera reforzado con hierro",
+    fr: "Porte-bagages d’auberge villageoise en bois renforcé de fer",
+    de: "Eisenverstärkte Holz-Gepäckablage für Dorfgasthäuser",
+    ja: "鉄補強の木製村宿荷物台",
+    ru: "Деревянная багажная подставка деревенской гостиницы с железными скобами",
+    ko: "철제 보강 목재 마을 여관 짐받이",
+    "zh-Hant": "鐵箍木製村莊旅店行李架",
+    "zh-Hans": "铁箍木制村庄客栈行李架",
+  })) {
+    await evaluate(client, `(() => {
+      const select = document.querySelector("[data-language-select]");
+      select.value = ${JSON.stringify(locale)};
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+    })()`);
+    await waitFor(() => evaluate(client, `document.documentElement.lang === ${JSON.stringify(locale)} && document.querySelector("#itemTitle").textContent === ${JSON.stringify(expectedName)}`));
+    assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), luggageRack.payload);
   }
   await evaluate(client, `(() => {
     const select = document.querySelector("[data-language-select]");

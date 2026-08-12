@@ -283,6 +283,18 @@ const ROOM_KEY_BOARD_LAYOUTS = Object.freeze({
     hooks: [13, 14, 15, 16, 17, 18],
   },
 });
+const RECEPTION_COUNTER_LAYOUTS = Object.freeze({
+  "iron-braced-timber-village-inn-reception-counter": {
+    feet: [0, 1, 2, 3],
+    posts: [4, 5, 6, 7],
+    frontBeams: [8, 9],
+    frontPanels: [10, 11, 12],
+    countertop: 13,
+    staffShelves: [14, 15],
+    sideAprons: [16, 17],
+    ironBands: [18, 19],
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -563,6 +575,11 @@ const ITEM_NAMES = Object.freeze({
     "Iron-hooked Timber Village Inn Room-key Board", "Tablero de llaves de habitaciones de posada de aldea en madera con ganchos de hierro", "Tableau à clés de chambres d’auberge villageoise en bois avec crochets en fer",
     "Hölzernes Zimmerschlüsselbrett für Dorfgasthäuser mit Eisenhaken", "鉄フック付き木製村宿客室鍵掛け板", "Деревянная доска для ключей от номеров деревенской гостиницы с железными крючками",
     "철제 갈고리 목재 마을 여관 객실 열쇠판", "鐵鉤木製村莊旅店房間鑰匙板", "铁钩木制村庄客栈房间钥匙板",
+  ),
+  "iron-braced-timber-village-inn-reception-counter": names(
+    "Iron-braced Timber Village Inn Reception Counter", "Mostrador de recepción de posada de aldea de madera reforzado con hierro", "Comptoir d’accueil d’auberge villageoise en bois renforcé de fer",
+    "Eisenverstärkter Holzempfangstresen für Dorfgasthäuser", "鉄補強の木製村宿受付カウンター", "Деревянная стойка регистрации деревенской гостиницы с железными скобами",
+    "철제 보강 목재 마을 여관 접수대", "鐵箍木製村莊旅店接待櫃檯", "铁箍木制村庄客栈接待柜台",
   ),
   "iron-blacksmith-anvil": names(
     "Iron Blacksmith Anvil", "Yunque de herrero de hierro", "Enclume de forgeron en fer", "Eiserner Schmiedeamboss",
@@ -1338,6 +1355,32 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+  placeable("commerce", "iron-braced-timber-village-inn-reception-counter", [
+    part("iron_bloom", [10, 6, 10], [-45, 3, -17]),
+    part("iron_bloom", [10, 6, 10], [-45, 3, 17]),
+    part("iron_bloom", [10, 6, 10], [45, 3, -17]),
+    part("iron_bloom", [10, 6, 10], [45, 3, 17]),
+    part("squared_timber", [8, 54, 8], [-45, 33, -17]),
+    part("squared_timber", [8, 54, 8], [-45, 33, 17]),
+    part("squared_timber", [8, 54, 8], [45, 33, -17]),
+    part("squared_timber", [8, 54, 8], [45, 33, 17]),
+    part("wooden_plank", [82, 8, 8], [0, 14, 17]),
+    part("wooden_plank", [82, 8, 8], [0, 56, 17]),
+    part("wooden_plank", [26, 34, 2], [-29, 35, 22]),
+    part("wooden_plank", [32, 34, 2], [0, 35, 22]),
+    part("wooden_plank", [26, 34, 2], [29, 35, 22]),
+    part("wooden_plank", [104, 8, 46], [0, 64, 0]),
+    part("wooden_plank", [82, 6, 20], [0, 49, -7]),
+    part("wooden_plank", [82, 6, 20], [0, 22, -7]),
+    part("squared_timber", [8, 8, 26], [-45, 56, 0]),
+    part("squared_timber", [8, 8, 26], [45, 56, 0]),
+    part("iron_bloom", [82, 3, 2], [0, 14, 22]),
+    part("iron_bloom", [82, 3, 2], [0, 56, 22]),
+  ], { yaw: -0.7, pitch: 0.3 }, {
+    image: "concepts/commerce/iron-braced-timber-village-inn-reception-counter-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
 ]);
 
 generate();
@@ -1445,6 +1488,8 @@ function buildItem(spec) {
   if (singleBedFrameLayout) validateSingleBedFrameGeometry(spec, runtime, singleBedFrameLayout);
   const roomKeyBoardLayout = ROOM_KEY_BOARD_LAYOUTS[spec.key] ?? null;
   if (roomKeyBoardLayout) validateRoomKeyBoardGeometry(spec, runtime, roomKeyBoardLayout);
+  const receptionCounterLayout = RECEPTION_COUNTER_LAYOUTS[spec.key] ?? null;
+  if (receptionCounterLayout) validateReceptionCounterGeometry(spec, runtime, receptionCounterLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -1556,6 +1601,7 @@ function buildItem(spec) {
       ...(washstandLayout ? { washstandGeometryValidated: true } : {}),
       ...(singleBedFrameLayout ? { singleBedFrameGeometryValidated: true } : {}),
       ...(roomKeyBoardLayout ? { roomKeyBoardGeometryValidated: true } : {}),
+      ...(receptionCounterLayout ? { receptionCounterGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -2834,6 +2880,92 @@ function validateRoomKeyBoardGeometry(spec, runtime, layout) {
     }
     if (!backSolid.length || !outerLow.length || !outerHigh.length) {
       throw new Error(`${spec.key} hook ${hookIndex} lacks a board root, outward arm, or raised retaining stop.`);
+    }
+  }
+  for (let first = 0; first < bounds.length; first += 1) {
+    for (let second = first + 1; second < bounds.length; second += 1) {
+      if (boundsOverlap(bounds[first], bounds[second], 0)) {
+        throw new Error(`${spec.key} components ${first} and ${second} intersect.`);
+      }
+    }
+  }
+}
+
+function validateReceptionCounterGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 20 || runtime.boundsQ.sizeQ.join(",") !== "104,68,46") {
+    throw new Error(`${spec.key} must preserve its human-scale inn reception-counter proportions (got ${runtime.componentCount} components and ${runtime.boundsQ.sizeQ.join(",")}).`);
+  }
+  const components = runtime.components ?? [];
+  const bounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    ...Array(4).fill("iron_bloom"),
+    ...Array(4).fill("squared_timber"),
+    ...Array(8).fill("wooden_plank"),
+    "squared_timber", "squared_timber", "iron_bloom", "iron_bloom",
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  const countertop = bounds[layout.countertop];
+  for (let position = 0; position < layout.feet.length; position += 1) {
+    const foot = bounds[layout.feet[position]];
+    const post = bounds[layout.posts[position]];
+    if (foot.min[1] !== 0 || foot.max[1] !== post.min[1] || post.max[1] !== countertop.min[1]
+      || overlapLength(foot.min[0], foot.max[0], post.min[0], post.max[0]) <= 0
+      || overlapLength(foot.min[2], foot.max[2], post.min[2], post.max[2]) <= 0
+      || overlapLength(post.min[0], post.max[0], countertop.min[0], countertop.max[0]) <= 0
+      || overlapLength(post.min[2], post.max[2], countertop.min[2], countertop.max[2]) <= 0) {
+      throw new Error(`${spec.key} corner support ${position} does not form a grounded post beneath the customer countertop.`);
+    }
+  }
+  const [lowerBeam, upperBeam] = layout.frontBeams.map((index) => bounds[index]);
+  const [leftFrontPost, rightFrontPost] = [layout.posts[1], layout.posts[3]].map((index) => bounds[index]);
+  for (const beam of [lowerBeam, upperBeam]) {
+    if (beam.min[0] !== leftFrontPost.max[0] || beam.max[0] !== rightFrontPost.min[0]) {
+      throw new Error(`${spec.key} customer-facing beam is detached from the front posts.`);
+    }
+  }
+  for (const panelIndex of layout.frontPanels) {
+    const panel = bounds[panelIndex];
+    if (panel.min[1] !== lowerBeam.max[1] || panel.max[1] !== upperBeam.min[1]
+      || panel.min[2] !== lowerBeam.max[2]
+      || overlapLength(panel.min[0], panel.max[0], lowerBeam.min[0], lowerBeam.max[0]) <= 0) {
+      throw new Error(`${spec.key} customer-facing panel ${panelIndex} is detached from the framed facade.`);
+    }
+  }
+  const [writingShelf, storageShelf] = layout.staffShelves.map((index) => bounds[index]);
+  const [leftBackPost, rightBackPost] = [layout.posts[0], layout.posts[2]].map((index) => bounds[index]);
+  for (const shelf of [writingShelf, storageShelf]) {
+    if (shelf.min[0] !== leftBackPost.max[0] || shelf.max[0] !== rightBackPost.min[0]
+      || overlapLength(shelf.min[2], shelf.max[2], leftBackPost.min[2], leftBackPost.max[2]) <= 0
+      || shelf.max[2] >= leftFrontPost.min[2]) {
+      throw new Error(`${spec.key} staff-side shelf is detached or obstructs the customer facade.`);
+    }
+  }
+  if (storageShelf.max[1] >= writingShelf.min[1] || writingShelf.max[1] >= countertop.min[1]) {
+    throw new Error(`${spec.key} staff shelves must preserve two ordered open working bays.`);
+  }
+  for (let position = 0; position < layout.sideAprons.length; position += 1) {
+    const apron = bounds[layout.sideAprons[position]];
+    const backPost = bounds[layout.posts[position * 2]];
+    const frontPost = bounds[layout.posts[position * 2 + 1]];
+    if (apron.min[2] !== backPost.max[2] || apron.max[2] !== frontPost.min[2]
+      || apron.max[1] !== countertop.min[1]) {
+      throw new Error(`${spec.key} side apron ${position} is detached from the post pair or countertop.`);
+    }
+  }
+  for (let position = 0; position < layout.ironBands.length; position += 1) {
+    const band = bounds[layout.ironBands[position]];
+    const beam = bounds[layout.frontBeams[position]];
+    if (band.min[2] !== beam.max[2]
+      || band.min[0] !== beam.min[0] || band.max[0] !== beam.max[0]
+      || overlapLength(band.min[1], band.max[1], beam.min[1], beam.max[1]) <= 0) {
+      throw new Error(`${spec.key} iron face band ${position} is detached from its timber beam.`);
     }
   }
   for (let first = 0; first < bounds.length; first += 1) {

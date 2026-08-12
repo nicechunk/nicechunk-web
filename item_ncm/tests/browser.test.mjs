@@ -82,7 +82,7 @@ try {
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 16);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /56 ITEMS/);
+  assert.match(initial.total, /57 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -538,6 +538,57 @@ try {
     })()`);
     await waitFor(() => evaluate(client, `document.documentElement.lang === ${JSON.stringify(locale)} && document.querySelector("#itemTitle").textContent === ${JSON.stringify(expectedName)}`));
     assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), roomKeyBoard.payload);
+  }
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "en";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
+
+  await evaluate(client, `document.querySelector('[data-category="commerce"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 2
+    && document.querySelector('[data-item="iron-braced-timber-village-inn-reception-counter"]')`));
+  assert.equal(await evaluate(client, `performance.getEntriesByType("resource").some((entry) => new URL(entry.name).pathname.includes("/item_ncm/json/commerce/"))`), false,
+    "category browsing must not load commerce item JSON files");
+  await evaluate(client, `document.querySelector('[data-item="iron-braced-timber-village-inn-reception-counter"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="iron-braced-timber-village-inn-reception-counter"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const receptionCounter = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payload: document.querySelector("#codeOutput").value,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    materialRows: document.querySelectorAll("#bomRows .bom-row").length,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(receptionCounter.title, "Iron-braced Timber Village Inn Reception Counter");
+  assert.equal(receptionCounter.type, "PLACEABLE");
+  assert.match(receptionCounter.payload, /^NCF1\./);
+  assert.equal(receptionCounter.payloadBytes, "227 / 640 B");
+  assert.equal(receptionCounter.componentCount, "20");
+  assert.equal(receptionCounter.materialRows, 3);
+  assert.equal(receptionCounter.selectedInUrl, "iron-braced-timber-village-inn-reception-counter");
+  assert.ok(receptionCounter.resources.includes("/item_ncm/json/commerce/iron-braced-timber-village-inn-reception-counter.json"));
+  for (const [locale, expectedName] of Object.entries({
+    en: "Iron-braced Timber Village Inn Reception Counter",
+    es: "Mostrador de recepción de posada de aldea de madera reforzado con hierro",
+    fr: "Comptoir d’accueil d’auberge villageoise en bois renforcé de fer",
+    de: "Eisenverstärkter Holzempfangstresen für Dorfgasthäuser",
+    ja: "鉄補強の木製村宿受付カウンター",
+    ru: "Деревянная стойка регистрации деревенской гостиницы с железными скобами",
+    ko: "철제 보강 목재 마을 여관 접수대",
+    "zh-Hant": "鐵箍木製村莊旅店接待櫃檯",
+    "zh-Hans": "铁箍木制村庄客栈接待柜台",
+  })) {
+    await evaluate(client, `(() => {
+      const select = document.querySelector("[data-language-select]");
+      select.value = ${JSON.stringify(locale)};
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+    })()`);
+    await waitFor(() => evaluate(client, `document.documentElement.lang === ${JSON.stringify(locale)} && document.querySelector("#itemTitle").textContent === ${JSON.stringify(expectedName)}`));
+    assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), receptionCounter.payload);
   }
   await evaluate(client, `(() => {
     const select = document.querySelector("[data-language-select]");

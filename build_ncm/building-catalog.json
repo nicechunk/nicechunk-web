@@ -79,6 +79,7 @@
     "buildings/commerce/compact-village-herbalist-shop.json",
     "buildings/agriculture/compact-village-piggery.json",
     "buildings/industrial/compact-village-ropemaker-workshop.json",
-    "buildings/utility/compact-village-icehouse.json"
+    "buildings/utility/compact-village-icehouse.json",
+    "buildings/agriculture/compact-village-cider-press-house.json"
   ]
 }

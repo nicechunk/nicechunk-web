@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 5);
-  assert.match(initial.totalBuildingCount, /69 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /70 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -1129,14 +1129,14 @@ try {
   assert.ok(!palisadeGatehouse.resources.some((path) => path.endsWith("compact-village-palisade-gatehouse-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=civic]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=civic-town-hall]') && document.querySelector('[data-building=covered-village-bread-oven]') && document.querySelector('[data-building=covered-village-notice-board]') && document.querySelector('[data-building=stone-village-sundial]') && document.querySelector('[data-building=compact-village-infirmary]') && document.querySelector('[data-building=compact-village-schoolhouse]') && document.querySelector('[data-building=compact-village-chapel]') && document.querySelector('[data-building=compact-village-bathhouse]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=civic-town-hall]') && document.querySelector('[data-building=covered-village-bread-oven]') && document.querySelector('[data-building=covered-village-notice-board]') && document.querySelector('[data-building=stone-village-sundial]') && document.querySelector('[data-building=compact-village-infirmary]') && document.querySelector('[data-building=compact-village-schoolhouse]') && document.querySelector('[data-building=compact-village-chapel]') && document.querySelector('[data-building=compact-village-bathhouse]') && document.querySelector('[data-building=compact-village-fire-brigade-station]')"));
   const civicBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     cardCount: document.querySelectorAll('[data-building]').length,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(civicBrowse.activeBuilding, null);
-  assert.equal(civicBrowse.cardCount, 8);
+  assert.equal(civicBrowse.cardCount, 9);
   assert.ok(!civicBrowse.resources.includes("/build_ncm/buildings/civic/civic-town-hall.json"), "category browsing must not load the town-hall JSON");
   assert.ok(!civicBrowse.resources.includes("/build_ncm/buildings/civic/covered-village-bread-oven.json"), "category browsing must not load the bread-oven JSON");
   assert.ok(!civicBrowse.resources.includes("/build_ncm/concepts/civic/covered-village-bread-oven.webp"), "category browsing must not load the bread-oven concept art");
@@ -1152,6 +1152,8 @@ try {
   assert.ok(!civicBrowse.resources.includes("/build_ncm/concepts/civic/compact-village-chapel.webp"), "category browsing must not load the chapel concept art");
   assert.ok(!civicBrowse.resources.includes("/build_ncm/buildings/civic/compact-village-bathhouse.json"), "category browsing must not load the bathhouse JSON");
   assert.ok(!civicBrowse.resources.includes("/build_ncm/concepts/civic/compact-village-bathhouse.webp"), "category browsing must not load the bathhouse concept art");
+  assert.ok(!civicBrowse.resources.includes("/build_ncm/buildings/civic/compact-village-fire-brigade-station.json"), "category browsing must not load the fire-brigade-station JSON");
+  assert.ok(!civicBrowse.resources.includes("/build_ncm/concepts/civic/compact-village-fire-brigade-station.webp"), "category browsing must not load the fire-brigade-station concept art");
   await clickBuilding(client, "civic-town-hall");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'civic-town-hall' && document.querySelector('#modelSize').textContent === '44 × 42 × 40'"));
   const townHall = await evaluate(client, `({
@@ -1513,6 +1515,47 @@ try {
   assert.ok(bathhouse.resources.includes("/build_ncm/buildings/civic/compact-village-bathhouse.json"));
   assert.ok(bathhouse.resources.includes("/build_ncm/concepts/civic/compact-village-bathhouse.webp"));
   assert.ok(!bathhouse.resources.some((path) => path.endsWith("compact-village-bathhouse-blueprint.js")));
+
+  await clickBuilding(client, "compact-village-fire-brigade-station");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-fire-brigade-station' && document.querySelector('#modelSize').textContent === '33 × 18 × 25' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const fireBrigadeStation = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptLoading: document.querySelector('#conceptImage').loading,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(fireBrigadeStation.activeCategory, "civic");
+  assert.match(fireBrigadeStation.title, /Compact Village Fire Brigade Station/);
+  assert.equal(fireBrigadeStation.modelSize, "33 × 18 × 25");
+  assert.match(fireBrigadeStation.payload, /^NCM3:/);
+  assert.equal(fireBrigadeStation.voxelCount, 2432);
+  for (const id of [55, 56, 57, 58, 65, 68, 69, 70, 74, 96]) assert.match(fireBrigadeStation.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(fireBrigadeStation.uncovered, false);
+  assert.equal(fireBrigadeStation.glazingDisabled, true);
+  assert.equal(fireBrigadeStation.glazingLabel, "Openings: Not applicable");
+  assert.equal(fireBrigadeStation.disabledStyles, 6);
+  assert.equal(fireBrigadeStation.disabledRoofs, 6);
+  assert.equal(fireBrigadeStation.conceptHidden, false);
+  assert.equal(fireBrigadeStation.conceptLoading, "eager");
+  assert.match(fireBrigadeStation.conceptAlt, /Compact Village Fire Brigade Station concept reference/);
+  assert.equal(fireBrigadeStation.conceptFit, "contain");
+  assert.equal(fireBrigadeStation.selectedInUrl, "compact-village-fire-brigade-station");
+  assert.ok(fireBrigadeStation.resources.includes("/build_ncm/buildings/civic/compact-village-fire-brigade-station.json"));
+  assert.ok(fireBrigadeStation.resources.includes("/build_ncm/concepts/civic/compact-village-fire-brigade-station.webp"));
+  assert.ok(!fireBrigadeStation.resources.some((path) => path.endsWith("compact-village-fire-brigade-station-blueprint.js")));
 
   if (screenshotPath) {
     await evaluate(client, "document.querySelector('.building-library-panel').scrollIntoView({block:'start'}); window.scrollBy(0, -76); new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))");
@@ -3299,10 +3342,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const visitorInformationKioskDirectUrl = new URL(url);
-  visitorInformationKioskDirectUrl.searchParams.set("building", "compact-village-visitor-information-kiosk");
-  await client.send("Page.navigate", { url: visitorInformationKioskDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'wayfinding' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-visitor-information-kiosk' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const fireBrigadeStationDirectUrl = new URL(url);
+  fireBrigadeStationDirectUrl.searchParams.set("building", "compact-village-fire-brigade-station");
+  await client.send("Page.navigate", { url: fireBrigadeStationDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'civic' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-fire-brigade-station' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -3314,16 +3357,16 @@ try {
     conceptPath: new URL(document.querySelector('#conceptImage').dataset.source).pathname,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(directSelection.activeCategory, "wayfinding");
-  assert.equal(directSelection.activeBuilding, "compact-village-visitor-information-kiosk");
-  assert.match(directSelection.title, /Compact Village Visitor Information Kiosk/);
-  assert.equal(directSelection.modelSize, "29 × 16 × 20");
+  assert.equal(directSelection.activeCategory, "civic");
+  assert.equal(directSelection.activeBuilding, "compact-village-fire-brigade-station");
+  assert.match(directSelection.title, /Compact Village Fire Brigade Station/);
+  assert.equal(directSelection.modelSize, "33 × 18 × 25");
   assert.match(directSelection.payload, /^NCM3:/);
   assert.equal(directSelection.conceptComplete, true);
   assert.ok(directSelection.conceptNaturalWidth > 0);
-  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/wayfinding/compact-village-visitor-information-kiosk.webp");
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/wayfinding/compact-village-visitor-information-kiosk.json"));
-  assert.ok(directSelection.resources.includes("/build_ncm/concepts/wayfinding/compact-village-visitor-information-kiosk.webp"));
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/civic/compact-village-fire-brigade-station.webp");
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/civic/compact-village-fire-brigade-station.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/concepts/civic/compact-village-fire-brigade-station.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

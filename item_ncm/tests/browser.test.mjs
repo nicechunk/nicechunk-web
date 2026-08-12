@@ -83,7 +83,7 @@ try {
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 16);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /65 ITEMS/);
+  assert.match(initial.total, /66 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -218,9 +218,10 @@ try {
   await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
 
   await evaluate(client, `document.querySelector('[data-category="furniture"]').click()`);
-  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 14
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 15
     && document.querySelector('[data-item="timber-workbench"]')
-    && document.querySelector('[data-item="iron-braced-timber-village-inn-double-door-wardrobe"]')`));
+    && document.querySelector('[data-item="iron-braced-timber-village-inn-double-door-wardrobe"]')
+    && document.querySelector('[data-item="iron-braced-timber-village-inn-communal-dining-table"]')`));
   const furnitureBrowse = await evaluate(client, `({
     activeCategory: document.querySelector("[data-category].active")?.dataset.category,
     activeItem: document.querySelector("[data-item].active")?.dataset.item ?? null,
@@ -633,6 +634,52 @@ try {
     })()`);
     await waitFor(() => evaluate(client, `document.documentElement.lang === ${JSON.stringify(locale)} && document.querySelector("#itemTitle").textContent === ${JSON.stringify(expectedName)}`));
     assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), writingDesk.payload);
+  }
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "en";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
+
+  await evaluate(client, `document.querySelector('[data-item="iron-braced-timber-village-inn-communal-dining-table"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="iron-braced-timber-village-inn-communal-dining-table"].active') && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const communalDiningTable = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payload: document.querySelector("#codeOutput").value,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    materialRows: document.querySelectorAll("#bomRows .bom-row").length,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(communalDiningTable.title, "Iron-braced Timber Village Inn Communal Dining Table");
+  assert.equal(communalDiningTable.type, "PLACEABLE");
+  assert.match(communalDiningTable.payload, /^NCF1\./);
+  assert.equal(communalDiningTable.payloadBytes, "270 / 640 B");
+  assert.equal(communalDiningTable.componentCount, "24");
+  assert.equal(communalDiningTable.materialRows, 3);
+  assert.equal(communalDiningTable.selectedInUrl, "iron-braced-timber-village-inn-communal-dining-table");
+  assert.ok(communalDiningTable.resources.includes("/item_ncm/json/furniture/iron-braced-timber-village-inn-communal-dining-table.json"));
+  for (const [locale, expectedName] of Object.entries({
+    en: "Iron-braced Timber Village Inn Communal Dining Table",
+    es: "Mesa de comedor comunal de posada de aldea de madera reforzada con hierro",
+    fr: "Table de repas commune d’auberge villageoise en bois renforcé de fer",
+    de: "Eisenverstärkter hölzerner Gemeinschaftsesstisch für Dorfgasthäuser",
+    ja: "鉄補強の木製村宿共同食卓",
+    ru: "Общий обеденный стол деревенской гостиницы из дерева с железными скобами",
+    ko: "철제 보강 목재 마을 여관 공동 식탁",
+    "zh-Hant": "鐵箍木製村莊旅店共餐桌",
+    "zh-Hans": "铁箍木制村庄客栈共餐桌",
+  })) {
+    await evaluate(client, `(() => {
+      const select = document.querySelector("[data-language-select]");
+      select.value = ${JSON.stringify(locale)};
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+    })()`);
+    await waitFor(() => evaluate(client, `document.documentElement.lang === ${JSON.stringify(locale)} && document.querySelector("#itemTitle").textContent === ${JSON.stringify(expectedName)}`));
+    assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), communalDiningTable.payload);
   }
   await evaluate(client, `(() => {
     const select = document.querySelector("[data-language-select]");

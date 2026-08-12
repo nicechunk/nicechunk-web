@@ -1,0 +1,316 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "iron-braced-timber-village-inn-communal-dining-table",
+  "category": "furniture",
+  "interaction": "placeable",
+  "names": {
+    "en": "Iron-braced Timber Village Inn Communal Dining Table",
+    "es": "Mesa de comedor comunal de posada de aldea de madera reforzada con hierro",
+    "fr": "Table de repas commune d’auberge villageoise en bois renforcé de fer",
+    "de": "Eisenverstärkter hölzerner Gemeinschaftsesstisch für Dorfgasthäuser",
+    "ja": "鉄補強の木製村宿共同食卓",
+    "ru": "Общий обеденный стол деревенской гостиницы из дерева с железными скобами",
+    "ko": "철제 보강 목재 마을 여관 공동 식탁",
+    "zh-Hant": "鐵箍木製村莊旅店共餐桌",
+    "zh-Hans": "铁箍木制村庄客栈共餐桌"
+  },
+  "descriptions": {
+    "en": "Iron-braced Timber Village Inn Communal Dining Table is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Mesa de comedor comunal de posada de aldea de madera reforzada con hierro es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Table de repas commune d’auberge villageoise en bois renforcé de fer est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Eisenverstärkter hölzerner Gemeinschaftsesstisch für Dorfgasthäuser ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "鉄補強の木製村宿共同食卓は、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Общий обеденный стол деревенской гостиницы из дерева с железными скобами — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "철제 보강 목재 마을 여관 공동 식탁은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "鐵箍木製村莊旅店共餐桌是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "铁箍木制村庄客栈共餐桌是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 1.8125,
+    "height": 0.7813,
+    "depth": 0.7813,
+    "sizeQ": [
+      116,
+      50,
+      50
+    ]
+  },
+  "preview": {
+    "yaw": -0.68,
+    "pitch": 0.3
+  },
+  "concept": {
+    "image": "concepts/furniture/iron-braced-timber-village-inn-communal-dining-table-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "efb0c2562cedd6f3f42295a41bc8e5d830d70b9326c96c6d0af7fd8545b3dd82"
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.-V94-nbtvZQjbaJMN0YCakKBAp54BfaQABNSFAgU88AgTIAAmpCgQKBiAX2kAATUhQIFAxAIEyACIZQgoCHngx9pABEMoQUBDzwYBMgAiGUIKAgGIMfaQARDKEFAQDEGATIAIp1dAYKAAF_2EAEU6ugMFAAC_9iACKdXQGCgABeABABFOroDBQAAvAogAinV0BgoAAXgoQARDKtBQMAAJ_tIAIhlWgoGAAE4JkAEQyhAUPPPCcACACIZQgKHgYhOABABEMoQDDzzwOAAgAiGUIBh4GIHAAQARDKtAwMAADgAIAAmpCgYCewE_0kAATUhQMBAoCf6SAAJqQoGAnsBOC5AAE1IUDAQKAnBcgAA",
+    "rawBytes": 270,
+    "sha256": "4823a8f27e59a855e0a5823840bfc77c1c7f4d8f94b56845aa02f9bda61fe9f4",
+    "designHash": 3584985084,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 270,
+    "savedBytes": 0,
+    "sourceComponentCount": 24,
+    "decodedComponentCount": 24,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 1525879,
+        "usedVolumeMm3": 1525879,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 1525879,
+        "usedVolumeMm3": 1525879,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 1525879,
+        "usedVolumeMm3": 1525879,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 1525879,
+        "usedVolumeMm3": 1525879,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 9765625,
+        "usedVolumeMm3": 9765625,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 9765625,
+        "usedVolumeMm3": 9765625,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 9765625,
+        "usedVolumeMm3": 9765625,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 7,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 9765625,
+        "usedVolumeMm3": 9765625,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 8,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 26550293,
+        "usedVolumeMm3": 26550293,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 9,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 26550293,
+        "usedVolumeMm3": 26550293,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 10,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 26550293,
+        "usedVolumeMm3": 26550293,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 11,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 26550293,
+        "usedVolumeMm3": 26550293,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 12,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 26550293,
+        "usedVolumeMm3": 26550293,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 13,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 20599365,
+        "usedVolumeMm3": 20599365,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 14,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 20599365,
+        "usedVolumeMm3": 20599365,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 15,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 9155273,
+        "usedVolumeMm3": 9155273,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 16,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 9155273,
+        "usedVolumeMm3": 9155273,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 17,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 5493164,
+        "usedVolumeMm3": 5493164,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 18,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 5493164,
+        "usedVolumeMm3": 5493164,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 19,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 12359619,
+        "usedVolumeMm3": 12359619,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 20,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 457764,
+        "usedVolumeMm3": 457764,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 21,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 457764,
+        "usedVolumeMm3": 457764,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 22,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 457764,
+        "usedVolumeMm3": 457764,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 23,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 457764,
+        "usedVolumeMm3": 457764,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 262602752,
+      "requiredEffectiveDurability": 38338,
+      "outputMassGrams": 191955,
+      "materialScore": 65
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 576,
+      "triangleCount": 288,
+      "meshByteLength": 10944
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 8,
+      "inputVolumeMm3": 7934572,
+      "usedVolumeMm3": 7934572,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 32
+    },
+    {
+      "materialId": "squared_timber",
+      "itemCode": 1033,
+      "componentCount": 11,
+      "inputVolumeMm3": 121917723,
+      "usedVolumeMm3": 121917723,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 48400,
+      "equivalentInputUnits": 2519
+    },
+    {
+      "materialId": "wooden_plank",
+      "itemCode": 1031,
+      "componentCount": 5,
+      "inputVolumeMm3": 132751465,
+      "usedVolumeMm3": 132751465,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 6638
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "communalDiningTableGeometryValidated": true,
+    "chainMinted": false
+  }
+}

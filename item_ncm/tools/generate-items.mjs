@@ -333,6 +333,18 @@ const WRITING_CHAIR_LAYOUTS = Object.freeze({
     seatPlates: [15, 16, 17, 18],
   },
 });
+const COMMUNAL_DINING_TABLE_LAYOUTS = Object.freeze({
+  "iron-braced-timber-village-inn-communal-dining-table": {
+    feet: [0, 1, 2, 3],
+    legs: [4, 5, 6, 7],
+    tabletopPlanks: [8, 9, 10, 11, 12],
+    longAprons: [13, 14],
+    endAprons: [15, 16],
+    endStretchers: [17, 18],
+    longStretcher: 19,
+    cornerStraps: [20, 21, 22, 23],
+  },
+});
 const DOUBLE_DOOR_WARDROBE_LAYOUTS = Object.freeze({
   "iron-braced-timber-village-inn-double-door-wardrobe": {
     feet: [0, 1, 2, 3],
@@ -703,6 +715,11 @@ const ITEM_NAMES = Object.freeze({
     "Iron-braced Timber Village Inn Writing Chair", "Silla de escritorio de posada de aldea de madera reforzada con hierro", "Chaise de bureau d’auberge villageoise en bois renforcée de fer",
     "Eisenverstärkter Holzschreibstuhl für Dorfgasthäuser", "鉄補強の木製村宿書き物椅子", "Деревянный письменный стул деревенской гостиницы с железными скобами",
     "철제 보강 목재 마을 여관 책상 의자", "鐵箍木製村莊旅店寫字椅", "铁箍木制村庄客栈写字椅",
+  ),
+  "iron-braced-timber-village-inn-communal-dining-table": names(
+    "Iron-braced Timber Village Inn Communal Dining Table", "Mesa de comedor comunal de posada de aldea de madera reforzada con hierro", "Table de repas commune d’auberge villageoise en bois renforcé de fer",
+    "Eisenverstärkter hölzerner Gemeinschaftsesstisch für Dorfgasthäuser", "鉄補強の木製村宿共同食卓", "Общий обеденный стол деревенской гостиницы из дерева с железными скобами",
+    "철제 보강 목재 마을 여관 공동 식탁", "鐵箍木製村莊旅店共餐桌", "铁箍木制村庄客栈共餐桌",
   ),
   "iron-braced-timber-village-inn-double-door-wardrobe": names(
     "Iron-braced Timber Village Inn Double-door Wardrobe", "Armario de dos puertas de posada de aldea de madera reforzado con hierro", "Armoire à deux portes d’auberge villageoise en bois renforcée de fer",
@@ -1590,6 +1607,32 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+  placeable("furniture", "iron-braced-timber-village-inn-communal-dining-table", [
+    part("iron_bloom", [10, 4, 10], [-49, 2, -19]),
+    part("iron_bloom", [10, 4, 10], [-49, 2, 19]),
+    part("iron_bloom", [10, 4, 10], [49, 2, -19]),
+    part("iron_bloom", [10, 4, 10], [49, 2, 19]),
+    part("squared_timber", [8, 40, 8], [-49, 24, -19]),
+    part("squared_timber", [8, 40, 8], [-49, 24, 19]),
+    part("squared_timber", [8, 40, 8], [49, 24, -19]),
+    part("squared_timber", [8, 40, 8], [49, 24, 19]),
+    ...[-20, -10, 0, 10, 20].map((z) => part("wooden_plank", [116, 6, 10], [0, 47, z])),
+    part("squared_timber", [90, 10, 6], [0, 39, -19]),
+    part("squared_timber", [90, 10, 6], [0, 39, 19]),
+    part("squared_timber", [8, 10, 30], [-49, 39, 0]),
+    part("squared_timber", [8, 10, 30], [49, 39, 0]),
+    part("squared_timber", [8, 6, 30], [-49, 14, 0]),
+    part("squared_timber", [8, 6, 30], [49, 14, 0]),
+    part("squared_timber", [90, 6, 6], [0, 14, 0]),
+    part("iron_bloom", [10, 6, 2], [-40, 39, -23]),
+    part("iron_bloom", [10, 6, 2], [40, 39, -23]),
+    part("iron_bloom", [10, 6, 2], [-40, 39, 23]),
+    part("iron_bloom", [10, 6, 2], [40, 39, 23]),
+  ], { yaw: -0.68, pitch: 0.3 }, {
+    image: "concepts/furniture/iron-braced-timber-village-inn-communal-dining-table-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
   placeable("furniture", "iron-braced-timber-village-inn-double-door-wardrobe", [
     part("iron_bloom", [8, 4, 6], [-25, 2, -13]),
     part("iron_bloom", [8, 4, 6], [-25, 2, 13]),
@@ -1835,6 +1878,8 @@ function buildItem(spec) {
   if (writingDeskLayout) validateWritingDeskGeometry(spec, runtime, writingDeskLayout);
   const writingChairLayout = WRITING_CHAIR_LAYOUTS[spec.key] ?? null;
   if (writingChairLayout) validateWritingChairGeometry(spec, runtime, writingChairLayout);
+  const communalDiningTableLayout = COMMUNAL_DINING_TABLE_LAYOUTS[spec.key] ?? null;
+  if (communalDiningTableLayout) validateCommunalDiningTableGeometry(spec, runtime, communalDiningTableLayout);
   const doubleDoorWardrobeLayout = DOUBLE_DOOR_WARDROBE_LAYOUTS[spec.key] ?? null;
   if (doubleDoorWardrobeLayout) validateDoubleDoorWardrobeGeometry(spec, runtime, doubleDoorWardrobeLayout);
   const wallMirrorLayout = WALL_MIRROR_LAYOUTS[spec.key] ?? null;
@@ -1960,6 +2005,7 @@ function buildItem(spec) {
       ...(luggageRackLayout ? { luggageRackGeometryValidated: true } : {}),
       ...(writingDeskLayout ? { writingDeskGeometryValidated: true } : {}),
       ...(writingChairLayout ? { writingChairGeometryValidated: true } : {}),
+      ...(communalDiningTableLayout ? { communalDiningTableGeometryValidated: true } : {}),
       ...(doubleDoorWardrobeLayout ? { doubleDoorWardrobeGeometryValidated: true } : {}),
       ...(wallMirrorLayout ? { wallMirrorGeometryValidated: true } : {}),
       ...(privacyScreenLayout ? { privacyScreenGeometryValidated: true } : {}),
@@ -3714,6 +3760,102 @@ function validatePrivacyScreenGeometry(spec, runtime, layout) {
   }
   if (components.some((component) => component.offsetQ[2] !== 0 && !layout.hingePlates.includes(components.indexOf(component)))) {
     throw new Error(`${spec.key} timber and cloth panels must remain in one straight aligned plane.`);
+  }
+  for (let first = 0; first < bounds.length; first += 1) {
+    for (let second = first + 1; second < bounds.length; second += 1) {
+      if (boundsOverlap(bounds[first], bounds[second], 0)) {
+        throw new Error(`${spec.key} components ${first} and ${second} intersect.`);
+      }
+    }
+  }
+}
+
+function validateCommunalDiningTableGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 24 || runtime.boundsQ.sizeQ.join(",") !== "116,50,50") {
+    throw new Error(`${spec.key} must preserve its canonical six-person inn dining-table proportions (got ${runtime.componentCount} components and ${runtime.boundsQ.sizeQ.join(",")}).`);
+  }
+  const components = runtime.components ?? [];
+  const bounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    ...Array(4).fill("iron_bloom"),
+    ...Array(4).fill("squared_timber"),
+    ...Array(5).fill("wooden_plank"),
+    ...Array(7).fill("squared_timber"),
+    ...Array(4).fill("iron_bloom"),
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  const tabletop = layout.tabletopPlanks.map((index) => bounds[index]);
+  const tabletopMinY = tabletop[0].min[1];
+  const tabletopMaxY = tabletop[0].max[1];
+  for (let position = 0; position < tabletop.length; position += 1) {
+    const plank = tabletop[position];
+    if (plank.min[1] !== tabletopMinY || plank.max[1] !== tabletopMaxY
+      || (position > 0 && tabletop[position - 1].max[2] !== plank.min[2])) {
+      throw new Error(`${spec.key} tabletop plank ${position} is not flush in the continuous five-plank surface.`);
+    }
+  }
+  for (let position = 0; position < layout.feet.length; position += 1) {
+    const foot = bounds[layout.feet[position]];
+    const leg = bounds[layout.legs[position]];
+    if (foot.min[1] !== 0 || foot.max[1] !== leg.min[1] || leg.max[1] !== tabletopMinY
+      || overlapLength(foot.min[0], foot.max[0], leg.min[0], leg.max[0]) <= 0
+      || overlapLength(foot.min[2], foot.max[2], leg.min[2], leg.max[2]) <= 0
+      || !tabletop.some((plank) => overlapLength(leg.min[0], leg.max[0], plank.min[0], plank.max[0]) > 0
+        && overlapLength(leg.min[2], leg.max[2], plank.min[2], plank.max[2]) > 0)) {
+      throw new Error(`${spec.key} support stack ${position} does not continuously connect a grounded iron shoe to the tabletop.`);
+    }
+  }
+  for (let position = 0; position < layout.longAprons.length; position += 1) {
+    const apron = bounds[layout.longAprons[position]];
+    const leftLeg = bounds[layout.legs[position]];
+    const rightLeg = bounds[layout.legs[position + 2]];
+    if (apron.min[0] !== leftLeg.max[0] || apron.max[0] !== rightLeg.min[0]
+      || apron.max[1] !== tabletopMinY) {
+      throw new Error(`${spec.key} long apron ${position} is detached from its leg pair or tabletop.`);
+    }
+  }
+  for (let position = 0; position < layout.endAprons.length; position += 1) {
+    const apron = bounds[layout.endAprons[position]];
+    const backLeg = bounds[layout.legs[position * 2]];
+    const frontLeg = bounds[layout.legs[position * 2 + 1]];
+    if (apron.min[2] !== backLeg.max[2] || apron.max[2] !== frontLeg.min[2]
+      || apron.max[1] !== tabletopMinY) {
+      throw new Error(`${spec.key} end apron ${position} is detached from its leg pair or tabletop.`);
+    }
+  }
+  for (let position = 0; position < layout.endStretchers.length; position += 1) {
+    const rail = bounds[layout.endStretchers[position]];
+    const backLeg = bounds[layout.legs[position * 2]];
+    const frontLeg = bounds[layout.legs[position * 2 + 1]];
+    if (rail.min[2] !== backLeg.max[2] || rail.max[2] !== frontLeg.min[2]
+      || overlapLength(rail.min[1], rail.max[1], backLeg.min[1], backLeg.max[1]) <= 0) {
+      throw new Error(`${spec.key} lower end stretcher ${position} is detached from its leg pair.`);
+    }
+  }
+  const longStretcher = bounds[layout.longStretcher];
+  const [leftEndStretcher, rightEndStretcher] = layout.endStretchers.map((index) => bounds[index]);
+  if (longStretcher.min[0] !== leftEndStretcher.max[0]
+    || longStretcher.max[0] !== rightEndStretcher.min[0]
+    || overlapLength(longStretcher.min[1], longStretcher.max[1], leftEndStretcher.min[1], leftEndStretcher.max[1]) <= 0
+    || overlapLength(longStretcher.min[2], longStretcher.max[2], leftEndStretcher.min[2], leftEndStretcher.max[2]) <= 0) {
+    throw new Error(`${spec.key} longitudinal lower stretcher is detached from the two end rails.`);
+  }
+  for (let position = 0; position < layout.cornerStraps.length; position += 1) {
+    const strap = bounds[layout.cornerStraps[position]];
+    const apron = bounds[layout.longAprons[position < 2 ? 0 : 1]];
+    const faceConnected = position < 2 ? strap.max[2] === apron.min[2] : strap.min[2] === apron.max[2];
+    if (!faceConnected
+      || overlapLength(strap.min[0], strap.max[0], apron.min[0], apron.max[0]) <= 0
+      || overlapLength(strap.min[1], strap.max[1], apron.min[1], apron.max[1]) <= 0) {
+      throw new Error(`${spec.key} iron apron strap ${position} is detached.`);
+    }
   }
   for (let first = 0; first < bounds.length; first += 1) {
     for (let second = first + 1; second < bounds.length; second += 1) {

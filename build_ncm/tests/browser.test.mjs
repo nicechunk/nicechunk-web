@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 5);
-  assert.match(initial.totalBuildingCount, /72 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /73 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -2092,14 +2092,14 @@ try {
   assert.ok(!visitorInformationKiosk.resources.some((path) => path.endsWith("compact-village-visitor-information-kiosk-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=commerce]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=covered-market-stall]') && document.querySelector('[data-building=compact-village-general-store]') && document.querySelector('[data-building=compact-village-bakery]') && document.querySelector('[data-building=compact-village-tavern]') && document.querySelector('[data-building=compact-village-butcher-shop]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=covered-market-stall]') && document.querySelector('[data-building=compact-village-general-store]') && document.querySelector('[data-building=compact-village-bakery]') && document.querySelector('[data-building=compact-village-tavern]') && document.querySelector('[data-building=compact-village-butcher-shop]') && document.querySelector('[data-building=compact-village-tailor-shop]')"));
   const commerceBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     cardCount: document.querySelectorAll('[data-building]').length,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(commerceBrowse.activeBuilding, null);
-  assert.equal(commerceBrowse.cardCount, 5);
+  assert.equal(commerceBrowse.cardCount, 6);
   assert.ok(!commerceBrowse.resources.includes("/build_ncm/buildings/commerce/covered-market-stall.json"), "category browsing must not load the market-stall JSON");
   assert.ok(!commerceBrowse.resources.includes("/build_ncm/concepts/commerce/covered-market-stall.webp"), "category browsing must not load the market-stall concept art");
   assert.ok(!commerceBrowse.resources.includes("/build_ncm/buildings/commerce/compact-village-general-store.json"), "category browsing must not load the general-store JSON");
@@ -2110,6 +2110,8 @@ try {
   assert.ok(!commerceBrowse.resources.includes("/build_ncm/concepts/commerce/compact-village-tavern.webp"), "category browsing must not load the tavern concept art");
   assert.ok(!commerceBrowse.resources.includes("/build_ncm/buildings/commerce/compact-village-butcher-shop.json"), "category browsing must not load the butcher-shop JSON");
   assert.ok(!commerceBrowse.resources.includes("/build_ncm/concepts/commerce/compact-village-butcher-shop.webp"), "category browsing must not load the butcher-shop concept art");
+  assert.ok(!commerceBrowse.resources.includes("/build_ncm/buildings/commerce/compact-village-tailor-shop.json"), "category browsing must not load the tailor-shop JSON");
+  assert.ok(!commerceBrowse.resources.includes("/build_ncm/concepts/commerce/compact-village-tailor-shop.webp"), "category browsing must not load the tailor-shop concept art");
   await clickBuilding(client, "covered-market-stall");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'covered-market-stall' && document.querySelector('#modelSize').textContent === '21 × 21 × 15' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const marketStall = await evaluate(client, `({
@@ -2312,6 +2314,47 @@ try {
   assert.ok(butcherShop.resources.includes("/build_ncm/buildings/commerce/compact-village-butcher-shop.json"));
   assert.ok(butcherShop.resources.includes("/build_ncm/concepts/commerce/compact-village-butcher-shop.webp"));
   assert.ok(!butcherShop.resources.some((path) => path.endsWith("compact-village-butcher-shop-blueprint.js")));
+
+  await clickBuilding(client, "compact-village-tailor-shop");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-tailor-shop' && document.querySelector('#modelSize').textContent === '25 × 19 × 25' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const tailorShop = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptLoading: document.querySelector('#conceptImage').loading,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(tailorShop.activeCategory, "commerce");
+  assert.match(tailorShop.title, /Compact Village Tailor Shop/);
+  assert.equal(tailorShop.modelSize, "25 × 19 × 25");
+  assert.match(tailorShop.payload, /^NCM3:/);
+  assert.equal(tailorShop.voxelCount, 2125);
+  for (const id of [55, 56, 57, 58, 68, 69, 70, 96]) assert.match(tailorShop.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(tailorShop.uncovered, false);
+  assert.equal(tailorShop.glazingDisabled, true);
+  assert.equal(tailorShop.glazingLabel, "Openings: Not applicable");
+  assert.equal(tailorShop.disabledStyles, 6);
+  assert.equal(tailorShop.disabledRoofs, 6);
+  assert.equal(tailorShop.conceptHidden, false);
+  assert.equal(tailorShop.conceptLoading, "eager");
+  assert.match(tailorShop.conceptAlt, /Compact Village Tailor Shop concept reference/);
+  assert.equal(tailorShop.conceptFit, "contain");
+  assert.equal(tailorShop.selectedInUrl, "compact-village-tailor-shop");
+  assert.ok(tailorShop.resources.includes("/build_ncm/buildings/commerce/compact-village-tailor-shop.json"));
+  assert.ok(tailorShop.resources.includes("/build_ncm/concepts/commerce/compact-village-tailor-shop.webp"));
+  assert.ok(!tailorShop.resources.some((path) => path.endsWith("compact-village-tailor-shop-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=transport]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=stone-timber-footbridge]') && document.querySelector('[data-building=two-wheel-village-handcart]') && document.querySelector('[data-building=compact-village-carriage-house]') && document.querySelector('[data-building=compact-village-courier-post]') && document.querySelector('[data-building=covered-village-ferry-landing]')"));
@@ -3428,10 +3471,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const candlemakerWorkshopDirectUrl = new URL(url);
-  candlemakerWorkshopDirectUrl.searchParams.set("building", "compact-village-candlemaker-workshop");
-  await client.send("Page.navigate", { url: candlemakerWorkshopDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'industrial' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-candlemaker-workshop' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const tailorShopDirectUrl = new URL(url);
+  tailorShopDirectUrl.searchParams.set("building", "compact-village-tailor-shop");
+  await client.send("Page.navigate", { url: tailorShopDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'commerce' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-tailor-shop' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -3443,16 +3486,16 @@ try {
     conceptPath: new URL(document.querySelector('#conceptImage').dataset.source).pathname,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(directSelection.activeCategory, "industrial");
-  assert.equal(directSelection.activeBuilding, "compact-village-candlemaker-workshop");
-  assert.match(directSelection.title, /Compact Village Candlemaker Workshop/);
-  assert.equal(directSelection.modelSize, "27 × 19 × 23");
+  assert.equal(directSelection.activeCategory, "commerce");
+  assert.equal(directSelection.activeBuilding, "compact-village-tailor-shop");
+  assert.match(directSelection.title, /Compact Village Tailor Shop/);
+  assert.equal(directSelection.modelSize, "25 × 19 × 25");
   assert.match(directSelection.payload, /^NCM3:/);
   assert.equal(directSelection.conceptComplete, true);
   assert.ok(directSelection.conceptNaturalWidth > 0);
-  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/industrial/compact-village-candlemaker-workshop.webp");
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/industrial/compact-village-candlemaker-workshop.json"));
-  assert.ok(directSelection.resources.includes("/build_ncm/concepts/industrial/compact-village-candlemaker-workshop.webp"));
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/commerce/compact-village-tailor-shop.webp");
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/commerce/compact-village-tailor-shop.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/concepts/commerce/compact-village-tailor-shop.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

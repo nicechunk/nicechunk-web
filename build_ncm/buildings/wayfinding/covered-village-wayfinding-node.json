@@ -1,0 +1,348 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "covered-village-wayfinding-node",
+  "category": "wayfinding",
+  "kind": "utility-structure",
+  "titles": {
+    "en": "Covered Village Wayfinding Node",
+    "es": "Nodo Cubierto de Orientación de la Aldea",
+    "fr": "Nœud Couvert d’Orientation du Village",
+    "de": "Überdachter Dorf-Wegweiserknoten",
+    "ja": "村の屋根付き案内ノード",
+    "ru": "Крытый деревенский навигационный узел",
+    "ko": "지붕 있는 마을 길찾기 거점",
+    "zh-Hant": "村莊有頂導向節點",
+    "zh-Hans": "村庄有顶导向节点"
+  },
+  "descriptions": {
+    "en": "A human-scaled four-way timber wayfinding node with zero-threshold five-wide passages, four grounded corner posts, paired blank map panels at every entrance, overhead direction arms with non-text route markers and a shallow stepped weather canopy; lettering, travelers, roads, landscaping and loose supplies are excluded.",
+    "es": "Un nodo de orientación de madera a escala humana con cuatro pasos de cinco vóxeles sin desnivel, cuatro postes de esquina apoyados en el suelo, paneles de mapa en blanco a ambos lados de cada entrada, brazos de dirección elevados con marcadores de ruta sin texto y una cubierta baja escalonada; se excluyen letras, viajeros, caminos, paisajismo y suministros sueltos.",
+    "fr": "Un nœud d’orientation en bois à échelle humaine avec quatre passages de cinq voxels sans ressaut, quatre poteaux d’angle ancrés au sol, des panneaux cartographiques vierges jumelés à chaque entrée, des bras directionnels surélevés munis de repères sans texte et un auvent bas à gradins ; lettrage, voyageurs, routes, aménagement paysager et fournitures mobiles sont exclus.",
+    "de": "Ein maßstäblicher hölzerner Wegweiserknoten mit vier schwellenlosen, fünf Voxel breiten Durchgängen, vier bodengebundenen Eckpfosten, paarigen leeren Kartentafeln an jedem Eingang, erhöhten Richtungsarmen mit textfreien Routenmarken und einem flachen gestuften Wetterschutzdach; Beschriftung, Reisende, Straßen, Landschaft und lose Vorräte sind ausgeschlossen.",
+    "ja": "人の尺度に合わせた木造の四方向案内拠点です。段差のない幅5ボクセルの通路、地面から連続する4本の隅柱、各入口の両側にある空白地図板、文字を使わない経路標識付きの頭上方向アーム、低い段状の雨よけ屋根を備えます。文字、旅人、道路、景観、ばらの備品は含みません。",
+    "ru": "Деревянный навигационный узел в масштабе персонажа с четырьмя проходами шириной пять вокселей без порогов, четырьмя угловыми стойками от земли, парными пустыми картографическими панелями у каждого входа, верхними указателями с нетекстовыми метками маршрута и низким ступенчатым навесом; надписи, путники, дороги, озеленение и отдельные припасы исключены.",
+    "ko": "사람 크기에 맞춘 목조 사방 길찾기 거점으로, 단차 없는 5복셀 폭 통로 네 곳, 지면부터 이어지는 모서리 기둥 네 개, 각 입구 양쪽의 빈 지도판, 글자 없는 경로 표식이 달린 머리 위 방향 팔과 낮은 계단형 비바람 지붕을 갖춥니다. 글자, 여행자, 도로, 조경과 낱개 비품은 포함하지 않습니다.",
+    "zh-Hant": "一座符合角色尺度的木構四向導向節點，設有四條零高差五體素寬通道、四根連續落地角柱、每個入口兩側的空白地圖板、帶無文字路線標記的頂部方向臂，以及低矮分級風雨頂棚；文字、旅人、道路、景觀與散裝用品不包含在藍圖內。",
+    "zh-Hans": "一座符合角色尺度的木构四向导向节点，设有四条零高差五体素宽通道、四根连续落地角柱、每个入口两侧的空白地图板、带无文字路线标记的顶部方向臂，以及低矮分级风雨顶棚；文字、旅人、道路、景观与散装用品不包含在蓝图内。"
+  },
+  "referenceImage": "concepts/wayfinding/covered-village-wayfinding-node.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "charcoal",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "23 × 23 vu",
+  "height": "15 vu",
+  "referenceScale": "1 voxel = 0.4 m; post frame 5.2 × 5.2 m; 1.75 m avatar = 4.375 voxels",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 13,
+      "z": 13
+    },
+    "wallFootprintMeters": {
+      "x": 5.2,
+      "z": 5.2
+    },
+    "doorClearVoxels": {
+      "width": 5,
+      "height": 7
+    },
+    "interiorClearHeightVoxels": 7
+  },
+  "preview": {
+    "fitScale": 1.04,
+    "minScale": 3.2,
+    "yaw": 2.38
+  },
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "fixtures",
+      "label": "Blank Map Panels and Overhead Direction Arms"
+    },
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Map-panel Rails and Non-text Route Markers"
+    },
+    {
+      "materialId": 69,
+      "phase": "floor",
+      "label": "Level Polished-stone Crossroads Surface"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARcPFyUBRQkAAAQAFgFFAAAJFgAEAUUHAAUIAAABRQcAEQgAAAFFBQAHAAAIAUURAAcAAAgCAQQABAIAAgEYAAACAQQAEAIAAgEYAAACAwUABQAJAAEYAAACAwUAEQAJAAEYAAABAwUJBQwAAAEDBQkRDAAAAQMFCQUAAAwBAxEJBQAADAI3BgQFAgIAARAAAAI3BgQRAgIAARAAAAI3BQQGAAICAQAAEAI3EQQGAAICAQAAEAI4BgMFAgAAARAAAAI4BgcFAgAAARAAAAI4BgMRAgAAARAAAAI4BgcRAgAAARAAAAI4BQMGAAACAQAAEAI4BQcGAAACAQAAEAI4EQMGAAACAQAAEAI4EQcGAAACAQAAEAI3CQgEBAAAAQAAHAI3BAgJAAAEARwAAAIDCwgFAAIAAQAAGAIDBQgLAAIAARgAAAI4CwgDAAAAAQAAIAI4AwgLAAAAASAAAAEFAwoDEAAQAQUFCwUMAAwBBQcMBwgACAEFCQ0JBAAEAQULDgsAAAA"
+  },
+  "validation": {
+    "expectedVoxelCount": 1050,
+    "expectedPayloadBytes": 389,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      56,
+      57,
+      68,
+      69,
+      99
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 92,
+      "56": 52,
+      "57": 88,
+      "68": 32,
+      "69": 221,
+      "99": 565
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 11,
+    "mirrorAxisZ": 11,
+    "supportColumns": [
+      {
+        "label": "North-west canopy post",
+        "x": 5,
+        "z": 5,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "North-east canopy post",
+        "x": 17,
+        "z": 5,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "South-west canopy post",
+        "x": 5,
+        "z": 17,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "South-east canopy post",
+        "x": 17,
+        "z": 17,
+        "baseY": 0,
+        "topY": 10
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "North upper frame beam",
+        "axis": "x",
+        "start": 5,
+        "end": 17,
+        "y": 9,
+        "fixed": 5
+      },
+      {
+        "label": "South upper frame beam",
+        "axis": "x",
+        "start": 5,
+        "end": 17,
+        "y": 9,
+        "fixed": 17
+      },
+      {
+        "label": "West upper frame beam",
+        "axis": "z",
+        "start": 5,
+        "end": 17,
+        "y": 9,
+        "fixed": 5
+      },
+      {
+        "label": "East upper frame beam",
+        "axis": "z",
+        "start": 5,
+        "end": 17,
+        "y": 9,
+        "fixed": 17
+      },
+      {
+        "label": "North blank direction arm",
+        "axis": "x",
+        "start": 9,
+        "end": 13,
+        "y": 8,
+        "fixed": 4
+      },
+      {
+        "label": "South blank direction arm",
+        "axis": "x",
+        "start": 9,
+        "end": 13,
+        "y": 8,
+        "fixed": 18
+      },
+      {
+        "label": "West blank direction arm",
+        "axis": "z",
+        "start": 9,
+        "end": 13,
+        "y": 8,
+        "fixed": 4
+      },
+      {
+        "label": "East blank direction arm",
+        "axis": "z",
+        "start": 9,
+        "end": 13,
+        "y": 8,
+        "fixed": 18
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "north-to-south five-wide passage",
+        "x": 9,
+        "y": 1,
+        "z": 0,
+        "width": 5,
+        "height": 7,
+        "depth": 23
+      },
+      {
+        "label": "west-to-east five-wide passage",
+        "x": 0,
+        "y": 1,
+        "z": 9,
+        "width": 23,
+        "height": 7,
+        "depth": 5
+      }
+    ],
+    "approach": [
+      {
+        "x": 11,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 5,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 11,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 17,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 22,
+        "topY": 1
+      },
+      {
+        "x": 0,
+        "z": 11,
+        "topY": 1
+      },
+      {
+        "x": 5,
+        "z": 11,
+        "topY": 1
+      },
+      {
+        "x": 17,
+        "z": 11,
+        "topY": 1
+      },
+      {
+        "x": 22,
+        "z": 11,
+        "topY": 1
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 11,
+        "y": 0,
+        "z": 0,
+        "materialId": 69
+      },
+      {
+        "x": 4,
+        "y": 0,
+        "z": 4,
+        "materialId": 68
+      },
+      {
+        "x": 5,
+        "y": 4,
+        "z": 5,
+        "materialId": 57
+      },
+      {
+        "x": 6,
+        "y": 4,
+        "z": 5,
+        "materialId": 55
+      },
+      {
+        "x": 6,
+        "y": 7,
+        "z": 5,
+        "materialId": 56
+      },
+      {
+        "x": 11,
+        "y": 8,
+        "z": 4,
+        "materialId": 55
+      },
+      {
+        "x": 11,
+        "y": 8,
+        "z": 3,
+        "materialId": 56
+      },
+      {
+        "x": 11,
+        "y": 9,
+        "z": 5,
+        "materialId": 57
+      },
+      {
+        "x": 3,
+        "y": 10,
+        "z": 3,
+        "materialId": 99
+      },
+      {
+        "x": 11,
+        "y": 14,
+        "z": 11,
+        "materialId": 99
+      }
+    ]
+  }
+}

@@ -296,10 +296,23 @@ const writingDeskLayouts = new Map([
     cornerPlates: [17, 18, 19, 20],
   }],
 ]);
+const writingChairLayouts = new Map([
+  ["iron-braced-timber-village-inn-writing-chair", {
+    feet: [0, 1, 2, 3],
+    frontLegs: [4, 5],
+    rearPosts: [6, 7],
+    seat: 8,
+    backSlats: [9, 10],
+    frontStretcher: 11,
+    sideStretchers: [12, 13],
+    rearStretcher: 14,
+    seatPlates: [15, 16, 17, 18],
+  }],
+]);
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
-assert.equal(catalog.items.length, 59);
+assert.equal(catalog.items.length, 60);
 assert.equal(new Set(catalog.items).size, catalog.items.length);
 
 const listedFiles = new Set(catalog.items);
@@ -334,6 +347,7 @@ let roomKeyBoardGeometryCount = 0;
 let receptionCounterGeometryCount = 0;
 let luggageRackGeometryCount = 0;
 let writingDeskGeometryCount = 0;
+let writingChairGeometryCount = 0;
 for (const file of catalog.items) {
   assert.match(file, /^json\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/);
   const item = json(join(root, file));
@@ -558,6 +572,14 @@ for (const file of catalog.items) {
     assert.equal(item.verification.writingDeskGeometryValidated, true);
     assertWritingDeskGeometry(item, runtime, writingDeskLayout);
   }
+  const writingChairLayout = writingChairLayouts.get(item.key);
+  if (writingChairLayout) {
+    writingChairGeometryCount += 1;
+    assert.equal(item.category, "furniture");
+    assert.equal(item.interaction, "placeable");
+    assert.equal(item.verification.writingChairGeometryValidated, true);
+    assertWritingChairGeometry(item, runtime, writingChairLayout);
+  }
   assert.equal(forgeWorkbenchComponentsConnected(runtime.components), true, `${item.key} must be a connected assembly`);
   const grip = validateForgeGripBindings(runtime.components);
   assert.equal(grip.valid, true, `${item.key} grip must remain valid after decoding`);
@@ -639,7 +661,7 @@ assert.deepEqual([...categories], [
   ["building-fittings", 3],
   ["lighting", 4],
   ["handheld-civic", 1],
-  ["furniture", 12],
+  ["furniture", 13],
   ["containers", 3],
   ["cooking", 2],
   ["commerce", 2],
@@ -650,8 +672,8 @@ assert.deepEqual([...categories], [
   ["exterior-decor", 5],
 ]);
 assert.equal(tools, 16);
-assert.equal(placeables, 43);
-assert.equal(conceptReferences, 32);
+assert.equal(placeables, 44);
+assert.equal(conceptReferences, 33);
 assert.equal(bookGeometryCount, 7);
 assert.equal(framedTextileGeometryCount, 1);
 assert.equal(drawerCabinetGeometryCount, 1);
@@ -674,9 +696,10 @@ assert.equal(roomKeyBoardGeometryCount, 1);
 assert.equal(receptionCounterGeometryCount, 1);
 assert.equal(luggageRackGeometryCount, 1);
 assert.equal(writingDeskGeometryCount, 1);
+assert.equal(writingChairGeometryCount, 1);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
-console.log("item_ncm catalog tests passed: 59 canonical NCF1 items across 16 categories");
+console.log("item_ncm catalog tests passed: 60 canonical NCF1 items across 16 categories");
 
 function json(file) {
   return JSON.parse(readFileSync(file, "utf8"));
@@ -1636,6 +1659,63 @@ function assertWritingDeskGeometry(item, runtime, layout) {
     const plate = bounds[plateIndex];
     assert.ok(plate.max[2] === desktop.min[2] || plate.min[2] === desktop.max[2]);
   }
+  for (let first = 0; first < bounds.length; first += 1) {
+    for (let second = first + 1; second < bounds.length; second += 1) {
+      assert.equal(positiveVolumeOverlap(bounds[first], bounds[second]), false, `${item.key} components ${first} and ${second} intersect`);
+    }
+  }
+}
+
+function assertWritingChairGeometry(item, runtime, layout) {
+  assert.equal(runtime.componentCount, 19);
+  assert.deepEqual(item.dimensions.sizeQ, [32, 56, 40]);
+  assert.equal(item.dimensions.width, 0.5);
+  assert.equal(item.dimensions.height, 0.875);
+  assert.equal(item.dimensions.depth, 0.625);
+  assert.ok(item.dimensions.height >= 0.85 && item.dimensions.height <= 0.95, `${item.key} must remain an adult writing chair`);
+  assert.ok(item.forge.rawBytes <= 260);
+  assert.ok(item.forge.requirements.outputMassGrams <= 80_000, `${item.key} must remain movable guest-room seating`);
+  assert.deepEqual(
+    [...new Set(item.forge.materialComponents.map(({ materialId }) => materialId))].sort(),
+    ["iron_bloom", "squared_timber", "wooden_plank"],
+  );
+  const components = runtime.components;
+  const bounds = components.map((component) => componentBoundsQ(component));
+  const seat = bounds[layout.seat];
+  assert.equal(seat.min[1], 26);
+  assert.equal(seat.max[1], 30);
+  assert.ok(seat.max[1] / 64 >= 0.45 && seat.max[1] / 64 <= 0.49, `${item.key} seat must match the canonical desk`);
+  for (let position = 0; position < layout.feet.length; position += 1) {
+    const foot = bounds[layout.feet[position]];
+    const supportIndex = position < 2 ? layout.frontLegs[position] : layout.rearPosts[position - 2];
+    const support = bounds[supportIndex];
+    assert.equal(foot.min[1], 0);
+    assert.equal(foot.max[1], support.min[1]);
+    if (position < 2) assert.equal(support.max[1], seat.min[1]);
+    else assert.equal(support.max[2], seat.min[2]);
+  }
+  const [leftRearPost, rightRearPost] = layout.rearPosts.map((index) => bounds[index]);
+  const [lowerBackSlat, upperBackSlat] = layout.backSlats.map((index) => bounds[index]);
+  for (const slat of [lowerBackSlat, upperBackSlat]) {
+    assert.equal(slat.min[0], leftRearPost.max[0]);
+    assert.equal(slat.max[0], rightRearPost.min[0]);
+    assert.equal(slat.min[2], leftRearPost.min[2]);
+    assert.equal(slat.max[2], leftRearPost.max[2]);
+  }
+  assert.ok(lowerBackSlat.min[1] > seat.max[1]);
+  assert.ok(lowerBackSlat.max[1] < upperBackSlat.min[1]);
+  const frontStretcher = bounds[layout.frontStretcher];
+  assert.equal(frontStretcher.min[0], bounds[layout.frontLegs[0]].max[0]);
+  assert.equal(frontStretcher.max[0], bounds[layout.frontLegs[1]].min[0]);
+  for (let position = 0; position < layout.sideStretchers.length; position += 1) {
+    const stretcher = bounds[layout.sideStretchers[position]];
+    assert.equal(stretcher.min[2], bounds[layout.rearPosts[position]].max[2]);
+    assert.equal(stretcher.max[2], bounds[layout.frontLegs[position]].min[2]);
+  }
+  const rearStretcher = bounds[layout.rearStretcher];
+  assert.equal(rearStretcher.min[0], leftRearPost.max[0]);
+  assert.equal(rearStretcher.max[0], rightRearPost.min[0]);
+  for (const plateIndex of layout.seatPlates) assert.equal(bounds[plateIndex].min[1], seat.max[1]);
   for (let first = 0; first < bounds.length; first += 1) {
     for (let second = first + 1; second < bounds.length; second += 1) {
       assert.equal(positiveVolumeOverlap(bounds[first], bounds[second]), false, `${item.key} components ${first} and ${second} intersect`);

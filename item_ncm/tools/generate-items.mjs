@@ -320,6 +320,19 @@ const WRITING_DESK_LAYOUTS = Object.freeze({
     cornerPlates: [17, 18, 19, 20],
   },
 });
+const WRITING_CHAIR_LAYOUTS = Object.freeze({
+  "iron-braced-timber-village-inn-writing-chair": {
+    feet: [0, 1, 2, 3],
+    frontLegs: [4, 5],
+    rearPosts: [6, 7],
+    seat: 8,
+    backSlats: [9, 10],
+    frontStretcher: 11,
+    sideStretchers: [12, 13],
+    rearStretcher: 14,
+    seatPlates: [15, 16, 17, 18],
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -615,6 +628,11 @@ const ITEM_NAMES = Object.freeze({
     "Iron-braced Timber Village Inn Writing Desk", "Escritorio de posada de aldea de madera reforzado con hierro", "Bureau d’écriture d’auberge villageoise en bois renforcé de fer",
     "Eisenverstärkter Holzschreibtisch für Dorfgasthäuser", "鉄補強の木製村宿書き物机", "Деревянный письменный стол деревенской гостиницы с железными скобами",
     "철제 보강 목재 마을 여관 책상", "鐵箍木製村莊旅店寫字桌", "铁箍木制村庄客栈写字桌",
+  ),
+  "iron-braced-timber-village-inn-writing-chair": names(
+    "Iron-braced Timber Village Inn Writing Chair", "Silla de escritorio de posada de aldea de madera reforzada con hierro", "Chaise de bureau d’auberge villageoise en bois renforcée de fer",
+    "Eisenverstärkter Holzschreibstuhl für Dorfgasthäuser", "鉄補強の木製村宿書き物椅子", "Деревянный письменный стул деревенской гостиницы с железными скобами",
+    "철제 보강 목재 마을 여관 책상 의자", "鐵箍木製村莊旅店寫字椅", "铁箍木制村庄客栈写字椅",
   ),
   "iron-blacksmith-anvil": names(
     "Iron Blacksmith Anvil", "Yunque de herrero de hierro", "Enclume de forgeron en fer", "Eiserner Schmiedeamboss",
@@ -1441,6 +1459,31 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+  placeable("furniture", "iron-braced-timber-village-inn-writing-chair", [
+    part("iron_bloom", [8, 4, 8], [-12, 2, 13]),
+    part("iron_bloom", [8, 4, 8], [12, 2, 13]),
+    part("iron_bloom", [8, 4, 8], [-12, 2, -19]),
+    part("iron_bloom", [8, 4, 8], [12, 2, -19]),
+    part("squared_timber", [6, 22, 6], [-12, 15, 13]),
+    part("squared_timber", [6, 22, 6], [12, 15, 13]),
+    part("squared_timber", [6, 52, 6], [-12, 30, -19]),
+    part("squared_timber", [6, 52, 6], [12, 30, -19]),
+    part("wooden_plank", [32, 4, 32], [0, 28, 0]),
+    part("wooden_plank", [18, 6, 6], [0, 40, -19]),
+    part("wooden_plank", [18, 8, 6], [0, 51, -19]),
+    part("squared_timber", [18, 4, 4], [0, 12, 13]),
+    part("squared_timber", [4, 4, 26], [-12, 12, -3]),
+    part("squared_timber", [4, 4, 26], [12, 12, -3]),
+    part("squared_timber", [18, 4, 4], [0, 12, -19]),
+    part("iron_bloom", [6, 2, 6], [-12, 31, -13]),
+    part("iron_bloom", [6, 2, 6], [-12, 31, 13]),
+    part("iron_bloom", [6, 2, 6], [12, 31, -13]),
+    part("iron_bloom", [6, 2, 6], [12, 31, 13]),
+  ], { yaw: -0.68, pitch: 0.28 }, {
+    image: "concepts/furniture/iron-braced-timber-village-inn-writing-chair-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
   placeable("commerce", "iron-braced-timber-village-inn-reception-counter", [
     part("iron_bloom", [10, 6, 10], [-45, 3, -17]),
     part("iron_bloom", [10, 6, 10], [-45, 3, 17]),
@@ -1580,6 +1623,8 @@ function buildItem(spec) {
   if (luggageRackLayout) validateLuggageRackGeometry(spec, runtime, luggageRackLayout);
   const writingDeskLayout = WRITING_DESK_LAYOUTS[spec.key] ?? null;
   if (writingDeskLayout) validateWritingDeskGeometry(spec, runtime, writingDeskLayout);
+  const writingChairLayout = WRITING_CHAIR_LAYOUTS[spec.key] ?? null;
+  if (writingChairLayout) validateWritingChairGeometry(spec, runtime, writingChairLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -1694,6 +1739,7 @@ function buildItem(spec) {
       ...(receptionCounterLayout ? { receptionCounterGeometryValidated: true } : {}),
       ...(luggageRackLayout ? { luggageRackGeometryValidated: true } : {}),
       ...(writingDeskLayout ? { writingDeskGeometryValidated: true } : {}),
+      ...(writingChairLayout ? { writingChairGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -3226,6 +3272,94 @@ function validateWritingDeskGeometry(spec, runtime, layout) {
       || overlapLength(plate.min[0], plate.max[0], desktop.min[0], desktop.max[0]) <= 0
       || overlapLength(plate.min[1], plate.max[1], desktop.min[1], desktop.max[1]) <= 0) {
       throw new Error(`${spec.key} iron desktop corner plate ${plateIndex} is detached.`);
+    }
+  }
+  for (let first = 0; first < bounds.length; first += 1) {
+    for (let second = first + 1; second < bounds.length; second += 1) {
+      if (boundsOverlap(bounds[first], bounds[second], 0)) {
+        throw new Error(`${spec.key} components ${first} and ${second} intersect.`);
+      }
+    }
+  }
+}
+
+function validateWritingChairGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 19 || runtime.boundsQ.sizeQ.join(",") !== "32,56,40") {
+    throw new Error(`${spec.key} must preserve its canonical-player-scale inn writing-chair proportions (got ${runtime.componentCount} components and ${runtime.boundsQ.sizeQ.join(",")}).`);
+  }
+  const components = runtime.components ?? [];
+  const bounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    ...Array(4).fill("iron_bloom"),
+    ...Array(4).fill("squared_timber"),
+    ...Array(3).fill("wooden_plank"),
+    ...Array(4).fill("squared_timber"),
+    ...Array(4).fill("iron_bloom"),
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  const seat = bounds[layout.seat];
+  for (let position = 0; position < layout.feet.length; position += 1) {
+    const foot = bounds[layout.feet[position]];
+    const supportIndex = position < 2 ? layout.frontLegs[position] : layout.rearPosts[position - 2];
+    const support = bounds[supportIndex];
+    const supportSeatConnected = position < 2
+      ? support.max[1] === seat.min[1]
+        && overlapLength(support.min[2], support.max[2], seat.min[2], seat.max[2]) > 0
+      : support.max[2] === seat.min[2]
+        && overlapLength(support.min[1], support.max[1], seat.min[1], seat.max[1]) > 0;
+    if (foot.min[1] !== 0 || foot.max[1] !== support.min[1] || !supportSeatConnected
+      || overlapLength(foot.min[0], foot.max[0], support.min[0], support.max[0]) <= 0
+      || overlapLength(foot.min[2], foot.max[2], support.min[2], support.max[2]) <= 0
+      || overlapLength(support.min[0], support.max[0], seat.min[0], seat.max[0]) <= 0) {
+      throw new Error(`${spec.key} support stack ${position} does not continuously connect a grounded iron foot to the seat.`);
+    }
+  }
+  const [leftRearPost, rightRearPost] = layout.rearPosts.map((index) => bounds[index]);
+  for (const slatIndex of layout.backSlats) {
+    const slat = bounds[slatIndex];
+    if (slat.min[0] !== leftRearPost.max[0] || slat.max[0] !== rightRearPost.min[0]
+      || slat.min[2] !== leftRearPost.min[2] || slat.max[2] !== leftRearPost.max[2]
+      || overlapLength(slat.min[1], slat.max[1], leftRearPost.min[1], leftRearPost.max[1]) <= 0) {
+      throw new Error(`${spec.key} backrest slat ${slatIndex} is detached from the rear posts.`);
+    }
+  }
+  const [lowerBackSlat, upperBackSlat] = layout.backSlats.map((index) => bounds[index]);
+  if (lowerBackSlat.max[1] >= upperBackSlat.min[1] || lowerBackSlat.min[1] <= seat.max[1]) {
+    throw new Error(`${spec.key} backrest must preserve two ordered slats and an open lumbar gap above the seat.`);
+  }
+  const [leftFrontLeg, rightFrontLeg] = layout.frontLegs.map((index) => bounds[index]);
+  const frontStretcher = bounds[layout.frontStretcher];
+  if (frontStretcher.min[0] !== leftFrontLeg.max[0] || frontStretcher.max[0] !== rightFrontLeg.min[0]
+    || overlapLength(frontStretcher.min[1], frontStretcher.max[1], leftFrontLeg.min[1], leftFrontLeg.max[1]) <= 0) {
+    throw new Error(`${spec.key} front stretcher is detached from the front legs.`);
+  }
+  for (let position = 0; position < layout.sideStretchers.length; position += 1) {
+    const stretcher = bounds[layout.sideStretchers[position]];
+    const frontLeg = bounds[layout.frontLegs[position]];
+    const rearPost = bounds[layout.rearPosts[position]];
+    if (stretcher.min[2] !== rearPost.max[2] || stretcher.max[2] !== frontLeg.min[2]
+      || overlapLength(stretcher.min[1], stretcher.max[1], frontLeg.min[1], frontLeg.max[1]) <= 0
+      || overlapLength(stretcher.min[0], stretcher.max[0], frontLeg.min[0], frontLeg.max[0]) <= 0) {
+      throw new Error(`${spec.key} side stretcher ${position} is detached from the front and rear supports.`);
+    }
+  }
+  const rearStretcher = bounds[layout.rearStretcher];
+  if (rearStretcher.min[0] !== leftRearPost.max[0] || rearStretcher.max[0] !== rightRearPost.min[0]) {
+    throw new Error(`${spec.key} rear stretcher is detached from the rear posts.`);
+  }
+  for (const plateIndex of layout.seatPlates) {
+    const plate = bounds[plateIndex];
+    if (plate.min[1] !== seat.max[1]
+      || overlapLength(plate.min[0], plate.max[0], seat.min[0], seat.max[0]) <= 0
+      || overlapLength(plate.min[2], plate.max[2], seat.min[2], seat.max[2]) <= 0) {
+      throw new Error(`${spec.key} iron seat plate ${plateIndex} is detached.`);
     }
   }
   for (let first = 0; first < bounds.length; first += 1) {

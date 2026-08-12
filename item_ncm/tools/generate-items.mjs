@@ -239,6 +239,18 @@ const COAT_RACK_LAYOUTS = Object.freeze({
     ],
   },
 });
+const BEDSIDE_TABLE_LAYOUTS = Object.freeze({
+  "iron-braced-timber-village-inn-bedside-table": {
+    feet: [0, 1, 2, 3],
+    legs: [4, 5, 6, 7],
+    shelf: 8,
+    upperCollars: [9, 10, 11, 12],
+    top: 13,
+    drawer: 14,
+    handle: 15,
+    topCaps: [16, 17, 18, 19],
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -499,6 +511,11 @@ const ITEM_NAMES = Object.freeze({
     "Iron-braced Timber Village Inn Coat Rack", "Perchero de posada de aldea de madera reforzado con hierro", "Portemanteau d’auberge villageoise en bois renforcé de fer",
     "Eisenverstärkter Holzkleiderständer für Dorfgasthäuser", "鉄補強の木製村宿コート掛け", "Деревянная вешалка деревенской гостиницы с железными скобами",
     "철제 보강 목재 마을 여관 옷걸이", "鐵箍木製村莊旅店衣帽架", "铁箍木制村庄客栈衣帽架",
+  ),
+  "iron-braced-timber-village-inn-bedside-table": names(
+    "Iron-braced Timber Village Inn Bedside Table", "Mesita de noche de posada de aldea de madera reforzada con hierro", "Table de chevet d’auberge villageoise en bois renforcée de fer",
+    "Eisenverstärkter Holz-Nachttisch für Dorfgasthäuser", "鉄補強の木製村宿ベッドサイドテーブル", "Деревянная прикроватная тумба деревенской гостиницы с железными скобами",
+    "철제 보강 목재 마을 여관 침대 탁자", "鐵箍木製村莊旅店床頭櫃", "铁箍木制村庄客栈床头柜",
   ),
   "iron-blacksmith-anvil": names(
     "Iron Blacksmith Anvil", "Yunque de herrero de hierro", "Enclume de forgeron en fer", "Eiserner Schmiedeamboss",
@@ -1176,6 +1193,32 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+  placeable("furniture", "iron-braced-timber-village-inn-bedside-table", [
+    part("iron_bloom", [8, 4, 8], [-17, 2, -12]),
+    part("iron_bloom", [8, 4, 8], [-17, 2, 12]),
+    part("iron_bloom", [8, 4, 8], [17, 2, -12]),
+    part("iron_bloom", [8, 4, 8], [17, 2, 12]),
+    part("squared_timber", [6, 32, 6], [-17, 20, -12]),
+    part("squared_timber", [6, 32, 6], [-17, 20, 12]),
+    part("squared_timber", [6, 32, 6], [17, 20, -12]),
+    part("squared_timber", [6, 32, 6], [17, 20, 12]),
+    part("wooden_plank", [28, 4, 24], [0, 12, 0]),
+    part("iron_bloom", [8, 4, 8], [-17, 38, -12]),
+    part("iron_bloom", [8, 4, 8], [-17, 38, 12]),
+    part("iron_bloom", [8, 4, 8], [17, 38, -12]),
+    part("iron_bloom", [8, 4, 8], [17, 38, 12]),
+    part("wooden_plank", [44, 6, 34], [0, 43, 0]),
+    part("wooden_plank", [28, 12, 24], [0, 30, 0]),
+    part("iron_bloom", [8, 4, 4], [0, 30, 14]),
+    part("iron_bloom", [6, 2, 6], [-19, 47, -14]),
+    part("iron_bloom", [6, 2, 6], [-19, 47, 14]),
+    part("iron_bloom", [6, 2, 6], [19, 47, -14]),
+    part("iron_bloom", [6, 2, 6], [19, 47, 14]),
+  ], { yaw: -0.7, pitch: 0.34 }, {
+    image: "concepts/furniture/iron-braced-timber-village-inn-bedside-table-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
 ]);
 
 generate();
@@ -1275,6 +1318,8 @@ function buildItem(spec) {
   if (publicLitterBinLayout) validatePublicLitterBinGeometry(spec, runtime, publicLitterBinLayout);
   const coatRackLayout = COAT_RACK_LAYOUTS[spec.key] ?? null;
   if (coatRackLayout) validateCoatRackGeometry(spec, runtime, coatRackLayout);
+  const bedsideTableLayout = BEDSIDE_TABLE_LAYOUTS[spec.key] ?? null;
+  if (bedsideTableLayout) validateBedsideTableGeometry(spec, runtime, bedsideTableLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -1382,6 +1427,7 @@ function buildItem(spec) {
       ...(directionSignpostLayout ? { directionSignpostGeometryValidated: true } : {}),
       ...(publicLitterBinLayout ? { publicLitterBinGeometryValidated: true } : {}),
       ...(coatRackLayout ? { coatRackGeometryValidated: true } : {}),
+      ...(bedsideTableLayout ? { bedsideTableGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -2345,6 +2391,80 @@ function validateCoatRackGeometry(spec, runtime, layout) {
         throw new Error(`${spec.key} ${tier} hook ${root}/${arm}/${stop} is detached, reversed, or lacks its raised retaining stop.`);
       }
     }
+  }
+  for (let left = 0; left < bounds.length; left += 1) {
+    for (let right = left + 1; right < bounds.length; right += 1) {
+      if (boundsOverlap(bounds[left], bounds[right], 0)) {
+        throw new Error(`${spec.key} components ${left} and ${right} intersect.`);
+      }
+    }
+  }
+}
+
+function validateBedsideTableGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 20 || runtime.boundsQ.sizeQ.join(",") !== "44,48,34") {
+    throw new Error(`${spec.key} must preserve its compact canonical-player-scale bedside proportions (got ${runtime.componentCount} components and ${runtime.boundsQ.sizeQ.join(",")}).`);
+  }
+  const components = runtime.components ?? [];
+  const bounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    ...Array(4).fill("iron_bloom"),
+    ...Array(4).fill("squared_timber"),
+    "wooden_plank",
+    ...Array(4).fill("iron_bloom"),
+    "wooden_plank", "wooden_plank", "iron_bloom",
+    ...Array(4).fill("iron_bloom"),
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  const top = bounds[layout.top];
+  if (top.max[0] - top.min[0] !== 44 || top.max[2] - top.min[2] !== 34) {
+    throw new Error(`${spec.key} must preserve a practical inn bedside top.`);
+  }
+  for (let position = 0; position < layout.feet.length; position += 1) {
+    const foot = bounds[layout.feet[position]];
+    const leg = bounds[layout.legs[position]];
+    const collar = bounds[layout.upperCollars[position]];
+    const cap = bounds[layout.topCaps[position]];
+    if (foot.min[1] !== 0 || foot.max[1] !== leg.min[1] || leg.max[1] !== collar.min[1]
+      || collar.max[1] !== top.min[1] || cap.min[1] !== top.max[1]
+      || overlapLength(foot.min[0], foot.max[0], leg.min[0], leg.max[0]) <= 0
+      || overlapLength(foot.min[2], foot.max[2], leg.min[2], leg.max[2]) <= 0
+      || overlapLength(leg.min[0], leg.max[0], collar.min[0], collar.max[0]) <= 0
+      || overlapLength(leg.min[2], leg.max[2], collar.min[2], collar.max[2]) <= 0
+      || overlapLength(collar.min[0], collar.max[0], top.min[0], top.max[0]) <= 0
+      || overlapLength(collar.min[2], collar.max[2], top.min[2], top.max[2]) <= 0
+      || overlapLength(cap.min[0], cap.max[0], top.min[0], top.max[0]) <= 0
+      || overlapLength(cap.min[2], cap.max[2], top.min[2], top.max[2]) <= 0) {
+      throw new Error(`${spec.key} corner stack ${position} does not form one grounded iron-capped timber support.`);
+    }
+  }
+  const shelf = bounds[layout.shelf];
+  const drawer = bounds[layout.drawer];
+  const handle = bounds[layout.handle];
+  for (const legIndex of layout.legs) {
+    const leg = bounds[legIndex];
+    const shelfTouches = [0, 2].some((axis) => (shelf.min[axis] === leg.max[axis] || shelf.max[axis] === leg.min[axis])
+      && overlapLength(shelf.min[1], shelf.max[1], leg.min[1], leg.max[1]) > 0
+      && overlapLength(shelf.min[axis === 0 ? 2 : 0], shelf.max[axis === 0 ? 2 : 0], leg.min[axis === 0 ? 2 : 0], leg.max[axis === 0 ? 2 : 0]) > 0);
+    const drawerTouches = [0, 2].some((axis) => (drawer.min[axis] === leg.max[axis] || drawer.max[axis] === leg.min[axis])
+      && overlapLength(drawer.min[1], drawer.max[1], leg.min[1], leg.max[1]) > 0
+      && overlapLength(drawer.min[axis === 0 ? 2 : 0], drawer.max[axis === 0 ? 2 : 0], leg.min[axis === 0 ? 2 : 0], leg.max[axis === 0 ? 2 : 0]) > 0);
+    if (!shelfTouches || !drawerTouches) {
+      throw new Error(`${spec.key} shelf or drawer is detached from leg ${legIndex}.`);
+    }
+  }
+  if (shelf.max[1] >= drawer.min[1] || drawer.max[1] !== bounds[layout.upperCollars[0]].min[1]
+    || handle.min[2] !== drawer.max[2]
+    || overlapLength(handle.min[0], handle.max[0], drawer.min[0], drawer.max[0]) <= 0
+    || overlapLength(handle.min[1], handle.max[1], drawer.min[1], drawer.max[1]) <= 0) {
+    throw new Error(`${spec.key} must keep an open lower bay, a closed supported drawer, and a face-mounted pull.`);
   }
   for (let left = 0; left < bounds.length; left += 1) {
     for (let right = left + 1; right < bounds.length; right += 1) {

@@ -194,6 +194,20 @@ const ROADSIDE_WELL_LAYOUTS = Object.freeze({
     crankGrip: 17,
   },
 });
+const DIRECTION_SIGNPOST_LAYOUTS = Object.freeze({
+  "stone-and-timber-village-roadside-direction-signpost": {
+    foundation: 0,
+    plinth: 1,
+    postFoot: 2,
+    post: 3,
+    topCollar: 4,
+    cap: 5,
+    boards: [6, 9, 12],
+    arrowheads: [7, 10, 13],
+    facePlates: [8, 11, 14],
+    directions: [-1, 1, -1],
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -439,6 +453,11 @@ const ITEM_NAMES = Object.freeze({
     "Stone-and-timber Village Roadside Well", "Pozo de camino de aldea de piedra y madera", "Puits de bord de route villageois en pierre et bois",
     "Dorfbrunnen am Weg aus Stein und Holz", "石と木の村落街道井戸", "Деревенский придорожный колодец из камня и дерева",
     "석재·목재 마을 길가 우물", "石木村莊路邊水井", "石木村庄路边水井",
+  ),
+  "stone-and-timber-village-roadside-direction-signpost": names(
+    "Stone-and-timber Village Roadside Direction Signpost", "Poste indicador de camino de aldea de piedra y madera", "Poteau indicateur routier villageois en pierre et bois",
+    "Dorfwegweiser aus Stein und Holz", "石と木の村落街道道標", "Деревенский придорожный указатель из камня и дерева",
+    "석재·목재 마을 길가 방향 표지대", "石木村莊路邊指路牌", "石木村庄路边指路牌",
   ),
   "iron-blacksmith-anvil": names(
     "Iron Blacksmith Anvil", "Yunque de herrero de hierro", "Enclume de forgeron en fer", "Eiserner Schmiedeamboss",
@@ -1036,6 +1055,27 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+  placeable("exterior-decor", "stone-and-timber-village-roadside-direction-signpost", [
+    part("polished_stone_slab", [38, 6, 32], [0, 3, 0]),
+    part("polished_stone_slab", [30, 10, 24], [0, 11, 0]),
+    part("iron_bloom", [18, 8, 18], [0, 20, 0]),
+    part("squared_timber", [10, 78, 10], [0, 63, 0]),
+    part("iron_bloom", [16, 6, 16], [0, 105, 0]),
+    part("squared_timber", [20, 4, 20], [0, 110, 0]),
+    part("wooden_plank", [40, 12, 6], [-25, 90, 0]),
+    part("wooden_plank", [12, 12, 6], [-51, 90, 0], { mask: directionSignLeftArrowMask }),
+    part("iron_bloom", [6, 8, 2], [-8, 90, 4]),
+    part("wooden_plank", [40, 12, 6], [25, 72, 0]),
+    part("wooden_plank", [12, 12, 6], [51, 72, 0], { mask: directionSignRightArrowMask }),
+    part("iron_bloom", [6, 8, 2], [8, 72, 4]),
+    part("wooden_plank", [40, 12, 6], [-25, 54, 0]),
+    part("wooden_plank", [12, 12, 6], [-51, 54, 0], { mask: directionSignLeftArrowMask }),
+    part("iron_bloom", [6, 8, 2], [-8, 54, 4]),
+  ], { yaw: -0.72, pitch: 0.25 }, {
+    image: "concepts/exterior-decor/stone-and-timber-village-roadside-direction-signpost-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
 ]);
 
 generate();
@@ -1129,6 +1169,8 @@ function buildItem(spec) {
   if (drinkingTroughLayout) validateDrinkingTroughGeometry(spec, runtime, drinkingTroughLayout);
   const roadsideWellLayout = ROADSIDE_WELL_LAYOUTS[spec.key] ?? null;
   if (roadsideWellLayout) validateRoadsideWellGeometry(spec, runtime, roadsideWellLayout);
+  const directionSignpostLayout = DIRECTION_SIGNPOST_LAYOUTS[spec.key] ?? null;
+  if (directionSignpostLayout) validateDirectionSignpostGeometry(spec, runtime, directionSignpostLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -1233,6 +1275,7 @@ function buildItem(spec) {
       ...(windowBoxLayout ? { windowBoxGeometryValidated: true } : {}),
       ...(drinkingTroughLayout ? { drinkingTroughGeometryValidated: true } : {}),
       ...(roadsideWellLayout ? { roadsideWellGeometryValidated: true } : {}),
+      ...(directionSignpostLayout ? { directionSignpostGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -1980,6 +2023,67 @@ function overlapLength(leftMin, leftMax, rightMin, rightMax) {
   return Math.min(leftMax, rightMax) - Math.max(leftMin, rightMin);
 }
 
+function validateDirectionSignpostGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 15 || runtime.boundsQ.sizeQ.join(",") !== "114,112,32") {
+    throw new Error(`${spec.key} must preserve its human-scale roadside signpost proportions (got ${runtime.componentCount} components and ${runtime.boundsQ.sizeQ.join(",")}).`);
+  }
+  const components = runtime.components ?? [];
+  const bounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    "polished_stone_slab", "polished_stone_slab", "iron_bloom", "squared_timber", "iron_bloom", "squared_timber",
+    "wooden_plank", "wooden_plank", "iron_bloom", "wooden_plank", "wooden_plank", "iron_bloom", "wooden_plank", "wooden_plank", "iron_bloom",
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  const foundation = bounds[layout.foundation];
+  const plinth = bounds[layout.plinth];
+  const postFoot = bounds[layout.postFoot];
+  const post = bounds[layout.post];
+  const topCollar = bounds[layout.topCollar];
+  const cap = bounds[layout.cap];
+  if (foundation.min[1] !== 0 || foundation.max[1] !== plinth.min[1]
+    || plinth.max[1] !== postFoot.min[1] || postFoot.max[1] !== post.min[1]
+    || post.max[1] !== topCollar.min[1] || topCollar.max[1] !== cap.min[1]
+    || post.min[0] < postFoot.min[0] || post.max[0] > postFoot.max[0]
+    || post.min[2] < postFoot.min[2] || post.max[2] > postFoot.max[2]
+    || cap.min[0] > topCollar.min[0] || cap.max[0] < topCollar.max[0]
+    || cap.min[2] > topCollar.min[2] || cap.max[2] < topCollar.max[2]) {
+    throw new Error(`${spec.key} foundation, plinth, iron foot, post, collar, and cap are not one continuous grounded stack.`);
+  }
+  for (let position = 0; position < layout.boards.length; position += 1) {
+    const board = bounds[layout.boards[position]];
+    const arrowhead = bounds[layout.arrowheads[position]];
+    const facePlate = bounds[layout.facePlates[position]];
+    const direction = layout.directions[position];
+    const boardTouchesPost = direction < 0 ? board.max[0] === post.min[0] : board.min[0] === post.max[0];
+    const arrowTouchesBoard = direction < 0 ? arrowhead.max[0] === board.min[0] : arrowhead.min[0] === board.max[0];
+    const pointsOutward = direction < 0 ? arrowhead.min[0] < board.min[0] : arrowhead.max[0] > board.max[0];
+    if (!boardTouchesPost || !arrowTouchesBoard || !pointsOutward
+      || overlapLength(board.min[1], board.max[1], post.min[1], post.max[1]) <= 0
+      || overlapLength(board.min[2], board.max[2], post.min[2], post.max[2]) <= 0
+      || facePlate.min[2] !== board.max[2]
+      || overlapLength(facePlate.min[0], facePlate.max[0], board.min[0], board.max[0]) <= 0
+      || overlapLength(facePlate.min[1], facePlate.max[1], board.min[1], board.max[1]) <= 0) {
+      throw new Error(`${spec.key} directional arm ${position} is detached, points inward, or has an invalid iron face plate.`);
+    }
+    const arrowComponent = components[layout.arrowheads[position]];
+    const solidCount = arrowComponent.solid.reduce((sum, value) => sum + value, 0);
+    if (solidCount <= 0 || solidCount >= FORGE_COMPONENT_GRID.x * FORGE_COMPONENT_GRID.y * FORGE_COMPONENT_GRID.z) {
+      throw new Error(`${spec.key} directional arm ${position} must preserve a machined arrow silhouette.`);
+    }
+  }
+  const boardHeights = layout.boards.map((index) => components[index].offsetQ[1]);
+  if (!(boardHeights[0] > boardHeights[1] && boardHeights[1] > boardHeights[2])) {
+    throw new Error(`${spec.key} direction arms must remain visibly staggered from top to bottom.`);
+  }
+}
+
 function validateToolHolding(spec, runtime) {
   const policy = spec.holding;
   const components = runtime.components ?? [];
@@ -2422,6 +2526,14 @@ function wellSuspendedBucketMask({ nx, ny, nz }) {
   const bottom = ny <= -0.72 && radial <= 0.78;
   const handle = ny >= 0.36 && (Math.abs(nx) <= 0.2 || Math.abs(nz) <= 0.2);
   return wall || bottom || handle;
+}
+
+function directionSignLeftArrowMask({ nx, ny }) {
+  return nx >= 0.15 || Math.abs(ny) <= (nx + 1) * 0.5;
+}
+
+function directionSignRightArrowMask({ nx, ny }) {
+  return nx <= -0.15 || Math.abs(ny) <= (1 - nx) * 0.5;
 }
 
 function chiselTip({ nx, ny, nz }) {

@@ -1,0 +1,254 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "stone-and-timber-village-roadside-direction-signpost",
+  "category": "exterior-decor",
+  "interaction": "placeable",
+  "names": {
+    "en": "Stone-and-timber Village Roadside Direction Signpost",
+    "es": "Poste indicador de camino de aldea de piedra y madera",
+    "fr": "Poteau indicateur routier villageois en pierre et bois",
+    "de": "Dorfwegweiser aus Stein und Holz",
+    "ja": "石と木の村落街道道標",
+    "ru": "Деревенский придорожный указатель из камня и дерева",
+    "ko": "석재·목재 마을 길가 방향 표지대",
+    "zh-Hant": "石木村莊路邊指路牌",
+    "zh-Hans": "石木村庄路边指路牌"
+  },
+  "descriptions": {
+    "en": "Stone-and-timber Village Roadside Direction Signpost is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Poste indicador de camino de aldea de piedra y madera es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Poteau indicateur routier villageois en pierre et bois est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Dorfwegweiser aus Stein und Holz ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "石と木の村落街道道標は、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Деревенский придорожный указатель из камня и дерева — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "석재·목재 마을 길가 방향 표지대은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "石木村莊路邊指路牌是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "石木村庄路边指路牌是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 1.7813,
+    "height": 1.75,
+    "depth": 0.5,
+    "sizeQ": [
+      114,
+      112,
+      32
+    ]
+  },
+  "preview": {
+    "yaw": -0.72,
+    "pitch": 0.25
+  },
+  "concept": {
+    "image": "concepts/exterior-decor/stone-and-timber-village-roadside-direction-signpost-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "16e2d2487b75b67233a43b18df2ddfa08478bee7d05172299731258166e18934"
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1._ruojBqxoQarsmOVSiPSqsmBiAAABgAQAJVWPBQwAACwAIAAmpEggSAACgAEAEQyhScFAAD8ACAAJqRAGEAADSABABEMooCCgABuAAgAinUoDAZ84tAAQARTqGBgM80WgAcFAgGCAYHBwQKAQ0BDQQKBwcIBggGAAE1IMEAT-BaAQgAinUoDAYDIkAAQARTqGBgMDMSAAdFAYIBggHBwoEDQENAQoEBwcGCAYIAAE1IMEAQCBIAQgAinUoDAZ84bAAQARTqGBgM80NgAcFAgGCAYHBwQKAQ0BDQQKBwcIBggGAAE1IMEAT-A2AQgAA",
+    "rawBytes": 238,
+    "sha256": "7caaddd26372611e6dc6709ceaff4c4e922411464e85ac9d81f4e56c82216f7d",
+    "designHash": 4290540702,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 238,
+    "savedBytes": 0,
+    "sourceComponentCount": 15,
+    "decodedComponentCount": 15,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "polished_stone_slab",
+        "itemCode": 1045,
+        "inputVolumeMm3": 27832031,
+        "usedVolumeMm3": 27832031,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "polished_stone_slab",
+        "itemCode": 1045,
+        "inputVolumeMm3": 27465820,
+        "usedVolumeMm3": 27465820,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 9887695,
+        "usedVolumeMm3": 9887695,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 29754639,
+        "usedVolumeMm3": 29754639,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 5859375,
+        "usedVolumeMm3": 5859375,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 6103516,
+        "usedVolumeMm3": 6103516,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 10986328,
+        "usedVolumeMm3": 10986328,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 7,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 3295898,
+        "usedVolumeMm3": 1977538,
+        "unusedVolumeMm3": 1318360
+      },
+      {
+        "index": 8,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 366211,
+        "usedVolumeMm3": 366211,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 9,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 10986328,
+        "usedVolumeMm3": 10986328,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 10,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 3295898,
+        "usedVolumeMm3": 1977538,
+        "unusedVolumeMm3": 1318360
+      },
+      {
+        "index": 11,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 366211,
+        "usedVolumeMm3": 366211,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 12,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 10986328,
+        "usedVolumeMm3": 10986328,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 13,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 3295898,
+        "usedVolumeMm3": 1977538,
+        "unusedVolumeMm3": 1318360
+      },
+      {
+        "index": 14,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 366211,
+        "usedVolumeMm3": 366211,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 146866176,
+      "requiredEffectiveDurability": 52472,
+      "outputMassGrams": 301730,
+      "materialScore": 63
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 576,
+      "triangleCount": 288,
+      "meshByteLength": 10944
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "polished_stone_slab",
+      "itemCode": 1045,
+      "componentCount": 2,
+      "inputVolumeMm3": 55297851,
+      "usedVolumeMm3": 55297851,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 60000,
+      "equivalentInputUnits": 922
+    },
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 5,
+      "inputVolumeMm3": 16845703,
+      "usedVolumeMm3": 16845703,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 68
+    },
+    {
+      "materialId": "squared_timber",
+      "itemCode": 1033,
+      "componentCount": 2,
+      "inputVolumeMm3": 35858155,
+      "usedVolumeMm3": 35858155,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 48400,
+      "equivalentInputUnits": 741
+    },
+    {
+      "materialId": "wooden_plank",
+      "itemCode": 1031,
+      "componentCount": 6,
+      "inputVolumeMm3": 42846678,
+      "usedVolumeMm3": 38891598,
+      "unusedVolumeMm3": 3955080,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 2143
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "directionSignpostGeometryValidated": true,
+    "chainMinted": false
+  }
+}

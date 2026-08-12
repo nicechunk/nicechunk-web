@@ -1,0 +1,445 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-boatwright-workshop",
+  "category": "coastal",
+  "kind": "habitable-building",
+  "titles": {
+    "en": "Compact Village Boatwright Workshop",
+    "es": "Taller Compacto de Carpintería Naval de la Aldea",
+    "fr": "Atelier Compact de Charpentier de Marine du Village",
+    "de": "Kompakte Dorfschiffbauerwerkstatt",
+    "ja": "コンパクトな村の船大工工房",
+    "ru": "Компактная деревенская судостроительная мастерская",
+    "ko": "소형 마을 선박 목공 작업장",
+    "zh-Hant": "緊湊型村莊船匠工坊",
+    "zh-Hans": "紧凑型村庄船匠工坊"
+  },
+  "descriptions": {
+    "en": "An enterable 8.4 × 10 m coastal boatwright workshop scaled to the 1.75 m avatar, with a zero-threshold seven-wide portal and a clear 7 × 8 × 24-voxel central hull berth. Four-bay grounded timber frames support clear-height truss ties, a longitudinal lifting rail and a complete ice-blue gable roof. Symmetric supported workbenches, fixed wall tool rails, low berth alignment rails, washable shell-terrazzo flooring and permanent high windows provide a credible work hall without encoding a boat, water, workers or loose tools.",
+    "es": "Un taller costero de carpintería naval transitable de 8,4 × 10 m, a escala del avatar de 1,75 m, con portal de siete vóxeles sin desnivel y una zona central despejada para casco de 7 × 8 × 24 vóxeles. Los pórticos de madera de cuatro crujías apoyados en el suelo sostienen tirantes a altura libre, un carril de elevación longitudinal y un techo a dos aguas completo de teja azul hielo. Bancos simétricos con soporte, rieles de herramientas fijos, guías bajas de alineación, suelo lavable de terrazo de concha y ventanas altas permanentes forman una nave creíble sin incluir barco, agua, trabajadores ni herramientas sueltas.",
+    "fr": "Un atelier côtier de charpentier de marine accessible de 8,4 × 10 m, à l’échelle de l’avatar de 1,75 m, avec un portail sans ressaut large de sept voxels et une aire centrale dégagée pour coque de 7 × 8 × 24 voxels. Des portiques en bois de quatre travées ancrés au sol portent des entraits à hauteur libre, un rail de levage longitudinal et une toiture complète à deux versants en tuiles bleu glacier. Des établis symétriques soutenus, des rails à outils fixes, de bas guides d’alignement, un sol lavable en terrazzo coquillier et des fenêtres hautes permanentes composent un hall crédible sans bateau, eau, ouvriers ni outils mobiles.",
+    "de": "Eine begehbare 8,4 × 10 m große Küsten-Schiffbauerwerkstatt im Maßstab des 1,75-m-Avatars mit schwellenlosem sieben Voxel breitem Portal und freiem 7 × 8 × 24 Voxel großem mittigem Rumpfarbeitsplatz. Vier bodengebundene Holzrahmenfelder tragen Binder oberhalb der Kopffreiheit, eine längs verlaufende Hebeschiene und ein vollständiges eisblaues Satteldach. Symmetrische gestützte Werkbänke, feste Werkzeugleisten, niedrige Ausrichtschienen, abwaschbarer Muschelterrazzo und dauerhafte Oberfenster bilden eine glaubwürdige Werkhalle ohne Boot, Wasser, Arbeiter oder lose Werkzeuge.",
+    "ja": "1.75mのアバター尺度に合わせた8.4×10mの進入可能な海辺の船大工工房です。段差のない幅7ボクセルの入口と、7×8×24ボクセルの空いた中央船体作業区画を備えます。地面から連続する4スパンの木造架構が、頭上クリアランスを確保した小屋組、長手方向の吊り上げレール、全面を覆う氷青色の切妻屋根を支えます。左右対称の支持付き作業台、固定工具レール、低い位置合わせレール、洗浄可能な貝殻テラゾー床、常設高窓を備え、船、水、作業員、ばらの工具は含みません。",
+    "ru": "Доступная прибрежная судостроительная мастерская размером 8,4 × 10 м в масштабе аватара ростом 1,75 м: вход шириной семь вокселей без порога и свободное центральное место для корпуса размером 7 × 8 × 24 вокселя. Четырёхпролётные деревянные рамы от земли несут затяжки выше зоны прохода, продольный подъёмный рельс и полную двускатную крышу из ледяно-голубой черепицы. Симметричные опирающиеся верстаки, закреплённые настенные рейки для инструментов, низкие направляющие, моющийся ракушечный терраццо и постоянные верхние окна создают правдоподобный цех без лодки, воды, рабочих и отдельных инструментов.",
+    "ko": "1.75m 아바타 크기에 맞춘 8.4 × 10m의 출입 가능한 해안 선박 목공 작업장으로, 단차 없는 7복셀 폭 출입구와 7 × 8 × 24복셀의 막힘없는 중앙 선체 작업 공간을 갖춥니다. 지면부터 이어지는 4베이 목재 골조가 머리 위 여유를 둔 트러스 보, 세로 인양 레일과 완전한 빙청색 박공지붕을 지지합니다. 대칭형 지지 작업대, 고정 벽 공구 레일, 낮은 정렬 레일, 세척 가능한 조개 테라조 바닥과 상부 고정창을 갖추며 배, 물, 작업자와 낱개 공구는 포함하지 않습니다.",
+    "zh-Hant": "一座可進入、符合1.75米角色尺度的8.4×10米海岸船匠工坊，設有零高差七體素寬入口，以及7×8×24體素的暢通中央船體工位。四跨連續落地木構架承托高於淨空的桁架繫梁、縱向起吊軌與完整冰藍色雙坡屋頂。左右對稱支承工作臺、固定牆面工具軌、低矮校準軌、可沖洗貝殼水磨石地坪及常設高窗構成可信工坊；船隻、水面、工人與散裝工具不包含在藍圖內。",
+    "zh-Hans": "一座可进入、符合1.75米角色尺度的8.4×10米海岸船匠工坊，设有零高差七体素宽入口，以及7×8×24体素的畅通中央船体工位。四跨连续落地木构架承托高于净空的桁架系梁、纵向起吊轨与完整冰蓝色双坡屋顶。左右对称支承工作台、固定墙面工具轨、低矮校准轨、可冲洗贝壳水磨石地坪及常设高窗构成可信工坊；船只、水面、工人与散装工具不包含在蓝图内。"
+  },
+  "referenceImage": "concepts/coastal/compact-village-boatwright-workshop.webp",
+  "defaults": {
+    "style": "coastal",
+    "roof": "iceBlue",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "23 × 29 vu",
+  "height": "22 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 21,
+      "z": 25
+    },
+    "wallFootprintMeters": {
+      "x": 8.4,
+      "z": 10
+    },
+    "doorClearVoxels": {
+      "width": 7,
+      "height": 8
+    },
+    "interiorClearHeightVoxels": 8
+  },
+  "preview": {
+    "fitScale": 1,
+    "minScale": 3.7,
+    "yaw": 2.4
+  },
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "fixtures",
+      "label": "Supported Workbenches and Timber Gable Infill"
+    },
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Bench Supports, Fixed Tool Rails and Berth Alignment Rails"
+    },
+    {
+      "materialId": 59,
+      "phase": "openings",
+      "label": "Permanent Ice-blue High Windows"
+    },
+    {
+      "materialId": 69,
+      "phase": "floor",
+      "label": "Level Polished-stone Launch-side Approach"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARsWHyABBgMAAxQAGAFFCgAABgACAgEDAAMUAAABAAAwAgEDAAQAABYBKAAAAgMDAAMACQADAAAQAgMXAAMACQADAAAQAgMJAAMACQABAAAwAgMRAAMACQABAAAwAgIDAQQAAwYCAAAQAgIXAQQAAwYCAAAQAjsDBQQAAgYCAAAQAjsXBQQAAgYCAAAQAgIEAQMEAwABHAAAAjsEBQMEAgABHAAAAgIEARsEAwABHAAAAQIKARsGAwACOwQFGwQCAAEcAAABOwoFGwYCAAIDAgkDFgAAAQAAMAIDAgkEAAAWASwAAAIDAgkLFgAAAQAAEAEDDQoHAAAQAjcFAwYCAA8BHAAAAjgFAQYCAQADAAAKAjgTAQYCAQADAAAKAjgEBQYAAA8BJAAAAjgJAQYAABEBEAAABzcDCgMUAAc3AwobFAADBQIKAhYaBgMCCgIWGgEDDRUCAAAa"
+  },
+  "validation": {
+    "expectedVoxelCount": 2351,
+    "expectedPayloadBytes": 345,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      56,
+      57,
+      59,
+      68,
+      69,
+      70,
+      73,
+      97
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 338,
+      "56": 116,
+      "57": 330,
+      "59": 207,
+      "68": 76,
+      "69": 21,
+      "70": 276,
+      "73": 437,
+      "97": 550
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 13,
+    "supportColumns": [
+      {
+        "label": "Front-left outer post",
+        "x": 3,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Front-right outer post",
+        "x": 23,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-left outer post",
+        "x": 3,
+        "z": 27,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Rear-right outer post",
+        "x": 23,
+        "z": 27,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Left portal post",
+        "x": 9,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Right portal post",
+        "x": 17,
+        "z": 3,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Left first side post",
+        "x": 3,
+        "z": 11,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Right first side post",
+        "x": 23,
+        "z": 11,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Left second side post",
+        "x": 3,
+        "z": 19,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Right second side post",
+        "x": 23,
+        "z": 19,
+        "baseY": 0,
+        "topY": 9
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Seven-wide portal lintel and front plate",
+        "axis": "x",
+        "start": 2,
+        "end": 24,
+        "y": 9,
+        "fixed": 3
+      },
+      {
+        "label": "Rear wall plate",
+        "axis": "x",
+        "start": 2,
+        "end": 24,
+        "y": 9,
+        "fixed": 27
+      },
+      {
+        "label": "Left longitudinal eave plate",
+        "axis": "z",
+        "start": 3,
+        "end": 27,
+        "y": 9,
+        "fixed": 2
+      },
+      {
+        "label": "Right longitudinal eave plate",
+        "axis": "z",
+        "start": 3,
+        "end": 27,
+        "y": 9,
+        "fixed": 24
+      },
+      {
+        "label": "First clear-height truss tie",
+        "axis": "x",
+        "start": 2,
+        "end": 24,
+        "y": 9,
+        "fixed": 11
+      },
+      {
+        "label": "Second clear-height truss tie",
+        "axis": "x",
+        "start": 2,
+        "end": 24,
+        "y": 9,
+        "fixed": 19
+      },
+      {
+        "label": "Central longitudinal lifting rail",
+        "axis": "z",
+        "start": 7,
+        "end": 23,
+        "y": 10,
+        "fixed": 13
+      },
+      {
+        "label": "Continuous ridge beam",
+        "axis": "z",
+        "start": 2,
+        "end": 28,
+        "y": 21,
+        "fixed": 13
+      },
+      {
+        "label": "Left supported workbench",
+        "axis": "z",
+        "start": 6,
+        "end": 21,
+        "y": 3,
+        "fixed": 5
+      },
+      {
+        "label": "Right supported workbench",
+        "axis": "z",
+        "start": 6,
+        "end": 21,
+        "y": 3,
+        "fixed": 19
+      }
+    ],
+    "gableProfiles": [
+      {
+        "label": "Front exposed timber roof trim",
+        "x": 2,
+        "baseY": 10,
+        "z": 2,
+        "width": 23,
+        "slopeMaterialId": 57,
+        "ridgeMaterialId": 57
+      },
+      {
+        "label": "Front ice-blue roof profile",
+        "x": 2,
+        "baseY": 10,
+        "z": 3,
+        "width": 23,
+        "slopeMaterialId": 97,
+        "ridgeMaterialId": 57
+      },
+      {
+        "label": "Rear ice-blue roof profile",
+        "x": 2,
+        "baseY": 10,
+        "z": 27,
+        "width": 23,
+        "slopeMaterialId": 97,
+        "ridgeMaterialId": 57
+      },
+      {
+        "label": "Rear exposed timber roof trim",
+        "x": 2,
+        "baseY": 10,
+        "z": 28,
+        "width": 23,
+        "slopeMaterialId": 57,
+        "ridgeMaterialId": 57
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "zero-threshold seven-wide hull portal",
+        "x": 10,
+        "y": 1,
+        "z": 2,
+        "width": 7,
+        "height": 8,
+        "depth": 1
+      },
+      {
+        "label": "clear central hull work berth",
+        "x": 10,
+        "y": 1,
+        "z": 3,
+        "width": 7,
+        "height": 8,
+        "depth": 24
+      }
+    ],
+    "approach": [
+      {
+        "x": 13,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 11,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 19,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 26,
+        "topY": 1
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 13,
+        "y": 0,
+        "z": 0,
+        "materialId": 69
+      },
+      {
+        "x": 4,
+        "y": 0,
+        "z": 3,
+        "materialId": 68
+      },
+      {
+        "x": 13,
+        "y": 0,
+        "z": 10,
+        "materialId": 73
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "z": 6,
+        "materialId": 70
+      },
+      {
+        "x": 3,
+        "y": 6,
+        "z": 6,
+        "materialId": 59
+      },
+      {
+        "x": 3,
+        "y": 8,
+        "z": 11,
+        "materialId": 57
+      },
+      {
+        "x": 5,
+        "y": 3,
+        "z": 10,
+        "materialId": 55
+      },
+      {
+        "x": 5,
+        "y": 2,
+        "z": 11,
+        "materialId": 56
+      },
+      {
+        "x": 13,
+        "y": 10,
+        "z": 11,
+        "materialId": 57
+      },
+      {
+        "x": 2,
+        "y": 10,
+        "z": 3,
+        "materialId": 97
+      },
+      {
+        "x": 13,
+        "y": 21,
+        "z": 15,
+        "materialId": 57
+      }
+    ]
+  }
+}

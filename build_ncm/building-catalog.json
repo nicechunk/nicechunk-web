@@ -68,6 +68,7 @@
     "buildings/residential/compact-village-boarding-house.json",
     "buildings/fortress/compact-village-palisade-gatehouse.json",
     "buildings/utility/compact-village-public-privy.json",
-    "buildings/construction/timber-village-building-gantry.json"
+    "buildings/construction/timber-village-building-gantry.json",
+    "buildings/wayfinding/compact-village-visitor-information-kiosk.json"
   ]
 }

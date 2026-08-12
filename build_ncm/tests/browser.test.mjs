@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 5);
-  assert.match(initial.totalBuildingCount, /68 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /69 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -1739,14 +1739,14 @@ try {
   assert.ok(!publicPrivy.resources.some((path) => path.endsWith("compact-village-public-privy-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=wayfinding]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=crossroads-wayfinding-sign]') && document.querySelector('[data-building=stone-timber-village-gateway]') && document.querySelector('[data-building=covered-village-route-map-shelter]') && document.querySelector('[data-building=covered-village-wayfinding-node]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=crossroads-wayfinding-sign]') && document.querySelector('[data-building=stone-timber-village-gateway]') && document.querySelector('[data-building=covered-village-route-map-shelter]') && document.querySelector('[data-building=covered-village-wayfinding-node]') && document.querySelector('[data-building=compact-village-visitor-information-kiosk]')"));
   const wayfindingBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     cardCount: document.querySelectorAll('[data-building]').length,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(wayfindingBrowse.activeBuilding, null);
-  assert.equal(wayfindingBrowse.cardCount, 4);
+  assert.equal(wayfindingBrowse.cardCount, 5);
   assert.ok(!wayfindingBrowse.resources.includes("/build_ncm/buildings/wayfinding/crossroads-wayfinding-sign.json"), "category browsing must not load the wayfinding JSON");
   assert.ok(!wayfindingBrowse.resources.includes("/build_ncm/concepts/wayfinding/crossroads-wayfinding-sign.webp"), "category browsing must not load the wayfinding concept art");
   assert.ok(!wayfindingBrowse.resources.includes("/build_ncm/buildings/wayfinding/stone-timber-village-gateway.json"), "category browsing must not load the gateway JSON");
@@ -1755,6 +1755,8 @@ try {
   assert.ok(!wayfindingBrowse.resources.includes("/build_ncm/concepts/wayfinding/covered-village-route-map-shelter.webp"), "category browsing must not load the route-map-shelter concept art");
   assert.ok(!wayfindingBrowse.resources.includes("/build_ncm/buildings/wayfinding/covered-village-wayfinding-node.json"), "category browsing must not load the wayfinding-node JSON");
   assert.ok(!wayfindingBrowse.resources.includes("/build_ncm/concepts/wayfinding/covered-village-wayfinding-node.webp"), "category browsing must not load the wayfinding-node concept art");
+  assert.ok(!wayfindingBrowse.resources.includes("/build_ncm/buildings/wayfinding/compact-village-visitor-information-kiosk.json"), "category browsing must not load the visitor-information-kiosk JSON");
+  assert.ok(!wayfindingBrowse.resources.includes("/build_ncm/concepts/wayfinding/compact-village-visitor-information-kiosk.webp"), "category browsing must not load the visitor-information-kiosk concept art");
   await clickBuilding(client, "crossroads-wayfinding-sign");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'crossroads-wayfinding-sign' && document.querySelector('#modelSize').textContent === '21 × 20 × 21' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const wayfinding = await evaluate(client, `({
@@ -1918,6 +1920,47 @@ try {
   assert.ok(wayfindingNode.resources.includes("/build_ncm/buildings/wayfinding/covered-village-wayfinding-node.json"));
   assert.ok(wayfindingNode.resources.includes("/build_ncm/concepts/wayfinding/covered-village-wayfinding-node.webp"));
   assert.ok(!wayfindingNode.resources.some((path) => path.endsWith("covered-village-wayfinding-node-blueprint.js")));
+
+  await clickBuilding(client, "compact-village-visitor-information-kiosk");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-visitor-information-kiosk' && document.querySelector('#modelSize').textContent === '29 × 16 × 20' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const visitorInformationKiosk = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptLoading: document.querySelector('#conceptImage').loading,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(visitorInformationKiosk.activeCategory, "wayfinding");
+  assert.match(visitorInformationKiosk.title, /Compact Village Visitor Information Kiosk/);
+  assert.equal(visitorInformationKiosk.modelSize, "29 × 16 × 20");
+  assert.match(visitorInformationKiosk.payload, /^NCM3:/);
+  assert.equal(visitorInformationKiosk.voxelCount, 1761);
+  for (const id of [55, 56, 57, 58, 68, 69, 70, 74, 96]) assert.match(visitorInformationKiosk.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(visitorInformationKiosk.uncovered, false);
+  assert.equal(visitorInformationKiosk.glazingDisabled, true);
+  assert.equal(visitorInformationKiosk.glazingLabel, "Openings: Not applicable");
+  assert.equal(visitorInformationKiosk.disabledStyles, 6);
+  assert.equal(visitorInformationKiosk.disabledRoofs, 6);
+  assert.equal(visitorInformationKiosk.conceptHidden, false);
+  assert.equal(visitorInformationKiosk.conceptLoading, "eager");
+  assert.match(visitorInformationKiosk.conceptAlt, /Compact Village Visitor Information Kiosk concept reference/);
+  assert.equal(visitorInformationKiosk.conceptFit, "contain");
+  assert.equal(visitorInformationKiosk.selectedInUrl, "compact-village-visitor-information-kiosk");
+  assert.ok(visitorInformationKiosk.resources.includes("/build_ncm/buildings/wayfinding/compact-village-visitor-information-kiosk.json"));
+  assert.ok(visitorInformationKiosk.resources.includes("/build_ncm/concepts/wayfinding/compact-village-visitor-information-kiosk.webp"));
+  assert.ok(!visitorInformationKiosk.resources.some((path) => path.endsWith("compact-village-visitor-information-kiosk-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=commerce]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=covered-market-stall]') && document.querySelector('[data-building=compact-village-general-store]') && document.querySelector('[data-building=compact-village-bakery]') && document.querySelector('[data-building=compact-village-tavern]') && document.querySelector('[data-building=compact-village-butcher-shop]')"));
@@ -3256,10 +3299,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const buildingGantryDirectUrl = new URL(url);
-  buildingGantryDirectUrl.searchParams.set("building", "timber-village-building-gantry");
-  await client.send("Page.navigate", { url: buildingGantryDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'construction' && document.querySelector('[data-building].active')?.dataset.building === 'timber-village-building-gantry' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const visitorInformationKioskDirectUrl = new URL(url);
+  visitorInformationKioskDirectUrl.searchParams.set("building", "compact-village-visitor-information-kiosk");
+  await client.send("Page.navigate", { url: visitorInformationKioskDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'wayfinding' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-visitor-information-kiosk' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -3271,16 +3314,16 @@ try {
     conceptPath: new URL(document.querySelector('#conceptImage').dataset.source).pathname,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(directSelection.activeCategory, "construction");
-  assert.equal(directSelection.activeBuilding, "timber-village-building-gantry");
-  assert.match(directSelection.title, /Timber Village Building Gantry/);
-  assert.equal(directSelection.modelSize, "31 × 26 × 23");
+  assert.equal(directSelection.activeCategory, "wayfinding");
+  assert.equal(directSelection.activeBuilding, "compact-village-visitor-information-kiosk");
+  assert.match(directSelection.title, /Compact Village Visitor Information Kiosk/);
+  assert.equal(directSelection.modelSize, "29 × 16 × 20");
   assert.match(directSelection.payload, /^NCM3:/);
   assert.equal(directSelection.conceptComplete, true);
   assert.ok(directSelection.conceptNaturalWidth > 0);
-  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/construction/timber-village-building-gantry.webp");
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/construction/timber-village-building-gantry.json"));
-  assert.ok(directSelection.resources.includes("/build_ncm/concepts/construction/timber-village-building-gantry.webp"));
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/wayfinding/compact-village-visitor-information-kiosk.webp");
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/wayfinding/compact-village-visitor-information-kiosk.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/concepts/wayfinding/compact-village-visitor-information-kiosk.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

@@ -52,7 +52,7 @@ try {
   await client.send("Emulation.setDeviceMetricsOverride", { width: 1600, height: 1200, deviceScaleFactor: 1, mobile: false });
   await client.send("Page.navigate", { url });
   await waitFor(() => evaluate(client, `document.readyState === "complete"
-    && document.querySelectorAll("[data-category]").length === 14
+    && document.querySelectorAll("[data-category]").length === 15
     && document.querySelectorAll("[data-item]").length === 4
     && document.querySelector("#runtimeState").dataset.state === "verified"`));
 
@@ -80,9 +80,9 @@ try {
   assert.equal(initial.locale, "en");
   assert.equal(initial.title, "ITEM_NCM — NiceChunk Forge Item Registry");
   assert.equal(initial.languageCount, 9);
-  assert.equal(initial.categoryCount, 14);
+  assert.equal(initial.categoryCount, 15);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /45 ITEMS/);
+  assert.match(initial.total, /46 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -121,6 +121,56 @@ try {
   assert.equal(chinese.category, "采矿工具");
   assert.equal(chinese.payload, initial.payload, "locale changes must never alter canonical NCF1");
 
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "en";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
+
+  await evaluate(client, `document.querySelector('[data-category="handheld-civic"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 1
+    && document.querySelector('[data-item="copper-town-crier-handbell"]')`));
+  assert.equal(await evaluate(client, `performance.getEntriesByType("resource").some((entry) => new URL(entry.name).pathname.includes("/item_ncm/json/handheld-civic/"))`), false,
+    "category browsing must not load handheld civic item JSON files");
+  await evaluate(client, `document.querySelector('[data-item="copper-town-crier-handbell"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="copper-town-crier-handbell"].active')
+    && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const handbell = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payload: document.querySelector("#codeOutput").value,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    materialRows: document.querySelectorAll("#bomRows .bom-row").length,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(handbell.title, "Copper Town Crier Handbell");
+  assert.equal(handbell.type, "HAND-HELD");
+  assert.match(handbell.payload, /^NCF1\./);
+  assert.equal(handbell.payloadBytes, "475 / 640 B");
+  assert.equal(handbell.componentCount, "6");
+  assert.equal(handbell.materialRows, 3);
+  assert.equal(handbell.selectedInUrl, "copper-town-crier-handbell");
+  assert.ok(handbell.resources.includes("/item_ncm/json/handheld-civic/copper-town-crier-handbell.json"));
+  const handbellPreview = await evaluate(client, `(() => {
+    return {
+      clothMotion: document.querySelector("#forgePreview").dataset.clothMotion,
+      width: document.querySelector("#forgePreview").width,
+      height: document.querySelector("#forgePreview").height,
+    };
+  })()`);
+  assert.equal(handbellPreview.clothMotion, "dynamic");
+  assert.ok(handbellPreview.width > 0 && handbellPreview.height > 0);
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "zh-Hans";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.querySelector("#itemTitle").textContent === "铜制城镇传令手铃"`));
+  assert.equal(await evaluate(client, `document.querySelector('[data-category="handheld-civic"] span').textContent`), "手持公共道具");
+  assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), handbell.payload);
   await evaluate(client, `(() => {
     const select = document.querySelector("[data-language-select]");
     select.value = "en";
@@ -616,7 +666,7 @@ try {
   })()`);
   assert.equal(mobile.clientWidth, 390);
   assert.equal(mobile.scrollWidth, mobile.clientWidth, "mobile page must not create document-level horizontal overflow");
-  assert.equal(mobile.categoryCount, 14);
+  assert.equal(mobile.categoryCount, 15);
   assert.equal(mobile.itemCount, 4);
   assert.equal(mobile.libraryBeforePreview, true);
   assert.equal(mobile.previewBeforeDetails, true);

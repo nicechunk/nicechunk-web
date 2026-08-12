@@ -1,0 +1,189 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "copper-town-crier-handbell",
+  "category": "handheld-civic",
+  "interaction": "tool",
+  "names": {
+    "en": "Copper Town Crier Handbell",
+    "es": "Campana de mano de cobre del pregonero",
+    "fr": "Clochette à main en cuivre du crieur public",
+    "de": "Kupferne Handglocke des Ausrufers",
+    "ja": "銅製の町触れ手鈴",
+    "ru": "Медный ручной колокол городского глашатая",
+    "ko": "구리 마을 전령 손종",
+    "zh-Hant": "銅製城鎮傳令手鈴",
+    "zh-Hans": "铜制城镇传令手铃"
+  },
+  "descriptions": {
+    "en": "Copper Town Crier Handbell is a canonical NCF1 hand-held blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Campana de mano de cobre del pregonero es un plano NCF1 canónico de mano, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Clochette à main en cuivre du crieur public est un plan NCF1 canonique tenu en main, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Kupferne Handglocke des Ausrufers ist ein kanonischer, handgeführter NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "銅製の町触れ手鈴は、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1手持ち設計図です。",
+    "ru": "Медный ручной колокол городского глашатая — канонический ручной чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "구리 마을 전령 손종은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 휴대 장비 설계도입니다.",
+    "zh-Hant": "銅製城鎮傳令手鈴是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 手持物品設計圖。",
+    "zh-Hans": "铜制城镇传令手铃是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 手持物品设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 0.2188,
+    "height": 0.4688,
+    "depth": 0.2188,
+    "sizeQ": [
+      14,
+      30,
+      14
+    ]
+  },
+  "preview": {
+    "yaw": -0.62,
+    "pitch": 0.28
+  },
+  "concept": {
+    "image": "concepts/handheld-civic/copper-town-crier-handbell-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "bb1898e15c2d78a68d4cde07ae82893aa4e55bdf3a58a00ee8973a37f2a76629"
+  },
+  "holding": {
+    "gripComponentIndex": 0,
+    "workComponentIndexes": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "lateralComponentGroups": [],
+    "sourceToAvatarAxes": [
+      "+Y",
+      "-Z",
+      "-X"
+    ],
+    "testedPoseCount": 27
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.8ZzWa4eoluLyhgvtOxGiGUHEAcAH7ABAT-wDIgACakIBAiQAGGAwYAABQAXAAOogAuUgUkUaUkUQUzUbUzUQBOEQFFQZFFQQVCWsVCWgBWEYBWEQFUSaFUSQBlGJBlGFCBFoCBFmCSFUGRRZGRRVGkRCWhVLWhVDWxU6WxU0XGUgAGHAgcAACgAaIwQGBgoDDAIDBgMBAwgGCAYIBggGCAYIAwEDBgMCDAMKBgYEAAE1IGEAYAAGAAgACakFBAUAAFAAAyQRACAUAYA4CADAIAOAYBQAgbACASAgAoCgCAKAIAoAgCgCgIASAIEwBgDAKAGAwAQDABAMAEAwAYCgDAGAuAQBACACAMAEAwAIHAAgMAEAwAgCAEAEASAYAwCgBgMACDgAIDABgKAMAYA4CACgKAGAwAIOAAgMAGAoAoCADAIAIAwAIVAAgMAIAgAwCACAMACFQAIDACAIAMAgAoCgBgMACDgAIDABgKAKAgA4BgDAKAGAwAIOAAgMAGAoAwBgEgEAQAgAgDABAMACBwAIDABAMAIAgBABALgGAMAoAYDABAMAEAwAQDABgKAMAYEwAgEgIAKAoAgCgCAKAIAoAoCAEgCBsAIBQBgDgIAMAgA4BgFACBEAAA",
+    "rawBytes": 475,
+    "sha256": "4bffc8474d23a9f9a40b73e1a70191e51491e44037772108ea6a0bc9b1d77c7e",
+    "designHash": 997360486,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 475,
+    "savedBytes": 0,
+    "sourceComponentCount": 6,
+    "decodedComponentCount": 6,
+    "appearanceQuadCount": 0,
+    "hasGrip": true,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 2990723,
+        "usedVolumeMm3": 2990723,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 976563,
+        "usedVolumeMm3": 976563,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "copper_bloom",
+        "itemCode": 1015,
+        "inputVolumeMm3": 3295898,
+        "usedVolumeMm3": 975316,
+        "unusedVolumeMm3": 2320582
+      },
+      {
+        "index": 3,
+        "materialId": "copper_bloom",
+        "itemCode": 1015,
+        "inputVolumeMm3": 2990723,
+        "usedVolumeMm3": 1586914,
+        "unusedVolumeMm3": 1403809
+      },
+      {
+        "index": 4,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 274658,
+        "usedVolumeMm3": 274658,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 381470,
+        "usedVolumeMm3": 242895,
+        "unusedVolumeMm3": 138575
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 7045120,
+      "requiredEffectiveDurability": 6761,
+      "outputMassGrams": 33025,
+      "materialScore": 62
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 2144,
+      "triangleCount": 1072,
+      "meshByteLength": 40736
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "squared_timber",
+      "itemCode": 1033,
+      "componentCount": 1,
+      "inputVolumeMm3": 2990723,
+      "usedVolumeMm3": 2990723,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 48400,
+      "equivalentInputUnits": 62
+    },
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 3,
+      "inputVolumeMm3": 1632691,
+      "usedVolumeMm3": 1494116,
+      "unusedVolumeMm3": 138575,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 7
+    },
+    {
+      "materialId": "copper_bloom",
+      "itemCode": 1015,
+      "componentCount": 2,
+      "inputVolumeMm3": 6286621,
+      "usedVolumeMm3": 2562230,
+      "unusedVolumeMm3": 3724391,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 26
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "handbellGeometryValidated": true,
+    "chainMinted": false
+  }
+}

@@ -121,10 +121,20 @@ const noticeBoardLayouts = new Map([
     roofPins: [19, 20],
   }],
 ]);
+const handbellLayouts = new Map([
+  ["copper-town-crier-handbell", {
+    handle: 0,
+    collar: 1,
+    body: 2,
+    rim: 3,
+    clapperStem: 4,
+    clapper: 5,
+  }],
+]);
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
-assert.equal(catalog.items.length, 45);
+assert.equal(catalog.items.length, 46);
 assert.equal(new Set(catalog.items).size, catalog.items.length);
 
 const listedFiles = new Set(catalog.items);
@@ -145,6 +155,7 @@ let publicBenchGeometryCount = 0;
 let wallClockGeometryCount = 0;
 let shopSignGeometryCount = 0;
 let noticeBoardGeometryCount = 0;
+let handbellGeometryCount = 0;
 for (const file of catalog.items) {
   assert.match(file, /^json\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/);
   const item = json(join(root, file));
@@ -257,6 +268,14 @@ for (const file of catalog.items) {
     assert.equal(item.verification.noticeBoardGeometryValidated, true);
     assertNoticeBoardGeometry(item, runtime, noticeBoardLayout);
   }
+  const handbellLayout = handbellLayouts.get(item.key);
+  if (handbellLayout) {
+    handbellGeometryCount += 1;
+    assert.equal(item.category, "handheld-civic");
+    assert.equal(item.interaction, "tool");
+    assert.equal(item.verification.handbellGeometryValidated, true);
+    assertHandbellGeometry(item, runtime, handbellLayout);
+  }
   assert.equal(forgeWorkbenchComponentsConnected(runtime.components), true, `${item.key} must be a connected assembly`);
   const grip = validateForgeGripBindings(runtime.components);
   assert.equal(grip.valid, true, `${item.key} grip must remain valid after decoding`);
@@ -337,6 +356,7 @@ assert.deepEqual([...categories], [
   ["weapons", 3],
   ["building-fittings", 3],
   ["lighting", 4],
+  ["handheld-civic", 1],
   ["furniture", 5],
   ["containers", 3],
   ["cooking", 2],
@@ -346,9 +366,9 @@ assert.deepEqual([...categories], [
   ["interior-decor", 2],
   ["signage", 2],
 ]);
-assert.equal(tools, 15);
+assert.equal(tools, 16);
 assert.equal(placeables, 30);
-assert.equal(conceptReferences, 18);
+assert.equal(conceptReferences, 19);
 assert.equal(bookGeometryCount, 7);
 assert.equal(framedTextileGeometryCount, 1);
 assert.equal(drawerCabinetGeometryCount, 1);
@@ -357,9 +377,10 @@ assert.equal(publicBenchGeometryCount, 1);
 assert.equal(wallClockGeometryCount, 1);
 assert.equal(shopSignGeometryCount, 1);
 assert.equal(noticeBoardGeometryCount, 1);
+assert.equal(handbellGeometryCount, 1);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
-console.log("item_ncm catalog tests passed: 45 canonical NCF1 items across 14 categories");
+console.log("item_ncm catalog tests passed: 46 canonical NCF1 items across 15 categories");
 
 function json(file) {
   return JSON.parse(readFileSync(file, "utf8"));
@@ -678,4 +699,36 @@ function assertNoticeBoardGeometry(item, runtime, layout) {
     assert.ok(bounds[pinIndex].min[1] <= bounds[layout.roof[0]].max[1]);
     assert.ok(bounds[pinIndex].max[1] >= bounds[layout.roof[2]].min[1]);
   }
+}
+
+function assertHandbellGeometry(item, runtime, layout) {
+  assert.equal(runtime.componentCount, 6);
+  assert.deepEqual(item.dimensions.sizeQ, [14, 30, 14]);
+  assert.ok(item.dimensions.width >= 0.2 && item.dimensions.width <= 0.24);
+  assert.ok(item.dimensions.height >= 0.45 && item.dimensions.height <= 0.5);
+  assert.ok(item.dimensions.depth >= 0.2 && item.dimensions.depth <= 0.24);
+  assert.ok(item.dimensions.height < 1.75 * 0.3, `${item.key} must remain a one-hand prop beside the canonical player`);
+  assert.ok(item.forge.requirements.outputMassGrams <= 35_000, `${item.key} must not regress to a monumental bell mass`);
+  assert.deepEqual(
+    [...new Set(item.forge.materialComponents.map(({ materialId }) => materialId))].sort(),
+    ["copper_bloom", "iron_bloom", "squared_timber"],
+  );
+  assert.deepEqual(item.holding, {
+    gripComponentIndex: layout.handle,
+    workComponentIndexes: [layout.collar, layout.body, layout.rim, layout.clapperStem, layout.clapper],
+    lateralComponentGroups: [],
+    sourceToAvatarAxes: ["+Y", "-Z", "-X"],
+    testedPoseCount: 27,
+  });
+  const components = runtime.components;
+  const bounds = components.map((component) => componentBoundsQ(component));
+  assert.equal(bounds[layout.handle].max[1], bounds[layout.collar].min[1]);
+  assert.equal(bounds[layout.collar].max[1], bounds[layout.body].min[1]);
+  assert.equal(bounds[layout.body].max[1], bounds[layout.rim].min[1]);
+  assert.equal(bounds[layout.clapperStem].min[1], bounds[layout.collar].max[1]);
+  assert.ok(bounds[layout.clapperStem].max[1] >= bounds[layout.rim].min[1]);
+  assert.ok(bounds[layout.clapper].min[1] <= bounds[layout.rim].max[1]);
+  assert.ok(bounds[layout.clapper].max[1] >= bounds[layout.rim].max[1]);
+  assert.ok(item.forge.materialComponents[layout.body].usedVolumeMm3 < item.forge.materialComponents[layout.body].inputVolumeMm3);
+  assert.ok(item.forge.materialComponents[layout.rim].usedVolumeMm3 < item.forge.materialComponents[layout.rim].inputVolumeMm3);
 }

@@ -273,8 +273,15 @@ function renderSelectedItem(runtime) {
   renderBillOfMaterials();
 
   if (renderer) {
-    renderer.setDesign(runtime.design, {
+    const isHandHeld = selectedItem.interaction === "tool";
+    if (isHandHeld) renderer.setWorkpieceCuboids([], { offset: [0, 0, 0] });
+    else renderer.setDesign(runtime.design, {
       componentMaterialIds: selectedItem.forge.materialComponents.map((component) => component.materialId),
+    });
+    renderer.setSceneAvatar(isHandHeld ? runtime : null, {
+      position: isHandHeld ? [0, 1.5, 0] : [-0.72, 1.5, 0.3],
+      yaw: isHandHeld ? 0 : -0.1,
+      state: isHandHeld ? "equipped" : "scale-reference",
     });
     const clothMotion = selectedItem.preview?.clothMotion ?? "dynamic";
     if (clothMotion === "rigid") renderer.setClothComponents(null, null);
@@ -387,11 +394,12 @@ function renderBillOfMaterials() {
 
 function setPreviewCamera(item) {
   const maxDimension = Math.max(item.dimensions.width, item.dimensions.height, item.dimensions.depth);
+  const isHandHeld = item.interaction === "tool";
   renderer.setCamera({
-    target: [0, 1.45 + item.dimensions.height * 0.46, 0],
-    yaw: Number(item.preview?.yaw) || -0.72,
+    target: isHandHeld ? [0, 1.55, 0] : [0, 1.45 + item.dimensions.height * 0.46, 0],
+    yaw: isHandHeld ? -0.44 : (Number(item.preview?.yaw) || -0.72),
     pitch: Number(item.preview?.pitch) || 0.34,
-    distance: Math.max(4.5, Math.min(7.2, 4.35 + maxDimension * 0.82)),
+    distance: isHandHeld ? 4.5 : Math.max(4.5, Math.min(7.2, 4.35 + maxDimension * 0.82)),
     fov: 34,
   });
 }

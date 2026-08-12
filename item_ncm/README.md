@@ -11,7 +11,7 @@ ITEM_NCM is the public NiceChunk forge-item blueprint registry. It follows the s
 - Every item JSON contains its own nine-language names and descriptions.
 - `tools/generate-items.mjs` is the canonical source for the initial collection and regenerates every item JSON deterministically.
 
-The registry currently contains 45 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, containers, cooking, commerce, construction, books and writing, interior decor, and signage. New designs begin with an Imagegen material-style concept; the resulting item JSON records the concept path, provenance, version, and SHA-256 before the forge encoding is accepted.
+The registry currently contains 46 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, containers, cooking, commerce, construction, books and writing, interior decor, signage, and hand-held civic props. New designs begin with an Imagegen material-style concept; the resulting item JSON records the concept path, provenance, version, and SHA-256 before the forge encoding is accepted.
 
 ## Forge guarantees
 
@@ -34,6 +34,7 @@ The generator rejects an item unless all of these checks pass:
 15. Wall clocks keep a human-scale portrait backplate, a connected wall hanger, ordered timber-dial/copper-bezel/glass layers, twelve iron hour studs, readable copper hands, and a framed glass pendulum chamber without component intersection.
 16. Projecting shop signs keep a wall-supported iron bracket, two aligned hangers, a timber panel enclosed by four rails, face-mounted studs, and a layered dyed emblem at human-readable village scale.
 17. Public notice boards keep two ground-anchored posts, four framed timber posting slats, visible iron posting points, and a connected three-tier rain hood at a scale readable beside the canonical player.
+18. Town-crier handbells stay below thirty percent of the canonical 1.75 m player height, keep a front-facing grip through all 27 motion samples, and preserve a connected timber handle, iron collar, flared copper body, hollow mouth rim, and captive clapper.
 
 `verification.chainMinted` remains `false` because this library validates blueprint readiness; it does not claim that a blueprint PDA has already been created.
 

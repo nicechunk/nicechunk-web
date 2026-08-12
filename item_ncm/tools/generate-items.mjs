@@ -145,6 +145,16 @@ const NOTICE_BOARD_LAYOUTS = Object.freeze({
     roofPins: [19, 20],
   },
 });
+const HANDBELL_LAYOUTS = Object.freeze({
+  "copper-town-crier-handbell": {
+    handle: 0,
+    collar: 1,
+    body: 2,
+    rim: 3,
+    clapperStem: 4,
+    clapper: 5,
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -369,6 +379,11 @@ const ITEM_NAMES = Object.freeze({
     "Öffentliche Dorfanschlagtafel aus Holz", "木製村落公共掲示板", "Деревянная общественная доска объявлений деревни",
     "목재 마을 공공 게시판", "木製村莊公共公告板", "木制村庄公共公告板",
   ),
+  "copper-town-crier-handbell": names(
+    "Copper Town Crier Handbell", "Campana de mano de cobre del pregonero", "Clochette à main en cuivre du crieur public",
+    "Kupferne Handglocke des Ausrufers", "銅製の町触れ手鈴", "Медный ручной колокол городского глашатая",
+    "구리 마을 전령 손종", "銅製城鎮傳令手鈴", "铜制城镇传令手铃",
+  ),
   "iron-blacksmith-anvil": names(
     "Iron Blacksmith Anvil", "Yunque de herrero de hierro", "Enclume de forgeron en fer", "Eiserner Schmiedeamboss",
     "鉄製の鍛冶金床", "Железная кузнечная наковальня", "철제 대장장이 모루", "鐵製鍛造砧", "铁制锻造砧",
@@ -519,6 +534,18 @@ const ITEM_SPECS = Object.freeze([
     part("glass_ingot", [10, 10, 3], [0, 4, 9]),
     part("copper_bloom", [12, 4, 12], [0, 12, 0]),
   ], held([1, 2, 3, 4])),
+  tool("handheld-civic", "copper-town-crier-handbell", [
+    part("squared_timber", [7, 16, 7], [0, -10, 0], { grip: handGrip(4, -5, 3) }),
+    part("iron_bloom", [8, 4, 8], [0, 0, 0]),
+    part("copper_bloom", [12, 6, 12], [0, 5, 0], { mask: handbellBodyMask }),
+    part("copper_bloom", [14, 4, 14], [0, 10, 0], { mask: handbellRimMask }),
+    part("iron_bloom", [3, 8, 3], [0, 6, 0]),
+    part("iron_bloom", [5, 4, 5], [0, 10, 0], { mask: roundMask }),
+  ], held([1, 2, 3, 4, 5]), { yaw: -0.62, pitch: 0.28 }, {
+    image: "concepts/handheld-civic/copper-town-crier-handbell-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
   placeable("lighting", "basalt-standing-brazier", [
     part("basalt_brick", [20, 6, 20], [0, 3, 0]),
     part("iron_bloom", [6, 28, 6], [0, 20, 0]),
@@ -976,6 +1003,8 @@ function buildItem(spec) {
   if (shopSignLayout) validateShopSignGeometry(spec, runtime, shopSignLayout);
   const noticeBoardLayout = NOTICE_BOARD_LAYOUTS[spec.key] ?? null;
   if (noticeBoardLayout) validateNoticeBoardGeometry(spec, runtime, noticeBoardLayout);
+  const handbellLayout = HANDBELL_LAYOUTS[spec.key] ?? null;
+  if (handbellLayout) validateHandbellGeometry(spec, runtime, handbellLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -1076,6 +1105,7 @@ function buildItem(spec) {
       ...(wallClockLayout ? { wallClockGeometryValidated: true } : {}),
       ...(shopSignLayout ? { shopSignGeometryValidated: true } : {}),
       ...(noticeBoardLayout ? { noticeBoardGeometryValidated: true } : {}),
+      ...(handbellLayout ? { handbellGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -1569,6 +1599,40 @@ function validateNoticeBoardGeometry(spec, runtime, layout) {
   }
 }
 
+function validateHandbellGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 6 || runtime.boundsQ.sizeQ.join(",") !== "14,30,14") {
+    throw new Error(`${spec.key} must preserve its one-hand, human-scale bell proportions.`);
+  }
+  const components = runtime.components ?? [];
+  const componentBounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = ["squared_timber", "iron_bloom", "copper_bloom", "copper_bloom", "iron_bloom", "iron_bloom"];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  const handle = componentBounds[layout.handle];
+  const collar = componentBounds[layout.collar];
+  const body = componentBounds[layout.body];
+  const rim = componentBounds[layout.rim];
+  const clapperStem = componentBounds[layout.clapperStem];
+  const clapper = componentBounds[layout.clapper];
+  if (handle.max[1] !== collar.min[1] || collar.max[1] !== body.min[1]
+    || body.max[1] !== rim.min[1]) {
+    throw new Error(`${spec.key} handle, collar, copper body, and rim are not connected in order.`);
+  }
+  if (clapperStem.min[1] !== collar.max[1] || clapperStem.max[1] < rim.min[1]
+    || clapper.min[1] > rim.max[1] || clapper.max[1] < rim.max[1]
+    || clapperStem.max[1] < clapper.min[1]
+    || clapper.min[0] < rim.min[0] || clapper.max[0] > rim.max[0]
+    || clapper.min[2] < rim.min[2] || clapper.max[2] > rim.max[2]) {
+    throw new Error(`${spec.key} iron clapper is detached or leaves the bell mouth.`);
+  }
+}
+
 function validateToolHolding(spec, runtime) {
   const policy = spec.holding;
   const components = runtime.components ?? [];
@@ -1971,6 +2035,19 @@ function shopSignDiamondMask({ nx, ny }) {
 function shopSignMerchantMarkMask({ nx, ny }) {
   const diamond = Math.abs(nx) + Math.abs(ny) <= 1.12;
   return diamond && (Math.abs(nx) <= 0.24 || Math.abs(ny) <= 0.28);
+}
+
+function handbellBodyMask({ nx, ny, nz }) {
+  const radial = Math.sqrt(nx * nx + nz * nz);
+  const progress = (ny + 1) / 2;
+  const outerRadius = 0.45 + progress * 0.55;
+  const stairRadius = Math.floor(outerRadius * 4) / 4;
+  return radial <= stairRadius;
+}
+
+function handbellRimMask({ nx, nz }) {
+  const radial = Math.sqrt(nx * nx + nz * nz);
+  return radial >= 0.62 && radial <= 1.02;
 }
 
 function noticeBoardFastenerMask({ x, y }) {

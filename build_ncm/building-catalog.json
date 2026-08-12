@@ -67,6 +67,7 @@
     "buildings/mining/compact-village-mine-rescue-station.json",
     "buildings/residential/compact-village-boarding-house.json",
     "buildings/fortress/compact-village-palisade-gatehouse.json",
-    "buildings/utility/compact-village-public-privy.json"
+    "buildings/utility/compact-village-public-privy.json",
+    "buildings/construction/timber-village-building-gantry.json"
   ]
 }

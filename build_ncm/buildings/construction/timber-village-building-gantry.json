@@ -1,0 +1,543 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "timber-village-building-gantry",
+  "category": "construction",
+  "kind": "surface-structure",
+  "titles": {
+    "en": "Timber Village Building Gantry",
+    "es": "Pórtico de Construcción de Madera de la Aldea",
+    "fr": "Portique de Construction en Bois du Village",
+    "de": "Hölzerner Dorf-Baukran",
+    "ja": "村の木造建築用門型クレーン",
+    "ru": "Деревенский деревянный строительный козловой кран",
+    "ko": "마을 목재 건축 갠트리 크레인",
+    "zh-Hant": "村莊木構建築龍門吊",
+    "zh-Hans": "村庄木构建筑龙门吊"
+  },
+  "descriptions": {
+    "en": "A face-connected fixed timber building gantry scaled to the 1.75 m avatar. Four dressed-stone foundations carry two inward-stepped portal frames, twin overhead runway beams and a centered spanning trolley above two clear 2.0 m-wide work lanes. A ground-anchored rear windlass, squared-timber spool, fixed reeving route, suspended deep-stone hoist block and hook establish a credible lifting path, while longitudinal ties and wooden-stick X bracing stabilize the 9.2 × 6.0 m frame. The level 10.8 × 7.6 m cobbled pad has a zero-step approach; loose loads, workers, operating motion, metal fittings and terrain are excluded.",
+    "es": "Un pórtico fijo de construcción en madera, unido por caras y dimensionado para el avatar de 1,75 m. Cuatro cimientos de piedra labrada sostienen dos marcos porticados escalonados hacia dentro, dos vigas de rodadura superiores y un carro transversal centrado sobre dos corredores de trabajo libres de 2,0 m de ancho. Un torno trasero anclado al suelo, un tambor de madera escuadrada, un recorrido fijo de cable, un bloque de izado suspendido de piedra profunda y un gancho forman una ruta de elevación creíble; tirantes longitudinales y cruces de varilla de madera estabilizan el armazón de 9,2 × 6,0 m. La plataforma adoquinada nivelada de 10,8 × 7,6 m tiene acceso sin desnivel; se excluyen cargas sueltas, trabajadores, movimiento operativo, herrajes metálicos y terreno.",
+    "fr": "Un portique fixe de chantier en bois, relié par faces et dimensionné pour l’avatar de 1,75 m. Quatre fondations en pierre taillée portent deux cadres rentrants par paliers, deux poutres de roulement supérieures et un chariot transversal centré au-dessus de deux couloirs de travail libres de 2,0 m de large. Un treuil arrière ancré au sol, un tambour en bois équarri, un chemin de mouflage fixe, un moufle suspendu en pierre profonde et un crochet forment une chaîne de levage crédible ; des longrines et des croisillons en baguettes de bois stabilisent l’ossature de 9,2 × 6,0 m. La plateforme pavée et plane de 10,8 × 7,6 m est accessible sans marche ; charges mobiles, ouvriers, mouvement, ferrures métalliques et terrain sont exclus.",
+    "de": "Ein flächenverbundener, fester Holz-Baukran im Maßstab des 1,75-m-Avatars. Vier Werksteinfundamente tragen zwei stufenweise einrückende Portalrahmen, zwei obere Laufträger und eine mittige Querfahrkatze über zwei freien, jeweils 2,0 m breiten Arbeitsbahnen. Eine bodenverankerte hintere Winde, eine Kantholztrommel, eine feste Seilführung, ein hängender Hebeblock aus Tiefenstein und ein Haken bilden einen glaubwürdigen Lastweg; Längsriegel und X-Streben aus Holzstäben stabilisieren den 9,2 × 6,0 m großen Rahmen. Die ebene, 10,8 × 7,6 m große Pflasterfläche besitzt einen schwellenlosen Zugang; lose Lasten, Arbeiter, Bewegung, Metallbeschläge und Gelände sind ausgeschlossen.",
+    "ja": "身長1.75 mのアバター尺度に合わせた、面接続の固定式木造建築用門型クレーンです。4基の切石基礎が、段階的に内側へ寄る2組の門型架構、2本の上部走行梁、中央の横行台車を支え、その下に幅2.0 mの通行可能な作業帯を2本確保します。地面に固定した後部巻上げ機、角材ドラム、固定索経路、吊り下げた深層石の巻上げブロックとフックが現実的な揚重経路を構成し、縦つなぎと木棒X筋交いが9.2 × 6.0 mの架構を安定させます。10.8 × 7.6 mの平坦な石敷き作業床は段差なく進入可能です。可動荷、作業員、動作、金物、地形は含みません。",
+    "ru": "Неподвижный деревянный строительный козловой кран с соединённой гранями конструкцией в масштабе аватара ростом 1,75 м. Четыре фундамента из тёсаного камня несут две ступенчато сходящиеся портальные рамы, пару верхних путевых балок и центральную поперечную тележку над двумя свободными рабочими проходами шириной по 2,0 м. Закреплённая на земле задняя лебёдка, барабан из бруса, фиксированная трасса каната, подвесной подъёмный блок из глубинного камня и крюк создают правдоподобную грузовую цепь; продольные связи и X-образные раскосы из деревянных реек стабилизируют раму 9,2 × 6,0 м. Ровная мощёная площадка 10,8 × 7,6 м имеет беспороговый подход; свободные грузы, рабочие, движение механизмов, металлическая фурнитура и рельеф исключены.",
+    "ko": "키 1.75 m 아바타 비율에 맞춘 면 연결식 고정 목재 건축 갠트리입니다. 다듬은 석재 기초 네 개가 안쪽으로 단계적으로 좁아지는 문형 프레임 두 조, 상부 주행보 두 줄과 중앙 횡행 트롤리를 지지하며, 그 아래에는 폭 2.0 m의 빈 작업 통로 두 줄이 확보됩니다. 지면에 고정한 후면 윈치, 각재 권취 드럼, 고정 로프 경로, 매달린 심층석 권상 블록과 후크가 신뢰할 수 있는 인양 경로를 이루고, 종방향 연결보와 목재 막대 X가새가 9.2 × 6.0 m 프레임을 안정시킵니다. 평탄한 10.8 × 7.6 m 조약돌 작업장은 단차 없이 진입할 수 있습니다. 이동 화물, 작업자, 작동 동작, 금속 부속과 지형은 포함하지 않습니다.",
+    "zh-Hant": "一座面連接、符合1.75公尺角色尺度的固定式木構建築龍門吊。四座切石基礎承托兩組逐級內收的門架、兩條上方走行樑及中央橫跨吊車，架下保留兩條各2.0公尺寬的淨空作業通道。落地錨固的後部捲揚機、方木捲筒、固定繞索路徑、懸吊深層石吊塊與吊鉤形成可信的提升路徑；縱向繫樑及木桿X形斜撐穩定9.2 × 6.0公尺主架。平整的10.8 × 7.6公尺卵石工作坪設零級差入口；散裝載荷、工人、運轉動作、金屬配件與地形不包含在藍圖內。",
+    "zh-Hans": "一座面连接、符合1.75米角色尺度的固定式木构建筑龙门吊。四座切石基础承托两组逐级内收的门架、两条上方走行梁及中央横跨吊车，架下保留两条各2.0米宽的净空作业通道。落地锚固的后部卷扬机、方木卷筒、固定绕索路径、悬吊深层石吊块与吊钩形成可信的提升路径；纵向系梁及木杆X形斜撑稳定9.2 × 6.0米主架。平整的10.8 × 7.6米卵石工作坪设零级差入口；散装载荷、工人、运转动作、金属配件与地形不包含在蓝图内。"
+  },
+  "referenceImage": "concepts/construction/timber-village-building-gantry.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "31 × 23 vu",
+  "height": "26 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 23,
+      "z": 15
+    },
+    "wallFootprintMeters": {
+      "x": 9.2,
+      "z": 6
+    },
+    "doorClearVoxels": {
+      "width": 9,
+      "height": 20
+    },
+    "interiorClearHeightVoxels": 18
+  },
+  "preview": {
+    "fitScale": 0.82,
+    "minScale": 3.2,
+    "yaw": 2.42
+  },
+  "extraMaterials": [
+    {
+      "materialId": 56,
+      "phase": "structure",
+      "label": "Face-connected X Bracing, Axle and Fixed Reeving Route"
+    },
+    {
+      "materialId": 64,
+      "phase": "foundation",
+      "label": "Four Dressed-stone Gantry Foundations"
+    },
+    {
+      "materialId": 65,
+      "phase": "equipment",
+      "label": "Grounded Windlass Anchor and Suspended Hoist Block"
+    },
+    {
+      "materialId": 69,
+      "phase": "foundation",
+      "label": "Polished Bearing Caps and Zero-step Approach"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:AR8aFyQBAQIAAhoAEgFFDQAABAACAkAEAAQDAgMBJgAAAkAEAA8DAgMBJgAAAkUEAwQDAAMBJgAAAkUEAw8DAAMBJgAAAgMFBAUBBAEBAAAWAgMYBAUBBAEBAAAWAgMGCQUBBAEBAAAWAgMXCQUBBAEBAAAWAgMHDgUBBAEBAAAWAgMWDgUBBAEBAAAWAgMIEwUBAwEBAAAWAgMVEwUBAwEBAAAWAgMIFgUOAQEBAAAWAgMFCAUBAAwBJgAAAgMHDwUBAAwBHgAAAjgHCQcAAAEHAAICAjgHCQ4AAAEHAAIBAjgXCQcAAAEHAAICAjgXCQ4AAAEHAAIBAgMMGAIBARIBCgAAAjgMGQIGAAAEAAAIAQMMFwkGAQIBQQ0BEwQCAgIDCwETAQUCAQ4AAAEDDQUTBAICAgMNBBIABAQBCAAAATgLBhQIAAABOA8GEgARAAE4DxcKAAAIATgPBwoAEAABQQ4FCQICAgE4DwIKAAIAATgOAgoCAAACOA4DCgAAAAEEAAA"
+  },
+  "validation": {
+    "expectedVoxelCount": 1709,
+    "expectedPayloadBytes": 389,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      56,
+      57,
+      64,
+      65,
+      68,
+      69
+    ],
+    "expectedMaterialVoxelCounts": {
+      "56": 152,
+      "57": 770,
+      "64": 192,
+      "65": 72,
+      "68": 444,
+      "69": 79
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 15,
+    "steppedSupports": [
+      {
+        "label": "Front-left inward-stepped gantry leg",
+        "materialId": 57,
+        "segments": [
+          {
+            "x": 5,
+            "y": 4,
+            "z": 5,
+            "width": 2,
+            "height": 5,
+            "depth": 2
+          },
+          {
+            "x": 6,
+            "y": 9,
+            "z": 5,
+            "width": 2,
+            "height": 5,
+            "depth": 2
+          },
+          {
+            "x": 7,
+            "y": 14,
+            "z": 5,
+            "width": 2,
+            "height": 5,
+            "depth": 2
+          },
+          {
+            "x": 8,
+            "y": 19,
+            "z": 5,
+            "width": 2,
+            "height": 4,
+            "depth": 2
+          }
+        ]
+      },
+      {
+        "label": "Front-right inward-stepped gantry leg",
+        "materialId": 57,
+        "segments": [
+          {
+            "x": 24,
+            "y": 4,
+            "z": 5,
+            "width": 2,
+            "height": 5,
+            "depth": 2
+          },
+          {
+            "x": 23,
+            "y": 9,
+            "z": 5,
+            "width": 2,
+            "height": 5,
+            "depth": 2
+          },
+          {
+            "x": 22,
+            "y": 14,
+            "z": 5,
+            "width": 2,
+            "height": 5,
+            "depth": 2
+          },
+          {
+            "x": 21,
+            "y": 19,
+            "z": 5,
+            "width": 2,
+            "height": 4,
+            "depth": 2
+          }
+        ]
+      },
+      {
+        "label": "Rear-left inward-stepped gantry leg",
+        "materialId": 57,
+        "segments": [
+          {
+            "x": 5,
+            "y": 4,
+            "z": 16,
+            "width": 2,
+            "height": 5,
+            "depth": 2
+          },
+          {
+            "x": 6,
+            "y": 9,
+            "z": 16,
+            "width": 2,
+            "height": 5,
+            "depth": 2
+          },
+          {
+            "x": 7,
+            "y": 14,
+            "z": 16,
+            "width": 2,
+            "height": 5,
+            "depth": 2
+          },
+          {
+            "x": 8,
+            "y": 19,
+            "z": 16,
+            "width": 2,
+            "height": 4,
+            "depth": 2
+          }
+        ]
+      },
+      {
+        "label": "Rear-right inward-stepped gantry leg",
+        "materialId": 57,
+        "segments": [
+          {
+            "x": 24,
+            "y": 4,
+            "z": 16,
+            "width": 2,
+            "height": 5,
+            "depth": 2
+          },
+          {
+            "x": 23,
+            "y": 9,
+            "z": 16,
+            "width": 2,
+            "height": 5,
+            "depth": 2
+          },
+          {
+            "x": 22,
+            "y": 14,
+            "z": 16,
+            "width": 2,
+            "height": 5,
+            "depth": 2
+          },
+          {
+            "x": 21,
+            "y": 19,
+            "z": 16,
+            "width": 2,
+            "height": 4,
+            "depth": 2
+          }
+        ]
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Front portal head beam",
+        "axis": "x",
+        "start": 8,
+        "end": 22,
+        "y": 22,
+        "fixed": 5
+      },
+      {
+        "label": "Rear portal head beam",
+        "axis": "x",
+        "start": 8,
+        "end": 22,
+        "y": 22,
+        "fixed": 16
+      },
+      {
+        "label": "Left lower longitudinal tie",
+        "axis": "z",
+        "start": 5,
+        "end": 17,
+        "y": 8,
+        "fixed": 5
+      },
+      {
+        "label": "Right lower longitudinal tie",
+        "axis": "z",
+        "start": 5,
+        "end": 17,
+        "y": 8,
+        "fixed": 25
+      },
+      {
+        "label": "Left upper longitudinal tie",
+        "axis": "z",
+        "start": 5,
+        "end": 17,
+        "y": 15,
+        "fixed": 7
+      },
+      {
+        "label": "Right upper longitudinal tie",
+        "axis": "z",
+        "start": 5,
+        "end": 17,
+        "y": 15,
+        "fixed": 23
+      },
+      {
+        "label": "Left overhead runway beam",
+        "axis": "z",
+        "start": 2,
+        "end": 20,
+        "y": 24,
+        "fixed": 12
+      },
+      {
+        "label": "Right overhead runway beam",
+        "axis": "z",
+        "start": 2,
+        "end": 20,
+        "y": 24,
+        "fixed": 18
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "clear nine-wide front portal",
+        "x": 11,
+        "y": 1,
+        "z": 4,
+        "width": 9,
+        "height": 20,
+        "depth": 4
+      },
+      {
+        "label": "left five-wide clear work lane",
+        "x": 9,
+        "y": 1,
+        "z": 8,
+        "width": 5,
+        "height": 14,
+        "depth": 7
+      },
+      {
+        "label": "right five-wide clear work lane",
+        "x": 17,
+        "y": 1,
+        "z": 8,
+        "width": 5,
+        "height": 14,
+        "depth": 7
+      }
+    ],
+    "approach": [
+      {
+        "x": 13,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 1,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 5,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 6,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 7,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 8,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 9,
+        "topY": 1
+      },
+      {
+        "x": 13,
+        "z": 10,
+        "topY": 1
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 2,
+        "y": 0,
+        "z": 2,
+        "materialId": 68
+      },
+      {
+        "x": 15,
+        "y": 0,
+        "z": 0,
+        "materialId": 69
+      },
+      {
+        "x": 4,
+        "y": 2,
+        "z": 4,
+        "materialId": 64
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "z": 4,
+        "materialId": 69
+      },
+      {
+        "x": 5,
+        "y": 4,
+        "z": 5,
+        "materialId": 57
+      },
+      {
+        "x": 6,
+        "y": 10,
+        "z": 5,
+        "materialId": 57
+      },
+      {
+        "x": 8,
+        "y": 20,
+        "z": 5,
+        "materialId": 57
+      },
+      {
+        "x": 15,
+        "y": 22,
+        "z": 5,
+        "materialId": 57
+      },
+      {
+        "x": 5,
+        "y": 8,
+        "z": 10,
+        "materialId": 57
+      },
+      {
+        "x": 7,
+        "y": 12,
+        "z": 10,
+        "materialId": 56
+      },
+      {
+        "x": 12,
+        "y": 24,
+        "z": 14,
+        "materialId": 57
+      },
+      {
+        "x": 15,
+        "y": 23,
+        "z": 15,
+        "materialId": 56
+      },
+      {
+        "x": 15,
+        "y": 2,
+        "z": 20,
+        "materialId": 65
+      },
+      {
+        "x": 13,
+        "y": 4,
+        "z": 18,
+        "materialId": 57
+      },
+      {
+        "x": 15,
+        "y": 20,
+        "z": 18,
+        "materialId": 56
+      },
+      {
+        "x": 15,
+        "y": 12,
+        "z": 10,
+        "materialId": 56
+      },
+      {
+        "x": 14,
+        "y": 6,
+        "z": 9,
+        "materialId": 65
+      },
+      {
+        "x": 15,
+        "y": 3,
+        "z": 10,
+        "materialId": 56
+      }
+    ]
+  }
+}

@@ -274,6 +274,15 @@ const SINGLE_BED_FRAME_LAYOUTS = Object.freeze({
     caps: [20, 21, 22, 23],
   },
 });
+const ROOM_KEY_BOARD_LAYOUTS = Object.freeze({
+  "iron-hooked-timber-village-inn-room-key-board": {
+    board: 0,
+    frame: [1, 2, 3, 4],
+    hangers: [5, 6],
+    labels: [7, 8, 9, 10, 11, 12],
+    hooks: [13, 14, 15, 16, 17, 18],
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -549,6 +558,11 @@ const ITEM_NAMES = Object.freeze({
     "Iron-braced Timber Village Inn Single Bed Frame", "Bastidor de cama individual de posada de aldea de madera reforzado con hierro", "Cadre de lit simple d’auberge villageoise en bois renforcé de fer",
     "Eisenverstärktes Einzelbettgestell aus Holz für Dorfgasthäuser", "鉄補強の木製村宿シングルベッド枠", "Деревянный каркас односпальной кровати деревенской гостиницы с железными скобами",
     "철제 보강 목재 마을 여관 1인용 침대틀", "鐵箍木製村莊旅店單人床架", "铁箍木制村庄客栈单人床架",
+  ),
+  "iron-hooked-timber-village-inn-room-key-board": names(
+    "Iron-hooked Timber Village Inn Room-key Board", "Tablero de llaves de habitaciones de posada de aldea en madera con ganchos de hierro", "Tableau à clés de chambres d’auberge villageoise en bois avec crochets en fer",
+    "Hölzernes Zimmerschlüsselbrett für Dorfgasthäuser mit Eisenhaken", "鉄フック付き木製村宿客室鍵掛け板", "Деревянная доска для ключей от номеров деревенской гостиницы с железными крючками",
+    "철제 갈고리 목재 마을 여관 객실 열쇠판", "鐵鉤木製村莊旅店房間鑰匙板", "铁钩木制村庄客栈房间钥匙板",
   ),
   "iron-blacksmith-anvil": names(
     "Iron Blacksmith Anvil", "Yunque de herrero de hierro", "Enclume de forgeron en fer", "Eiserner Schmiedeamboss",
@@ -1309,6 +1323,21 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+  placeable("furniture", "iron-hooked-timber-village-inn-room-key-board", [
+    part("wooden_plank", [40, 56, 4], [0, 30, 0]),
+    part("squared_timber", [4, 64, 6], [-22, 30, 0]),
+    part("squared_timber", [4, 64, 6], [22, 30, 0]),
+    part("squared_timber", [40, 4, 6], [0, 0, 0]),
+    part("squared_timber", [40, 4, 6], [0, 60, 0]),
+    part("iron_bloom", [8, 6, 4], [-12, 65, -1]),
+    part("iron_bloom", [8, 6, 4], [12, 65, -1]),
+    ...[47, 25].flatMap((y) => [-12, 0, 12].map((x) => part("wooden_plank", [10, 4, 2], [x, y, 3]))),
+    ...[36, 14].flatMap((y) => [-12, 0, 12].map((x) => part("iron_bloom", [8, 12, 12], [x, y, 8], { mask: roomKeyHookMask }))),
+  ], { yaw: -0.68, pitch: 0.25 }, {
+    image: "concepts/furniture/iron-hooked-timber-village-inn-room-key-board-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
 ]);
 
 generate();
@@ -1414,6 +1443,8 @@ function buildItem(spec) {
   if (washstandLayout) validateWashstandGeometry(spec, runtime, washstandLayout);
   const singleBedFrameLayout = SINGLE_BED_FRAME_LAYOUTS[spec.key] ?? null;
   if (singleBedFrameLayout) validateSingleBedFrameGeometry(spec, runtime, singleBedFrameLayout);
+  const roomKeyBoardLayout = ROOM_KEY_BOARD_LAYOUTS[spec.key] ?? null;
+  if (roomKeyBoardLayout) validateRoomKeyBoardGeometry(spec, runtime, roomKeyBoardLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -1524,6 +1555,7 @@ function buildItem(spec) {
       ...(bedsideTableLayout ? { bedsideTableGeometryValidated: true } : {}),
       ...(washstandLayout ? { washstandGeometryValidated: true } : {}),
       ...(singleBedFrameLayout ? { singleBedFrameGeometryValidated: true } : {}),
+      ...(roomKeyBoardLayout ? { roomKeyBoardGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -2733,6 +2765,86 @@ function validateSingleBedFrameGeometry(spec, runtime, layout) {
   }
 }
 
+function validateRoomKeyBoardGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 19 || runtime.boundsQ.sizeQ.join(",") !== "48,70,17") {
+    throw new Error(`${spec.key} must preserve its human-readable portrait room-key-board proportions (got ${runtime.componentCount} components and ${runtime.boundsQ.sizeQ.join(",")}).`);
+  }
+  const components = runtime.components ?? [];
+  const bounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    "wooden_plank",
+    ...Array(4).fill("squared_timber"),
+    "iron_bloom", "iron_bloom",
+    ...Array(6).fill("wooden_plank"),
+    ...Array(6).fill("iron_bloom"),
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  const board = bounds[layout.board];
+  const [left, right, bottom, top] = layout.frame.map((index) => bounds[index]);
+  if (board.min[0] !== left.max[0] || board.max[0] !== right.min[0]
+    || board.min[1] !== bottom.max[1] || board.max[1] !== top.min[1]
+    || board.min[2] < left.min[2] || board.max[2] > left.max[2]) {
+    throw new Error(`${spec.key} backboard must remain captive within all four timber frame faces.`);
+  }
+  for (const hangerIndex of layout.hangers) {
+    const hanger = bounds[hangerIndex];
+    if (hanger.min[1] !== top.max[1]
+      || overlapLength(hanger.min[0], hanger.max[0], top.min[0], top.max[0]) <= 0
+      || overlapLength(hanger.min[2], hanger.max[2], top.min[2], top.max[2]) <= 0) {
+      throw new Error(`${spec.key} wall hanger ${hangerIndex} is detached from the upper frame.`);
+    }
+  }
+  const expectedPositions = [
+    [-12, 47], [0, 47], [12, 47], [-12, 25], [0, 25], [12, 25],
+  ];
+  for (let position = 0; position < layout.labels.length; position += 1) {
+    const labelIndex = layout.labels[position];
+    const hookIndex = layout.hooks[position];
+    const label = bounds[labelIndex];
+    const hook = bounds[hookIndex];
+    const [expectedX, labelY] = expectedPositions[position];
+    if (components[labelIndex].offsetQ[0] !== expectedX || components[labelIndex].offsetQ[1] !== labelY
+      || components[hookIndex].offsetQ[0] !== expectedX
+      || label.min[2] !== board.max[2] || hook.min[2] !== board.max[2]
+      || label.min[1] <= hook.max[1]
+      || hook.max[2] <= label.max[2]) {
+      throw new Error(`${spec.key} label-hook pair ${position} is misaligned or leaves the board face.`);
+    }
+    const hookSolidCount = components[hookIndex].solid.reduce((sum, value) => sum + value, 0);
+    if (hookSolidCount <= 0 || hookSolidCount >= FORGE_COMPONENT_GRID.x * FORGE_COMPONENT_GRID.y * FORGE_COMPONENT_GRID.z) {
+      throw new Error(`${spec.key} hook ${hookIndex} must preserve a genuinely machined raised-stop silhouette.`);
+    }
+    const backSolid = [];
+    const outerLow = [];
+    const outerHigh = [];
+    for (let y = 0; y < FORGE_COMPONENT_GRID.y; y += 1) {
+      for (let x = 0; x < FORGE_COMPONENT_GRID.x; x += 1) {
+        if (components[hookIndex].solid[forgeVoxelIndex(x, y, 0)]) backSolid.push([x, y]);
+        if (components[hookIndex].solid[forgeVoxelIndex(x, y, FORGE_COMPONENT_GRID.z - 2)]) {
+          (y >= 6 ? outerHigh : outerLow).push([x, y]);
+        }
+      }
+    }
+    if (!backSolid.length || !outerLow.length || !outerHigh.length) {
+      throw new Error(`${spec.key} hook ${hookIndex} lacks a board root, outward arm, or raised retaining stop.`);
+    }
+  }
+  for (let first = 0; first < bounds.length; first += 1) {
+    for (let second = first + 1; second < bounds.length; second += 1) {
+      if (boundsOverlap(bounds[first], bounds[second], 0)) {
+        throw new Error(`${spec.key} components ${first} and ${second} intersect.`);
+      }
+    }
+  }
+}
+
 function validateToolHolding(spec, runtime) {
   const policy = spec.holding;
   const components = runtime.components ?? [];
@@ -3158,6 +3270,13 @@ function windowBoxCornerBandMask({ nx, ny, nz }) {
   const sideRail = Math.abs(nx) >= 0.5 && (Math.abs(ny) >= 0.56 || Math.abs(nz) >= 0.56);
   const faceRail = Math.abs(nx) < 0.5 && Math.abs(ny) >= 0.72 && Math.abs(nz) >= 0.72;
   return sideRail || faceRail;
+}
+
+function roomKeyHookMask({ x, y, z }) {
+  const rootPlate = z <= 1 && x >= 3 && x <= 10 && y >= 1 && y <= 8;
+  const outwardArm = x >= 5 && x <= 8 && y >= 1 && y <= 3 && z >= 1 && z <= 12;
+  const retainingStop = x >= 5 && x <= 8 && y >= 1 && y <= 8 && z >= 11;
+  return rootPlate || outwardArm || retainingStop;
 }
 
 function windowBoxBloomMask({ nx, ny, nz }) {

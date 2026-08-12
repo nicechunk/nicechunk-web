@@ -11,7 +11,7 @@ ITEM_NCM is the public NiceChunk forge-item blueprint registry. It follows the s
 - Every item JSON contains its own nine-language names and descriptions.
 - `tools/generate-items.mjs` is the canonical source for the initial collection and regenerates every item JSON deterministically.
 
-The registry currently contains 55 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, containers, cooking, commerce, construction, books and writing, interior decor, signage, exterior decor, and hand-held civic props. New designs begin with an Imagegen material-style concept; the resulting item JSON records the concept path, provenance, version, and SHA-256 before the forge encoding is accepted.
+The registry currently contains 56 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, containers, cooking, commerce, construction, books and writing, interior decor, signage, exterior decor, and hand-held civic props. New designs begin with an Imagegen material-style concept; the resulting item JSON records the concept path, provenance, version, and SHA-256 before the forge encoding is accepted.
 
 ## Forge guarantees
 
@@ -44,6 +44,7 @@ The generator rejects an item unless all of these checks pass:
 25. Inn bedside tables keep a compact bed-height top, four grounded iron-capped timber legs, a supported open lower shelf, a closed face-pulled drawer, and four flush top corner plates without component intersections.
 26. Inn washstands keep a waist-height basin on four grounded iron-collared timber legs, a supported lower shelf, a continuous copper floor and four-wall usable open cavity, and an outward face-connected towel rail without component intersections.
 27. Inn single-bed frames preserve a 1.9 m sleeping length and narrow human-scale width, four grounded iron-capped posts, continuous long rails, a captive slatted headboard, a connected low footboard, and four evenly spaced cross-bed supports without component intersections.
+28. Inn room-key boards preserve a portrait wall-readable scale, a captive framed timber backboard, two connected upper hangers, six aligned blank label plates with no encoded lettering, and six face-rooted voxel-machined iron hooks with outward arms and raised retaining stops.
 
 `verification.chainMinted` remains `false` because this library validates blueprint readiness; it does not claim that a blueprint PDA has already been created.
 

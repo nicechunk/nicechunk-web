@@ -82,7 +82,7 @@ try {
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 16);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /47 ITEMS/);
+  assert.match(initial.total, /48 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -633,7 +633,7 @@ try {
   assert.ok(wateringCan.resources.includes("/item_ncm/json/forestry-farming/copper-field-watering-can.json"));
 
   await evaluate(client, `document.querySelector('[data-category="exterior-decor"]').click()`);
-  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 1
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 2
     && document.querySelector('[data-item="iron-braced-village-window-box-planter"]')`));
   assert.equal(await evaluate(client, `performance.getEntriesByType("resource").some((entry) => new URL(entry.name).pathname.includes("/item_ncm/json/exterior-decor/"))`), false,
     "category browsing must not load exterior decor item JSON files");
@@ -672,6 +672,42 @@ try {
   await waitFor(() => evaluate(client, `document.querySelector("#itemTitle").textContent === "铁箍村庄窗台花箱"`));
   assert.equal(await evaluate(client, `document.querySelector('[data-category="exterior-decor"] span').textContent`), "室外装饰");
   assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), windowBox.payload);
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "en";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
+
+  await evaluate(client, `document.querySelector('[data-item="stone-and-timber-village-drinking-trough"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="stone-and-timber-village-drinking-trough"].active')
+    && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const drinkingTrough = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payload: document.querySelector("#codeOutput").value,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    materialRows: document.querySelectorAll("#bomRows .bom-row").length,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(drinkingTrough.title, "Stone-and-timber Village Drinking Trough");
+  assert.equal(drinkingTrough.type, "PLACEABLE");
+  assert.match(drinkingTrough.payload, /^NCF1\./);
+  assert.equal(drinkingTrough.componentCount, "11");
+  assert.equal(drinkingTrough.materialRows, 4);
+  assert.equal(drinkingTrough.selectedInUrl, "stone-and-timber-village-drinking-trough");
+  assert.ok(drinkingTrough.resources.includes("/item_ncm/json/exterior-decor/stone-and-timber-village-drinking-trough.json"));
+  assert.equal(drinkingTrough.payloadBytes, "132 / 640 B");
+
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "zh-Hans";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.querySelector("#itemTitle").textContent === "石木村庄公共饮水槽"`));
+  assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), drinkingTrough.payload);
   await evaluate(client, `(() => {
     const select = document.querySelector("[data-language-select]");
     select.value = "en";

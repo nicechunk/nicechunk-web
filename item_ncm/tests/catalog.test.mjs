@@ -143,10 +143,21 @@ const windowBoxLayouts = new Map([
     blooms: [12, 13, 14],
   }],
 ]);
+const drinkingTroughLayouts = new Map([
+  ["stone-and-timber-village-drinking-trough", {
+    feet: [0, 1],
+    floor: 2,
+    walls: [3, 4, 5, 6],
+    water: 7,
+    timberRail: 8,
+    spout: 9,
+    spoutMouth: 10,
+  }],
+]);
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
-assert.equal(catalog.items.length, 47);
+assert.equal(catalog.items.length, 48);
 assert.equal(new Set(catalog.items).size, catalog.items.length);
 
 const listedFiles = new Set(catalog.items);
@@ -169,6 +180,7 @@ let shopSignGeometryCount = 0;
 let noticeBoardGeometryCount = 0;
 let handbellGeometryCount = 0;
 let windowBoxGeometryCount = 0;
+let drinkingTroughGeometryCount = 0;
 for (const file of catalog.items) {
   assert.match(file, /^json\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/);
   const item = json(join(root, file));
@@ -297,6 +309,14 @@ for (const file of catalog.items) {
     assert.equal(item.verification.windowBoxGeometryValidated, true);
     assertWindowBoxGeometry(item, runtime, windowBoxLayout);
   }
+  const drinkingTroughLayout = drinkingTroughLayouts.get(item.key);
+  if (drinkingTroughLayout) {
+    drinkingTroughGeometryCount += 1;
+    assert.equal(item.category, "exterior-decor");
+    assert.equal(item.interaction, "placeable");
+    assert.equal(item.verification.drinkingTroughGeometryValidated, true);
+    assertDrinkingTroughGeometry(item, runtime, drinkingTroughLayout);
+  }
   assert.equal(forgeWorkbenchComponentsConnected(runtime.components), true, `${item.key} must be a connected assembly`);
   const grip = validateForgeGripBindings(runtime.components);
   assert.equal(grip.valid, true, `${item.key} grip must remain valid after decoding`);
@@ -386,11 +406,11 @@ assert.deepEqual([...categories], [
   ["books-writing", 7],
   ["interior-decor", 2],
   ["signage", 2],
-  ["exterior-decor", 1],
+  ["exterior-decor", 2],
 ]);
 assert.equal(tools, 16);
-assert.equal(placeables, 31);
-assert.equal(conceptReferences, 20);
+assert.equal(placeables, 32);
+assert.equal(conceptReferences, 21);
 assert.equal(bookGeometryCount, 7);
 assert.equal(framedTextileGeometryCount, 1);
 assert.equal(drawerCabinetGeometryCount, 1);
@@ -401,9 +421,10 @@ assert.equal(shopSignGeometryCount, 1);
 assert.equal(noticeBoardGeometryCount, 1);
 assert.equal(handbellGeometryCount, 1);
 assert.equal(windowBoxGeometryCount, 1);
+assert.equal(drinkingTroughGeometryCount, 1);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
-console.log("item_ncm catalog tests passed: 47 canonical NCF1 items across 16 categories");
+console.log("item_ncm catalog tests passed: 48 canonical NCF1 items across 16 categories");
 
 function json(file) {
   return JSON.parse(readFileSync(file, "utf8"));
@@ -794,4 +815,37 @@ function assertWindowBoxGeometry(item, runtime, layout) {
     assert.ok(bounds[bloomIndex].min[1] <= soil.max[1]);
     assert.ok(bounds[bloomIndex].max[1] > soil.max[1]);
   }
+}
+
+function assertDrinkingTroughGeometry(item, runtime, layout) {
+  assert.equal(runtime.componentCount, 11);
+  assert.deepEqual(item.dimensions.sizeQ, [105, 38, 42]);
+  assert.ok(item.dimensions.width >= 1.6 && item.dimensions.width <= 1.7);
+  assert.ok(item.dimensions.height >= 0.55 && item.dimensions.height <= 0.65);
+  assert.ok(item.dimensions.depth >= 0.6 && item.dimensions.depth <= 0.7);
+  assert.ok(item.forge.requirements.outputMassGrams <= 1_250_000, `${item.key} must remain a compact street fixture rather than monumental masonry`);
+  assert.deepEqual(
+    [...new Set(item.forge.materialComponents.map(({ materialId }) => materialId))].sort(),
+    ["ice_blue_glass_panel", "iron_bloom", "polished_stone_slab", "squared_timber"],
+  );
+  const components = runtime.components;
+  const bounds = components.map((component) => componentBoundsQ(component));
+  const floor = bounds[layout.floor];
+  const [back, front, left, right] = layout.walls.map((index) => bounds[index]);
+  const water = bounds[layout.water];
+  assert.equal(floor.max[1], back.min[1]);
+  assert.equal(floor.max[1], front.min[1]);
+  assert.equal(floor.max[1], left.min[1]);
+  assert.equal(floor.max[1], right.min[1]);
+  assert.equal(water.min[0], left.max[0]);
+  assert.equal(water.max[0], right.min[0]);
+  assert.equal(water.min[2], back.max[2]);
+  assert.equal(water.max[2], front.min[2]);
+  assert.ok(water.max[1] < back.max[1]);
+  for (const footIndex of layout.feet) {
+    assert.equal(bounds[footIndex].min[1], 0);
+    assert.equal(bounds[footIndex].max[1], floor.min[1]);
+  }
+  assert.equal(bounds[layout.timberRail].max[2], back.min[2]);
+  assert.equal(bounds[layout.spout].max[2], bounds[layout.spoutMouth].min[2]);
 }

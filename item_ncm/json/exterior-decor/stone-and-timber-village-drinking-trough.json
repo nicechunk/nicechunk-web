@@ -1,0 +1,222 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "stone-and-timber-village-drinking-trough",
+  "category": "exterior-decor",
+  "interaction": "placeable",
+  "names": {
+    "en": "Stone-and-timber Village Drinking Trough",
+    "es": "Abrevadero público de aldea de piedra y madera",
+    "fr": "Abreuvoir public de village en pierre et bois",
+    "de": "Dorftränke aus Stein und Holz",
+    "ja": "石と木の村落共同水飲み槽",
+    "ru": "Деревенская общественная поилка из камня и дерева",
+    "ko": "석재·목재 마을 공용 물통",
+    "zh-Hant": "石木村莊公共飲水槽",
+    "zh-Hans": "石木村庄公共饮水槽"
+  },
+  "descriptions": {
+    "en": "Stone-and-timber Village Drinking Trough is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Abrevadero público de aldea de piedra y madera es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Abreuvoir public de village en pierre et bois est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Dorftränke aus Stein und Holz ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "石と木の村落共同水飲み槽は、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Деревенская общественная поилка из камня и дерева — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "석재·목재 마을 공용 물통은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "石木村莊公共飲水槽是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "石木村庄公共饮水槽是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 1.6406,
+    "height": 0.5938,
+    "depth": 0.6563,
+    "sizeQ": [
+      105,
+      38,
+      42
+    ]
+  },
+  "preview": {
+    "yaw": -0.66,
+    "pitch": 0.26
+  },
+  "concept": {
+    "image": "concepts/exterior-decor/stone-and-timber-village-drinking-trough-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "57c3af623b4088f7ad0a9cddc7f81fcc80fa3684f0078f33ef795075b0471272"
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.___4xbwygDlqy2GTEZLSqscCBh7gCAAQAJVWOBAwCQBAAIAEqrYAYcAABYAEACVVsAgCgABb8CABKq2AQBQAAsCBAAlVYKIDbzgWAAgASqsFEBsGQLAAQAJF6vgQ2AAHAAIAIhlPAQFAADn1kAATUgwUJAAB_9yAAJqQgIBgABEAZAAA",
+    "rawBytes": 132,
+    "sha256": "ff824a57fd161766193aeba61db46773a8712c98a6ab05a2e10e7e6791070d56",
+    "designHash": 3600173781,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 132,
+    "savedBytes": 0,
+    "sourceComponentCount": 11,
+    "decodedComponentCount": 11,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "polished_stone_slab",
+        "itemCode": 1045,
+        "inputVolumeMm3": 20507813,
+        "usedVolumeMm3": 20507813,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "polished_stone_slab",
+        "itemCode": 1045,
+        "inputVolumeMm3": 20507813,
+        "usedVolumeMm3": 20507813,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "polished_stone_slab",
+        "itemCode": 1045,
+        "inputVolumeMm3": 61523438,
+        "usedVolumeMm3": 61523438,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "polished_stone_slab",
+        "itemCode": 1045,
+        "inputVolumeMm3": 29296875,
+        "usedVolumeMm3": 29296875,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "polished_stone_slab",
+        "itemCode": 1045,
+        "inputVolumeMm3": 29296875,
+        "usedVolumeMm3": 29296875,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "polished_stone_slab",
+        "itemCode": 1045,
+        "inputVolumeMm3": 8239746,
+        "usedVolumeMm3": 8239746,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "polished_stone_slab",
+        "itemCode": 1045,
+        "inputVolumeMm3": 8239746,
+        "usedVolumeMm3": 8239746,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 7,
+        "materialId": "ice_blue_glass_panel",
+        "itemCode": 1035,
+        "inputVolumeMm3": 19569397,
+        "usedVolumeMm3": 19569397,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 8,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 4577637,
+        "usedVolumeMm3": 4577637,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 9,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 4119873,
+        "usedVolumeMm3": 4119873,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 10,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 1464844,
+        "usedVolumeMm3": 1464844,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 207290368,
+      "requiredEffectiveDurability": 57630,
+      "outputMassGrams": 327675,
+      "materialScore": 57
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 264,
+      "triangleCount": 132,
+      "meshByteLength": 5016
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "polished_stone_slab",
+      "itemCode": 1045,
+      "componentCount": 7,
+      "inputVolumeMm3": 177612306,
+      "usedVolumeMm3": 177612306,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 60000,
+      "equivalentInputUnits": 2961
+    },
+    {
+      "materialId": "ice_blue_glass_panel",
+      "itemCode": 1035,
+      "componentCount": 1,
+      "inputVolumeMm3": 19569397,
+      "usedVolumeMm3": 19569397,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 60000,
+      "equivalentInputUnits": 327
+    },
+    {
+      "materialId": "squared_timber",
+      "itemCode": 1033,
+      "componentCount": 1,
+      "inputVolumeMm3": 4577637,
+      "usedVolumeMm3": 4577637,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 48400,
+      "equivalentInputUnits": 95
+    },
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 2,
+      "inputVolumeMm3": 5584717,
+      "usedVolumeMm3": 5584717,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 23
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "drinkingTroughGeometryValidated": true,
+    "chainMinted": false
+  }
+}

@@ -167,6 +167,17 @@ const WINDOW_BOX_LAYOUTS = Object.freeze({
     blooms: [12, 13, 14],
   },
 });
+const DRINKING_TROUGH_LAYOUTS = Object.freeze({
+  "stone-and-timber-village-drinking-trough": {
+    feet: [0, 1],
+    floor: 2,
+    walls: [3, 4, 5, 6],
+    water: 7,
+    timberRail: 8,
+    spout: 9,
+    spoutMouth: 10,
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -179,6 +190,7 @@ const COLORS = Object.freeze({
   copper_bloom: 0xb64,
   fired_clay_brick: 0xa54,
   glass_ingot: 0x9cd,
+  ice_blue_glass_panel: 0x8bd,
   iron_bloom: 0x9a9,
   polished_stone_slab: 0xaab,
   red_dye: 0xb43,
@@ -401,6 +413,11 @@ const ITEM_NAMES = Object.freeze({
     "Iron-braced Village Window-box Planter", "Jardinera de ventana de aldea reforzada con hierro", "Jardinière de fenêtre villageoise renforcée de fer",
     "Eisenverstärkter Dorf-Fensterblumenkasten", "鉄補強の村落窓辺プランター", "Деревенский оконный цветочный ящик с железными скобами",
     "철제 보강 마을 창가 화분 상자", "鐵箍村莊窗臺花箱", "铁箍村庄窗台花箱",
+  ),
+  "stone-and-timber-village-drinking-trough": names(
+    "Stone-and-timber Village Drinking Trough", "Abrevadero público de aldea de piedra y madera", "Abreuvoir public de village en pierre et bois",
+    "Dorftränke aus Stein und Holz", "石と木の村落共同水飲み槽", "Деревенская общественная поилка из камня и дерева",
+    "석재·목재 마을 공용 물통", "石木村莊公共飲水槽", "石木村庄公共饮水槽",
   ),
   "iron-blacksmith-anvil": names(
     "Iron Blacksmith Anvil", "Yunque de herrero de hierro", "Enclume de forgeron en fer", "Eiserner Schmiedeamboss",
@@ -957,6 +974,23 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+  placeable("exterior-decor", "stone-and-timber-village-drinking-trough", [
+    part("polished_stone_slab", [28, 8, 24], [-36, 4, 0]),
+    part("polished_stone_slab", [28, 8, 24], [36, 4, 0]),
+    part("polished_stone_slab", [96, 6, 28], [0, 11, 0]),
+    part("polished_stone_slab", [96, 16, 5], [0, 22, -16]),
+    part("polished_stone_slab", [96, 16, 5], [0, 22, 16]),
+    part("polished_stone_slab", [5, 16, 27], [-50, 22, 0]),
+    part("polished_stone_slab", [5, 16, 27], [50, 22, 0]),
+    part("ice_blue_glass_panel", [95, 2, 27], [0, 28, 0]),
+    part("squared_timber", [60, 4, 5], [0, 28, -21]),
+    part("iron_bloom", [6, 10, 18], [0, 31, -9]),
+    part("iron_bloom", [8, 8, 6], [0, 34, 3]),
+  ], { yaw: -0.66, pitch: 0.26 }, {
+    image: "concepts/exterior-decor/stone-and-timber-village-drinking-trough-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
 ]);
 
 generate();
@@ -1046,6 +1080,8 @@ function buildItem(spec) {
   if (handbellLayout) validateHandbellGeometry(spec, runtime, handbellLayout);
   const windowBoxLayout = WINDOW_BOX_LAYOUTS[spec.key] ?? null;
   if (windowBoxLayout) validateWindowBoxGeometry(spec, runtime, windowBoxLayout);
+  const drinkingTroughLayout = DRINKING_TROUGH_LAYOUTS[spec.key] ?? null;
+  if (drinkingTroughLayout) validateDrinkingTroughGeometry(spec, runtime, drinkingTroughLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -1148,6 +1184,7 @@ function buildItem(spec) {
       ...(noticeBoardLayout ? { noticeBoardGeometryValidated: true } : {}),
       ...(handbellLayout ? { handbellGeometryValidated: true } : {}),
       ...(windowBoxLayout ? { windowBoxGeometryValidated: true } : {}),
+      ...(drinkingTroughLayout ? { drinkingTroughGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -1737,6 +1774,62 @@ function validateWindowBoxGeometry(spec, runtime, layout) {
       || bloom.min[2] < soil.min[2] || bloom.max[2] > soil.max[2]) {
       throw new Error(`${spec.key} bloom ${bloomIndex} is not planted into the compost bed.`);
     }
+  }
+}
+
+function validateDrinkingTroughGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 11 || runtime.boundsQ.sizeQ.join(",") !== "105,38,42") {
+    throw new Error(`${spec.key} must preserve its low, human-scale public drinking-trough proportions (got ${runtime.componentCount} components and ${runtime.boundsQ.sizeQ.join(",")}).`);
+  }
+  const components = runtime.components ?? [];
+  const componentBounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    "polished_stone_slab", "polished_stone_slab", "polished_stone_slab", "polished_stone_slab",
+    "polished_stone_slab", "polished_stone_slab", "polished_stone_slab", "ice_blue_glass_panel",
+    "squared_timber", "iron_bloom", "iron_bloom",
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  const floor = componentBounds[layout.floor];
+  const [back, front, left, right] = layout.walls.map((index) => componentBounds[index]);
+  const water = componentBounds[layout.water];
+  if (floor.min[0] !== back.min[0] || floor.max[0] !== back.max[0]
+    || floor.min[2] > left.min[2] || floor.max[2] < left.max[2]
+    || back.min[0] !== floor.min[0] || back.max[0] !== floor.max[0]
+    || front.min[0] !== floor.min[0] || front.max[0] !== floor.max[0]
+    || back.max[2] !== left.min[2] || front.min[2] !== left.max[2]
+    || left.max[0] < floor.min[0] || right.min[0] > floor.max[0]
+    || floor.max[1] !== back.min[1] || floor.max[1] !== front.min[1]
+    || floor.max[1] !== left.min[1] || floor.max[1] !== right.min[1]) {
+    throw new Error(`${spec.key} stone basin is not continuously enclosed above its floor.`);
+  }
+  if (water.min[0] !== left.max[0] || water.max[0] !== right.min[0]
+    || water.min[2] !== back.max[2] || water.max[2] !== front.min[2]
+    || water.min[1] <= floor.max[1] || water.max[1] >= back.max[1]) {
+    throw new Error(`${spec.key} still-water plane leaves the hollow basin or reaches above its rim.`);
+  }
+  for (const footIndex of layout.feet) {
+    const foot = componentBounds[footIndex];
+    if (foot.min[1] !== 0 || foot.max[1] < floor.min[1]
+      || foot.max[0] <= floor.min[0] || foot.min[0] >= floor.max[0]
+      || foot.max[2] <= floor.min[2] || foot.min[2] >= floor.max[2]) {
+      throw new Error(`${spec.key} stone foot ${footIndex} does not support the basin floor.`);
+    }
+  }
+  const timberRail = componentBounds[layout.timberRail];
+  const spout = componentBounds[layout.spout];
+  const mouth = componentBounds[layout.spoutMouth];
+  if (timberRail.max[2] !== back.min[2] || timberRail.min[1] < back.min[1] || timberRail.max[1] > back.max[1]
+    || spout.min[2] - timberRail.max[2] > 0.5 || spout.min[1] > timberRail.max[1]
+    || spout.max[2] !== mouth.min[2] || mouth.min[1] <= water.max[1]
+    || mouth.max[2] >= front.min[2]) {
+    throw new Error(`${spec.key} timber back rail or iron drinking spout is detached or badly placed.`);
   }
 }
 

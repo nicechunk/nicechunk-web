@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 4);
-  assert.match(initial.totalBuildingCount, /59 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /60 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -2110,20 +2110,22 @@ try {
   assert.ok(!courierPost.resources.some((path) => path.endsWith("compact-village-courier-post-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=mining]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=timber-mine-headframe]') && document.querySelector('[data-building=covered-village-ore-sorting-shed]') && document.querySelector('[data-building=compact-village-assay-house]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=timber-mine-headframe]') && document.querySelector('[data-building=covered-village-ore-sorting-shed]') && document.querySelector('[data-building=compact-village-assay-house]') && document.querySelector('[data-building=compact-village-lamp-room]')"));
   const miningBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     cardCount: document.querySelectorAll('[data-building]').length,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(miningBrowse.activeBuilding, null);
-  assert.equal(miningBrowse.cardCount, 3);
+  assert.equal(miningBrowse.cardCount, 4);
   assert.ok(!miningBrowse.resources.includes("/build_ncm/buildings/mining/timber-mine-headframe.json"), "category browsing must not load the headframe JSON");
   assert.ok(!miningBrowse.resources.includes("/build_ncm/concepts/mining/timber-mine-headframe.webp"), "category browsing must not load the headframe concept art");
   assert.ok(!miningBrowse.resources.includes("/build_ncm/buildings/mining/covered-village-ore-sorting-shed.json"), "category browsing must not load the ore-sorting-shed JSON");
   assert.ok(!miningBrowse.resources.includes("/build_ncm/concepts/mining/covered-village-ore-sorting-shed.webp"), "category browsing must not load the ore-sorting-shed concept art");
   assert.ok(!miningBrowse.resources.includes("/build_ncm/buildings/mining/compact-village-assay-house.json"), "category browsing must not load the assay-house JSON");
   assert.ok(!miningBrowse.resources.includes("/build_ncm/concepts/mining/compact-village-assay-house.webp"), "category browsing must not load the assay-house concept art");
+  assert.ok(!miningBrowse.resources.includes("/build_ncm/buildings/mining/compact-village-lamp-room.json"), "category browsing must not load the lamp-room JSON");
+  assert.ok(!miningBrowse.resources.includes("/build_ncm/concepts/mining/compact-village-lamp-room.webp"), "category browsing must not load the lamp-room concept art");
   await clickBuilding(client, "timber-mine-headframe");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'timber-mine-headframe' && document.querySelector('#modelSize').textContent === '23 × 27 × 17' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const headframe = await evaluate(client, `({
@@ -2164,6 +2166,8 @@ try {
   assert.ok(!headframe.resources.some((path) => path.endsWith("timber-mine-headframe-blueprint.js")));
   assert.ok(!headframe.resources.includes("/build_ncm/buildings/mining/covered-village-ore-sorting-shed.json"), "selecting the headframe must not load the ore-sorting-shed JSON");
   assert.ok(!headframe.resources.includes("/build_ncm/concepts/mining/covered-village-ore-sorting-shed.webp"), "selecting the headframe must not load the ore-sorting-shed concept art");
+  assert.ok(!headframe.resources.includes("/build_ncm/buildings/mining/compact-village-lamp-room.json"), "selecting the headframe must not load the lamp-room JSON");
+  assert.ok(!headframe.resources.includes("/build_ncm/concepts/mining/compact-village-lamp-room.webp"), "selecting the headframe must not load the lamp-room concept art");
 
   await clickBuilding(client, "covered-village-ore-sorting-shed");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'covered-village-ore-sorting-shed' && document.querySelector('#modelSize').textContent === '21 × 19 × 17' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
@@ -2205,6 +2209,8 @@ try {
   assert.ok(!oreSortingShed.resources.some((path) => path.endsWith("covered-village-ore-sorting-shed-blueprint.js")));
   assert.ok(!oreSortingShed.resources.includes("/build_ncm/buildings/mining/compact-village-assay-house.json"), "selecting existing mining buildings must not load the assay-house JSON");
   assert.ok(!oreSortingShed.resources.includes("/build_ncm/concepts/mining/compact-village-assay-house.webp"), "selecting existing mining buildings must not load the assay-house concept art");
+  assert.ok(!oreSortingShed.resources.includes("/build_ncm/buildings/mining/compact-village-lamp-room.json"), "selecting the ore-sorting shed must not load the lamp-room JSON");
+  assert.ok(!oreSortingShed.resources.includes("/build_ncm/concepts/mining/compact-village-lamp-room.webp"), "selecting the ore-sorting shed must not load the lamp-room concept art");
 
   await clickBuilding(client, "compact-village-assay-house");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-assay-house' && document.querySelector('#modelSize').textContent === '27 × 22 × 25' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
@@ -2246,6 +2252,49 @@ try {
   assert.ok(assayHouse.resources.includes("/build_ncm/buildings/mining/compact-village-assay-house.json"));
   assert.ok(assayHouse.resources.includes("/build_ncm/concepts/mining/compact-village-assay-house.webp"));
   assert.ok(!assayHouse.resources.some((path) => path.endsWith("compact-village-assay-house-blueprint.js")));
+  assert.ok(!assayHouse.resources.includes("/build_ncm/buildings/mining/compact-village-lamp-room.json"), "selecting the assay house must not load the lamp-room JSON");
+  assert.ok(!assayHouse.resources.includes("/build_ncm/concepts/mining/compact-village-lamp-room.webp"), "selecting the assay house must not load the lamp-room concept art");
+
+  await clickBuilding(client, "compact-village-lamp-room");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-lamp-room' && document.querySelector('#modelSize').textContent === '25 × 20 × 25' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const lampRoom = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptLoading: document.querySelector('#conceptImage').loading,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(lampRoom.activeCategory, "mining");
+  assert.match(lampRoom.title, /Compact Village Lamp Room/);
+  assert.equal(lampRoom.modelSize, "25 × 20 × 25");
+  assert.match(lampRoom.payload, /^NCM3:/);
+  assert.equal(lampRoom.voxelCount, 1858);
+  for (const id of [56, 57, 58, 64, 65, 69, 70, 99]) assert.match(lampRoom.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(lampRoom.uncovered, false);
+  assert.equal(lampRoom.glazingDisabled, true);
+  assert.equal(lampRoom.glazingLabel, "Openings: Not applicable");
+  assert.equal(lampRoom.disabledStyles, 6);
+  assert.equal(lampRoom.disabledRoofs, 6);
+  assert.equal(lampRoom.conceptHidden, false);
+  assert.equal(lampRoom.conceptLoading, "eager");
+  assert.match(lampRoom.conceptAlt, /Compact Village Lamp Room concept reference/);
+  assert.equal(lampRoom.conceptFit, "contain");
+  assert.equal(lampRoom.selectedInUrl, "compact-village-lamp-room");
+  assert.ok(lampRoom.resources.includes("/build_ncm/buildings/mining/compact-village-lamp-room.json"));
+  assert.ok(lampRoom.resources.includes("/build_ncm/concepts/mining/compact-village-lamp-room.webp"));
+  assert.ok(!lampRoom.resources.some((path) => path.endsWith("compact-village-lamp-room-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=agriculture]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=glass-timber-greenhouse]') && document.querySelector('[data-building=compact-village-watermill]') && document.querySelector('[data-building=compact-village-cheese-house]')"));
@@ -2863,10 +2912,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const supplyDepotDirectUrl = new URL(url);
-  supplyDepotDirectUrl.searchParams.set("building", "compact-village-building-supply-depot");
-  await client.send("Page.navigate", { url: supplyDepotDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'construction' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-building-supply-depot' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const lampRoomDirectUrl = new URL(url);
+  lampRoomDirectUrl.searchParams.set("building", "compact-village-lamp-room");
+  await client.send("Page.navigate", { url: lampRoomDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'mining' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-lamp-room' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -2878,16 +2927,16 @@ try {
     conceptPath: new URL(document.querySelector('#conceptImage').dataset.source).pathname,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(directSelection.activeCategory, "construction");
-  assert.equal(directSelection.activeBuilding, "compact-village-building-supply-depot");
-  assert.match(directSelection.title, /Compact Village Building Supply Depot/);
-  assert.equal(directSelection.modelSize, "27 × 21 × 29");
+  assert.equal(directSelection.activeCategory, "mining");
+  assert.equal(directSelection.activeBuilding, "compact-village-lamp-room");
+  assert.match(directSelection.title, /Compact Village Lamp Room/);
+  assert.equal(directSelection.modelSize, "25 × 20 × 25");
   assert.match(directSelection.payload, /^NCM3:/);
   assert.equal(directSelection.conceptComplete, true);
   assert.ok(directSelection.conceptNaturalWidth > 0);
-  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/construction/compact-village-building-supply-depot.webp");
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/construction/compact-village-building-supply-depot.json"));
-  assert.ok(directSelection.resources.includes("/build_ncm/concepts/construction/compact-village-building-supply-depot.webp"));
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/mining/compact-village-lamp-room.webp");
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/mining/compact-village-lamp-room.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/concepts/mining/compact-village-lamp-room.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

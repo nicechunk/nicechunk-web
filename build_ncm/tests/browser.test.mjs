@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 5);
-  assert.match(initial.totalBuildingCount, /75 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /76 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -2092,14 +2092,14 @@ try {
   assert.ok(!visitorInformationKiosk.resources.some((path) => path.endsWith("compact-village-visitor-information-kiosk-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=commerce]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=covered-market-stall]') && document.querySelector('[data-building=compact-village-general-store]') && document.querySelector('[data-building=compact-village-bakery]') && document.querySelector('[data-building=compact-village-tavern]') && document.querySelector('[data-building=compact-village-butcher-shop]') && document.querySelector('[data-building=compact-village-tailor-shop]') && document.querySelector('[data-building=compact-village-cobbler-shop]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=covered-market-stall]') && document.querySelector('[data-building=compact-village-general-store]') && document.querySelector('[data-building=compact-village-bakery]') && document.querySelector('[data-building=compact-village-tavern]') && document.querySelector('[data-building=compact-village-butcher-shop]') && document.querySelector('[data-building=compact-village-tailor-shop]') && document.querySelector('[data-building=compact-village-cobbler-shop]') && document.querySelector('[data-building=compact-village-herbalist-shop]')"));
   const commerceBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     cardCount: document.querySelectorAll('[data-building]').length,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(commerceBrowse.activeBuilding, null);
-  assert.equal(commerceBrowse.cardCount, 7);
+  assert.equal(commerceBrowse.cardCount, 8);
   assert.ok(!commerceBrowse.resources.includes("/build_ncm/buildings/commerce/covered-market-stall.json"), "category browsing must not load the market-stall JSON");
   assert.ok(!commerceBrowse.resources.includes("/build_ncm/concepts/commerce/covered-market-stall.webp"), "category browsing must not load the market-stall concept art");
   assert.ok(!commerceBrowse.resources.includes("/build_ncm/buildings/commerce/compact-village-general-store.json"), "category browsing must not load the general-store JSON");
@@ -2114,6 +2114,8 @@ try {
   assert.ok(!commerceBrowse.resources.includes("/build_ncm/concepts/commerce/compact-village-tailor-shop.webp"), "category browsing must not load the tailor-shop concept art");
   assert.ok(!commerceBrowse.resources.includes("/build_ncm/buildings/commerce/compact-village-cobbler-shop.json"), "category browsing must not load the cobbler-shop JSON");
   assert.ok(!commerceBrowse.resources.includes("/build_ncm/concepts/commerce/compact-village-cobbler-shop.webp"), "category browsing must not load the cobbler-shop concept art");
+  assert.ok(!commerceBrowse.resources.includes("/build_ncm/buildings/commerce/compact-village-herbalist-shop.json"), "category browsing must not load the herbalist-shop JSON");
+  assert.ok(!commerceBrowse.resources.includes("/build_ncm/concepts/commerce/compact-village-herbalist-shop.webp"), "category browsing must not load the herbalist-shop concept art");
   await clickBuilding(client, "covered-market-stall");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'covered-market-stall' && document.querySelector('#modelSize').textContent === '21 × 21 × 15' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const marketStall = await evaluate(client, `({
@@ -2398,6 +2400,47 @@ try {
   assert.ok(cobblerShop.resources.includes("/build_ncm/buildings/commerce/compact-village-cobbler-shop.json"));
   assert.ok(cobblerShop.resources.includes("/build_ncm/concepts/commerce/compact-village-cobbler-shop.webp"));
   assert.ok(!cobblerShop.resources.some((path) => path.endsWith("compact-village-cobbler-shop-blueprint.js")));
+
+  await clickBuilding(client, "compact-village-herbalist-shop");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-herbalist-shop' && document.querySelector('#modelSize').textContent === '23 × 18 × 25' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const herbalistShop = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptLoading: document.querySelector('#conceptImage').loading,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(herbalistShop.activeCategory, "commerce");
+  assert.match(herbalistShop.title, /Compact Village Herbalist Shop/);
+  assert.equal(herbalistShop.modelSize, "23 × 18 × 25");
+  assert.match(herbalistShop.payload, /^NCM3:/);
+  assert.equal(herbalistShop.voxelCount, 1881);
+  for (const id of [55, 56, 57, 58, 68, 69, 70, 96]) assert.match(herbalistShop.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(herbalistShop.uncovered, false);
+  assert.equal(herbalistShop.glazingDisabled, true);
+  assert.equal(herbalistShop.glazingLabel, "Openings: Not applicable");
+  assert.equal(herbalistShop.disabledStyles, 6);
+  assert.equal(herbalistShop.disabledRoofs, 6);
+  assert.equal(herbalistShop.conceptHidden, false);
+  assert.equal(herbalistShop.conceptLoading, "eager");
+  assert.match(herbalistShop.conceptAlt, /Compact Village Herbalist Shop concept reference/);
+  assert.equal(herbalistShop.conceptFit, "contain");
+  assert.equal(herbalistShop.selectedInUrl, "compact-village-herbalist-shop");
+  assert.ok(herbalistShop.resources.includes("/build_ncm/buildings/commerce/compact-village-herbalist-shop.json"));
+  assert.ok(herbalistShop.resources.includes("/build_ncm/concepts/commerce/compact-village-herbalist-shop.webp"));
+  assert.ok(!herbalistShop.resources.some((path) => path.endsWith("compact-village-herbalist-shop-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=transport]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=stone-timber-footbridge]') && document.querySelector('[data-building=two-wheel-village-handcart]') && document.querySelector('[data-building=compact-village-carriage-house]') && document.querySelector('[data-building=compact-village-courier-post]') && document.querySelector('[data-building=covered-village-ferry-landing]')"));
@@ -3557,10 +3600,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const cobblerShopDirectUrl = new URL(url);
-  cobblerShopDirectUrl.searchParams.set("building", "compact-village-cobbler-shop");
-  await client.send("Page.navigate", { url: cobblerShopDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'commerce' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-cobbler-shop' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const herbalistShopDirectUrl = new URL(url);
+  herbalistShopDirectUrl.searchParams.set("building", "compact-village-herbalist-shop");
+  await client.send("Page.navigate", { url: herbalistShopDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'commerce' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-herbalist-shop' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -3573,15 +3616,15 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(directSelection.activeCategory, "commerce");
-  assert.equal(directSelection.activeBuilding, "compact-village-cobbler-shop");
-  assert.match(directSelection.title, /Compact Village Cobbler Shop/);
-  assert.equal(directSelection.modelSize, "23 × 18 × 23");
+  assert.equal(directSelection.activeBuilding, "compact-village-herbalist-shop");
+  assert.match(directSelection.title, /Compact Village Herbalist Shop/);
+  assert.equal(directSelection.modelSize, "23 × 18 × 25");
   assert.match(directSelection.payload, /^NCM3:/);
   assert.equal(directSelection.conceptComplete, true);
   assert.ok(directSelection.conceptNaturalWidth > 0);
-  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/commerce/compact-village-cobbler-shop.webp");
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/commerce/compact-village-cobbler-shop.json"));
-  assert.ok(directSelection.resources.includes("/build_ncm/concepts/commerce/compact-village-cobbler-shop.webp"));
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/commerce/compact-village-herbalist-shop.webp");
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/commerce/compact-village-herbalist-shop.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/concepts/commerce/compact-village-herbalist-shop.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

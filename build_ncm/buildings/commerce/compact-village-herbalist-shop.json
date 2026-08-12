@@ -1,0 +1,432 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-herbalist-shop",
+  "category": "commerce",
+  "kind": "habitable-building",
+  "titles": {
+    "en": "Compact Village Herbalist Shop",
+    "es": "Herbolario Compacto de la Aldea",
+    "fr": "Herboristerie Compacte du Village",
+    "de": "Kompakter Dorfkräuterladen",
+    "ja": "コンパクトな村の薬草店",
+    "ru": "Компактная деревенская травная лавка",
+    "ko": "소형 마을 약초상점",
+    "zh-Hant": "緊湊型村莊草藥師店",
+    "zh-Hans": "紧凑型村庄草药师店"
+  },
+  "descriptions": {
+    "en": "An enterable 6.8 × 7.2 m herbalist shop scaled to the 1.75 m avatar. A zero-threshold 5 × 9-voxel storefront entrance leads through a five-wide clear customer aisle to a rear preparation zone. Two fixed display windows, a supported dispensing counter, a durable preparation bench, two face-connected herb-shelf banks, high side ventilation glazing, a clean plank floor and a complete deep-overhang terracotta roof form a credible village herb preparation, storage and retail room. Continuous grounded posts, wall plates, cross ties and ridge carry the shell; door leaves, herbs, jars, remedies, tools, workers, lighting, signs and terrain are excluded.",
+    "es": "Un herbolario transitable de 6,8 × 7,2 m, dimensionado para el avatar de 1,75 m. Una entrada de escaparate sin desnivel de 5 × 9 vóxeles conduce por un pasillo despejado de cinco vóxeles hasta una zona trasera de preparación. Dos vitrinas fijas, un mostrador de dispensación apoyado, un banco resistente de preparación, dos conjuntos de estantes para hierbas unidos por caras, acristalamiento lateral alto de ventilación, suelo limpio de tablones y una cubierta completa de terracota con gran alero forman un espacio verosímil para preparar, almacenar y vender hierbas. Postes, soleras, tirantes y cumbrera continuos y anclados sostienen la envolvente; se excluyen hojas de puerta, hierbas, frascos, remedios, herramientas, operarios, iluminación, letreros y terreno.",
+    "fr": "Une herboristerie accessible de 6,8 × 7,2 m, dimensionnée pour l’avatar de 1,75 m. Une entrée de devanture sans ressaut de 5 × 9 voxels mène, par une allée libre de cinq voxels, à une zone de préparation arrière. Deux vitrines fixes, un comptoir de délivrance soutenu, un établi de préparation durable, deux ensembles d’étagères à herbes reliés par faces, un vitrage latéral haut de ventilation, un sol propre en planches et un toit complet en terre cuite à fort débord composent un espace crédible de préparation, stockage et vente d’herbes. Des poteaux, sablières, entraits et une faîtière continus et ancrés portent l’enveloppe ; vantaux, herbes, bocaux, remèdes, outils, artisans, éclairage, enseignes et terrain sont exclus.",
+    "de": "Ein begehbarer 6,8 × 7,2 m großer Dorfkräuterladen im Maßstab des 1,75-m-Avatars. Ein schwellenloser 5 × 9-Voxel-Ladeneingang führt durch einen fünf Voxel breiten freien Kundengang zu einem hinteren Vorbereitungsbereich. Zwei feste Schaufenster, eine abgestützte Ausgabetheke, eine robuste Zubereitungsbank, zwei flächenverbundene Kräuterregale, hohe seitliche Lüftungsverglasung, ein sauberer Dielenboden und ein vollständiges Terrakottadach mit tiefem Überstand bilden einen glaubwürdigen Raum zum Zubereiten, Lagern und Verkaufen von Kräutern. Durchgehende bodengebundene Pfosten, Wandplatten, Querbinder und der First tragen die Hülle; Türblätter, Kräuter, Gläser, Heilmittel, Werkzeuge, Arbeiter, Beleuchtung, Schilder und Gelände sind ausgeschlossen.",
+    "ja": "身長1.75 mのアバター尺度に合わせた、進入可能な6.8 × 7.2 mの薬草店です。段差のない5 × 9ボクセルの店先入口から、幅5ボクセルの空いた接客通路を通って後部の調製区画へ進めます。固定展示窓2面、支持された調剤カウンター、耐久性のある後部作業台、面接続された薬草棚2列、高所側面換気窓、清潔な板床、深い軒の全面テラコッタ屋根により、薬草の調製・保管・販売を行う現実的な空間を構成します。地面から連続する柱・桁・小屋梁・棟が外皮を支持します。扉、薬草、瓶、薬剤、工具、職人、照明、看板、地形は含みません。",
+    "ru": "Доступная травная лавка размером 6,8 × 7,2 м в масштабе аватара ростом 1,75 м. Беспороговый витринный вход 5 × 9 вокселей ведёт по свободному проходу шириной пять вокселей в заднюю зону приготовления. Две стационарные витрины, опирающаяся стойка выдачи, прочный стол для приготовления, два соединённых по граням блока полок для трав, высокое боковое вентиляционное остекление, чистый дощатый пол и полная терракотовая крыша с глубоким свесом образуют правдоподобное помещение для приготовления, хранения и продажи трав. Непрерывные опирающиеся на землю стойки, обвязки, поперечные связи и конёк несут оболочку; дверные полотна, травы, банки, лекарства, инструменты, мастера, освещение, вывески и рельеф исключены.",
+    "ko": "키 1.75 m 아바타 비율에 맞춘 출입 가능한 6.8 × 7.2 m 약초상점입니다. 단차 없는 5 × 9복셀 상점 입구에서 폭 5복셀의 빈 고객 통로를 따라 후면 조제 구역으로 이어집니다. 고정 진열창 두 면, 지지된 조제 판매대, 견고한 후면 조제대, 면으로 연결된 약초 선반 두 줄, 상부 측면 환기창, 깨끗한 판자 바닥과 깊은 처마의 완전한 테라코타 지붕이 현실적인 약초 조제·보관·판매 공간을 이룹니다. 지면에서 연속되는 기둥, 벽도리, 가로보와 용마루가 외피를 지지합니다. 문짝, 약초, 병, 치료제, 공구, 작업자, 조명, 간판과 지형은 포함하지 않습니다.",
+    "zh-Hant": "一座可進入、符合1.75公尺角色尺度的6.8 × 7.2公尺草藥師店。零門檻5 × 9體素臨街入口經五體素寬淨空顧客走道通往後部調製區。兩面固定展示窗、受承托配藥櫃檯、耐用後部調製台、兩組面連接草藥架、高位側向通風窗、潔淨木板地坪與完整深出簷赤陶屋頂，構成可信的村莊草藥調製、儲存及零售空間。連續落地柱、牆頂樑、橫向繫樑及屋脊承托外殼；門扇、草藥、罐瓶、藥劑、工具、工人、照明、招牌及地形不包含在藍圖內。",
+    "zh-Hans": "一座可进入、符合1.75米角色尺度的6.8 × 7.2米草药师店。零门槛5 × 9体素临街入口经五体素宽净空顾客走道通往后部调制区。两面固定展示窗、受承托配药柜台、耐用后部调制台、两组面连接草药架、高位侧向通风窗、洁净木板地坪与完整深出檐赤陶屋顶，构成可信的村庄草药调制、储存及零售空间。连续落地柱、墙顶梁、横向系梁及屋脊承托外壳；门扇、草药、罐瓶、药剂、工具、工人、照明、招牌及地形不包含在蓝图内。"
+  },
+  "referenceImage": "concepts/commerce/compact-village-herbalist-shop.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "23 × 25 vu",
+  "height": "18 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 17,
+      "z": 18
+    },
+    "wallFootprintMeters": {
+      "x": 6.8,
+      "z": 7.2
+    },
+    "doorClearVoxels": {
+      "width": 5,
+      "height": 9
+    },
+    "interiorClearHeightVoxels": 8
+  },
+  "preview": {
+    "fitScale": 1,
+    "minScale": 3.1,
+    "yaw": 2.45
+  },
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "fixtures",
+      "label": "Supported Dispensing Counter and Clean Plank Work Floor"
+    },
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Two Face-connected Rear Herb-shelf Banks"
+    },
+    {
+      "materialId": 57,
+      "phase": "fixtures",
+      "label": "Grounded Dispensing-counter and Preparation-bench Supports"
+    },
+    {
+      "materialId": 58,
+      "phase": "openings",
+      "label": "Permanent Front Display and High Side Ventilation Glazing"
+    },
+    {
+      "materialId": 69,
+      "phase": "fixtures",
+      "label": "Durable Rear Preparation Bench and Level Street Approach"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARcSGSQCAQMAAxAAAAACAAACAQMABAAAEAEgAAABNwQABA4ADwFFCQAABAADAQIDAQMFCAABAg4BAwUIAAECAwEUEAgAAQIDAQQACA8BAhMBBAAIDwE6BAIDAwUAAToPAgMDBQACOgMGBwABAgMAAAgCOhMGBwABAgMAAAgCAwMAAwAKAAMAAAwBAwMAFAAKAAIDEwADAAoAAwAADAEDEwAUAAoAAQMIAAMACgABAw4AAwAKAAIDAwoDEAAAAQAAIgIDAwoDAAARASAAAAIDAwkJEAAAAQAADAE3BAIIAwEGAjkEAAgAAQYBBgAAAUUPAg8DAQMCOQ8ADwABAwEGAAACOAQBEwUAAAIABAACOA0BEwUAAAIABAACAgQLAw4AAAEAACICAgYMAwoAAAEAACICAggNAwYAAAEAACICAgoOAwIAAAEAACIBAgsPAwAAEQIFAQsBAgAWBAQCAAIFEwsBAgAWBAMCAAEDCxABAAAW"
+  },
+  "validation": {
+    "expectedVoxelCount": 1881,
+    "expectedPayloadBytes": 369,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      56,
+      57,
+      58,
+      68,
+      69,
+      70,
+      96
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 274,
+      "56": 36,
+      "57": 285,
+      "58": 80,
+      "68": 36,
+      "69": 52,
+      "70": 451,
+      "96": 667
+    },
+    "requireConnected": true,
+    "supportColumns": [
+      {
+        "label": "Front-left corner post",
+        "x": 3,
+        "z": 3,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Front-right corner post",
+        "x": 19,
+        "z": 3,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-left corner post",
+        "x": 3,
+        "z": 20,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-right corner post",
+        "x": 19,
+        "z": 20,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left storefront-entrance jamb",
+        "x": 8,
+        "z": 3,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right storefront-entrance jamb",
+        "x": 14,
+        "z": 3,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left first side post",
+        "x": 3,
+        "z": 9,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left second side post",
+        "x": 3,
+        "z": 15,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right first side post",
+        "x": 19,
+        "z": 9,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right second side post",
+        "x": 19,
+        "z": 15,
+        "baseY": 0,
+        "topY": 10
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Front wall plate and storefront lintel",
+        "axis": "x",
+        "start": 3,
+        "end": 19,
+        "y": 10,
+        "fixed": 3
+      },
+      {
+        "label": "Rear wall plate",
+        "axis": "x",
+        "start": 3,
+        "end": 19,
+        "y": 10,
+        "fixed": 20
+      },
+      {
+        "label": "Left wall plate",
+        "axis": "z",
+        "start": 3,
+        "end": 20,
+        "y": 10,
+        "fixed": 3
+      },
+      {
+        "label": "Right wall plate",
+        "axis": "z",
+        "start": 3,
+        "end": 20,
+        "y": 10,
+        "fixed": 19
+      },
+      {
+        "label": "First clear-height roof tie",
+        "axis": "x",
+        "start": 3,
+        "end": 19,
+        "y": 9,
+        "fixed": 9
+      },
+      {
+        "label": "Second clear-height roof tie",
+        "axis": "x",
+        "start": 3,
+        "end": 19,
+        "y": 9,
+        "fixed": 15
+      },
+      {
+        "label": "Continuous ridge beam",
+        "axis": "z",
+        "start": 1,
+        "end": 23,
+        "y": 16,
+        "fixed": 11
+      }
+    ],
+    "diagonalBands": [
+      {
+        "label": "Left deep-overhang terracotta roof slope",
+        "materialId": 96,
+        "x": 1,
+        "y": 11,
+        "z": 1,
+        "width": 3,
+        "height": 1,
+        "depth": 23,
+        "count": 5,
+        "dx": 2,
+        "dy": 1,
+        "dz": 0
+      },
+      {
+        "label": "Right deep-overhang terracotta roof slope",
+        "materialId": 96,
+        "x": 19,
+        "y": 11,
+        "z": 1,
+        "width": 3,
+        "height": 1,
+        "depth": 23,
+        "count": 5,
+        "dx": -2,
+        "dy": 1,
+        "dz": 0
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "zero-threshold five-wide storefront entrance",
+        "x": 9,
+        "y": 1,
+        "z": 3,
+        "width": 5,
+        "height": 9,
+        "depth": 1
+      },
+      {
+        "label": "five-wide customer aisle to rear preparation zone",
+        "x": 9,
+        "y": 1,
+        "z": 4,
+        "width": 5,
+        "height": 8,
+        "depth": 15
+      }
+    ],
+    "approach": [
+      {
+        "x": 11,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 1,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 11,
+        "topY": 1
+      },
+      {
+        "x": 11,
+        "z": 18,
+        "topY": 1
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 11,
+        "y": 0,
+        "z": 0,
+        "materialId": 69
+      },
+      {
+        "x": 4,
+        "y": 0,
+        "z": 4,
+        "materialId": 55
+      },
+      {
+        "x": 4,
+        "y": 2,
+        "z": 3,
+        "materialId": 58
+      },
+      {
+        "x": 3,
+        "y": 6,
+        "z": 7,
+        "materialId": 58
+      },
+      {
+        "x": 3,
+        "y": 10,
+        "z": 9,
+        "materialId": 57
+      },
+      {
+        "x": 4,
+        "y": 2,
+        "z": 8,
+        "materialId": 55
+      },
+      {
+        "x": 4,
+        "y": 0,
+        "z": 8,
+        "materialId": 57
+      },
+      {
+        "x": 15,
+        "y": 2,
+        "z": 15,
+        "materialId": 69
+      },
+      {
+        "x": 15,
+        "y": 0,
+        "z": 15,
+        "materialId": 57
+      },
+      {
+        "x": 4,
+        "y": 1,
+        "z": 19,
+        "materialId": 56
+      },
+      {
+        "x": 13,
+        "y": 5,
+        "z": 19,
+        "materialId": 56
+      },
+      {
+        "x": 1,
+        "y": 11,
+        "z": 10,
+        "materialId": 96
+      },
+      {
+        "x": 11,
+        "y": 16,
+        "z": 10,
+        "materialId": 57
+      }
+    ]
+  }
+}

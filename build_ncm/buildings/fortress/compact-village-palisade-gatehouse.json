@@ -1,0 +1,726 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-palisade-gatehouse",
+  "category": "fortress",
+  "kind": "habitable-building",
+  "titles": {
+    "en": "Compact Village Palisade Gatehouse",
+    "es": "Casa de Puerta de Empalizada Compacta de la Aldea",
+    "fr": "Porte Fortifiée Compacte à Palissade du Village",
+    "de": "Kompaktes Dorf-Palisadentorhaus",
+    "ja": "コンパクトな村の柵門楼",
+    "ru": "Компактная деревенская надвратная башня частокола",
+    "ko": "소형 마을 목책 문루",
+    "zh-Hant": "緊湊型村莊木柵門樓",
+    "zh-Hans": "紧凑型村庄木栅门楼"
+  },
+  "descriptions": {
+    "en": "An enterable 10.0 × 6.0 m palisade gatehouse scaled to the 1.75 m avatar. Its zero-threshold 2.8 × 3.6 m through-passage admits carts beneath a face-supported bridge gallery. Two grounded guard rooms have paired 1.2 m-wide ten-step timber stairs, clear lower and upper doorways, permanent high windows and seven voxels of gallery headroom. Continuous jamb posts, floor ties, wall plates, shallow filled gables, a complete terracotta roof and a longitudinal ridge beam provide explicit load paths; gate leaves, weapons, guards, loose furniture and adjoining palisade walls are excluded.",
+    "es": "Una casa de puerta de empalizada transitable de 10,0 × 6,0 m, dimensionada para el avatar de 1,75 m. Su paso sin desnivel de 2,8 × 3,6 m permite el tránsito de carros bajo una galería-puente apoyada por contacto. Dos salas de guardia asentadas en el suelo tienen escaleras gemelas de madera de diez peldaños y 1,2 m de ancho, puertas inferiores y superiores despejadas, ventanas altas permanentes y siete vóxeles de altura libre en la galería. Jambas continuas, tirantes de piso, soleras superiores, hastiales rellenos de poca pendiente, una cubierta completa de terracota y una viga longitudinal de cumbrera forman recorridos de carga explícitos; no se incluyen hojas de puerta, armas, guardias, muebles sueltos ni los muros contiguos de la empalizada.",
+    "fr": "Une porte fortifiée à palissade accessible de 10,0 × 6,0 m, dimensionnée pour l’avatar de 1,75 m. Son passage traversant sans ressaut de 2,8 × 3,6 m laisse passer les charrettes sous une galerie-pont portée par contact. Deux salles de garde ancrées au sol disposent d’escaliers jumelés en bois de dix marches et 1,2 m de large, de portes basses et hautes dégagées, de fenêtres hautes permanentes et de sept voxels de hauteur libre dans la galerie. Des montants continus, entraits de plancher, sablières, pignons remplis à faible pente, une toiture complète en terre cuite et une poutre faîtière longitudinale établissent des descentes de charge explicites ; vantaux, armes, gardes, mobilier mobile et murs de palissade adjacents sont exclus.",
+    "de": "Ein begehbares 10,0 × 6,0 m großes Palisadentorhaus im Maßstab des 1,75-m-Avatars. Die schwellenlose 2,8 × 3,6 m große Durchfahrt lässt Karren unter einer flächig getragenen Brückengalerie passieren. Zwei bodengebundene Wachräume besitzen paarige, 1,2 m breite Holztreppen mit je zehn Stufen, freie untere und obere Durchgänge, dauerhafte hohe Fenster und sieben Voxel lichte Höhe in der Galerie. Durchgehende Torpfosten, Deckenträger, Wandpfetten, flach ausgefüllte Giebel, ein vollständiges Terrakottadach und ein Längsfirstbalken bilden eindeutige Lastpfade; Torflügel, Waffen, Wachen, lose Möbel und anschließende Palisadenwände sind ausgeschlossen.",
+    "ja": "身長1.75 mのアバター尺度に合わせた、内部に入れる10.0 × 6.0 mの木柵門楼です。段差のない2.8 × 3.6 mの通り抜け通路は、面支持された橋状ギャラリーの下を荷車が通れる寸法です。接地した左右の衛兵室には、幅1.2 mで10段の木製階段、上下階の空いた入口、常設高窓、上階ギャラリーの7ボクセル有効高を備えます。連続した門柱、床梁、桁、浅い充填妻壁、全面のテラコッタ屋根、長手方向の棟木により明確な荷重経路を構成します。門扉、武器、衛兵、可動家具、接続する木柵壁は含みません。",
+    "ru": "Доступная надвратная башня частокола размером 10,0 × 6,0 м в масштабе аватара ростом 1,75 м. Сквозной проезд 2,8 × 3,6 м без порога пропускает повозки под галереей-мостом с опорой по граням. В двух опирающихся на землю караульных помещениях устроены парные деревянные лестницы шириной 1,2 м по десять ступеней, свободные нижние и верхние проёмы, постоянные высокие окна и семь вокселей чистой высоты галереи. Непрерывные стойки проезда, балки пола, стеновые обвязки, заполненные пологие фронтоны, полная терракотовая крыша и продольный коньковый брус образуют явные пути нагрузки; створки ворот, оружие, стража, переносная мебель и примыкающие стены частокола исключены.",
+    "ko": "키 1.75 m 아바타 비율에 맞춘 출입 가능한 10.0 × 6.0 m 목책 문루입니다. 단차 없는 2.8 × 3.6 m 관통 통로는 면 지지된 다리형 회랑 아래로 수레가 지나갈 수 있습니다. 지면에 지지된 두 경비실에는 폭 1.2 m의 10단 목재 계단 한 쌍, 막힘없는 아래·위 출입구, 상부 고정창과 회랑의 7복셀 유효 높이가 있습니다. 연속 문설주, 바닥 가로보, 벽 상부보, 완만한 채움 박공, 완전한 테라코타 지붕과 길이 방향 용마루보가 명확한 하중 경로를 이룹니다. 문짝, 무기, 경비병, 이동식 가구와 연결 목책벽은 포함하지 않습니다.",
+    "zh-Hant": "一座可進入、符合1.75公尺角色尺度的10.0 × 6.0公尺木柵門樓。零門檻2.8 × 3.6公尺貫通門道可讓貨車從面接觸承托的橋式樓廊下通行。兩側落地守衛室各設一座1.2公尺寬十級木梯，具暢通的上下層門洞、常設高窗與七體素樓廊淨高。連續門柱、樓板繫梁、牆頂梁、淺坡填充山牆、完整赤陶屋頂及縱向脊樑形成明確受力路徑；門扇、武器、守衛、活動家具與相連木柵牆不包含在藍圖內。",
+    "zh-Hans": "一座可进入、符合1.75米角色尺度的10.0 × 6.0米木栅门楼。零门槛2.8 × 3.6米贯通门道可让货车从面接触承托的桥式楼廊下通行。两侧落地守卫室各设一座1.2米宽十级木梯，具畅通的上下层门洞、常设高窗与七体素楼廊净高。连续门柱、楼板系梁、墙顶梁、浅坡填充山墙、完整赤陶屋顶及纵向脊梁形成明确受力路径；门扇、武器、守卫、活动家具与相连木栅墙不包含在蓝图内。"
+  },
+  "referenceImage": "concepts/fortress/compact-village-palisade-gatehouse.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 1
+  },
+  "doorOpening": "open",
+  "footprint": "31 × 23 vu",
+  "height": "23 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 25,
+      "z": 15
+    },
+    "wallFootprintMeters": {
+      "x": 10,
+      "z": 6
+    },
+    "doorClearVoxels": {
+      "width": 7,
+      "height": 9
+    },
+    "interiorClearHeightVoxels": 7
+  },
+  "preview": {
+    "fitScale": 0.98,
+    "minScale": 3.2,
+    "yaw": 2.48
+  },
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "access",
+      "label": "Paired Adult-width Ten-step Timber Stairs"
+    },
+    {
+      "materialId": 58,
+      "phase": "openings",
+      "label": "Permanent Lower and Upper Clear-glass Windows"
+    },
+    {
+      "materialId": 64,
+      "phase": "foundation",
+      "label": "Two-course Stone-brick Wing Plinths"
+    },
+    {
+      "materialId": 69,
+      "phase": "foundation",
+      "label": "Level Polished-stone Through-passage"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:AR8XFykCAQMABBgAAAEAABwCAQMABQAADAEwAAACBgQABQYADAEgAAABRQwAAAYAFgJAAwEECAEAASAAAAJAAwESCAEAASAAAAJAAwEFAAEMATAAAAJACwEFAAEBARAAAAJACwEKAAEHARAAAAICBAMEBg4AASAAAAICBAMSBg4AASAAAAICAwMFAA4MATAAAAICCwMFAAYBARAAAAICCwMKAAYHARAAAAICCwsFAAYIARAAAAICCwsRAAYAARAAAAI6BQUEBAIAASAAAAI6BQUSBAIAASAAAAI6AwULAAICATAAAAI6BQ0EBAIAASAAAAI6BQ0SBAIAASAAAAI6Aw0LAAICATAAAAIDAwAEABIAAxAAAAIDAwASABIAAxAAAAIDAwALABIAATAAAAIDAwoEGAAAAQAAHAIDAxIEGAAAAQAAHAIDAwoEAAAOATAAAAIDCwoEAAAOARAAAAIDCxIEAAAOARAAAAEGCwoFCAAMAgYECgUAAAwBLAAAAgYICgUCAAwBGAAAAgYFCg8CAAIBJAAAAjcFAQUCAAEJAAICAjcXAQUCAAEJAAICAgIDEwUAAAwBMAAAAgIDFAkAAAQBMAAAAgUBEwEcAAMCAAIIAgUBExIcAAMCAAIHAQMCFgsaAAA"
+  },
+  "validation": {
+    "expectedVoxelCount": 2896,
+    "expectedPayloadBytes": 485,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      57,
+      58,
+      64,
+      68,
+      69,
+      70,
+      96
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 535,
+      "57": 351,
+      "58": 144,
+      "64": 144,
+      "68": 52,
+      "69": 161,
+      "70": 900,
+      "96": 609
+    },
+    "requireConnected": true,
+    "mirrorAxisX": 15,
+    "supportColumns": [
+      {
+        "label": "Front-left outer post",
+        "x": 3,
+        "z": 4,
+        "baseY": 0,
+        "topY": 18
+      },
+      {
+        "label": "Front-left portal jamb",
+        "x": 11,
+        "z": 4,
+        "baseY": 0,
+        "topY": 18
+      },
+      {
+        "label": "Front-right portal jamb",
+        "x": 19,
+        "z": 4,
+        "baseY": 0,
+        "topY": 18
+      },
+      {
+        "label": "Front-right outer post",
+        "x": 27,
+        "z": 4,
+        "baseY": 0,
+        "topY": 18
+      },
+      {
+        "label": "Rear-left outer post",
+        "x": 3,
+        "z": 18,
+        "baseY": 0,
+        "topY": 18
+      },
+      {
+        "label": "Rear-left portal jamb",
+        "x": 11,
+        "z": 18,
+        "baseY": 0,
+        "topY": 18
+      },
+      {
+        "label": "Rear-right portal jamb",
+        "x": 19,
+        "z": 18,
+        "baseY": 0,
+        "topY": 18
+      },
+      {
+        "label": "Rear-right outer post",
+        "x": 27,
+        "z": 18,
+        "baseY": 0,
+        "topY": 18
+      },
+      {
+        "label": "Left outer middle post",
+        "x": 3,
+        "z": 11,
+        "baseY": 0,
+        "topY": 18
+      },
+      {
+        "label": "Right outer middle post",
+        "x": 27,
+        "z": 11,
+        "baseY": 0,
+        "topY": 18
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Front portal lintel and bridge tie",
+        "axis": "x",
+        "start": 3,
+        "end": 27,
+        "y": 10,
+        "fixed": 4
+      },
+      {
+        "label": "Rear portal lintel and bridge tie",
+        "axis": "x",
+        "start": 3,
+        "end": 27,
+        "y": 10,
+        "fixed": 18
+      },
+      {
+        "label": "Front roof plate",
+        "axis": "x",
+        "start": 3,
+        "end": 27,
+        "y": 18,
+        "fixed": 4
+      },
+      {
+        "label": "Rear roof plate",
+        "axis": "x",
+        "start": 3,
+        "end": 27,
+        "y": 18,
+        "fixed": 18
+      },
+      {
+        "label": "Left outer bridge tie",
+        "axis": "z",
+        "start": 4,
+        "end": 18,
+        "y": 10,
+        "fixed": 3
+      },
+      {
+        "label": "Right outer bridge tie",
+        "axis": "z",
+        "start": 4,
+        "end": 18,
+        "y": 10,
+        "fixed": 27
+      },
+      {
+        "label": "Left passage bridge support",
+        "axis": "z",
+        "start": 4,
+        "end": 18,
+        "y": 10,
+        "fixed": 11
+      },
+      {
+        "label": "Right passage bridge support",
+        "axis": "z",
+        "start": 4,
+        "end": 18,
+        "y": 10,
+        "fixed": 19
+      },
+      {
+        "label": "Longitudinal roof ridge",
+        "axis": "x",
+        "start": 2,
+        "end": 28,
+        "y": 22,
+        "fixed": 11
+      }
+    ],
+    "walkableDecks": [
+      {
+        "label": "Level cart-width through-passage",
+        "axis": "z",
+        "start": 0,
+        "end": 22,
+        "crossStart": 12,
+        "crossEnd": 18,
+        "topProfile": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "clearance": 9
+      },
+      {
+        "label": "Elevated bridge gallery",
+        "axis": "z",
+        "start": 5,
+        "end": 17,
+        "crossStart": 12,
+        "crossEnd": 18,
+        "topProfile": [
+          11,
+          11,
+          11,
+          11,
+          11,
+          11,
+          11,
+          11,
+          11,
+          11,
+          11,
+          11,
+          11
+        ],
+        "clearance": 7
+      }
+    ],
+    "steppedSupports": [
+      {
+        "label": "Left ten-step gallery stair",
+        "materialId": 55,
+        "segments": [
+          {
+            "x": 5,
+            "y": 1,
+            "z": 5,
+            "width": 3,
+            "height": 1,
+            "depth": 2
+          },
+          {
+            "x": 5,
+            "y": 2,
+            "z": 6,
+            "width": 3,
+            "height": 1,
+            "depth": 2
+          },
+          {
+            "x": 5,
+            "y": 3,
+            "z": 7,
+            "width": 3,
+            "height": 1,
+            "depth": 2
+          },
+          {
+            "x": 5,
+            "y": 4,
+            "z": 8,
+            "width": 3,
+            "height": 1,
+            "depth": 2
+          },
+          {
+            "x": 5,
+            "y": 5,
+            "z": 9,
+            "width": 3,
+            "height": 1,
+            "depth": 2
+          },
+          {
+            "x": 5,
+            "y": 6,
+            "z": 10,
+            "width": 3,
+            "height": 1,
+            "depth": 2
+          },
+          {
+            "x": 5,
+            "y": 7,
+            "z": 11,
+            "width": 3,
+            "height": 1,
+            "depth": 2
+          },
+          {
+            "x": 5,
+            "y": 8,
+            "z": 12,
+            "width": 3,
+            "height": 1,
+            "depth": 2
+          },
+          {
+            "x": 5,
+            "y": 9,
+            "z": 13,
+            "width": 3,
+            "height": 1,
+            "depth": 2
+          },
+          {
+            "x": 5,
+            "y": 10,
+            "z": 14,
+            "width": 3,
+            "height": 1,
+            "depth": 2
+          }
+        ]
+      },
+      {
+        "label": "Right ten-step gallery stair",
+        "materialId": 55,
+        "segments": [
+          {
+            "x": 23,
+            "y": 1,
+            "z": 5,
+            "width": 3,
+            "height": 1,
+            "depth": 2
+          },
+          {
+            "x": 23,
+            "y": 2,
+            "z": 6,
+            "width": 3,
+            "height": 1,
+            "depth": 2
+          },
+          {
+            "x": 23,
+            "y": 3,
+            "z": 7,
+            "width": 3,
+            "height": 1,
+            "depth": 2
+          },
+          {
+            "x": 23,
+            "y": 4,
+            "z": 8,
+            "width": 3,
+            "height": 1,
+            "depth": 2
+          },
+          {
+            "x": 23,
+            "y": 5,
+            "z": 9,
+            "width": 3,
+            "height": 1,
+            "depth": 2
+          },
+          {
+            "x": 23,
+            "y": 6,
+            "z": 10,
+            "width": 3,
+            "height": 1,
+            "depth": 2
+          },
+          {
+            "x": 23,
+            "y": 7,
+            "z": 11,
+            "width": 3,
+            "height": 1,
+            "depth": 2
+          },
+          {
+            "x": 23,
+            "y": 8,
+            "z": 12,
+            "width": 3,
+            "height": 1,
+            "depth": 2
+          },
+          {
+            "x": 23,
+            "y": 9,
+            "z": 13,
+            "width": 3,
+            "height": 1,
+            "depth": 2
+          },
+          {
+            "x": 23,
+            "y": 10,
+            "z": 14,
+            "width": 3,
+            "height": 1,
+            "depth": 2
+          }
+        ]
+      }
+    ],
+    "diagonalBands": [
+      {
+        "label": "Front shallow terracotta roof slope",
+        "materialId": 96,
+        "x": 1,
+        "y": 19,
+        "z": 1,
+        "width": 29,
+        "height": 1,
+        "depth": 4,
+        "count": 3,
+        "dx": 0,
+        "dy": 1,
+        "dz": 4
+      },
+      {
+        "label": "Rear shallow terracotta roof slope",
+        "materialId": 96,
+        "x": 1,
+        "y": 19,
+        "z": 18,
+        "width": 29,
+        "height": 1,
+        "depth": 4,
+        "count": 3,
+        "dx": 0,
+        "dy": 1,
+        "dz": -4
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "clear cart-width through-passage",
+        "x": 12,
+        "y": 1,
+        "z": 0,
+        "width": 7,
+        "height": 9,
+        "depth": 23
+      },
+      {
+        "label": "clear elevated bridge gallery",
+        "x": 12,
+        "y": 11,
+        "z": 5,
+        "width": 7,
+        "height": 7,
+        "depth": 13
+      },
+      {
+        "label": "left lower guard-room doorway",
+        "x": 11,
+        "y": 3,
+        "z": 7,
+        "width": 1,
+        "height": 6,
+        "depth": 3
+      },
+      {
+        "label": "right lower guard-room doorway",
+        "x": 19,
+        "y": 3,
+        "z": 7,
+        "width": 1,
+        "height": 6,
+        "depth": 3
+      },
+      {
+        "label": "left upper gallery doorway",
+        "x": 11,
+        "y": 11,
+        "z": 14,
+        "width": 1,
+        "height": 6,
+        "depth": 3
+      },
+      {
+        "label": "right upper gallery doorway",
+        "x": 19,
+        "y": 11,
+        "z": 14,
+        "width": 1,
+        "height": 6,
+        "depth": 3
+      }
+    ],
+    "approach": [
+      {
+        "x": 15,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 15,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 15,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 15,
+        "z": 10,
+        "topY": 1
+      },
+      {
+        "x": 15,
+        "z": 17,
+        "topY": 1
+      },
+      {
+        "x": 15,
+        "z": 18,
+        "topY": 1
+      },
+      {
+        "x": 15,
+        "z": 22,
+        "topY": 1
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 15,
+        "y": 0,
+        "z": 0,
+        "materialId": 69
+      },
+      {
+        "x": 4,
+        "y": 0,
+        "z": 5,
+        "materialId": 55
+      },
+      {
+        "x": 4,
+        "y": 1,
+        "z": 4,
+        "materialId": 64
+      },
+      {
+        "x": 5,
+        "y": 5,
+        "z": 4,
+        "materialId": 58
+      },
+      {
+        "x": 3,
+        "y": 5,
+        "z": 12,
+        "materialId": 58
+      },
+      {
+        "x": 3,
+        "y": 10,
+        "z": 11,
+        "materialId": 57
+      },
+      {
+        "x": 11,
+        "y": 10,
+        "z": 11,
+        "materialId": 55
+      },
+      {
+        "x": 15,
+        "y": 10,
+        "z": 11,
+        "materialId": 55
+      },
+      {
+        "x": 5,
+        "y": 1,
+        "z": 5,
+        "materialId": 55
+      },
+      {
+        "x": 5,
+        "y": 10,
+        "z": 14,
+        "materialId": 55
+      },
+      {
+        "x": 5,
+        "y": 13,
+        "z": 4,
+        "materialId": 58
+      },
+      {
+        "x": 3,
+        "y": 19,
+        "z": 5,
+        "materialId": 70
+      },
+      {
+        "x": 1,
+        "y": 19,
+        "z": 2,
+        "materialId": 96
+      },
+      {
+        "x": 15,
+        "y": 21,
+        "z": 11,
+        "materialId": 96
+      },
+      {
+        "x": 15,
+        "y": 22,
+        "z": 11,
+        "materialId": 57
+      }
+    ]
+  }
+}

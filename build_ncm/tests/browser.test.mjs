@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 5);
-  assert.match(initial.totalBuildingCount, /65 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /66 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -908,20 +908,22 @@ try {
   assert.ok(!sawmill.resources.some((path) => path.endsWith("compact-village-sawmill-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=fortress]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=grand-castle]') && document.querySelector('[data-building=compact-village-guardhouse]') && document.querySelector('[data-building=compact-village-watchtower]') && document.querySelector('[data-building=compact-village-barracks]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=grand-castle]') && document.querySelector('[data-building=compact-village-guardhouse]') && document.querySelector('[data-building=compact-village-watchtower]') && document.querySelector('[data-building=compact-village-barracks]') && document.querySelector('[data-building=compact-village-palisade-gatehouse]')"));
   const fortressBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     cardCount: document.querySelectorAll('[data-building]').length,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(fortressBrowse.activeBuilding, null);
-  assert.equal(fortressBrowse.cardCount, 4);
+  assert.equal(fortressBrowse.cardCount, 5);
   assert.ok(!fortressBrowse.resources.includes("/build_ncm/buildings/fortress/compact-village-guardhouse.json"), "category browsing must not load the guardhouse JSON");
   assert.ok(!fortressBrowse.resources.includes("/build_ncm/concepts/fortress/compact-village-guardhouse.webp"), "category browsing must not load the guardhouse concept art");
   assert.ok(!fortressBrowse.resources.includes("/build_ncm/buildings/fortress/compact-village-watchtower.json"), "category browsing must not load the watchtower JSON");
   assert.ok(!fortressBrowse.resources.includes("/build_ncm/concepts/fortress/compact-village-watchtower.webp"), "category browsing must not load the watchtower concept art");
   assert.ok(!fortressBrowse.resources.includes("/build_ncm/buildings/fortress/compact-village-barracks.json"), "category browsing must not load the barracks JSON");
   assert.ok(!fortressBrowse.resources.includes("/build_ncm/concepts/fortress/compact-village-barracks.webp"), "category browsing must not load the barracks concept art");
+  assert.ok(!fortressBrowse.resources.includes("/build_ncm/buildings/fortress/compact-village-palisade-gatehouse.json"), "category browsing must not load the palisade-gatehouse JSON");
+  assert.ok(!fortressBrowse.resources.includes("/build_ncm/concepts/fortress/compact-village-palisade-gatehouse.webp"), "category browsing must not load the palisade-gatehouse concept art");
   await clickBuilding(client, "grand-castle");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'grand-castle' && document.querySelector('#modelSize').textContent === '152 × 86 × 136'"));
   const castle = await evaluate(client, `({
@@ -1084,6 +1086,47 @@ try {
   assert.ok(barracks.resources.includes("/build_ncm/buildings/fortress/compact-village-barracks.json"));
   assert.ok(barracks.resources.includes("/build_ncm/concepts/fortress/compact-village-barracks.webp"));
   assert.ok(!barracks.resources.some((path) => path.endsWith("compact-village-barracks-blueprint.js")));
+
+  await clickBuilding(client, "compact-village-palisade-gatehouse");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-palisade-gatehouse' && document.querySelector('#modelSize').textContent === '31 × 23 × 23' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const palisadeGatehouse = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptLoading: document.querySelector('#conceptImage').loading,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(palisadeGatehouse.activeCategory, "fortress");
+  assert.match(palisadeGatehouse.title, /Compact Village Palisade Gatehouse/);
+  assert.equal(palisadeGatehouse.modelSize, "31 × 23 × 23");
+  assert.match(palisadeGatehouse.payload, /^NCM3:/);
+  assert.equal(palisadeGatehouse.voxelCount, 2896);
+  for (const id of [55, 57, 58, 64, 68, 69, 70, 96]) assert.match(palisadeGatehouse.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(palisadeGatehouse.uncovered, false);
+  assert.equal(palisadeGatehouse.glazingDisabled, true);
+  assert.equal(palisadeGatehouse.glazingLabel, "Openings: Not applicable");
+  assert.equal(palisadeGatehouse.disabledStyles, 6);
+  assert.equal(palisadeGatehouse.disabledRoofs, 6);
+  assert.equal(palisadeGatehouse.conceptHidden, false);
+  assert.equal(palisadeGatehouse.conceptLoading, "eager");
+  assert.match(palisadeGatehouse.conceptAlt, /Compact Village Palisade Gatehouse concept reference/);
+  assert.equal(palisadeGatehouse.conceptFit, "contain");
+  assert.equal(palisadeGatehouse.selectedInUrl, "compact-village-palisade-gatehouse");
+  assert.ok(palisadeGatehouse.resources.includes("/build_ncm/buildings/fortress/compact-village-palisade-gatehouse.json"));
+  assert.ok(palisadeGatehouse.resources.includes("/build_ncm/concepts/fortress/compact-village-palisade-gatehouse.webp"));
+  assert.ok(!palisadeGatehouse.resources.some((path) => path.endsWith("compact-village-palisade-gatehouse-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=civic]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=civic-town-hall]') && document.querySelector('[data-building=covered-village-bread-oven]') && document.querySelector('[data-building=covered-village-notice-board]') && document.querySelector('[data-building=stone-village-sundial]') && document.querySelector('[data-building=compact-village-infirmary]') && document.querySelector('[data-building=compact-village-schoolhouse]') && document.querySelector('[data-building=compact-village-chapel]') && document.querySelector('[data-building=compact-village-bathhouse]')"));
@@ -3127,10 +3170,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const boardingHouseDirectUrl = new URL(url);
-  boardingHouseDirectUrl.searchParams.set("building", "compact-village-boarding-house");
-  await client.send("Page.navigate", { url: boardingHouseDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'residential' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-boarding-house' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const palisadeGatehouseDirectUrl = new URL(url);
+  palisadeGatehouseDirectUrl.searchParams.set("building", "compact-village-palisade-gatehouse");
+  await client.send("Page.navigate", { url: palisadeGatehouseDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'fortress' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-palisade-gatehouse' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -3142,16 +3185,16 @@ try {
     conceptPath: new URL(document.querySelector('#conceptImage').dataset.source).pathname,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(directSelection.activeCategory, "residential");
-  assert.equal(directSelection.activeBuilding, "compact-village-boarding-house");
-  assert.match(directSelection.title, /Compact Village Boarding House/);
-  assert.equal(directSelection.modelSize, "29 × 19 × 35");
+  assert.equal(directSelection.activeCategory, "fortress");
+  assert.equal(directSelection.activeBuilding, "compact-village-palisade-gatehouse");
+  assert.match(directSelection.title, /Compact Village Palisade Gatehouse/);
+  assert.equal(directSelection.modelSize, "31 × 23 × 23");
   assert.match(directSelection.payload, /^NCM3:/);
   assert.equal(directSelection.conceptComplete, true);
   assert.ok(directSelection.conceptNaturalWidth > 0);
-  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/residential/compact-village-boarding-house.webp");
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/residential/compact-village-boarding-house.json"));
-  assert.ok(directSelection.resources.includes("/build_ncm/concepts/residential/compact-village-boarding-house.webp"));
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/fortress/compact-village-palisade-gatehouse.webp");
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/fortress/compact-village-palisade-gatehouse.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/concepts/fortress/compact-village-palisade-gatehouse.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

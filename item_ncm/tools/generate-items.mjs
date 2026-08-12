@@ -155,11 +155,24 @@ const HANDBELL_LAYOUTS = Object.freeze({
     clapper: 5,
   },
 });
+const WINDOW_BOX_LAYOUTS = Object.freeze({
+  "iron-braced-village-window-box-planter": {
+    back: 0,
+    front: 1,
+    sides: [2, 3],
+    floor: 4,
+    soil: 5,
+    cornerBands: [6, 7],
+    brackets: [8, 9, 10, 11],
+    blooms: [12, 13, 14],
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
   basalt_brick: 0x334,
   basalt_composite: 0x354,
+  biochar_compost: 0x432,
   blue_dye: 0x258,
   carbon_steel: 0x899,
   clear_glass_panel: 0x9ce,
@@ -383,6 +396,11 @@ const ITEM_NAMES = Object.freeze({
     "Copper Town Crier Handbell", "Campana de mano de cobre del pregonero", "Clochette à main en cuivre du crieur public",
     "Kupferne Handglocke des Ausrufers", "銅製の町触れ手鈴", "Медный ручной колокол городского глашатая",
     "구리 마을 전령 손종", "銅製城鎮傳令手鈴", "铜制城镇传令手铃",
+  ),
+  "iron-braced-village-window-box-planter": names(
+    "Iron-braced Village Window-box Planter", "Jardinera de ventana de aldea reforzada con hierro", "Jardinière de fenêtre villageoise renforcée de fer",
+    "Eisenverstärkter Dorf-Fensterblumenkasten", "鉄補強の村落窓辺プランター", "Деревенский оконный цветочный ящик с железными скобами",
+    "철제 보강 마을 창가 화분 상자", "鐵箍村莊窗臺花箱", "铁箍村庄窗台花箱",
   ),
   "iron-blacksmith-anvil": names(
     "Iron Blacksmith Anvil", "Yunque de herrero de hierro", "Enclume de forgeron en fer", "Eiserner Schmiedeamboss",
@@ -918,6 +936,27 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+  placeable("exterior-decor", "iron-braced-village-window-box-planter", [
+    part("wooden_plank", [76, 16, 2], [0, 8, -11]),
+    part("wooden_plank", [76, 16, 2], [0, 8, 11]),
+    part("wooden_plank", [2, 16, 20], [-39, 8, 0]),
+    part("wooden_plank", [2, 16, 20], [39, 8, 0]),
+    part("wooden_plank", [76, 2, 20], [0, 1, 0]),
+    part("biochar_compost", [72, 4, 20], [0, 14, 0]),
+    part("iron_bloom", [2, 18, 24], [-37, 8, 0], { mask: windowBoxCornerBandMask }),
+    part("iron_bloom", [2, 18, 24], [37, 8, 0], { mask: windowBoxCornerBandMask }),
+    part("iron_bloom", [2, 14, 2], [-22, -7, -11]),
+    part("iron_bloom", [2, 2, 20], [-22, -1, 0]),
+    part("iron_bloom", [2, 14, 2], [22, -7, -11]),
+    part("iron_bloom", [2, 2, 20], [22, -1, 0]),
+    part("red_dye", [10, 12, 10], [-24, 22, 0], { mask: windowBoxBloomMask }),
+    part("yellow_dye", [10, 10, 10], [0, 21, 0], { mask: windowBoxBloomMask }),
+    part("blue_dye", [10, 12, 10], [24, 22, 0], { mask: windowBoxBloomMask }),
+  ], { yaw: -0.68, pitch: 0.3 }, {
+    image: "concepts/exterior-decor/iron-braced-village-window-box-planter-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
 ]);
 
 generate();
@@ -1005,6 +1044,8 @@ function buildItem(spec) {
   if (noticeBoardLayout) validateNoticeBoardGeometry(spec, runtime, noticeBoardLayout);
   const handbellLayout = HANDBELL_LAYOUTS[spec.key] ?? null;
   if (handbellLayout) validateHandbellGeometry(spec, runtime, handbellLayout);
+  const windowBoxLayout = WINDOW_BOX_LAYOUTS[spec.key] ?? null;
+  if (windowBoxLayout) validateWindowBoxGeometry(spec, runtime, windowBoxLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -1106,6 +1147,7 @@ function buildItem(spec) {
       ...(shopSignLayout ? { shopSignGeometryValidated: true } : {}),
       ...(noticeBoardLayout ? { noticeBoardGeometryValidated: true } : {}),
       ...(handbellLayout ? { handbellGeometryValidated: true } : {}),
+      ...(windowBoxLayout ? { windowBoxGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -1633,6 +1675,71 @@ function validateHandbellGeometry(spec, runtime, layout) {
   }
 }
 
+function validateWindowBoxGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 15 || runtime.boundsQ.sizeQ.join(",") !== "80,42,24") {
+    throw new Error(`${spec.key} must preserve its human-scale wall-mounted window-box proportions (got ${runtime.componentCount} components and ${runtime.boundsQ.sizeQ.join(",")}).`);
+  }
+  const components = runtime.components ?? [];
+  const componentBounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    "wooden_plank", "wooden_plank", "wooden_plank", "wooden_plank", "wooden_plank",
+    "biochar_compost", "iron_bloom", "iron_bloom", "iron_bloom", "iron_bloom", "iron_bloom", "iron_bloom",
+    "red_dye", "yellow_dye", "blue_dye",
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  const back = componentBounds[layout.back];
+  const front = componentBounds[layout.front];
+  const floor = componentBounds[layout.floor];
+  const soil = componentBounds[layout.soil];
+  const [leftSide, rightSide] = layout.sides.map((index) => componentBounds[index]);
+  if (floor.min[0] !== back.min[0] || floor.max[0] !== back.max[0]
+    || floor.min[2] !== back.max[2] || floor.max[2] !== front.min[2]
+    || back.min[1] !== front.min[1] || back.max[1] !== front.max[1]
+    || leftSide.max[0] !== back.min[0] || rightSide.min[0] !== back.max[0]
+    || leftSide.min[2] !== back.max[2] || leftSide.max[2] !== front.min[2]
+    || rightSide.min[2] !== back.max[2] || rightSide.max[2] !== front.min[2]) {
+    throw new Error(`${spec.key} timber trough is not continuously enclosed.`);
+  }
+  if (soil.min[0] < back.min[0] || soil.max[0] > back.max[0]
+    || soil.min[2] < back.max[2] || soil.max[2] > front.min[2]
+    || soil.min[1] < floor.max[1] || soil.max[1] > back.max[1]) {
+    throw new Error(`${spec.key} compost escapes the timber trough.`);
+  }
+  for (const bandIndex of layout.cornerBands) {
+    const band = componentBounds[bandIndex];
+    if (band.min[1] > floor.min[1] || band.max[1] < front.max[1]
+      || band.min[2] > back.min[2] || band.max[2] < front.max[2]
+      || (band.min[0] > leftSide.max[0] && band.max[0] < rightSide.min[0])) {
+      throw new Error(`${spec.key} corner band ${bandIndex} does not reinforce the complete trough section.`);
+    }
+  }
+  for (let index = 0; index < layout.brackets.length; index += 2) {
+    const upright = componentBounds[layout.brackets[index]];
+    const shelf = componentBounds[layout.brackets[index + 1]];
+    if (upright.max[1] !== floor.min[1] || shelf.max[1] !== floor.min[1]
+      || upright.max[2] !== shelf.min[2] || upright.min[2] !== back.min[2]
+      || shelf.max[2] !== front.min[2] || upright.min[0] !== shelf.min[0]
+      || upright.max[0] !== shelf.max[0]) {
+      throw new Error(`${spec.key} wall bracket pair ${index / 2} is detached from the trough.`);
+    }
+  }
+  for (const bloomIndex of layout.blooms) {
+    const bloom = componentBounds[bloomIndex];
+    if (bloom.min[1] > soil.max[1] || bloom.max[1] <= soil.max[1]
+      || bloom.min[0] < soil.min[0] || bloom.max[0] > soil.max[0]
+      || bloom.min[2] < soil.min[2] || bloom.max[2] > soil.max[2]) {
+      throw new Error(`${spec.key} bloom ${bloomIndex} is not planted into the compost bed.`);
+    }
+  }
+}
+
 function validateToolHolding(spec, runtime) {
   const policy = spec.holding;
   const components = runtime.components ?? [];
@@ -2052,6 +2159,21 @@ function handbellRimMask({ nx, nz }) {
 
 function noticeBoardFastenerMask({ x, y }) {
   return [1, 4, 7, 10, 12].includes(x) && [1, 3, 5, 7, 9].includes(y);
+}
+
+function windowBoxCornerBandMask({ nx, ny, nz }) {
+  const sideRail = Math.abs(nx) >= 0.5 && (Math.abs(ny) >= 0.56 || Math.abs(nz) >= 0.56);
+  const faceRail = Math.abs(nx) < 0.5 && Math.abs(ny) >= 0.72 && Math.abs(nz) >= 0.72;
+  return sideRail || faceRail;
+}
+
+function windowBoxBloomMask({ nx, ny, nz }) {
+  const stem = Math.abs(nx) <= 0.2 && Math.abs(nz) <= 0.2 && ny <= 0.35;
+  const petals = ny >= -0.1 && (
+    (Math.abs(nx) <= 0.28 && Math.abs(nz) <= 0.92)
+    || (Math.abs(nx) <= 0.92 && Math.abs(nz) <= 0.28)
+  );
+  return stem || petals;
 }
 
 function chiselTip({ nx, ny, nz }) {

@@ -52,7 +52,7 @@ try {
   await client.send("Emulation.setDeviceMetricsOverride", { width: 1600, height: 1200, deviceScaleFactor: 1, mobile: false });
   await client.send("Page.navigate", { url });
   await waitFor(() => evaluate(client, `document.readyState === "complete"
-    && document.querySelectorAll("[data-category]").length === 15
+    && document.querySelectorAll("[data-category]").length === 16
     && document.querySelectorAll("[data-item]").length === 4
     && document.querySelector("#runtimeState").dataset.state === "verified"`));
 
@@ -80,9 +80,9 @@ try {
   assert.equal(initial.locale, "en");
   assert.equal(initial.title, "ITEM_NCM — NiceChunk Forge Item Registry");
   assert.equal(initial.languageCount, 9);
-  assert.equal(initial.categoryCount, 15);
+  assert.equal(initial.categoryCount, 16);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /46 ITEMS/);
+  assert.match(initial.total, /47 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -632,6 +632,53 @@ try {
   assert.equal(wateringCan.selectedInUrl, "copper-field-watering-can");
   assert.ok(wateringCan.resources.includes("/item_ncm/json/forestry-farming/copper-field-watering-can.json"));
 
+  await evaluate(client, `document.querySelector('[data-category="exterior-decor"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 1
+    && document.querySelector('[data-item="iron-braced-village-window-box-planter"]')`));
+  assert.equal(await evaluate(client, `performance.getEntriesByType("resource").some((entry) => new URL(entry.name).pathname.includes("/item_ncm/json/exterior-decor/"))`), false,
+    "category browsing must not load exterior decor item JSON files");
+  await evaluate(client, `document.querySelector('[data-item="iron-braced-village-window-box-planter"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="iron-braced-village-window-box-planter"].active')
+    && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const windowBox = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payload: document.querySelector("#codeOutput").value,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    materialRows: document.querySelectorAll("#bomRows .bom-row").length,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(windowBox.title, "Iron-braced Village Window-box Planter");
+  assert.equal(windowBox.type, "PLACEABLE");
+  assert.match(windowBox.payload, /^NCF1\./);
+  assert.equal(windowBox.payloadBytes, "315 / 640 B");
+  assert.equal(windowBox.componentCount, "15");
+  assert.equal(windowBox.materialRows, 6);
+  assert.equal(windowBox.selectedInUrl, "iron-braced-village-window-box-planter");
+  assert.ok(windowBox.resources.includes("/item_ncm/json/exterior-decor/iron-braced-village-window-box-planter.json"));
+  const windowBoxPreview = await evaluate(client, `(() => {
+    const canvas = document.querySelector("#forgePreview");
+    return { width: canvas.width, height: canvas.height };
+  })()`);
+  assert.ok(windowBoxPreview.width > 0 && windowBoxPreview.height > 0);
+
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "zh-Hans";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.querySelector("#itemTitle").textContent === "铁箍村庄窗台花箱"`));
+  assert.equal(await evaluate(client, `document.querySelector('[data-category="exterior-decor"] span').textContent`), "室外装饰");
+  assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), windowBox.payload);
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "en";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
+
   await evaluate(client, `(() => {
     const search = document.querySelector("#itemSearch");
     search.value = "guardian-spear";
@@ -666,7 +713,7 @@ try {
   })()`);
   assert.equal(mobile.clientWidth, 390);
   assert.equal(mobile.scrollWidth, mobile.clientWidth, "mobile page must not create document-level horizontal overflow");
-  assert.equal(mobile.categoryCount, 15);
+  assert.equal(mobile.categoryCount, 16);
   assert.equal(mobile.itemCount, 4);
   assert.equal(mobile.libraryBeforePreview, true);
   assert.equal(mobile.previewBeforeDetails, true);

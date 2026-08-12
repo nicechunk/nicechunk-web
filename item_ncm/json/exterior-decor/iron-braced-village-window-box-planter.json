@@ -1,0 +1,274 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "iron-braced-village-window-box-planter",
+  "category": "exterior-decor",
+  "interaction": "placeable",
+  "names": {
+    "en": "Iron-braced Village Window-box Planter",
+    "es": "Jardinera de ventana de aldea reforzada con hierro",
+    "fr": "Jardinière de fenêtre villageoise renforcée de fer",
+    "de": "Eisenverstärkter Dorf-Fensterblumenkasten",
+    "ja": "鉄補強の村落窓辺プランター",
+    "ru": "Деревенский оконный цветочный ящик с железными скобами",
+    "ko": "철제 보강 마을 창가 화분 상자",
+    "zh-Hant": "鐵箍村莊窗臺花箱",
+    "zh-Hans": "铁箍村庄窗台花箱"
+  },
+  "descriptions": {
+    "en": "Iron-braced Village Window-box Planter is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Jardinera de ventana de aldea reforzada con hierro es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Jardinière de fenêtre villageoise renforcée de fer est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Eisenverstärkter Dorf-Fensterblumenkasten ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "鉄補強の村落窓辺プランターは、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Деревенский оконный цветочный ящик с железными скобами — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "철제 보강 마을 창가 화분 상자은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "鐵箍村莊窗臺花箱是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "铁箍村庄窗台花箱是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 1.25,
+    "height": 0.6563,
+    "depth": 0.375,
+    "sizeQ": [
+      80,
+      42,
+      24
+    ]
+  },
+  "preview": {
+    "yaw": -0.68,
+    "pitch": 0.3
+  },
+  "concept": {
+    "image": "concepts/exterior-decor/iron-braced-village-window-box-planter-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "ba53ea0d5b0066e631c2117bb1a693d2d5dcd95c993b9bec7414f4bdebe44fdb"
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.8t4IPQZllXQiecOQUxPinVMEAIAAEfqQARTqmCAEAACALIAIp1AhAUeyBAAEAEU6gQgKAnAgACACKdUwCFAAACABAAyGSQCCgAAOAAgACakCEhh7YEAAioINHIBMNJJMNARo0URo0AACakCEhgEoEAAioINHIBMNJJMNARo0URo0AACakCDgJ9X8_qQABNSBAQo-r_wAIAAmpAg4CAt_P6kAATUgQEKAW_8ACABLQwoMCn0AsACYAB1CADyKCCrJKCrICKLTqKLSAMyRAMyQwQSMKSjLKSjKqajCABNswoKCgAAqACYAB1CADyKCCrJKCrICKLTqKLSAMyRAMyQwQSMKSjLKSjKqajCABCWAoMCgMAsACYAB1CADyKCCrJKCrICKLTqKLSAMyRAMyQwQSMKSjLKSjKqajCAA",
+    "rawBytes": 315,
+    "sha256": "1b76833e96c529614e23256013cae7d6c6e5150832daf9a32c3d8bd7ef9c8c84",
+    "designHash": 973535069,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 315,
+    "savedBytes": 0,
+    "sourceComponentCount": 15,
+    "decodedComponentCount": 15,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 9277344,
+        "usedVolumeMm3": 9277344,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 9277344,
+        "usedVolumeMm3": 9277344,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 2441406,
+        "usedVolumeMm3": 2441406,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 2441406,
+        "usedVolumeMm3": 2441406,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "wooden_plank",
+        "itemCode": 1031,
+        "inputVolumeMm3": 11596680,
+        "usedVolumeMm3": 11596680,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "biochar_compost",
+        "itemCode": 1002,
+        "inputVolumeMm3": 21972656,
+        "usedVolumeMm3": 21972656,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 3295898,
+        "usedVolumeMm3": 1318359,
+        "unusedVolumeMm3": 1977539
+      },
+      {
+        "index": 7,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 3295898,
+        "usedVolumeMm3": 1318359,
+        "unusedVolumeMm3": 1977539
+      },
+      {
+        "index": 8,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 213623,
+        "usedVolumeMm3": 213623,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 9,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 305176,
+        "usedVolumeMm3": 305176,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 10,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 213623,
+        "usedVolumeMm3": 213623,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 11,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 305176,
+        "usedVolumeMm3": 305176,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 12,
+        "materialId": "red_dye",
+        "itemCode": 1028,
+        "inputVolumeMm3": 4577637,
+        "usedVolumeMm3": 1158422,
+        "unusedVolumeMm3": 3419215
+      },
+      {
+        "index": 13,
+        "materialId": "yellow_dye",
+        "itemCode": 1027,
+        "inputVolumeMm3": 3814697,
+        "usedVolumeMm3": 965351,
+        "unusedVolumeMm3": 2849346
+      },
+      {
+        "index": 14,
+        "materialId": "blue_dye",
+        "itemCode": 1029,
+        "inputVolumeMm3": 4577637,
+        "usedVolumeMm3": 1158422,
+        "unusedVolumeMm3": 3419215
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 63963136,
+      "requiredEffectiveDurability": 13627,
+      "outputMassGrams": 58720,
+      "materialScore": 56
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 968,
+      "triangleCount": 484,
+      "meshByteLength": 18392
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "wooden_plank",
+      "itemCode": 1031,
+      "componentCount": 5,
+      "inputVolumeMm3": 35034180,
+      "usedVolumeMm3": 35034180,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 1752
+    },
+    {
+      "materialId": "biochar_compost",
+      "itemCode": 1002,
+      "componentCount": 1,
+      "inputVolumeMm3": 21972656,
+      "usedVolumeMm3": 21972656,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 1000000,
+      "equivalentInputUnits": 22
+    },
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 6,
+      "inputVolumeMm3": 7629394,
+      "usedVolumeMm3": 3674316,
+      "unusedVolumeMm3": 3955078,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 31
+    },
+    {
+      "materialId": "red_dye",
+      "itemCode": 1028,
+      "componentCount": 1,
+      "inputVolumeMm3": 4577637,
+      "usedVolumeMm3": 1158422,
+      "unusedVolumeMm3": 3419215,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 229
+    },
+    {
+      "materialId": "yellow_dye",
+      "itemCode": 1027,
+      "componentCount": 1,
+      "inputVolumeMm3": 3814697,
+      "usedVolumeMm3": 965351,
+      "unusedVolumeMm3": 2849346,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 191
+    },
+    {
+      "materialId": "blue_dye",
+      "itemCode": 1029,
+      "componentCount": 1,
+      "inputVolumeMm3": 4577637,
+      "usedVolumeMm3": 1158422,
+      "unusedVolumeMm3": 3419215,
+      "unitVolumeMm3": 20000,
+      "equivalentInputUnits": 229
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "windowBoxGeometryValidated": true,
+    "chainMinted": false
+  }
+}

@@ -1,0 +1,486 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-ropemaker-workshop",
+  "category": "industrial",
+  "kind": "habitable-building",
+  "titles": {
+    "en": "Compact Village Ropemaker Workshop",
+    "es": "Cordelería Compacta de la Aldea",
+    "fr": "Corderie Compacte du Village",
+    "de": "Kompakte Dorfseilerei",
+    "ja": "コンパクトな村の製綱工房",
+    "ru": "Компактная деревенская канатная мастерская",
+    "ko": "소형 마을 밧줄 제작소",
+    "zh-Hant": "緊湊型村莊製繩工坊",
+    "zh-Hans": "紧凑型村庄制绳工坊"
+  },
+  "descriptions": {
+    "en": "An enterable 6.0 × 11.6 m ropemaker workshop scaled to the 1.75 m avatar. Opposed zero-threshold 5 × 9-voxel end entrances align with a five-wide, 10.8 m clear twisting lane. A long supported guide rail, two durable fibre-preparation benches, a face-connected side rack, high ventilation glazing, a clean plank floor and a complete deep-overhang terracotta roof form a credible compact ropewalk. Continuous grounded posts, wall plates, clear-height ties and ridge carry the elongated shell; door leaves, rope, fibre, spindles, tools, workers, lighting, signs and terrain are excluded.",
+    "es": "Una cordelería transitable de 6,0 × 11,6 m, dimensionada para el avatar de 1,75 m. Dos entradas opuestas sin desnivel de 5 × 9 vóxeles se alinean con una pista de torsión despejada de cinco vóxeles y 10,8 m de longitud. Una guía longitudinal apoyada, dos bancos resistentes de preparación de fibras, un estante lateral unido por caras, acristalamiento alto de ventilación, suelo limpio de tablones y una cubierta completa de terracota con gran alero forman una instalación compacta y verosímil para fabricar cuerda. Postes, soleras, tirantes elevados y cumbrera continuos y anclados sostienen la envolvente alargada; se excluyen hojas de puerta, cuerda, fibras, husos, herramientas, operarios, iluminación, letreros y terreno.",
+    "fr": "Une corderie accessible de 6,0 × 11,6 m, dimensionnée pour l’avatar de 1,75 m. Deux entrées opposées sans ressaut de 5 × 9 voxels s’alignent sur une piste de torsion libre de cinq voxels et longue de 10,8 m. Un long guide soutenu, deux établis durables de préparation des fibres, un râtelier latéral relié par faces, un vitrage haut de ventilation, un sol propre en planches et un toit complet en terre cuite à fort débord composent une corderie compacte et crédible. Des poteaux, sablières, entraits hauts et une faîtière continus et ancrés portent l’enveloppe allongée ; vantaux, cordes, fibres, broches, outils, ouvriers, éclairage, enseignes et terrain sont exclus.",
+    "de": "Eine begehbare 6,0 × 11,6 m große Dorfseilerei im Maßstab des 1,75-m-Avatars. Zwei gegenüberliegende schwellenlose 5 × 9-Voxel-Endeingänge fluchten mit einer fünf Voxel breiten und 10,8 m langen freien Schlagbahn. Eine lange abgestützte Führung, zwei robuste Faser-Vorbereitungsbänke, ein flächenverbundenes Seitenregal, hohe Lüftungsverglasung, ein sauberer Dielenboden und ein vollständiges Terrakottadach mit tiefem Überstand bilden eine glaubwürdige kompakte Seilerbahn. Durchgehende bodengebundene Pfosten, Wandplatten, hoch liegende Binder und der First tragen die lang gestreckte Hülle; Türblätter, Seile, Fasern, Spindeln, Werkzeuge, Arbeiter, Beleuchtung, Schilder und Gelände sind ausgeschlossen.",
+    "ja": "身長1.75 mのアバター尺度に合わせた、進入可能な6.0 × 11.6 mの製綱工房です。向かい合う段差のない5 × 9ボクセルの両端入口が、幅5ボクセル・長さ10.8 mの空いた撚り合わせ通路に一直線でつながります。支持された長い案内レール、耐久性のある繊維準備台2台、面接続された側面棚、高所換気窓、清潔な板床、深い軒の全面テラコッタ屋根により、現実的でコンパクトなロープウォークを構成します。地面から連続する柱・桁・高所小屋梁・棟が細長い外皮を支持します。扉、ロープ、繊維、スピンドル、工具、作業者、照明、看板、地形は含みません。",
+    "ru": "Доступная канатная мастерская размером 6,0 × 11,6 м в масштабе аватара ростом 1,75 м. Два противоположных беспороговых торцевых входа 5 × 9 вокселей выровнены с чистой дорожкой кручения шириной пять вокселей и длиной 10,8 м. Длинная опирающаяся направляющая, два прочных стола подготовки волокна, соединённый по граням боковой стеллаж, высокое вентиляционное остекление, чистый дощатый пол и полная терракотовая крыша с глубоким свесом образуют правдоподобную компактную канатную дорожку. Непрерывные опирающиеся на землю стойки, обвязки, высокие поперечные связи и конёк несут вытянутую оболочку; дверные полотна, канаты, волокно, шпиндели, инструменты, работники, освещение, вывески и рельеф исключены.",
+    "ko": "키 1.75 m 아바타 비율에 맞춘 출입 가능한 6.0 × 11.6 m 밧줄 제작소입니다. 서로 마주 보는 단차 없는 5 × 9복셀 양끝 입구가 폭 5복셀, 길이 10.8 m의 빈 꼬임 작업 통로와 일직선으로 연결됩니다. 지지된 긴 안내 레일, 견고한 섬유 준비대 두 개, 면으로 연결된 측면 선반, 상부 환기창, 깨끗한 판자 바닥과 깊은 처마의 완전한 테라코타 지붕이 현실적인 소형 로프워크를 이룹니다. 지면에서 연속되는 기둥, 벽도리, 높은 가로보와 용마루가 긴 외피를 지지합니다. 문짝, 밧줄, 섬유, 스핀들, 공구, 작업자, 조명, 간판과 지형은 포함하지 않습니다.",
+    "zh-Hant": "一座可進入、符合1.75公尺角色尺度的6.0 × 11.6公尺製繩工坊。兩端相對的零門檻5 × 9體素入口，對準五體素寬、10.8公尺長的淨空捻繩通道。受承托長導軌、兩座耐用纖維準備台、面連接側牆架、高位通風窗、潔淨木板地坪與完整深出簷赤陶屋頂，構成可信的緊湊型繩道工坊。連續落地柱、牆頂樑、高位橫向繫樑及屋脊承托狹長外殼；門扇、繩索、纖維、紡軸、工具、工人、照明、招牌及地形不包含在藍圖內。",
+    "zh-Hans": "一座可进入、符合1.75米角色尺度的6.0 × 11.6米制绳工坊。两端相对的零门槛5 × 9体素入口，对准五体素宽、10.8米长的净空捻绳通道。受承托长导轨、两座耐用纤维准备台、面连接侧墙架、高位通风窗、洁净木板地坪与完整深出檐赤陶屋顶，构成可信的紧凑型绳道工坊。连续落地柱、墙顶梁、高位横向系梁及屋脊承托狭长外壳；门扇、绳索、纤维、纺轴、工具、工人、照明、招牌及地形不包含在蓝图内。"
+  },
+  "referenceImage": "concepts/industrial/compact-village-ropemaker-workshop.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "21 × 35 vu",
+  "height": "16 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 15,
+      "z": 29
+    },
+    "wallFootprintMeters": {
+      "x": 6,
+      "z": 11.6
+    },
+    "doorClearVoxels": {
+      "width": 5,
+      "height": 9
+    },
+    "interiorClearHeightVoxels": 8
+  },
+  "preview": {
+    "fitScale": 1,
+    "minScale": 2.6,
+    "yaw": 2.45
+  },
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "floor",
+      "label": "Clean Plank Ropewalk Floor"
+    },
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Supported Long Twisting Guide and Face-connected Side Rack"
+    },
+    {
+      "materialId": 57,
+      "phase": "fixtures",
+      "label": "Grounded Guide and Fibre-preparation Bench Supports"
+    },
+    {
+      "materialId": 58,
+      "phase": "openings",
+      "label": "High Side Ventilation Glazing"
+    },
+    {
+      "materialId": 69,
+      "phase": "fixtures",
+      "label": "Two Durable Fibre-preparation Benches and Level End Approaches"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARUQIyUCAQMAAw4AAAACAAACAQMABAAAGgEcAAABNwQABAwAGgFFCAAABAADAUUIAB8EAAMBAgMBAwQIAAECDQEDBAgAAQIDAR8ECAABAg0BHwQIAAECAwEEAAgaAQIRAQQACBoCOgMGBgABAgMAAA4COhEGBgABAgMAAA4CAwMAAwAKAAQAAA4CAxEAAwAKAAQAAA4BAwcAAwAKAAEDDQADAAoAAQMHAB8ACgABAw0AHwAKAAIDAwoDDgAAAQAAOAIDAwoDAAAcARwAAAIDAwkKDgAAAgAADgE4BAIGAgAWAjkEAQYCAAAEAAAKAUUOAggCAQcCOQ4BCAIAAAEAAA4BRQ4CFAIBBwI5DgEUAgAAAQAADgI4EAEHAAUAAwAADgE4EAMHAAAVAgIECwMMAAABAAA4AgIGDAMIAAABAAA4AgIIDQMEAAABAAA4AgIKDgMAAAABAAA4AgUBCwECACADBAIAAgURCwECACADAwIAAQMKDwEAACA"
+  },
+  "validation": {
+    "expectedVoxelCount": 2345,
+    "expectedPayloadBytes": 377,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      56,
+      57,
+      58,
+      68,
+      69,
+      70,
+      96
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 351,
+      "56": 111,
+      "57": 323,
+      "58": 48,
+      "68": 54,
+      "69": 118,
+      "70": 548,
+      "96": 792
+    },
+    "requireConnected": true,
+    "supportColumns": [
+      {
+        "label": "Front-left corner post",
+        "x": 3,
+        "z": 3,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Front-right corner post",
+        "x": 17,
+        "z": 3,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-left corner post",
+        "x": 3,
+        "z": 31,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-right corner post",
+        "x": 17,
+        "z": 31,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Front-left entrance jamb",
+        "x": 7,
+        "z": 3,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Front-right entrance jamb",
+        "x": 13,
+        "z": 3,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-left entrance jamb",
+        "x": 7,
+        "z": 31,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-right entrance jamb",
+        "x": 13,
+        "z": 31,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left first side post",
+        "x": 3,
+        "z": 10,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left second side post",
+        "x": 3,
+        "z": 17,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left third side post",
+        "x": 3,
+        "z": 24,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right first side post",
+        "x": 17,
+        "z": 10,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right second side post",
+        "x": 17,
+        "z": 17,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right third side post",
+        "x": 17,
+        "z": 24,
+        "baseY": 0,
+        "topY": 10
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Front wall plate and entrance lintel",
+        "axis": "x",
+        "start": 3,
+        "end": 17,
+        "y": 10,
+        "fixed": 3
+      },
+      {
+        "label": "Rear wall plate and entrance lintel",
+        "axis": "x",
+        "start": 3,
+        "end": 17,
+        "y": 10,
+        "fixed": 31
+      },
+      {
+        "label": "Left wall plate",
+        "axis": "z",
+        "start": 3,
+        "end": 31,
+        "y": 10,
+        "fixed": 3
+      },
+      {
+        "label": "Right wall plate",
+        "axis": "z",
+        "start": 3,
+        "end": 31,
+        "y": 10,
+        "fixed": 17
+      },
+      {
+        "label": "First clear-height ropewalk tie",
+        "axis": "x",
+        "start": 3,
+        "end": 17,
+        "y": 9,
+        "fixed": 10
+      },
+      {
+        "label": "Second clear-height ropewalk tie",
+        "axis": "x",
+        "start": 3,
+        "end": 17,
+        "y": 9,
+        "fixed": 17
+      },
+      {
+        "label": "Third clear-height ropewalk tie",
+        "axis": "x",
+        "start": 3,
+        "end": 17,
+        "y": 9,
+        "fixed": 24
+      },
+      {
+        "label": "Continuous ridge beam",
+        "axis": "z",
+        "start": 1,
+        "end": 33,
+        "y": 15,
+        "fixed": 10
+      }
+    ],
+    "diagonalBands": [
+      {
+        "label": "Left deep-overhang terracotta roof slope",
+        "materialId": 96,
+        "x": 1,
+        "y": 11,
+        "z": 1,
+        "width": 3,
+        "height": 1,
+        "depth": 33,
+        "count": 4,
+        "dx": 2,
+        "dy": 1,
+        "dz": 0
+      },
+      {
+        "label": "Right deep-overhang terracotta roof slope",
+        "materialId": 96,
+        "x": 17,
+        "y": 11,
+        "z": 1,
+        "width": 3,
+        "height": 1,
+        "depth": 33,
+        "count": 4,
+        "dx": -2,
+        "dy": 1,
+        "dz": 0
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "zero-threshold five-wide front entrance",
+        "x": 8,
+        "y": 1,
+        "z": 3,
+        "width": 5,
+        "height": 9,
+        "depth": 1
+      },
+      {
+        "label": "five-wide clear twisting lane",
+        "x": 8,
+        "y": 1,
+        "z": 4,
+        "width": 5,
+        "height": 8,
+        "depth": 27
+      },
+      {
+        "label": "zero-threshold five-wide rear entrance",
+        "x": 8,
+        "y": 1,
+        "z": 31,
+        "width": 5,
+        "height": 9,
+        "depth": 1
+      }
+    ],
+    "approach": [
+      {
+        "x": 10,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 10,
+        "z": 1,
+        "topY": 1
+      },
+      {
+        "x": 10,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 10,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 10,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 10,
+        "z": 17,
+        "topY": 1
+      },
+      {
+        "x": 10,
+        "z": 30,
+        "topY": 1
+      },
+      {
+        "x": 10,
+        "z": 31,
+        "topY": 1
+      },
+      {
+        "x": 10,
+        "z": 32,
+        "topY": 1
+      },
+      {
+        "x": 10,
+        "z": 34,
+        "topY": 1
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 10,
+        "y": 0,
+        "z": 0,
+        "materialId": 69
+      },
+      {
+        "x": 10,
+        "y": 0,
+        "z": 34,
+        "materialId": 69
+      },
+      {
+        "x": 4,
+        "y": 0,
+        "z": 4,
+        "materialId": 55
+      },
+      {
+        "x": 3,
+        "y": 6,
+        "z": 6,
+        "materialId": 58
+      },
+      {
+        "x": 3,
+        "y": 10,
+        "z": 10,
+        "materialId": 57
+      },
+      {
+        "x": 4,
+        "y": 2,
+        "z": 6,
+        "materialId": 56
+      },
+      {
+        "x": 4,
+        "y": 1,
+        "z": 6,
+        "materialId": 57
+      },
+      {
+        "x": 14,
+        "y": 2,
+        "z": 8,
+        "materialId": 69
+      },
+      {
+        "x": 14,
+        "y": 1,
+        "z": 8,
+        "materialId": 57
+      },
+      {
+        "x": 16,
+        "y": 5,
+        "z": 7,
+        "materialId": 56
+      },
+      {
+        "x": 1,
+        "y": 11,
+        "z": 10,
+        "materialId": 96
+      },
+      {
+        "x": 10,
+        "y": 15,
+        "z": 10,
+        "materialId": 57
+      }
+    ]
+  }
+}

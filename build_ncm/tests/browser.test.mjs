@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 5);
-  assert.match(initial.totalBuildingCount, /77 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /78 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -560,14 +560,14 @@ try {
   assert.ok(!boatwrightWorkshop.resources.some((path) => path.endsWith("compact-village-boatwright-workshop-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=industrial]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=freight-warehouse]') && document.querySelector('[data-building=covered-village-bloomery]') && document.querySelector('[data-building=compact-village-blacksmith-shop]') && document.querySelector('[data-building=compact-village-weaving-workshop]') && document.querySelector('[data-building=compact-village-pottery-workshop]') && document.querySelector('[data-building=compact-village-cooper-workshop]') && document.querySelector('[data-building=compact-village-brewhouse]') && document.querySelector('[data-building=compact-village-tannery]') && document.querySelector('[data-building=compact-village-sawmill]') && document.querySelector('[data-building=compact-village-wheelwright-workshop]') && document.querySelector('[data-building=compact-village-candlemaker-workshop]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=freight-warehouse]') && document.querySelector('[data-building=covered-village-bloomery]') && document.querySelector('[data-building=compact-village-blacksmith-shop]') && document.querySelector('[data-building=compact-village-weaving-workshop]') && document.querySelector('[data-building=compact-village-pottery-workshop]') && document.querySelector('[data-building=compact-village-cooper-workshop]') && document.querySelector('[data-building=compact-village-brewhouse]') && document.querySelector('[data-building=compact-village-tannery]') && document.querySelector('[data-building=compact-village-sawmill]') && document.querySelector('[data-building=compact-village-wheelwright-workshop]') && document.querySelector('[data-building=compact-village-candlemaker-workshop]') && document.querySelector('[data-building=compact-village-ropemaker-workshop]')"));
   const industrialBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     cardCount: document.querySelectorAll('[data-building]').length,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(industrialBrowse.activeBuilding, null);
-  assert.equal(industrialBrowse.cardCount, 11);
+  assert.equal(industrialBrowse.cardCount, 12);
   assert.ok(!industrialBrowse.resources.includes("/build_ncm/buildings/industrial/freight-warehouse.json"), "category browsing must not load the warehouse JSON");
   assert.ok(!industrialBrowse.resources.includes("/build_ncm/buildings/industrial/covered-village-bloomery.json"), "category browsing must not load the bloomery JSON");
   assert.ok(!industrialBrowse.resources.includes("/build_ncm/buildings/industrial/compact-village-blacksmith-shop.json"), "category browsing must not load the blacksmith-shop JSON");
@@ -588,6 +588,8 @@ try {
   assert.ok(!industrialBrowse.resources.includes("/build_ncm/concepts/industrial/compact-village-wheelwright-workshop.webp"), "category browsing must not load the wheelwright-workshop concept art");
   assert.ok(!industrialBrowse.resources.includes("/build_ncm/buildings/industrial/compact-village-candlemaker-workshop.json"), "category browsing must not load the candlemaker-workshop JSON");
   assert.ok(!industrialBrowse.resources.includes("/build_ncm/concepts/industrial/compact-village-candlemaker-workshop.webp"), "category browsing must not load the candlemaker-workshop concept art");
+  assert.ok(!industrialBrowse.resources.includes("/build_ncm/buildings/industrial/compact-village-ropemaker-workshop.json"), "category browsing must not load the ropemaker-workshop JSON");
+  assert.ok(!industrialBrowse.resources.includes("/build_ncm/concepts/industrial/compact-village-ropemaker-workshop.webp"), "category browsing must not load the ropemaker-workshop concept art");
   await clickBuilding(client, "freight-warehouse");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'freight-warehouse' && document.querySelector('#modelSize').textContent === '48 × 36 × 38'"));
   const warehouse = await evaluate(client, `({
@@ -992,6 +994,47 @@ try {
   assert.ok(candlemakerWorkshop.resources.includes("/build_ncm/buildings/industrial/compact-village-candlemaker-workshop.json"));
   assert.ok(candlemakerWorkshop.resources.includes("/build_ncm/concepts/industrial/compact-village-candlemaker-workshop.webp"));
   assert.ok(!candlemakerWorkshop.resources.some((path) => path.endsWith("compact-village-candlemaker-workshop-blueprint.js")));
+
+  await clickBuilding(client, "compact-village-ropemaker-workshop");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-ropemaker-workshop' && document.querySelector('#modelSize').textContent === '21 × 16 × 35' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const ropemakerWorkshop = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptLoading: document.querySelector('#conceptImage').loading,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(ropemakerWorkshop.activeCategory, "industrial");
+  assert.match(ropemakerWorkshop.title, /Compact Village Ropemaker Workshop/);
+  assert.equal(ropemakerWorkshop.modelSize, "21 × 16 × 35");
+  assert.match(ropemakerWorkshop.payload, /^NCM3:/);
+  assert.equal(ropemakerWorkshop.voxelCount, 2345);
+  for (const id of [55, 56, 57, 58, 68, 69, 70, 96]) assert.match(ropemakerWorkshop.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(ropemakerWorkshop.uncovered, false);
+  assert.equal(ropemakerWorkshop.glazingDisabled, true);
+  assert.equal(ropemakerWorkshop.glazingLabel, "Openings: Not applicable");
+  assert.equal(ropemakerWorkshop.disabledStyles, 6);
+  assert.equal(ropemakerWorkshop.disabledRoofs, 6);
+  assert.equal(ropemakerWorkshop.conceptHidden, false);
+  assert.equal(ropemakerWorkshop.conceptLoading, "eager");
+  assert.match(ropemakerWorkshop.conceptAlt, /Compact Village Ropemaker Workshop concept reference/);
+  assert.equal(ropemakerWorkshop.conceptFit, "contain");
+  assert.equal(ropemakerWorkshop.selectedInUrl, "compact-village-ropemaker-workshop");
+  assert.ok(ropemakerWorkshop.resources.includes("/build_ncm/buildings/industrial/compact-village-ropemaker-workshop.json"));
+  assert.ok(ropemakerWorkshop.resources.includes("/build_ncm/concepts/industrial/compact-village-ropemaker-workshop.webp"));
+  assert.ok(!ropemakerWorkshop.resources.some((path) => path.endsWith("compact-village-ropemaker-workshop-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=fortress]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=grand-castle]') && document.querySelector('[data-building=compact-village-guardhouse]') && document.querySelector('[data-building=compact-village-watchtower]') && document.querySelector('[data-building=compact-village-barracks]') && document.querySelector('[data-building=compact-village-palisade-gatehouse]')"));
@@ -3643,10 +3686,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const piggeryDirectUrl = new URL(url);
-  piggeryDirectUrl.searchParams.set("building", "compact-village-piggery");
-  await client.send("Page.navigate", { url: piggeryDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'agriculture' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-piggery' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const ropemakerWorkshopDirectUrl = new URL(url);
+  ropemakerWorkshopDirectUrl.searchParams.set("building", "compact-village-ropemaker-workshop");
+  await client.send("Page.navigate", { url: ropemakerWorkshopDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'industrial' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-ropemaker-workshop' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -3658,16 +3701,16 @@ try {
     conceptPath: new URL(document.querySelector('#conceptImage').dataset.source).pathname,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(directSelection.activeCategory, "agriculture");
-  assert.equal(directSelection.activeBuilding, "compact-village-piggery");
-  assert.match(directSelection.title, /Compact Village Piggery/);
-  assert.equal(directSelection.modelSize, "29 × 19 × 25");
+  assert.equal(directSelection.activeCategory, "industrial");
+  assert.equal(directSelection.activeBuilding, "compact-village-ropemaker-workshop");
+  assert.match(directSelection.title, /Compact Village Ropemaker Workshop/);
+  assert.equal(directSelection.modelSize, "21 × 16 × 35");
   assert.match(directSelection.payload, /^NCM3:/);
   assert.equal(directSelection.conceptComplete, true);
   assert.ok(directSelection.conceptNaturalWidth > 0);
-  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/agriculture/compact-village-piggery.webp");
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/agriculture/compact-village-piggery.json"));
-  assert.ok(directSelection.resources.includes("/build_ncm/concepts/agriculture/compact-village-piggery.webp"));
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/industrial/compact-village-ropemaker-workshop.webp");
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/industrial/compact-village-ropemaker-workshop.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/concepts/industrial/compact-village-ropemaker-workshop.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

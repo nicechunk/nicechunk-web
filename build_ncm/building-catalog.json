@@ -77,6 +77,7 @@
     "buildings/agriculture/compact-village-poultry-house.json",
     "buildings/commerce/compact-village-cobbler-shop.json",
     "buildings/commerce/compact-village-herbalist-shop.json",
-    "buildings/agriculture/compact-village-piggery.json"
+    "buildings/agriculture/compact-village-piggery.json",
+    "buildings/industrial/compact-village-ropemaker-workshop.json"
   ]
 }

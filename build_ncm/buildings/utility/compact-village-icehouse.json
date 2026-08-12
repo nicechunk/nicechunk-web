@@ -1,0 +1,448 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-icehouse",
+  "category": "utility",
+  "kind": "habitable-building",
+  "titles": {
+    "en": "Compact Village Icehouse",
+    "es": "Casa de Hielo Compacta de la Aldea",
+    "fr": "Glacière Compacte du Village",
+    "de": "Kompaktes Dorfeishaus",
+    "ja": "コンパクトな村の氷室",
+    "ru": "Компактный деревенский ледник",
+    "ko": "소형 마을 얼음 저장고",
+    "zh-Hant": "緊湊型村莊冰窖房",
+    "zh-Hans": "紧凑型村庄冰窖房"
+  },
+  "descriptions": {
+    "en": "An enterable 7.6 × 8.0 m icehouse scaled to the 1.75 m avatar. A zero-threshold 5 × 9-voxel delivery entrance leads through a three-deep insulated vestibule and a five-wide inner opening to two cold-room aisles. Thick stone walls, a central thermal divider, two supported raised ice platforms, small high vents, a washable stone floor and a complete deep-overhang shell-white roof form a credible village cold store. Continuous embedded posts, wall plates, clear-height ties and ridge carry the shell; door leaves, ice, food, crates, tools, workers, lighting, signs, snow and terrain are excluded.",
+    "es": "Una casa de hielo transitable de 7,6 × 8,0 m, dimensionada para el avatar de 1,75 m. Una entrada de entrega sin desnivel de 5 × 9 vóxeles conduce por un vestíbulo aislado de tres vóxeles de profundidad y una abertura interior de cinco vóxeles a dos pasillos de cámara fría. Muros gruesos de piedra, un divisor térmico central, dos plataformas elevadas y apoyadas para hielo, pequeñas ventilaciones altas, suelo lavable de piedra y una cubierta completa blanca con gran alero forman un almacén frigorífico verosímil. Postes empotrados, soleras, tirantes elevados y cumbrera continuos sostienen la envolvente; se excluyen hojas de puerta, hielo, alimentos, cajas, herramientas, operarios, iluminación, letreros, nieve y terreno.",
+    "fr": "Une glacière accessible de 7,6 × 8,0 m, dimensionnée pour l’avatar de 1,75 m. Une entrée de livraison sans ressaut de 5 × 9 voxels mène, par un vestibule isolé profond de trois voxels et une ouverture intérieure large de cinq voxels, à deux allées froides. Des murs épais en pierre, une cloison thermique centrale, deux plateformes à glace surélevées et soutenues, de petits évents hauts, un sol en pierre lavable et un toit complet blanc à fort débord composent un entrepôt frigorifique crédible. Des poteaux intégrés, sablières, entraits hauts et une faîtière continus portent l’enveloppe ; vantaux, glace, aliments, caisses, outils, ouvriers, éclairage, enseignes, neige et terrain sont exclus.",
+    "de": "Ein begehbares 7,6 × 8,0 m großes Dorfeishaus im Maßstab des 1,75-m-Avatars. Ein schwellenloser 5 × 9-Voxel-Liefereingang führt durch einen drei Voxel tiefen isolierten Vorraum und eine fünf Voxel breite Innenöffnung zu zwei Kühlraumgängen. Dicke Steinwände, eine mittlere Wärmetrennwand, zwei abgestützte erhöhte Eisplattformen, kleine hohe Lüftungen, ein abwaschbarer Steinboden und ein vollständiges weißes Dach mit tiefem Überstand bilden einen glaubwürdigen dörflichen Kühlspeicher. Durchgehende eingelassene Pfosten, Wandplatten, hoch liegende Binder und der First tragen die Hülle; Türblätter, Eis, Lebensmittel, Kisten, Werkzeuge, Arbeiter, Beleuchtung, Schilder, Schnee und Gelände sind ausgeschlossen.",
+    "ja": "身長1.75 mのアバター尺度に合わせた、進入可能な7.6 × 8.0 mの氷室です。段差のない5 × 9ボクセルの搬入口から、奥行き3ボクセルの断熱前室と幅5ボクセルの内側開口を通って、2本の冷蔵通路へ進めます。厚い石壁、中央の断熱仕切り、支持された2基の高床氷台、小さな高所換気口、洗浄可能な石床、深い軒の全面白色屋根により、現実的な村の冷蔵庫を構成します。埋め込まれた連続柱・桁・高所小屋梁・棟が外皮を支持します。扉、氷、食料、箱、工具、作業者、照明、看板、雪、地形は含みません。",
+    "ru": "Доступный ледник размером 7,6 × 8,0 м в масштабе аватара ростом 1,75 м. Беспороговый вход для доставки 5 × 9 вокселей ведёт через утеплённый тамбур глубиной три вокселя и внутренний проём шириной пять вокселей к двум проходам холодной камеры. Толстые каменные стены, центральная тепловая перегородка, две опирающиеся приподнятые ледяные платформы, небольшие высокие вентиляционные проёмы, моющийся каменный пол и полная белая крыша с глубоким свесом образуют правдоподобное деревенское холодное хранилище. Непрерывные встроенные стойки, обвязки, высокие поперечные связи и конёк несут оболочку; дверные полотна, лёд, продукты, ящики, инструменты, работники, освещение, вывески, снег и рельеф исключены.",
+    "ko": "키 1.75 m 아바타 비율에 맞춘 출입 가능한 7.6 × 8.0 m 얼음 저장고입니다. 단차 없는 5 × 9복셀 반입구에서 깊이 3복셀의 단열 전실과 폭 5복셀의 내부 개구부를 거쳐 두 개의 냉장 통로로 이어집니다. 두꺼운 석벽, 중앙 단열 칸막이, 지지된 두 개의 높인 얼음 받침대, 작은 상부 환기구, 세척 가능한 석재 바닥과 깊은 처마의 완전한 흰색 지붕이 현실적인 마을 냉장 창고를 이룹니다. 벽에 매입된 연속 기둥, 벽도리, 높은 가로보와 용마루가 외피를 지지합니다. 문짝, 얼음, 식품, 상자, 공구, 작업자, 조명, 간판, 눈과 지형은 포함하지 않습니다.",
+    "zh-Hant": "一座可進入、符合1.75公尺角色尺度的7.6 × 8.0公尺冰窖房。零門檻5 × 9體素運貨入口經三體素深保溫前室及五體素寬內門洞，通往兩條冷藏室走道。厚石牆、中央隔熱牆、兩座受承托抬高冰台、小型高位通風口、可沖洗石地坪與完整深出簷貝白屋頂，構成可信的村莊冷藏庫。連續嵌入柱、牆頂樑、高位橫向繫樑及屋脊承托外殼；門扇、冰塊、食物、木箱、工具、工人、照明、招牌、積雪及地形不包含在藍圖內。",
+    "zh-Hans": "一座可进入、符合1.75米角色尺度的7.6 × 8.0米冰窖房。零门槛5 × 9体素运货入口经三体素深保温前室及五体素宽内门洞，通往两条冷藏室走道。厚石墙、中央隔热墙、两座受承托抬高冰台、小型高位通风口、可冲洗石地坪与完整深出檐贝白屋顶，构成可信的村庄冷藏库。连续嵌入柱、墙顶梁、高位横向系梁及屋脊承托外壳；门扇、冰块、食物、木箱、工具、工人、照明、招牌、积雪及地形不包含在蓝图内。"
+  },
+  "referenceImage": "concepts/utility/compact-village-icehouse.webp",
+  "defaults": {
+    "style": "castle",
+    "roof": "shellWhite",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "25 × 27 vu",
+  "height": "17 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 19,
+      "z": 20
+    },
+    "wallFootprintMeters": {
+      "x": 7.6,
+      "z": 8
+    },
+    "doorClearVoxels": {
+      "width": 5,
+      "height": 9
+    },
+    "interiorClearHeightVoxels": 8
+  },
+  "preview": {
+    "fitScale": 1,
+    "minScale": 3,
+    "yaw": 2.45
+  },
+  "extraMaterials": [
+    {
+      "materialId": 57,
+      "phase": "fixtures",
+      "label": "Grounded Raised Ice-platform Supports"
+    },
+    {
+      "materialId": 60,
+      "phase": "openings",
+      "label": "Small High Ventilation Glazing"
+    },
+    {
+      "materialId": 64,
+      "phase": "walls",
+      "label": "Thick Stone Outer Shell, Vestibule and Thermal Divider"
+    },
+    {
+      "materialId": 65,
+      "phase": "foundation",
+      "label": "Broad Deep-stone Footing"
+    },
+    {
+      "materialId": 69,
+      "phase": "fixtures",
+      "label": "Washable Floor, Raised Ice Platforms and Level Delivery Approach"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:ARkRGyUCQQMAAxIAAAACAAACQQMABAAAEgEkAAABRQQABBAAEQFFCgAABAADAUADAQMGCAEBQA8BAwUIAQFAAwEVEggBAUADAQUBCA8BQBQBBQEIDwI8AwcJAQECAQAAEAI8FAcJAQECAQAAEAI8CAcVAgEBAQwAAAIDAwADAQoBAwAADAIDFAADAQoBAwAADAEDCAADAQoBAQMPAAMBCgECAwMKAxIAAQEAACQCAwMKAwEAEwEiAAACAwMJCRIAAQEAAAwBQAUBBwMHAQFADwEHBAcBAQMIAAcBCQEBAw8ABwEJAQEDCAkHCAABAUALAQwBBwgBRQUBDAQBBwFFDgEMBAEHAjkFAAwAAAcBCAAAAjkOAAwAAAcBCAAAAkAECwMQAAEBAAAoAkAGDAMMAAEBAAAoAkAIDQMIAAEBAAAoAkAKDgMEAAEBAAAoAUAMDwMAARQCBQELAQIAGAQEAgACBRULAQIAGAQDAgABAwwQAQAAGA"
+  },
+  "validation": {
+    "expectedVoxelCount": 3204,
+    "expectedPayloadBytes": 373,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      57,
+      60,
+      64,
+      65,
+      69,
+      98
+    ],
+    "expectedMaterialVoxelCounts": {
+      "57": 747,
+      "60": 56,
+      "64": 1191,
+      "65": 30,
+      "69": 430,
+      "98": 750
+    },
+    "requireConnected": true,
+    "supportColumns": [
+      {
+        "label": "Front-left embedded corner post",
+        "x": 3,
+        "z": 3,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Front-right embedded corner post",
+        "x": 20,
+        "z": 3,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-left embedded corner post",
+        "x": 3,
+        "z": 21,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-right embedded corner post",
+        "x": 20,
+        "z": 21,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left delivery-entrance jamb",
+        "x": 8,
+        "z": 3,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right delivery-entrance jamb",
+        "x": 15,
+        "z": 3,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left vestibule jamb",
+        "x": 8,
+        "z": 7,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Right vestibule jamb",
+        "x": 15,
+        "z": 7,
+        "baseY": 0,
+        "topY": 9
+      },
+      {
+        "label": "Left first side post",
+        "x": 3,
+        "z": 9,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left second side post",
+        "x": 3,
+        "z": 15,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right first side post",
+        "x": 20,
+        "z": 9,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right second side post",
+        "x": 20,
+        "z": 15,
+        "baseY": 0,
+        "topY": 10
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Front wall plate and delivery lintel",
+        "axis": "x",
+        "start": 3,
+        "end": 21,
+        "y": 10,
+        "fixed": 3
+      },
+      {
+        "label": "Rear wall plate",
+        "axis": "x",
+        "start": 3,
+        "end": 21,
+        "y": 10,
+        "fixed": 21
+      },
+      {
+        "label": "Left wall plate",
+        "axis": "z",
+        "start": 3,
+        "end": 22,
+        "y": 10,
+        "fixed": 3
+      },
+      {
+        "label": "Right wall plate",
+        "axis": "z",
+        "start": 3,
+        "end": 22,
+        "y": 10,
+        "fixed": 20
+      },
+      {
+        "label": "First clear-height cold-room tie",
+        "axis": "x",
+        "start": 3,
+        "end": 21,
+        "y": 9,
+        "fixed": 9
+      },
+      {
+        "label": "Second clear-height cold-room tie",
+        "axis": "x",
+        "start": 3,
+        "end": 21,
+        "y": 9,
+        "fixed": 15
+      },
+      {
+        "label": "Continuous ridge beam",
+        "axis": "z",
+        "start": 1,
+        "end": 25,
+        "y": 16,
+        "fixed": 12
+      }
+    ],
+    "diagonalBands": [
+      {
+        "label": "Left shell-white insulated roof slope",
+        "materialId": 98,
+        "x": 1,
+        "y": 11,
+        "z": 1,
+        "width": 3,
+        "height": 1,
+        "depth": 25,
+        "count": 5,
+        "dx": 2,
+        "dy": 1,
+        "dz": 0
+      },
+      {
+        "label": "Right shell-white insulated roof slope",
+        "materialId": 98,
+        "x": 21,
+        "y": 11,
+        "z": 1,
+        "width": 3,
+        "height": 1,
+        "depth": 25,
+        "count": 5,
+        "dx": -2,
+        "dy": 1,
+        "dz": 0
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "zero-threshold five-wide delivery entrance",
+        "x": 10,
+        "y": 1,
+        "z": 3,
+        "width": 5,
+        "height": 9,
+        "depth": 2
+      },
+      {
+        "label": "five-wide insulated vestibule",
+        "x": 10,
+        "y": 1,
+        "z": 5,
+        "width": 5,
+        "height": 8,
+        "depth": 4
+      },
+      {
+        "label": "left cold-room access aisle",
+        "x": 5,
+        "y": 3,
+        "z": 9,
+        "width": 5,
+        "height": 6,
+        "depth": 12
+      },
+      {
+        "label": "right cold-room access aisle",
+        "x": 13,
+        "y": 3,
+        "z": 9,
+        "width": 6,
+        "height": 6,
+        "depth": 12
+      }
+    ],
+    "approach": [
+      {
+        "x": 12,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 12,
+        "z": 1,
+        "topY": 1
+      },
+      {
+        "x": 12,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 12,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 12,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 12,
+        "z": 6,
+        "topY": 1
+      },
+      {
+        "x": 12,
+        "z": 8,
+        "topY": 1
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 12,
+        "y": 0,
+        "z": 0,
+        "materialId": 69
+      },
+      {
+        "x": 6,
+        "y": 0,
+        "z": 6,
+        "materialId": 69
+      },
+      {
+        "x": 4,
+        "y": 7,
+        "z": 11,
+        "materialId": 60
+      },
+      {
+        "x": 3,
+        "y": 10,
+        "z": 9,
+        "materialId": 57
+      },
+      {
+        "x": 5,
+        "y": 1,
+        "z": 7,
+        "materialId": 64
+      },
+      {
+        "x": 8,
+        "y": 5,
+        "z": 7,
+        "materialId": 57
+      },
+      {
+        "x": 11,
+        "y": 1,
+        "z": 12,
+        "materialId": 64
+      },
+      {
+        "x": 5,
+        "y": 1,
+        "z": 12,
+        "materialId": 69
+      },
+      {
+        "x": 5,
+        "y": 0,
+        "z": 12,
+        "materialId": 57
+      },
+      {
+        "x": 1,
+        "y": 11,
+        "z": 10,
+        "materialId": 98
+      },
+      {
+        "x": 12,
+        "y": 16,
+        "z": 10,
+        "materialId": 57
+      }
+    ]
+  }
+}

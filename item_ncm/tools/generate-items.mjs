@@ -118,6 +118,19 @@ const WALL_CLOCK_LAYOUTS = Object.freeze({
     pendulum: [18, 19],
   },
 });
+const SHOP_SIGN_LAYOUTS = Object.freeze({
+  "iron-bracketed-village-shop-sign": {
+    wallPlate: 0,
+    arm: 1,
+    endCap: 2,
+    brace: 3,
+    hangers: [4, 5],
+    board: 6,
+    frame: [7, 8, 9, 10],
+    cornerStuds: [11, 12, 13, 14],
+    emblem: [15, 16],
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -331,6 +344,11 @@ const ITEM_NAMES = Object.freeze({
     "Copper-rimmed Village Wall Clock", "Reloj de pared de aldea con aro de cobre", "Horloge murale de village cerclée de cuivre",
     "Dorf-Wanduhr mit Kupferrand", "銅縁の村落壁掛け時計", "Деревенские настенные часы с медным ободом",
     "구리 테두리 마을 벽시계", "銅邊村莊掛鐘", "铜边村庄挂钟",
+  ),
+  "iron-bracketed-village-shop-sign": names(
+    "Iron-bracketed Village Shop Sign", "Letrero de tienda de aldea con soporte de hierro", "Enseigne de boutique villageoise sur potence en fer",
+    "Dorfladenschild mit Eisenhalterung", "鉄製ブラケット付き村落商店看板", "Деревенская магазинная вывеска на железном кронштейне",
+    "철제 브래킷 마을 상점 간판", "鐵架村莊商店招牌", "铁架村庄商店招牌",
   ),
   "iron-blacksmith-anvil": names(
     "Iron Blacksmith Anvil", "Yunque de herrero de hierro", "Enclume de forgeron en fer", "Eiserner Schmiedeamboss",
@@ -810,6 +828,26 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+  placeable("signage", "iron-bracketed-village-shop-sign", [
+    part("iron_bloom", [4, 56, 3], [-30, 16, 0]),
+    part("iron_bloom", [60, 4, 3], [2, 42, 0]),
+    part("iron_bloom", [6, 8, 4], [35, 42, 0]),
+    part("iron_bloom", [18, 22, 2], [-19, 29, 0], { mask: shopSignBraceMask }),
+    part("iron_bloom", [3, 14, 2], [-4, 33, 0]),
+    part("iron_bloom", [3, 14, 2], [20, 33, 0]),
+    part("wooden_plank", [40, 28, 1], [8, 8, 0]),
+    part("squared_timber", [4, 32, 2], [-14, 8, 0]),
+    part("squared_timber", [4, 32, 2], [30, 8, 0]),
+    part("squared_timber", [40, 4, 2], [8, 24, 0]),
+    part("squared_timber", [40, 4, 2], [8, -8, 0]),
+    ...[-13, 29].flatMap((x) => [-7, 23].map((y) => part("iron_bloom", [3, 3, 1], [x, y, 1]))),
+    part("red_dye", [24, 20, 1], [8, 8, 1], { mask: shopSignDiamondMask }),
+    part("yellow_dye", [14, 12, 1], [8, 8, 2], { mask: shopSignMerchantMarkMask }),
+  ], { yaw: -0.66, pitch: 0.28 }, {
+    image: "concepts/signage/iron-bracketed-village-shop-sign-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
 ]);
 
 generate();
@@ -891,6 +929,8 @@ function buildItem(spec) {
   if (publicBenchLayout) validatePublicBenchGeometry(spec, runtime, publicBenchLayout);
   const wallClockLayout = WALL_CLOCK_LAYOUTS[spec.key] ?? null;
   if (wallClockLayout) validateWallClockGeometry(spec, runtime, wallClockLayout);
+  const shopSignLayout = SHOP_SIGN_LAYOUTS[spec.key] ?? null;
+  if (shopSignLayout) validateShopSignGeometry(spec, runtime, shopSignLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -989,6 +1029,7 @@ function buildItem(spec) {
       ...(streetLanternLayout ? { streetLanternGeometryValidated: true } : {}),
       ...(publicBenchLayout ? { publicBenchGeometryValidated: true } : {}),
       ...(wallClockLayout ? { wallClockGeometryValidated: true } : {}),
+      ...(shopSignLayout ? { shopSignGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -1354,6 +1395,60 @@ function validateWallClockGeometry(spec, runtime, layout) {
         throw new Error(`${spec.key} components ${left} and ${right} intersect.`);
       }
     }
+  }
+}
+
+function validateShopSignGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 17 || runtime.boundsQ.sizeQ.join(",") !== "70,58,5") {
+    throw new Error(`${spec.key} must preserve its human-scale projecting shop-sign proportions.`);
+  }
+  const components = runtime.components ?? [];
+  const componentBounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    "iron_bloom", "iron_bloom", "iron_bloom", "iron_bloom", "iron_bloom", "iron_bloom",
+    "wooden_plank", "squared_timber", "squared_timber", "squared_timber", "squared_timber",
+    "iron_bloom", "iron_bloom", "iron_bloom", "iron_bloom", "red_dye", "yellow_dye",
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  const wallPlate = componentBounds[layout.wallPlate];
+  const arm = componentBounds[layout.arm];
+  const endCap = componentBounds[layout.endCap];
+  const brace = componentBounds[layout.brace];
+  const board = componentBounds[layout.board];
+  const [leftFrame, rightFrame, topFrame, bottomFrame] = layout.frame.map((index) => componentBounds[index]);
+  if (wallPlate.max[1] !== arm.max[1] || wallPlate.max[0] !== arm.min[0]
+    || arm.max[0] !== endCap.min[0] || brace.max[1] !== arm.min[1]
+    || brace.min[0] < wallPlate.min[0] || brace.max[0] > arm.max[0]) {
+    throw new Error(`${spec.key} bracket does not form one supported wall-mounted assembly.`);
+  }
+  if (board.min[0] !== leftFrame.max[0] || board.max[0] !== rightFrame.min[0]
+    || board.max[1] !== topFrame.min[1] || board.min[1] !== bottomFrame.max[1]) {
+    throw new Error(`${spec.key} timber panel is not enclosed by its four frame members.`);
+  }
+  for (const hangerIndex of layout.hangers) {
+    const hanger = componentBounds[hangerIndex];
+    if (hanger.max[1] !== arm.min[1] || hanger.min[1] !== topFrame.max[1]) {
+      throw new Error(`${spec.key} hanger ${hangerIndex} does not meet both arm and sign frame.`);
+    }
+  }
+  for (const studIndex of layout.cornerStuds) {
+    const stud = componentBounds[studIndex];
+    if (stud.min[2] !== board.max[2]) {
+      throw new Error(`${spec.key} stud ${studIndex} leaves the board face.`);
+    }
+  }
+  const [backEmblem, frontEmblem] = layout.emblem.map((index) => componentBounds[index]);
+  if (backEmblem.min[2] !== board.max[2] || frontEmblem.min[2] !== backEmblem.max[2]
+    || frontEmblem.min[0] < backEmblem.min[0] || frontEmblem.max[0] > backEmblem.max[0]
+    || frontEmblem.min[1] < backEmblem.min[1] || frontEmblem.max[1] > backEmblem.max[1]) {
+    throw new Error(`${spec.key} merchant emblem is not layered on the board face.`);
   }
 }
 
@@ -1746,6 +1841,19 @@ function clockHandsMask({ x, y }) {
   const hourHand = (x === 6 || x === 7) && y >= 4 && y <= 8;
   const minuteHand = (y === 4 || y === 5) && x >= 6 && x <= 12;
   return hourHand || minuteHand;
+}
+
+function shopSignBraceMask({ nx, ny }) {
+  return Math.abs(ny - nx) <= 0.28;
+}
+
+function shopSignDiamondMask({ nx, ny }) {
+  return Math.abs(nx) + Math.abs(ny) <= 1.08;
+}
+
+function shopSignMerchantMarkMask({ nx, ny }) {
+  const diamond = Math.abs(nx) + Math.abs(ny) <= 1.12;
+  return diamond && (Math.abs(nx) <= 0.24 || Math.abs(ny) <= 0.28);
 }
 
 function chiselTip({ nx, ny, nz }) {

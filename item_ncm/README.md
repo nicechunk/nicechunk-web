@@ -11,7 +11,7 @@ ITEM_NCM is the public NiceChunk forge-item blueprint registry. It follows the s
 - Every item JSON contains its own nine-language names and descriptions.
 - `tools/generate-items.mjs` is the canonical source for the initial collection and regenerates every item JSON deterministically.
 
-The registry currently contains 40 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, containers, cooking, books and writing, and interior decor. New designs begin with an Imagegen material-style concept; the resulting item JSON records the concept path, provenance, version, and SHA-256 before the forge encoding is accepted.
+The registry currently contains 44 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, containers, cooking, commerce, construction, books and writing, interior decor, and signage. New designs begin with an Imagegen material-style concept; the resulting item JSON records the concept path, provenance, version, and SHA-256 before the forge encoding is accepted.
 
 ## Forge guarantees
 
@@ -32,6 +32,7 @@ The generator rejects an item unless all of these checks pass:
 13. Street lanterns keep a stable square plinth, a centered high post, and an amber chamber enclosed by top and bottom plates with four aligned corner rails and no component intersection.
 14. Public benches preserve a two-person human scale, a safe seat height, four supporting legs, two supported back slats, and a symmetric iron-braced underframe without component intersection.
 15. Wall clocks keep a human-scale portrait backplate, a connected wall hanger, ordered timber-dial/copper-bezel/glass layers, twelve iron hour studs, readable copper hands, and a framed glass pendulum chamber without component intersection.
+16. Projecting shop signs keep a wall-supported iron bracket, two aligned hangers, a timber panel enclosed by four rails, face-mounted studs, and a layered dyed emblem at human-readable village scale.
 
 `verification.chainMinted` remains `false` because this library validates blueprint readiness; it does not claim that a blueprint PDA has already been created.
 

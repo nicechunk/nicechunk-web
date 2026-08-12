@@ -94,10 +94,23 @@ const wallClockLayouts = new Map([
     pendulum: [18, 19],
   }],
 ]);
+const shopSignLayouts = new Map([
+  ["iron-bracketed-village-shop-sign", {
+    wallPlate: 0,
+    arm: 1,
+    endCap: 2,
+    brace: 3,
+    hangers: [4, 5],
+    board: 6,
+    frame: [7, 8, 9, 10],
+    cornerStuds: [11, 12, 13, 14],
+    emblem: [15, 16],
+  }],
+]);
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
-assert.equal(catalog.items.length, 43);
+assert.equal(catalog.items.length, 44);
 assert.equal(new Set(catalog.items).size, catalog.items.length);
 
 const listedFiles = new Set(catalog.items);
@@ -116,6 +129,7 @@ let drawerCabinetGeometryCount = 0;
 let streetLanternGeometryCount = 0;
 let publicBenchGeometryCount = 0;
 let wallClockGeometryCount = 0;
+let shopSignGeometryCount = 0;
 for (const file of catalog.items) {
   assert.match(file, /^json\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/);
   const item = json(join(root, file));
@@ -214,6 +228,13 @@ for (const file of catalog.items) {
     assert.equal(item.verification.wallClockGeometryValidated, true);
     assertWallClockGeometry(item, runtime, wallClockLayout);
   }
+  const shopSignLayout = shopSignLayouts.get(item.key);
+  if (shopSignLayout) {
+    shopSignGeometryCount += 1;
+    assert.equal(item.category, "signage");
+    assert.equal(item.verification.shopSignGeometryValidated, true);
+    assertShopSignGeometry(item, runtime, shopSignLayout);
+  }
   assert.equal(forgeWorkbenchComponentsConnected(runtime.components), true, `${item.key} must be a connected assembly`);
   const grip = validateForgeGripBindings(runtime.components);
   assert.equal(grip.valid, true, `${item.key} grip must remain valid after decoding`);
@@ -301,19 +322,21 @@ assert.deepEqual([...categories], [
   ["construction", 1],
   ["books-writing", 7],
   ["interior-decor", 2],
+  ["signage", 1],
 ]);
 assert.equal(tools, 15);
-assert.equal(placeables, 28);
-assert.equal(conceptReferences, 16);
+assert.equal(placeables, 29);
+assert.equal(conceptReferences, 17);
 assert.equal(bookGeometryCount, 7);
 assert.equal(framedTextileGeometryCount, 1);
 assert.equal(drawerCabinetGeometryCount, 1);
 assert.equal(streetLanternGeometryCount, 1);
 assert.equal(publicBenchGeometryCount, 1);
 assert.equal(wallClockGeometryCount, 1);
+assert.equal(shopSignGeometryCount, 1);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
-console.log("item_ncm catalog tests passed: 43 canonical NCF1 items across 13 categories");
+console.log("item_ncm catalog tests passed: 44 canonical NCF1 items across 14 categories");
 
 function json(file) {
   return JSON.parse(readFileSync(file, "utf8"));
@@ -562,4 +585,36 @@ function assertWallClockGeometry(item, runtime, layout) {
       assert.equal(positiveVolumeOverlap(bounds[left], bounds[right]), false, `${item.key} components ${left} and ${right} intersect`);
     }
   }
+}
+
+function assertShopSignGeometry(item, runtime, layout) {
+  assert.equal(runtime.componentCount, 17);
+  assert.deepEqual(item.dimensions.sizeQ, [70, 58, 5]);
+  assert.ok(item.dimensions.width >= 1 && item.dimensions.width <= 1.15);
+  assert.ok(item.dimensions.height >= 0.9 && item.dimensions.height <= 1);
+  assert.ok(item.dimensions.depth >= 0.07 && item.dimensions.depth <= 0.09);
+  assert.deepEqual(
+    [...new Set(item.forge.materialComponents.map(({ materialId }) => materialId))].sort(),
+    ["iron_bloom", "red_dye", "squared_timber", "wooden_plank", "yellow_dye"],
+  );
+  const components = runtime.components;
+  const bounds = components.map((component) => componentBoundsQ(component));
+  assert.deepEqual(components[layout.wallPlate].dimsQ, [4, 56, 3]);
+  assert.deepEqual(components[layout.arm].dimsQ, [60, 4, 3]);
+  assert.deepEqual(components[layout.endCap].dimsQ, [6, 8, 4]);
+  assert.equal(bounds[layout.wallPlate].max[0], bounds[layout.arm].min[0]);
+  assert.equal(bounds[layout.arm].max[0], bounds[layout.endCap].min[0]);
+  const [leftFrame, rightFrame, topFrame, bottomFrame] = layout.frame.map((index) => bounds[index]);
+  const board = bounds[layout.board];
+  assert.equal(board.min[0], leftFrame.max[0]);
+  assert.equal(board.max[0], rightFrame.min[0]);
+  assert.equal(board.max[1], topFrame.min[1]);
+  assert.equal(board.min[1], bottomFrame.max[1]);
+  for (const hangerIndex of layout.hangers) {
+    assert.equal(bounds[hangerIndex].max[1], bounds[layout.arm].min[1]);
+    assert.equal(bounds[hangerIndex].min[1], topFrame.max[1]);
+  }
+  for (const studIndex of layout.cornerStuds) assert.equal(bounds[studIndex].min[2], board.max[2]);
+  assert.equal(bounds[layout.emblem[0]].min[2], board.max[2]);
+  assert.equal(bounds[layout.emblem[1]].min[2], bounds[layout.emblem[0]].max[2]);
 }

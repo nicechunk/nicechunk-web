@@ -52,7 +52,7 @@ try {
   await client.send("Emulation.setDeviceMetricsOverride", { width: 1600, height: 1200, deviceScaleFactor: 1, mobile: false });
   await client.send("Page.navigate", { url });
   await waitFor(() => evaluate(client, `document.readyState === "complete"
-    && document.querySelectorAll("[data-category]").length === 11
+    && document.querySelectorAll("[data-category]").length === 14
     && document.querySelectorAll("[data-item]").length === 4
     && document.querySelector("#runtimeState").dataset.state === "verified"`));
 
@@ -80,9 +80,9 @@ try {
   assert.equal(initial.locale, "en");
   assert.equal(initial.title, "ITEM_NCM — NiceChunk Forge Item Registry");
   assert.equal(initial.languageCount, 9);
-  assert.equal(initial.categoryCount, 11);
+  assert.equal(initial.categoryCount, 14);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /40 ITEMS/);
+  assert.match(initial.total, /44 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -484,14 +484,40 @@ try {
   assert.equal(wallClock.selectedInUrl, "copper-rimmed-village-wall-clock");
   assert.ok(wallClock.resources.includes("/item_ncm/json/interior-decor/copper-rimmed-village-wall-clock.json"));
 
+  await evaluate(client, `document.querySelector('[data-category="signage"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 1
+    && document.querySelector('[data-item="iron-bracketed-village-shop-sign"]')`));
+  assert.equal(await evaluate(client, `performance.getEntriesByType("resource").some((entry) => new URL(entry.name).pathname.includes("/item_ncm/json/signage/"))`), false,
+    "category browsing must not load signage item JSON files");
+  await evaluate(client, `document.querySelector('[data-item="iron-bracketed-village-shop-sign"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="iron-bracketed-village-shop-sign"].active')
+    && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const shopSign = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payload: document.querySelector("#codeOutput").value,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    materialRows: document.querySelectorAll("#bomRows .bom-row").length,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(shopSign.title, "Iron-bracketed Village Shop Sign");
+  assert.equal(shopSign.type, "PLACEABLE");
+  assert.match(shopSign.payload, /^NCF1\./);
+  assert.equal(shopSign.componentCount, "17");
+  assert.equal(shopSign.materialRows, 5);
+  assert.equal(shopSign.selectedInUrl, "iron-bracketed-village-shop-sign");
+  assert.ok(shopSign.resources.includes("/item_ncm/json/signage/iron-bracketed-village-shop-sign.json"));
+
   await evaluate(client, `(() => {
     const select = document.querySelector("[data-language-select]");
     select.value = "zh-Hans";
     select.dispatchEvent(new Event("change", { bubbles: true }));
   })()`);
-  await waitFor(() => evaluate(client, `document.querySelector("#itemTitle").textContent === "铜边村庄挂钟"`));
-  assert.equal(await evaluate(client, `document.querySelector('[data-category="interior-decor"] span').textContent`), "室内装饰");
-  assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), wallClock.payload);
+  await waitFor(() => evaluate(client, `document.querySelector("#itemTitle").textContent === "铁架村庄商店招牌"`));
+  assert.equal(await evaluate(client, `document.querySelector('[data-category="signage"] span').textContent`), "招牌与公告板");
+  assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), shopSign.payload);
   await evaluate(client, `(() => {
     const select = document.querySelector("[data-language-select]");
     select.value = "en";
@@ -567,7 +593,7 @@ try {
   })()`);
   assert.equal(mobile.clientWidth, 390);
   assert.equal(mobile.scrollWidth, mobile.clientWidth, "mobile page must not create document-level horizontal overflow");
-  assert.equal(mobile.categoryCount, 11);
+  assert.equal(mobile.categoryCount, 14);
   assert.equal(mobile.itemCount, 4);
   assert.equal(mobile.libraryBeforePreview, true);
   assert.equal(mobile.previewBeforeDetails, true);

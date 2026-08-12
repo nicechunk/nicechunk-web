@@ -1,0 +1,450 @@
+{
+  "schema": "nicechunk.ncm-building.v1",
+  "key": "compact-village-wheelwright-workshop",
+  "category": "industrial",
+  "kind": "habitable-building",
+  "titles": {
+    "en": "Compact Village Wheelwright Workshop",
+    "es": "Taller Compacto de Carretero de la Aldea",
+    "fr": "Atelier Compact de Charron du Village",
+    "de": "Kompakte Dorfradmacherei",
+    "ja": "コンパクトな村の車輪職人工房",
+    "ru": "Компактная деревенская колёсная мастерская",
+    "ko": "소형 마을 수레바퀴 공방",
+    "zh-Hant": "緊湊型村莊車輪匠工坊",
+    "zh-Hans": "紧凑型村庄车轮匠工坊"
+  },
+  "descriptions": {
+    "en": "An enterable 9.2 × 7.2 m wheelwright workshop scaled to the 1.75 m avatar. A zero-threshold 6 × 9-voxel material portal opens to a six-wide clear delivery and assembly lane. A supported hub bench, face-connected spoke rack, two fixed empty wheel-assembly frames, high side glazing, durable polished-stone floor and a complete deep-overhang terracotta roof support credible wheel construction and repair. Continuous grounded posts, wall plates, cross ties and ridge carry the shell; door leaves, wheels, hubs, spokes, carts, loose timber, tools, workers, lighting and terrain are excluded.",
+    "es": "Un taller de carretero transitable de 9,2 × 7,2 m, dimensionado para el avatar de 1,75 m. Un portal de materiales sin desnivel de 6 × 9 vóxeles abre a un carril despejado de entrega y montaje de seis vóxeles. Un banco apoyado para cubos, un estante para radios unido por caras, dos bastidores fijos y vacíos de montaje de ruedas, acristalamiento lateral alto, suelo resistente de piedra pulida y una cubierta completa de terracota con gran alero permiten una construcción y reparación verosímiles. Postes, soleras, tirantes y cumbrera continuos y anclados sostienen la envolvente; se excluyen hojas de puerta, ruedas, cubos, radios, carros, madera suelta, herramientas, operarios, iluminación y terreno.",
+    "fr": "Un atelier de charron accessible de 9,2 × 7,2 m, dimensionné pour l’avatar de 1,75 m. Un portail de matériaux sans ressaut de 6 × 9 voxels donne sur une voie libre de livraison et d’assemblage large de six voxels. Un établi soutenu pour les moyeux, un râtelier de rayons relié par faces, deux cadres fixes et vides d’assemblage de roues, un vitrage latéral haut, un sol durable en pierre polie et un toit complet en terre cuite à fort débord permettent une fabrication et une réparation crédibles. Des poteaux, sablières, entraits et une faîtière continus et ancrés portent l’enveloppe ; vantaux, roues, moyeux, rayons, chariots, bois mobile, outils, artisans, éclairage et terrain sont exclus.",
+    "de": "Eine begehbare 9,2 × 7,2 m große Dorfradmacherei im Maßstab des 1,75-m-Avatars. Ein schwellenloses 6 × 9-Voxel-Materialtor öffnet sich zu einer sechs Voxel breiten freien Liefer- und Montagelinie. Eine abgestützte Nabenbank, ein flächenverbundenes Speichenregal, zwei feste leere Radmontagerahmen, hohe Seitenverglasung, ein robuster polierter Steinboden und ein vollständiges Terrakottadach mit tiefem Überstand ermöglichen glaubwürdigen Radbau und Reparatur. Durchgehende bodengebundene Pfosten, Wandplatten, Querbinder und der First tragen die Hülle; Türblätter, Räder, Naben, Speichen, Wagen, loses Holz, Werkzeuge, Arbeiter, Beleuchtung und Gelände sind ausgeschlossen.",
+    "ja": "身長1.75 mのアバター尺度に合わせた、進入可能な9.2 × 7.2 mの車輪職人工房です。段差のない6 × 9ボクセルの材料口が、幅6ボクセルの搬入・組立用空間へ開きます。支持された輪毂作業台、面接続されたスポーク棚、固定された空の車輪組立フレーム2基、高所側面窓、耐久性のある磨石床、深い軒を持つ全面テラコッタ屋根により、現実的な車輪製作と修理を構成します。地面から連続する柱・桁・小屋梁・棟が外皮を支持します。扉、車輪、輪毂、スポーク、荷車、ばらの木材、工具、職人、照明、地形は含みません。",
+    "ru": "Доступная колёсная мастерская размером 9,2 × 7,2 м в масштабе аватара ростом 1,75 м. Беспороговый проём для материалов 6 × 9 вокселей открывается в свободную зону доставки и сборки шириной шесть вокселей. Опирающийся верстак для ступиц, соединённая по граням стойка для спиц, две стационарные пустые рамы для сборки колёс, высокое боковое остекление, прочный пол из полированного камня и полная терракотовая крыша с глубоким свесом обеспечивают правдоподобные изготовление и ремонт колёс. Непрерывные опирающиеся на землю стойки, обвязки, поперечные связи и конёк несут оболочку; дверные полотна, колёса, ступицы, спицы, телеги, отдельная древесина, инструменты, мастера, освещение и рельеф исключены.",
+    "ko": "키 1.75 m 아바타 비율에 맞춘 출입 가능한 9.2 × 7.2 m 수레바퀴 공방입니다. 단차 없는 6 × 9복셀 자재 출입구가 폭 6복셀의 빈 반입·조립 통로로 열립니다. 지지된 바퀴통 작업대, 면으로 연결된 바퀴살 선반, 고정된 빈 바퀴 조립 프레임 두 개, 상부 측면 창, 내구성 있는 연마석 바닥과 깊은 처마의 완전한 테라코타 지붕이 현실적인 바퀴 제작과 수리를 지원합니다. 지면에서 연속되는 기둥, 벽도리, 가로보와 용마루가 외피를 지지합니다. 문짝, 바퀴, 바퀴통, 바퀴살, 수레, 낱개 목재, 공구, 작업자, 조명과 지형은 포함하지 않습니다.",
+    "zh-Hant": "一座可進入、符合1.75公尺角色尺度的9.2 × 7.2公尺車輪匠工坊。零門檻6 × 9體素材門通往六體素寬的淨空搬運及裝配通道。受承托輪轂工作檯、面連接輻條架、兩座固定空車輪裝配框、高位側窗、耐用磨光石地坪與完整深出簷赤陶屋頂，支援可信的車輪製造與維修。連續落地柱、牆頂樑、橫向繫樑及屋脊承托外殼；門扇、車輪、輪轂、輻條、車輛、散裝木料、工具、工人、照明及地形不包含在藍圖內。",
+    "zh-Hans": "一座可进入、符合1.75米角色尺度的9.2 × 7.2米车轮匠工坊。零门槛6 × 9体素材门通往六体素宽的净空搬运及装配通道。受承托轮毂工作台、面连接辐条架、两座固定空车轮装配框、高位侧窗、耐用磨光石地坪与完整深出檐赤陶屋顶，支持可信的车轮制造与维修。连续落地柱、墙顶梁、横向系梁及屋脊承托外壳；门扇、车轮、轮毂、辐条、车辆、散装木料、工具、工人、照明及地形不包含在蓝图内。"
+  },
+  "referenceImage": "concepts/industrial/compact-village-wheelwright-workshop.webp",
+  "defaults": {
+    "style": "cottage",
+    "roof": "terracotta",
+    "glazed": false
+  },
+  "capabilities": {
+    "styles": false,
+    "roofVariants": false,
+    "glazing": false
+  },
+  "access": {
+    "enterable": true,
+    "maxStepRise": 0
+  },
+  "doorOpening": "open",
+  "footprint": "31 × 25 vu",
+  "height": "19 vu",
+  "referenceScale": "1 vu = 0.4 m; the 1.75 m avatar is 4.375 vu tall",
+  "scale": {
+    "voxelMeters": 0.4,
+    "avatarHeightVoxels": 4.375,
+    "wallFootprintVoxels": {
+      "x": 23,
+      "z": 18
+    },
+    "wallFootprintMeters": {
+      "x": 9.2,
+      "z": 7.2
+    },
+    "doorClearVoxels": {
+      "width": 6,
+      "height": 9
+    },
+    "interiorClearHeightVoxels": 8
+  },
+  "preview": {
+    "fitScale": 1,
+    "minScale": 3.2,
+    "yaw": 2.45
+  },
+  "extraMaterials": [
+    {
+      "materialId": 55,
+      "phase": "fixtures",
+      "label": "Supported Hub Bench and Two Fixed Empty Wheel-assembly Bases"
+    },
+    {
+      "materialId": 56,
+      "phase": "fixtures",
+      "label": "Face-connected Spoke Rack, Bench Legs and Empty Wheel-assembly Frames"
+    },
+    {
+      "materialId": 58,
+      "phase": "openings",
+      "label": "Permanent High Work-light Glazing"
+    },
+    {
+      "materialId": 69,
+      "phase": "floor",
+      "label": "Durable Polished-stone Work Floor and Level Delivery Approach"
+    }
+  ],
+  "ncm": {
+    "format": "NCM3_ROLE_TEMPLATE",
+    "materialRoles": {
+      "foundation": 1,
+      "wall": 2,
+      "structure": 3,
+      "glazing": 4,
+      "roof": 5,
+      "floor": 6,
+      "chimney": 7
+    },
+    "code": "NCM3:AR8TGSUCAQQABBYAAAEAACQCAQQABQAAEAEsAAABRQUABRQADwFFCwAABgAEAQIEAQQHCAABAhIBBAgIAAECBAEVFggAAQIEAQUACA8BAhoBBQAIDwI6BAUHAAECAgAACgI6GgUHAAECAgAACgIDBAAEAAoAAwAADAEDBAAVAAoAAgMaAAQACgADAAAMAQMaABUACgACAwsABAAKAAEOAAACAxIABAAKAAEQAAACAwQKBBYAAAEAACICAwQKBAAAEQEsAAACAwQJChYAAAEAAAwBNwUCCAQBBgI4BQAIAAEGAR4AAAI4FgEIAAYAAgAACgI4FgMJAAAGAgAEAAI3FAERBQAAAQAABAI4FAARAAAABQIAAAI4FAIRAAUAAQAACAI4FAIRBQAAAQAACAICBQsEFAAAAQAAIgICBwwEEAAAAQAAIgICCQ0EDAAAAQAAIgICCw4ECAAAAQAAIgICDQ8EBAAAAQAAIgECDxAEAAARAgUCCwICABUGBAIAAgUaCwICABUGAwIAAQMPEQIAABU"
+  },
+  "validation": {
+    "expectedVoxelCount": 2384,
+    "expectedPayloadBytes": 401,
+    "maxPayloadBytes": 512,
+    "expectedDefaultMaterialIds": [
+      55,
+      56,
+      57,
+      58,
+      68,
+      69,
+      70,
+      96
+    ],
+    "expectedMaterialVoxelCounts": {
+      "55": 82,
+      "56": 95,
+      "57": 264,
+      "58": 36,
+      "68": 62,
+      "69": 350,
+      "70": 659,
+      "96": 836
+    },
+    "requireConnected": true,
+    "supportColumns": [
+      {
+        "label": "Front-left corner post",
+        "x": 4,
+        "z": 4,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Front-right corner post",
+        "x": 26,
+        "z": 4,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-left corner post",
+        "x": 4,
+        "z": 21,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Rear-right corner post",
+        "x": 26,
+        "z": 21,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left material-portal jamb",
+        "x": 11,
+        "z": 4,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right material-portal jamb",
+        "x": 18,
+        "z": 4,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left first side post",
+        "x": 4,
+        "z": 10,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Left second side post",
+        "x": 4,
+        "z": 16,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right first side post",
+        "x": 26,
+        "z": 10,
+        "baseY": 0,
+        "topY": 10
+      },
+      {
+        "label": "Right second side post",
+        "x": 26,
+        "z": 16,
+        "baseY": 0,
+        "topY": 10
+      }
+    ],
+    "horizontalSpans": [
+      {
+        "label": "Front wall plate and portal lintel",
+        "axis": "x",
+        "start": 4,
+        "end": 26,
+        "y": 10,
+        "fixed": 4
+      },
+      {
+        "label": "Rear wall plate",
+        "axis": "x",
+        "start": 4,
+        "end": 26,
+        "y": 10,
+        "fixed": 21
+      },
+      {
+        "label": "Left wall plate",
+        "axis": "z",
+        "start": 4,
+        "end": 21,
+        "y": 10,
+        "fixed": 4
+      },
+      {
+        "label": "Right wall plate",
+        "axis": "z",
+        "start": 4,
+        "end": 21,
+        "y": 10,
+        "fixed": 26
+      },
+      {
+        "label": "First clear-height roof tie",
+        "axis": "x",
+        "start": 4,
+        "end": 26,
+        "y": 9,
+        "fixed": 10
+      },
+      {
+        "label": "Second clear-height roof tie",
+        "axis": "x",
+        "start": 4,
+        "end": 26,
+        "y": 9,
+        "fixed": 16
+      },
+      {
+        "label": "Continuous ridge beam",
+        "axis": "z",
+        "start": 2,
+        "end": 23,
+        "y": 17,
+        "fixed": 15
+      }
+    ],
+    "diagonalBands": [
+      {
+        "label": "Left deep-overhang terracotta roof slope",
+        "materialId": 96,
+        "x": 2,
+        "y": 11,
+        "z": 2,
+        "width": 3,
+        "height": 1,
+        "depth": 22,
+        "count": 7,
+        "dx": 2,
+        "dy": 1,
+        "dz": 0,
+        "allowedPenetrations": [
+          {
+            "label": "Grounded ridge beam",
+            "x": 15,
+            "y": 17,
+            "z": 2,
+            "width": 1,
+            "height": 1,
+            "depth": 22,
+            "materialId": 57
+          }
+        ]
+      },
+      {
+        "label": "Right deep-overhang terracotta roof slope",
+        "materialId": 96,
+        "x": 26,
+        "y": 11,
+        "z": 2,
+        "width": 3,
+        "height": 1,
+        "depth": 22,
+        "count": 7,
+        "dx": -2,
+        "dy": 1,
+        "dz": 0,
+        "allowedPenetrations": [
+          {
+            "label": "Grounded ridge beam",
+            "x": 15,
+            "y": 17,
+            "z": 2,
+            "width": 1,
+            "height": 1,
+            "depth": 22,
+            "materialId": 57
+          }
+        ]
+      }
+    ],
+    "openVolumes": [
+      {
+        "label": "zero-threshold six-wide material portal",
+        "x": 12,
+        "y": 1,
+        "z": 4,
+        "width": 6,
+        "height": 9,
+        "depth": 1
+      },
+      {
+        "label": "six-wide delivery and assembly lane",
+        "x": 12,
+        "y": 1,
+        "z": 5,
+        "width": 6,
+        "height": 8,
+        "depth": 16
+      }
+    ],
+    "approach": [
+      {
+        "x": 14,
+        "z": 0,
+        "topY": 1
+      },
+      {
+        "x": 14,
+        "z": 1,
+        "topY": 1
+      },
+      {
+        "x": 14,
+        "z": 2,
+        "topY": 1
+      },
+      {
+        "x": 14,
+        "z": 3,
+        "topY": 1
+      },
+      {
+        "x": 14,
+        "z": 4,
+        "topY": 1
+      },
+      {
+        "x": 14,
+        "z": 5,
+        "topY": 1
+      },
+      {
+        "x": 14,
+        "z": 10,
+        "topY": 1
+      },
+      {
+        "x": 14,
+        "z": 20,
+        "topY": 1
+      }
+    ],
+    "solidPoints": [
+      {
+        "x": 14,
+        "y": 0,
+        "z": 0,
+        "materialId": 69
+      },
+      {
+        "x": 5,
+        "y": 0,
+        "z": 5,
+        "materialId": 69
+      },
+      {
+        "x": 4,
+        "y": 4,
+        "z": 8,
+        "materialId": 70
+      },
+      {
+        "x": 4,
+        "y": 5,
+        "z": 8,
+        "materialId": 58
+      },
+      {
+        "x": 4,
+        "y": 10,
+        "z": 10,
+        "materialId": 57
+      },
+      {
+        "x": 5,
+        "y": 2,
+        "z": 8,
+        "materialId": 55
+      },
+      {
+        "x": 5,
+        "y": 0,
+        "z": 8,
+        "materialId": 56
+      },
+      {
+        "x": 22,
+        "y": 4,
+        "z": 8,
+        "materialId": 56
+      },
+      {
+        "x": 20,
+        "y": 1,
+        "z": 17,
+        "materialId": 55
+      },
+      {
+        "x": 20,
+        "y": 0,
+        "z": 17,
+        "materialId": 56
+      },
+      {
+        "x": 2,
+        "y": 11,
+        "z": 10,
+        "materialId": 96
+      },
+      {
+        "x": 15,
+        "y": 17,
+        "z": 10,
+        "materialId": 57
+      }
+    ]
+  }
+}

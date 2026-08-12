@@ -262,6 +262,18 @@ const WASHSTAND_LAYOUTS = Object.freeze({
     towelRail: [18, 19, 20],
   },
 });
+const SINGLE_BED_FRAME_LAYOUTS = Object.freeze({
+  "iron-braced-timber-village-inn-single-bed-frame": {
+    feet: [0, 1, 2, 3],
+    posts: [4, 5, 6, 7],
+    sideRails: [8, 9],
+    headRails: [10, 11],
+    headSlats: [12, 13, 14],
+    footboard: 15,
+    supportSlats: [16, 17, 18, 19],
+    caps: [20, 21, 22, 23],
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -532,6 +544,11 @@ const ITEM_NAMES = Object.freeze({
     "Copper-basin Timber Village Inn Washstand", "Lavabo de posada de aldea de madera con palangana de cobre", "Meuble de toilette d’auberge villageoise en bois avec bassin en cuivre",
     "Holzwaschtisch für Dorfgasthäuser mit Kupferbecken", "銅たらい付き木製村宿洗面台", "Деревянный умывальный столик деревенской гостиницы с медным тазом",
     "구리 세숫대야 목재 마을 여관 세면대", "銅盆木製村莊旅店盥洗架", "铜盆木制村庄客栈盥洗架",
+  ),
+  "iron-braced-timber-village-inn-single-bed-frame": names(
+    "Iron-braced Timber Village Inn Single Bed Frame", "Bastidor de cama individual de posada de aldea de madera reforzado con hierro", "Cadre de lit simple d’auberge villageoise en bois renforcé de fer",
+    "Eisenverstärktes Einzelbettgestell aus Holz für Dorfgasthäuser", "鉄補強の木製村宿シングルベッド枠", "Деревянный каркас односпальной кровати деревенской гостиницы с железными скобами",
+    "철제 보강 목재 마을 여관 1인용 침대틀", "鐵箍木製村莊旅店單人床架", "铁箍木制村庄客栈单人床架",
   ),
   "iron-blacksmith-anvil": names(
     "Iron Blacksmith Anvil", "Yunque de herrero de hierro", "Enclume de forgeron en fer", "Eiserner Schmiedeamboss",
@@ -1262,6 +1279,36 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+  placeable("furniture", "iron-braced-timber-village-inn-single-bed-frame", [
+    part("iron_bloom", [10, 6, 10], [-24, 3, -56]),
+    part("iron_bloom", [10, 6, 10], [24, 3, -56]),
+    part("iron_bloom", [10, 6, 10], [-24, 3, 56]),
+    part("iron_bloom", [10, 6, 10], [24, 3, 56]),
+    part("squared_timber", [8, 56, 8], [-24, 34, -56]),
+    part("squared_timber", [8, 56, 8], [24, 34, -56]),
+    part("squared_timber", [8, 34, 8], [-24, 23, 56]),
+    part("squared_timber", [8, 34, 8], [24, 23, 56]),
+    part("wooden_plank", [8, 12, 104], [-24, 30, 0]),
+    part("wooden_plank", [8, 12, 104], [24, 30, 0]),
+    part("wooden_plank", [40, 12, 8], [0, 30, -56]),
+    part("wooden_plank", [40, 6, 8], [0, 59, -56]),
+    part("squared_timber", [6, 20, 8], [-12, 46, -56]),
+    part("squared_timber", [6, 20, 8], [0, 46, -56]),
+    part("squared_timber", [6, 20, 8], [12, 46, -56]),
+    part("wooden_plank", [40, 10, 8], [0, 35, 56]),
+    part("wooden_plank", [40, 4, 16], [0, 36, -36]),
+    part("wooden_plank", [40, 4, 16], [0, 36, -12]),
+    part("wooden_plank", [40, 4, 16], [0, 36, 12]),
+    part("wooden_plank", [40, 4, 16], [0, 36, 36]),
+    part("iron_bloom", [10, 6, 10], [-24, 65, -56]),
+    part("iron_bloom", [10, 6, 10], [24, 65, -56]),
+    part("iron_bloom", [10, 6, 10], [-24, 43, 56]),
+    part("iron_bloom", [10, 6, 10], [24, 43, 56]),
+  ], { yaw: -0.68, pitch: 0.3 }, {
+    image: "concepts/furniture/iron-braced-timber-village-inn-single-bed-frame-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
 ]);
 
 generate();
@@ -1365,6 +1412,8 @@ function buildItem(spec) {
   if (bedsideTableLayout) validateBedsideTableGeometry(spec, runtime, bedsideTableLayout);
   const washstandLayout = WASHSTAND_LAYOUTS[spec.key] ?? null;
   if (washstandLayout) validateWashstandGeometry(spec, runtime, washstandLayout);
+  const singleBedFrameLayout = SINGLE_BED_FRAME_LAYOUTS[spec.key] ?? null;
+  if (singleBedFrameLayout) validateSingleBedFrameGeometry(spec, runtime, singleBedFrameLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -1474,6 +1523,7 @@ function buildItem(spec) {
       ...(coatRackLayout ? { coatRackGeometryValidated: true } : {}),
       ...(bedsideTableLayout ? { bedsideTableGeometryValidated: true } : {}),
       ...(washstandLayout ? { washstandGeometryValidated: true } : {}),
+      ...(singleBedFrameLayout ? { singleBedFrameGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -2594,6 +2644,85 @@ function validateWashstandGeometry(spec, runtime, layout) {
     || overlapLength(rail.min[1], rail.max[1], rightMount.min[1], rightMount.max[1]) <= 0
     || overlapLength(rail.min[2], rail.max[2], rightMount.min[2], rightMount.max[2]) <= 0) {
     throw new Error(`${spec.key} towel rail must remain a face-connected outward front assembly.`);
+  }
+  for (let first = 0; first < bounds.length; first += 1) {
+    for (let second = first + 1; second < bounds.length; second += 1) {
+      if (boundsOverlap(bounds[first], bounds[second], 0)) {
+        throw new Error(`${spec.key} components ${first} and ${second} intersect.`);
+      }
+    }
+  }
+}
+
+function validateSingleBedFrameGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 24 || runtime.boundsQ.sizeQ.join(",") !== "58,68,122") {
+    throw new Error(`${spec.key} must preserve its canonical-player-scale single-bed proportions (got ${runtime.componentCount} components and ${runtime.boundsQ.sizeQ.join(",")}).`);
+  }
+  const components = runtime.components ?? [];
+  const bounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    ...Array(4).fill("iron_bloom"),
+    ...Array(4).fill("squared_timber"),
+    "wooden_plank", "wooden_plank", "wooden_plank", "wooden_plank",
+    ...Array(3).fill("squared_timber"),
+    ...Array(5).fill("wooden_plank"),
+    ...Array(4).fill("iron_bloom"),
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  for (let position = 0; position < layout.feet.length; position += 1) {
+    const foot = bounds[layout.feet[position]];
+    const post = bounds[layout.posts[position]];
+    const cap = bounds[layout.caps[position]];
+    if (foot.min[1] !== 0 || foot.max[1] !== post.min[1] || post.max[1] !== cap.min[1]
+      || overlapLength(foot.min[0], foot.max[0], post.min[0], post.max[0]) <= 0
+      || overlapLength(foot.min[2], foot.max[2], post.min[2], post.max[2]) <= 0
+      || overlapLength(post.min[0], post.max[0], cap.min[0], cap.max[0]) <= 0
+      || overlapLength(post.min[2], post.max[2], cap.min[2], cap.max[2]) <= 0) {
+      throw new Error(`${spec.key} corner post ${position} is not one grounded iron-capped support.`);
+    }
+  }
+  const [leftRail, rightRail] = layout.sideRails.map((index) => bounds[index]);
+  const [leftHeadPost, rightHeadPost, leftFootPost, rightFootPost] = layout.posts.map((index) => bounds[index]);
+  if (leftRail.min[2] !== leftHeadPost.max[2] || leftRail.max[2] !== leftFootPost.min[2]
+    || rightRail.min[2] !== rightHeadPost.max[2] || rightRail.max[2] !== rightFootPost.min[2]) {
+    throw new Error(`${spec.key} long side rails must face-connect head and foot posts across the full sleeping length.`);
+  }
+  const [lowerHeadRail, upperHeadRail] = layout.headRails.map((index) => bounds[index]);
+  const footboard = bounds[layout.footboard];
+  for (const rail of [lowerHeadRail, upperHeadRail]) {
+    if (rail.min[0] !== leftHeadPost.max[0] || rail.max[0] !== rightHeadPost.min[0]) {
+      throw new Error(`${spec.key} headboard rail is detached from its posts.`);
+    }
+  }
+  if (footboard.min[0] !== leftFootPost.max[0] || footboard.max[0] !== rightFootPost.min[0]) {
+    throw new Error(`${spec.key} footboard is detached from its posts.`);
+  }
+  for (const slatIndex of layout.headSlats) {
+    const slat = bounds[slatIndex];
+    if (slat.min[1] !== lowerHeadRail.max[1] || slat.max[1] !== upperHeadRail.min[1]
+      || overlapLength(slat.min[0], slat.max[0], lowerHeadRail.min[0], lowerHeadRail.max[0]) <= 0
+      || overlapLength(slat.min[2], slat.max[2], lowerHeadRail.min[2], lowerHeadRail.max[2]) <= 0) {
+      throw new Error(`${spec.key} headboard slat ${slatIndex} is not captive between both head rails.`);
+    }
+  }
+  for (const slatIndex of layout.supportSlats) {
+    const slat = bounds[slatIndex];
+    if (slat.min[0] !== leftRail.max[0] || slat.max[0] !== rightRail.min[0]
+      || overlapLength(slat.min[1], slat.max[1], leftRail.min[1], leftRail.max[1]) <= 0
+      || slat.min[2] <= leftRail.min[2] || slat.max[2] >= leftRail.max[2]) {
+      throw new Error(`${spec.key} sleeping support slat ${slatIndex} is detached or leaves the bed interior.`);
+    }
+  }
+  const supportOffsets = layout.supportSlats.map((index) => components[index].offsetQ[2]);
+  if (supportOffsets.some((value, index) => index > 0 && value - supportOffsets[index - 1] !== 24)) {
+    throw new Error(`${spec.key} support slats must remain evenly spaced under the sleeping plane.`);
   }
   for (let first = 0; first < bounds.length; first += 1) {
     for (let second = first + 1; second < bounds.length; second += 1) {

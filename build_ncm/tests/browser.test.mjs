@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 5);
-  assert.match(initial.totalBuildingCount, /76 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /77 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -2899,14 +2899,14 @@ try {
   assert.ok(!mineRescueStation.resources.some((path) => path.endsWith("compact-village-mine-rescue-station-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=agriculture]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=glass-timber-greenhouse]') && document.querySelector('[data-building=compact-village-watermill]') && document.querySelector('[data-building=compact-village-cheese-house]') && document.querySelector('[data-building=compact-village-poultry-house]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=glass-timber-greenhouse]') && document.querySelector('[data-building=compact-village-watermill]') && document.querySelector('[data-building=compact-village-cheese-house]') && document.querySelector('[data-building=compact-village-poultry-house]') && document.querySelector('[data-building=compact-village-piggery]')"));
   const agricultureBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     cardCount: document.querySelectorAll('[data-building]').length,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(agricultureBrowse.activeBuilding, null);
-  assert.equal(agricultureBrowse.cardCount, 8);
+  assert.equal(agricultureBrowse.cardCount, 9);
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/buildings/agriculture/glass-timber-greenhouse.json"), "category browsing must not load the greenhouse JSON");
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/concepts/agriculture/glass-timber-greenhouse.webp"), "category browsing must not load the greenhouse concept art");
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/buildings/agriculture/stone-timber-tower-windmill.json"), "category browsing must not load the windmill JSON");
@@ -2923,6 +2923,8 @@ try {
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/concepts/agriculture/compact-village-cheese-house.webp"), "category browsing must not load the cheese-house concept art");
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/buildings/agriculture/compact-village-poultry-house.json"), "category browsing must not load the poultry-house JSON");
   assert.ok(!agricultureBrowse.resources.includes("/build_ncm/concepts/agriculture/compact-village-poultry-house.webp"), "category browsing must not load the poultry-house concept art");
+  assert.ok(!agricultureBrowse.resources.includes("/build_ncm/buildings/agriculture/compact-village-piggery.json"), "category browsing must not load the piggery JSON");
+  assert.ok(!agricultureBrowse.resources.includes("/build_ncm/concepts/agriculture/compact-village-piggery.webp"), "category browsing must not load the piggery concept art");
   await clickBuilding(client, "glass-timber-greenhouse");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'glass-timber-greenhouse' && document.querySelector('#modelSize').textContent === '19 × 20 × 27' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const greenhouse = await evaluate(client, `({
@@ -3255,6 +3257,47 @@ try {
   assert.ok(poultryHouse.resources.includes("/build_ncm/concepts/agriculture/compact-village-poultry-house.webp"));
   assert.ok(!poultryHouse.resources.some((path) => path.endsWith("compact-village-poultry-house-blueprint.js")));
 
+  await clickBuilding(client, "compact-village-piggery");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-piggery' && document.querySelector('#modelSize').textContent === '29 × 19 × 25' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const piggery = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptLoading: document.querySelector('#conceptImage').loading,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(piggery.activeCategory, "agriculture");
+  assert.match(piggery.title, /Compact Village Piggery/);
+  assert.equal(piggery.modelSize, "29 × 19 × 25");
+  assert.match(piggery.payload, /^NCM3:/);
+  assert.equal(piggery.voxelCount, 2408);
+  for (const id of [55, 56, 57, 58, 68, 69, 70, 96]) assert.match(piggery.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(piggery.uncovered, false);
+  assert.equal(piggery.glazingDisabled, true);
+  assert.equal(piggery.glazingLabel, "Openings: Not applicable");
+  assert.equal(piggery.disabledStyles, 6);
+  assert.equal(piggery.disabledRoofs, 6);
+  assert.equal(piggery.conceptHidden, false);
+  assert.equal(piggery.conceptLoading, "eager");
+  assert.match(piggery.conceptAlt, /Compact Village Piggery concept reference/);
+  assert.equal(piggery.conceptFit, "contain");
+  assert.equal(piggery.selectedInUrl, "compact-village-piggery");
+  assert.ok(piggery.resources.includes("/build_ncm/buildings/agriculture/compact-village-piggery.json"));
+  assert.ok(piggery.resources.includes("/build_ncm/concepts/agriculture/compact-village-piggery.webp"));
+  assert.ok(!piggery.resources.some((path) => path.endsWith("compact-village-piggery-blueprint.js")));
+
   await evaluate(client, "document.querySelector('[data-building-category=construction]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'construction' && document.querySelectorAll('[data-building]').length === 5 && document.querySelector('[data-building=timber-building-scaffold]') && document.querySelector('[data-building=compact-village-stonemason-workshop]') && document.querySelector('[data-building=compact-village-carpenter-workshop]') && document.querySelector('[data-building=compact-village-building-supply-depot]') && document.querySelector('[data-building=timber-village-building-gantry]')"));
   const constructionBrowse = await evaluate(client, `({
@@ -3265,7 +3308,7 @@ try {
   })`);
   assert.equal(constructionBrowse.activeBuilding, null, "browsing construction must not select or generate a building");
   assert.equal(constructionBrowse.buildingCount, 5);
-  assert.match(constructionBrowse.previewTitle, /Compact Village Cheese House|Compact Village Poultry House/);
+  assert.match(constructionBrowse.previewTitle, /Compact Village Cheese House|Compact Village Poultry House|Compact Village Piggery/);
   assert.ok(!constructionBrowse.resources.includes("/build_ncm/buildings/construction/timber-building-scaffold.json"), "browsing construction must not load the scaffold JSON");
   assert.ok(!constructionBrowse.resources.includes("/build_ncm/buildings/construction/compact-village-stonemason-workshop.json"), "browsing construction must not load the stonemason workshop JSON");
   assert.ok(!constructionBrowse.resources.includes("/build_ncm/concepts/construction/compact-village-stonemason-workshop.webp"), "browsing construction must not load the stonemason concept art");
@@ -3600,10 +3643,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const herbalistShopDirectUrl = new URL(url);
-  herbalistShopDirectUrl.searchParams.set("building", "compact-village-herbalist-shop");
-  await client.send("Page.navigate", { url: herbalistShopDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'commerce' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-herbalist-shop' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const piggeryDirectUrl = new URL(url);
+  piggeryDirectUrl.searchParams.set("building", "compact-village-piggery");
+  await client.send("Page.navigate", { url: piggeryDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'agriculture' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-piggery' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -3615,16 +3658,16 @@ try {
     conceptPath: new URL(document.querySelector('#conceptImage').dataset.source).pathname,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(directSelection.activeCategory, "commerce");
-  assert.equal(directSelection.activeBuilding, "compact-village-herbalist-shop");
-  assert.match(directSelection.title, /Compact Village Herbalist Shop/);
-  assert.equal(directSelection.modelSize, "23 × 18 × 25");
+  assert.equal(directSelection.activeCategory, "agriculture");
+  assert.equal(directSelection.activeBuilding, "compact-village-piggery");
+  assert.match(directSelection.title, /Compact Village Piggery/);
+  assert.equal(directSelection.modelSize, "29 × 19 × 25");
   assert.match(directSelection.payload, /^NCM3:/);
   assert.equal(directSelection.conceptComplete, true);
   assert.ok(directSelection.conceptNaturalWidth > 0);
-  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/commerce/compact-village-herbalist-shop.webp");
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/commerce/compact-village-herbalist-shop.json"));
-  assert.ok(directSelection.resources.includes("/build_ncm/concepts/commerce/compact-village-herbalist-shop.webp"));
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/agriculture/compact-village-piggery.webp");
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/agriculture/compact-village-piggery.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/concepts/agriculture/compact-village-piggery.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

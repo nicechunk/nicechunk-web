@@ -82,7 +82,7 @@ try {
   assert.equal(initial.languageCount, 9);
   assert.equal(initial.categoryCount, 16);
   assert.equal(initial.visibleItems, 4);
-  assert.match(initial.total, /62 ITEMS/);
+  assert.match(initial.total, /63 ITEMS/);
   assert.equal(initial.selected, "carbon-steel-prospector-pick");
   assert.equal(initial.itemTitle, "Carbon-steel Prospector Pick");
   assert.match(initial.payload, /^NCF1\./);
@@ -217,7 +217,9 @@ try {
   await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
 
   await evaluate(client, `document.querySelector('[data-category="furniture"]').click()`);
-  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 13 && document.querySelector('[data-item="timber-workbench"]')`));
+  await waitFor(() => evaluate(client, `document.querySelectorAll("[data-item]").length === 14
+    && document.querySelector('[data-item="timber-workbench"]')
+    && document.querySelector('[data-item="iron-braced-timber-village-inn-double-door-wardrobe"]')`));
   const furnitureBrowse = await evaluate(client, `({
     activeCategory: document.querySelector("[data-category].active")?.dataset.category,
     activeItem: document.querySelector("[data-item].active")?.dataset.item ?? null,
@@ -676,6 +678,53 @@ try {
     })()`);
     await waitFor(() => evaluate(client, `document.documentElement.lang === ${JSON.stringify(locale)} && document.querySelector("#itemTitle").textContent === ${JSON.stringify(expectedName)}`));
     assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), writingChair.payload);
+  }
+  await evaluate(client, `(() => {
+    const select = document.querySelector("[data-language-select]");
+    select.value = "en";
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  })()`);
+  await waitFor(() => evaluate(client, `document.documentElement.lang === "en"`));
+
+  await evaluate(client, `document.querySelector('[data-item="iron-braced-timber-village-inn-double-door-wardrobe"]').click()`);
+  await waitFor(() => evaluate(client, `document.querySelector('[data-item="iron-braced-timber-village-inn-double-door-wardrobe"].active')
+    && document.querySelector("#runtimeState").dataset.state === "verified"`));
+  const doubleDoorWardrobe = await evaluate(client, `({
+    title: document.querySelector("#itemTitle").textContent,
+    type: document.querySelector("#interactionBadge").textContent,
+    payload: document.querySelector("#codeOutput").value,
+    payloadBytes: document.querySelector("#payloadBytes").textContent,
+    componentCount: document.querySelectorAll("#metrics .metric-card")[5].querySelector("strong").textContent,
+    materialRows: document.querySelectorAll("#bomRows .bom-row").length,
+    selectedInUrl: new URL(location.href).searchParams.get("item"),
+    resources: performance.getEntriesByType("resource").map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(doubleDoorWardrobe.title, "Iron-braced Timber Village Inn Double-door Wardrobe");
+  assert.equal(doubleDoorWardrobe.type, "PLACEABLE");
+  assert.match(doubleDoorWardrobe.payload, /^NCF1\./);
+  assert.equal(doubleDoorWardrobe.payloadBytes, "270 / 640 B");
+  assert.equal(doubleDoorWardrobe.componentCount, "24");
+  assert.equal(doubleDoorWardrobe.materialRows, 3);
+  assert.equal(doubleDoorWardrobe.selectedInUrl, "iron-braced-timber-village-inn-double-door-wardrobe");
+  assert.ok(doubleDoorWardrobe.resources.includes("/item_ncm/json/furniture/iron-braced-timber-village-inn-double-door-wardrobe.json"));
+  for (const [locale, expectedName] of Object.entries({
+    en: "Iron-braced Timber Village Inn Double-door Wardrobe",
+    es: "Armario de dos puertas de posada de aldea de madera reforzado con hierro",
+    fr: "Armoire à deux portes d’auberge villageoise en bois renforcée de fer",
+    de: "Eisenverstärkter zweitüriger Holzkleiderschrank für Dorfgasthäuser",
+    ja: "鉄補強の木製村宿両開き衣装戸棚",
+    ru: "Двухдверный деревянный шкаф деревенской гостиницы с железными скобами",
+    ko: "철제 보강 목재 마을 여관 양문 옷장",
+    "zh-Hant": "鐵箍木製村莊旅店雙門衣櫃",
+    "zh-Hans": "铁箍木制村庄客栈双门衣柜",
+  })) {
+    await evaluate(client, `(() => {
+      const select = document.querySelector("[data-language-select]");
+      select.value = ${JSON.stringify(locale)};
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+    })()`);
+    await waitFor(() => evaluate(client, `document.documentElement.lang === ${JSON.stringify(locale)} && document.querySelector("#itemTitle").textContent === ${JSON.stringify(expectedName)}`));
+    assert.equal(await evaluate(client, `document.querySelector("#codeOutput").value`), doubleDoorWardrobe.payload);
   }
   await evaluate(client, `(() => {
     const select = document.querySelector("[data-language-select]");

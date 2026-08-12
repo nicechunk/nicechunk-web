@@ -333,6 +333,22 @@ const WRITING_CHAIR_LAYOUTS = Object.freeze({
     seatPlates: [15, 16, 17, 18],
   },
 });
+const DOUBLE_DOOR_WARDROBE_LAYOUTS = Object.freeze({
+  "iron-braced-timber-village-inn-double-door-wardrobe": {
+    feet: [0, 1, 2, 3],
+    posts: [4, 5, 6, 7],
+    floor: 8,
+    sidePanels: [9, 10],
+    backPanel: 11,
+    doors: [12, 13],
+    bottomRail: 14,
+    topRail: 15,
+    topSlab: 16,
+    crown: 17,
+    doorStraps: [18, 19, 20, 21],
+    pulls: [22, 23],
+  },
+});
 const WALL_MIRROR_LAYOUTS = Object.freeze({
   "polished-copper-timber-village-inn-wall-mirror": {
     backplate: 0,
@@ -654,6 +670,11 @@ const ITEM_NAMES = Object.freeze({
     "Iron-braced Timber Village Inn Writing Chair", "Silla de escritorio de posada de aldea de madera reforzada con hierro", "Chaise de bureau d’auberge villageoise en bois renforcée de fer",
     "Eisenverstärkter Holzschreibstuhl für Dorfgasthäuser", "鉄補強の木製村宿書き物椅子", "Деревянный письменный стул деревенской гостиницы с железными скобами",
     "철제 보강 목재 마을 여관 책상 의자", "鐵箍木製村莊旅店寫字椅", "铁箍木制村庄客栈写字椅",
+  ),
+  "iron-braced-timber-village-inn-double-door-wardrobe": names(
+    "Iron-braced Timber Village Inn Double-door Wardrobe", "Armario de dos puertas de posada de aldea de madera reforzado con hierro", "Armoire à deux portes d’auberge villageoise en bois renforcée de fer",
+    "Eisenverstärkter zweitüriger Holzkleiderschrank für Dorfgasthäuser", "鉄補強の木製村宿両開き衣装戸棚", "Двухдверный деревянный шкаф деревенской гостиницы с железными скобами",
+    "철제 보강 목재 마을 여관 양문 옷장", "鐵箍木製村莊旅店雙門衣櫃", "铁箍木制村庄客栈双门衣柜",
   ),
   "polished-copper-timber-village-inn-wall-mirror": names(
     "Polished-copper Timber Village Inn Wall Mirror", "Espejo de pared de posada de aldea de madera con cobre pulido", "Miroir mural d’auberge villageoise en bois à face de cuivre poli",
@@ -1515,6 +1536,36 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+  placeable("furniture", "iron-braced-timber-village-inn-double-door-wardrobe", [
+    part("iron_bloom", [8, 4, 6], [-25, 2, -13]),
+    part("iron_bloom", [8, 4, 6], [-25, 2, 13]),
+    part("iron_bloom", [8, 4, 6], [25, 2, -13]),
+    part("iron_bloom", [8, 4, 6], [25, 2, 13]),
+    part("squared_timber", [6, 96, 6], [-25, 52, -13]),
+    part("squared_timber", [6, 96, 6], [-25, 52, 13]),
+    part("squared_timber", [6, 96, 6], [25, 52, -13]),
+    part("squared_timber", [6, 96, 6], [25, 52, 13]),
+    part("wooden_plank", [44, 6, 28], [0, 7, 0]),
+    part("wooden_plank", [2, 86, 28], [-21, 53, 0]),
+    part("wooden_plank", [2, 86, 28], [21, 53, 0]),
+    part("wooden_plank", [40, 86, 2], [0, 53, -13]),
+    part("wooden_plank", [20, 82, 2], [-10, 55, 13]),
+    part("wooden_plank", [20, 82, 2], [10, 55, 13]),
+    part("squared_timber", [40, 4, 4], [0, 12, 12]),
+    part("squared_timber", [44, 4, 4], [0, 98, 12]),
+    part("wooden_plank", [60, 6, 32], [0, 103, 0]),
+    part("squared_timber", [52, 8, 28], [0, 110, 0]),
+    part("iron_bloom", [16, 4, 2], [-10, 78, 15]),
+    part("iron_bloom", [16, 4, 2], [10, 78, 15]),
+    part("iron_bloom", [16, 4, 2], [-10, 32, 15]),
+    part("iron_bloom", [16, 4, 2], [10, 32, 15]),
+    part("iron_bloom", [4, 12, 2], [-3, 55, 15]),
+    part("iron_bloom", [4, 12, 2], [3, 55, 15]),
+  ], { yaw: -0.66, pitch: 0.24 }, {
+    image: "concepts/furniture/iron-braced-timber-village-inn-double-door-wardrobe-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
   placeable("interior-decor", "polished-copper-timber-village-inn-wall-mirror", [
     part("wooden_plank", [32, 52, 2], [0, 30, -2]),
     part("squared_timber", [4, 52, 4], [-18, 30, 1]),
@@ -1701,6 +1752,8 @@ function buildItem(spec) {
   if (writingDeskLayout) validateWritingDeskGeometry(spec, runtime, writingDeskLayout);
   const writingChairLayout = WRITING_CHAIR_LAYOUTS[spec.key] ?? null;
   if (writingChairLayout) validateWritingChairGeometry(spec, runtime, writingChairLayout);
+  const doubleDoorWardrobeLayout = DOUBLE_DOOR_WARDROBE_LAYOUTS[spec.key] ?? null;
+  if (doubleDoorWardrobeLayout) validateDoubleDoorWardrobeGeometry(spec, runtime, doubleDoorWardrobeLayout);
   const wallMirrorLayout = WALL_MIRROR_LAYOUTS[spec.key] ?? null;
   if (wallMirrorLayout) validateWallMirrorGeometry(spec, runtime, wallMirrorLayout);
   const privacyScreenLayout = PRIVACY_SCREEN_LAYOUTS[spec.key] ?? null;
@@ -1820,6 +1873,7 @@ function buildItem(spec) {
       ...(luggageRackLayout ? { luggageRackGeometryValidated: true } : {}),
       ...(writingDeskLayout ? { writingDeskGeometryValidated: true } : {}),
       ...(writingChairLayout ? { writingChairGeometryValidated: true } : {}),
+      ...(doubleDoorWardrobeLayout ? { doubleDoorWardrobeGeometryValidated: true } : {}),
       ...(wallMirrorLayout ? { wallMirrorGeometryValidated: true } : {}),
       ...(privacyScreenLayout ? { privacyScreenGeometryValidated: true } : {}),
       chainMinted: false,
@@ -3571,6 +3625,96 @@ function validatePrivacyScreenGeometry(spec, runtime, layout) {
   }
   if (components.some((component) => component.offsetQ[2] !== 0 && !layout.hingePlates.includes(components.indexOf(component)))) {
     throw new Error(`${spec.key} timber and cloth panels must remain in one straight aligned plane.`);
+  }
+  for (let first = 0; first < bounds.length; first += 1) {
+    for (let second = first + 1; second < bounds.length; second += 1) {
+      if (boundsOverlap(bounds[first], bounds[second], 0)) {
+        throw new Error(`${spec.key} components ${first} and ${second} intersect.`);
+      }
+    }
+  }
+}
+
+function validateDoubleDoorWardrobeGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 24 || runtime.boundsQ.sizeQ.join(",") !== "60,114,32") {
+    throw new Error(`${spec.key} must preserve its human-scale double-door wardrobe proportions (got ${runtime.componentCount} components and ${runtime.boundsQ.sizeQ.join(",")}).`);
+  }
+  const components = runtime.components ?? [];
+  const bounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    ...Array(4).fill("iron_bloom"),
+    ...Array(4).fill("squared_timber"),
+    ...Array(6).fill("wooden_plank"),
+    "squared_timber", "squared_timber", "wooden_plank", "squared_timber",
+    ...Array(6).fill("iron_bloom"),
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  const floor = bounds[layout.floor];
+  const bottomRail = bounds[layout.bottomRail];
+  const topRail = bounds[layout.topRail];
+  const topSlab = bounds[layout.topSlab];
+  const crown = bounds[layout.crown];
+  for (let position = 0; position < layout.feet.length; position += 1) {
+    const foot = bounds[layout.feet[position]];
+    const post = bounds[layout.posts[position]];
+    if (foot.min[1] !== 0 || foot.max[1] !== post.min[1] || post.max[1] !== topSlab.min[1]
+      || overlapLength(foot.min[0], foot.max[0], post.min[0], post.max[0]) <= 0
+      || overlapLength(foot.min[2], foot.max[2], post.min[2], post.max[2]) <= 0
+      || overlapLength(post.min[0], post.max[0], topSlab.min[0], topSlab.max[0]) <= 0
+      || overlapLength(post.min[2], post.max[2], topSlab.min[2], topSlab.max[2]) <= 0) {
+      throw new Error(`${spec.key} corner support ${position} must form one grounded foot-post-top stack.`);
+    }
+  }
+  if (floor.min[1] !== 4 || floor.max[1] !== bottomRail.min[1]
+    || topRail.max[1] !== topSlab.min[1] || topSlab.max[1] !== crown.min[1]
+    || crown.max[1] !== 114) {
+    throw new Error(`${spec.key} floor, front rails, top slab, and crown are vertically detached.`);
+  }
+  const [leftSide, rightSide] = layout.sidePanels.map((index) => bounds[index]);
+  const back = bounds[layout.backPanel];
+  if (leftSide.min[1] !== floor.max[1] || leftSide.max[1] !== topRail.min[1]
+    || rightSide.min[1] !== floor.max[1] || rightSide.max[1] !== topRail.min[1]
+    || back.min[1] !== floor.max[1] || back.max[1] !== topRail.min[1]
+    || leftSide.min[0] !== floor.min[0] || rightSide.max[0] !== floor.max[0]
+    || back.min[0] !== leftSide.max[0] || back.max[0] !== rightSide.min[0]
+    || leftSide.min[2] !== floor.min[2] || leftSide.max[2] !== floor.max[2]
+    || rightSide.min[2] !== floor.min[2] || rightSide.max[2] !== floor.max[2]
+    || back.min[2] !== floor.min[2]) {
+    throw new Error(`${spec.key} floor, side walls, and rear wall must form one closed storage carcass.`);
+  }
+  const [leftDoor, rightDoor] = layout.doors.map((index) => bounds[index]);
+  if (leftDoor.min[0] !== bottomRail.min[0] || leftDoor.max[0] !== rightDoor.min[0] || rightDoor.max[0] !== bottomRail.max[0]
+    || leftDoor.min[1] !== bottomRail.max[1] || leftDoor.max[1] !== topRail.min[1]
+    || rightDoor.min[1] !== bottomRail.max[1] || rightDoor.max[1] !== topRail.min[1]
+    || leftDoor.max[2] !== floor.max[2] || rightDoor.max[2] !== floor.max[2]) {
+    throw new Error(`${spec.key} two closed doors must meet at center and remain captive inside the front opening.`);
+  }
+  for (let position = 0; position < layout.doorStraps.length; position += 1) {
+    const strap = bounds[layout.doorStraps[position]];
+    const door = position % 2 === 0 ? leftDoor : rightDoor;
+    if (strap.min[2] !== door.max[2]
+      || strap.min[0] < door.min[0] || strap.max[0] > door.max[0]
+      || overlapLength(strap.min[1], strap.max[1], door.min[1], door.max[1]) <= 0) {
+      throw new Error(`${spec.key} iron door strap ${position} is detached from its closed door.`);
+    }
+  }
+  for (let position = 0; position < layout.pulls.length; position += 1) {
+    const pull = bounds[layout.pulls[position]];
+    const door = position === 0 ? leftDoor : rightDoor;
+    const centerSign = position === 0 ? -1 : 1;
+    if (pull.min[2] !== door.max[2]
+      || Math.sign(components[layout.pulls[position]].offsetQ[0]) !== centerSign
+      || Math.abs(components[layout.pulls[position]].offsetQ[0]) > 4
+      || overlapLength(pull.min[1], pull.max[1], door.min[1], door.max[1]) <= 0) {
+      throw new Error(`${spec.key} door pull ${position} must remain face-mounted beside the center seam.`);
+    }
   }
   for (let first = 0; first < bounds.length; first += 1) {
     for (let second = first + 1; second < bounds.length; second += 1) {

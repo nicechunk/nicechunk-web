@@ -11,7 +11,7 @@ ITEM_NCM is the public NiceChunk forge-item blueprint registry. It follows the s
 - Every item JSON contains its own nine-language names and descriptions.
 - `tools/generate-items.mjs` is the canonical source for the initial collection and regenerates every item JSON deterministically.
 
-The registry currently contains 53 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, containers, cooking, commerce, construction, books and writing, interior decor, signage, exterior decor, and hand-held civic props. New designs begin with an Imagegen material-style concept; the resulting item JSON records the concept path, provenance, version, and SHA-256 before the forge encoding is accepted.
+The registry currently contains 54 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, containers, cooking, commerce, construction, books and writing, interior decor, signage, exterior decor, and hand-held civic props. New designs begin with an Imagegen material-style concept; the resulting item JSON records the concept path, provenance, version, and SHA-256 before the forge encoding is accepted.
 
 ## Forge guarantees
 
@@ -42,6 +42,7 @@ The generator rejects an item unless all of these checks pass:
 23. Public litter bins keep a compact street scale, four grounded iron feet, a supported timber floor, four continuous timber walls around a usable open cavity, two exterior iron bands, an unobstructed four-piece top rim, and a closed side-handle loop mounted outside the front wall.
 24. Inn coat racks stand at the canonical 1.75 m player height, keep a four-way grounded base and continuous iron-collared timber post, and preserve two perpendicular pairs of face-connected hooks with raised retaining stops and no component intersections.
 25. Inn bedside tables keep a compact bed-height top, four grounded iron-capped timber legs, a supported open lower shelf, a closed face-pulled drawer, and four flush top corner plates without component intersections.
+26. Inn washstands keep a waist-height basin on four grounded iron-collared timber legs, a supported lower shelf, a continuous copper floor and four-wall usable open cavity, and an outward face-connected towel rail without component intersections.
 
 `verification.chainMinted` remains `false` because this library validates blueprint readiness; it does not claim that a blueprint PDA has already been created.
 

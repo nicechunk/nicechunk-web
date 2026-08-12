@@ -251,6 +251,17 @@ const BEDSIDE_TABLE_LAYOUTS = Object.freeze({
     topCaps: [16, 17, 18, 19],
   },
 });
+const WASHSTAND_LAYOUTS = Object.freeze({
+  "copper-basin-timber-village-inn-washstand": {
+    feet: [0, 1, 2, 3],
+    legs: [4, 5, 6, 7],
+    shelf: 8,
+    upperCollars: [9, 10, 11, 12],
+    basinFloor: 13,
+    basinWalls: [14, 15, 16, 17],
+    towelRail: [18, 19, 20],
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -516,6 +527,11 @@ const ITEM_NAMES = Object.freeze({
     "Iron-braced Timber Village Inn Bedside Table", "Mesita de noche de posada de aldea de madera reforzada con hierro", "Table de chevet d’auberge villageoise en bois renforcée de fer",
     "Eisenverstärkter Holz-Nachttisch für Dorfgasthäuser", "鉄補強の木製村宿ベッドサイドテーブル", "Деревянная прикроватная тумба деревенской гостиницы с железными скобами",
     "철제 보강 목재 마을 여관 침대 탁자", "鐵箍木製村莊旅店床頭櫃", "铁箍木制村庄客栈床头柜",
+  ),
+  "copper-basin-timber-village-inn-washstand": names(
+    "Copper-basin Timber Village Inn Washstand", "Lavabo de posada de aldea de madera con palangana de cobre", "Meuble de toilette d’auberge villageoise en bois avec bassin en cuivre",
+    "Holzwaschtisch für Dorfgasthäuser mit Kupferbecken", "銅たらい付き木製村宿洗面台", "Деревянный умывальный столик деревенской гостиницы с медным тазом",
+    "구리 세숫대야 목재 마을 여관 세면대", "銅盆木製村莊旅店盥洗架", "铜盆木制村庄客栈盥洗架",
   ),
   "iron-blacksmith-anvil": names(
     "Iron Blacksmith Anvil", "Yunque de herrero de hierro", "Enclume de forgeron en fer", "Eiserner Schmiedeamboss",
@@ -1219,6 +1235,33 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+  placeable("furniture", "copper-basin-timber-village-inn-washstand", [
+    part("iron_bloom", [8, 4, 8], [-18, 2, -13]),
+    part("iron_bloom", [8, 4, 8], [-18, 2, 13]),
+    part("iron_bloom", [8, 4, 8], [18, 2, -13]),
+    part("iron_bloom", [8, 4, 8], [18, 2, 13]),
+    part("squared_timber", [6, 34, 6], [-18, 21, -13]),
+    part("squared_timber", [6, 34, 6], [-18, 21, 13]),
+    part("squared_timber", [6, 34, 6], [18, 21, -13]),
+    part("squared_timber", [6, 34, 6], [18, 21, 13]),
+    part("wooden_plank", [36, 4, 20], [0, 14, 0]),
+    part("iron_bloom", [8, 4, 8], [-18, 40, -13]),
+    part("iron_bloom", [8, 4, 8], [-18, 40, 13]),
+    part("iron_bloom", [8, 4, 8], [18, 40, -13]),
+    part("iron_bloom", [8, 4, 8], [18, 40, 13]),
+    part("copper_bloom", [44, 4, 36], [0, 44, 0]),
+    part("copper_bloom", [44, 10, 4], [0, 51, -16]),
+    part("copper_bloom", [44, 10, 4], [0, 51, 16]),
+    part("copper_bloom", [4, 10, 28], [-20, 51, 0]),
+    part("copper_bloom", [4, 10, 28], [20, 51, 0]),
+    part("iron_bloom", [4, 6, 6], [-18, 30, 19]),
+    part("iron_bloom", [4, 6, 6], [18, 30, 19]),
+    part("wooden_stick", [32, 4, 4], [0, 30, 22]),
+  ], { yaw: -0.7, pitch: 0.35 }, {
+    image: "concepts/furniture/copper-basin-timber-village-inn-washstand-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
 ]);
 
 generate();
@@ -1320,6 +1363,8 @@ function buildItem(spec) {
   if (coatRackLayout) validateCoatRackGeometry(spec, runtime, coatRackLayout);
   const bedsideTableLayout = BEDSIDE_TABLE_LAYOUTS[spec.key] ?? null;
   if (bedsideTableLayout) validateBedsideTableGeometry(spec, runtime, bedsideTableLayout);
+  const washstandLayout = WASHSTAND_LAYOUTS[spec.key] ?? null;
+  if (washstandLayout) validateWashstandGeometry(spec, runtime, washstandLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -1428,6 +1473,7 @@ function buildItem(spec) {
       ...(publicLitterBinLayout ? { publicLitterBinGeometryValidated: true } : {}),
       ...(coatRackLayout ? { coatRackGeometryValidated: true } : {}),
       ...(bedsideTableLayout ? { bedsideTableGeometryValidated: true } : {}),
+      ...(washstandLayout ? { washstandGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -2470,6 +2516,89 @@ function validateBedsideTableGeometry(spec, runtime, layout) {
     for (let right = left + 1; right < bounds.length; right += 1) {
       if (boundsOverlap(bounds[left], bounds[right], 0)) {
         throw new Error(`${spec.key} components ${left} and ${right} intersect.`);
+      }
+    }
+  }
+}
+
+function validateWashstandGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 21 || runtime.boundsQ.sizeQ.join(",") !== "44,56,42") {
+    throw new Error(`${spec.key} must preserve its compact canonical-player-scale washstand proportions (got ${runtime.componentCount} components and ${runtime.boundsQ.sizeQ.join(",")}).`);
+  }
+  const components = runtime.components ?? [];
+  const bounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    ...Array(4).fill("iron_bloom"),
+    ...Array(4).fill("squared_timber"),
+    "wooden_plank",
+    ...Array(4).fill("iron_bloom"),
+    ...Array(5).fill("copper_bloom"),
+    "iron_bloom", "iron_bloom", "wooden_stick",
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  const floor = bounds[layout.basinFloor];
+  const [back, front, left, right] = layout.basinWalls.map((index) => bounds[index]);
+  if (floor.min[0] !== left.min[0] || floor.max[0] !== right.max[0]
+    || floor.min[2] !== back.min[2] || floor.max[2] !== front.max[2]
+    || [back, front, left, right].some((wall) => wall.min[1] !== floor.max[1])
+    || back.min[0] !== floor.min[0] || back.max[0] !== floor.max[0]
+    || front.min[0] !== floor.min[0] || front.max[0] !== floor.max[0]
+    || left.min[2] !== back.max[2] || left.max[2] !== front.min[2]
+    || right.min[2] !== back.max[2] || right.max[2] !== front.min[2]
+    || back.max[2] !== left.min[2] || front.min[2] !== left.max[2]
+    || left.max[0] >= right.min[0] || back.max[2] >= front.min[2]) {
+    throw new Error(`${spec.key} copper floor and four walls must form one continuous, genuinely open wash basin.`);
+  }
+  const cavityWidth = right.min[0] - left.max[0];
+  const cavityDepth = front.min[2] - back.max[2];
+  const cavityHeight = back.max[1] - floor.max[1];
+  if (cavityWidth < 32 || cavityDepth < 24 || cavityHeight < 8) {
+    throw new Error(`${spec.key} copper basin cavity is too small to be usable.`);
+  }
+  for (let position = 0; position < layout.feet.length; position += 1) {
+    const foot = bounds[layout.feet[position]];
+    const leg = bounds[layout.legs[position]];
+    const collar = bounds[layout.upperCollars[position]];
+    if (foot.min[1] !== 0 || foot.max[1] !== leg.min[1] || leg.max[1] !== collar.min[1]
+      || collar.max[1] !== floor.min[1]
+      || overlapLength(foot.min[0], foot.max[0], leg.min[0], leg.max[0]) <= 0
+      || overlapLength(foot.min[2], foot.max[2], leg.min[2], leg.max[2]) <= 0
+      || overlapLength(leg.min[0], leg.max[0], collar.min[0], collar.max[0]) <= 0
+      || overlapLength(leg.min[2], leg.max[2], collar.min[2], collar.max[2]) <= 0
+      || overlapLength(collar.min[0], collar.max[0], floor.min[0], floor.max[0]) <= 0
+      || overlapLength(collar.min[2], collar.max[2], floor.min[2], floor.max[2]) <= 0) {
+      throw new Error(`${spec.key} support stack ${position} does not continuously ground the copper basin.`);
+    }
+  }
+  const shelf = bounds[layout.shelf];
+  for (const legIndex of layout.legs) {
+    const leg = bounds[legIndex];
+    const shelfTouches = [0, 2].some((axis) => (shelf.min[axis] === leg.max[axis] || shelf.max[axis] === leg.min[axis])
+      && overlapLength(shelf.min[1], shelf.max[1], leg.min[1], leg.max[1]) > 0
+      && overlapLength(shelf.min[axis === 0 ? 2 : 0], shelf.max[axis === 0 ? 2 : 0], leg.min[axis === 0 ? 2 : 0], leg.max[axis === 0 ? 2 : 0]) > 0);
+    if (!shelfTouches) throw new Error(`${spec.key} lower shelf is detached from leg ${legIndex}.`);
+  }
+  const [leftMount, rightMount, rail] = layout.towelRail.map((index) => bounds[index]);
+  if (leftMount.min[2] !== bounds[layout.legs[1]].max[2]
+    || rightMount.min[2] !== bounds[layout.legs[3]].max[2]
+    || rail.min[0] !== leftMount.max[0] || rail.max[0] !== rightMount.min[0]
+    || overlapLength(rail.min[1], rail.max[1], leftMount.min[1], leftMount.max[1]) <= 0
+    || overlapLength(rail.min[2], rail.max[2], leftMount.min[2], leftMount.max[2]) <= 0
+    || overlapLength(rail.min[1], rail.max[1], rightMount.min[1], rightMount.max[1]) <= 0
+    || overlapLength(rail.min[2], rail.max[2], rightMount.min[2], rightMount.max[2]) <= 0) {
+    throw new Error(`${spec.key} towel rail must remain a face-connected outward front assembly.`);
+  }
+  for (let first = 0; first < bounds.length; first += 1) {
+    for (let second = first + 1; second < bounds.length; second += 1) {
+      if (boundsOverlap(bounds[first], bounds[second], 0)) {
+        throw new Error(`${spec.key} components ${first} and ${second} intersect.`);
       }
     }
   }

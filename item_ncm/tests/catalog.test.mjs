@@ -227,10 +227,21 @@ const bedsideTableLayouts = new Map([
     topCaps: [16, 17, 18, 19],
   }],
 ]);
+const washstandLayouts = new Map([
+  ["copper-basin-timber-village-inn-washstand", {
+    feet: [0, 1, 2, 3],
+    legs: [4, 5, 6, 7],
+    shelf: 8,
+    upperCollars: [9, 10, 11, 12],
+    basinFloor: 13,
+    basinWalls: [14, 15, 16, 17],
+    towelRail: [18, 19, 20],
+  }],
+]);
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
-assert.equal(catalog.items.length, 53);
+assert.equal(catalog.items.length, 54);
 assert.equal(new Set(catalog.items).size, catalog.items.length);
 
 const listedFiles = new Set(catalog.items);
@@ -259,6 +270,7 @@ let directionSignpostGeometryCount = 0;
 let publicLitterBinGeometryCount = 0;
 let coatRackGeometryCount = 0;
 let bedsideTableGeometryCount = 0;
+let washstandGeometryCount = 0;
 for (const file of catalog.items) {
   assert.match(file, /^json\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/);
   const item = json(join(root, file));
@@ -435,6 +447,14 @@ for (const file of catalog.items) {
     assert.equal(item.verification.bedsideTableGeometryValidated, true);
     assertBedsideTableGeometry(item, runtime, bedsideTableLayout);
   }
+  const washstandLayout = washstandLayouts.get(item.key);
+  if (washstandLayout) {
+    washstandGeometryCount += 1;
+    assert.equal(item.category, "furniture");
+    assert.equal(item.interaction, "placeable");
+    assert.equal(item.verification.washstandGeometryValidated, true);
+    assertWashstandGeometry(item, runtime, washstandLayout);
+  }
   assert.equal(forgeWorkbenchComponentsConnected(runtime.components), true, `${item.key} must be a connected assembly`);
   const grip = validateForgeGripBindings(runtime.components);
   assert.equal(grip.valid, true, `${item.key} grip must remain valid after decoding`);
@@ -516,7 +536,7 @@ assert.deepEqual([...categories], [
   ["building-fittings", 3],
   ["lighting", 4],
   ["handheld-civic", 1],
-  ["furniture", 7],
+  ["furniture", 8],
   ["containers", 3],
   ["cooking", 2],
   ["commerce", 1],
@@ -527,8 +547,8 @@ assert.deepEqual([...categories], [
   ["exterior-decor", 5],
 ]);
 assert.equal(tools, 16);
-assert.equal(placeables, 37);
-assert.equal(conceptReferences, 26);
+assert.equal(placeables, 38);
+assert.equal(conceptReferences, 27);
 assert.equal(bookGeometryCount, 7);
 assert.equal(framedTextileGeometryCount, 1);
 assert.equal(drawerCabinetGeometryCount, 1);
@@ -545,9 +565,10 @@ assert.equal(directionSignpostGeometryCount, 1);
 assert.equal(publicLitterBinGeometryCount, 1);
 assert.equal(coatRackGeometryCount, 1);
 assert.equal(bedsideTableGeometryCount, 1);
+assert.equal(washstandGeometryCount, 1);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
-console.log("item_ncm catalog tests passed: 53 canonical NCF1 items across 16 categories");
+console.log("item_ncm catalog tests passed: 54 canonical NCF1 items across 16 categories");
 
 function json(file) {
   return JSON.parse(readFileSync(file, "utf8"));
@@ -1198,6 +1219,52 @@ function assertBedsideTableGeometry(item, runtime, layout) {
   for (let left = 0; left < bounds.length; left += 1) {
     for (let right = left + 1; right < bounds.length; right += 1) {
       assert.equal(positiveVolumeOverlap(bounds[left], bounds[right]), false, `${item.key} components ${left} and ${right} intersect`);
+    }
+  }
+}
+
+function assertWashstandGeometry(item, runtime, layout) {
+  assert.equal(runtime.componentCount, 21);
+  assert.deepEqual(item.dimensions.sizeQ, [44, 56, 42]);
+  assert.equal(item.dimensions.width, 0.6875);
+  assert.equal(item.dimensions.height, 0.875);
+  assert.equal(item.dimensions.depth, 0.6563);
+  assert.ok(item.forge.rawBytes <= 300);
+  assert.ok(item.forge.requirements.outputMassGrams <= 350_000, `${item.key} must remain a movable inn washstand`);
+  assert.deepEqual(
+    [...new Set(item.forge.materialComponents.map(({ materialId }) => materialId))].sort(),
+    ["copper_bloom", "iron_bloom", "squared_timber", "wooden_plank", "wooden_stick"],
+  );
+  const bounds = runtime.components.map((component) => componentBoundsQ(component));
+  const floor = bounds[layout.basinFloor];
+  const [back, front, left, right] = layout.basinWalls.map((index) => bounds[index]);
+  for (const index of [layout.basinFloor, ...layout.basinWalls]) {
+    assert.equal(item.forge.materialComponents[index].materialId, "copper_bloom");
+  }
+  assert.equal(back.min[1], floor.max[1]);
+  assert.equal(front.min[1], floor.max[1]);
+  assert.equal(left.min[1], floor.max[1]);
+  assert.equal(right.min[1], floor.max[1]);
+  assert.equal(right.min[0] - left.max[0], 36);
+  assert.equal(front.min[2] - back.max[2], 28);
+  assert.equal(back.max[1] - floor.max[1], 10);
+  for (let position = 0; position < layout.feet.length; position += 1) {
+    const foot = bounds[layout.feet[position]];
+    const leg = bounds[layout.legs[position]];
+    const collar = bounds[layout.upperCollars[position]];
+    assert.equal(foot.min[1], 0);
+    assert.equal(foot.max[1], leg.min[1]);
+    assert.equal(leg.max[1], collar.min[1]);
+    assert.equal(collar.max[1], floor.min[1]);
+  }
+  const [leftMount, rightMount, rail] = layout.towelRail.map((index) => bounds[index]);
+  assert.equal(leftMount.min[2], bounds[layout.legs[1]].max[2]);
+  assert.equal(rightMount.min[2], bounds[layout.legs[3]].max[2]);
+  assert.equal(rail.min[0], leftMount.max[0]);
+  assert.equal(rail.max[0], rightMount.min[0]);
+  for (let first = 0; first < bounds.length; first += 1) {
+    for (let second = first + 1; second < bounds.length; second += 1) {
+      assert.equal(positiveVolumeOverlap(bounds[first], bounds[second]), false, `${item.key} components ${first} and ${second} intersect`);
     }
   }
 }

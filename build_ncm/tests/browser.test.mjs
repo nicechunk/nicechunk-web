@@ -38,7 +38,7 @@ try {
   await client.send("Page.enable");
   await client.send("Emulation.setDeviceMetricsOverride", { width: 1600, height: 1200, deviceScaleFactor: 1, mobile: false });
   await client.send("Page.navigate", { url });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 12 && document.querySelectorAll('[data-building]').length === 4 && document.querySelector('[data-building=hollow-cottage]') && document.querySelector('[data-building=compact-village-duplex]') && document.querySelector('[data-building=compact-village-farmhouse]') && document.querySelector('[data-building=compact-village-rowhouse]') && document.querySelector('[data-language-select]').options.length === 9"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 12 && document.querySelectorAll('[data-building]').length === 5 && document.querySelector('[data-building=hollow-cottage]') && document.querySelector('[data-building=compact-village-duplex]') && document.querySelector('[data-building=compact-village-farmhouse]') && document.querySelector('[data-building=compact-village-rowhouse]') && document.querySelector('[data-building=compact-village-boarding-house]') && document.querySelector('[data-language-select]').options.length === 9"));
 
   const initial = await evaluate(client, `({
     visibleBuildingCount: document.querySelectorAll('[data-building]').length,
@@ -75,8 +75,8 @@ try {
     hasHorizontalOverflow: document.documentElement.scrollWidth > document.documentElement.clientWidth,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(initial.visibleBuildingCount, 4);
-  assert.match(initial.totalBuildingCount, /64 BUILDINGS/);
+  assert.equal(initial.visibleBuildingCount, 5);
+  assert.match(initial.totalBuildingCount, /65 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -169,6 +169,8 @@ try {
   assert.ok(!cottageLoaded.resources.includes("/build_ncm/concepts/residential/compact-village-farmhouse.webp"), "selecting the hollow cottage must not load the farmhouse concept art");
   assert.ok(!cottageLoaded.resources.includes("/build_ncm/buildings/residential/compact-village-rowhouse.json"), "selecting the hollow cottage must not load the rowhouse JSON");
   assert.ok(!cottageLoaded.resources.includes("/build_ncm/concepts/residential/compact-village-rowhouse.webp"), "selecting the hollow cottage must not load the rowhouse concept art");
+  assert.ok(!cottageLoaded.resources.includes("/build_ncm/buildings/residential/compact-village-boarding-house.json"), "selecting the hollow cottage must not load the boarding-house JSON");
+  assert.ok(!cottageLoaded.resources.includes("/build_ncm/concepts/residential/compact-village-boarding-house.webp"), "selecting the hollow cottage must not load the boarding-house concept art");
   const cottagePayload = cottageLoaded.payload;
   const cottageVoxels = Number((await evaluate(client, "document.querySelectorAll('#metrics .metric strong')[2].textContent")).replaceAll(",", ""));
 
@@ -295,6 +297,47 @@ try {
   assert.ok(rowhouse.resources.includes("/build_ncm/concepts/residential/compact-village-rowhouse.webp"));
   assert.ok(!rowhouse.resources.some((path) => path.endsWith("compact-village-rowhouse-blueprint.js")));
 
+  await clickBuilding(client, "compact-village-boarding-house");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'compact-village-boarding-house' && document.querySelector('#modelSize').textContent === '29 × 19 × 35' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const boardingHouse = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptLoading: document.querySelector('#conceptImage').loading,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(boardingHouse.activeCategory, "residential");
+  assert.match(boardingHouse.title, /Compact Village Boarding House/);
+  assert.equal(boardingHouse.modelSize, "29 × 19 × 35");
+  assert.match(boardingHouse.payload, /^NCM3:/);
+  assert.equal(boardingHouse.voxelCount, 3654);
+  for (const id of [55, 56, 57, 58, 62, 68, 69, 70, 96]) assert.match(boardingHouse.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(boardingHouse.uncovered, false);
+  assert.equal(boardingHouse.glazingDisabled, true);
+  assert.equal(boardingHouse.glazingLabel, "Openings: Not applicable");
+  assert.equal(boardingHouse.disabledStyles, 6);
+  assert.equal(boardingHouse.disabledRoofs, 6);
+  assert.equal(boardingHouse.conceptHidden, false);
+  assert.equal(boardingHouse.conceptLoading, "eager");
+  assert.match(boardingHouse.conceptAlt, /Compact Village Boarding House concept reference/);
+  assert.equal(boardingHouse.conceptFit, "contain");
+  assert.equal(boardingHouse.selectedInUrl, "compact-village-boarding-house");
+  assert.ok(boardingHouse.resources.includes("/build_ncm/buildings/residential/compact-village-boarding-house.json"));
+  assert.ok(boardingHouse.resources.includes("/build_ncm/concepts/residential/compact-village-boarding-house.webp"));
+  assert.ok(!boardingHouse.resources.some((path) => path.endsWith("compact-village-boarding-house-blueprint.js")));
+
   await evaluate(client, "document.querySelector('[data-building-category=coastal]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'coastal' && document.querySelector('[data-building=seaside-cottage]') && document.querySelector('[data-building=stone-timber-harbor-beacon]') && document.querySelector('[data-building=compact-village-smokehouse]') && document.querySelector('[data-building=compact-village-fish-market]') && document.querySelector('[data-building=compact-village-boatwright-workshop]')"));
   const coastalBrowse = await evaluate(client, `({
@@ -305,7 +348,7 @@ try {
   })`);
   assert.equal(coastalBrowse.activeBuilding, null, "browsing another category must not select or generate a building");
   assert.equal(coastalBrowse.cardCount, 5);
-  assert.match(coastalBrowse.previewTitle, /Compact Village Rowhouse/);
+  assert.match(coastalBrowse.previewTitle, /Compact Village Boarding House/);
   assert.ok(!coastalBrowse.resources.includes("/build_ncm/buildings/coastal/seaside-cottage.json"), "category browsing must not load its building JSON");
   assert.ok(!coastalBrowse.resources.includes("/build_ncm/buildings/coastal/stone-timber-harbor-beacon.json"), "category browsing must not load the harbor-beacon JSON");
   assert.ok(!coastalBrowse.resources.includes("/build_ncm/concepts/coastal/stone-timber-harbor-beacon.webp"), "category browsing must not load the harbor-beacon concept art");
@@ -3055,7 +3098,7 @@ try {
 
   await client.send("Emulation.setDeviceMetricsOverride", { width: 390, height: 844, deviceScaleFactor: 1, mobile: true });
   await client.send("Page.reload", { ignoreCache: true });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 12 && document.querySelectorAll('[data-building]').length === 4"));
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelectorAll('[data-style]').length === 6 && document.querySelectorAll('[data-building-category]').length === 12 && document.querySelectorAll('[data-building]').length === 5"));
   await evaluate(client, "document.querySelector('[data-material-filter=all]').click()");
   await waitFor(() => evaluate(client, "document.querySelectorAll('#buildingMaterialCatalog .model-material-card').length === 33"));
   const mobile = await evaluate(client, `({
@@ -3076,7 +3119,7 @@ try {
   assert.equal(mobile.modelCards, 33);
   assert.equal(mobile.modelErrors, 0);
   assert.equal(mobile.categories, 12);
-  assert.equal(mobile.buildingCards, 4);
+  assert.equal(mobile.buildingCards, 5);
   assert.equal(mobile.buildingThumbnails, 0);
   assert.equal(mobile.categoryFlow, "row");
   assert.equal(mobile.editorReadOnly, false);
@@ -3084,10 +3127,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const mineRescueStationDirectUrl = new URL(url);
-  mineRescueStationDirectUrl.searchParams.set("building", "compact-village-mine-rescue-station");
-  await client.send("Page.navigate", { url: mineRescueStationDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'mining' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-mine-rescue-station' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const boardingHouseDirectUrl = new URL(url);
+  boardingHouseDirectUrl.searchParams.set("building", "compact-village-boarding-house");
+  await client.send("Page.navigate", { url: boardingHouseDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'residential' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-boarding-house' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -3099,16 +3142,16 @@ try {
     conceptPath: new URL(document.querySelector('#conceptImage').dataset.source).pathname,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(directSelection.activeCategory, "mining");
-  assert.equal(directSelection.activeBuilding, "compact-village-mine-rescue-station");
-  assert.match(directSelection.title, /Compact Village Mine Rescue Station/);
-  assert.equal(directSelection.modelSize, "27 × 22 × 25");
+  assert.equal(directSelection.activeCategory, "residential");
+  assert.equal(directSelection.activeBuilding, "compact-village-boarding-house");
+  assert.match(directSelection.title, /Compact Village Boarding House/);
+  assert.equal(directSelection.modelSize, "29 × 19 × 35");
   assert.match(directSelection.payload, /^NCM3:/);
   assert.equal(directSelection.conceptComplete, true);
   assert.ok(directSelection.conceptNaturalWidth > 0);
-  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/mining/compact-village-mine-rescue-station.webp");
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/mining/compact-village-mine-rescue-station.json"));
-  assert.ok(directSelection.resources.includes("/build_ncm/concepts/mining/compact-village-mine-rescue-station.webp"));
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/residential/compact-village-boarding-house.webp");
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/residential/compact-village-boarding-house.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/concepts/residential/compact-village-boarding-house.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

@@ -11,7 +11,7 @@ ITEM_NCM is the public NiceChunk forge-item blueprint registry. It follows the s
 - Every item JSON contains its own nine-language names and descriptions.
 - `tools/generate-items.mjs` is the canonical source for the initial collection and regenerates every item JSON deterministically.
 
-The registry currently contains 50 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, containers, cooking, commerce, construction, books and writing, interior decor, signage, exterior decor, and hand-held civic props. New designs begin with an Imagegen material-style concept; the resulting item JSON records the concept path, provenance, version, and SHA-256 before the forge encoding is accepted.
+The registry currently contains 51 blueprints across mining tools, forestry and farming, workshop tools, weapons, building fittings, lighting, furniture, containers, cooking, commerce, construction, books and writing, interior decor, signage, exterior decor, and hand-held civic props. New designs begin with an Imagegen material-style concept; the resulting item JSON records the concept path, provenance, version, and SHA-256 before the forge encoding is accepted.
 
 ## Forge guarantees
 
@@ -39,6 +39,7 @@ The generator rejects an item unless all of these checks pass:
 20. Public drinking troughs keep a low human-scale basin on two grounded stone feet, enclose a still-water plane below four continuous stone rim walls, and connect a timber back rail and iron drinking spout to the basin.
 21. Roadside wells preserve a human-scale grounded stone curb, continuously iron-anchored timber posts, a face-seated upper crossbeam and spindle, a captive hollow bucket suspended inside the curb without intersections, and a complete outward crank with a wooden grip.
 22. Roadside direction signposts stay at canonical player height, keep a compact grounded stone-and-iron post stack, and preserve three staggered, face-fastened timber arms with genuinely machined left-right-left arrow silhouettes and no encoded lettering.
+23. Public litter bins keep a compact street scale, four grounded iron feet, a supported timber floor, four continuous timber walls around a usable open cavity, two exterior iron bands, an unobstructed four-piece top rim, and a closed side-handle loop mounted outside the front wall.
 
 `verification.chainMinted` remains `false` because this library validates blueprint readiness; it does not claim that a blueprint PDA has already been created.
 

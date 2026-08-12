@@ -208,6 +208,17 @@ const DIRECTION_SIGNPOST_LAYOUTS = Object.freeze({
     directions: [-1, 1, -1],
   },
 });
+const PUBLIC_LITTER_BIN_LAYOUTS = Object.freeze({
+  "iron-braced-village-public-litter-bin": {
+    feet: [0, 1, 2, 3],
+    floor: 4,
+    walls: [5, 6, 7, 8],
+    lowerBands: [9, 10, 11, 12],
+    middleBands: [13, 14, 15, 16],
+    rim: [17, 18, 19, 20],
+    handle: [21, 22, 23],
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -458,6 +469,11 @@ const ITEM_NAMES = Object.freeze({
     "Stone-and-timber Village Roadside Direction Signpost", "Poste indicador de camino de aldea de piedra y madera", "Poteau indicateur routier villageois en pierre et bois",
     "Dorfwegweiser aus Stein und Holz", "石と木の村落街道道標", "Деревенский придорожный указатель из камня и дерева",
     "석재·목재 마을 길가 방향 표지대", "石木村莊路邊指路牌", "石木村庄路边指路牌",
+  ),
+  "iron-braced-village-public-litter-bin": names(
+    "Iron-braced Village Public Litter Bin", "Papelera pública de aldea reforzada con hierro", "Corbeille publique villageoise renforcée de fer",
+    "Eisenverstärkter öffentlicher Dorfabfallbehälter", "鉄補強の村落公共ごみ箱", "Деревенская общественная урна с железными скобами",
+    "철제 보강 마을 공공 쓰레기통", "鐵箍村莊公共垃圾桶", "铁箍村庄公共垃圾桶",
   ),
   "iron-blacksmith-anvil": names(
     "Iron Blacksmith Anvil", "Yunque de herrero de hierro", "Enclume de forgeron en fer", "Eiserner Schmiedeamboss",
@@ -1076,6 +1092,36 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+  placeable("exterior-decor", "iron-braced-village-public-litter-bin", [
+    part("iron_bloom", [6, 6, 6], [-11, 3, -11]),
+    part("iron_bloom", [6, 6, 6], [11, 3, -11]),
+    part("iron_bloom", [6, 6, 6], [-11, 3, 11]),
+    part("iron_bloom", [6, 6, 6], [11, 3, 11]),
+    part("wooden_plank", [28, 8, 28], [0, 10, 0]),
+    part("wooden_plank", [28, 32, 2], [0, 26, -15]),
+    part("wooden_plank", [28, 32, 2], [0, 26, 15]),
+    part("wooden_plank", [2, 32, 28], [-15, 26, 0]),
+    part("wooden_plank", [2, 32, 28], [15, 26, 0]),
+    part("iron_bloom", [28, 3, 2], [0, 18, -17]),
+    part("iron_bloom", [28, 3, 2], [0, 18, 17]),
+    part("iron_bloom", [2, 3, 28], [-17, 18, 0]),
+    part("iron_bloom", [2, 3, 28], [17, 18, 0]),
+    part("iron_bloom", [28, 3, 2], [0, 30, -17]),
+    part("iron_bloom", [28, 3, 2], [0, 30, 17]),
+    part("iron_bloom", [2, 3, 28], [-17, 30, 0]),
+    part("iron_bloom", [2, 3, 28], [17, 30, 0]),
+    part("iron_bloom", [32, 4, 4], [0, 44, -16]),
+    part("iron_bloom", [32, 4, 4], [0, 44, 16]),
+    part("iron_bloom", [4, 4, 28], [-16, 44, 0]),
+    part("iron_bloom", [4, 4, 28], [16, 44, 0]),
+    part("iron_bloom", [4, 8, 4], [-8, 42, 18]),
+    part("iron_bloom", [4, 8, 4], [8, 42, 18]),
+    part("iron_bloom", [12, 4, 4], [0, 48, 18]),
+  ], { yaw: -0.68, pitch: 0.31 }, {
+    image: "concepts/exterior-decor/iron-braced-village-public-litter-bin-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
 ]);
 
 generate();
@@ -1171,6 +1217,8 @@ function buildItem(spec) {
   if (roadsideWellLayout) validateRoadsideWellGeometry(spec, runtime, roadsideWellLayout);
   const directionSignpostLayout = DIRECTION_SIGNPOST_LAYOUTS[spec.key] ?? null;
   if (directionSignpostLayout) validateDirectionSignpostGeometry(spec, runtime, directionSignpostLayout);
+  const publicLitterBinLayout = PUBLIC_LITTER_BIN_LAYOUTS[spec.key] ?? null;
+  if (publicLitterBinLayout) validatePublicLitterBinGeometry(spec, runtime, publicLitterBinLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -1276,6 +1324,7 @@ function buildItem(spec) {
       ...(drinkingTroughLayout ? { drinkingTroughGeometryValidated: true } : {}),
       ...(roadsideWellLayout ? { roadsideWellGeometryValidated: true } : {}),
       ...(directionSignpostLayout ? { directionSignpostGeometryValidated: true } : {}),
+      ...(publicLitterBinLayout ? { publicLitterBinGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -2081,6 +2130,83 @@ function validateDirectionSignpostGeometry(spec, runtime, layout) {
   const boardHeights = layout.boards.map((index) => components[index].offsetQ[1]);
   if (!(boardHeights[0] > boardHeights[1] && boardHeights[1] > boardHeights[2])) {
     throw new Error(`${spec.key} direction arms must remain visibly staggered from top to bottom.`);
+  }
+}
+
+function validatePublicLitterBinGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 24 || runtime.boundsQ.sizeQ.join(",") !== "36,50,38") {
+    throw new Error(`${spec.key} must preserve its compact human-scale public-bin proportions (got ${runtime.componentCount} components and ${runtime.boundsQ.sizeQ.join(",")}).`);
+  }
+  const components = runtime.components ?? [];
+  const bounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    "iron_bloom", "iron_bloom", "iron_bloom", "iron_bloom", "wooden_plank",
+    "wooden_plank", "wooden_plank", "wooden_plank", "wooden_plank",
+    ...Array(15).fill("iron_bloom"),
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+  const floor = bounds[layout.floor];
+  const [back, front, left, right] = layout.walls.map((index) => bounds[index]);
+  if (floor.min[1] <= 0 || floor.max[1] < back.min[1] || floor.max[1] < front.min[1]
+    || floor.max[1] < left.min[1] || floor.max[1] < right.min[1]
+    || floor.min[1] > back.min[1] || floor.min[1] > front.min[1]
+    || floor.min[1] > left.min[1] || floor.min[1] > right.min[1]
+    || back.min[0] !== floor.min[0] || back.max[0] !== floor.max[0]
+    || front.min[0] !== floor.min[0] || front.max[0] !== floor.max[0]
+    || left.min[2] !== floor.min[2] || left.max[2] !== floor.max[2]
+    || right.min[2] !== floor.min[2] || right.max[2] !== floor.max[2]
+    || back.max[2] !== left.min[2] || front.min[2] !== left.max[2]
+    || back.min[0] !== left.max[0] || back.max[0] !== right.min[0]
+    || front.min[0] !== left.max[0] || front.max[0] !== right.min[0]) {
+    throw new Error(`${spec.key} timber floor and four walls do not form one open-topped container.`);
+  }
+  for (const footIndex of layout.feet) {
+    const foot = bounds[footIndex];
+    if (foot.min[1] !== 0 || foot.max[1] !== floor.min[1]
+      || overlapLength(foot.min[0], foot.max[0], floor.min[0], floor.max[0]) <= 0
+      || overlapLength(foot.min[2], foot.max[2], floor.min[2], floor.max[2]) <= 0) {
+      throw new Error(`${spec.key} foot ${footIndex} does not ground and support the timber floor.`);
+    }
+  }
+  const wallTop = back.max[1];
+  const innerOpening = {
+    minX: left.max[0],
+    maxX: right.min[0],
+    minZ: back.max[2],
+    maxZ: front.min[2],
+  };
+  if (innerOpening.maxX - innerOpening.minX < 24 || innerOpening.maxZ - innerOpening.minZ < 24) {
+    throw new Error(`${spec.key} must keep a genuinely usable open top rather than a solid or token cavity.`);
+  }
+  for (const [bandName, indexes, expectedY] of [
+    ["lower band", layout.lowerBands, 18],
+    ["middle band", layout.middleBands, 30],
+    ["top rim", layout.rim, 44],
+  ]) {
+    for (const index of indexes) {
+      const piece = bounds[index];
+      if (components[index].offsetQ[1] !== expectedY || piece.min[1] < back.min[1] || piece.max[1] > wallTop + 6) {
+        throw new Error(`${spec.key} ${bandName} ${index} is vertically misplaced.`);
+      }
+      const crossesOpening = overlapLength(piece.min[0], piece.max[0], innerOpening.minX, innerOpening.maxX) > 0
+        && overlapLength(piece.min[2], piece.max[2], innerOpening.minZ, innerOpening.maxZ) > 0;
+      if (crossesOpening) throw new Error(`${spec.key} ${bandName} ${index} obstructs the open top.`);
+    }
+  }
+  const [leftMount, rightMount, handleGrip] = layout.handle.map((index) => bounds[index]);
+  if (leftMount.max[1] !== handleGrip.min[1] || rightMount.max[1] !== handleGrip.min[1]
+    || handleGrip.min[0] !== leftMount.max[0] || handleGrip.max[0] !== rightMount.min[0]
+    || leftMount.min[2] > front.max[2] + 2 || leftMount.max[2] <= front.max[2]
+    || rightMount.min[2] > front.max[2] + 2 || rightMount.max[2] <= front.max[2]
+    || handleGrip.min[2] > front.max[2] + 2 || handleGrip.max[2] <= front.max[2]) {
+    throw new Error(`${spec.key} side handle must remain a closed, face-connected loop mounted outside the front wall.`);
   }
 }
 

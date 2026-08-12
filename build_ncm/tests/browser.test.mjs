@@ -76,7 +76,7 @@ try {
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(initial.visibleBuildingCount, 4);
-  assert.match(initial.totalBuildingCount, /62 BUILDINGS/);
+  assert.match(initial.totalBuildingCount, /63 BUILDINGS/);
   assert.equal(initial.categoryCount, 12);
   assert.equal(initial.activeCategory, "residential");
   assert.equal(initial.activeBuilding, null);
@@ -2013,14 +2013,14 @@ try {
   assert.ok(!butcherShop.resources.some((path) => path.endsWith("compact-village-butcher-shop-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=transport]').click()");
-  await waitFor(() => evaluate(client, "document.querySelector('[data-building=stone-timber-footbridge]') && document.querySelector('[data-building=two-wheel-village-handcart]') && document.querySelector('[data-building=compact-village-carriage-house]') && document.querySelector('[data-building=compact-village-courier-post]')"));
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building=stone-timber-footbridge]') && document.querySelector('[data-building=two-wheel-village-handcart]') && document.querySelector('[data-building=compact-village-carriage-house]') && document.querySelector('[data-building=compact-village-courier-post]') && document.querySelector('[data-building=covered-village-ferry-landing]')"));
   const transportBrowse = await evaluate(client, `({
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building ?? null,
     cardCount: document.querySelectorAll('[data-building]').length,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
   assert.equal(transportBrowse.activeBuilding, null);
-  assert.equal(transportBrowse.cardCount, 4);
+  assert.equal(transportBrowse.cardCount, 5);
   assert.ok(!transportBrowse.resources.includes("/build_ncm/buildings/transport/stone-timber-footbridge.json"), "category browsing must not load the footbridge JSON");
   assert.ok(!transportBrowse.resources.includes("/build_ncm/concepts/transport/stone-timber-footbridge.webp"), "category browsing must not load the footbridge concept art");
   assert.ok(!transportBrowse.resources.includes("/build_ncm/buildings/transport/two-wheel-village-handcart.json"), "category browsing must not load the handcart JSON");
@@ -2029,6 +2029,8 @@ try {
   assert.ok(!transportBrowse.resources.includes("/build_ncm/concepts/transport/compact-village-carriage-house.webp"), "category browsing must not load the carriage-house concept art");
   assert.ok(!transportBrowse.resources.includes("/build_ncm/buildings/transport/compact-village-courier-post.json"), "category browsing must not load the courier-post JSON");
   assert.ok(!transportBrowse.resources.includes("/build_ncm/concepts/transport/compact-village-courier-post.webp"), "category browsing must not load the courier-post concept art");
+  assert.ok(!transportBrowse.resources.includes("/build_ncm/buildings/transport/covered-village-ferry-landing.json"), "category browsing must not load the ferry-landing JSON");
+  assert.ok(!transportBrowse.resources.includes("/build_ncm/concepts/transport/covered-village-ferry-landing.webp"), "category browsing must not load the ferry-landing concept art");
   await clickBuilding(client, "stone-timber-footbridge");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'stone-timber-footbridge' && document.querySelector('#modelSize').textContent === '31 × 9 × 13' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const footbridge = await evaluate(client, `({
@@ -2194,6 +2196,47 @@ try {
   assert.ok(courierPost.resources.includes("/build_ncm/buildings/transport/compact-village-courier-post.json"));
   assert.ok(courierPost.resources.includes("/build_ncm/concepts/transport/compact-village-courier-post.webp"));
   assert.ok(!courierPost.resources.some((path) => path.endsWith("compact-village-courier-post-blueprint.js")));
+
+  await clickBuilding(client, "covered-village-ferry-landing");
+  await waitFor(() => evaluate(client, "document.querySelector('[data-building].active')?.dataset.building === 'covered-village-ferry-landing' && document.querySelector('#modelSize').textContent === '19 × 21 × 29' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const ferryLanding = await evaluate(client, `({
+    activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
+    title: document.querySelector('#buildingTitle').textContent,
+    modelSize: document.querySelector('#modelSize').textContent,
+    payload: document.querySelector('#codeOutput').value,
+    voxelCount: Number(document.querySelectorAll('#metrics .metric strong')[2].textContent.replaceAll(',', '')),
+    usedMaterials: document.querySelector('#materialStrip').textContent,
+    uncovered: document.querySelector('#bomSummary').textContent.toLowerCase().includes('uncovered'),
+    glazingDisabled: document.querySelector('#toggleGlazing').disabled,
+    glazingLabel: document.querySelector('#toggleGlazing').textContent,
+    disabledStyles: document.querySelectorAll('[data-style]:disabled').length,
+    disabledRoofs: document.querySelectorAll('[data-roof]:disabled').length,
+    conceptHidden: document.querySelector('#conceptReference').hidden,
+    conceptLoading: document.querySelector('#conceptImage').loading,
+    conceptAlt: document.querySelector('#conceptImage').alt,
+    conceptFit: getComputedStyle(document.querySelector('#conceptImage')).objectFit,
+    selectedInUrl: new URL(location.href).searchParams.get('building'),
+    resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
+  })`);
+  assert.equal(ferryLanding.activeCategory, "transport");
+  assert.match(ferryLanding.title, /Covered Village Ferry Landing/);
+  assert.equal(ferryLanding.modelSize, "19 × 21 × 29");
+  assert.match(ferryLanding.payload, /^NCM3:/);
+  assert.equal(ferryLanding.voxelCount, 1066);
+  for (const id of [55, 56, 57, 68, 69, 99]) assert.match(ferryLanding.usedMaterials, new RegExp(`MAT_${String(id).padStart(3, '0')}`));
+  assert.equal(ferryLanding.uncovered, false);
+  assert.equal(ferryLanding.glazingDisabled, true);
+  assert.equal(ferryLanding.glazingLabel, "Openings: Not applicable");
+  assert.equal(ferryLanding.disabledStyles, 6);
+  assert.equal(ferryLanding.disabledRoofs, 6);
+  assert.equal(ferryLanding.conceptHidden, false);
+  assert.equal(ferryLanding.conceptLoading, "eager");
+  assert.match(ferryLanding.conceptAlt, /Covered Village Ferry Landing concept reference/);
+  assert.equal(ferryLanding.conceptFit, "contain");
+  assert.equal(ferryLanding.selectedInUrl, "covered-village-ferry-landing");
+  assert.ok(ferryLanding.resources.includes("/build_ncm/buildings/transport/covered-village-ferry-landing.json"));
+  assert.ok(ferryLanding.resources.includes("/build_ncm/concepts/transport/covered-village-ferry-landing.webp"));
+  assert.ok(!ferryLanding.resources.some((path) => path.endsWith("covered-village-ferry-landing-blueprint.js")));
 
   await evaluate(client, "document.querySelector('[data-building-category=mining]').click()");
   await waitFor(() => evaluate(client, "document.querySelector('[data-building=timber-mine-headframe]') && document.querySelector('[data-building=covered-village-ore-sorting-shed]') && document.querySelector('[data-building=compact-village-assay-house]') && document.querySelector('[data-building=compact-village-lamp-room]')"));
@@ -2998,10 +3041,10 @@ try {
   assert.ok(mobile.loadButtonHeight >= 40);
   assert.ok(mobile.copyButtonHeight >= 40);
 
-  const boatwrightWorkshopDirectUrl = new URL(url);
-  boatwrightWorkshopDirectUrl.searchParams.set("building", "compact-village-boatwright-workshop");
-  await client.send("Page.navigate", { url: boatwrightWorkshopDirectUrl.href });
-  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'coastal' && document.querySelector('[data-building].active')?.dataset.building === 'compact-village-boatwright-workshop' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
+  const ferryLandingDirectUrl = new URL(url);
+  ferryLandingDirectUrl.searchParams.set("building", "covered-village-ferry-landing");
+  await client.send("Page.navigate", { url: ferryLandingDirectUrl.href });
+  await waitFor(() => evaluate(client, "document.readyState === 'complete' && document.querySelector('[data-building-category].active')?.dataset.buildingCategory === 'transport' && document.querySelector('[data-building].active')?.dataset.building === 'covered-village-ferry-landing' && document.querySelector('#conceptImage').complete && document.querySelector('#conceptImage').naturalWidth > 0"));
   const directSelection = await evaluate(client, `({
     activeCategory: document.querySelector('[data-building-category].active')?.dataset.buildingCategory,
     activeBuilding: document.querySelector('[data-building].active')?.dataset.building,
@@ -3013,16 +3056,16 @@ try {
     conceptPath: new URL(document.querySelector('#conceptImage').dataset.source).pathname,
     resources: performance.getEntriesByType('resource').map((entry) => new URL(entry.name).pathname),
   })`);
-  assert.equal(directSelection.activeCategory, "coastal");
-  assert.equal(directSelection.activeBuilding, "compact-village-boatwright-workshop");
-  assert.match(directSelection.title, /Compact Village Boatwright Workshop/);
-  assert.equal(directSelection.modelSize, "27 × 22 × 31");
+  assert.equal(directSelection.activeCategory, "transport");
+  assert.equal(directSelection.activeBuilding, "covered-village-ferry-landing");
+  assert.match(directSelection.title, /Covered Village Ferry Landing/);
+  assert.equal(directSelection.modelSize, "19 × 21 × 29");
   assert.match(directSelection.payload, /^NCM3:/);
   assert.equal(directSelection.conceptComplete, true);
   assert.ok(directSelection.conceptNaturalWidth > 0);
-  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/coastal/compact-village-boatwright-workshop.webp");
-  assert.ok(directSelection.resources.includes("/build_ncm/buildings/coastal/compact-village-boatwright-workshop.json"));
-  assert.ok(directSelection.resources.includes("/build_ncm/concepts/coastal/compact-village-boatwright-workshop.webp"));
+  assert.equal(directSelection.conceptPath, "/build_ncm/concepts/transport/covered-village-ferry-landing.webp");
+  assert.ok(directSelection.resources.includes("/build_ncm/buildings/transport/covered-village-ferry-landing.json"));
+  assert.ok(directSelection.resources.includes("/build_ncm/concepts/transport/covered-village-ferry-landing.webp"));
   assert.equal(
     directSelection.resources.filter((path) => path.startsWith("/build_ncm/buildings/")).length,
     1,

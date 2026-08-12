@@ -62,6 +62,7 @@
     "buildings/construction/compact-village-building-supply-depot.json",
     "buildings/mining/compact-village-lamp-room.json",
     "buildings/wayfinding/covered-village-wayfinding-node.json",
-    "buildings/coastal/compact-village-boatwright-workshop.json"
+    "buildings/coastal/compact-village-boatwright-workshop.json",
+    "buildings/transport/covered-village-ferry-landing.json"
   ]
 }

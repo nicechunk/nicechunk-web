@@ -1,0 +1,308 @@
+{
+  "schema": "nicechunk.ncf-item.v1",
+  "key": "iron-braced-timber-village-inn-coat-rack",
+  "category": "furniture",
+  "interaction": "placeable",
+  "names": {
+    "en": "Iron-braced Timber Village Inn Coat Rack",
+    "es": "Perchero de posada de aldea de madera reforzado con hierro",
+    "fr": "Portemanteau d’auberge villageoise en bois renforcé de fer",
+    "de": "Eisenverstärkter Holzkleiderständer für Dorfgasthäuser",
+    "ja": "鉄補強の木製村宿コート掛け",
+    "ru": "Деревянная вешалка деревенской гостиницы с железными скобами",
+    "ko": "철제 보강 목재 마을 여관 옷걸이",
+    "zh-Hant": "鐵箍木製村莊旅店衣帽架",
+    "zh-Hans": "铁箍木制村庄客栈衣帽架"
+  },
+  "descriptions": {
+    "en": "Iron-braced Timber Village Inn Coat Rack is a canonical NCF1 placeable blueprint made only from current NiceChunk forge materials and restored by the live game runtime.",
+    "es": "Perchero de posada de aldea de madera reforzado con hierro es un plano NCF1 canónico colocable, fabricado solo con materiales actuales de NiceChunk y restaurado por el entorno del juego.",
+    "fr": "Portemanteau d’auberge villageoise en bois renforcé de fer est un plan NCF1 canonique à placer, composé uniquement de matériaux actuels de NiceChunk et restauré par le moteur du jeu.",
+    "de": "Eisenverstärkter Holzkleiderständer für Dorfgasthäuser ist ein kanonischer platzierbarer NCF1-Bauplan, der nur aktuelle NiceChunk-Schmiedematerialien nutzt und von der Spiel-Laufzeit rekonstruiert wird.",
+    "ja": "鉄補強の木製村宿コート掛けは、現行のNiceChunk鍛造素材だけで作られ、ゲーム実行環境で復元される正規NCF1設置物設計図です。",
+    "ru": "Деревянная вешалка деревенской гостиницы с железными скобами — канонический размещаемый чертёж NCF1, использующий только текущие кузнечные материалы NiceChunk и восстанавливаемый игровым движком.",
+    "ko": "철제 보강 목재 마을 여관 옷걸이은(는) 현재 NiceChunk 단조 재료만 사용하며 게임 런타임에서 복원되는 정규 NCF1 배치형 설계도입니다.",
+    "zh-Hant": "鐵箍木製村莊旅店衣帽架是僅使用現行 NiceChunk 鍛造材料、並可由遊戲執行環境還原的標準 NCF1 可放置物設計圖。",
+    "zh-Hans": "铁箍木制村庄客栈衣帽架是仅使用现行 NiceChunk 锻造材料、并可由游戏运行环境还原的标准 NCF1 可放置物设计图。"
+  },
+  "dimensions": {
+    "unit": "m",
+    "width": 1.0313,
+    "height": 1.75,
+    "depth": 1.0313,
+    "sizeQ": [
+      66,
+      112,
+      66
+    ]
+  },
+  "preview": {
+    "yaw": -0.7,
+    "pitch": 0.28
+  },
+  "concept": {
+    "image": "concepts/furniture/iron-braced-timber-village-inn-coat-rack-v1.webp",
+    "source": "imagegen",
+    "version": 1,
+    "sha256": "770b34debec8cab2cd6c254476eeac9520164b12af68e6611ad8ce97566f723b"
+  },
+  "forge": {
+    "format": "NCF1",
+    "version": 15,
+    "code": "NCF1.9cAIN-ktveQtmXXZjqXCakOBA4AABAAQARDKGAgMA0AgAIAIhlDAQGfmAQAEAEQygwIGAAAIDSACIZQYEDAAAF-ZAAE1IcCBwAAGAAgAiGUIRAgAAVAAQABNSHAgcAATgAIAIhlCBQIAALQAEAATUhwIHAAGYACACIZRIIEgADYABAAE1IICAwCROAAgAkQBAQCYnAAQASDBQMB4UQAIAAmpBAQGfuJwAEAEiAICPtE4ACACQYKBnxCiABAAE1IMCAgABmAkgAkEBBAAAzAmQASDBQMAAaQeIAAmpBgQEAAM37kAEggIIAAGb7SACQYKBgADT8RAAA",
+    "rawBytes": 247,
+    "sha256": "d4a90268768f5ddb736573bc9cb90a0f8d786f8b76c5f371b2483b15b9dc79bf",
+    "designHash": 2083571708,
+    "encodingMode": "components",
+    "sourceEncodingMode": "components",
+    "surfaceBaked": false,
+    "sourceBytes": 247,
+    "savedBytes": 0,
+    "sourceComponentCount": 23,
+    "decodedComponentCount": 23,
+    "appearanceQuadCount": 0,
+    "hasGrip": false,
+    "materialPolicy": "current-smelting-rules-only",
+    "materialRuleSet": "nicechunk-smelting-v1",
+    "materialComponents": [
+      {
+        "index": 0,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 2990723,
+        "usedVolumeMm3": 2990723,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 1,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 1098633,
+        "usedVolumeMm3": 1098633,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 2,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 1098633,
+        "usedVolumeMm3": 1098633,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 3,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 1098633,
+        "usedVolumeMm3": 1098633,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 4,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 1098633,
+        "usedVolumeMm3": 1098633,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 5,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 2990723,
+        "usedVolumeMm3": 2990723,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 6,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 16601563,
+        "usedVolumeMm3": 16601563,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 7,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 2990723,
+        "usedVolumeMm3": 2990723,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 8,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 4882813,
+        "usedVolumeMm3": 4882813,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 9,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 2990723,
+        "usedVolumeMm3": 2990723,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 10,
+        "materialId": "squared_timber",
+        "itemCode": 1033,
+        "inputVolumeMm3": 9887695,
+        "usedVolumeMm3": 9887695,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 11,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 366211,
+        "usedVolumeMm3": 366211,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 12,
+        "materialId": "wooden_stick",
+        "itemCode": 1032,
+        "inputVolumeMm3": 976563,
+        "usedVolumeMm3": 976563,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 13,
+        "materialId": "wooden_stick",
+        "itemCode": 1032,
+        "inputVolumeMm3": 1373291,
+        "usedVolumeMm3": 1373291,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 14,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 366211,
+        "usedVolumeMm3": 366211,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 15,
+        "materialId": "wooden_stick",
+        "itemCode": 1032,
+        "inputVolumeMm3": 976563,
+        "usedVolumeMm3": 976563,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 16,
+        "materialId": "wooden_stick",
+        "itemCode": 1032,
+        "inputVolumeMm3": 1373291,
+        "usedVolumeMm3": 1373291,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 17,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 366211,
+        "usedVolumeMm3": 366211,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 18,
+        "materialId": "wooden_stick",
+        "itemCode": 1032,
+        "inputVolumeMm3": 976563,
+        "usedVolumeMm3": 976563,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 19,
+        "materialId": "wooden_stick",
+        "itemCode": 1032,
+        "inputVolumeMm3": 1373291,
+        "usedVolumeMm3": 1373291,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 20,
+        "materialId": "iron_bloom",
+        "itemCode": 1014,
+        "inputVolumeMm3": 366211,
+        "usedVolumeMm3": 366211,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 21,
+        "materialId": "wooden_stick",
+        "itemCode": 1032,
+        "inputVolumeMm3": 976563,
+        "usedVolumeMm3": 976563,
+        "unusedVolumeMm3": 0
+      },
+      {
+        "index": 22,
+        "materialId": "wooden_stick",
+        "itemCode": 1032,
+        "inputVolumeMm3": 1373291,
+        "usedVolumeMm3": 1373291,
+        "unusedVolumeMm3": 0
+      }
+    ],
+    "requirements": {
+      "requiredVolumeMm3": 58589184,
+      "requiredEffectiveDurability": 22353,
+      "outputMassGrams": 117760,
+      "materialScore": 66
+    },
+    "runtime": {
+      "kind": "ncf1-forge-runtime-v1",
+      "vertexCount": 552,
+      "triangleCount": 276,
+      "meshByteLength": 10488
+    }
+  },
+  "billOfMaterials": [
+    {
+      "materialId": "iron_bloom",
+      "itemCode": 1014,
+      "componentCount": 8,
+      "inputVolumeMm3": 13427736,
+      "usedVolumeMm3": 13427736,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 250000,
+      "equivalentInputUnits": 54
+    },
+    {
+      "materialId": "squared_timber",
+      "itemCode": 1033,
+      "componentCount": 7,
+      "inputVolumeMm3": 35766603,
+      "usedVolumeMm3": 35766603,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 48400,
+      "equivalentInputUnits": 739
+    },
+    {
+      "materialId": "wooden_stick",
+      "itemCode": 1032,
+      "componentCount": 8,
+      "inputVolumeMm3": 9399416,
+      "usedVolumeMm3": 9399416,
+      "unusedVolumeMm3": 0,
+      "unitVolumeMm3": 4900,
+      "equivalentInputUnits": 1919
+    }
+  ],
+  "verification": {
+    "canonicalRoundTrip": true,
+    "gameRuntimeRestored": true,
+    "connectedComponents": true,
+    "gripValidated": true,
+    "gripDirectionValidated": true,
+    "currentMaterialsOnly": true,
+    "coatRackGeometryValidated": true,
+    "chainMinted": false
+  }
+}

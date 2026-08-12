@@ -219,6 +219,26 @@ const PUBLIC_LITTER_BIN_LAYOUTS = Object.freeze({
     handle: [21, 22, 23],
   },
 });
+const COAT_RACK_LAYOUTS = Object.freeze({
+  "iron-braced-timber-village-inn-coat-rack": {
+    foundation: 0,
+    feet: [1, 2, 3, 4],
+    baseCollar: 5,
+    lowerPost: 6,
+    middleCollar: 7,
+    upperPost: 8,
+    upperCollar: 9,
+    cap: 10,
+    lowerHooks: [
+      { root: 11, arm: 12, stop: 13, axis: 0, direction: 1 },
+      { root: 14, arm: 15, stop: 16, axis: 0, direction: -1 },
+    ],
+    upperHooks: [
+      { root: 17, arm: 18, stop: 19, axis: 2, direction: 1 },
+      { root: 20, arm: 21, stop: 22, axis: 2, direction: -1 },
+    ],
+  },
+});
 
 const COLORS = Object.freeze({
   amber_glass_panel: 0xda5,
@@ -474,6 +494,11 @@ const ITEM_NAMES = Object.freeze({
     "Iron-braced Village Public Litter Bin", "Papelera pública de aldea reforzada con hierro", "Corbeille publique villageoise renforcée de fer",
     "Eisenverstärkter öffentlicher Dorfabfallbehälter", "鉄補強の村落公共ごみ箱", "Деревенская общественная урна с железными скобами",
     "철제 보강 마을 공공 쓰레기통", "鐵箍村莊公共垃圾桶", "铁箍村庄公共垃圾桶",
+  ),
+  "iron-braced-timber-village-inn-coat-rack": names(
+    "Iron-braced Timber Village Inn Coat Rack", "Perchero de posada de aldea de madera reforzado con hierro", "Portemanteau d’auberge villageoise en bois renforcé de fer",
+    "Eisenverstärkter Holzkleiderständer für Dorfgasthäuser", "鉄補強の木製村宿コート掛け", "Деревянная вешалка деревенской гостиницы с железными скобами",
+    "철제 보강 목재 마을 여관 옷걸이", "鐵箍木製村莊旅店衣帽架", "铁箍木制村庄客栈衣帽架",
   ),
   "iron-blacksmith-anvil": names(
     "Iron Blacksmith Anvil", "Yunque de herrero de hierro", "Enclume de forgeron en fer", "Eiserner Schmiedeamboss",
@@ -1122,6 +1147,35 @@ const ITEM_SPECS = Object.freeze([
     source: "imagegen",
     version: 1,
   }),
+  placeable("furniture", "iron-braced-timber-village-inn-coat-rack", [
+    part("iron_bloom", [14, 4, 14], [0, 2, 0]),
+    part("squared_timber", [12, 4, 6], [13, 2, 0]),
+    part("squared_timber", [12, 4, 6], [-13, 2, 0]),
+    part("squared_timber", [6, 4, 12], [0, 2, 13]),
+    part("squared_timber", [6, 4, 12], [0, 2, -13]),
+    part("iron_bloom", [14, 4, 14], [0, 6, 0]),
+    part("squared_timber", [8, 68, 8], [0, 42, 0]),
+    part("iron_bloom", [14, 4, 14], [0, 78, 0]),
+    part("squared_timber", [8, 20, 8], [0, 90, 0]),
+    part("iron_bloom", [14, 4, 14], [0, 102, 0]),
+    part("squared_timber", [18, 8, 18], [0, 108, 0]),
+    part("iron_bloom", [4, 4, 6], [9, 78, 0]),
+    part("wooden_stick", [16, 4, 4], [19, 78, 0]),
+    part("wooden_stick", [6, 10, 6], [30, 81, 0]),
+    part("iron_bloom", [4, 4, 6], [-9, 78, 0]),
+    part("wooden_stick", [16, 4, 4], [-19, 78, 0]),
+    part("wooden_stick", [6, 10, 6], [-30, 81, 0]),
+    part("iron_bloom", [6, 4, 4], [0, 102, 9]),
+    part("wooden_stick", [4, 4, 16], [0, 102, 19]),
+    part("wooden_stick", [6, 10, 6], [0, 105, 30]),
+    part("iron_bloom", [6, 4, 4], [0, 102, -9]),
+    part("wooden_stick", [4, 4, 16], [0, 102, -19]),
+    part("wooden_stick", [6, 10, 6], [0, 105, -30]),
+  ], { yaw: -0.7, pitch: 0.28 }, {
+    image: "concepts/furniture/iron-braced-timber-village-inn-coat-rack-v1.webp",
+    source: "imagegen",
+    version: 1,
+  }),
 ]);
 
 generate();
@@ -1219,6 +1273,8 @@ function buildItem(spec) {
   if (directionSignpostLayout) validateDirectionSignpostGeometry(spec, runtime, directionSignpostLayout);
   const publicLitterBinLayout = PUBLIC_LITTER_BIN_LAYOUTS[spec.key] ?? null;
   if (publicLitterBinLayout) validatePublicLitterBinGeometry(spec, runtime, publicLitterBinLayout);
+  const coatRackLayout = COAT_RACK_LAYOUTS[spec.key] ?? null;
+  if (coatRackLayout) validateCoatRackGeometry(spec, runtime, coatRackLayout);
 
   const requirements = forgeMaterialRequirements(selection.bytes);
   const materialComponents = stats.componentBreakdown.map((entry, index) => ({
@@ -1325,6 +1381,7 @@ function buildItem(spec) {
       ...(roadsideWellLayout ? { roadsideWellGeometryValidated: true } : {}),
       ...(directionSignpostLayout ? { directionSignpostGeometryValidated: true } : {}),
       ...(publicLitterBinLayout ? { publicLitterBinGeometryValidated: true } : {}),
+      ...(coatRackLayout ? { coatRackGeometryValidated: true } : {}),
       chainMinted: false,
     },
   };
@@ -2207,6 +2264,94 @@ function validatePublicLitterBinGeometry(spec, runtime, layout) {
     || rightMount.min[2] > front.max[2] + 2 || rightMount.max[2] <= front.max[2]
     || handleGrip.min[2] > front.max[2] + 2 || handleGrip.max[2] <= front.max[2]) {
     throw new Error(`${spec.key} side handle must remain a closed, face-connected loop mounted outside the front wall.`);
+  }
+}
+
+function validateCoatRackGeometry(spec, runtime, layout) {
+  if (runtime.componentCount !== 23 || runtime.boundsQ.sizeQ.join(",") !== "66,112,66") {
+    throw new Error(`${spec.key} must preserve its canonical-player-scale inn coat-rack proportions (got ${runtime.componentCount} components and ${runtime.boundsQ.sizeQ.join(",")}).`);
+  }
+  const components = runtime.components ?? [];
+  const bounds = components.map((component) => ({
+    min: component.offsetQ.map((value, axis) => value - component.dimsQ[axis] * 0.5),
+    max: component.offsetQ.map((value, axis) => value + component.dimsQ[axis] * 0.5),
+  }));
+  const expectedMaterials = [
+    "iron_bloom",
+    ...Array(4).fill("squared_timber"),
+    "iron_bloom", "squared_timber", "iron_bloom", "squared_timber", "iron_bloom", "squared_timber",
+    "iron_bloom", "wooden_stick", "wooden_stick",
+    "iron_bloom", "wooden_stick", "wooden_stick",
+    "iron_bloom", "wooden_stick", "wooden_stick",
+    "iron_bloom", "wooden_stick", "wooden_stick",
+  ];
+  for (let index = 0; index < expectedMaterials.length; index += 1) {
+    if (!components[index] || spec.parts[index]?.materialId !== expectedMaterials[index]) {
+      throw new Error(`${spec.key} has an invalid material at component ${index}.`);
+    }
+  }
+
+  const foundation = bounds[layout.foundation];
+  const baseCollar = bounds[layout.baseCollar];
+  const lowerPost = bounds[layout.lowerPost];
+  const middleCollar = bounds[layout.middleCollar];
+  const upperPost = bounds[layout.upperPost];
+  const upperCollar = bounds[layout.upperCollar];
+  const cap = bounds[layout.cap];
+  if (foundation.min[1] !== 0 || baseCollar.min[1] !== foundation.max[1]
+    || baseCollar.max[1] !== lowerPost.min[1] || lowerPost.max[1] !== middleCollar.min[1]
+    || middleCollar.max[1] !== upperPost.min[1] || upperPost.max[1] !== upperCollar.min[1]
+    || upperCollar.max[1] !== cap.min[1]
+    || lowerPost.min[0] < baseCollar.min[0] || lowerPost.max[0] > baseCollar.max[0]
+    || lowerPost.min[2] < baseCollar.min[2] || lowerPost.max[2] > baseCollar.max[2]
+    || upperPost.min[0] < middleCollar.min[0] || upperPost.max[0] > middleCollar.max[0]
+    || upperPost.min[2] < middleCollar.min[2] || upperPost.max[2] > middleCollar.max[2]) {
+    throw new Error(`${spec.key} base collars, timber post, and cap must form one continuous vertical stack.`);
+  }
+  const expectedFootOffsets = [[13, 2, 0], [-13, 2, 0], [0, 2, 13], [0, 2, -13]];
+  for (let position = 0; position < layout.feet.length; position += 1) {
+    const index = layout.feet[position];
+    const foot = bounds[index];
+    if (components[index].offsetQ.some((value, axis) => value !== expectedFootOffsets[position][axis])
+      || foot.min[1] !== 0
+      || ![0, 2].some((axis) => overlapLength(foot.min[axis], foot.max[axis], foundation.min[axis], foundation.max[axis]) === 0)
+      || overlapLength(foot.min[0], foot.max[0], foundation.min[0], foundation.max[0]) < 0
+      || overlapLength(foot.min[2], foot.max[2], foundation.min[2], foundation.max[2]) < 0) {
+      throw new Error(`${spec.key} foot ${index} is not a grounded face-connected arm of the four-way base.`);
+    }
+  }
+
+  for (const [tier, hooks, collarIndex] of [
+    ["lower", layout.lowerHooks, layout.middleCollar],
+    ["upper", layout.upperHooks, layout.upperCollar],
+  ]) {
+    const collar = bounds[collarIndex];
+    for (const { root, arm, stop, axis, direction } of hooks) {
+      const crossAxes = [0, 1, 2].filter((candidate) => candidate !== axis);
+      const rootBounds = bounds[root];
+      const armBounds = bounds[arm];
+      const stopBounds = bounds[stop];
+      const collarFace = direction > 0 ? collar.max[axis] : collar.min[axis];
+      const rootInnerFace = direction > 0 ? rootBounds.min[axis] : rootBounds.max[axis];
+      const rootOuterFace = direction > 0 ? rootBounds.max[axis] : rootBounds.min[axis];
+      const armInnerFace = direction > 0 ? armBounds.min[axis] : armBounds.max[axis];
+      const armOuterFace = direction > 0 ? armBounds.max[axis] : armBounds.min[axis];
+      const stopInnerFace = direction > 0 ? stopBounds.min[axis] : stopBounds.max[axis];
+      if (rootInnerFace !== collarFace || armInnerFace !== rootOuterFace || stopInnerFace !== armOuterFace
+        || crossAxes.some((crossAxis) => overlapLength(rootBounds.min[crossAxis], rootBounds.max[crossAxis], collar.min[crossAxis], collar.max[crossAxis]) <= 0)
+        || crossAxes.some((crossAxis) => overlapLength(armBounds.min[crossAxis], armBounds.max[crossAxis], rootBounds.min[crossAxis], rootBounds.max[crossAxis]) <= 0)
+        || crossAxes.some((crossAxis) => overlapLength(stopBounds.min[crossAxis], stopBounds.max[crossAxis], armBounds.min[crossAxis], armBounds.max[crossAxis]) <= 0)
+        || stopBounds.max[1] <= armBounds.max[1]) {
+        throw new Error(`${spec.key} ${tier} hook ${root}/${arm}/${stop} is detached, reversed, or lacks its raised retaining stop.`);
+      }
+    }
+  }
+  for (let left = 0; left < bounds.length; left += 1) {
+    for (let right = left + 1; right < bounds.length; right += 1) {
+      if (boundsOverlap(bounds[left], bounds[right], 0)) {
+        throw new Error(`${spec.key} components ${left} and ${right} intersect.`);
+      }
+    }
   }
 }
 

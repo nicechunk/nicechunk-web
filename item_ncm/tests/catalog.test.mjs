@@ -195,10 +195,30 @@ const publicLitterBinLayouts = new Map([
     handle: [21, 22, 23],
   }],
 ]);
+const coatRackLayouts = new Map([
+  ["iron-braced-timber-village-inn-coat-rack", {
+    foundation: 0,
+    feet: [1, 2, 3, 4],
+    baseCollar: 5,
+    lowerPost: 6,
+    middleCollar: 7,
+    upperPost: 8,
+    upperCollar: 9,
+    cap: 10,
+    lowerHooks: [
+      { root: 11, arm: 12, stop: 13, axis: 0, direction: 1 },
+      { root: 14, arm: 15, stop: 16, axis: 0, direction: -1 },
+    ],
+    upperHooks: [
+      { root: 17, arm: 18, stop: 19, axis: 2, direction: 1 },
+      { root: 20, arm: 21, stop: 22, axis: 2, direction: -1 },
+    ],
+  }],
+]);
 
 assert.equal(catalog.schema, "nicechunk.ncf-item-catalog.v1");
 assert.equal(catalog.version, 1);
-assert.equal(catalog.items.length, 51);
+assert.equal(catalog.items.length, 52);
 assert.equal(new Set(catalog.items).size, catalog.items.length);
 
 const listedFiles = new Set(catalog.items);
@@ -225,6 +245,7 @@ let drinkingTroughGeometryCount = 0;
 let roadsideWellGeometryCount = 0;
 let directionSignpostGeometryCount = 0;
 let publicLitterBinGeometryCount = 0;
+let coatRackGeometryCount = 0;
 for (const file of catalog.items) {
   assert.match(file, /^json\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9]+(?:-[a-z0-9]+)*\.json$/);
   const item = json(join(root, file));
@@ -385,6 +406,14 @@ for (const file of catalog.items) {
     assert.equal(item.verification.publicLitterBinGeometryValidated, true);
     assertPublicLitterBinGeometry(item, runtime, publicLitterBinLayout);
   }
+  const coatRackLayout = coatRackLayouts.get(item.key);
+  if (coatRackLayout) {
+    coatRackGeometryCount += 1;
+    assert.equal(item.category, "furniture");
+    assert.equal(item.interaction, "placeable");
+    assert.equal(item.verification.coatRackGeometryValidated, true);
+    assertCoatRackGeometry(item, runtime, coatRackLayout);
+  }
   assert.equal(forgeWorkbenchComponentsConnected(runtime.components), true, `${item.key} must be a connected assembly`);
   const grip = validateForgeGripBindings(runtime.components);
   assert.equal(grip.valid, true, `${item.key} grip must remain valid after decoding`);
@@ -466,7 +495,7 @@ assert.deepEqual([...categories], [
   ["building-fittings", 3],
   ["lighting", 4],
   ["handheld-civic", 1],
-  ["furniture", 5],
+  ["furniture", 6],
   ["containers", 3],
   ["cooking", 2],
   ["commerce", 1],
@@ -477,8 +506,8 @@ assert.deepEqual([...categories], [
   ["exterior-decor", 5],
 ]);
 assert.equal(tools, 16);
-assert.equal(placeables, 35);
-assert.equal(conceptReferences, 24);
+assert.equal(placeables, 36);
+assert.equal(conceptReferences, 25);
 assert.equal(bookGeometryCount, 7);
 assert.equal(framedTextileGeometryCount, 1);
 assert.equal(drawerCabinetGeometryCount, 1);
@@ -493,9 +522,10 @@ assert.equal(drinkingTroughGeometryCount, 1);
 assert.equal(roadsideWellGeometryCount, 1);
 assert.equal(directionSignpostGeometryCount, 1);
 assert.equal(publicLitterBinGeometryCount, 1);
+assert.equal(coatRackGeometryCount, 1);
 assert.ok(runtimeCache.snapshot().residentBytes > 0);
 
-console.log("item_ncm catalog tests passed: 51 canonical NCF1 items across 16 categories");
+console.log("item_ncm catalog tests passed: 52 canonical NCF1 items across 16 categories");
 
 function json(file) {
   return JSON.parse(readFileSync(file, "utf8"));
@@ -1054,4 +1084,58 @@ function assertPublicLitterBinGeometry(item, runtime, layout) {
   assert.equal(grip.max[0], rightMount.min[0]);
   assert.ok(leftMount.min[2] <= front.max[2] + 2 && leftMount.max[2] > front.max[2]);
   assert.ok(rightMount.min[2] <= front.max[2] + 2 && rightMount.max[2] > front.max[2]);
+}
+
+function assertCoatRackGeometry(item, runtime, layout) {
+  assert.equal(runtime.componentCount, 23);
+  assert.deepEqual(item.dimensions.sizeQ, [66, 112, 66]);
+  assert.equal(item.dimensions.width, 1.0313);
+  assert.equal(item.dimensions.height, 1.75);
+  assert.equal(item.dimensions.depth, 1.0313);
+  assert.ok(item.forge.rawBytes <= 320);
+  assert.ok(item.forge.requirements.outputMassGrams <= 125_000, `${item.key} must remain a movable inn furnishing`);
+  assert.deepEqual(
+    [...new Set(item.forge.materialComponents.map(({ materialId }) => materialId))].sort(),
+    ["iron_bloom", "squared_timber", "wooden_stick"],
+  );
+  const components = runtime.components;
+  const bounds = components.map((component) => componentBoundsQ(component));
+  const foundation = bounds[layout.foundation];
+  const baseCollar = bounds[layout.baseCollar];
+  const lowerPost = bounds[layout.lowerPost];
+  const middleCollar = bounds[layout.middleCollar];
+  const upperPost = bounds[layout.upperPost];
+  const upperCollar = bounds[layout.upperCollar];
+  const cap = bounds[layout.cap];
+  assert.equal(foundation.min[1], 0);
+  assert.equal(foundation.max[1], baseCollar.min[1]);
+  assert.equal(baseCollar.max[1], lowerPost.min[1]);
+  assert.equal(lowerPost.max[1], middleCollar.min[1]);
+  assert.equal(middleCollar.max[1], upperPost.min[1]);
+  assert.equal(upperPost.max[1], upperCollar.min[1]);
+  assert.equal(upperCollar.max[1], cap.min[1]);
+  assert.deepEqual(layout.feet.map((index) => components[index].offsetQ), [
+    [13, 2, 0], [-13, 2, 0], [0, 2, 13], [0, 2, -13],
+  ]);
+  for (const index of layout.feet) assert.equal(bounds[index].min[1], 0);
+  for (const [hooks, collarIndex] of [
+    [layout.lowerHooks, layout.middleCollar],
+    [layout.upperHooks, layout.upperCollar],
+  ]) {
+    const collar = bounds[collarIndex];
+    for (const { root, arm, stop, axis, direction } of hooks) {
+      const rootBounds = bounds[root];
+      const armBounds = bounds[arm];
+      const stopBounds = bounds[stop];
+      assert.equal(direction > 0 ? rootBounds.min[axis] : rootBounds.max[axis], direction > 0 ? collar.max[axis] : collar.min[axis]);
+      assert.equal(direction > 0 ? armBounds.min[axis] : armBounds.max[axis], direction > 0 ? rootBounds.max[axis] : rootBounds.min[axis]);
+      assert.equal(direction > 0 ? stopBounds.min[axis] : stopBounds.max[axis], direction > 0 ? armBounds.max[axis] : armBounds.min[axis]);
+      assert.ok(stopBounds.max[1] > armBounds.max[1]);
+    }
+  }
+  for (let left = 0; left < bounds.length; left += 1) {
+    for (let right = left + 1; right < bounds.length; right += 1) {
+      assert.equal(positiveVolumeOverlap(bounds[left], bounds[right]), false, `${item.key} components ${left} and ${right} intersect`);
+    }
+  }
 }

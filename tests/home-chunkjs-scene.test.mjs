@@ -152,12 +152,16 @@ assert.match(html, /rel: "modulepreload", href: `\/chunk\.js\/chunk\/browser-run
 assert.match(html, /rel: "preload", as: "fetch", type: "application\/javascript", href: `\/chunk\.js\/chunk\/chunk-build-worker\.bundle\.js\$\{versionSuffix\}`/u);
 assert.match(html, /Object\.assign\(link, warmup, \{ crossOrigin: "anonymous", fetchPriority: "high" \}\)/u);
 assert.doesNotMatch(html, /<link rel="modulepreload"[^>]+browser-runtime/u);
-for (const preloadPath of [
-  "/media/home-world-terrain-v1.bin.gz",
+assert.match(html, /rel="preload" as="fetch"[^>]+href="\/media\/home-world-terrain-v1\.bin\.gz\?v=__NICECHUNK_BUILD_VERSION__"/u);
+const preloadLinks = html.match(/<link\b[^>]*\brel="preload"[^>]*>/gu) || [];
+for (const deferredModelPath of [
   "/media/vox/chr_peasant_guy_blackhair.ncm",
   "/media/vox/chr_peasant_girl_orangehair.ncm",
 ]) {
-  assert.match(html, new RegExp(`rel="preload" as="fetch"[^>]+href="${preloadPath.replaceAll(".", "\\.")}\\?v=__NICECHUNK_BUILD_VERSION__"`, "u"));
+  assert.ok(
+    preloadLinks.every((link) => !link.includes(deferredModelPath)),
+    `${deferredModelPath} must load with the 3D scene instead of being preloaded before first paint.`,
+  );
 }
 assert.equal(homeBuildAssetUrl("/chunk.js/chunk/browser-runtime.js", "build 42"), "/chunk.js/chunk/browser-runtime.js?v=build%2042");
 assert.equal(homeBuildAssetUrl("/asset.bin?format=gzip", "build-42"), "/asset.bin?format=gzip&v=build-42");

@@ -1,4 +1,5 @@
 import "./site-header.css";
+import "./site-ui.js";
 import { mountSiteHeader } from "./site-header.js";
 
 const header = document.querySelector("[data-site-header-root], .site-header");

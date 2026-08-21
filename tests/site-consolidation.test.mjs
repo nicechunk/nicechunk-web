@@ -90,11 +90,12 @@ for (const [hub, expectation] of Object.entries(pageExpectations)) {
   assert.doesNotMatch(html, /<video\b|placehold\.co|unsplash\.com/u);
 }
 
-const [hubScript, hubStyle, headerStyle, headerScript, fallbackScript, i18nScript, buildConfig] = await Promise.all([
+const [hubScript, hubStyle, headerStyle, headerScript, headerBootstrapScript, fallbackScript, i18nScript, buildConfig] = await Promise.all([
   readFile(new URL("../hubs/hub.js", import.meta.url), "utf8"),
   readFile(new URL("../hubs/style.css", import.meta.url), "utf8"),
   readFile(new URL("../src/site-header.css", import.meta.url), "utf8"),
   readFile(new URL("../src/site-header.js", import.meta.url), "utf8"),
+  readFile(new URL("../src/site-header-bootstrap.js", import.meta.url), "utf8"),
   readFile(new URL("../src/site-ui.js", import.meta.url), "utf8"),
   readFile(new URL("../src/i18n.js", import.meta.url), "utf8"),
   readSiteBuildConfig(),
@@ -108,7 +109,7 @@ for (const requiredPath of [
   assert.ok(hubScript.includes(requiredPath), `Hub directory is missing ${requiredPath}.`);
 }
 assert.match(headerScript, /from "\.\/site-navigation\.js"/u);
-assert.match(headerScript, /import "\.\/site-ui\.js";/u);
+assert.match(headerBootstrapScript, /import "\.\/site-ui\.js";/u);
 assert.match(fallbackScript, /from "\.\/site-navigation\.js"/u);
 assert.match(fallbackScript, /if \(!usesSharedHeader\) ensureUnifiedNavigation\(\);\s*ensureUnifiedFooter\(\);/u);
 assert.match(fallbackScript, /footer\.site-footer, \[data-site-footer-native\]/u);

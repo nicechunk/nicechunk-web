@@ -109,12 +109,31 @@ for (const requiredPath of [
 }
 assert.match(headerScript, /from "\.\/site-navigation\.js"/u);
 assert.match(fallbackScript, /from "\.\/site-navigation\.js"/u);
+assert.match(fallbackScript, /if \(!usesSharedHeader\) ensureUnifiedNavigation\(\);\s*ensureUnifiedFooter\(\);/u);
+assert.match(fallbackScript, /footer\.site-footer, \[data-site-footer-native\]/u);
+assert.match(fallbackScript, /https:\/\/x\.com\/nicechunk/u);
+assert.match(fallbackScript, /nicechunk-footer-directory/u);
+for (const requiredFooterPath of [
+  "/", "/play/", "/world/", "/world_rule/", "/resource_rule/", "/elements/",
+  "/technology/", "/chunk.js/", "/ncm/", "/ncfm/", "/fairness/", "/proof-of-frontier/",
+  "/guardian/", "/contracts/", "/civilization/", "/trust/", "/create/", "/build_ncm/",
+  "/item_ncm/", "/ncm4/", "/forging/", "/miner/", "/fourier-voxel/", "/roadmap/",
+  "/docs/", "/whitepaper/", "/seed/",
+]) {
+  assert.ok(fallbackScript.includes(`href: "${requiredFooterPath}"`), `Footer directory is missing ${requiredFooterPath}.`);
+}
+for (const language of localeCodes.slice(1)) {
+  assert.ok(fallbackScript.includes(language.includes("-") ? `"${language}": {` : `${language}: {`), `Footer labels are missing ${language}.`);
+}
 assert.doesNotMatch(`${hubStyle}\n${headerStyle}`, /transition:\s*all/u);
 assert.match(hubStyle, /\.hub-action:focus-visible,[\s\S]*?outline: 2px solid/u);
 assert.match(hubStyle, /@media \(prefers-reduced-motion: reduce\)/u);
 assert.match(hubStyle, /@media \(max-width: 900px\)[\s\S]*?\.hub-links \{\s*grid-template-columns: minmax\(0, 1fr\);/u);
 assert.match(headerStyle, /max-height: min\(70dvh, 620px\)/u);
 assert.match(headerStyle, /grid-template-columns: minmax\(0, 1fr\) auto 44px/u);
+assert.match(headerStyle, /\.nicechunk-footer-directory \{[\s\S]*?grid-template-columns: repeat\(4, minmax\(120px, 1fr\)\)/u);
+assert.match(headerStyle, /@media \(max-width: 900px\)[\s\S]*?\.nicechunk-footer-directory \{[\s\S]*?grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/u);
+assert.match(headerStyle, /\.nicechunk-footer-group a \{[\s\S]*?min-height: 40px/u);
 assert.match(i18nScript, /hubs: \{\s*localeBase: "\/hubs\/locales"/u);
 for (const [name, path] of Object.entries({ world: "world/index.html", technology: "technology/index.html", create: "create/index.html" })) {
   const viteEntry = new RegExp(`${name}: "${path.replace("/", "\\/")}"`, "u");

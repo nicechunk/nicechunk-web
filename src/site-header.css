@@ -1018,21 +1018,22 @@ header.site-header.site-header-shared[data-site-header-mounted="true"] {
   }
 }
 
-/* Existing unified footer compatibility. */
+/* Shared directory footer. Native page footers are replaced with this complete sitemap. */
 .nicechunk-site-footer {
   position: relative !important;
   z-index: 10 !important;
   display: grid !important;
-  grid-template-columns: minmax(180px, 1fr) auto auto !important;
-  align-items: center !important;
-  gap: 16px 22px !important;
+  grid-template-columns: minmax(220px, 0.72fr) minmax(0, 2.28fr) !important;
+  align-items: start !important;
+  gap: 28px clamp(28px, 5vw, 76px) !important;
   width: 100% !important;
-  padding: 22px clamp(16px, 4vw, 42px) !important;
-  color: rgba(218, 231, 238, 0.72) !important;
+  padding: 34px clamp(18px, 4vw, 56px) 24px !important;
+  color: rgba(218, 231, 238, 0.78) !important;
   background:
-    linear-gradient(180deg, rgba(8, 12, 18, 0.62), rgba(8, 12, 18, 0.9)),
-    rgba(8, 12, 18, 0.82) !important;
-  border-top: 1px solid rgba(152, 203, 255, 0.16) !important;
+    radial-gradient(circle at 12% 0%, rgba(0, 163, 255, 0.09), transparent 28%),
+    linear-gradient(180deg, rgba(8, 12, 18, 0.76), rgba(5, 8, 12, 0.96)),
+    rgba(8, 12, 18, 0.94) !important;
+  border-top: 1px solid rgba(152, 203, 255, 0.18) !important;
   box-sizing: border-box !important;
   backdrop-filter: blur(18px) !important;
 }
@@ -1061,62 +1062,153 @@ header.site-header.site-header-shared[data-site-header-mounted="true"] {
 
 .nicechunk-footer-brand {
   display: grid !important;
-  gap: 8px !important;
+  gap: 10px !important;
   min-width: 0 !important;
 }
 
 .nicechunk-footer-brand p,
 .nicechunk-footer-meta {
+  max-width: 34ch !important;
   margin: 0 !important;
-  color: rgba(218, 231, 238, 0.58) !important;
+  color: rgba(218, 231, 238, 0.62) !important;
   font-size: 11px !important;
-  font-weight: 800 !important;
-  line-height: 1.45 !important;
+  font-weight: 750 !important;
+  line-height: 1.6 !important;
 }
 
-.nicechunk-footer-links,
-.nicechunk-footer-social {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: flex-end !important;
-  flex-wrap: wrap !important;
+.nicechunk-footer-directory {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(120px, 1fr)) !important;
+  gap: 24px clamp(18px, 2.8vw, 42px) !important;
+  min-width: 0 !important;
+}
+
+.nicechunk-footer-group {
+  display: grid !important;
+  align-content: start !important;
   gap: 8px !important;
   min-width: 0 !important;
 }
 
-.nicechunk-footer-links a,
-.nicechunk-footer-social a {
+.nicechunk-footer-group h2 {
+  margin: 0 0 4px !important;
+  color: var(--nc-nav-green) !important;
+  font-size: 10px !important;
+  font-weight: 950 !important;
+  letter-spacing: 0.16em !important;
+  line-height: 1.4 !important;
+  text-transform: uppercase !important;
+}
+
+.nicechunk-footer-group nav {
+  display: grid !important;
+  gap: 2px !important;
+  min-width: 0 !important;
+}
+
+.nicechunk-footer-group a {
   display: inline-flex !important;
   align-items: center !important;
-  justify-content: center !important;
-  min-height: 44px !important;
-  padding: 0 10px !important;
+  width: fit-content !important;
+  max-width: 100% !important;
+  min-height: 40px !important;
+  padding: 4px 0 !important;
   color: rgba(218, 231, 238, 0.78) !important;
-  background: rgba(152, 203, 255, 0.04) !important;
-  border: 1px solid rgba(152, 203, 255, 0.16) !important;
-  border-radius: 8px !important;
-  font-size: 10px !important;
-  font-weight: 900 !important;
-  letter-spacing: 0.08em !important;
-  line-height: 1 !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  line-height: 1.35 !important;
   text-decoration: none !important;
-  text-transform: uppercase !important;
-  white-space: nowrap !important;
+  overflow-wrap: anywhere !important;
   transition:
     color 160ms ease,
-    background 160ms ease,
-    border-color 160ms ease !important;
+    transform 160ms ease !important;
+}
+
+.nicechunk-footer-group a::before {
+  width: 0 !important;
+  height: 1px !important;
+  margin-right: 0 !important;
+  background: var(--nc-nav-green) !important;
+  content: "" !important;
+  opacity: 0 !important;
+  transition:
+    width 160ms ease,
+    margin-right 160ms ease,
+    opacity 160ms ease !important;
+}
+
+.nicechunk-footer-group a:hover {
+  color: #f4f8ff !important;
+  transform: translateX(2px) !important;
+}
+
+.nicechunk-footer-group a:hover::before {
+  width: 10px !important;
+  margin-right: 7px !important;
+  opacity: 1 !important;
+}
+
+.nicechunk-site-footer :is(a, button):focus-visible {
+  border-radius: 4px !important;
+  outline: 2px solid var(--nc-nav-blue) !important;
+  outline-offset: 3px !important;
+}
+
+.nicechunk-footer-bar {
+  grid-column: 1 / -1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 18px !important;
+  min-width: 0 !important;
+  padding-top: 18px !important;
+  border-top: 1px solid rgba(152, 203, 255, 0.12) !important;
+}
+
+.nicechunk-footer-community {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 14px !important;
+}
+
+.nicechunk-footer-community h2 {
+  margin: 0 !important;
+}
+
+.nicechunk-footer-social {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+  min-width: 0 !important;
 }
 
 .nicechunk-footer-social a {
+  justify-content: center !important;
+  min-width: 58px !important;
+  min-height: 40px !important;
+  padding: 0 12px !important;
   color: var(--nc-nav-blue) !important;
+  background: rgba(152, 203, 255, 0.05) !important;
+  border: 1px solid rgba(152, 203, 255, 0.18) !important;
+  border-radius: 7px !important;
+  font-size: 10px !important;
+  font-weight: 950 !important;
+  letter-spacing: 0.08em !important;
+  line-height: 1 !important;
+  text-transform: uppercase !important;
 }
 
-.nicechunk-footer-links a:hover,
 .nicechunk-footer-social a:hover {
   color: var(--nc-nav-green) !important;
   background: rgba(140, 255, 0, 0.08) !important;
   border-color: rgba(140, 255, 0, 0.34) !important;
+  transform: none !important;
+}
+
+.nicechunk-footer-social a::before {
+  display: none !important;
 }
 
 .nicechunk-site-footer-floating {
@@ -1125,19 +1217,29 @@ header.site-header.site-header-shared[data-site-header-mounted="true"] {
   bottom: 12px !important;
   left: 12px !important;
   z-index: 8200 !important;
-  grid-template-columns: auto minmax(0, 1fr) auto !important;
+  grid-template-columns: auto minmax(0, 1fr) !important;
+  align-items: center !important;
+  gap: 12px !important;
   width: auto !important;
   padding: 8px 10px !important;
-  background: rgba(8, 12, 18, 0.7) !important;
+  background: rgba(8, 12, 18, 0.72) !important;
   border: 1px solid rgba(152, 203, 255, 0.18) !important;
   border-radius: 8px !important;
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.26) !important;
 }
 
 .nicechunk-site-footer-floating .nicechunk-footer-brand p,
+.nicechunk-site-footer-floating .nicechunk-footer-directory,
 .nicechunk-site-footer-floating .nicechunk-footer-meta,
-.nicechunk-site-footer-floating .nicechunk-footer-links {
+.nicechunk-site-footer-floating .nicechunk-footer-community h2 {
   display: none !important;
+}
+
+.nicechunk-site-footer-floating .nicechunk-footer-bar {
+  grid-column: auto !important;
+  justify-content: flex-end !important;
+  padding: 0 !important;
+  border: 0 !important;
 }
 
 .nicechunk-site-footer-floating .brand-mark {
@@ -1149,21 +1251,14 @@ header.site-header.site-header-shared[data-site-header-mounted="true"] {
   height: 24px !important;
 }
 
-.nicechunk-site-footer-floating .nicechunk-footer-social a {
-  min-height: 44px !important;
-  padding: 0 8px !important;
-  font-size: 10px !important;
-}
-
 @media (max-width: 1180px) {
   .nicechunk-site-footer {
     grid-template-columns: 1fr !important;
-    align-items: start !important;
+    gap: 24px !important;
   }
 
-  .nicechunk-footer-links,
-  .nicechunk-footer-social {
-    justify-content: flex-start !important;
+  .nicechunk-footer-directory {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
   }
 }
 
@@ -1192,19 +1287,31 @@ header.site-header.site-header-shared[data-site-header-mounted="true"] {
     padding: 18px 14px calc(18px + env(safe-area-inset-bottom, 0px)) !important;
   }
 
-  .nicechunk-footer-links,
-  .nicechunk-footer-social {
+  .nicechunk-footer-directory {
     display: grid !important;
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 18px 20px !important;
     width: 100% !important;
   }
 
-  .nicechunk-footer-links a,
-  .nicechunk-footer-social a {
-    min-width: 0 !important;
-    padding: 0 8px !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
+  .nicechunk-footer-group a {
+    width: 100% !important;
+  }
+
+  .nicechunk-footer-bar {
+    align-items: flex-start !important;
+    flex-direction: column-reverse !important;
+  }
+
+  .nicechunk-footer-community {
+    align-items: flex-start !important;
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+
+  .nicechunk-footer-social {
+    justify-content: flex-start !important;
+    width: 100% !important;
   }
 
   .nicechunk-site-footer-floating {
@@ -1220,6 +1327,12 @@ header.site-header.site-header-shared[data-site-header-mounted="true"] {
     width: auto !important;
   }
 
+  .nicechunk-site-footer-floating .nicechunk-footer-community {
+    align-items: center !important;
+    flex-direction: row !important;
+    width: auto !important;
+  }
+
   html:is(
     [data-i18n-scope="mining"],
     [data-i18n-scope="playerSet"],
@@ -1232,7 +1345,10 @@ header.site-header.site-header-shared[data-site-header-mounted="true"] {
 @media (prefers-reduced-motion: reduce) {
   .site-header *,
   .site-header *::before,
-  .site-header *::after {
+  .site-header *::after,
+  .nicechunk-site-footer *,
+  .nicechunk-site-footer *::before,
+  .nicechunk-site-footer *::after {
     scroll-behavior: auto;
     transition-duration: 0.01ms;
     animation-duration: 0.01ms;

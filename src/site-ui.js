@@ -65,7 +65,8 @@ function installSiteUi() {
   document.documentElement.classList.add("site-ui-ready");
   const usesSharedHeader = Boolean(document.querySelector("[data-site-header-root]"));
   if (!usesSharedHeader) ensureUnifiedNavigation();
-  if (!document.querySelector("[data-site-footer-native]")) ensureUnifiedFooter();
+  ensureUnifiedFooter();
+  installUnifiedLanguageObserver();
   if (!usesSharedHeader) {
     installMobileMenu();
     installHeaderMetrics();
@@ -83,39 +84,62 @@ function installSiteUi() {
 const unifiedNavItems = SITE_NAVIGATION_ROUTES.filter((route) => route.group === "primary");
 const unifiedSecondaryNavItems = SITE_NAVIGATION_ROUTES.filter((route) => route.group === "secondary");
 
-const footerPrimaryLinks = [
-  { key: "home", href: "/" },
-  { key: "play", href: "/play/" },
-  { key: "roadmap", href: "/roadmap/" },
-  { key: "docs", href: "/docs/" },
-  { key: "guardian", href: "/guardian/" },
-  { key: "contracts", href: "/contracts/" },
+const footerGroups = [
+  {
+    key: "worldGroup",
+    links: [
+      { key: "home", href: "/" },
+      { key: "enterWorld", href: "/play/" },
+      { key: "world", href: "/world/" },
+      { key: "worldRules", href: "/world_rule/" },
+      { key: "resources", href: "/resource_rule/" },
+      { key: "elements", href: "/elements/" },
+    ],
+  },
+  {
+    key: "technologyGroup",
+    links: [
+      { key: "technology", href: "/technology/" },
+      { key: "chunkjs", href: "/chunk.js/" },
+      { key: "ncm", href: "/ncm/" },
+      { key: "ncfm", href: "/ncfm/" },
+      { key: "fairness", href: "/fairness/" },
+      { key: "proof", href: "/proof-of-frontier/" },
+      { key: "guardians", href: "/guardian/" },
+      { key: "contracts", href: "/contracts/" },
+      { key: "civilization", href: "/civilization/" },
+      { key: "trust", href: "/trust/" },
+    ],
+  },
+  {
+    key: "createGroup",
+    links: [
+      { key: "create", href: "/create/" },
+      { key: "buildNcm", href: "/build_ncm/" },
+      { key: "itemNcm", href: "/item_ncm/" },
+      { key: "ncm4", href: "/ncm4/" },
+      { key: "forging", href: "/forging/" },
+      { key: "miner", href: "/miner/" },
+      { key: "fourierVoxel", href: "/fourier-voxel/" },
+    ],
+  },
+  {
+    key: "projectGroup",
+    links: [
+      { key: "roadmap", href: "/roadmap/" },
+      { key: "docs", href: "/docs/" },
+      { key: "whitepaper", href: "/whitepaper/" },
+      { key: "whitelist", href: "/seed/" },
+    ],
+  },
 ];
 
 const footerSocialLinks = [
-  { key: "x", href: "https://x.com/nicechunk/" },
+  { key: "x", href: "https://x.com/nicechunk" },
   { key: "github", href: "https://github.com/nicechunk" },
 ];
 
-const footerI18nAttributes = [
-  "data-i18n",
-  "data-home-i18n",
-  "data-docs-i18n",
-  "data-roadmap-i18n",
-  "data-fairness-i18n",
-  "data-trust-i18n",
-  "data-wr-i18n",
-];
-
-const footerAriaI18nAttributes = [
-  "data-i18n-aria-label",
-  "data-home-i18n-aria-label",
-  "data-docs-i18n-aria-label",
-  "data-roadmap-i18n-aria-label",
-  "data-fairness-i18n-aria-label",
-  "data-trust-i18n-aria-label",
-  "data-wr-i18n-aria-label",
-];
+const footerLabels = createFooterLabels();
 
 const unifiedNavLabels = {
   en: {
@@ -343,54 +367,53 @@ function ensureUnifiedNavigation() {
   });
 
   updateUnifiedNavigationLabels();
-
-  if ("MutationObserver" in window && !window.__nicechunkNavLanguageObserver) {
-    const observer = new MutationObserver(updateUnifiedNavigationLabels);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
-    window.__nicechunkNavLanguageObserver = observer;
-  }
 }
 
 function ensureUnifiedFooter() {
-  const existingFooter = document.querySelector(".nicechunk-site-footer, footer.site-footer");
-  const footer = existingFooter || document.createElement("footer");
+  const existingFooters = [
+    ...document.querySelectorAll(".nicechunk-site-footer, footer.site-footer, [data-site-footer-native]"),
+  ];
+  const footer = existingFooters.shift() || document.createElement("footer");
+  existingFooters.forEach((duplicate) => duplicate.remove());
   footer.className = "site-footer nicechunk-site-footer";
   footer.dataset.ncUnifiedFooter = "true";
   footer.classList.toggle("nicechunk-site-footer-floating", isImmersiveFooterPage());
 
   const brand = createFooterBrand();
-  const primaryNav = document.createElement("nav");
-  primaryNav.className = "nicechunk-footer-links";
-  setFooterAriaI18n(primaryNav, "siteFooter.navigationAria", "Footer navigation");
-  primaryNav.replaceChildren(
-    ...footerPrimaryLinks.map((item) => {
-      const link = document.createElement("a");
-      link.href = item.href;
-      setFooterTextI18n(link, `siteFooter.${item.key}`, footerFallbackLabel(item.key));
-      return link;
-    }),
-  );
+  const directory = document.createElement("div");
+  directory.className = "nicechunk-footer-directory";
+  directory.replaceChildren(...footerGroups.map(createFooterGroup));
 
   const socialNav = document.createElement("nav");
   socialNav.className = "nicechunk-footer-social";
-  setFooterAriaI18n(socialNav, "siteFooter.socialAria", "NiceChunk social links");
+  setFooterLabelKey(socialNav, "socialAria", { aria: true });
   socialNav.replaceChildren(
     ...footerSocialLinks.map((item) => {
       const link = document.createElement("a");
       link.href = item.href;
       link.target = "_blank";
-      link.rel = "noreferrer";
-      setFooterTextI18n(link, `siteFooter.${item.key}`, footerFallbackLabel(item.key));
-      setFooterAriaI18n(link, `siteFooter.${item.key}`, footerFallbackLabel(item.key));
+      link.rel = "noopener noreferrer";
+      setFooterLabelKey(link, item.key, { aria: true, text: true });
       return link;
     }),
   );
 
+  const communityHeading = document.createElement("h2");
+  setFooterLabelKey(communityHeading, "communityGroup", { text: true });
+  const community = document.createElement("section");
+  community.className = "nicechunk-footer-group nicechunk-footer-community";
+  community.append(communityHeading, socialNav);
+
   const meta = document.createElement("p");
   meta.className = "nicechunk-footer-meta";
-  setFooterTextI18n(meta, "siteFooter.copyright", "2026 NiceChunk. All rights reserved.");
+  setFooterLabelKey(meta, "copyright", { text: true });
 
-  footer.replaceChildren(brand, primaryNav, socialNav, meta);
+  const footerBar = document.createElement("div");
+  footerBar.className = "nicechunk-footer-bar";
+  footerBar.append(meta, community);
+
+  footer.replaceChildren(brand, directory, footerBar);
+  updateUnifiedFooterLabels(footer);
 
   const target = findFooterInsertionTarget();
   if (target === document.body) {
@@ -398,6 +421,26 @@ function ensureUnifiedFooter() {
   } else if (footer.parentElement !== document.body || footer.previousElementSibling !== target) {
     target.insertAdjacentElement("afterend", footer);
   }
+}
+
+function createFooterGroup(group) {
+  const section = document.createElement("section");
+  section.className = "nicechunk-footer-group";
+
+  const heading = document.createElement("h2");
+  setFooterLabelKey(heading, group.key, { text: true });
+
+  const navigation = document.createElement("nav");
+  setFooterLabelKey(navigation, "navigationAria", { aria: true });
+  navigation.replaceChildren(...group.links.map((item) => {
+    const link = document.createElement("a");
+    link.href = item.href;
+    setFooterLabelKey(link, item.key, { text: true });
+    return link;
+  }));
+
+  section.append(heading, navigation);
+  return section;
 }
 
 function findFooterInsertionTarget() {
@@ -426,39 +469,379 @@ function createFooterBrand() {
   name.textContent = "NICECHUNK";
 
   const tagline = document.createElement("p");
-  setFooterTextI18n(tagline, "siteFooter.tagline", "A seeded voxel world protocol on Solana.");
+  setFooterLabelKey(tagline, "tagline", { text: true });
 
   link.append(image, name);
   wrapper.append(link, tagline);
   return wrapper;
 }
 
-function setFooterTextI18n(element, key, fallback) {
-  footerI18nAttributes.forEach((attribute) => {
-    element.setAttribute(attribute, key);
-  });
-  element.textContent = fallback;
+function setFooterLabelKey(element, key, { aria = false, text = false } = {}) {
+  element.dataset.siteFooterKey = key;
+  if (aria) element.dataset.siteFooterAria = "true";
+  if (text) element.dataset.siteFooterText = "true";
 }
 
-function setFooterAriaI18n(element, key, fallback) {
-  footerAriaI18nAttributes.forEach((attribute) => {
-    element.setAttribute(attribute, key);
+function updateUnifiedFooterLabels(root = document) {
+  const language = currentSiteLanguage();
+  root.querySelectorAll("[data-site-footer-key]").forEach((element) => {
+    const label = footerLabel(language, element.dataset.siteFooterKey);
+    if (element.dataset.siteFooterText === "true") element.textContent = label;
+    if (element.dataset.siteFooterAria === "true") element.setAttribute("aria-label", label);
   });
-  element.setAttribute("aria-label", fallback);
 }
 
-function footerFallbackLabel(key) {
-  const labels = {
+function footerLabel(language, key) {
+  return footerLabels[language]?.[key] || footerLabels.en[key] || key;
+}
+
+function createFooterLabels() {
+  const english = {
+    navigationAria: "Footer navigation",
+    socialAria: "NiceChunk social links",
+    worldGroup: "World",
+    technologyGroup: "Technology",
+    createGroup: "Create",
+    projectGroup: "Project",
+    communityGroup: "Community",
     home: "Home",
-    play: "Enter World",
-    roadmap: "Roadbook",
-    docs: "Docs",
-    guardian: "Guardians",
+    enterWorld: "Enter World",
+    world: "World Overview",
+    worldRules: "World Rules",
+    resources: "Resource Rules",
+    elements: "Elements",
+    technology: "Technology Overview",
+    chunkjs: "Chunk.js Engine",
+    ncm: "NCM Compression",
+    ncfm: "NCFM",
+    fairness: "Fairness",
+    proof: "Proof",
+    guardians: "Guardians",
     contracts: "Contracts",
-    x: "X / Twitter",
+    civilization: "Civilization",
+    trust: "Trust",
+    create: "Create Hub",
+    buildNcm: "Building NCM",
+    itemNcm: "Item NCM",
+    ncm4: "NCM4",
+    forging: "Forging",
+    miner: "Miner",
+    fourierVoxel: "Fourier Voxel",
+    roadmap: "Roadmap",
+    docs: "Docs",
+    whitepaper: "Whitepaper",
+    whitelist: "Whitelist",
+    x: "X",
     github: "GitHub",
+    tagline: "A verifiable seeded voxel civilization on Solana.",
+    copyright: "© 2026 NiceChunk. All rights reserved.",
   };
-  return labels[key] || key;
+
+  const translations = {
+    es: {
+      navigationAria: "Navegación del pie de página",
+      socialAria: "Enlaces sociales de NiceChunk",
+      worldGroup: "Mundo",
+      technologyGroup: "Tecnología",
+      createGroup: "Crear",
+      projectGroup: "Proyecto",
+      communityGroup: "Comunidad",
+      home: "Inicio",
+      enterWorld: "Entrar al mundo",
+      world: "Resumen del mundo",
+      worldRules: "Reglas del mundo",
+      resources: "Reglas de recursos",
+      elements: "Elementos",
+      technology: "Resumen tecnológico",
+      chunkjs: "Motor Chunk.js",
+      ncm: "Compresión NCM",
+      fairness: "Equidad",
+      proof: "Prueba",
+      guardians: "Guardianes",
+      contracts: "Contratos",
+      civilization: "Civilización",
+      trust: "Confianza",
+      create: "Centro de creación",
+      buildNcm: "NCM de edificios",
+      itemNcm: "NCM de objetos",
+      forging: "Forja",
+      fourierVoxel: "Vóxel de Fourier",
+      roadmap: "Ruta",
+      docs: "Documentación",
+      whitepaper: "Libro blanco",
+      whitelist: "Lista de acceso",
+      tagline: "Una civilización voxel verificable y sembrada en Solana.",
+      copyright: "© 2026 NiceChunk. Todos los derechos reservados.",
+    },
+    fr: {
+      navigationAria: "Navigation du pied de page",
+      socialAria: "Liens sociaux NiceChunk",
+      worldGroup: "Monde",
+      technologyGroup: "Technologie",
+      createGroup: "Créer",
+      projectGroup: "Projet",
+      communityGroup: "Communauté",
+      home: "Accueil",
+      enterWorld: "Entrer dans le monde",
+      world: "Vue d’ensemble du monde",
+      worldRules: "Règles du monde",
+      resources: "Règles des ressources",
+      elements: "Éléments",
+      technology: "Vue d’ensemble technique",
+      chunkjs: "Moteur Chunk.js",
+      ncm: "Compression NCM",
+      fairness: "Équité",
+      proof: "Preuve",
+      guardians: "Gardiens",
+      contracts: "Contrats",
+      civilization: "Civilisation",
+      trust: "Confiance",
+      create: "Atelier de création",
+      buildNcm: "NCM de bâtiments",
+      itemNcm: "NCM d’objets",
+      forging: "Forge",
+      fourierVoxel: "Voxel de Fourier",
+      roadmap: "Feuille de route",
+      docs: "Documentation",
+      whitepaper: "Livre blanc",
+      whitelist: "Liste d’accès",
+      tagline: "Une civilisation voxel vérifiable et déterminée sur Solana.",
+      copyright: "© 2026 NiceChunk. Tous droits réservés.",
+    },
+    de: {
+      navigationAria: "Fußzeilennavigation",
+      socialAria: "NiceChunk Social-Links",
+      worldGroup: "Welt",
+      technologyGroup: "Technologie",
+      createGroup: "Erstellen",
+      projectGroup: "Projekt",
+      communityGroup: "Community",
+      home: "Startseite",
+      enterWorld: "Welt betreten",
+      world: "Weltübersicht",
+      worldRules: "Weltregeln",
+      resources: "Ressourcenregeln",
+      elements: "Elemente",
+      technology: "Technologieübersicht",
+      chunkjs: "Chunk.js-Engine",
+      ncm: "NCM-Kompression",
+      fairness: "Fairness",
+      proof: "Nachweis",
+      guardians: "Wächter",
+      contracts: "Verträge",
+      civilization: "Zivilisation",
+      trust: "Vertrauen",
+      create: "Erstellungszentrum",
+      buildNcm: "Gebäude-NCM",
+      itemNcm: "Objekt-NCM",
+      forging: "Schmieden",
+      fourierVoxel: "Fourier-Voxel",
+      roadmap: "Roadmap",
+      docs: "Dokumentation",
+      whitepaper: "Whitepaper",
+      whitelist: "Whitelist",
+      tagline: "Eine verifizierbare, deterministische Voxel-Zivilisation auf Solana.",
+      copyright: "© 2026 NiceChunk. Alle Rechte vorbehalten.",
+    },
+    ja: {
+      navigationAria: "フッターナビゲーション",
+      socialAria: "NiceChunk ソーシャルリンク",
+      worldGroup: "世界",
+      technologyGroup: "技術",
+      createGroup: "制作",
+      projectGroup: "プロジェクト",
+      communityGroup: "コミュニティ",
+      home: "ホーム",
+      enterWorld: "世界に入る",
+      world: "世界概要",
+      worldRules: "世界ルール",
+      resources: "資源ルール",
+      elements: "元素",
+      technology: "技術概要",
+      chunkjs: "Chunk.js エンジン",
+      ncm: "NCM 圧縮",
+      fairness: "公平性",
+      proof: "証明",
+      guardians: "ガーディアン",
+      contracts: "コントラクト",
+      civilization: "文明",
+      trust: "信頼",
+      create: "制作ハブ",
+      buildNcm: "建築 NCM",
+      itemNcm: "アイテム NCM",
+      forging: "鍛造",
+      fourierVoxel: "フーリエ・ボクセル",
+      roadmap: "ロードマップ",
+      docs: "ドキュメント",
+      whitepaper: "ホワイトペーパー",
+      whitelist: "ホワイトリスト",
+      tagline: "Solana 上の検証可能なシード型ボクセル文明。",
+      copyright: "© 2026 NiceChunk. All rights reserved.",
+    },
+    ru: {
+      navigationAria: "Навигация в подвале",
+      socialAria: "Социальные ссылки NiceChunk",
+      worldGroup: "Мир",
+      technologyGroup: "Технологии",
+      createGroup: "Создание",
+      projectGroup: "Проект",
+      communityGroup: "Сообщество",
+      home: "Главная",
+      enterWorld: "Войти в мир",
+      world: "Обзор мира",
+      worldRules: "Правила мира",
+      resources: "Правила ресурсов",
+      elements: "Элементы",
+      technology: "Обзор технологий",
+      chunkjs: "Движок Chunk.js",
+      ncm: "Сжатие NCM",
+      fairness: "Честность",
+      proof: "Доказательство",
+      guardians: "Стражи",
+      contracts: "Контракты",
+      civilization: "Цивилизация",
+      trust: "Доверие",
+      create: "Центр создания",
+      buildNcm: "NCM зданий",
+      itemNcm: "NCM предметов",
+      forging: "Ковка",
+      fourierVoxel: "Воксели Фурье",
+      roadmap: "План",
+      docs: "Документация",
+      whitepaper: "Whitepaper",
+      whitelist: "Вайтлист",
+      tagline: "Проверяемая детерминированная воксельная цивилизация на Solana.",
+      copyright: "© 2026 NiceChunk. Все права защищены.",
+    },
+    ko: {
+      navigationAria: "바닥글 탐색",
+      socialAria: "NiceChunk 소셜 링크",
+      worldGroup: "세계",
+      technologyGroup: "기술",
+      createGroup: "제작",
+      projectGroup: "프로젝트",
+      communityGroup: "커뮤니티",
+      home: "홈",
+      enterWorld: "월드 입장",
+      world: "월드 개요",
+      worldRules: "월드 규칙",
+      resources: "자원 규칙",
+      elements: "원소",
+      technology: "기술 개요",
+      chunkjs: "Chunk.js 엔진",
+      ncm: "NCM 압축",
+      fairness: "공정성",
+      proof: "증명",
+      guardians: "가디언",
+      contracts: "컨트랙트",
+      civilization: "문명",
+      trust: "신뢰",
+      create: "제작 허브",
+      buildNcm: "건축 NCM",
+      itemNcm: "아이템 NCM",
+      forging: "단조",
+      fourierVoxel: "푸리에 복셀",
+      roadmap: "로드맵",
+      docs: "문서",
+      whitepaper: "백서",
+      whitelist: "허용 목록",
+      tagline: "Solana 위에서 검증 가능한 시드 기반 복셀 문명.",
+      copyright: "© 2026 NiceChunk. 모든 권리 보유.",
+    },
+    "zh-Hant": {
+      navigationAria: "頁尾導覽",
+      socialAria: "NiceChunk 社群連結",
+      worldGroup: "世界",
+      technologyGroup: "技術",
+      createGroup: "創作",
+      projectGroup: "專案",
+      communityGroup: "社群",
+      home: "首頁",
+      enterWorld: "進入世界",
+      world: "世界總覽",
+      worldRules: "世界規則",
+      resources: "資源規則",
+      elements: "元素",
+      technology: "技術總覽",
+      chunkjs: "Chunk.js 引擎",
+      ncm: "NCM 壓縮",
+      fairness: "公平性",
+      proof: "證明",
+      guardians: "守護者",
+      contracts: "合約",
+      civilization: "文明",
+      trust: "信任",
+      create: "創作中心",
+      buildNcm: "建築 NCM",
+      itemNcm: "物品 NCM",
+      forging: "鍛造",
+      fourierVoxel: "傅立葉體素",
+      roadmap: "路線圖",
+      docs: "文件",
+      whitepaper: "白皮書",
+      whitelist: "白名單",
+      tagline: "Solana 上可驗證的種子體素文明。",
+      copyright: "© 2026 NiceChunk. 保留所有權利。",
+    },
+    "zh-Hans": {
+      navigationAria: "页脚导航",
+      socialAria: "NiceChunk 社交链接",
+      worldGroup: "世界",
+      technologyGroup: "技术",
+      createGroup: "创作",
+      projectGroup: "项目",
+      communityGroup: "社区",
+      home: "首页",
+      enterWorld: "进入世界",
+      world: "世界总览",
+      worldRules: "世界规则",
+      resources: "资源规则",
+      elements: "元素",
+      technology: "技术总览",
+      chunkjs: "Chunk.js 引擎",
+      ncm: "NCM 压缩",
+      fairness: "公平性",
+      proof: "证明",
+      guardians: "守护者",
+      contracts: "合约",
+      civilization: "文明",
+      trust: "信任",
+      create: "创作中心",
+      buildNcm: "建筑 NCM",
+      itemNcm: "物品 NCM",
+      forging: "锻造",
+      fourierVoxel: "傅里叶体素",
+      roadmap: "路线图",
+      docs: "文档",
+      whitepaper: "白皮书",
+      whitelist: "白名单",
+      tagline: "Solana 上可验证的种子体素文明。",
+      copyright: "© 2026 NiceChunk. 保留所有权利。",
+    },
+  };
+
+  return Object.freeze(Object.fromEntries(
+    Object.entries({ en: {}, ...translations }).map(([language, overrides]) => [
+      language,
+      Object.freeze({ ...english, ...overrides }),
+    ]),
+  ));
+}
+
+function currentSiteLanguage() {
+  return normalizeSiteLanguage(
+    document.documentElement.lang || window.localStorage?.getItem("nicechunk.language") || navigator.language,
+  );
+}
+
+function installUnifiedLanguageObserver() {
+  if (!("MutationObserver" in window) || window.__nicechunkNavLanguageObserver) return;
+  const observer = new MutationObserver(() => {
+    updateUnifiedNavigationLabels();
+    updateUnifiedFooterLabels();
+  });
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
+  window.__nicechunkNavLanguageObserver = observer;
 }
 
 function isImmersiveFooterPage() {

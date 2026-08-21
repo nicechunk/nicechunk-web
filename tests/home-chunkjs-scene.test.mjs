@@ -78,6 +78,8 @@ assert.doesNotMatch(html, /<video\b|nck-hero-logo-v0149\.(?:png|webm)/u);
 assert.doesNotMatch(assetManifestSource, /nck-hero-logo-v0149\.(?:png|webm)/u);
 assert.match(siteUi, /if \(!usesSharedHeader\) ensureUnifiedNavigation\(\);\s*ensureUnifiedFooter\(\);/u);
 assert.match(siteUi, /footer\.site-footer, \[data-site-footer-native\]/u);
+assert.match(siteUi, /const homeFooterContainer = findHomeFooterContainer\(\);/u);
+assert.match(siteUi, /homeFooterContainer\.append\(footer\);/u);
 assert.match(siteHeader, /mergeClassNames\(header\.className, "site-header site-header-shared"\)/u);
 assert.match(siteHeader, /const MOBILE_MEDIA_QUERY = "\(max-width: 900px\)";/u);
 assert.match(siteHeaderCss, /header\.site-header\.site-header-shared\[data-site-header-mounted="true"\] \{/u);
@@ -116,6 +118,7 @@ assert.match(style, /\.home-world-loader-backdrop \{[\s\S]*?backdrop-filter: blu
 assert.match(style, /\.home-world-loader \{[\s\S]*?top: 50%;[\s\S]*?transform: translate\(-50%, calc\(-50% - 6px\)\) scale\(0\.98\);/u);
 assert.match(style, /\.site-loading \.home-world-loader \{[\s\S]*?transform: translate\(-50%, -50%\) scale\(1\);/u);
 assert.match(style, /\.home-world-presented \.home-world-static \{\s*display: none;/u);
+assert.match(style, /\.scroll-container > \.nicechunk-site-footer-home \{[\s\S]*?min-height: 100dvh !important;[\s\S]*?scroll-snap-align: start;/u);
 assert.match(style, /@keyframes home-loader-voxel-rise/u);
 assert.match(style, /@keyframes home-loader-scan/u);
 assert.match(style, /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.home-loader-voxel-grid i,/u);

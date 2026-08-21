@@ -415,6 +415,15 @@ function ensureUnifiedFooter() {
   footer.replaceChildren(brand, directory, footerBar);
   updateUnifiedFooterLabels(footer);
 
+  const homeFooterContainer = findHomeFooterContainer();
+  footer.classList.toggle("nicechunk-site-footer-home", Boolean(homeFooterContainer));
+  if (homeFooterContainer) {
+    if (footer.parentElement !== homeFooterContainer || footer !== homeFooterContainer.lastElementChild) {
+      homeFooterContainer.append(footer);
+    }
+    return;
+  }
+
   const target = findFooterInsertionTarget();
   if (target === document.body) {
     if (footer.parentElement !== document.body) document.body.append(footer);
@@ -441,6 +450,11 @@ function createFooterGroup(group) {
 
   section.append(heading, navigation);
   return section;
+}
+
+function findHomeFooterContainer() {
+  if (document.documentElement.dataset.i18nScope !== "home") return null;
+  return document.querySelector("#scrollContainer.scroll-container");
 }
 
 function findFooterInsertionTarget() {

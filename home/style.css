@@ -1260,6 +1260,16 @@ html[data-i18n-scope="home"] .site-header.scrolled {
   display: none;
 }
 
+html[data-i18n-scope="home"] .scroll-container > .nicechunk-site-footer-home {
+  min-height: 100vh !important;
+  min-height: 100dvh !important;
+  padding-top: calc(var(--nc-site-topbar-px, var(--home-header-height)) + clamp(28px, 6vh, 64px)) !important;
+  padding-bottom: max(32px, env(safe-area-inset-bottom, 0px)) !important;
+  align-content: center !important;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
 .snap-section {
   position: relative;
   display: grid;

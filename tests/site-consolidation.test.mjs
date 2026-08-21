@@ -90,14 +90,14 @@ for (const [hub, expectation] of Object.entries(pageExpectations)) {
   assert.doesNotMatch(html, /<video\b|placehold\.co|unsplash\.com/u);
 }
 
-const [hubScript, hubStyle, headerStyle, headerScript, fallbackScript, i18nScript, viteConfig] = await Promise.all([
+const [hubScript, hubStyle, headerStyle, headerScript, fallbackScript, i18nScript, buildConfig] = await Promise.all([
   readFile(new URL("../hubs/hub.js", import.meta.url), "utf8"),
   readFile(new URL("../hubs/style.css", import.meta.url), "utf8"),
   readFile(new URL("../src/site-header.css", import.meta.url), "utf8"),
   readFile(new URL("../src/site-header.js", import.meta.url), "utf8"),
   readFile(new URL("../src/site-ui.js", import.meta.url), "utf8"),
   readFile(new URL("../src/i18n.js", import.meta.url), "utf8"),
-  readFile(new URL("../vite.config.js", import.meta.url), "utf8"),
+  readSiteBuildConfig(),
 ]);
 
 for (const requiredPath of [
@@ -117,7 +117,9 @@ assert.match(headerStyle, /max-height: min\(70dvh, 620px\)/u);
 assert.match(headerStyle, /grid-template-columns: minmax\(0, 1fr\) auto 44px/u);
 assert.match(i18nScript, /hubs: \{\s*localeBase: "\/hubs\/locales"/u);
 for (const [name, path] of Object.entries({ world: "world/index.html", technology: "technology/index.html", create: "create/index.html" })) {
-  assert.match(viteConfig, new RegExp(`${name}: "${path.replace("/", "\\/")}"`, "u"));
+  const viteEntry = new RegExp(`${name}: "${path.replace("/", "\\/")}"`, "u");
+  const staticEntry = new RegExp(`name: "${name}", html: "${path.replace("/", "\\/")}", entry: "hubs\\/hub\\.js"`, "u");
+  assert.ok(viteEntry.test(buildConfig) || staticEntry.test(buildConfig), `${name} is missing from the site build.`);
 }
 
 console.log("Consolidated navigation, hubs, aliases, and nine-language copy are valid.");
@@ -125,4 +127,13 @@ console.log("Consolidated navigation, hubs, aliases, and nine-language copy are 
 function flattenKeys(value, prefix = "") {
   if (!value || typeof value !== "object" || Array.isArray(value)) return [prefix];
   return Object.entries(value).flatMap(([key, child]) => flattenKeys(child, prefix ? `${prefix}.${key}` : key));
+}
+
+async function readSiteBuildConfig() {
+  try {
+    return await readFile(new URL("../vite.config.js", import.meta.url), "utf8");
+  } catch (error) {
+    if (error?.code !== "ENOENT") throw error;
+    return readFile(new URL("../scripts/build-static-site.mjs", import.meta.url), "utf8");
+  }
 }

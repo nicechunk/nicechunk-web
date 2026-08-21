@@ -1,0 +1,175 @@
+{
+  "common": {
+    "language": "言語",
+    "comingSoon": "近日公開",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "NiceChunk ホーム",
+    "primaryNavigationAria": "メインナビゲーション",
+    "openMenu": "メニューを開く",
+    "closeMenu": "メニューを閉じる",
+    "routes": {
+      "home": "ホーム",
+      "roadbook": "ロードブック",
+      "worldRules": "世界ルール",
+      "resources": "資源",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "元素",
+      "fairness": "公平性",
+      "proofOfFrontier": "証明",
+      "seed": "シード",
+      "guardians": "ガーディアン",
+      "contracts": "コントラクト",
+      "civilization": "文明",
+      "trust": "信頼",
+      "whitepaper": "Whitepaper",
+      "docs": "ドキュメント",
+      "miner": "マイナー",
+      "enterWorld": "ワールドへ入る"
+    }
+  },
+  "hubs": {
+    "common": {
+      "inspect": "システムを検証",
+      "directoryEyebrow": "レイヤーを探索",
+      "footer": "NiceChunk · 検証可能なボクセル文明",
+      "docs": "ドキュメント"
+    },
+    "world": {
+      "meta": {
+        "title": "NiceChunk ワールド",
+        "description": "決定論的ワールド、文明ルール、物理資源、元素体系を探索します。"
+      },
+      "eyebrow": "ワールドレイヤー",
+      "title": "ルールから再構築される世界。",
+      "body": "シードと座標が未変更の地形を再構築し、プレイヤーの変更・所有・採掘・統治をSolanaが記録します。",
+      "primaryAction": "世界に入る",
+      "proofAria": "ワールド検証シグナル",
+      "proofLabel": "決定論的再構築",
+      "proofTitle": "未変更の地形に隠されたマスターマップは不要です。",
+      "directoryTitle": "地形から文明へ",
+      "directoryBody": "ワールドモデルから始め、各ルールを証明と実装まで追跡できます。",
+      "links": {
+        "civilization": {
+          "title": "文明",
+          "body": "公開された世界法をプレイヤーが作成・検証します。"
+        },
+        "worldRules": {
+          "title": "ワールドルール",
+          "body": "決定論的地形、差分、変更権限を確認します。"
+        },
+        "resourceRules": {
+          "title": "資源ルール",
+          "body": "ドロップ、体積、密度、質量、由来を確認します。"
+        },
+        "elements": {
+          "title": "元素",
+          "body": "経済で使う素材と元素のカタログです。"
+        }
+      }
+    },
+    "technology": {
+      "meta": {
+        "title": "NiceChunk テクノロジー",
+        "description": "NCM圧縮、Solanaプログラム、Guardian、公平性、信頼境界を検証します。"
+      },
+      "eyebrow": "検証レイヤー",
+      "title": "すべての信頼境界を検証する。",
+      "body": "圧縮で複雑な資産を実用化し、プログラムが永続状態を決済します。Guardianは第二の権威にならずリアルタイムを中継します。",
+      "primaryAction": "プロトコルを検証",
+      "proofAria": "技術検証シグナル",
+      "proofLabel": "明示的な権限",
+      "proofTitle": "ローカル描画。近傍中継。Solana決済。",
+      "directoryTitle": "圧縮、証明、決済",
+      "directoryBody": "大きな主張を信じる代わりに、技術境界を個別に確認できます。",
+      "links": {
+        "ncm": {
+          "title": "NCM",
+          "body": "ボクセル形状をコンパクトな決定論的データへ。"
+        },
+        "ncfm": {
+          "title": "NCFM",
+          "body": "周波数領域のボクセル表現を研究します。"
+        },
+        "fairness": {
+          "title": "公平性",
+          "body": "決定論的生成と不正対策境界を確認します。"
+        },
+        "proof": {
+          "title": "フロンティア証明",
+          "body": "主張と有用な行動を検証可能な領収書へ。"
+        },
+        "guardians": {
+          "title": "Guardian",
+          "body": "保管や決済なしで近傍とチャットを中継。"
+        },
+        "contracts": {
+          "title": "コントラクト",
+          "body": "デプロイ済みプログラム、PDA、権限範囲。"
+        },
+        "trust": {
+          "title": "信頼",
+          "body": "すべての主張を公開証明まで追跡します。"
+        }
+      }
+    },
+    "create": {
+      "meta": {
+        "title": "NiceChunk クリエイト",
+        "description": "Chunk.js、Build NCM、Item NCM、鍛造、NCM4、有用計算で資産を作ります。"
+      },
+      "eyebrow": "制作レイヤー",
+      "title": "有用な仕事を世界の資産へ。",
+      "body": "プレイ可能な世界と同じ形式で、ボクセル建築、アイテム、道具、圧縮表現を作成します。",
+      "primaryAction": "クリエイターハブを開く",
+      "proofAria": "制作パイプラインシグナル",
+      "proofLabel": "一つの制作パイプライン",
+      "proofTitle": "作成、圧縮、描画、検証。",
+      "directoryTitle": "ビルダーと研究者の道具",
+      "directoryBody": "形状、圧縮、鍛造、描画、有用探索に特化したツールです。",
+      "links": {
+        "miner": {
+          "title": "Miner",
+          "body": "測定可能な有用計算でNCM候補を探索します。"
+        },
+        "chunkjs": {
+          "title": "Chunk.js",
+          "body": "NiceChunk専用WebGL2エンジンで世界を描画。"
+        },
+        "buildNcm": {
+          "title": "Build NCM",
+          "body": "本番NCMカタログから建築を構成します。"
+        },
+        "itemNcm": {
+          "title": "Item NCM",
+          "body": "物理的な道具、家具、ワールド小物を作成。"
+        },
+        "forging": {
+          "title": "鍛造",
+          "body": "計測素材を検証可能なアイテム形状へ。"
+        },
+        "ncm4": {
+          "title": "NCM4",
+          "body": "次世代の意味的圧縮を探索します。"
+        },
+        "fourier": {
+          "title": "Fourier Lab",
+          "body": "周波数表現を動作する試作で検証します。"
+        }
+      }
+    }
+  }
+}

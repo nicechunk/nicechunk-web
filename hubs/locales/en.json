@@ -1,0 +1,175 @@
+{
+  "common": {
+    "language": "Language",
+    "comingSoon": "Coming soon",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "NiceChunk home",
+    "primaryNavigationAria": "Primary navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "routes": {
+      "home": "Home",
+      "roadbook": "Roadbook",
+      "worldRules": "World Rules",
+      "resources": "Resources",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "Elements",
+      "fairness": "Fairness",
+      "proofOfFrontier": "Proof",
+      "seed": "Seed",
+      "guardians": "Guardians",
+      "contracts": "Contracts",
+      "civilization": "Civilization",
+      "trust": "Trust",
+      "whitepaper": "Whitepaper",
+      "docs": "Docs",
+      "miner": "Miner",
+      "enterWorld": "Enter World"
+    }
+  },
+  "hubs": {
+    "common": {
+      "inspect": "Inspect the system",
+      "directoryEyebrow": "Explore the layer",
+      "footer": "NiceChunk · Verifiable voxel civilization",
+      "docs": "Docs"
+    },
+    "world": {
+      "meta": {
+        "title": "NiceChunk World",
+        "description": "Explore NiceChunk's deterministic world, civilization rules, physical resources, and element system."
+      },
+      "eyebrow": "The World Layer",
+      "title": "A world rebuilt from rules.",
+      "body": "Seed and coordinates reconstruct untouched terrain. Solana records what players change, own, mine, and govern.",
+      "primaryAction": "Enter World",
+      "proofAria": "World verification signal",
+      "proofLabel": "Deterministic reconstruction",
+      "proofTitle": "Untouched terrain needs no hidden master map.",
+      "directoryTitle": "From terrain to civilization",
+      "directoryBody": "Start with the world model, then follow each rule to its detailed proof and implementation.",
+      "links": {
+        "civilization": {
+          "title": "Civilization",
+          "body": "Read how players write and validate public world law."
+        },
+        "worldRules": {
+          "title": "World Rules",
+          "body": "Follow deterministic terrain, deltas, and modification authority."
+        },
+        "resourceRules": {
+          "title": "Resource Rules",
+          "body": "Inspect drops, volume, density, mass, and provenance."
+        },
+        "elements": {
+          "title": "Elements",
+          "body": "Browse the material and element catalog used by the economy."
+        }
+      }
+    },
+    "technology": {
+      "meta": {
+        "title": "NiceChunk Technology",
+        "description": "Verify NiceChunk's NCM compression, Solana programs, Guardian relays, fairness, and trust boundaries."
+      },
+      "eyebrow": "The Verification Layer",
+      "title": "Inspect every trust boundary.",
+      "body": "Compression makes complex assets practical. Programs settle persistent state. Guardians relay the live moment without becoming a second authority.",
+      "primaryAction": "Verify the protocol",
+      "proofAria": "Technology verification signal",
+      "proofLabel": "Explicit authority",
+      "proofTitle": "Render locally. Relay nearby. Settle on Solana.",
+      "directoryTitle": "Compression, proof, and settlement",
+      "directoryBody": "Each destination exposes one technical boundary instead of asking you to trust a single broad claim.",
+      "links": {
+        "ncm": {
+          "title": "NCM",
+          "body": "Encode voxel geometry as compact deterministic chain data."
+        },
+        "ncfm": {
+          "title": "NCFM",
+          "body": "Study frequency-domain experiments for voxel representation."
+        },
+        "fairness": {
+          "title": "Fairness",
+          "body": "Inspect deterministic generation and anti-cheat boundaries."
+        },
+        "proof": {
+          "title": "Proof of Frontier",
+          "body": "Verify how frontier claims and useful actions become receipts."
+        },
+        "guardians": {
+          "title": "Guardians",
+          "body": "Relay nearby presence and chat without custody or settlement."
+        },
+        "contracts": {
+          "title": "Contracts",
+          "body": "Inspect deployed programs, PDAs, and authority scopes."
+        },
+        "trust": {
+          "title": "Trust",
+          "body": "Trace every claim to a public proof object and rejection path."
+        }
+      }
+    },
+    "create": {
+      "meta": {
+        "title": "NiceChunk Create",
+        "description": "Build NiceChunk assets with Chunk.js, Build NCM, Item NCM, forging tools, NCM4, and useful-compute experiments."
+      },
+      "eyebrow": "The Creation Layer",
+      "title": "Turn useful work into world assets.",
+      "body": "Shape voxel buildings, items, tools, and compressed representations with the same formats the playable world consumes.",
+      "primaryAction": "Open creator hub",
+      "proofAria": "Creation pipeline signal",
+      "proofLabel": "One production pipeline",
+      "proofTitle": "Create, compress, render, and verify.",
+      "directoryTitle": "Tools for builders and researchers",
+      "directoryBody": "Use focused tools for geometry, compression, forging, rendering, and useful-compute search.",
+      "links": {
+        "miner": {
+          "title": "Miner",
+          "body": "Search NCM candidates through useful, measurable compute."
+        },
+        "chunkjs": {
+          "title": "Chunk.js",
+          "body": "Render the world with NiceChunk's purpose-built WebGL2 engine."
+        },
+        "buildNcm": {
+          "title": "Build NCM",
+          "body": "Compose buildings from the production NCM construction catalog."
+        },
+        "itemNcm": {
+          "title": "Item NCM",
+          "body": "Create physical tools, furniture, and world props."
+        },
+        "forging": {
+          "title": "Forging",
+          "body": "Shape measured materials into verifiable item geometry."
+        },
+        "ncm4": {
+          "title": "NCM4",
+          "body": "Explore next-generation semantic compression profiles."
+        },
+        "fourier": {
+          "title": "Fourier Lab",
+          "body": "Test frequency-domain representation with working prototypes."
+        }
+      }
+    }
+  }
+}

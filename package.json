@@ -12,9 +12,11 @@
     "benchmark:home-world:ncm4": "node scripts/benchmark-home-world-ncm4.mjs",
     "dev": "vite --host 0.0.0.0",
     "generate:home-world": "node scripts/generate-home-world-terrain.mjs",
+    "generate:home-world:structures": "node scripts/generate-home-world-structure-codes.mjs",
     "preview": "vite preview --host 0.0.0.0",
     "test:forge-volume": "node tests/forged-item-volume-codec.test.mjs",
-    "test:home-world": "node tests/home-chunkjs-scene.test.mjs",
+    "test:home-world": "node tests/home-chunkjs-scene.test.mjs && node tests/site-consolidation.test.mjs",
+    "test:site-consolidation": "node tests/site-consolidation.test.mjs",
     "validate:ncm-fixtures": "node scripts/validate-ncm-fixtures.mjs",
     "validate:release": "npm run audit:deps && npm run audit:licenses && npm run build"
   },

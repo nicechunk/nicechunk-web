@@ -1,65 +1,9 @@
 {
   "_meta": {
     "language": "zh-Hans",
-    "label": "Simplified Chinese",
-    "version": "home-locale-zh-Hans-af33563d5505f82b",
-    "contentHash": "af33563d5505f82b"
-  },
-  "common": {
-    "language": "语言",
-    "comingSoon": "即将推出",
-    "languageNative": {
-      "en": "English",
-      "es": "Español",
-      "fr": "Français",
-      "de": "Deutsch",
-      "ja": "日本語",
-      "ru": "Русский",
-      "ko": "한국어",
-      "zhHant": "繁體中文",
-      "zhHans": "简体中文"
-    }
-  },
-  "siteHeader": {
-    "brandName": "NICECHUNK",
-    "brandHomeAria": "NiceChunk 首页",
-    "primaryNavigationAria": "主导航",
-    "openMenu": "打开菜单",
-    "closeMenu": "关闭菜单",
-    "routes": {
-      "home": "首页",
-      "roadbook": "路书",
-      "worldRules": "世界规则",
-      "resources": "资源",
-      "ncm": "NCM",
-      "ncfm": "NCFM",
-      "elements": "元素",
-      "fairness": "公平性",
-      "proofOfFrontier": "证明",
-      "seed": "种子",
-      "guardians": "守护者",
-      "contracts": "合约",
-      "civilization": "文明",
-      "trust": "信任",
-      "whitepaper": "Whitepaper",
-      "docs": "文档",
-      "miner": "矿工",
-      "enterWorld": "进入世界"
-    }
-  },
-  "siteFooter": {
-    "tagline": "Solana 上的种子体素世界协议。",
-    "navigationAria": "页脚导航",
-    "socialAria": "NiceChunk 社交链接",
-    "home": "首页",
-    "play": "进入世界",
-    "roadmap": "路书",
-    "docs": "文档",
-    "guardian": "守护者",
-    "contracts": "合约",
-    "x": "X / Twitter",
-    "github": "GitHub",
-    "copyright": "2026 NiceChunk。保留所有权利。"
+    "label": "简体中文",
+    "version": "home-locale-zh-Hans-3eca09890230b9c3",
+    "contentHash": "3eca09890230b9c3"
   },
   "meta": {
     "title": "NiceChunk | 建造世界，验证每次改变",
@@ -91,7 +35,11 @@
     "world": "世界",
     "economy": "经济",
     "watchers": "守护者",
-    "roadmap": "路线图"
+    "roadmap": "路线图",
+    "arrival": "抵达",
+    "technology": "技术",
+    "create": "创作",
+    "explore": "探索"
   },
   "scrollCue": {
     "aria": "探索下一章",
@@ -101,7 +49,7 @@
   "hero": {
     "eyebrow": "Devnet 可玩 Alpha",
     "title": "建造世界，验证每次改变。",
-    "subtitle": "探索一个可确定性重建的体素世界，挖掘带真实体积与重量的资源，熔炼、锻造、建造、交易精确物品并成长技能。Chunk.js 负责即时渲染，Solana 程序结算持久状态，守护者中继附近玩家的实时互动。",
+    "subtitle": "探索一个确定性的体素文明：可测量资源、锻造物品、土地、技能与市场都由 Solana 程序持久保存。",
     "enterWorld": "进入世界",
     "connectWallet": "连接钱包",
     "readRoadbook": "查看路书",
@@ -116,8 +64,8 @@
   },
   "world": {
     "eyebrow": "可验证世界",
-    "title": "未改变的地形由规则生成，玩家造成的改变被记录。",
-    "body": "种子与坐标可以重建每一个未改动方块。玩家挖掘或建造时，Solana 程序验证操作并记录持久化差量；浏览器无需下载隐藏的主地图，也能重建相同的基础世界。",
+    "title": "未改动地形可重建，玩家改变会留存。",
+    "body": "种子与坐标重建未改动地形；Solana 记录玩家的改变、所有权、采集与治理。",
     "seed": {
       "eyebrow": "确定性 Chunk",
       "title": "按需重建，而不是预先加载",
@@ -128,7 +76,8 @@
       "protocol": "基础：确定性重建",
       "state": "改变：SOLANA CHUNK 差量",
       "verify": "渲染：CHUNK.JS WEBGL2"
-    }
+    },
+    "primaryAction": "进入世界"
   },
   "terrainPouw": {
     "aria": "NCM4 有用计算证明地形实验",
@@ -255,7 +204,53 @@
     "watcherNetwork": "守护者网络",
     "whitepaper": "白皮书",
     "fairness": "公平模型",
-    "github": "GitHub"
+    "github": "GitHub",
+    "world": "世界",
+    "technology": "技术",
+    "create": "创作",
+    "docs": "文档"
+  },
+  "common": {
+    "language": "语言",
+    "comingSoon": "即将推出",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "NiceChunk 首页",
+    "primaryNavigationAria": "主导航",
+    "openMenu": "打开菜单",
+    "closeMenu": "关闭菜单",
+    "routes": {
+      "home": "首页",
+      "roadbook": "路书",
+      "worldRules": "世界规则",
+      "resources": "资源",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "元素",
+      "fairness": "公平性",
+      "proofOfFrontier": "证明",
+      "seed": "种子",
+      "guardians": "守护者",
+      "contracts": "合约",
+      "civilization": "文明",
+      "trust": "信任",
+      "whitepaper": "Whitepaper",
+      "docs": "文档",
+      "miner": "矿工",
+      "enterWorld": "进入世界"
+    }
   },
   "buildingInspector": {
     "aria": "建筑 NCM 存储表示",
@@ -279,5 +274,34 @@
     "ready": "世界已就绪",
     "fallback": "预览已就绪",
     "engine": "Chunk.js · 本地重建"
+  },
+  "technology": {
+    "eyebrow": "验证层",
+    "title": "本地渲染，Solana 结算。",
+    "body": "压缩让复杂资产能够实用化，程序结算持久状态；守护者中继实时互动，但不成为第二权威。",
+    "primaryAction": "验证协议",
+    "facts": {
+      "compression": "精简且确定性的 NCM 数据",
+      "authority": "明确的程序与守护者边界",
+      "proof": "公开证明，而不是隐藏权威"
+    }
+  },
+  "create": {
+    "eyebrow": "创作层",
+    "title": "有用工作成为世界资产。",
+    "body": "使用游戏世界实际消费的格式，制作体素建筑、物品、工具与压缩表达。",
+    "primaryAction": "打开创作中心",
+    "facts": {
+      "build": "Build NCM 与 Item NCM 生产编辑器",
+      "render": "Chunk.js 专用 WebGL2 渲染",
+      "search": "Miner、NCM4 与 Fourier 研究工具"
+    }
+  },
+  "explore": {
+    "eyebrow": "开放知识",
+    "title": "沿着每条规则走进代码。",
+    "body": "从玩家指南、技术架构或可玩的 Devnet 世界开始；需要完整证明时，所有详情页仍然开放。",
+    "primaryAction": "打开文档",
+    "secondaryAction": "进入世界"
   }
 }

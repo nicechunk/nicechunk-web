@@ -1,0 +1,175 @@
+{
+  "common": {
+    "language": "Sprache",
+    "comingSoon": "Demnächst",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "NiceChunk-Startseite",
+    "primaryNavigationAria": "Hauptnavigation",
+    "openMenu": "Menü öffnen",
+    "closeMenu": "Menü schließen",
+    "routes": {
+      "home": "Home",
+      "roadbook": "Roadbook",
+      "worldRules": "Weltregeln",
+      "resources": "Ressourcen",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "Elemente",
+      "fairness": "Fairness",
+      "proofOfFrontier": "Beweis",
+      "seed": "Seed",
+      "guardians": "Wächter",
+      "contracts": "Verträge",
+      "civilization": "Zivilisation",
+      "trust": "Vertrauen",
+      "whitepaper": "Whitepaper",
+      "docs": "Docs",
+      "miner": "Miner",
+      "enterWorld": "Welt betreten"
+    }
+  },
+  "hubs": {
+    "common": {
+      "inspect": "System prüfen",
+      "directoryEyebrow": "Ebene erkunden",
+      "footer": "NiceChunk · Verifizierbare Voxel-Zivilisation",
+      "docs": "Dokumentation"
+    },
+    "world": {
+      "meta": {
+        "title": "NiceChunk Welt",
+        "description": "Erkunde die deterministische Welt, Zivilisationsregeln, physische Ressourcen und Elemente."
+      },
+      "eyebrow": "Die Weltebene",
+      "title": "Eine Welt, aus Regeln rekonstruiert.",
+      "body": "Seed und Koordinaten rekonstruieren unberührtes Gelände. Solana zeichnet auf, was Spieler ändern, besitzen, abbauen und verwalten.",
+      "primaryAction": "Welt betreten",
+      "proofAria": "Verifikationssignal der Welt",
+      "proofLabel": "Deterministische Rekonstruktion",
+      "proofTitle": "Unberührtes Gelände braucht keine geheime Masterkarte.",
+      "directoryTitle": "Vom Gelände zur Zivilisation",
+      "directoryBody": "Beginne beim Weltmodell und folge jeder Regel bis zu Beweis und Implementierung.",
+      "links": {
+        "civilization": {
+          "title": "Zivilisation",
+          "body": "Öffentliche Weltgesetze schreiben und validieren."
+        },
+        "worldRules": {
+          "title": "Weltregeln",
+          "body": "Deterministisches Gelände, Deltas und Änderungsrechte."
+        },
+        "resourceRules": {
+          "title": "Ressourcenregeln",
+          "body": "Drops, Volumen, Dichte, Masse und Herkunft."
+        },
+        "elements": {
+          "title": "Elemente",
+          "body": "Material- und Elementkatalog der Ökonomie."
+        }
+      }
+    },
+    "technology": {
+      "meta": {
+        "title": "NiceChunk Technologie",
+        "description": "Prüfe NCM-Kompression, Solana-Programme, Guardians und Vertrauensgrenzen."
+      },
+      "eyebrow": "Die Verifikationsebene",
+      "title": "Prüfe jede Vertrauensgrenze.",
+      "body": "Kompression macht komplexe Assets praktikabel. Programme rechnen persistenten Zustand ab. Guardians übertragen das Live-Geschehen ohne zweite Autorität.",
+      "primaryAction": "Protokoll verifizieren",
+      "proofAria": "Technologie-Verifikationssignal",
+      "proofLabel": "Explizite Autorität",
+      "proofTitle": "Lokal rendern. Nah übertragen. Auf Solana abrechnen.",
+      "directoryTitle": "Kompression, Beweis und Abrechnung",
+      "directoryBody": "Jedes Ziel legt eine konkrete technische Grenze offen statt eines pauschalen Versprechens.",
+      "links": {
+        "ncm": {
+          "title": "NCM",
+          "body": "Voxel-Geometrie als kompakte deterministische Daten."
+        },
+        "ncfm": {
+          "title": "NCFM",
+          "body": "Frequenzexperimente zur Voxel-Repräsentation."
+        },
+        "fairness": {
+          "title": "Fairness",
+          "body": "Deterministische Erzeugung und Anti-Cheat-Grenzen."
+        },
+        "proof": {
+          "title": "Frontier-Beweis",
+          "body": "Ansprüche und nützliche Aktionen als Belege."
+        },
+        "guardians": {
+          "title": "Guardians",
+          "body": "Nähe und Chat ohne Verwahrung oder Abrechnung."
+        },
+        "contracts": {
+          "title": "Contracts",
+          "body": "Programme, PDAs und Autoritätsbereiche prüfen."
+        },
+        "trust": {
+          "title": "Vertrauen",
+          "body": "Jede Aussage bis zum öffentlichen Beweis verfolgen."
+        }
+      }
+    },
+    "create": {
+      "meta": {
+        "title": "NiceChunk Create",
+        "description": "Baue Assets mit Chunk.js, Build NCM, Item NCM, Forging, NCM4 und nützlicher Rechenarbeit."
+      },
+      "eyebrow": "Die Erstellungsebene",
+      "title": "Mache nützliche Arbeit zu Welt-Assets.",
+      "body": "Forme Voxel-Gebäude, Gegenstände und Werkzeuge in denselben Formaten, die die spielbare Welt nutzt.",
+      "primaryAction": "Creator Hub öffnen",
+      "proofAria": "Signal der Erstellungspipeline",
+      "proofLabel": "Eine Produktionspipeline",
+      "proofTitle": "Erstellen, komprimieren, rendern und prüfen.",
+      "directoryTitle": "Werkzeuge für Builder und Forschung",
+      "directoryBody": "Fokussierte Werkzeuge für Geometrie, Kompression, Schmieden, Rendering und Suche.",
+      "links": {
+        "miner": {
+          "title": "Miner",
+          "body": "NCM-Kandidaten durch messbare nützliche Arbeit suchen."
+        },
+        "chunkjs": {
+          "title": "Chunk.js",
+          "body": "Die Welt mit NiceChunks WebGL2-Engine rendern."
+        },
+        "buildNcm": {
+          "title": "Build NCM",
+          "body": "Gebäude aus dem produktiven NCM-Katalog bauen."
+        },
+        "itemNcm": {
+          "title": "Item NCM",
+          "body": "Physische Werkzeuge, Möbel und Requisiten erstellen."
+        },
+        "forging": {
+          "title": "Schmieden",
+          "body": "Gemessene Materialien zu prüfbarer Geometrie formen."
+        },
+        "ncm4": {
+          "title": "NCM4",
+          "body": "Semantische Kompressionsprofile erforschen."
+        },
+        "fourier": {
+          "title": "Fourier-Labor",
+          "body": "Frequenzrepräsentation mit Prototypen testen."
+        }
+      }
+    }
+  }
+}

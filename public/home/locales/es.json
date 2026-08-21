@@ -1,65 +1,9 @@
 {
   "_meta": {
     "language": "es",
-    "label": "Spanish",
-    "version": "home-locale-es-e85b7cc71fbd08f5",
-    "contentHash": "e85b7cc71fbd08f5"
-  },
-  "common": {
-    "language": "Idioma",
-    "comingSoon": "Próximamente",
-    "languageNative": {
-      "en": "English",
-      "es": "Español",
-      "fr": "Français",
-      "de": "Deutsch",
-      "ja": "日本語",
-      "ru": "Русский",
-      "ko": "한국어",
-      "zhHant": "繁體中文",
-      "zhHans": "简体中文"
-    }
-  },
-  "siteHeader": {
-    "brandName": "NICECHUNK",
-    "brandHomeAria": "Inicio de NiceChunk",
-    "primaryNavigationAria": "Navegación principal",
-    "openMenu": "Abrir menú",
-    "closeMenu": "Cerrar menú",
-    "routes": {
-      "home": "Inicio",
-      "roadbook": "Ruta",
-      "worldRules": "Reglas",
-      "resources": "Recursos",
-      "ncm": "NCM",
-      "ncfm": "NCFM",
-      "elements": "Elementos",
-      "fairness": "Equidad",
-      "proofOfFrontier": "Prueba",
-      "seed": "Semilla",
-      "guardians": "Guardianes",
-      "contracts": "Contratos",
-      "civilization": "Civilización",
-      "trust": "Confianza",
-      "whitepaper": "Whitepaper",
-      "docs": "Docs",
-      "miner": "Miner",
-      "enterWorld": "Entrar al mundo"
-    }
-  },
-  "siteFooter": {
-    "tagline": "Un protocolo de mundo voxel con semillas en Solana.",
-    "navigationAria": "Navegación del pie de página",
-    "socialAria": "Enlaces sociales de NiceChunk",
-    "home": "Inicio",
-    "play": "Entrar al mundo",
-    "roadmap": "Roadbook",
-    "docs": "Docs",
-    "guardian": "Guardianes",
-    "contracts": "Contratos",
-    "x": "X / Twitter",
-    "github": "GitHub",
-    "copyright": "2026 NiceChunk. Todos los derechos reservados."
+    "label": "Español",
+    "version": "home-locale-es-40e22215e94f09f8",
+    "contentHash": "40e22215e94f09f8"
   },
   "meta": {
     "title": "NiceChunk | Construye el mundo. Verifica el cambio.",
@@ -91,7 +35,11 @@
     "world": "Mundo",
     "economy": "Economía",
     "watchers": "Guardians",
-    "roadmap": "Hoja de ruta"
+    "roadmap": "Hoja de ruta",
+    "arrival": "Llegada",
+    "technology": "Tecnología",
+    "create": "Crear",
+    "explore": "Explorar"
   },
   "scrollCue": {
     "aria": "Explorar el siguiente capítulo",
@@ -101,7 +49,7 @@
   "hero": {
     "eyebrow": "Alpha jugable en Devnet",
     "title": "Construye el mundo. Verifica el cambio.",
-    "subtitle": "Explora un mundo voxel determinista, extrae recursos medidos, funde y forja materiales, construye, intercambia objetos exactos y desarrolla habilidades. Chunk.js renderiza cada momento; los programas de Solana consolidan el estado persistente; los Guardians retransmiten la actividad cercana.",
+    "subtitle": "Explora una civilización voxel determinista donde recursos medidos, objetos forjados, tierras, habilidades y mercados persisten mediante programas Solana.",
     "enterWorld": "Entrar al mundo",
     "connectWallet": "Conectar cartera",
     "readRoadbook": "Leer Roadbook",
@@ -116,8 +64,8 @@
   },
   "world": {
     "eyebrow": "Mundo verificable",
-    "title": "El terreno intacto se genera. Los cambios de los jugadores se registran.",
-    "body": "La semilla y las coordenadas reconstruyen cada bloque intacto. Cuando alguien mina o construye, los programas de Solana validan la acción y registran el cambio persistente. El navegador puede reconstruir el mismo mundo base sin descargar un mapa maestro oculto.",
+    "title": "El terreno intacto se reconstruye. Los cambios persisten.",
+    "body": "La semilla y las coordenadas reconstruyen el terreno intacto. Solana registra lo que los jugadores cambian, poseen, extraen y gobiernan.",
     "seed": {
       "eyebrow": "Chunk determinista",
       "title": "Reconstruir, no precargar",
@@ -128,7 +76,8 @@
       "protocol": "BASE: RECONSTRUCCIÓN DETERMINISTA",
       "state": "CAMBIO: DELTAS DE CHUNK EN SOLANA",
       "verify": "RENDER: CHUNK.JS WEBGL2"
-    }
+    },
+    "primaryAction": "Entrar al mundo"
   },
   "terrainPouw": {
     "aria": "Experimento de terreno NCM4 con prueba de trabajo útil",
@@ -255,7 +204,53 @@
     "watcherNetwork": "Red Guardian",
     "whitepaper": "Whitepaper",
     "fairness": "Equidad",
-    "github": "GitHub"
+    "github": "GitHub",
+    "world": "Mundo",
+    "technology": "Tecnología",
+    "create": "Crear",
+    "docs": "Docs"
+  },
+  "common": {
+    "language": "Idioma",
+    "comingSoon": "Próximamente",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "Inicio de NiceChunk",
+    "primaryNavigationAria": "Navegación principal",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "routes": {
+      "home": "Inicio",
+      "roadbook": "Ruta",
+      "worldRules": "Reglas",
+      "resources": "Recursos",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "Elementos",
+      "fairness": "Equidad",
+      "proofOfFrontier": "Prueba",
+      "seed": "Semilla",
+      "guardians": "Guardianes",
+      "contracts": "Contratos",
+      "civilization": "Civilización",
+      "trust": "Confianza",
+      "whitepaper": "Whitepaper",
+      "docs": "Docs",
+      "miner": "Miner",
+      "enterWorld": "Entrar al mundo"
+    }
   },
   "buildingInspector": {
     "aria": "Representación de almacenamiento NCM del edificio",
@@ -279,5 +274,34 @@
     "ready": "Mundo listo",
     "fallback": "Vista previa lista",
     "engine": "Chunk.js · Reconstrucción local"
+  },
+  "technology": {
+    "eyebrow": "La capa de verificación",
+    "title": "Render local. Liquidación en Solana.",
+    "body": "La compresión hace viables los activos complejos. Los programas liquidan el estado persistente y los Guardianes transmiten el momento en vivo sin ser otra autoridad.",
+    "primaryAction": "Verificar el protocolo",
+    "facts": {
+      "compression": "Datos NCM compactos y deterministas",
+      "authority": "Límites explícitos de programas y Guardianes",
+      "proof": "Pruebas públicas, no autoridad oculta"
+    }
+  },
+  "create": {
+    "eyebrow": "La capa de creación",
+    "title": "El trabajo útil se convierte en un activo del mundo.",
+    "body": "Da forma a edificios, objetos y herramientas voxel con los mismos formatos que consume el mundo jugable.",
+    "primaryAction": "Abrir centro creativo",
+    "facts": {
+      "build": "Editores Build NCM e Item NCM",
+      "render": "Render WebGL2 específico de Chunk.js",
+      "search": "Miner, NCM4 y herramientas Fourier"
+    }
+  },
+  "explore": {
+    "eyebrow": "Conocimiento abierto",
+    "title": "Sigue cada regla hasta el código.",
+    "body": "Empieza con la guía del jugador, inspecciona la arquitectura técnica o entra al mundo Devnet jugable. Las pruebas detalladas siguen abiertas.",
+    "primaryAction": "Abrir documentación",
+    "secondaryAction": "Entrar al mundo"
   }
 }

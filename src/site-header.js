@@ -1,36 +1,21 @@
 import {
   applyTranslations,
+  currentLanguage,
   initI18n,
   setupLanguageControls,
 } from "./i18n.js";
+import {
+  SITE_NAVIGATION_ALIASES,
+  SITE_NAVIGATION_LABELS,
+  SITE_NAVIGATION_ROUTES,
+  resolveSiteNavigationPath,
+} from "./site-navigation.js";
 
-const MOBILE_MEDIA_QUERY = "(max-width: 1320px)";
+const MOBILE_MEDIA_QUERY = "(max-width: 900px)";
 const HEADER_I18N_PREFIX = "siteHeader";
 
-export const SITE_HEADER_ROUTES = Object.freeze([
-  Object.freeze({ key: "home", href: "/", group: "primary" }),
-  Object.freeze({ key: "roadbook", href: "/roadmap/", group: "primary" }),
-  Object.freeze({ key: "worldRules", href: "/world_rule/", group: "primary" }),
-  Object.freeze({ key: "resources", href: "/resource_rule/", group: "primary" }),
-  Object.freeze({ key: "ncm", href: "/ncm/", group: "primary" }),
-  Object.freeze({ key: "ncfm", href: "/ncfm/", group: "primary" }),
-  Object.freeze({ key: "elements", href: "/elements/", group: "primary" }),
-  Object.freeze({ key: "fairness", href: "/fairness/", group: "primary" }),
-  Object.freeze({ key: "proofOfFrontier", href: "/proof-of-frontier/", group: "primary" }),
-  Object.freeze({ key: "seed", href: "/seed/", group: "primary" }),
-  Object.freeze({ key: "guardians", href: "/guardian/", group: "primary" }),
-  Object.freeze({ key: "contracts", href: "/contracts/", group: "primary" }),
-  Object.freeze({ key: "civilization", href: "/civilization/", group: "primary" }),
-  Object.freeze({ key: "trust", href: "/trust/", group: "primary" }),
-  Object.freeze({ key: "docs", href: "/docs/", group: "primary" }),
-  Object.freeze({ key: "miner", href: "/miner/", group: "primary" }),
-  Object.freeze({ key: "whitepaper", href: "/whitepaper/", group: "action" }),
-  Object.freeze({ key: "enterWorld", href: "/play/", group: "action" }),
-]);
-
-export const SITE_HEADER_ROUTE_ALIASES = Object.freeze({
-  "/ncm_dna/": "/ncm/",
-});
+export const SITE_HEADER_ROUTES = SITE_NAVIGATION_ROUTES;
+export const SITE_HEADER_ROUTE_ALIASES = SITE_NAVIGATION_ALIASES;
 
 const mountedHeaders = new WeakMap();
 let headerInstanceSequence = 0;
@@ -92,12 +77,13 @@ function createHeaderController(header, options) {
   header.dataset.siteHeaderPending = "true";
 
   const brand = createBrand(brandImage);
+  const mobileEnter = createMobileEnter();
   const menuToggle = createMenuToggle(`${instanceId}-navigation`);
   const navigation = createNavigation(instanceId);
   const backdrop = createElement("div", "site-menu-backdrop");
   backdrop.setAttribute("aria-hidden", "true");
 
-  header.replaceChildren(brand, menuToggle, navigation.element, backdrop);
+  header.replaceChildren(brand, mobileEnter, menuToggle, navigation.element, backdrop);
   updateActiveRoute(header, currentActivePath);
 
   function setMobileMenuOpen(open, { restoreFocus = true } = {}) {
@@ -162,6 +148,7 @@ function createHeaderController(header, options) {
 
   function refresh() {
     updateActiveRoute(header, currentActivePath);
+    updateRouteLabels(header);
     enhanceLanguageMenu(navigation.languagePicker);
     syncLanguageMenuState(navigation.languagePicker);
     syncResponsiveState();
@@ -223,6 +210,7 @@ function createHeaderController(header, options) {
   }, { signal });
   window.addEventListener("nicechunk:languagechange", () => {
     window.requestAnimationFrame(() => {
+      updateRouteLabels(header);
       syncLanguageMenuState(navigation.languagePicker);
       updateHeaderMetrics(header, menuToggle);
     });
@@ -293,6 +281,14 @@ function createMenuToggle(navigationId) {
   return button;
 }
 
+function createMobileEnter() {
+  const link = createElement("a", "site-mobile-enter");
+  link.href = "/play/";
+  link.dataset.siteMobileEnter = "true";
+  link.textContent = routeLabel("enterWorld");
+  return link;
+}
+
 function createNavigation(instanceId) {
   const navigation = createElement("nav", "site-nav");
   navigation.id = `${instanceId}-navigation`;
@@ -304,24 +300,44 @@ function createNavigation(instanceId) {
   closeButton.append(createMenuLine(), createMenuLine());
 
   const links = createElement("div", "nav-links");
+  const secondaryLinks = createElement("div", "nav-secondary");
   const actions = createElement("div", "nav-actions");
 
   for (const route of SITE_HEADER_ROUTES) {
     const link = createElement("a", route.group === "action" ? "header-action" : "");
-    if (route.key === "whitepaper") link.classList.add("header-whitepaper-action");
     link.href = route.href;
+    if (route.external) {
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.dataset.siteNavExternal = "true";
+    }
     link.dataset.siteNavKey = route.key;
     link.dataset.siteNavPath = normalizePath(route.href);
-    setI18nText(link, `${HEADER_I18N_PREFIX}.routes.${route.key}`);
-    (route.group === "action" ? actions : links).append(link);
+    link.textContent = routeLabel(route.key);
+    if (route.group === "action") actions.append(link);
+    else if (route.group === "secondary") secondaryLinks.append(link);
+    else links.append(link);
   }
 
   const languagePicker = createElement("div", "site-header-language");
   languagePicker.setAttribute("data-i18n-language-menu", "");
-  actions.append(languagePicker);
-  navigation.append(closeButton, links, actions);
+  actions.prepend(languagePicker);
+  navigation.append(closeButton, links, secondaryLinks, actions);
 
-  return { element: navigation, closeButton, languagePicker };
+  return { element: navigation, closeButton, languagePicker, secondaryLinks };
+}
+
+function updateRouteLabels(header) {
+  header.querySelectorAll("[data-site-nav-key]").forEach((link) => {
+    link.textContent = routeLabel(link.dataset.siteNavKey);
+  });
+  const mobileEnter = header.querySelector("[data-site-mobile-enter]");
+  if (mobileEnter) mobileEnter.textContent = routeLabel("enterWorld");
+}
+
+function routeLabel(key) {
+  const labels = SITE_NAVIGATION_LABELS[currentLanguage()] || SITE_NAVIGATION_LABELS.en;
+  return labels[key] || SITE_NAVIGATION_LABELS.en[key] || key;
 }
 
 function createMenuLine() {
@@ -473,9 +489,14 @@ function isVisibleFocusable(element) {
 
 function updateActiveRoute(header, activePath) {
   const normalizedCurrent = normalizePath(activePath || window.location.pathname);
-  const aliasedCurrent = SITE_HEADER_ROUTE_ALIASES[normalizedCurrent] || normalizedCurrent;
+  const aliasedCurrent = resolveSiteNavigationPath(normalizedCurrent);
 
   header.querySelectorAll("[data-site-nav-path]").forEach((link) => {
+    if (link.dataset.siteNavExternal === "true") {
+      link.classList.remove("active");
+      link.removeAttribute("aria-current");
+      return;
+    }
     const routePath = link.dataset.siteNavPath;
     const active = routePath === "/"
       ? aliasedCurrent === "/"

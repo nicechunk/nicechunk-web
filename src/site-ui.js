@@ -1,3 +1,9 @@
+import {
+  SITE_NAVIGATION_LABELS,
+  SITE_NAVIGATION_ROUTES,
+  resolveSiteNavigationPath,
+} from "./site-navigation.js";
+
 const loadingState = {
   active: false,
   autoFinish: true,
@@ -74,28 +80,8 @@ function installSiteUi() {
   });
 }
 
-const unifiedNavItems = [
-  { key: "home", href: "/" },
-  { key: "roadbook", href: "/roadmap/" },
-  { key: "worldRules", href: "/world_rule/" },
-  { key: "resources", href: "/resource_rule/" },
-  { key: "ncm", href: "/ncm/" },
-  { key: "ncfm", href: "/ncfm/" },
-  { key: "elements", href: "/elements/" },
-  { key: "fairness", href: "/fairness/" },
-  { key: "proofOfFrontier", href: "/proof-of-frontier/" },
-  { key: "seed", href: "/seed/" },
-  { key: "guardians", href: "/guardian/" },
-  { key: "contracts", href: "/contracts/" },
-  { key: "civilization", href: "/civilization/" },
-  { key: "trust", href: "/trust/" },
-  { key: "docs", href: "/docs/" },
-  { key: "miner", href: "/miner/" },
-];
-
-const navActiveAliases = {
-  "/ncm_dna/": "/ncm/",
-};
+const unifiedNavItems = SITE_NAVIGATION_ROUTES.filter((route) => route.group === "primary");
+const unifiedSecondaryNavItems = SITE_NAVIGATION_ROUTES.filter((route) => route.group === "secondary");
 
 const footerPrimaryLinks = [
   { key: "home", href: "/" },
@@ -324,16 +310,36 @@ function ensureUnifiedNavigation() {
     });
 
     container.replaceChildren(...orderedLinks);
+
+    let secondary = container.parentElement?.querySelector(":scope > .nav-secondary");
+    if (!secondary) {
+      secondary = document.createElement("div");
+      secondary.className = "nav-secondary";
+      container.insertAdjacentElement("afterend", secondary);
+    }
+    secondary.replaceChildren(...unifiedSecondaryNavItems.map((item) => {
+      const link = document.createElement("a");
+      link.href = item.href;
+      link.dataset.siteNavKey = item.key;
+      if (item.external) {
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+      } else {
+        link.classList.toggle("active", isActiveNavPath(normalizePath(item.href)));
+      }
+      return link;
+    }));
   });
 
   document.querySelectorAll(".site-header .nav-actions").forEach((container) => {
-    let link = container.querySelector('a[href="/whitepaper/"], [data-site-nav-key="whitepaper"]');
+    const controls = [...container.children].filter((element) => element.tagName !== "A");
+    let link = container.querySelector('a[href="/play/"], [data-site-nav-key="enterWorld"]');
     if (!link) link = document.createElement("a");
-    link.href = "/whitepaper/";
-    link.classList.add("header-action", "header-whitepaper-action");
-    link.dataset.siteNavKey = "whitepaper";
-    link.classList.toggle("active", isActiveNavPath("/whitepaper/"));
-    container.prepend(link);
+    link.href = "/play/";
+    link.className = "header-action";
+    link.dataset.siteNavKey = "enterWorld";
+    link.classList.toggle("active", isActiveNavPath("/play/"));
+    container.replaceChildren(...controls, link);
   });
 
   updateUnifiedNavigationLabels();
@@ -462,7 +468,8 @@ function isImmersiveFooterPage() {
 function updateUnifiedNavigationLabels() {
   document.querySelectorAll("[data-site-nav-key]").forEach((link) => {
     link.textContent = navLabel(link.dataset.siteNavKey);
-    link.classList.toggle("active", isActiveNavPath(normalizePath(link.getAttribute("href"))));
+    const url = new URL(link.getAttribute("href") || "/", window.location.origin);
+    link.classList.toggle("active", url.origin === window.location.origin && isActiveNavPath(normalizePath(url.href)));
   });
 }
 
@@ -470,7 +477,11 @@ function navLabel(key) {
   const language = normalizeSiteLanguage(
     document.documentElement.lang || window.localStorage?.getItem("nicechunk.language") || navigator.language,
   );
-  return unifiedNavLabels[language]?.[key] || unifiedNavLabels.en[key] || key;
+  return SITE_NAVIGATION_LABELS[language]?.[key]
+    || SITE_NAVIGATION_LABELS.en[key]
+    || unifiedNavLabels[language]?.[key]
+    || unifiedNavLabels.en[key]
+    || key;
 }
 
 function normalizeSiteLanguage(language) {
@@ -491,7 +502,7 @@ function normalizePath(href) {
 
 function isActiveNavPath(path) {
   const current = normalizePath(window.location.pathname);
-  const activePath = navActiveAliases[current] || current;
+  const activePath = resolveSiteNavigationPath(current);
   return path === "/" ? activePath === "/" : activePath === path || activePath.startsWith(path);
 }
 
@@ -511,6 +522,12 @@ function installMobileMenu() {
   button.setAttribute("aria-controls", nav.id);
   button.setAttribute("aria-expanded", "false");
   button.innerHTML = '<span></span><span></span><span></span>';
+  const mobileEnter = document.createElement("a");
+  mobileEnter.className = "site-mobile-enter";
+  mobileEnter.href = "/play/";
+  mobileEnter.dataset.siteNavKey = "enterWorld";
+  mobileEnter.textContent = navLabel("enterWorld");
+  header.insertBefore(mobileEnter, nav);
   header.insertBefore(button, nav);
 
   const closeButton = document.createElement("button");

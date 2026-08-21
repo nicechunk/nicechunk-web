@@ -24,6 +24,14 @@ const defaultI18nConfig = {
   },
 };
 const scopedI18nConfig = {
+  hubs: {
+    localeBase: "/hubs/locales",
+    storageKeys: {
+      language: "nicechunk.language",
+      localeVersionPrefix: "nicechunk.hubs.locale.version.",
+      localeDataPrefix: "nicechunk.hubs.locale.data.",
+    },
+  },
   home: {
     localeBase: "/home/locales",
     storageKeys: {

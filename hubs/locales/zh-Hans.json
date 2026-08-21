@@ -1,0 +1,175 @@
+{
+  "common": {
+    "language": "语言",
+    "comingSoon": "即将推出",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "NiceChunk 首页",
+    "primaryNavigationAria": "主导航",
+    "openMenu": "打开菜单",
+    "closeMenu": "关闭菜单",
+    "routes": {
+      "home": "首页",
+      "roadbook": "路书",
+      "worldRules": "世界规则",
+      "resources": "资源",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "元素",
+      "fairness": "公平性",
+      "proofOfFrontier": "证明",
+      "seed": "种子",
+      "guardians": "守护者",
+      "contracts": "合约",
+      "civilization": "文明",
+      "trust": "信任",
+      "whitepaper": "Whitepaper",
+      "docs": "文档",
+      "miner": "矿工",
+      "enterWorld": "进入世界"
+    }
+  },
+  "hubs": {
+    "common": {
+      "inspect": "检查系统",
+      "directoryEyebrow": "探索此层",
+      "footer": "NiceChunk · 可验证体素文明",
+      "docs": "文档"
+    },
+    "world": {
+      "meta": {
+        "title": "NiceChunk 世界",
+        "description": "探索确定性世界、文明规则、物理资源与元素系统。"
+      },
+      "eyebrow": "世界层",
+      "title": "一个由规则重建的世界。",
+      "body": "种子与坐标重建未改动地形；Solana 记录玩家的改变、所有权、采集与治理。",
+      "primaryAction": "进入世界",
+      "proofAria": "世界验证信号",
+      "proofLabel": "确定性重建",
+      "proofTitle": "未改动地形不需要隐藏的主地图。",
+      "directoryTitle": "从地形走向文明",
+      "directoryBody": "从世界模型开始，沿着每条规则查看对应证明与实现。",
+      "links": {
+        "civilization": {
+          "title": "文明",
+          "body": "查看玩家如何撰写并验证公开世界法律。"
+        },
+        "worldRules": {
+          "title": "世界规则",
+          "body": "追踪确定性地形、差量与修改权限。"
+        },
+        "resourceRules": {
+          "title": "资源规则",
+          "body": "检查掉落、体积、密度、重量与来源。"
+        },
+        "elements": {
+          "title": "元素",
+          "body": "浏览经济系统使用的材料与元素目录。"
+        }
+      }
+    },
+    "technology": {
+      "meta": {
+        "title": "NiceChunk 技术",
+        "description": "验证 NCM 压缩、Solana 程序、守护者、公平性与信任边界。"
+      },
+      "eyebrow": "验证层",
+      "title": "检查每一道信任边界。",
+      "body": "压缩让复杂资产能够实用化，程序结算持久状态；守护者中继实时互动，但不成为第二权威。",
+      "primaryAction": "验证协议",
+      "proofAria": "技术验证信号",
+      "proofLabel": "明确权限",
+      "proofTitle": "本地渲染、附近中继、Solana 结算。",
+      "directoryTitle": "压缩、证明与结算",
+      "directoryBody": "每个入口只揭示一项具体技术边界，而不是要求你相信一个宽泛承诺。",
+      "links": {
+        "ncm": {
+          "title": "NCM",
+          "body": "把体素几何编码为精简的确定性链上数据。"
+        },
+        "ncfm": {
+          "title": "NCFM",
+          "body": "研究频域体素表达实验。"
+        },
+        "fairness": {
+          "title": "公平性",
+          "body": "检查确定性生成与防作弊边界。"
+        },
+        "proof": {
+          "title": "边疆证明",
+          "body": "把主张与有用行动转为可验证凭证。"
+        },
+        "guardians": {
+          "title": "守护者",
+          "body": "不托管、不结算地中继附近玩家与聊天。"
+        },
+        "contracts": {
+          "title": "合约",
+          "body": "检查已部署程序、PDA 与权限范围。"
+        },
+        "trust": {
+          "title": "信任",
+          "body": "把每项主张追溯到公开证明与拒绝路径。"
+        }
+      }
+    },
+    "create": {
+      "meta": {
+        "title": "NiceChunk 创作",
+        "description": "使用 Chunk.js、Build NCM、Item NCM、锻造、NCM4 与有用计算创建资产。"
+      },
+      "eyebrow": "创作层",
+      "title": "把有用工作变成世界资产。",
+      "body": "使用游戏世界实际消费的格式，制作体素建筑、物品、工具与压缩表达。",
+      "primaryAction": "打开创作中心",
+      "proofAria": "创作流程信号",
+      "proofLabel": "一条生产流程",
+      "proofTitle": "创作、压缩、渲染、验证。",
+      "directoryTitle": "给建造者与研究者的工具",
+      "directoryBody": "使用专注于几何、压缩、锻造、渲染与有用搜索的工具。",
+      "links": {
+        "miner": {
+          "title": "Miner",
+          "body": "通过可衡量的有用计算搜索 NCM 候选。"
+        },
+        "chunkjs": {
+          "title": "Chunk.js",
+          "body": "以 NiceChunk 专用 WebGL2 引擎渲染世界。"
+        },
+        "buildNcm": {
+          "title": "Build NCM",
+          "body": "使用生产 NCM 建筑目录组合建筑。"
+        },
+        "itemNcm": {
+          "title": "Item NCM",
+          "body": "创建实体工具、家具与世界道具。"
+        },
+        "forging": {
+          "title": "锻造",
+          "body": "把可测量材料塑造成可验证物品几何。"
+        },
+        "ncm4": {
+          "title": "NCM4",
+          "body": "探索下一代语义压缩格式。"
+        },
+        "fourier": {
+          "title": "Fourier 实验室",
+          "body": "用可运行原型测试频域表达。"
+        }
+      }
+    }
+  }
+}

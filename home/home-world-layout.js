@@ -5,17 +5,17 @@ export const PRESENTATION_GROUND_Y = 99;
 export const PRESENTATION_WATER_Y = 96;
 export const PRESENTATION_WATER_BED_Y = 93;
 export const COASTAL_WATER_MARGIN = 18;
-export const MINING_TARGET = Object.freeze({ x: 2385, y: 102, z: 1644, material: "coal" });
+export const MINING_TARGET = Object.freeze({ x: 2393, y: 102, z: 1650, material: "coal" });
 
 export const ACTOR_SITES = Object.freeze({
   boy: Object.freeze({ x: 2508, z: 1789, yaw: 0.2 }),
-  boyMine: Object.freeze({ x: 2386, z: 1646, yaw: -2.68 }),
+  boyMine: Object.freeze({ x: 2395, z: 1653, yaw: -2.5 }),
   girl: Object.freeze({ x: 2515, z: 1788, yaw: -0.55 }),
   girlCottage: Object.freeze({ x: 2409, z: 1697, yaw: -1.57 }),
-  economyBoy: Object.freeze({ x: 2508, z: 1775, yaw: 0 }),
-  economyGirl: Object.freeze({ x: 2528, z: 1777, yaw: 0 }),
-  guardianBoy: Object.freeze({ x: 2473, z: 1708, yaw: -1.57 }),
-  guardianGirl: Object.freeze({ x: 2479, z: 1708, yaw: 1.57 }),
+  economyBoy: Object.freeze({ x: 2486, z: 1805, yaw: 0 }),
+  economyGirl: Object.freeze({ x: 2494, z: 1805, yaw: 0 }),
+  guardianBoy: Object.freeze({ x: 2498, z: 1718, yaw: -1.57 }),
+  guardianGirl: Object.freeze({ x: 2494, z: 1722, yaw: 1.57 }),
   constructionBoy: Object.freeze({ x: 2512, z: 1797, yaw: 3.141593 }),
   constructionGirl: Object.freeze({ x: 2498, z: 1808, yaw: -1.38 }),
   bridgeEast: Object.freeze({ x: 2464, z: 1700 }),
@@ -23,26 +23,26 @@ export const ACTOR_SITES = Object.freeze({
 });
 
 export const ECONOMY_FORGE_SITE = Object.freeze({
-  anvil: Object.freeze({ x: 2508.5, y: 100, z: 1773, yaw: 0 }),
-  bench: Object.freeze({ x: 2501.5, y: 100, z: 1771, yaw: 0 }),
-  tool: Object.freeze({ x: 2508.5, y: 102.34, z: 1773, yaw: 1.570796 }),
-  strike: Object.freeze({ x: 2508.5, y: 102.58, z: 1773 }),
-  shelf: Object.freeze({ x: 2500, y: 100, z: 1777, yaw: 0 }),
-  marketDisplay: Object.freeze({ x: 2526.5, y: 100, z: 1775, yaw: 0 }),
+  anvil: Object.freeze({ x: 2486.5, y: 100, z: 1803, yaw: 0 }),
+  bench: Object.freeze({ x: 2479.5, y: 100, z: 1803, yaw: 0 }),
+  tool: Object.freeze({ x: 2486.5, y: 102.34, z: 1803, yaw: 1.570796 }),
+  strike: Object.freeze({ x: 2486.5, y: 102.58, z: 1803 }),
+  shelf: Object.freeze({ x: 2479, y: 100, z: 1807, yaw: 0 }),
+  marketDisplay: Object.freeze({ x: 2496.5, y: 100, z: 1803, yaw: 0 }),
 });
 
 export const ECONOMY_FLOW_SITES = Object.freeze([
-  Object.freeze({ x: 2494, z: 1773 }),
-  Object.freeze({ x: 2502, z: 1773 }),
-  Object.freeze({ x: 2508, z: 1773 }),
-  Object.freeze({ x: 2526, z: 1775 }),
+  Object.freeze({ x: 2479, z: 1803 }),
+  Object.freeze({ x: 2483, z: 1803 }),
+  Object.freeze({ x: 2486, z: 1803 }),
+  Object.freeze({ x: 2496, z: 1803 }),
 ]);
 
 export const ECONOMY_MATERIAL_SITES = Object.freeze({
-  copperBloom: Object.freeze({ x: 2502.2, y: 103.15, z: 1771.1, yaw: -0.35 }),
-  woodenPlank: Object.freeze({ x: 2499.7, y: 101.55, z: 1776.7, yaw: 0.2 }),
-  woodenStick: Object.freeze({ x: 2500.3, y: 102.42, z: 1776.7, yaw: -0.25 }),
-  basaltBrick: Object.freeze({ x: 2526.2, y: 102.4, z: 1774.8, yaw: 0.28 }),
+  copperBloom: Object.freeze({ x: 2483.2, y: 103.15, z: 1801.1, yaw: -0.35 }),
+  woodenPlank: Object.freeze({ x: 2478.7, y: 101.55, z: 1806.7, yaw: 0.2 }),
+  woodenStick: Object.freeze({ x: 2479.3, y: 102.42, z: 1806.7, yaw: -0.25 }),
+  basaltBrick: Object.freeze({ x: 2496.2, y: 102.4, z: 1802.8, yaw: 0.28 }),
 });
 
 export const CONSTRUCTION_SITE = Object.freeze({
@@ -55,10 +55,10 @@ export const SCENE_RESOURCE_CLUSTERS = Object.freeze([
   Object.freeze({
     id: "mining-coal-outcrop",
     voxels: Object.freeze([
-      Object.freeze({ x: 2385, y: 101, z: 1644, material: "coal" }),
-      Object.freeze({ x: 2385, y: 102, z: 1644, material: "coal" }),
-      Object.freeze({ x: 2384, y: 101, z: 1644, material: "basalt" }),
-      Object.freeze({ x: 2385, y: 101, z: 1645, material: "basalt" }),
+      Object.freeze({ x: 2393, y: 101, z: 1650, material: "coal" }),
+      Object.freeze({ x: 2393, y: 102, z: 1650, material: "coal" }),
+      Object.freeze({ x: 2392, y: 101, z: 1650, material: "basalt" }),
+      Object.freeze({ x: 2393, y: 101, z: 1651, material: "basalt" }),
     ]),
   }),
 ]);
@@ -158,6 +158,7 @@ export const PRESENTATION_PATHS = Object.freeze([
 export const STRUCTURE_LAYOUT = Object.freeze([
   Object.freeze({
     id: "coastal-cottage",
+    structureKey: "seaside-cottage",
     definitionKey: "cottage",
     definitionPath: "build_ncm/buildings/coastal/seaside-cottage.json",
     minX: 2370,
@@ -168,6 +169,7 @@ export const STRUCTURE_LAYOUT = Object.freeze([
   }),
   Object.freeze({
     id: "river-footbridge",
+    structureKey: "stone-timber-footbridge",
     definitionKey: "footbridge",
     definitionPath: "build_ncm/buildings/transport/stone-timber-footbridge.json",
     minX: 2431,
@@ -180,6 +182,7 @@ export const STRUCTURE_LAYOUT = Object.freeze([
   }),
   Object.freeze({
     id: "village-gateway",
+    structureKey: "stone-timber-village-gateway",
     definitionKey: "villageGateway",
     definitionPath: "build_ncm/buildings/wayfinding/stone-timber-village-gateway.json",
     minX: 2504,
@@ -191,6 +194,7 @@ export const STRUCTURE_LAYOUT = Object.freeze([
   }),
   Object.freeze({
     id: "hollow-cottage",
+    structureKey: "hollow-cottage",
     definitionKey: "hollowCottage",
     definitionPath: "build_ncm/buildings/residential/hollow-cottage.json",
     minX: 2488,
@@ -200,6 +204,7 @@ export const STRUCTURE_LAYOUT = Object.freeze([
   }),
   Object.freeze({
     id: "tower-windmill",
+    structureKey: "stone-timber-tower-windmill",
     definitionKey: "windmill",
     definitionPath: "build_ncm/buildings/agriculture/stone-timber-tower-windmill.json",
     minX: 2510,
@@ -209,6 +214,7 @@ export const STRUCTURE_LAYOUT = Object.freeze([
   }),
   Object.freeze({
     id: "village-bloomery",
+    structureKey: "covered-village-bloomery",
     definitionKey: "bloomery",
     definitionPath: "build_ncm/buildings/industrial/covered-village-bloomery.json",
     minX: 2477,
@@ -218,6 +224,7 @@ export const STRUCTURE_LAYOUT = Object.freeze([
   }),
   Object.freeze({
     id: "village-market-stall",
+    structureKey: "covered-market-stall",
     definitionKey: "marketStall",
     definitionPath: "build_ncm/buildings/commerce/covered-market-stall.json",
     minX: 2520,
@@ -227,10 +234,51 @@ export const STRUCTURE_LAYOUT = Object.freeze([
   }),
   Object.freeze({
     id: "construction-scaffold",
+    structureKey: "timber-building-scaffold",
     definitionKey: "scaffold",
     definitionPath: "build_ncm/buildings/construction/timber-building-scaffold.json",
     minX: 2503,
     minZ: 1800,
+    surfaceY: 100,
+    quarterTurns: 0,
+  }),
+  Object.freeze({
+    id: "mine-headframe",
+    structureKey: "timber-mine-headframe",
+    definitionKey: "mineHeadframe",
+    definitionPath: "build_ncm/buildings/mining/timber-mine-headframe.json",
+    minX: 2372,
+    minZ: 1635,
+    surfaceY: 100,
+    quarterTurns: 0,
+  }),
+  Object.freeze({
+    id: "harbor-beacon",
+    structureKey: "stone-timber-harbor-beacon",
+    definitionKey: "harborBeacon",
+    definitionPath: "build_ncm/buildings/coastal/stone-timber-harbor-beacon.json",
+    minX: 2470,
+    minZ: 1620,
+    surfaceY: 100,
+    quarterTurns: 0,
+  }),
+  Object.freeze({
+    id: "village-blacksmith-shop",
+    structureKey: "compact-village-blacksmith-shop",
+    definitionKey: "blacksmithShop",
+    definitionPath: "build_ncm/buildings/industrial/compact-village-blacksmith-shop.json",
+    minX: 2475,
+    minZ: 1780,
+    surfaceY: 100,
+    quarterTurns: 2,
+  }),
+  Object.freeze({
+    id: "village-schoolhouse",
+    structureKey: "compact-village-schoolhouse",
+    definitionKey: "schoolhouse",
+    definitionPath: "build_ncm/buildings/civic/compact-village-schoolhouse.json",
+    minX: 2470,
+    minZ: 1725,
     surfaceY: 100,
     quarterTurns: 0,
   }),
@@ -242,7 +290,7 @@ export const PRESENTATION_TREES = Object.freeze([
   Object.freeze({ x: 2390, z: 1800, height: 6 }),
   Object.freeze({ x: 2490, z: 1652, height: 6 }),
   Object.freeze({ x: 2531, z: 1712, height: 7 }),
-  Object.freeze({ x: 2480, z: 1801, height: 6 }),
+  Object.freeze({ x: 2464, z: 1804, height: 6 }),
 ]);
 
 const AMBIENT_PLANTS = Object.freeze([
@@ -259,9 +307,9 @@ const AMBIENT_PLANTS = Object.freeze([
   Object.freeze({ x: 2524, z: 1778, block: "grassPlant" }),
   Object.freeze({ x: 2527, z: 1781, block: "flowerYellow" }),
   Object.freeze({ x: 2524, z: 1784, block: "flowerWhite" }),
-  Object.freeze({ x: 2486, z: 1732, block: "grassPlant" }),
-  Object.freeze({ x: 2483, z: 1734, block: "flowerPink" }),
-  Object.freeze({ x: 2485, z: 1737, block: "flowerWhite" }),
+  Object.freeze({ x: 2466, z: 1732, block: "grassPlant" }),
+  Object.freeze({ x: 2464, z: 1734, block: "flowerPink" }),
+  Object.freeze({ x: 2467, z: 1737, block: "flowerWhite" }),
   Object.freeze({ x: 2506, z: 1725, block: "grassPlant" }),
   Object.freeze({ x: 2509, z: 1728, block: "flowerRed" }),
   Object.freeze({ x: 2504, z: 1726, block: "grassPlant" }),
@@ -310,6 +358,10 @@ const ROADSIDE_FLOWER_INNER_OFFSET = 0.9;
 const ROADSIDE_FLOWER_OUTER_OFFSET = 2.25;
 
 const ROADSIDE_FLOWER_CLEARINGS = Object.freeze([
+  Object.freeze({ minX: 2369, maxX: 2397, minZ: 1632, maxZ: 1654 }),
+  Object.freeze({ minX: 2467, maxX: 2497, minZ: 1617, maxZ: 1645 }),
+  Object.freeze({ minX: 2472, maxX: 2500, minZ: 1777, maxZ: 1809 }),
+  Object.freeze({ minX: 2467, maxX: 2495, minZ: 1722, maxZ: 1750 }),
   Object.freeze({ minX: 2501, maxX: 2526, minZ: 1798, maxZ: 1822 }),
   Object.freeze({ minX: 2494, maxX: 2502, minZ: 1804, maxZ: 1812 }),
   Object.freeze({ minX: 2368, maxX: 2410, minZ: 1678, maxZ: 1715 }),

@@ -29,7 +29,11 @@
     "world": "월드",
     "economy": "경제",
     "watchers": "Guardians",
-    "roadmap": "로드맵"
+    "roadmap": "로드맵",
+    "arrival": "도착",
+    "technology": "기술",
+    "create": "제작",
+    "explore": "탐색"
   },
   "scrollCue": {
     "aria": "다음 챕터 살펴보기",
@@ -39,7 +43,7 @@
   "hero": {
     "eyebrow": "플레이 가능한 Devnet 알파",
     "title": "세계를 만들고, 변화를 검증하세요.",
-    "subtitle": "결정론적 복셀 세계를 탐험하고, 측정 가능한 자원을 채굴하고, 재료를 제련·단조하고, 건축하고, 동일성이 보존된 아이템을 거래하며 스킬을 성장시키세요. Chunk.js가 순간을 렌더링하고, Solana 프로그램이 영구 상태를 확정하며, Guardian이 주변 플레이를 중계합니다.",
+    "subtitle": "측정 자원, 단조 아이템, 토지, 스킬과 시장이 Solana 프로그램으로 지속되는 결정론적 복셀 문명을 탐험하세요.",
     "enterWorld": "월드 입장",
     "connectWallet": "지갑 연결",
     "readRoadbook": "로드북 읽기",
@@ -54,8 +58,8 @@
   },
   "world": {
     "eyebrow": "검증 가능한 세계",
-    "title": "손대지 않은 지형은 생성되고, 플레이어의 변화는 기록됩니다.",
-    "body": "시드와 좌표로 변경되지 않은 모든 블록을 재구성합니다. 플레이어가 채굴하거나 건축하면 Solana 프로그램이 행동을 검증하고 영구 변경분을 기록합니다. 브라우저는 숨겨진 마스터 맵 없이도 같은 기반 세계를 복원합니다.",
+    "title": "변경되지 않은 지형은 재구성되고 플레이어 변경은 지속됩니다.",
+    "body": "시드와 좌표가 변경되지 않은 지형을 재구성하고, Solana가 플레이어의 변경·소유·채굴·통치를 기록합니다.",
     "seed": {
       "eyebrow": "결정론적 Chunk",
       "title": "미리 불러오지 않고 재구성",
@@ -66,7 +70,8 @@
       "protocol": "기반: 결정론적 재구성",
       "state": "변경: SOLANA CHUNK 델타",
       "verify": "렌더링: CHUNK.JS WEBGL2"
-    }
+    },
+    "primaryAction": "월드 입장"
   },
   "terrainPouw": {
     "aria": "NCM4 유용 작업 증명 지형 실험",
@@ -193,7 +198,11 @@
     "watcherNetwork": "Guardian 네트워크",
     "whitepaper": "백서",
     "fairness": "공정성",
-    "github": "GitHub"
+    "github": "GitHub",
+    "world": "월드",
+    "technology": "기술",
+    "create": "제작",
+    "docs": "문서"
   },
   "common": {
     "language": "언어",
@@ -259,5 +268,34 @@
     "ready": "월드 준비 완료",
     "fallback": "미리보기 준비 완료",
     "engine": "Chunk.js · 로컬 재구성"
+  },
+  "technology": {
+    "eyebrow": "검증 레이어",
+    "title": "로컬 렌더. Solana 결제.",
+    "body": "압축은 복잡한 자산을 실용화하고 프로그램은 영구 상태를 결제합니다. 가디언은 두 번째 권한이 되지 않고 실시간을 중계합니다.",
+    "primaryAction": "프로토콜 검증",
+    "facts": {
+      "compression": "압축된 결정론적 NCM 데이터",
+      "authority": "명시적인 프로그램과 가디언 경계",
+      "proof": "숨은 권한이 아닌 공개 증명"
+    }
+  },
+  "create": {
+    "eyebrow": "제작 레이어",
+    "title": "유용한 작업이 월드 자산이 됩니다.",
+    "body": "플레이 가능한 월드가 사용하는 동일한 형식으로 복셀 건물, 아이템, 도구와 압축 표현을 제작합니다.",
+    "primaryAction": "크리에이터 허브 열기",
+    "facts": {
+      "build": "Build NCM과 Item NCM 제작 편집기",
+      "render": "Chunk.js 전용 WebGL2 렌더링",
+      "search": "Miner, NCM4와 Fourier 연구 도구"
+    }
+  },
+  "explore": {
+    "eyebrow": "열린 지식",
+    "title": "모든 규칙을 코드까지 추적하세요.",
+    "body": "플레이어 가이드, 기술 아키텍처 또는 플레이 가능한 Devnet 월드에서 시작하세요. 상세 증명도 계속 공개됩니다.",
+    "primaryAction": "문서 열기",
+    "secondaryAction": "월드 입장"
   }
 }

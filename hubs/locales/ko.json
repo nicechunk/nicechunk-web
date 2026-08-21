@@ -1,0 +1,175 @@
+{
+  "common": {
+    "language": "언어",
+    "comingSoon": "곧 제공",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "NiceChunk 홈",
+    "primaryNavigationAria": "기본 탐색",
+    "openMenu": "메뉴 열기",
+    "closeMenu": "메뉴 닫기",
+    "routes": {
+      "home": "홈",
+      "roadbook": "로드북",
+      "worldRules": "월드 규칙",
+      "resources": "자원",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "원소",
+      "fairness": "공정성",
+      "proofOfFrontier": "증명",
+      "seed": "시드",
+      "guardians": "가디언",
+      "contracts": "컨트랙트",
+      "civilization": "문명",
+      "trust": "신뢰",
+      "whitepaper": "Whitepaper",
+      "docs": "문서",
+      "miner": "마이너",
+      "enterWorld": "월드 입장"
+    }
+  },
+  "hubs": {
+    "common": {
+      "inspect": "시스템 확인",
+      "directoryEyebrow": "레이어 탐색",
+      "footer": "NiceChunk · 검증 가능한 복셀 문명",
+      "docs": "문서"
+    },
+    "world": {
+      "meta": {
+        "title": "NiceChunk 월드",
+        "description": "결정론적 세계, 문명 규칙, 물리 자원과 원소 체계를 탐색합니다."
+      },
+      "eyebrow": "월드 레이어",
+      "title": "규칙으로 재구성되는 세계.",
+      "body": "시드와 좌표가 변경되지 않은 지형을 재구성하고, Solana가 플레이어의 변경·소유·채굴·통치를 기록합니다.",
+      "primaryAction": "월드 입장",
+      "proofAria": "월드 검증 신호",
+      "proofLabel": "결정론적 재구성",
+      "proofTitle": "변경되지 않은 지형에는 숨겨진 마스터 맵이 필요 없습니다.",
+      "directoryTitle": "지형에서 문명까지",
+      "directoryBody": "월드 모델부터 시작해 각 규칙을 증명과 구현까지 추적하세요.",
+      "links": {
+        "civilization": {
+          "title": "문명",
+          "body": "플레이어가 공개 월드 법을 작성하고 검증합니다."
+        },
+        "worldRules": {
+          "title": "월드 규칙",
+          "body": "결정론적 지형, 델타와 수정 권한을 확인합니다."
+        },
+        "resourceRules": {
+          "title": "자원 규칙",
+          "body": "드롭, 부피, 밀도, 질량과 출처를 확인합니다."
+        },
+        "elements": {
+          "title": "원소",
+          "body": "경제에 사용되는 재료와 원소 카탈로그입니다."
+        }
+      }
+    },
+    "technology": {
+      "meta": {
+        "title": "NiceChunk 기술",
+        "description": "NCM 압축, Solana 프로그램, 가디언, 공정성과 신뢰 경계를 검증합니다."
+      },
+      "eyebrow": "검증 레이어",
+      "title": "모든 신뢰 경계를 확인하세요.",
+      "body": "압축은 복잡한 자산을 실용화하고 프로그램은 영구 상태를 결제합니다. 가디언은 두 번째 권한이 되지 않고 실시간을 중계합니다.",
+      "primaryAction": "프로토콜 검증",
+      "proofAria": "기술 검증 신호",
+      "proofLabel": "명시적 권한",
+      "proofTitle": "로컬 렌더. 근거리 중계. Solana 결제.",
+      "directoryTitle": "압축, 증명, 결제",
+      "directoryBody": "큰 주장을 믿는 대신 각 기술 경계를 개별적으로 확인합니다.",
+      "links": {
+        "ncm": {
+          "title": "NCM",
+          "body": "복셀 형상을 압축된 결정론적 데이터로 인코딩."
+        },
+        "ncfm": {
+          "title": "NCFM",
+          "body": "주파수 영역 복셀 표현 실험."
+        },
+        "fairness": {
+          "title": "공정성",
+          "body": "결정론적 생성과 치팅 방지 경계."
+        },
+        "proof": {
+          "title": "프런티어 증명",
+          "body": "주장과 유용한 행동을 검증 가능한 영수증으로."
+        },
+        "guardians": {
+          "title": "가디언",
+          "body": "보관이나 결제 없이 근거리와 채팅을 중계."
+        },
+        "contracts": {
+          "title": "컨트랙트",
+          "body": "배포 프로그램, PDA와 권한 범위."
+        },
+        "trust": {
+          "title": "신뢰",
+          "body": "모든 주장을 공개 증명까지 추적."
+        }
+      }
+    },
+    "create": {
+      "meta": {
+        "title": "NiceChunk 제작",
+        "description": "Chunk.js, Build NCM, Item NCM, 단조, NCM4와 유용 계산으로 자산을 만듭니다."
+      },
+      "eyebrow": "제작 레이어",
+      "title": "유용한 작업을 월드 자산으로.",
+      "body": "플레이 가능한 월드가 사용하는 동일한 형식으로 복셀 건물, 아이템, 도구와 압축 표현을 제작합니다.",
+      "primaryAction": "크리에이터 허브 열기",
+      "proofAria": "제작 파이프라인 신호",
+      "proofLabel": "하나의 제작 파이프라인",
+      "proofTitle": "제작, 압축, 렌더, 검증.",
+      "directoryTitle": "빌더와 연구자를 위한 도구",
+      "directoryBody": "형상, 압축, 단조, 렌더링과 유용 탐색을 위한 도구입니다.",
+      "links": {
+        "miner": {
+          "title": "Miner",
+          "body": "측정 가능한 유용 계산으로 NCM 후보를 탐색."
+        },
+        "chunkjs": {
+          "title": "Chunk.js",
+          "body": "NiceChunk 전용 WebGL2 엔진으로 월드를 렌더."
+        },
+        "buildNcm": {
+          "title": "Build NCM",
+          "body": "프로덕션 NCM 카탈로그로 건물을 구성."
+        },
+        "itemNcm": {
+          "title": "Item NCM",
+          "body": "물리 도구, 가구와 월드 소품 제작."
+        },
+        "forging": {
+          "title": "단조",
+          "body": "측정된 재료를 검증 가능한 형상으로 제작."
+        },
+        "ncm4": {
+          "title": "NCM4",
+          "body": "차세대 의미 기반 압축 프로필 탐색."
+        },
+        "fourier": {
+          "title": "Fourier Lab",
+          "body": "동작하는 프로토타입으로 주파수 표현 실험."
+        }
+      }
+    }
+  }
+}

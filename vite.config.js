@@ -11,6 +11,9 @@ const buildVersion = `${pkg.version}-${new Date()
 const pageInputs = Object.fromEntries(
   Object.entries({
     home: "index.html",
+    world: "world/index.html",
+    technology: "technology/index.html",
+    create: "create/index.html",
     play: "play/index.html",
     login: "login/index.html",
     docs: "docs/index.html",

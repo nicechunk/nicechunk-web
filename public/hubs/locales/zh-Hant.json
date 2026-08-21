@@ -1,0 +1,175 @@
+{
+  "common": {
+    "language": "語言",
+    "comingSoon": "即將推出",
+    "languageNative": {
+      "en": "English",
+      "es": "Español",
+      "fr": "Français",
+      "de": "Deutsch",
+      "ja": "日本語",
+      "ru": "Русский",
+      "ko": "한국어",
+      "zhHant": "繁體中文",
+      "zhHans": "简体中文"
+    }
+  },
+  "siteHeader": {
+    "brandName": "NICECHUNK",
+    "brandHomeAria": "NiceChunk 首頁",
+    "primaryNavigationAria": "主要導覽",
+    "openMenu": "開啟選單",
+    "closeMenu": "關閉選單",
+    "routes": {
+      "home": "首頁",
+      "roadbook": "路書",
+      "worldRules": "世界規則",
+      "resources": "資源",
+      "ncm": "NCM",
+      "ncfm": "NCFM",
+      "elements": "元素",
+      "fairness": "公平性",
+      "proofOfFrontier": "證明",
+      "seed": "種子",
+      "guardians": "守護者",
+      "contracts": "合約",
+      "civilization": "文明",
+      "trust": "信任",
+      "whitepaper": "Whitepaper",
+      "docs": "文檔",
+      "miner": "礦工",
+      "enterWorld": "進入世界"
+    }
+  },
+  "hubs": {
+    "common": {
+      "inspect": "檢查系統",
+      "directoryEyebrow": "探索此層",
+      "footer": "NiceChunk · 可驗證體素文明",
+      "docs": "文件"
+    },
+    "world": {
+      "meta": {
+        "title": "NiceChunk 世界",
+        "description": "探索確定性世界、文明規則、物理資源與元素系統。"
+      },
+      "eyebrow": "世界層",
+      "title": "一個由規則重建的世界。",
+      "body": "種子與座標重建未改動地形；Solana 記錄玩家的改變、所有權、採集與治理。",
+      "primaryAction": "進入世界",
+      "proofAria": "世界驗證訊號",
+      "proofLabel": "確定性重建",
+      "proofTitle": "未改動地形不需要隱藏的主地圖。",
+      "directoryTitle": "從地形走向文明",
+      "directoryBody": "從世界模型開始，沿著每條規則查看對應證明與實作。",
+      "links": {
+        "civilization": {
+          "title": "文明",
+          "body": "查看玩家如何撰寫並驗證公開世界法律。"
+        },
+        "worldRules": {
+          "title": "世界規則",
+          "body": "追蹤確定性地形、差量與修改權限。"
+        },
+        "resourceRules": {
+          "title": "資源規則",
+          "body": "檢查掉落、體積、密度、重量與來源。"
+        },
+        "elements": {
+          "title": "元素",
+          "body": "瀏覽經濟使用的材料與元素目錄。"
+        }
+      }
+    },
+    "technology": {
+      "meta": {
+        "title": "NiceChunk 技術",
+        "description": "驗證 NCM 壓縮、Solana 程式、守護者、公平性與信任邊界。"
+      },
+      "eyebrow": "驗證層",
+      "title": "檢查每一道信任邊界。",
+      "body": "壓縮讓複雜資產可實用化，程式結算持久狀態；守護者中繼即時互動，但不成為第二權威。",
+      "primaryAction": "驗證協議",
+      "proofAria": "技術驗證訊號",
+      "proofLabel": "明確權限",
+      "proofTitle": "本地渲染、附近中繼、Solana 結算。",
+      "directoryTitle": "壓縮、證明與結算",
+      "directoryBody": "每個入口只揭示一項具體技術邊界，而不是要求你相信一個寬泛承諾。",
+      "links": {
+        "ncm": {
+          "title": "NCM",
+          "body": "把體素幾何編碼為精簡的確定性鏈上資料。"
+        },
+        "ncfm": {
+          "title": "NCFM",
+          "body": "研究頻域體素表達實驗。"
+        },
+        "fairness": {
+          "title": "公平性",
+          "body": "檢查確定性生成與防作弊邊界。"
+        },
+        "proof": {
+          "title": "邊疆證明",
+          "body": "把主張與有用行動轉為可驗證憑證。"
+        },
+        "guardians": {
+          "title": "守護者",
+          "body": "不托管、不結算地中繼附近玩家與聊天。"
+        },
+        "contracts": {
+          "title": "合約",
+          "body": "檢查已部署程式、PDA 與權限範圍。"
+        },
+        "trust": {
+          "title": "信任",
+          "body": "把每項主張追溯到公開證明與拒絕路徑。"
+        }
+      }
+    },
+    "create": {
+      "meta": {
+        "title": "NiceChunk 創作",
+        "description": "使用 Chunk.js、Build NCM、Item NCM、鍛造、NCM4 與有用計算建立資產。"
+      },
+      "eyebrow": "創作層",
+      "title": "把有用工作變成世界資產。",
+      "body": "使用遊戲世界實際消費的格式，製作體素建築、物品、工具與壓縮表達。",
+      "primaryAction": "開啟創作中心",
+      "proofAria": "創作流程訊號",
+      "proofLabel": "一條生產流程",
+      "proofTitle": "創作、壓縮、渲染、驗證。",
+      "directoryTitle": "給建造者與研究者的工具",
+      "directoryBody": "使用專注於幾何、壓縮、鍛造、渲染與有用搜尋的工具。",
+      "links": {
+        "miner": {
+          "title": "Miner",
+          "body": "透過可衡量的有用計算搜尋 NCM 候選。"
+        },
+        "chunkjs": {
+          "title": "Chunk.js",
+          "body": "以 NiceChunk 專用 WebGL2 引擎渲染世界。"
+        },
+        "buildNcm": {
+          "title": "Build NCM",
+          "body": "使用生產 NCM 建築目錄組合建築。"
+        },
+        "itemNcm": {
+          "title": "Item NCM",
+          "body": "建立實體工具、家具與世界道具。"
+        },
+        "forging": {
+          "title": "鍛造",
+          "body": "把可量測材料塑造成可驗證物品幾何。"
+        },
+        "ncm4": {
+          "title": "NCM4",
+          "body": "探索下一代語意壓縮格式。"
+        },
+        "fourier": {
+          "title": "Fourier 實驗室",
+          "body": "用可運作原型測試頻域表達。"
+        }
+      }
+    }
+  }
+}

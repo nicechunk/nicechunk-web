@@ -6,6 +6,10 @@ import windmillDefinition from "../build_ncm/buildings/agriculture/stone-timber-
 import bloomeryDefinition from "../build_ncm/buildings/industrial/covered-village-bloomery.json";
 import marketStallDefinition from "../build_ncm/buildings/commerce/covered-market-stall.json";
 import scaffoldDefinition from "../build_ncm/buildings/construction/timber-building-scaffold.json";
+import mineHeadframeDefinition from "../build_ncm/buildings/mining/timber-mine-headframe.json";
+import harborBeaconDefinition from "../build_ncm/buildings/coastal/stone-timber-harbor-beacon.json";
+import blacksmithShopDefinition from "../build_ncm/buildings/industrial/compact-village-blacksmith-shop.json";
+import schoolhouseDefinition from "../build_ncm/buildings/civic/compact-village-schoolhouse.json";
 import {
   ACTOR_SITES,
   CONSTRUCTION_SITE,
@@ -33,7 +37,7 @@ const CHUNK_RUNTIME_BUNDLE = "chunk/browser-runtime.js";
 const CHUNK_WORKER_BUNDLE = "chunk/chunk-build-worker.bundle.js";
 const FORGE_RUNTIME_MODULE = "forge/forge-runtime-cache.js";
 const SMELTING_MATERIAL_MODULE = "renderer/smelting-material-models.js";
-const SECTION_VIEWS = Object.freeze(["arrival", "world", "market", "guardian", "roadmap"]);
+const SECTION_VIEWS = Object.freeze(["arrival", "world", "technology", "create", "explore"]);
 const CAMERA_TRANSITION_MS = 1_180;
 const CAMERA_TARGET_WAIT_TIMEOUT_MS = 3_000;
 const DEFERRED_SCENE_ASSET_DELAY_MS = 600;
@@ -118,6 +122,10 @@ const STRUCTURE_DEFINITIONS = Object.freeze({
   bloomery: bloomeryDefinition,
   marketStall: marketStallDefinition,
   scaffold: scaffoldDefinition,
+  mineHeadframe: mineHeadframeDefinition,
+  harborBeacon: harborBeaconDefinition,
+  blacksmithShop: blacksmithShopDefinition,
+  schoolhouse: schoolhouseDefinition,
 });
 const STRUCTURE_SPECS = Object.freeze(STRUCTURE_LAYOUT.map((spec) => Object.freeze({
   ...spec,
@@ -131,21 +139,21 @@ const CAMERA_PRESETS = Object.freeze({
     fov: 52,
   }),
   world: Object.freeze({
-    eye: [2427, 110, 1684],
-    target: [2386, 102, 1645],
-    fov: 36,
-  }),
-  market: Object.freeze({
-    eye: [2555, 118, 1808],
-    target: [2508, 103, 1771],
+    eye: [2427, 118, 1684],
+    target: [2392, 106, 1650],
     fov: 42,
   }),
-  guardian: Object.freeze({
-    eye: [2504, 110, 1734],
-    target: [2476, 103, 1706],
+  create: Object.freeze({
+    eye: [2496, 120, 1845],
+    target: [2496, 104, 1802],
+    fov: 42,
+  }),
+  technology: Object.freeze({
+    eye: [2448, 116, 1682],
+    target: [2492, 104, 1724],
     fov: 38,
   }),
-  roadmap: Object.freeze({
+  explore: Object.freeze({
     eye: [2565, 121, 1843],
     target: [2513, 105, 1808],
     fov: 42,
@@ -277,8 +285,8 @@ export function createHomeWorldScene(canvas, options = {}) {
       if (canvas.dataset.sceneReady === "true" && chunks.buildQueue?.length) resumeTerrainBuildsForView();
       else if (view !== initialTerrainView) startDeferredTerrainPreparation();
     }
-    if (view === "market" && canvas.dataset.sceneReady === "true") void ensureDeferredSceneAssets();
-    if (view !== "guardian") emitGuardianChat(null);
+    if (view === "create" && canvas.dataset.sceneReady === "true") void ensureDeferredSceneAssets();
+    if (view !== "technology") emitGuardianChat(null);
     cameraTarget = cameraPoseForView(view, sceneAspect);
     const waitForTarget = !immediate
       && !reducedMotion.matches
@@ -498,17 +506,17 @@ export function createHomeWorldScene(canvas, options = {}) {
 
     if (focusView === "world") {
       boyPose = focusedMiningPose(focusElapsed, reducedMotion.matches);
-    } else if (focusView === "market") {
+    } else if (focusView === "create") {
       boyPose = focusedForgingPose(focusElapsed, reducedMotion.matches);
       girlPose = focusedIdlePose(ACTOR_SITES.economyGirl, ACTOR_SITES.economyBoy, focusElapsed);
-    } else if (focusView === "guardian") {
+    } else if (focusView === "technology") {
       boyPose = focusedIdlePose(ACTOR_SITES.guardianBoy, ACTOR_SITES.guardianGirl, focusElapsed);
       girlPose = focusedIdlePose(ACTOR_SITES.guardianGirl, ACTOR_SITES.guardianBoy, focusElapsed);
-    } else if (focusView === "roadmap") {
+    } else if (focusView === "explore") {
       boyPose = focusedBuildingPose(focusElapsed, reducedMotion.matches);
       girlPose = focusedIdlePose(ACTOR_SITES.constructionGirl, ACTOR_SITES.constructionBoy, focusElapsed);
     }
-    const guardianDialogue = focusView === "guardian"
+    const guardianDialogue = focusView === "technology"
       ? guardianDialogueState(focusElapsed, reducedMotion.matches)
       : null;
     const boyGuardianGesture = guardianDialogue
@@ -625,7 +633,7 @@ export function createHomeWorldScene(canvas, options = {}) {
         lineColor: [0.28, 0.9, 1, 0.82],
       }];
     }
-    if (focusView === "market") {
+    if (focusView === "create") {
       const activeIndex = reducedMotion.matches ? ECONOMY_FLOW_SITES.length - 1 : Math.floor(timestamp / 520) % ECONOMY_FLOW_SITES.length;
       const flow = ECONOMY_FLOW_SITES.map((site, index) => ({
         worldX: site.x,
@@ -642,7 +650,7 @@ export function createHomeWorldScene(canvas, options = {}) {
       }));
       return flow;
     }
-    if (focusView === "roadmap") {
+    if (focusView === "explore") {
       return [buildingProgressOverlay(
         CONSTRUCTION_SITE.overlay.x,
         CONSTRUCTION_SITE.overlay.z,
@@ -748,7 +756,7 @@ export function createHomeWorldScene(canvas, options = {}) {
 
   function updateGuardianChat(cameraPose, timestamp) {
     if (typeof options.onGuardianChat !== "function") return;
-    if (focusView !== "guardian" || cameraTransitioning || canvas.dataset.sceneReady !== "true") {
+    if (focusView !== "technology" || cameraTransitioning || canvas.dataset.sceneReady !== "true") {
       emitGuardianChat(null);
       return;
     }
@@ -978,7 +986,7 @@ export function createHomeWorldScene(canvas, options = {}) {
       deferredSceneAssetsScheduled = false;
       if (!destroyed) void ensureDeferredSceneAssets();
     };
-    if (focusView === "market") {
+    if (focusView === "create") {
       queueMicrotask(load);
     } else {
       const delayHandle = window.setTimeout(() => {
@@ -1532,7 +1540,7 @@ function createInspectableStructure(building, placements, spec) {
     id: spec.id,
     titles: Object.freeze({ ...spec.definition.titles }),
     descriptions: Object.freeze({ ...spec.definition.descriptions }),
-    ncmCode: spec.definition.ncm.code,
+    ncmCode: building.canonicalCode,
     payloadBytes: building.payloadBytes,
     voxelCount: building.voxels.size,
     modelSize: Object.freeze({ ...building.size }),
@@ -2269,9 +2277,9 @@ function sceneCueForView(view) {
   return {
     arrival: "world-travel",
     world: "terrain-delta",
-    market: "material-flow",
-    guardian: "guardian-relay",
-    roadmap: "building-progress",
+    technology: "guardian-relay",
+    create: "material-flow",
+    explore: "building-progress",
   }[view] || "world-travel";
 }
 
@@ -2465,9 +2473,9 @@ function cameraPoseForView(view, aspect) {
   if (mobile && view === "arrival") {
     target.splice(0, 3, 2524, 110, 1645);
     eye = [2560, 145, 1768];
-  } else if (mobile && view === "market") {
-    target.splice(0, 3, 2508, 103, 1771);
-    eye = [2558, 122, 1816];
+  } else if (mobile && view === "create") {
+    target.splice(0, 3, 2490, 104, 1802);
+    eye = [2490, 126, 1860];
   } else {
     const distanceScale = mobile ? 1.08 : 1;
     eye = target.map((value, index) => value + (source.eye[index] - source.target[index]) * distanceScale);
@@ -3064,7 +3072,7 @@ function pointerDistanceAxis(center, extent) {
 
 function isBuildingInspectionPointerTarget(target) {
   if (!(target instanceof Element)) return true;
-  return !target.closest("a, button, input, select, textarea, [contenteditable], .chapter-card, .chapter-nav, .terrain-pouw-demo, .site-header, .site-footer");
+  return !target.closest("a, button, input, select, textarea, [contenteditable], .chapter-card, .chapter-nav, .site-header, .site-footer");
 }
 
 function terrainReadinessProbe(chunk) {

@@ -29,7 +29,11 @@
     "world": "世界",
     "economy": "経済",
     "watchers": "Guardians",
-    "roadmap": "ロードマップ"
+    "roadmap": "ロードマップ",
+    "arrival": "到着",
+    "technology": "技術",
+    "create": "制作",
+    "explore": "探索"
   },
   "scrollCue": {
     "aria": "次の章を見る",
@@ -39,7 +43,7 @@
   "hero": {
     "eyebrow": "Devnet でプレイ可能な Alpha",
     "title": "世界を築く。変化を検証する。",
-    "subtitle": "決定論的なボクセル世界を探索し、計測可能な資源を採掘し、素材を精錬・鍛造し、建築し、同一性を保ったアイテムを取引し、スキルを育てます。Chunk.js が瞬間を描画し、Solana プログラムが永続状態を確定し、Guardian が周辺プレイを中継します。",
+    "subtitle": "計測資源、鍛造品、土地、スキル、市場がSolanaプログラムで永続化される決定論的ボクセル文明を探索します。",
     "enterWorld": "ワールドへ入る",
     "connectWallet": "ウォレットを接続",
     "readRoadbook": "ロードブックを読む",
@@ -54,8 +58,8 @@
   },
   "world": {
     "eyebrow": "検証可能な世界",
-    "title": "未変更の地形は生成され、プレイヤーの変更は記録される。",
-    "body": "シードと座標から、未変更のすべてのブロックを再構築できます。プレイヤーが採掘または建築すると、Solana プログラムが操作を検証し、永続的な差分を記録します。隠されたマスターマップを取得せずに、ブラウザが同じ基礎世界を再現できます。",
+    "title": "未変更の地形は再構築され、プレイヤーの変更は残る。",
+    "body": "シードと座標が未変更の地形を再構築し、プレイヤーの変更・所有・採掘・統治をSolanaが記録します。",
     "seed": {
       "eyebrow": "決定論的 Chunk",
       "title": "事前読込ではなく再構築",
@@ -66,7 +70,8 @@
       "protocol": "基礎：決定論的再構築",
       "state": "変更：SOLANA CHUNK 差分",
       "verify": "描画：CHUNK.JS WEBGL2"
-    }
+    },
+    "primaryAction": "世界に入る"
   },
   "terrainPouw": {
     "aria": "NCM4 Proof of Useful Work 地形実験",
@@ -193,7 +198,11 @@
     "watcherNetwork": "Guardian ネットワーク",
     "whitepaper": "ホワイトペーパー",
     "fairness": "公平性",
-    "github": "GitHub"
+    "github": "GitHub",
+    "world": "世界",
+    "technology": "技術",
+    "create": "制作",
+    "docs": "ドキュメント"
   },
   "common": {
     "language": "言語",
@@ -259,5 +268,34 @@
     "ready": "ワールド準備完了",
     "fallback": "プレビュー準備完了",
     "engine": "Chunk.js · ローカル再構築"
+  },
+  "technology": {
+    "eyebrow": "検証レイヤー",
+    "title": "ローカル描画。Solana決済。",
+    "body": "圧縮で複雑な資産を実用化し、プログラムが永続状態を決済します。Guardianは第二の権威にならずリアルタイムを中継します。",
+    "primaryAction": "プロトコルを検証",
+    "facts": {
+      "compression": "コンパクトで決定論的なNCMデータ",
+      "authority": "明示的なプログラムとGuardianの境界",
+      "proof": "隠れた権限ではなく公開証明"
+    }
+  },
+  "create": {
+    "eyebrow": "制作レイヤー",
+    "title": "有用な仕事が世界の資産になる。",
+    "body": "プレイ可能な世界と同じ形式で、ボクセル建築、アイテム、道具、圧縮表現を作成します。",
+    "primaryAction": "クリエイターハブを開く",
+    "facts": {
+      "build": "Build NCMとItem NCMの制作エディタ",
+      "render": "Chunk.js専用WebGL2レンダリング",
+      "search": "Miner、NCM4、Fourier研究ツール"
+    }
+  },
+  "explore": {
+    "eyebrow": "オープンな知識",
+    "title": "すべてのルールをコードまで追跡する。",
+    "body": "プレイヤーガイド、技術アーキテクチャ、またはプレイ可能なDevnet世界から始めてください。詳細な証明も公開されています。",
+    "primaryAction": "ドキュメントを開く",
+    "secondaryAction": "世界に入る"
   }
 }

@@ -78,24 +78,17 @@ assert.doesNotMatch(html, /<video\b|nck-hero-logo-v0149\.(?:png|webm)/u);
 assert.doesNotMatch(assetManifestSource, /nck-hero-logo-v0149\.(?:png|webm)/u);
 assert.match(siteUi, /if \(!document\.querySelector\("\[data-site-footer-native\]"\)\) ensureUnifiedFooter\(\);/u);
 assert.match(siteHeader, /mergeClassNames\(header\.className, "site-header site-header-shared"\)/u);
-assert.match(siteHeader, /const MOBILE_MEDIA_QUERY = "\(max-width: 1320px\)";/u);
+assert.match(siteHeader, /const MOBILE_MEDIA_QUERY = "\(max-width: 900px\)";/u);
 assert.match(siteHeaderCss, /header\.site-header\.site-header-shared\[data-site-header-mounted="true"\] \{/u);
-assert.match(siteHeaderCss, /@media \(max-width: 1320px\) \{[\s\S]*?\.site-header \.site-menu-toggle/u);
-assert.match(siteHeaderCss, /@media \(min-width: 901px\) and \(max-width: 1320px\)[\s\S]*?html:not\(\[data-i18n-scope="home"\]\)/u);
+assert.match(siteHeaderCss, /@media \(max-width: 900px\) \{[\s\S]*?\.site-header \.site-menu-toggle/u);
+assert.match(siteHeaderCss, /max-height: min\(70dvh, 620px\)/u);
 assert.doesNotMatch(siteHeaderCss, /^\s*\.site-header\s*\{/mu);
 for (const extension of ["png", "webm"]) {
   await assert.rejects(access(new URL(`../public/media/nck-hero-logo-v0149.${extension}`, import.meta.url)));
 }
 assert.match(html, /<div class="hero-world-stage" aria-hidden="true"><\/div>/u);
 assert.match(html, /class="chapter-layout chapter-layout-world"/u);
-assert.match(html, /class="terrain-pouw-demo"/u);
-assert.match(html, /data-source-bytes="345719"/u);
-assert.match(html, /data-candidate-bytes="645944"/u);
-assert.match(html, /data-exact-chunks="225"/u);
-assert.match(html, /data-mismatch-count="0"/u);
-assert.match(html, /href="\/media\/home-world-terrain-ncm4-v1-report\.json"/u);
-assert.match(html, /href="\/media\/home-world-terrain-ncm4-v1\.ncm4b" download/u);
-assert.equal([...html.matchAll(/data-i18n="terrainPouw\./gu)].length, 14);
+assert.doesNotMatch(html, /class="terrain-pouw-demo"/u);
 assert.match(html, /<footer class="site-footer" data-site-footer-native>/u);
 assert.ok(
   html.indexOf('<header class="site-header"') < html.indexOf('<nav class="chapter-nav"'),
@@ -106,7 +99,7 @@ assert.deepEqual(
   [0, -1, -1, -1, -1],
   "Chapter navigation must expose one initial roving-tabindex stop.",
 );
-assert.equal([...html.matchAll(/class="chapter-copy-line"/gu)].length, 9);
+assert.equal([...html.matchAll(/class="chapter-copy-line"/gu)].length, 10);
 assert.match(style, /\.chapter-copy-line \{[\s\S]*?box-decoration-break: clone;/u);
 assert.match(style, /\.chapter-card \{[\s\S]*?background: transparent;[\s\S]*?backdrop-filter: none;/u);
 assert.match(style, /\.side-dot \{[\s\S]*?background: transparent;[\s\S]*?border: 0;/u);
@@ -247,6 +240,7 @@ assert.match(terrainModule, /fetch\(homeBuildAssetUrl\(url\),/u);
 assert.doesNotMatch(scene, /load\("(?:construction|renderer|world)\//u);
 assert.match(scene, /payloadBytes: building\.payloadBytes/u);
 assert.match(scene, /voxelCount: building\.voxels\.size/u);
+assert.match(scene, /ncmCode: building\.canonicalCode/u);
 assert.match(scene, /const encoded = homeStructureNcmEntry\(spec\.definition\);/u);
 assert.match(scene, /runtime\.parseNcm3Building\(encoded\.code/u);
 assert.match(scene, /building\.payloadBytes !== encoded\.payloadBytes/u);
@@ -292,7 +286,7 @@ assert.match(scene, /sceneViewport = viewportRect\(width, height\);[\s\S]*?rende
 assert.match(scene, /const BUILDING_INSPECTION_FRAME_MS = 1_000 \/ 12;/u);
 assert.match(scene, /if \(!buildingInspectionDirty && !animatedOutline\) return;/u);
 assert.match(scene, /buildingInspectionDirty = true;[\s\S]*?guardianProjectionDirty = true;/u);
-assert.match(scene, /\.terrain-pouw-demo/u);
+assert.doesNotMatch(scene, /\.terrain-pouw-demo/u);
 assert.match(scene, /const GUARDIAN_DIALOGUE_PAIR_COUNT = 3;/u);
 assert.match(scene, /updateGuardianChat\(cameraPose, timestamp\)/u);
 assert.match(scene, /projectAvatarChatAnchor\(boy, cameraPose, viewport\)/u);
@@ -387,17 +381,21 @@ for (const buildingPath of [
   "covered-village-bloomery.json",
   "covered-market-stall.json",
   "timber-building-scaffold.json",
+  "timber-mine-headframe.json",
+  "stone-timber-harbor-beacon.json",
+  "compact-village-blacksmith-shop.json",
+  "compact-village-schoolhouse.json",
 ]) {
   assert.ok(layout.includes(buildingPath), `Missing canonical building: ${buildingPath}`);
 }
-assert.doesNotMatch(layout, /timber-mine-headframe\.json/u);
 const structureLayout = layout.match(/export const STRUCTURE_LAYOUT = Object\.freeze\(\[[\s\S]*?\n\]\);/u)?.[0];
 assert.ok(structureLayout, "Missing fixed structure layout block.");
-assert.equal([...structureLayout.matchAll(/\bid: "/gu)].length, 8);
+assert.equal([...structureLayout.matchAll(/\bid: "/gu)].length, 12);
 assert.equal(HOME_STRUCTURE_ROOF_MATERIAL_ID, 96);
 assert.equal(Object.keys(HOME_STRUCTURE_NCM_CODES).length, STRUCTURE_LAYOUT.length);
 for (const spec of STRUCTURE_LAYOUT) {
   const definition = JSON.parse(await readFile(new URL(`../${spec.definitionPath}`, import.meta.url), "utf8"));
+  assert.equal(spec.structureKey, definition.key, `${spec.id} points at an unexpected NCM structure.`);
   const encoded = HOME_STRUCTURE_NCM_CODES[definition.key];
   assert.ok(encoded, `Missing materialized homepage NCM3 code for ${definition.key}.`);
   assert.equal(
@@ -414,14 +412,14 @@ for (const spec of STRUCTURE_LAYOUT) {
     encoded.materials.every((materialId) => materialId < 1 || materialId > 7),
     `${definition.key} still contains role-placeholder materials 1..7.`,
   );
-  if (spec.id === "river-footbridge") {
+  if (["river-footbridge", "mine-headframe"].includes(spec.id)) {
     assert.ok(!encoded.materials.includes(HOME_STRUCTURE_ROOF_MATERIAL_ID));
   } else {
     assert.ok(encoded.materials.includes(HOME_STRUCTURE_ROOF_MATERIAL_ID), `${definition.key} is missing red roof tiles.`);
   }
 }
 
-for (const view of ["arrival", "world", "market", "guardian", "roadmap"]) {
+for (const view of ["arrival", "world", "technology", "create", "explore"]) {
   assert.match(scene, new RegExp(`\\b${view}: Object\\.freeze\\(`, "u"));
 }
 
@@ -614,25 +612,25 @@ assert.equal(terrain.chunkSize, 16);
 assert.equal(terrain.width, 15);
 assert.equal(terrain.depth, 15);
 assert.equal(terrain.chunks.size, 225);
-assert.equal(terrain.runCount, 158_432);
-assert.equal(terrain.deltaCount, 623_314);
-assert.equal(terrain.fingerprint, "633ddc2887804cf2af5c7fc44d55f9a0");
+assert.equal(terrain.runCount, 159_057);
+assert.equal(terrain.deltaCount, 633_903);
+assert.equal(terrain.fingerprint, "7541cdf019729fb8e585101c06382cba");
 assert.deepEqual(gunzipSync(compressedTerrainBytes), terrainBytes);
 assert.ok(compressedTerrainBytes.byteLength < terrainBytes.byteLength / 20);
 assert.equal(PRESENTATION_PATHS.length, 6);
-assert.equal(PRESENTATION_PLANTS.length, 311);
-assert.equal(PRESENTATION_PLANTS.filter((plant) => plant.block.startsWith("flower")).length, 289);
+assert.equal(PRESENTATION_PLANTS.length, 299);
+assert.equal(PRESENTATION_PLANTS.filter((plant) => plant.block.startsWith("flower")).length, 277);
 assert.equal(PRESENTATION_TREES.length, 6);
-assert.deepEqual(MINING_TARGET, { x: 2385, y: 102, z: 1644, material: "coal" });
-assert.deepEqual(ACTOR_SITES.boyMine, { x: 2386, z: 1646, yaw: -2.68 });
-assert.deepEqual(ACTOR_SITES.economyBoy, { x: 2508, z: 1775, yaw: 0 });
+assert.deepEqual(MINING_TARGET, { x: 2393, y: 102, z: 1650, material: "coal" });
+assert.deepEqual(ACTOR_SITES.boyMine, { x: 2395, z: 1653, yaw: -2.5 });
+assert.deepEqual(ACTOR_SITES.economyBoy, { x: 2486, z: 1805, yaw: 0 });
 assert.deepEqual(ECONOMY_FORGE_SITE, {
-  anvil: { x: 2508.5, y: 100, z: 1773, yaw: 0 },
-  bench: { x: 2501.5, y: 100, z: 1771, yaw: 0 },
-  tool: { x: 2508.5, y: 102.34, z: 1773, yaw: 1.570796 },
-  strike: { x: 2508.5, y: 102.58, z: 1773 },
-  shelf: { x: 2500, y: 100, z: 1777, yaw: 0 },
-  marketDisplay: { x: 2526.5, y: 100, z: 1775, yaw: 0 },
+  anvil: { x: 2486.5, y: 100, z: 1803, yaw: 0 },
+  bench: { x: 2479.5, y: 100, z: 1803, yaw: 0 },
+  tool: { x: 2486.5, y: 102.34, z: 1803, yaw: 1.570796 },
+  strike: { x: 2486.5, y: 102.58, z: 1803 },
+  shelf: { x: 2479, y: 100, z: 1807, yaw: 0 },
+  marketDisplay: { x: 2496.5, y: 100, z: 1803, yaw: 0 },
 });
 assert.equal(Object.keys(ECONOMY_MATERIAL_SITES).length, 4);
 assert.equal(SCENE_RESOURCE_CLUSTERS.length, 1);
@@ -666,7 +664,7 @@ for (const path of PRESENTATION_PATHS) {
     )));
     return distance >= path.halfWidth + 0.5 && distance <= path.halfWidth + 4.2;
   });
-  if (path.id !== "production-courtyard") {
+  if (!["production-courtyard", "construction-spur"].includes(path.id)) {
     assert.ok(roadsideFlowers.length >= Math.floor(length * 0.8), `${path.id} does not have a dense roadside flower band.`);
   }
 }
@@ -731,11 +729,11 @@ assert.equal(ncm4Report.source.runs, terrain.runCount);
 assert.equal(ncm4Report.projection.format, "NCM4B-v1");
 assert.equal(ncm4Report.projection.ncm4Format, "ncm4-pouw-v1");
 assert.equal(ncm4Report.projection.profile, "building");
-assert.equal(ncm4Report.projection.genericNcm3Bytes, 1_268_806);
-assert.equal(ncm4Report.projection.ncm4RecordBytes, 645_944);
-assert.equal(ncm4Report.projection.bundleBytes, 647_754);
-assert.equal(ncm4Report.projection.ncm4SavedPercentAgainstNcm3, 49.0904);
-assert.equal(ncm4Report.projection.ncm4LargerPercentAgainstNcht, 86.8408);
+assert.equal(ncm4Report.projection.genericNcm3Bytes, 1_273_806);
+assert.equal(ncm4Report.projection.ncm4RecordBytes, 648_383);
+assert.equal(ncm4Report.projection.bundleBytes, 650_193);
+assert.equal(ncm4Report.projection.ncm4SavedPercentAgainstNcm3, 49.0988);
+assert.equal(ncm4Report.projection.ncm4LargerPercentAgainstNcht, 86.8706);
 assert.equal(ncm4Report.projection.exactChunks, 225);
 assert.equal(ncm4Report.projection.chunkCount, 225);
 assert.equal(ncm4Report.projection.mismatchCount, 0);
@@ -746,14 +744,14 @@ assert.equal(ncm4Report.chunks.length, 225);
 assert.ok(ncm4Report.chunks.every((chunk) => chunk.exact && chunk.mismatchCount === 0 && chunk.acceptedAgainstNcm3));
 assert.equal(ncm4Report.chunks.reduce((total, chunk) => total + chunk.deltaCount, 0), terrain.deltaCount);
 assert.equal(ncm4Report.chunks.reduce((total, chunk) => total + chunk.runCount, 0), terrain.runCount);
-assert.equal(ncm4Report.chunks.reduce((total, chunk) => total + chunk.ncm4Bytes, 0), 645_944);
+assert.equal(ncm4Report.chunks.reduce((total, chunk) => total + chunk.ncm4Bytes, 0), 648_383);
 assert.equal(ncm4BundleBytes.byteLength, ncm4Report.projection.bundleBytes);
 assert.equal(createHash("sha256").update(ncm4BundleBytes).digest("hex"), ncm4Report.projection.bundleSha256);
 assert.equal(ncm4BundleBytes.subarray(0, 4).toString("ascii"), "NC4B");
 assert.equal(ncm4BundleBytes[4], 1);
 assert.equal(ncm4BundleBytes.readUInt16LE(5), 225);
 assert.equal(ncm4BundleBytes.readInt16LE(7), 85);
-assert.equal(ncm4BundleBytes[9], 29);
+assert.equal(ncm4BundleBytes[9], 31);
 let ncm4BundleOffset = 10;
 for (const proof of ncm4Report.chunks) {
   assert.equal(ncm4BundleBytes.readInt16LE(ncm4BundleOffset), proof.chunkX);
@@ -780,7 +778,7 @@ for (const [worldX, worldZ, expectedY] of [
   assert.equal(topY, expectedY, `Unexpected homepage relief height at ${worldX},${worldZ}.`);
 }
 
-for (const view of ["arrival", "world", "market", "guardian", "roadmap"]) {
+for (const view of ["arrival", "world", "technology", "create", "explore"]) {
   const preset = scene.match(new RegExp(`${view}: Object\\.freeze\\(\\{[\\s\\S]*?eye: \\[([^\\]]+)\\],[\\s\\S]*?target: \\[([^\\]]+)\\]`, "u"));
   assert.ok(preset, `Missing ${view} camera preset.`);
   const eye = preset[1].split(",").map(Number);
@@ -789,9 +787,9 @@ for (const view of ["arrival", "world", "market", "guardian", "roadmap"]) {
   assert.ok(distance < 112, `${view} camera is too far from its subject (${distance.toFixed(2)}).`);
 }
 assert.match(scene, /arrival: Object\.freeze\(\{\s*eye: \[2460, 134, 1757\],\s*target: \[2494, 103, 1662\],\s*fov: 52,/u);
-assert.match(scene, /market: Object\.freeze\(\{\s*eye: \[2555, 118, 1808\],\s*target: \[2508, 103, 1771\],\s*fov: 42,/u);
+assert.match(scene, /create: Object\.freeze\(\{\s*eye: \[2496, 120, 1845\],\s*target: \[2496, 104, 1802\],\s*fov: 42,/u);
 assert.match(scene, /mobile && view === "arrival"[\s\S]*?target\.splice\(0, 3, 2524, 110, 1645\);[\s\S]*?eye = \[2560, 145, 1768\];/u);
-assert.match(scene, /mobile && view === "market"[\s\S]*?target\.splice\(0, 3, 2508, 103, 1771\);[\s\S]*?eye = \[2558, 122, 1816\];/u);
+assert.match(scene, /mobile && view === "create"[\s\S]*?target\.splice\(0, 3, 2490, 104, 1802\);[\s\S]*?eye = \[2490, 126, 1860\];/u);
 assert.match(scene, /const distanceScale = mobile \? 1\.08 : 1/u);
 assert.match(scene, /fov: source\.fov \+ \(mobile \? 2 : 0\)/u);
 

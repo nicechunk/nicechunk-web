@@ -29,7 +29,11 @@
     "world": "World",
     "economy": "Economy",
     "watchers": "Guardians",
-    "roadmap": "Roadmap"
+    "roadmap": "Roadmap",
+    "arrival": "Arrival",
+    "technology": "Technology",
+    "create": "Create",
+    "explore": "Explore"
   },
   "scrollCue": {
     "aria": "Explore the next chapter",
@@ -39,7 +43,7 @@
   "hero": {
     "eyebrow": "Playable Devnet Alpha",
     "title": "Build the world. Verify the change.",
-    "subtitle": "Explore a deterministic voxel world, mine measured resources, smelt and forge materials, build, trade exact items, and grow skills. Chunk.js renders each moment; Solana programs settle persistent state; Guardians relay nearby play.",
+    "subtitle": "Explore a deterministic voxel civilization where measured resources, forged items, land, skills, and markets persist through Solana programs.",
     "enterWorld": "Enter World",
     "connectWallet": "Connect Wallet",
     "readRoadbook": "Read Roadbook",
@@ -54,8 +58,8 @@
   },
   "world": {
     "eyebrow": "Verifiable World",
-    "title": "Untouched terrain is generated. Player changes are recorded.",
-    "body": "Seed and coordinates reconstruct every untouched block. When a player mines or builds, Solana programs validate the action and record the persistent delta. The browser can rebuild the same base world without downloading a hidden master map.",
+    "title": "Untouched terrain is rebuilt. Player changes persist.",
+    "body": "Seed and coordinates reconstruct untouched terrain. Solana records what players change, own, mine, and govern.",
     "seed": {
       "eyebrow": "Deterministic Chunk",
       "title": "Reconstruct, don't preload",
@@ -66,7 +70,8 @@
       "protocol": "BASE: DETERMINISTIC RECONSTRUCTION",
       "state": "CHANGE: SOLANA CHUNK DELTAS",
       "verify": "RENDER: CHUNK.JS WEBGL2"
-    }
+    },
+    "primaryAction": "Enter World"
   },
   "terrainPouw": {
     "aria": "NCM4 proof-of-useful-work terrain experiment",
@@ -193,7 +198,11 @@
     "watcherNetwork": "Guardian Network",
     "whitepaper": "Whitepaper",
     "fairness": "Fairness",
-    "github": "GitHub"
+    "github": "GitHub",
+    "world": "World",
+    "technology": "Technology",
+    "create": "Create",
+    "docs": "Docs"
   },
   "common": {
     "language": "Language",
@@ -259,5 +268,34 @@
     "ready": "World ready",
     "fallback": "Preview ready",
     "engine": "Chunk.js · Local reconstruction"
+  },
+  "technology": {
+    "eyebrow": "The Verification Layer",
+    "title": "Render locally. Settle on Solana.",
+    "body": "Compression makes complex assets practical. Programs settle persistent state. Guardians relay the live moment without becoming a second authority.",
+    "primaryAction": "Verify the protocol",
+    "facts": {
+      "compression": "Compact deterministic NCM data",
+      "authority": "Explicit program and Guardian boundaries",
+      "proof": "Public proofs instead of hidden authority"
+    }
+  },
+  "create": {
+    "eyebrow": "The Creation Layer",
+    "title": "Useful work becomes a world asset.",
+    "body": "Shape voxel buildings, items, tools, and compressed representations with the same formats the playable world consumes.",
+    "primaryAction": "Open creator hub",
+    "facts": {
+      "build": "Build NCM and Item NCM production editors",
+      "render": "Chunk.js purpose-built WebGL2 rendering",
+      "search": "Miner, NCM4, and Fourier research tools"
+    }
+  },
+  "explore": {
+    "eyebrow": "Open Knowledge",
+    "title": "Follow every rule into the code.",
+    "body": "Start with the player guide, inspect the technical architecture, or enter the playable Devnet world. Detailed proofs remain open when you need them.",
+    "primaryAction": "Open Docs",
+    "secondaryAction": "Enter World"
   }
 }

@@ -108,6 +108,7 @@ for (const requiredPath of [
   assert.ok(hubScript.includes(requiredPath), `Hub directory is missing ${requiredPath}.`);
 }
 assert.match(headerScript, /from "\.\/site-navigation\.js"/u);
+assert.match(headerScript, /import "\.\/site-ui\.js";/u);
 assert.match(fallbackScript, /from "\.\/site-navigation\.js"/u);
 assert.match(fallbackScript, /if \(!usesSharedHeader\) ensureUnifiedNavigation\(\);\s*ensureUnifiedFooter\(\);/u);
 assert.match(fallbackScript, /footer\.site-footer, \[data-site-footer-native\]/u);

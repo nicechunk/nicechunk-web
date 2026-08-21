@@ -10,6 +10,7 @@ import {
   SITE_NAVIGATION_ROUTES,
   resolveSiteNavigationPath,
 } from "./site-navigation.js";
+import "./site-ui.js";
 
 const MOBILE_MEDIA_QUERY = "(max-width: 900px)";
 const HEADER_I18N_PREFIX = "siteHeader";

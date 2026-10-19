@@ -101,6 +101,10 @@ const blockDensityKgM3 = {
 };
 
 export const blockAtlas = [
+  block({id:"NCK_55",key:"stoneFragment",name:"Stone Fragment",category:"geological",source:"Loose surface stones",tags:["Starter tools","Bare-hand pickup"],
+    description:"One loose, angular gray stone collected from authenticated surface pebble decorations. A distinct resource from terrain Gravel: 500 cm³ of silicate rock, density 2600 kg/m³, mass 1.3 kg. Pickup removes only the loose stone and leaves the ground intact. One stone fragment and two twigs make a basic stone axe with 99 durability. Bare-hand collection grants no skill points or skill bonuses.",
+    colors:["#858983","#535953","#b5bab1"],densityKgM3:2600,dimensionsM:{width:0.10,height:0.08,depth:0.08},physical:{densityKgM3:2600,dimensionsM:{width:0.10,height:0.08,depth:0.08},volumeM3:0.0005,massKg:1.3},composition:geologicalSilicate,
+    signals:{temperature:42,humidity:28,altitude:56,slope:30,rarity:8}}),
   block({
     id: "NCK_01",
     key: "grass",

@@ -55,7 +55,7 @@
       "seeded": "Moteur voxel Chunk.js",
       "watchers": "Relais Guardian en temps réel"
     },
-    "starterTools": "No tool yet? Buy one at the market, or gather 1 pebble + 2 twigs and craft a stone axe (99 durability) in Backpack → Smelting.",
+    "starterTools": "No tool yet? Buy one at the market, or gather 1 stone fragment + 2 twigs and craft a stone axe (99 durability) in Backpack → Smelting.",
     "starterRules": "See starter rules"
   },
   "world": {

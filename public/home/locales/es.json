@@ -1,10 +1,4 @@
 {
-  "_meta": {
-    "language": "es",
-    "label": "Español",
-    "version": "home-locale-es-40e22215e94f09f8",
-    "contentHash": "40e22215e94f09f8"
-  },
   "meta": {
     "title": "NiceChunk | Construye el mundo. Verifica el cambio.",
     "description": "NiceChunk es una civilización voxel jugable en Solana Devnet: terreno determinista, minería verificada, materiales físicos, forja, construcción, mercado, habilidades y relés Guardian."
@@ -60,7 +54,9 @@
       "solana": "Estado en programas de Solana",
       "seeded": "Motor voxel Chunk.js",
       "watchers": "Relé Guardian en tiempo real"
-    }
+    },
+    "starterTools": "No tool yet? Buy one at the market, or gather 1 pebble + 2 twigs and craft a stone axe (99 durability) in Backpack → Smelting.",
+    "starterRules": "See starter rules"
   },
   "world": {
     "eyebrow": "Mundo verificable",

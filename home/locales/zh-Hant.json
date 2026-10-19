@@ -54,7 +54,9 @@
       "solana": "Solana 程式狀態",
       "seeded": "Chunk.js 體素引擎",
       "watchers": "Guardian 即時中繼"
-    }
+    },
+    "starterTools": "還沒有工具？從市場購買，或徒手收集1個碎石和2根樹枝，在背包→熔煉中製作耐久99的石斧。",
+    "starterRules": "查看新手資源規則"
   },
   "world": {
     "eyebrow": "可驗證世界",

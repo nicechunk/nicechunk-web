@@ -54,7 +54,9 @@
       "solana": "Solana プログラム状態",
       "seeded": "Chunk.js ボクセルエンジン",
       "watchers": "Guardian リアルタイムリレー"
-    }
+    },
+    "starterTools": "No tool yet? Buy one at the market, or gather 1 pebble + 2 twigs and craft a stone axe (99 durability) in Backpack → Smelting.",
+    "starterRules": "See starter rules"
   },
   "world": {
     "eyebrow": "検証可能な世界",

@@ -1,10 +1,4 @@
 {
-  "_meta": {
-    "language": "zh-Hant",
-    "label": "繁體中文",
-    "version": "home-locale-zh-Hant-68932e3dc38e4828",
-    "contentHash": "68932e3dc38e4828"
-  },
   "meta": {
     "title": "NiceChunk | 建造世界，驗證每次改變",
     "description": "NiceChunk 是運行於 Solana Devnet 的可玩體素文明：確定性地形、鏈上驗證挖掘、物理材料、熔煉、鍛造、建造、市場、技能與 Guardian 即時中繼。"
@@ -60,7 +54,9 @@
       "solana": "Solana 程式狀態",
       "seeded": "Chunk.js 體素引擎",
       "watchers": "Guardian 即時中繼"
-    }
+    },
+    "starterTools": "還沒有工具？從市場購買，或徒手收集1個碎石和2根樹枝，在背包→熔煉中製作耐久99的石斧。",
+    "starterRules": "查看新手資源規則"
   },
   "world": {
     "eyebrow": "可驗證世界",

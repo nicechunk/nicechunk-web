@@ -1,10 +1,4 @@
 {
-  "_meta": {
-    "language": "en",
-    "label": "English",
-    "version": "home-locale-en-50f3c9baea9c0e42",
-    "contentHash": "50f3c9baea9c0e42"
-  },
   "meta": {
     "title": "NiceChunk | Build the world. Verify the change.",
     "description": "NiceChunk is a playable voxel civilization on Solana Devnet: deterministic terrain, verified mining, physical materials, forging, building, markets, skills, and Guardian relays."
@@ -60,7 +54,9 @@
       "solana": "Solana Program State",
       "seeded": "Chunk.js Voxel Engine",
       "watchers": "Guardian Realtime Relay"
-    }
+    },
+    "starterTools": "No tool yet? Buy one at the market, or gather 1 pebble + 2 twigs and craft a stone axe (99 durability) in Backpack → Smelting.",
+    "starterRules": "See starter rules"
   },
   "world": {
     "eyebrow": "Verifiable World",

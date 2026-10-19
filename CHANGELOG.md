@@ -1,5 +1,11 @@
 # nicechunk-web Changelog
 
+## 2026-10-19 — Starter tool route
+
+- Explain market purchase and bare-hand pebble/twig crafting on the homepage.
+- Link the public starter resource rules and synchronize deployable homepage locales.
+
+
 All notable public changes for this split repository should be recorded here.
 
 This repository is generated from the main NiceChunk working tree. Make source changes in the main tree, regenerate the split repositories, then commit and push this split separately.

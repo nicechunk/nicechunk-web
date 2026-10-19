@@ -1,10 +1,4 @@
 {
-  "_meta": {
-    "language": "ru",
-    "label": "Русский",
-    "version": "home-locale-ru-88db9f39ac0e3e89",
-    "contentHash": "88db9f39ac0e3e89"
-  },
   "meta": {
     "title": "NiceChunk | Стройте мир. Проверяйте изменения.",
     "description": "NiceChunk — игровая воксельная цивилизация в Solana Devnet: детерминированный мир, проверяемая добыча, физические материалы, ковка, строительство, рынок, навыки и Guardian-реле."
@@ -60,7 +54,9 @@
       "solana": "Состояние в программах Solana",
       "seeded": "Воксельный движок Chunk.js",
       "watchers": "Guardian-реле в реальном времени"
-    }
+    },
+    "starterTools": "No tool yet? Buy one at the market, or gather 1 pebble + 2 twigs and craft a stone axe (99 durability) in Backpack → Smelting.",
+    "starterRules": "See starter rules"
   },
   "world": {
     "eyebrow": "Проверяемый мир",

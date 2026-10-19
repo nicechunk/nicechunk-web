@@ -1,10 +1,4 @@
 {
-  "_meta": {
-    "language": "ko",
-    "label": "한국어",
-    "version": "home-locale-ko-22debcadd4cf7eac",
-    "contentHash": "22debcadd4cf7eac"
-  },
   "meta": {
     "title": "NiceChunk | 세계를 만들고, 변화를 검증하세요.",
     "description": "NiceChunk는 Solana Devnet에서 플레이할 수 있는 복셀 문명입니다. 결정론적 지형, 검증된 채굴, 물리 재료, 제련, 단조, 건축, 시장, 스킬, Guardian 릴레이를 제공합니다."
@@ -60,7 +54,9 @@
       "solana": "Solana 프로그램 상태",
       "seeded": "Chunk.js 복셀 엔진",
       "watchers": "Guardian 실시간 릴레이"
-    }
+    },
+    "starterTools": "No tool yet? Buy one at the market, or gather 1 pebble + 2 twigs and craft a stone axe (99 durability) in Backpack → Smelting.",
+    "starterRules": "See starter rules"
   },
   "world": {
     "eyebrow": "검증 가능한 세계",

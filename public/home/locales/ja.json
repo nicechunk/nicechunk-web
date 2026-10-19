@@ -1,10 +1,4 @@
 {
-  "_meta": {
-    "language": "ja",
-    "label": "日本語",
-    "version": "home-locale-ja-b9005d22c4f0ba28",
-    "contentHash": "b9005d22c4f0ba28"
-  },
   "meta": {
     "title": "NiceChunk | 世界を築く。変化を検証する。",
     "description": "NiceChunk は Solana Devnet 上で遊べるボクセル文明です。決定論的地形、検証付き採掘、物理量を持つ素材、精錬、鍛造、建築、市場、スキル、Guardian リレーを実装しています。"
@@ -60,7 +54,9 @@
       "solana": "Solana プログラム状態",
       "seeded": "Chunk.js ボクセルエンジン",
       "watchers": "Guardian リアルタイムリレー"
-    }
+    },
+    "starterTools": "No tool yet? Buy one at the market, or gather 1 pebble + 2 twigs and craft a stone axe (99 durability) in Backpack → Smelting.",
+    "starterRules": "See starter rules"
   },
   "world": {
     "eyebrow": "検証可能な世界",
